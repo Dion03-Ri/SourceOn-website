@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SourceOn — Schweizer Beschaffungsvermittler für die Baubranche</title>
+  <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte die kein Einzelkunde alleine bekäme." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy: #1B3A5C;
+      --navy-dark: #122844;
+      --navy-mid: #224870;
+      --navy-light: #2a5a8a;
+      --gold: #E8A020;
+      --gold-dark: #c8881a;
+      --gold-light: #f0b840;
+      --white: #ffffff;
+      --gray-50: #f8f9fb;
+      --gray-100: #f1f3f7;
+      --gray-200: #e2e6ee;
+      --gray-400: #9aa3b8;
+      --gray-600: #6b7694;
+      --gray-800: #374065;
+      --text-body: #4a5568;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--navy);
+      background: var(--white);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(27, 58, 92, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      transition: box-shadow 0.3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 32px rgba(0,0,0,0.25); }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px;
+    }
+
+    .logo {
+      font-size: 1.45rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .logo span.source { color: var(--white); }
+    .logo span.on { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.78);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--white); background: rgba(255,255,255,0.07); }
+
+    .btn-nav {
+      background: var(--gold);
+      color: var(--navy-dark) !important;
+      font-weight: 700 !important;
+      padding: 10px 20px !important;
+      border-radius: 10px !important;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s !important;
+      box-shadow: 0 2px 12px rgba(232,160,32,0.35);
+      white-space: nowrap;
+    }
+    .btn-nav:hover {
+      background: var(--gold-light) !important;
+      transform: translateY(-1px) !important;
+      box-shadow: 0 4px 20px rgba(232,160,32,0.5) !important;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 8px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--white);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: linear-gradient(150deg, var(--navy-dark) 0%, var(--navy) 45%, var(--navy-mid) 100%);
+      padding: 140px 24px 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(232,160,32,0.12) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -100px; left: -100px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(42,90,138,0.5) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(232,160,32,0.15);
+      border: 1px solid rgba(232,160,32,0.35);
+      color: var(--gold-light);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 100px;
+      margin-bottom: 32px;
+    }
+    .hero-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 5.5vw, 4rem);
+      font-weight: 800;
+      color: var(--white);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      color: rgba(255,255,255,0.72);
+      max-width: 620px;
+      margin: 0 auto 44px;
+      line-height: 1.65;
+      font-weight: 400;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 72px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--gold);
+      color: var(--navy-dark);
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 15px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 4px 24px rgba(232,160,32,0.4);
+    }
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(232,160,32,0.55);
+    }
+    .btn-primary svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 15px 30px;
+      border-radius: 12px;
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.28);
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+    }
+    .btn-outline:hover {
+      border-color: rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-2px);
+    }
+
+    /* ─── STATS ─── */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      overflow: hidden;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .stat-item {
+      background: rgba(255,255,255,0.05);
+      padding: 28px 24px;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .stat-item:hover { background: rgba(255,255,255,0.08); }
+    .stat-value {
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-weight: 800;
+      color: var(--gold);
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* ─── SECTION COMMONS ─── */
+    section { padding: 96px 24px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .section-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+    .section-tag::before {
+      content: '';
+      display: block;
+      width: 20px; height: 2px;
+      background: var(--gold);
+      border-radius: 2px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--navy);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--gray-600);
+      max-width: 560px;
+      line-height: 1.65;
+    }
+    .section-header { margin-bottom: 64px; }
+    .section-header.centered { text-align: center; }
+    .section-header.centered .section-subtitle { margin: 0 auto; }
+
+    /* ─── HOW IT WORKS ─── */
+    #wie-es-funktioniert { background: var(--gray-50); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0;
+      position: relative;
+    }
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 36px; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gray-200) 20%, var(--gray-200) 80%, transparent);
+    }
+
+    .step {
+      padding: 0 24px;
+      text-align: center;
+      position: relative;
+    }
+
+    .step-number {
+      width: 72px; height: 72px;
+      background: var(--navy);
+      color: var(--white);
+      font-size: 1.4rem;
+      font-weight: 800;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+      position: relative;
+      z-index: 1;
+      box-shadow: 0 4px 20px rgba(27,58,92,0.2);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .step:hover .step-number {
+      transform: scale(1.08);
+      box-shadow: 0 8px 28px rgba(27,58,92,0.3);
+    }
+    .step:first-child .step-number,
+    .step:last-child .step-number { background: var(--gold); color: var(--navy-dark); }
+
+    .step h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+    .step p {
+      font-size: 0.9rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    /* ─── FOR WHOM ─── */
+    #fuer-wen { background: var(--white); }
+
+    .audience-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .audience-card {
+      border: 1px solid var(--gray-200);
+      border-radius: 20px;
+      padding: 40px;
+      transition: box-shadow 0.25s, border-color 0.25s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .audience-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--navy);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .audience-card:hover::before { transform: scaleX(1); }
+    .audience-card:hover {
+      box-shadow: 0 12px 48px rgba(27,58,92,0.1);
+      border-color: var(--gray-200);
+      transform: translateY(-3px);
+    }
+    .audience-card.highlight {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: var(--white);
+    }
+    .audience-card.highlight::before { background: var(--gold); }
+
+    .card-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      background: var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      font-size: 1.5rem;
+    }
+    .audience-card.highlight .card-icon { background: rgba(255,255,255,0.12); }
+
+    .audience-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+      color: var(--navy);
+    }
+    .audience-card.highlight h3 { color: var(--white); }
+
+    .audience-card p {
+      font-size: 0.92rem;
+      color: var(--gray-600);
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+    .audience-card.highlight p { color: rgba(255,255,255,0.7); }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 0.88rem;
+      color: var(--gray-600);
+    }
+    .audience-card.highlight .feature-list li { color: rgba(255,255,255,0.75); }
+    .feature-list li::before {
+      content: '';
+      flex-shrink: 0;
+      width: 18px; height: 18px;
+      margin-top: 1px;
+      background: var(--gold);
+      border-radius: 50%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B3A5C' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E");
+      background-size: 11px;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    /* ─── SUPPLIERS ─── */
+    #lieferanten { background: var(--gray-50); }
+
+    .supplier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .supplier-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 32px;
+      transition: box-shadow 0.25s, transform 0.2s;
+    }
+    .supplier-card:hover {
+      box-shadow: 0 8px 32px rgba(27,58,92,0.08);
+      transform: translateY(-2px);
+    }
+
+    .supplier-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+    }
+
+    .supplier-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .supplier-card p {
+      font-size: 0.88rem;
+      color: var(--gray-600);
+      line-height: 1.6;
+    }
+
+    /* ─── ABOUT ─── */
+    #ueber-uns { background: var(--white); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .about-visual {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 50%, var(--navy-mid) 100%);
+      border-radius: 24px;
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+      min-height: 380px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .about-visual::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(232,160,32,0.2) 0%, transparent 60%);
+    }
+    .about-visual-content { position: relative; z-index: 1; }
+
+    .about-quote {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1.4;
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .about-quote span { color: var(--gold); }
+
+    .about-author {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      font-weight: 500;
+    }
+
+    .trust-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 28px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.85);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 8px;
+    }
+    .badge::before {
+      content: '✦';
+      color: var(--gold);
+      font-size: 0.6rem;
+    }
+
+    .about-text .section-subtitle { margin-bottom: 32px; }
+
+    .value-props {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .value-prop {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .vp-icon {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      background: var(--gray-100);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .vp-text h4 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .vp-text p {
+      font-size: 0.875rem;
+      color: var(--gray-600);
+      line-height: 1.55;
+    }
+
+    /* ─── CTA BANNER ─── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy) 60%, var(--navy-mid) 100%);
+      padding: 96px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(ellipse, rgba(232,160,32,0.1) 0%, transparent 65%);
+    }
+    .cta-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-inner h2 {
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .cta-inner h2 em { font-style: normal; color: var(--gold); }
+    .cta-inner p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    .cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ─── CONTACT ─── */
+    #kontakt { background: var(--gray-50); }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: start;
+    }
+
+    .contact-info h3 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 16px;
+      letter-spacing: -0.02em;
+    }
+    .contact-info p {
+      font-size: 0.95rem;
+      color: var(--gray-600);
+      line-height: 1.65;
+      margin-bottom: 32px;
+    }
+
+    .contact-detail {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .contact-detail-icon {
+      width: 36px; height: 36px;
+      border-radius: 8px;
+      background: var(--navy);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-detail-icon svg { width: 16px; height: 16px; color: var(--gold); }
+    .contact-detail span {
+      font-size: 0.9rem;
+      color: var(--navy);
+      font-weight: 500;
+    }
+
+    .contact-form {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 4px 24px rgba(27,58,92,0.06);
+    }
+
+    .form-row { margin-bottom: 20px; }
+    .form-row label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .form-row input,
+    .form-row textarea,
+    .form-row select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid var(--gray-200);
+      border-radius: 10px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      color: var(--navy);
+      background: var(--white);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      appearance: none;
+    }
+    .form-row input:focus,
+    .form-row textarea:focus,
+    .form-row select:focus {
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(27,58,92,0.1);
+    }
+    .form-row textarea { resize: vertical; min-height: 110px; }
+    .form-row select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231B3A5C' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      background-size: 16px;
+      padding-right: 40px;
+    }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .btn-submit {
+      width: 100%;
+      background: var(--navy);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 14px 24px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      letter-spacing: 0.01em;
+    }
+    .btn-submit:hover { background: var(--navy-mid); transform: translateY(-1px); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--navy-dark);
+      padding: 60px 24px 32px;
+      color: rgba(255,255,255,0.6);
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      margin-bottom: 32px;
+    }
+    .footer-brand .logo { font-size: 1.3rem; margin-bottom: 12px; display: block; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.65; }
+    .footer-col h4 {
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      font-size: 0.875rem;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: var(--white); }
+
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p { font-size: 0.82rem; }
+    .footer-bottom-links { display: flex; gap: 20px; }
+    .footer-bottom-links a {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-bottom-links a:hover { color: rgba(255,255,255,0.8); }
+
+    /* ─── MOBILE MENU ─── */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 68px; left: 0; right: 0;
+      background: var(--navy-dark);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 16px 24px 24px;
+      z-index: 99;
+    }
+    .mobile-menu.open { display: flex; flex-direction: column; gap: 4px; }
+    .mobile-menu a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 500;
+      padding: 12px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      transition: color 0.2s;
+    }
+    .mobile-menu a:hover { color: var(--white); }
+    .mobile-menu .btn-nav {
+      margin-top: 12px;
+      text-align: center;
+      border-radius: 10px !important;
+      padding: 14px !important;
+      border: none !important;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .audience-grid { grid-template-columns: 1fr; }
+      .supplier-grid { grid-template-columns: 1fr 1fr; }
+      .about-grid { grid-template-columns: 1fr; gap: 40px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+    }
+    @media (max-width: 640px) {
+      .stats-strip { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .steps::before { display: none; }
+      .supplier-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      .hero-actions { flex-direction: column; align-items: center; }
+    }
+
+    /* ─── SCROLL ANIMATION ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: none; }
+    .fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .fade-up:nth-child(3) { transition-delay: 0.2s; }
+    .fade-up:nth-child(4) { transition-delay: 0.3s; }
+    .fade-up:nth-child(5) { transition-delay: 0.4s; }
+    .fade-up:nth-child(6) { transition-delay: 0.5s; }
+  </style>
+</head>
+<body>
+
+  <!-- ─── NAV ─── -->
+  <nav id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="logo"><span class="source">source</span><span class="on">ON</span></a>
+      <ul class="nav-links">
+        <li><a href="#wie-es-funktioniert">Wie es funktioniert</a></li>
+        <li><a href="#fuer-wen">Für wen</a></li>
+        <li><a href="#lieferanten">Lieferanten</a></li>
+        <li><a href="#ueber-uns">Über uns</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+        <li><a href="#kontakt" class="btn-nav">Materialbedarf melden</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Menü öffnen">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#wie-es-funktioniert">Wie es funktioniert</a>
+    <a href="#fuer-wen">Für wen</a>
+    <a href="#lieferanten">Lieferanten</a>
+    <a href="#ueber-uns">Über uns</a>
+    <a href="#kontakt">Kontakt</a>
+    <a href="#kontakt" class="btn-nav">Materialbedarf melden</a>
+  </div>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Schweizer B2B Beschaffungsvermittler</div>
+      <h1>Du zahlst erst, wenn<br>wir dir <em>sparen.</em></h1>
+      <p class="hero-sub">SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme.</p>
+      <div class="hero-actions">
+        <a href="#kontakt" class="btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Materialbedarf melden
+        </a>
+        <a href="#wie-es-funktioniert" class="btn-outline">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 8 16 12 12 16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          Wie es funktioniert
+        </a>
+      </div>
+      <div class="stats-strip">
+        <div class="stat-item">
+          <div class="stat-value">CHF 23.9 Mrd.</div>
+          <div class="stat-label">Baumarkt Schweiz</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">10–30%</div>
+          <div class="stat-label">Einsparung möglich</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">2.25%</div>
+          <div class="stat-label">Provision — nur bei Ersparnis</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── HOW IT WORKS ─── -->
+  <section id="wie-es-funktioniert">
+    <div class="section-inner">
+      <div class="section-header centered">
+        <div class="section-tag">Prozess</div>
+        <h2 class="section-title">In vier Schritten zu tieferen Einkaufspreisen</h2>
+        <p class="section-subtitle">Kein Aufwand, kein Risiko — Sie zahlen nur dann, wenn wir Ihnen tatsächlich Geld sparen.</p>
+      </div>
+      <div class="steps">
+        <div class="step fade-up">
+          <div class="step-number">1</div>
+          <h3>Bedarf melden</h3>
+          <p>Sie teilen uns Ihren Materialbedarf mit — Mengen, Spezifikationen und Zeitplan. Keine Verpflichtung.</p>
+        </div>
+        <div class="step fade-up">
+          <div class="step-number">2</div>
+          <h3>Bündelung</h3>
+          <p>Wir aggregieren Ihren Bedarf mit dem anderer KMU-Baufirmen zu einem volumenstarken Gesamtauftrag.</p>
+        </div>
+        <div class="step fade-up">
+          <div class="step-number">3</div>
+          <h3>Verhandlung</h3>
+          <p>Mit gebündelter Nachfrage verhandeln wir Mengenrabatte bei geprüften Lieferanten in der Schweiz.</p>
+        </div>
+        <div class="step fade-up">
+          <div class="step-number">4</div>
+          <h3>Sie sparen</h3>
+          <p>Sie erhalten das Material günstiger als direkt. Unsere Provision von 2.25% zahlen Sie nur auf die Ersparnis.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOR WHOM ─── -->
+  <section id="fuer-wen">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-tag">Für wen</div>
+        <h2 class="section-title">Gemacht für Schweizer Baufirmen</h2>
+        <p class="section-subtitle">Ob Hoch- oder Tiefbau, Renovation oder Neubau — SourceOn lohnt sich für KMU jeder Grösse.</p>
+      </div>
+      <div class="audience-grid">
+        <div class="audience-card highlight fade-up">
+          <div class="card-icon">🏗️</div>
+          <h3>KMU-Baufirmen & Generalunternehmer</h3>
+          <p>Erzielen Sie Einkaufspreise wie Grosskonzerne — ohne eigene Einkaufsabteilung oder Lagerrisiko.</p>
+          <ul class="feature-list">
+            <li>Kein Mindestumsatz, keine Bindung</li>
+            <li>Direktlieferung auf die Baustelle</li>
+            <li>Transparente Abrechnung</li>
+            <li>Schweizer Lieferanten, kurze Wege</li>
+          </ul>
+        </div>
+        <div class="audience-card fade-up">
+          <div class="card-icon">🔨</div>
+          <h3>Handwerksbetriebe & Subunternehmer</h3>
+          <p>Auch für Elektriker, Sanitärbetriebe und Schreiner — Materialeinkauf effizienter gestalten.</p>
+          <ul class="feature-list">
+            <li>Für alle Gewerke und Materialien</li>
+            <li>Schnelle Abwicklung</li>
+            <li>Keine Vorauszahlung nötig</li>
+            <li>Persönliche Betreuung</li>
+          </ul>
+        </div>
+        <div class="audience-card fade-up">
+          <div class="card-icon">🏢</div>
+          <h3>Immobilieneigentümer & Investoren</h3>
+          <p>Für Renovationsprojekte und Neubauten — profitieren Sie von professionellem Einkauf ohne eigenes Netzwerk.</p>
+          <ul class="feature-list">
+            <li>Ideal für Mehrfamilienhäuser</li>
+            <li>Geprüfte Qualitätsstandards</li>
+            <li>Vollständige Dokumentation</li>
+            <li>Kostenvergleich inklusive</li>
+          </ul>
+        </div>
+        <div class="audience-card fade-up">
+          <div class="card-icon">📐</div>
+          <h3>Architekten & Planer</h3>
+          <p>Optimieren Sie die Materialkosten Ihrer Projekte und bieten Sie Ihren Kunden einen echten Mehrwert.</p>
+          <ul class="feature-list">
+            <li>Integration in frühe Planungsphase</li>
+            <li>Technische Beratung inklusive</li>
+            <li>Flexible Mengenpuffer</li>
+            <li>Referenzprojekte verfügbar</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SUPPLIERS ─── -->
+  <section id="lieferanten">
+    <div class="section-inner">
+      <div class="section-header centered">
+        <div class="section-tag">Lieferanten</div>
+        <h2 class="section-title">Qualitätsgeprüfte Schweizer Lieferanten</h2>
+        <p class="section-subtitle">Wir arbeiten ausschliesslich mit geprüften, zuverlässigen Lieferanten — für höchste Qualität und Termintreue.</p>
+      </div>
+      <div class="supplier-grid">
+        <div class="supplier-card fade-up">
+          <div class="supplier-icon">🪵</div>
+          <h3>Holz & Baustoffe</h3>
+          <p>Konstruktionsholz, Platten, Dämmstoffe und Verbundwerkstoffe für den Roh- und Innenausbau.</p>
+        </div>
+        <div class="supplier-card fade-up">
+          <div class="supplier-icon">🔩</div>
+          <h3>Stahl & Metall</h3>
+          <p>Bewehrungsstahl, Profile, Bleche und Verbindungselemente — nach Schweizer Norm zertifiziert.</p>
+        </div>
+        <div class="supplier-card fade-up">
+          <div class="supplier-icon">🏠</div>
+          <h3>Dach & Fassade</h3>
+          <p>Ziegel, Dachplatten, Fassadenverkleidungen und Wärmedämmverbundsysteme aller Preisklassen.</p>
+        </div>
+        <div class="supplier-card fade-up">
+          <div class="supplier-icon">💧</div>
+          <h3>Sanitär & HLKS</h3>
+          <p>Rohrleitungen, Armaturen, Heizkörper und Lüftungssysteme von Markenproduzenten.</p>
+        </div>
+        <div class="supplier-card fade-up">
+          <div class="supplier-icon">⚡</div>
+          <h3>Elektro & Gebäudetechnik</h3>
+          <p>Kabeltrassen, Verteiler, Schalter und Smart-Home-Komponenten für Neubau und Renovation.</p>
+        </div>
+        <div class="supplier-card fade-up">
+          <div class="supplier-icon">🪟</div>
+          <h3>Fenster & Türen</h3>
+          <p>Holz-, Kunststoff- und Aluminiumfenster sowie Innen- und Aussentüren aller Energieklassen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ABOUT ─── -->
+  <section id="ueber-uns">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-visual">
+          <div class="about-visual-content">
+            <p class="about-quote">"Der Schweizer Baumarkt ist fragmentiert. <span>SourceOn schafft die Bündelungsmacht, die KMU alleine nicht haben.</span>"</p>
+            <p class="about-author">Das SourceOn-Team, Zürich</p>
+            <div class="trust-badges">
+              <span class="badge">Gegründet in der Schweiz</span>
+              <span class="badge">MWST-konform</span>
+              <span class="badge">Kein Risiko für Kunden</span>
+            </div>
+          </div>
+        </div>
+        <div class="about-text">
+          <div class="section-tag">Über uns</div>
+          <h2 class="section-title">Bündelungsmacht für den Mittelstand</h2>
+          <p class="section-subtitle">SourceOn wurde mit einer klaren Mission gegründet: KMU-Baufirmen denselben Einkaufsvorteil zu geben, den Grosskonzerne seit Jahrzehnten nutzen.</p>
+          <div class="value-props">
+            <div class="value-prop fade-up">
+              <div class="vp-icon">🎯</div>
+              <div class="vp-text">
+                <h4>Erfolgsbasiertes Modell</h4>
+                <p>Wir verdienen nur, wenn Sie sparen. Unsere 2.25% Provision wird ausschliesslich auf die erzielte Preisdifferenz berechnet.</p>
+              </div>
+            </div>
+            <div class="value-prop fade-up">
+              <div class="vp-icon">🔒</div>
+              <div class="vp-text">
+                <h4>Schweizer Qualitätsstandards</h4>
+                <p>Alle Lieferanten sind SIA- und ISO-geprüft. Keine Kompromisse bei Qualität, Normen oder Liefertreue.</p>
+              </div>
+            </div>
+            <div class="value-prop fade-up">
+              <div class="vp-icon">⚡</div>
+              <div class="vp-text">
+                <h4>Schnelle Abwicklung</h4>
+                <p>Von der Bedarfsmeldung bis zum Angebot in maximal 48 Stunden. Kein bürokratischer Overhead.</p>
+              </div>
+            </div>
+            <div class="value-prop fade-up">
+              <div class="vp-icon">🤝</div>
+              <div class="vp-text">
+                <h4>Persönliche Betreuung</h4>
+                <p>Jeder Kunde hat einen festen Ansprechpartner. Kein Callcenter, kein Ticketsystem.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA BANNER ─── -->
+  <section class="cta-section">
+    <div class="cta-inner">
+      <h2>Bereit für <em>tiefere Einkaufspreise?</em></h2>
+      <p>Melden Sie Ihren nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
+      <div class="cta-actions">
+        <a href="#kontakt" class="btn-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+          Materialbedarf melden
+        </a>
+        <a href="mailto:info@sourceon.ch" class="btn-outline">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          info@sourceon.ch
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CONTACT ─── -->
+  <section id="kontakt">
+    <div class="section-inner">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <div class="section-tag">Kontakt</div>
+          <h2 class="section-title">Jetzt Materialbedarf melden</h2>
+          <p>Füllen Sie das Formular aus — wir prüfen Ihren Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</p>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold)"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <span>+41 44 000 00 00</span>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold)"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <span>info@sourceon.ch</span>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-detail-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold)"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <span>Zürich, Schweiz</span>
+          </div>
+        </div>
+        <div class="contact-form">
+          <div class="form-row">
+            <label>Unternehmen</label>
+            <input type="text" placeholder="Muster Bau AG" />
+          </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label>Vorname</label>
+              <input type="text" placeholder="Hans" />
+            </div>
+            <div class="form-row">
+              <label>Nachname</label>
+              <input type="text" placeholder="Muster" />
+            </div>
+          </div>
+          <div class="form-grid">
+            <div class="form-row">
+              <label>E-Mail</label>
+              <input type="email" placeholder="hans@musterbau.ch" />
+            </div>
+            <div class="form-row">
+              <label>Telefon</label>
+              <input type="tel" placeholder="+41 79 000 00 00" />
+            </div>
+          </div>
+          <div class="form-row">
+            <label>Materialbereich</label>
+            <select>
+              <option value="">Bitte wählen…</option>
+              <option>Holz & Baustoffe</option>
+              <option>Stahl & Metall</option>
+              <option>Dach & Fassade</option>
+              <option>Sanitär & HLKS</option>
+              <option>Elektro & Gebäudetechnik</option>
+              <option>Fenster & Türen</option>
+              <option>Sonstiges</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <label>Projektbeschreibung & Bedarf</label>
+            <textarea placeholder="Beschreiben Sie kurz Ihr Projekt, benötigte Materialien und ungefähre Mengen…"></textarea>
+          </div>
+          <button class="btn-submit" type="submit">Anfrage absenden →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#" class="logo"><span class="source">source</span><span class="on">ON</span></a>
+          <p>SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und schafft Einkaufsmacht, die kein Einzelner alleine hätte.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Leistungen</h4>
+          <ul>
+            <li><a href="#wie-es-funktioniert">Wie es funktioniert</a></li>
+            <li><a href="#fuer-wen">Für wen</a></li>
+            <li><a href="#lieferanten">Lieferanten</a></li>
+            <li><a href="#kontakt">Materialbedarf melden</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Unternehmen</h4>
+          <ul>
+            <li><a href="#ueber-uns">Über uns</a></li>
+            <li><a href="#kontakt">Kontakt</a></li>
+            <li><a href="#">Karriere</a></li>
+            <li><a href="#">Presse</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Rechtliches</h4>
+          <ul>
+            <li><a href="#">Datenschutz</a></li>
+            <li><a href="#">Impressum</a></li>
+            <li><a href="#">AGB</a></li>
+            <li><a href="#">Cookie-Richtlinie</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 SourceOn GmbH, Zürich — Alle Rechte vorbehalten</p>
+        <div class="footer-bottom-links">
+          <a href="#">Datenschutz</a>
+          <a href="#">Impressum</a>
+          <a href="#">AGB</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar scroll effect
+    const nav = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 20);
+    });
+
+    // Mobile menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => mobileMenu.classList.remove('open'));
+    });
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', e => {
+        const target = document.querySelector(anchor.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          const offset = 80;
+          const top = target.getBoundingClientRect().top + window.scrollY - offset;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Form submit (demo)
+    document.querySelector('.btn-submit').addEventListener('click', (e) => {
+      e.preventDefault();
+      const btn = e.target;
+      btn.textContent = 'Anfrage gesendet ✓';
+      btn.style.background = '#2a7a3a';
+      setTimeout(() => {
+        btn.textContent = 'Anfrage absenden →';
+        btn.style.background = '';
+      }, 3000);
+    });
+  </script>
+</body>
+</html>
