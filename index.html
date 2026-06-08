@@ -768,18 +768,19 @@
 
     .btn-submit {
       width: 100%;
-      background: var(--navy);
-      color: var(--white);
+      background: var(--gold);
+      color: var(--navy-dark);
       font-weight: 700;
       font-size: 0.95rem;
       padding: 14px 24px;
       border-radius: 10px;
       border: none;
       cursor: pointer;
-      transition: background 0.2s, transform 0.15s;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
       letter-spacing: 0.01em;
+      box-shadow: 0 4px 16px rgba(232,160,32,0.35);
     }
-    .btn-submit:hover { background: var(--navy-mid); transform: translateY(-1px); }
+    .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); box-shadow: 0 6px 24px rgba(232,160,32,0.5); }
 
     /* ─── FOOTER ─── */
     footer {
@@ -968,13 +969,13 @@
       <div class="section-header centered">
         <div class="section-tag">Prozess</div>
         <h2 class="section-title">In vier Schritten zu tieferen Einkaufspreisen</h2>
-        <p class="section-subtitle">Kein Aufwand, kein Risiko — Sie zahlen nur dann, wenn wir Ihnen tatsächlich Geld sparen.</p>
+        <p class="section-subtitle">Kein Aufwand, kein Risiko — du zahlst nur dann, wenn wir dir tatsächlich Geld sparen.</p>
       </div>
       <div class="steps">
         <div class="step fade-up">
           <div class="step-number">1</div>
           <h3>Bedarf melden</h3>
-          <p>Sie teilen uns Ihren Materialbedarf mit — Mengen, Spezifikationen und Zeitplan. Keine Verpflichtung.</p>
+          <p>Du teilst uns deinen Materialbedarf mit — Mengen, Spezifikationen und Zeitplan. Keine Verpflichtung.</p>
         </div>
         <div class="step fade-up">
           <div class="step-number">2</div>
@@ -988,8 +989,8 @@
         </div>
         <div class="step fade-up">
           <div class="step-number">4</div>
-          <h3>Sie sparen</h3>
-          <p>Sie erhalten das Material günstiger als direkt. Unsere Provision von 2.25% zahlen Sie nur auf die Ersparnis.</p>
+          <h3>Du sparst</h3>
+          <p>Du erhältst das Material günstiger als direkt. Unsere Provision von 2.25% zahlst du nur auf die Ersparnis.</p>
         </div>
       </div>
     </div>
@@ -1007,7 +1008,7 @@
         <div class="audience-card highlight fade-up">
           <div class="card-icon">🏗️</div>
           <h3>KMU-Baufirmen & Generalunternehmer</h3>
-          <p>Erzielen Sie Einkaufspreise wie Grosskonzerne — ohne eigene Einkaufsabteilung oder Lagerrisiko.</p>
+          <p>Erziel Einkaufspreise wie Grosskonzerne — ohne eigene Einkaufsabteilung oder Lagerrisiko.</p>
           <ul class="feature-list">
             <li>Kein Mindestumsatz, keine Bindung</li>
             <li>Direktlieferung auf die Baustelle</li>
@@ -1029,7 +1030,7 @@
         <div class="audience-card fade-up">
           <div class="card-icon">🏢</div>
           <h3>Immobilieneigentümer & Investoren</h3>
-          <p>Für Renovationsprojekte und Neubauten — profitieren Sie von professionellem Einkauf ohne eigenes Netzwerk.</p>
+          <p>Für Renovationsprojekte und Neubauten — profitier von professionellem Einkauf ohne eigenes Netzwerk.</p>
           <ul class="feature-list">
             <li>Ideal für Mehrfamilienhäuser</li>
             <li>Geprüfte Qualitätsstandards</li>
@@ -1040,7 +1041,7 @@
         <div class="audience-card fade-up">
           <div class="card-icon">📐</div>
           <h3>Architekten & Planer</h3>
-          <p>Optimieren Sie die Materialkosten Ihrer Projekte und bieten Sie Ihren Kunden einen echten Mehrwert.</p>
+          <p>Optimier die Materialkosten deiner Projekte und biete deinen Kunden einen echten Mehrwert.</p>
           <ul class="feature-list">
             <li>Integration in frühe Planungsphase</li>
             <li>Technische Beratung inklusive</li>
@@ -1105,7 +1106,6 @@
             <p class="about-author">Das SourceOn-Team, Zürich</p>
             <div class="trust-badges">
               <span class="badge">Gegründet in der Schweiz</span>
-              <span class="badge">MWST-konform</span>
               <span class="badge">Kein Risiko für Kunden</span>
             </div>
           </div>
@@ -1116,28 +1116,36 @@
           <p class="section-subtitle">SourceOn wurde mit einer klaren Mission gegründet: KMU-Baufirmen denselben Einkaufsvorteil zu geben, den Grosskonzerne seit Jahrzehnten nutzen.</p>
           <div class="value-props">
             <div class="value-prop fade-up">
-              <div class="vp-icon">🎯</div>
+              <div class="vp-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8A020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+              </div>
               <div class="vp-text">
                 <h4>Erfolgsbasiertes Modell</h4>
-                <p>Wir verdienen nur, wenn Sie sparen. Unsere 2.25% Provision wird ausschliesslich auf die erzielte Preisdifferenz berechnet.</p>
+                <p>Wir verdienen nur, wenn du sparst. Unsere 2.25% Provision wird ausschliesslich auf die erzielte Preisdifferenz berechnet.</p>
               </div>
             </div>
             <div class="value-prop fade-up">
-              <div class="vp-icon">🔒</div>
+              <div class="vp-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B3A5C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
               <div class="vp-text">
                 <h4>Schweizer Qualitätsstandards</h4>
                 <p>Alle Lieferanten sind SIA- und ISO-geprüft. Keine Kompromisse bei Qualität, Normen oder Liefertreue.</p>
               </div>
             </div>
             <div class="value-prop fade-up">
-              <div class="vp-icon">⚡</div>
+              <div class="vp-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E8A020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              </div>
               <div class="vp-text">
                 <h4>Schnelle Abwicklung</h4>
                 <p>Von der Bedarfsmeldung bis zum Angebot in maximal 48 Stunden. Kein bürokratischer Overhead.</p>
               </div>
             </div>
             <div class="value-prop fade-up">
-              <div class="vp-icon">🤝</div>
+              <div class="vp-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1B3A5C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              </div>
               <div class="vp-text">
                 <h4>Persönliche Betreuung</h4>
                 <p>Jeder Kunde hat einen festen Ansprechpartner. Kein Callcenter, kein Ticketsystem.</p>
@@ -1153,7 +1161,7 @@
   <section class="cta-section">
     <div class="cta-inner">
       <h2>Bereit für <em>tiefere Einkaufspreise?</em></h2>
-      <p>Melden Sie Ihren nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
+      <p>Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
       <div class="cta-actions">
         <a href="#kontakt" class="btn-primary">
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
@@ -1174,7 +1182,7 @@
         <div class="contact-info">
           <div class="section-tag">Kontakt</div>
           <h2 class="section-title">Jetzt Materialbedarf melden</h2>
-          <p>Füllen Sie das Formular aus — wir prüfen Ihren Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</p>
+          <p>Füll das Formular aus — wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</p>
           <div class="contact-detail">
             <div class="contact-detail-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--gold)"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.8a19.79 19.79 0 01-3.07-8.68A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
@@ -1234,7 +1242,7 @@
           </div>
           <div class="form-row">
             <label>Projektbeschreibung & Bedarf</label>
-            <textarea placeholder="Beschreiben Sie kurz Ihr Projekt, benötigte Materialien und ungefähre Mengen…"></textarea>
+            <textarea placeholder="Beschreib kurz dein Projekt, benötigte Materialien und ungefähre Mengen…"></textarea>
           </div>
           <button class="btn-submit" type="submit">Anfrage absenden →</button>
         </div>
@@ -1264,8 +1272,6 @@
           <ul>
             <li><a href="#ueber-uns">Über uns</a></li>
             <li><a href="#kontakt">Kontakt</a></li>
-            <li><a href="#">Karriere</a></li>
-            <li><a href="#">Presse</a></li>
           </ul>
         </div>
         <div class="footer-col">
@@ -1279,7 +1285,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2025 SourceOn GmbH, Zürich — Alle Rechte vorbehalten</p>
+        <p>© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</p>
         <div class="footer-bottom-links">
           <a href="#">Datenschutz</a>
           <a href="#">Impressum</a>
