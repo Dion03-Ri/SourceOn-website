@@ -121,10 +121,10 @@ a{color:inherit;text-decoration:none}
 /* PROCESS */
 #process{background:var(--bg)}
 .steps-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:64px;position:relative}
-.steps-wrap::before{content:'';position:absolute;top:48px;left:calc(12.5% + 12px);right:calc(12.5% + 12px);height:1px;background:rgba(232,160,32,.4);z-index:0}
+.steps-wrap::before{content:'';position:absolute;top:60px;left:calc(12.5% + 12px);right:calc(12.5% + 12px);border-top:2px dashed rgba(232,160,32,.4);z-index:0;pointer-events:none}
 .step-card{text-align:center;padding:0 20px;position:relative;z-index:1;opacity:0;transition:opacity .4s ease}
 .step-card.step-visible{opacity:1}
-.step-num{font-size:3rem;font-weight:800;line-height:1;margin-bottom:8px;background:linear-gradient(135deg,var(--gold) 0%,rgba(232,160,32,.25) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.step-num{display:none}
 .step-icon{width:60px;height:60px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;transition:all .25s var(--ease)}
 .step-card:hover .step-icon{background:var(--gold);border-color:var(--gold);transform:translateY(-4px)}
 .step-card:hover .step-icon svg{color:#fff!important}
@@ -564,25 +564,21 @@ footer{background:var(--dark);padding:72px 0 0}
     </div>
     <div class="steps-wrap" id="steps-wrap">
       <div class="step-card" id="step-card-0">
-        <div class="step-num">01</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
         <div class="step-title">Bedarf melden</div>
         <p class="step-desc">Du teilst uns Materialart, Menge und Liefertermin mit. Dauert zwei Minuten.</p>
       </div>
       <div class="step-card" id="step-card-1">
-        <div class="step-num">02</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
         <div class="step-title">Bündeln</div>
         <p class="step-desc">SourceOn matcht deinen Bedarf mit anderen Baufirmen für echtes Einkaufsvolumen.</p>
       </div>
       <div class="step-card" id="step-card-2">
-        <div class="step-num">03</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
         <div class="step-title">Vergleichen &amp; Verhandeln</div>
         <p class="step-desc">KI-Analyse und erfahrene Verhandler holen mindestens 3 Angebote ein.</p>
       </div>
       <div class="step-card" id="step-card-3">
-        <div class="step-num">04</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div>
         <div class="step-title">Du sparst</div>
         <p class="step-desc">Direktlieferung auf deine Baustelle. Provision nur wenn du wirklich günstiger einkaufst.</p>
@@ -886,6 +882,7 @@ footer{background:var(--dark);padding:72px 0 0}
   wrap.style.height=H+'px';
   canvas.style.height=H+'px';
 
+  /* Scene */
   var scene=new THREE.Scene();
   scene.background=new THREE.Color(0x0F2238);
 
@@ -897,7 +894,7 @@ footer{background:var(--dark);padding:72px 0 0}
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.setSize(W,H);
 
-  // Lighting
+  /* Lighting */
   scene.add(new THREE.AmbientLight(0xffffff,0.4));
   var ptLight=new THREE.PointLight(0xE8A020,1.5,30);
   ptLight.position.set(0,2,3);
@@ -906,7 +903,7 @@ footer{background:var(--dark);padding:72px 0 0}
   dirLight.position.set(5,5,5);
   scene.add(dirLight);
 
-  // Sprite label helper
+  /* Sprite label helper */
   function mkLabel(txt){
     var c=document.createElement('canvas');
     c.width=200;c.height=48;
@@ -921,27 +918,27 @@ footer{background:var(--dark);padding:72px 0 0}
     return sp;
   }
 
-  // Object 1: Firma A at (-3, 1.5, 0)
-  var matBlue=new THREE.MeshPhongMaterial({color:0x2E75B6,shininess:80});
+  /* Object 1 — Firma A */
+  var blueMat=new THREE.MeshPhongMaterial({color:0x2E75B6,shininess:80});
   var boxGeo=new THREE.BoxGeometry(0.8,0.8,0.8);
-  var firmaA=new THREE.Mesh(boxGeo,matBlue.clone());
+  var firmaA=new THREE.Mesh(boxGeo,blueMat.clone());
   firmaA.position.set(-3,1.5,0);
   scene.add(firmaA);
   var lblA=mkLabel('Firma A');lblA.position.set(-3,2.25,0);scene.add(lblA);
 
-  // Object 2: Firma B at (3, 1.5, 0)
-  var firmaB=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8),matBlue.clone());
+  /* Object 2 — Firma B */
+  var firmaB=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8),blueMat.clone());
   firmaB.position.set(3,1.5,0);
   scene.add(firmaB);
   var lblB=mkLabel('Firma B');lblB.position.set(3,2.25,0);scene.add(lblB);
 
-  // Object 3: Firma C at (-1.5, -1.5, 0)
-  var firmaC=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8),matBlue.clone());
+  /* Object 3 — Firma C */
+  var firmaC=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8),blueMat.clone());
   firmaC.position.set(-1.5,-1.5,0);
   scene.add(firmaC);
   var lblC=mkLabel('Firma C');lblC.position.set(-1.5,-0.75,0);scene.add(lblC);
 
-  // Object 4: SourceOn sphere at (0, 0, 0)
+  /* Object 4 — SourceOn sphere */
   var sphere=new THREE.Mesh(
     new THREE.SphereGeometry(0.9,32,32),
     new THREE.MeshPhongMaterial({color:0xE8A020,emissive:0x5C3A00,shininess:150})
@@ -953,7 +950,7 @@ footer{background:var(--dark);padding:72px 0 0}
   hubPtLight.position.set(0,0,0);
   scene.add(hubPtLight);
 
-  // Object 5: Lieferant box at (4, 0, 0)
+  /* Object 5 — Lieferant */
   var lieferant=new THREE.Mesh(
     new THREE.BoxGeometry(1,0.7,0.7),
     new THREE.MeshPhongMaterial({color:0x0D9488,shininess:80})
@@ -962,63 +959,59 @@ footer{background:var(--dark);padding:72px 0 0}
   scene.add(lieferant);
   var lblLief=mkLabel('Lieferant');lblLief.position.set(4,0.65,0);scene.add(lblLief);
 
-  // Lines between objects
+  /* Lines */
   var lineMat=new THREE.LineBasicMaterial({color:0xE8A020,transparent:true,opacity:0.4});
-  function mkLine(a,b){
-    var geo=new THREE.BufferGeometry().setFromPoints([a,b]);
+  function mkLine(ax,ay,az,bx,by,bz){
+    var geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(ax,ay,az),new THREE.Vector3(bx,by,bz)]);
     return new THREE.Line(geo,lineMat);
   }
-  scene.add(mkLine(new THREE.Vector3(-3,1.5,0),new THREE.Vector3(0,0,0)));
-  scene.add(mkLine(new THREE.Vector3(3,1.5,0),new THREE.Vector3(0,0,0)));
-  scene.add(mkLine(new THREE.Vector3(-1.5,-1.5,0),new THREE.Vector3(0,0,0)));
-  scene.add(mkLine(new THREE.Vector3(0,0,0),new THREE.Vector3(4,0,0)));
+  scene.add(mkLine(-3,1.5,0, 0,0,0));
+  scene.add(mkLine(3,1.5,0, 0,0,0));
+  scene.add(mkLine(-1.5,-1.5,0, 0,0,0));
+  scene.add(mkLine(0,0,0, 4,0,0));
 
-  // Particles: 15 per Firma->SourceOn + 15 SourceOn->Lieferant
+  /* Particles */
   var partMat=new THREE.MeshBasicMaterial({color:0xE8A020});
   var partGeo=new THREE.SphereGeometry(0.05,6,6);
   var routes=[
-    {from:new THREE.Vector3(-3,1.5,0),to:new THREE.Vector3(0,0,0),count:15,speed:0.008},
-    {from:new THREE.Vector3(3,1.5,0),to:new THREE.Vector3(0,0,0),count:15,speed:0.009},
-    {from:new THREE.Vector3(-1.5,-1.5,0),to:new THREE.Vector3(0,0,0),count:15,speed:0.007},
-    {from:new THREE.Vector3(0,0,0),to:new THREE.Vector3(4,0,0),count:15,speed:0.012}
+    {fx:-3,fy:1.5,fz:0, tx:0,ty:0,tz:0, speed:0.008},
+    {fx:3,fy:1.5,fz:0, tx:0,ty:0,tz:0, speed:0.009},
+    {fx:-1.5,fy:-1.5,fz:0, tx:0,ty:0,tz:0, speed:0.007},
+    {fx:0,fy:0,fz:0, tx:4,ty:0,tz:0, speed:0.012}
   ];
-  var allParticles=[];
-  routes.forEach(function(route){
-    for(var j=0;j<route.count;j++){
+  var particles=[];
+  routes.forEach(function(r){
+    for(var j=0;j<15;j++){
       var pm=new THREE.Mesh(partGeo,partMat.clone());
-      pm.userData.t=(j/route.count);
-      pm.userData.from=route.from;
-      pm.userData.to=route.to;
-      pm.userData.speed=route.speed;
-      scene.add(pm);
-      allParticles.push(pm);
+      pm.userData={fx:r.fx,fy:r.fy,fz:r.fz,tx:r.tx,ty:r.ty,tz:r.tz,speed:r.speed,t:(j/15)};
+      scene.add(pm);particles.push(pm);
     }
   });
 
-  // Camera Y-axis auto-rotate pivot
+  /* Auto-rotate camera */
   var camAngle=0;
 
   function animate(){
     requestAnimationFrame(animate);
-
-    // Camera orbit Y only
     camAngle+=0.003;
     camera.position.x=Math.sin(camAngle)*9;
     camera.position.z=Math.cos(camAngle)*9;
     camera.lookAt(0,0,0);
 
-    // Objects rotate
     firmaA.rotation.y+=0.008;
     firmaB.rotation.y+=0.008;
     firmaC.rotation.y+=0.008;
     sphere.rotation.x+=0.005;sphere.rotation.y+=0.005;sphere.rotation.z+=0.005;
     lieferant.rotation.y+=0.006;
 
-    // Particles
-    allParticles.forEach(function(p){
-      p.userData.t=(p.userData.t+p.userData.speed)%1;
-      var t=p.userData.t;
-      p.position.lerpVectors(p.userData.from,p.userData.to,t);
+    particles.forEach(function(p){
+      var d=p.userData;
+      d.t=(d.t+d.speed)%1;
+      p.position.set(
+        d.fx+(d.tx-d.fx)*d.t,
+        d.fy+(d.ty-d.fy)*d.t,
+        d.fz+(d.tz-d.fz)*d.t
+      );
     });
 
     renderer.render(scene,camera);
@@ -1530,7 +1523,7 @@ function submitSupplier(e){
     entries.forEach(function(e){
       if(e.isIntersecting){
         var idx=cards.indexOf(e.target);
-        setTimeout(function(){e.target.classList.add('step-visible');},idx*80);
+        setTimeout(function(){e.target.classList.add('step-visible');},idx*150);
         obs.unobserve(e.target);
       }
     });
