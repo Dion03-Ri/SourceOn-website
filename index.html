@@ -121,13 +121,9 @@ a{color:inherit;text-decoration:none}
 /* PROCESS */
 #process{background:var(--bg)}
 .steps-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:64px;position:relative}
-.steps-wrap::before{content:'';position:absolute;top:48px;left:calc(12.5% + 12px);right:calc(12.5% + 12px);height:1px;background:repeating-linear-gradient(to right,rgba(232,160,32,.3) 0,rgba(232,160,32,.3) 6px,transparent 6px,transparent 14px);z-index:0}
-.steps-beam-wrap{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0}
-.steps-beam{position:absolute;top:0;bottom:0;left:0;width:60px;background:linear-gradient(90deg,transparent,rgba(232,160,32,.45),transparent);opacity:0;will-change:transform}
-.steps-beam.beam-run{opacity:1;animation:beamSweep 1.5s ease-in-out forwards}
-@keyframes beamSweep{from{transform:translateX(-100%)}to{transform:translateX(calc(100vw + 100%))}}
-.step-card{text-align:center;padding:0 20px;position:relative;z-index:1;border-left:3px solid transparent;transition:border-color .3s,box-shadow .3s}
-.step-card.step-glow{border-left-color:var(--gold);box-shadow:0 0 20px rgba(232,160,32,.4)}
+.steps-wrap::before{content:'';position:absolute;top:48px;left:calc(12.5% + 12px);right:calc(12.5% + 12px);height:1px;background:rgba(232,160,32,.4);z-index:0}
+.step-card{text-align:center;padding:0 20px;position:relative;z-index:1;opacity:0;transition:opacity .4s ease}
+.step-card.step-visible{opacity:1}
 .step-num{font-size:3rem;font-weight:800;line-height:1;margin-bottom:8px;background:linear-gradient(135deg,var(--gold) 0%,rgba(232,160,32,.25) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .step-icon{width:60px;height:60px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;transition:all .25s var(--ease)}
 .step-card:hover .step-icon{background:var(--gold);border-color:var(--gold);transform:translateY(-4px)}
@@ -159,10 +155,8 @@ a{color:inherit;text-decoration:none}
 /* FOR WHOM */
 #forwhom{background:var(--bg)}
 .fw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:56px}
-.fw-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:36px;box-shadow:var(--sh-md);transition:all .25s var(--ease);position:relative;overflow:hidden}
-.fw-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent;transition:background .25s}
-.fw-card:hover{transform:translateY(-8px);box-shadow:var(--sh-lg);border-color:var(--gold-b)}
-.fw-card:hover::before{background:var(--gold)}
+.fw-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:36px;box-shadow:var(--sh-md);position:relative;overflow:hidden}
+.fw-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:transparent}
 .fw-card-featured{background:linear-gradient(145deg,var(--dark) 0%,var(--dark3) 100%);border-color:transparent}
 .fw-card-featured::before{background:var(--gold)}
 .fw-badge{position:absolute;top:20px;right:20px;font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:var(--gold);color:#1a1a1a;border-radius:100px;padding:4px 10px}
@@ -403,14 +397,6 @@ footer{background:var(--dark);padding:72px 0 0}
 #contact{background:var(--bg)}
 .contact-form-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:44px;box-shadow:var(--sh-md)}
 
-/* FIX8 — EXTRA ANIMATIONS */
-/* Step 3D flip */
-.steps-wrap{perspective:1200px}
-.step-card{transform:rotateY(90deg);opacity:0;transition:transform .6s var(--ease),opacity .5s var(--ease);transform-origin:center center}
-.step-card.flip-in{transform:rotateY(0deg);opacity:1}
-/* Mat pop-in */
-.mat-card{transform:scale(0.85);opacity:0;transition:transform .5s var(--ease),opacity .5s var(--ease),border-color .25s,box-shadow .25s}
-.mat-card.visible{transform:scale(1);opacity:1}
 /* Hero word stagger */
 .hw{display:inline-block;opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
 .hw.in{opacity:1;transform:translateY(0)}
@@ -501,10 +487,7 @@ footer{background:var(--dark);padding:72px 0 0}
 @keyframes dividerPulse{0%,100%{opacity:.2;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.15),transparent)}50%{opacity:1;background:linear-gradient(to bottom,transparent,rgba(232,160,32,.5),transparent)}}
 .cmp-split-divider{animation:dividerPulse 3s ease-in-out infinite}
 
-/* For whom featured card: floating animation */
-@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-.fw-card-featured{animation:floatCard 3s ease-in-out infinite}
-.fw-card-featured:hover{animation-play-state:paused}
+
 
 /* Hero entrance animation */
 @keyframes heroEntrance{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
@@ -580,26 +563,25 @@ footer{background:var(--dark);padding:72px 0 0}
       <p class="subtitle" style="margin-top:16px">Kein Aufwand auf deiner Seite — du meldest den Bedarf, wir übernehmen alles.</p>
     </div>
     <div class="steps-wrap" id="steps-wrap">
-      <div class="steps-beam-wrap"><div class="steps-beam" id="steps-beam"></div></div>
-      <div class="step-card reveal reveal-d1">
+      <div class="step-card" id="step-card-0">
         <div class="step-num">01</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
         <div class="step-title">Bedarf melden</div>
         <p class="step-desc">Du teilst uns Materialart, Menge und Liefertermin mit. Dauert zwei Minuten.</p>
       </div>
-      <div class="step-card reveal reveal-d2">
+      <div class="step-card" id="step-card-1">
         <div class="step-num">02</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
         <div class="step-title">Bündeln</div>
         <p class="step-desc">SourceOn matcht deinen Bedarf mit anderen Baufirmen für echtes Einkaufsvolumen.</p>
       </div>
-      <div class="step-card reveal reveal-d3">
+      <div class="step-card" id="step-card-2">
         <div class="step-num">03</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
         <div class="step-title">Vergleichen &amp; Verhandeln</div>
         <p class="step-desc">KI-Analyse und erfahrene Verhandler holen mindestens 3 Angebote ein.</p>
       </div>
-      <div class="step-card reveal reveal-d4">
+      <div class="step-card" id="step-card-3">
         <div class="step-num">04</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div>
         <div class="step-title">Du sparst</div>
@@ -610,7 +592,7 @@ footer{background:var(--dark);padding:72px 0 0}
 </section>
 
 <!-- SUPPLIERS MARQUEE -->
-<section id="suppliers" class="reveal">
+<section id="suppliers">
   <div class="container">
     <div class="mq-header">
       <div class="label label-green">✓ Alle Lieferanten persönlich geprüft — SIA/ISO-konform</div>
@@ -765,39 +747,39 @@ footer{background:var(--dark);padding:72px 0 0}
       <h2 class="h2">SourceOn deckt alle wichtigen Materialgruppen ab.</h2>
     </div>
     <div class="mat-grid">
-      <div class="mat-card reveal reveal-d1">
+      <div class="mat-card">
         <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
         <div><div class="mat-name">Beton</div><div class="mat-desc">C20–C30, SN EN 206</div></div>
       </div>
-      <div class="mat-card reveal reveal-d2">
+      <div class="mat-card">
         <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg></div>
         <div><div class="mat-name">Armierungsstahl</div><div class="mat-desc">B500B, SN EN 10080</div></div>
       </div>
-      <div class="mat-card reveal reveal-d3">
+      <div class="mat-card">
         <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l9-3 9 3v12l-9 3-9-3V6z"/></svg></div>
         <div><div class="mat-name">Kies &amp; Splitt</div><div class="mat-desc">0–32 mm, SIA 318</div></div>
       </div>
-      <div class="mat-card reveal reveal-d1">
+      <div class="mat-card">
         <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
         <div><div class="mat-name">Mauerwerk &amp; Ziegel</div><div class="mat-desc">SN EN 771</div></div>
       </div>
-      <div class="mat-card reveal reveal-d2">
+      <div class="mat-card">
         <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
         <div><div class="mat-name">Dämmung</div><div class="mat-desc">EPS/Mineralwolle, SN EN 13163</div></div>
       </div>
-      <div class="mat-card reveal reveal-d3">
+      <div class="mat-card">
         <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,17 10,11 4,5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
         <div><div class="mat-name">Schalung</div><div class="mat-desc">Dreischichtplatten</div></div>
       </div>
-      <div class="mat-card reveal reveal-d1">
+      <div class="mat-card">
         <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
         <div><div class="mat-name">Mörtel</div><div class="mat-desc">MG II, SN EN 998</div></div>
       </div>
-      <div class="mat-card reveal reveal-d2">
+      <div class="mat-card">
         <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <div><div class="mat-name">Sanitär &amp; HLKS</div><div class="mat-desc">Heizung, Lüftung, Klima, Sanitär</div></div>
       </div>
-      <div class="mat-card mat-card-gold reveal reveal-d3">
+      <div class="mat-card mat-card-gold">
         <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
         <div><div class="mat-name" style="color:var(--gold)">Weitere auf Anfrage</div><div class="mat-desc">Individuelle Materialgruppen möglich</div></div>
       </div>
@@ -808,12 +790,12 @@ footer{background:var(--dark);padding:72px 0 0}
 <!-- COMPARISON -->
 <section id="comparison" class="section">
   <div class="container">
-    <div class="text-center reveal" style="margin-bottom:0">
+    <div class="text-center" style="margin-bottom:0">
       <h2 class="h2">Mit oder ohne SourceOn?</h2>
     </div>
     <div class="cmp-split">
       <div class="cmp-split-divider"></div>
-      <div class="cmp-left reveal">
+      <div class="cmp-left">
         <div class="cmp-col-title">Ohne SourceOn</div>
         <div class="cmp-items">
           <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Einzeln verhandeln — ohne Volumen, ohne Hebelwirkung</span></div>
@@ -825,7 +807,7 @@ footer{background:var(--dark);padding:72px 0 0}
           <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Normprüfung — eigenverantwortlich, fehleranfällig</span></div>
         </div>
       </div>
-      <div class="cmp-right reveal">
+      <div class="cmp-right">
         <div class="cmp-col-title">Mit SourceOn</div>
         <div class="cmp-items">
           <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>Gebündeltes Volumen — Mengenrabatte wie Grosskonzerne</span></div>
@@ -844,52 +826,51 @@ footer{background:var(--dark);padding:72px 0 0}
 <!-- ZAHLEN & FAKTEN -->
 <section id="zahlen">
   <div class="container">
-    <div class="text-center reveal" style="position:relative;z-index:1">
-      <div class="label label-dark">ZAHLEN &amp; FAKTEN</div>
+    <div class="text-center"><div class="label label-dark">ZAHLEN &amp; FAKTEN</div>
       <h2 class="h2" style="color:#fff">Der Schweizer Baumarkt — in Zahlen.</h2>
     </div>
     <div class="zahlen-grid">
-      <div class="zahlen-card reveal reveal-d1">
+      <div class="zahlen-card">
         <div class="zahlen-num">CHF 8–10 Mrd.</div>
         <div class="zahlen-label">Jährliches Einkaufsvolumen Baumarkt CH</div>
       </div>
-      <div class="zahlen-card reveal reveal-d2">
+      <div class="zahlen-card">
         <div class="zahlen-num" data-count="98" data-suffix="%">0%</div>
         <div class="zahlen-label">der CH-Baufirmen sind KMU</div>
       </div>
-      <div class="zahlen-card reveal reveal-d3">
+      <div class="zahlen-card">
         <div class="zahlen-num">40–70%</div>
         <div class="zahlen-label">der Baukosten entfallen auf Material</div>
       </div>
-      <div class="zahlen-card reveal reveal-d1">
+      <div class="zahlen-card">
         <div class="zahlen-num">Bis 30%+</div>
         <div class="zahlen-label">Einsparung je nach Volumen und Material</div>
       </div>
-      <div class="zahlen-card reveal reveal-d2">
+      <div class="zahlen-card">
         <div class="zahlen-num">48h</div>
         <div class="zahlen-label">bis zum ersten konkreten Angebot</div>
       </div>
-      <div class="zahlen-card reveal reveal-d3">
+      <div class="zahlen-card">
         <div class="zahlen-num">3+</div>
         <div class="zahlen-label">Offerten — Mindestanzahl Angebote pro Beschaffungsauftrag</div>
       </div>
     </div>
-    <p class="zahlen-statement reveal">Jede Bestellung die du alleine aufgibst kostet dich mehr als nötig.</p>
+    <p class="zahlen-statement">Jede Bestellung die du alleine aufgibst kostet dich mehr als nötig.</p>
   </div>
 </section>
 
 <!-- BÜNDELUNG VISUALISIERT (Three.js WebGL) -->
-<section id="bundling" style="background:#0F2238;position:relative;overflow:hidden">
-  <div style="text-align:center;padding:80px 0 32px;position:relative;z-index:2">
+<section id="bundling" style="background:#0F2238;position:relative;overflow:hidden;padding:60px 0">
+  <div style="text-align:center;padding:0 0 32px;position:relative;z-index:2">
     <div class="label label-dark">BÜNDELUNG VISUALISIERT</div>
     <h2 class="h2" style="color:#fff;margin-top:0;margin-bottom:12px">Gemeinsam stärker einkaufen.</h2>
     <p class="subtitle subtitle-dark" style="margin:0 auto">Sieh wie SourceOn Materialbedarf bündelt und Mengenrabatte erzielt.</p>
   </div>
-  <div id="webgl-wrap" style="width:100%;height:580px;position:relative;cursor:crosshair">
+  <div id="webgl-wrap" style="width:100%;height:520px;position:relative">
     <canvas id="bundling-canvas" style="display:block;width:100%;height:100%"></canvas>
   </div>
-  <div style="text-align:center;padding:32px 0 80px;position:relative;z-index:2">
-    <p style="font-size:.9rem;color:#94A3B8;font-style:italic;padding:0 20px">Materialfluss in Echtzeit — SourceOn verbindet Baufirmen mit Lieferanten.</p>
+  <div style="text-align:center;padding:24px 0 0;position:relative;z-index:2">
+    <p style="font-size:.85rem;color:#94A3B8;font-style:italic;padding:0 20px">SourceOn verbindet Baufirmen mit Lieferanten.</p>
   </div>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -900,233 +881,152 @@ footer{background:var(--dark);padding:72px 0 0}
   if(!wrap||!canvas||typeof THREE==='undefined')return;
 
   var isMobile=window.innerWidth<640;
-  var H=isMobile?380:580;
+  var H=isMobile?360:520;
   var W=wrap.offsetWidth||window.innerWidth;
   wrap.style.height=H+'px';
   canvas.style.height=H+'px';
 
   var scene=new THREE.Scene();
   scene.background=new THREE.Color(0x0F2238);
-  scene.fog=new THREE.FogExp2(0x0A1628,0.04);
 
-  var camera=new THREE.PerspectiveCamera(60,W/H,0.1,200);
-  camera.position.set(0,1.5,10);
-  camera.lookAt(0,0.5,0);
+  var camera=new THREE.PerspectiveCamera(55,W/H,0.1,200);
+  camera.position.set(0,0,9);
+  camera.lookAt(0,0,0);
 
   var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.setSize(W,H);
 
   // Lighting
-  scene.add(new THREE.AmbientLight(0x1B3A5C,0.6));
-  var hubLight=new THREE.PointLight(0xE8A020,2,20);
-  hubLight.position.set(0,0.5,0);
-  scene.add(hubLight);
-  var dirLight=new THREE.DirectionalLight(0xffffff,0.5);
-  dirLight.position.set(4,8,5);
+  scene.add(new THREE.AmbientLight(0xffffff,0.4));
+  var ptLight=new THREE.PointLight(0xE8A020,1.5,30);
+  ptLight.position.set(0,2,3);
+  scene.add(ptLight);
+  var dirLight=new THREE.DirectionalLight(0xffffff,0.8);
+  dirLight.position.set(5,5,5);
   scene.add(dirLight);
 
   // Sprite label helper
-  function mkLabel(txt,col,bg){
+  function mkLabel(txt){
     var c=document.createElement('canvas');
-    c.width=256;c.height=56;
+    c.width=200;c.height=48;
     var ctx=c.getContext('2d');
-    if(bg){
-      ctx.fillStyle=bg;
-      var rx=8;
-      ctx.beginPath();
-      ctx.moveTo(rx,0);ctx.lineTo(c.width-rx,0);ctx.quadraticCurveTo(c.width,0,c.width,rx);
-      ctx.lineTo(c.width,c.height-rx);ctx.quadraticCurveTo(c.width,c.height,c.width-rx,c.height);
-      ctx.lineTo(rx,c.height);ctx.quadraticCurveTo(0,c.height,0,c.height-rx);
-      ctx.lineTo(0,rx);ctx.quadraticCurveTo(0,0,rx,0);ctx.closePath();ctx.fill();
-    }
-    ctx.font='bold 22px Inter,sans-serif';
-    ctx.fillStyle=col||'#ffffff';
+    ctx.font='bold 20px Inter,sans-serif';
+    ctx.fillStyle='#ffffff';
     ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(txt,128,28);
+    ctx.fillText(txt,100,24);
     var tex=new THREE.CanvasTexture(c);
     var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false}));
-    sp.scale.set(2.8,0.62,1);
+    sp.scale.set(2.2,0.53,1);
     return sp;
   }
 
-  // Positions
-  var compPos=[
-    new THREE.Vector3(-3,2,0),
-    new THREE.Vector3(3,2,0),
-    new THREE.Vector3(0,-1,0)
+  // Object 1: Firma A at (-3, 1.5, 0)
+  var matBlue=new THREE.MeshPhongMaterial({color:0x2E75B6,shininess:80});
+  var boxGeo=new THREE.BoxGeometry(0.8,0.8,0.8);
+  var firmaA=new THREE.Mesh(boxGeo,matBlue.clone());
+  firmaA.position.set(-3,1.5,0);
+  scene.add(firmaA);
+  var lblA=mkLabel('Firma A');lblA.position.set(-3,2.25,0);scene.add(lblA);
+
+  // Object 2: Firma B at (3, 1.5, 0)
+  var firmaB=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8),matBlue.clone());
+  firmaB.position.set(3,1.5,0);
+  scene.add(firmaB);
+  var lblB=mkLabel('Firma B');lblB.position.set(3,2.25,0);scene.add(lblB);
+
+  // Object 3: Firma C at (-1.5, -1.5, 0)
+  var firmaC=new THREE.Mesh(new THREE.BoxGeometry(0.8,0.8,0.8),matBlue.clone());
+  firmaC.position.set(-1.5,-1.5,0);
+  scene.add(firmaC);
+  var lblC=mkLabel('Firma C');lblC.position.set(-1.5,-0.75,0);scene.add(lblC);
+
+  // Object 4: SourceOn sphere at (0, 0, 0)
+  var sphere=new THREE.Mesh(
+    new THREE.SphereGeometry(0.9,32,32),
+    new THREE.MeshPhongMaterial({color:0xE8A020,emissive:0x5C3A00,shininess:150})
+  );
+  sphere.position.set(0,0,0);
+  scene.add(sphere);
+  var lblHub=mkLabel('SourceOn');lblHub.position.set(0,1.15,0);scene.add(lblHub);
+  var hubPtLight=new THREE.PointLight(0xE8A020,1,8);
+  hubPtLight.position.set(0,0,0);
+  scene.add(hubPtLight);
+
+  // Object 5: Lieferant box at (4, 0, 0)
+  var lieferant=new THREE.Mesh(
+    new THREE.BoxGeometry(1,0.7,0.7),
+    new THREE.MeshPhongMaterial({color:0x0D9488,shininess:80})
+  );
+  lieferant.position.set(4,0,0);
+  scene.add(lieferant);
+  var lblLief=mkLabel('Lieferant');lblLief.position.set(4,0.65,0);scene.add(lblLief);
+
+  // Lines between objects
+  var lineMat=new THREE.LineBasicMaterial({color:0xE8A020,transparent:true,opacity:0.4});
+  function mkLine(a,b){
+    var geo=new THREE.BufferGeometry().setFromPoints([a,b]);
+    return new THREE.Line(geo,lineMat);
+  }
+  scene.add(mkLine(new THREE.Vector3(-3,1.5,0),new THREE.Vector3(0,0,0)));
+  scene.add(mkLine(new THREE.Vector3(3,1.5,0),new THREE.Vector3(0,0,0)));
+  scene.add(mkLine(new THREE.Vector3(-1.5,-1.5,0),new THREE.Vector3(0,0,0)));
+  scene.add(mkLine(new THREE.Vector3(0,0,0),new THREE.Vector3(4,0,0)));
+
+  // Particles: 15 per Firma->SourceOn + 15 SourceOn->Lieferant
+  var partMat=new THREE.MeshBasicMaterial({color:0xE8A020});
+  var partGeo=new THREE.SphereGeometry(0.05,6,6);
+  var routes=[
+    {from:new THREE.Vector3(-3,1.5,0),to:new THREE.Vector3(0,0,0),count:15,speed:0.008},
+    {from:new THREE.Vector3(3,1.5,0),to:new THREE.Vector3(0,0,0),count:15,speed:0.009},
+    {from:new THREE.Vector3(-1.5,-1.5,0),to:new THREE.Vector3(0,0,0),count:15,speed:0.007},
+    {from:new THREE.Vector3(0,0,0),to:new THREE.Vector3(4,0,0),count:15,speed:0.012}
   ];
-  var hubPos=new THREE.Vector3(0,0.5,0);
-  var supPos=new THREE.Vector3(4.5,0.5,0);
-
-  // Company spheres + rings
-  var compMeshes=[];
-  for(var i=0;i<3;i++){
-    var sm=new THREE.Mesh(
-      new THREE.SphereGeometry(0.4,24,24),
-      new THREE.MeshPhongMaterial({color:0x2E75B6,emissive:0x1B3A5C,shininess:100,transparent:true,opacity:0.9})
-    );
-    sm.position.copy(compPos[i]);
-    scene.add(sm);
-    compMeshes.push(sm);
-    var ring=new THREE.Mesh(
-      new THREE.TorusGeometry(0.55,0.04,8,40),
-      new THREE.MeshPhongMaterial({color:0xE8A020,emissive:0x704010,shininess:80})
-    );
-    ring.position.copy(compPos[i]);
-    scene.add(ring);
-    sm.userData.ring=ring;
-    var lbl=mkLabel('Baufirma','#ffffff','rgba(15,34,56,0.85)');
-    lbl.position.copy(compPos[i]);
-    lbl.position.y+=0.75;
-    scene.add(lbl);
-  }
-
-  // Hub icosahedron
-  var hub=new THREE.Mesh(
-    new THREE.IcosahedronGeometry(0.8,0),
-    new THREE.MeshPhongMaterial({color:0xE8A020,emissive:0x854F0B,shininess:200})
-  );
-  hub.position.copy(hubPos);
-  scene.add(hub);
-  var hubLbl=mkLabel('sourceON','#E8A020','rgba(15,34,56,0.85)');
-  hubLbl.position.set(0,1.55,0);
-  hub.add(hubLbl);
-
-  // Supplier octahedron
-  var sup=new THREE.Mesh(
-    new THREE.OctahedronGeometry(0.5,0),
-    new THREE.MeshPhongMaterial({color:0x0D9488,emissive:0x065148,shininess:100})
-  );
-  sup.position.copy(supPos);
-  scene.add(sup);
-  var supLbl=mkLabel('Lieferant','#ffffff','rgba(15,34,56,0.85)');
-  supLbl.position.copy(supPos);supLbl.position.y+=0.9;
-  scene.add(supLbl);
-
-  // Tubes from companies to hub
-  var curves=[];
-  for(var i=0;i<3;i++){
-    var cx=(compPos[i].x+hubPos.x)/2+(Math.random()-.5)*0.5;
-    var cy2=(compPos[i].y+hubPos.y)/2;
-    var cz=(compPos[i].z+hubPos.z)/2;
-    var curve=new THREE.CatmullRomCurve3([
-      compPos[i].clone(),
-      new THREE.Vector3(cx,cy2,cz),
-      hubPos.clone()
-    ]);
-    curves.push(curve);
-    var tubeGeo=new THREE.TubeGeometry(curve,20,0.025,6,false);
-    var tubeMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.3});
-    var tube=new THREE.Mesh(tubeGeo,tubeMat);
-    scene.add(tube);
-    curve.userData={mat:tubeMat};
-  }
-
-  // Hub to supplier tube
-  var hubSupCurve=new THREE.CatmullRomCurve3([
-    hubPos.clone(),
-    new THREE.Vector3(2.5,1.2,0),
-    supPos.clone()
-  ]);
-  var hubSupMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.3});
-  scene.add(new THREE.Mesh(new THREE.TubeGeometry(hubSupCurve,20,0.04,6,false),hubSupMat));
-
-  // Particles company->hub (20 each)
-  var PARTS_PER=20;
-  var compParticles=[];
-  for(var i=0;i<3;i++){
-    var pts=[];
-    for(var j=0;j<PARTS_PER;j++){
-      var pm=new THREE.Mesh(
-        new THREE.SphereGeometry(0.05,6,6),
-        new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.85})
-      );
-      pm.userData.t=j/PARTS_PER;
-      scene.add(pm);pts.push(pm);
+  var allParticles=[];
+  routes.forEach(function(route){
+    for(var j=0;j<route.count;j++){
+      var pm=new THREE.Mesh(partGeo,partMat.clone());
+      pm.userData.t=(j/route.count);
+      pm.userData.from=route.from;
+      pm.userData.to=route.to;
+      pm.userData.speed=route.speed;
+      scene.add(pm);
+      allParticles.push(pm);
     }
-    compParticles.push(pts);
-  }
-
-  // Particles hub->supplier (30)
-  var SUP_PARTS=30;
-  var supParticles=[];
-  for(var j=0;j<SUP_PARTS;j++){
-    var pm=new THREE.Mesh(
-      new THREE.SphereGeometry(0.05,6,6),
-      new THREE.MeshBasicMaterial({color:0x0D9488,transparent:true,opacity:0.85})
-    );
-    pm.userData.t=j/SUP_PARTS;
-    scene.add(pm);supParticles.push(pm);
-  }
-
-  // Mouse
-  var tmx=0,tmy=0,cmx=0,cmy=0;
-  wrap.addEventListener('mousemove',function(e){
-    var r=wrap.getBoundingClientRect();
-    tmx=(e.clientX-r.left)/r.width-.5;
-    tmy=(e.clientY-r.top)/r.height-.5;
   });
 
-  var t0=performance.now();
-  function lerp(a,b,t){return a+(b-a)*t;}
+  // Camera Y-axis auto-rotate pivot
+  var camAngle=0;
 
   function animate(){
     requestAnimationFrame(animate);
-    var now=(performance.now()-t0)/1000;
 
-    // Camera auto-orbit
-    var angle=now*0.12;
-    var camR=10;
-    camera.position.x=Math.sin(angle)*camR;
-    camera.position.z=Math.cos(angle)*camR;
-    camera.position.y=1.5+Math.sin(now*0.3)*0.5;
-    cmx=lerp(cmx,tmx,0.03);cmy=lerp(cmy,tmy,0.03);
-    camera.position.x+=cmx*3;camera.position.y+=cmy*1.5;
-    camera.lookAt(0,0.5,0);
+    // Camera orbit Y only
+    camAngle+=0.003;
+    camera.position.x=Math.sin(camAngle)*9;
+    camera.position.z=Math.cos(camAngle)*9;
+    camera.lookAt(0,0,0);
 
-    // Hub rotate
-    hub.rotation.y=now*0.6;hub.rotation.x=now*0.3;hub.rotation.z=now*0.15;
-    hubLight.intensity=1.8+Math.sin(now*2.5)*0.5;
+    // Objects rotate
+    firmaA.rotation.y+=0.008;
+    firmaB.rotation.y+=0.008;
+    firmaC.rotation.y+=0.008;
+    sphere.rotation.x+=0.005;sphere.rotation.y+=0.005;sphere.rotation.z+=0.005;
+    lieferant.rotation.y+=0.006;
 
-    // Rings
-    for(var i=0;i<3;i++){
-      if(compMeshes[i].userData.ring)
-        compMeshes[i].userData.ring.rotation.y=now*(0.4+i*0.1);
-    }
-    sup.rotation.y=now*0.5;sup.rotation.x=now*0.2;
-
-    // Tube pulse
-    var pulse=0.2+Math.sin(now*Math.PI)*0.15;
-    for(var i=0;i<curves.length;i++){
-      if(curves[i].userData&&curves[i].userData.mat)
-        curves[i].userData.mat.opacity=pulse;
-    }
-    hubSupMat.opacity=pulse*1.3;
-
-    // Company->hub particles
-    for(var i=0;i<3;i++){
-      for(var j=0;j<PARTS_PER;j++){
-        var p=compParticles[i][j];
-        p.userData.t=(p.userData.t+0.005)%1;
-        var pt=curves[i].getPoint(p.userData.t);
-        p.position.copy(pt);
-      }
-    }
-    // Hub->supplier particles
-    for(var j=0;j<SUP_PARTS;j++){
-      var p=supParticles[j];
-      p.userData.t=(p.userData.t+0.008)%1;
-      var pt=hubSupCurve.getPoint(p.userData.t);
-      p.position.copy(pt);
-    }
+    // Particles
+    allParticles.forEach(function(p){
+      p.userData.t=(p.userData.t+p.userData.speed)%1;
+      var t=p.userData.t;
+      p.position.lerpVectors(p.userData.from,p.userData.to,t);
+    });
 
     renderer.render(scene,camera);
   }
   animate();
 
   window.addEventListener('resize',function(){
-    var nW=wrap.offsetWidth,nH=window.innerWidth<640?380:580;
+    var nW=wrap.offsetWidth,nH=window.innerWidth<640?360:520;
     wrap.style.height=nH+'px';canvas.style.height=nH+'px';
     camera.aspect=nW/nH;camera.updateProjectionMatrix();
     renderer.setSize(nW,nH);
@@ -1138,20 +1038,20 @@ footer{background:var(--dark);padding:72px 0 0}
 <section id="supplier-apply" class="section">
   <div class="container">
     <div class="sa-layout">
-      <div class="reveal">
+      <div>
         <div class="label">Partnerlieferanten</div>
         <h2 class="h2">Werden Sie SourceOn-Partnerlieferant.</h2>
         <p class="subtitle" style="margin-top:14px">Wir suchen zuverlässige Schweizer Lieferanten für unser wachsendes Netzwerk.</p>
         <div class="sa-benefits">
-          <div class="sa-benefit slide-left"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div><div class="sa-benefit-text"><strong>Garantiertes Volumen</strong><span>Gebündelte Aufträge statt Einzelanfragen</span></div></div>
-          <div class="sa-benefit slide-left"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="sa-benefit-text"><strong>Planungssicherheit</strong><span>Regelmässige Bedarfsmeldungen im Voraus</span></div></div>
-          <div class="sa-benefit slide-left"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="sa-benefit-text"><strong>Neue Kundschaft</strong><span>Zugang zu Schweizer KMU-Baufirmen</span></div></div>
-          <div class="sa-benefit slide-left"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div class="sa-benefit-text"><strong>Schnelle Zahlung</strong><span>Klare Zahlungsbedingungen, 14 Tage netto</span></div></div>
-          <div class="sa-benefit slide-left"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="sa-benefit-text"><strong>Qualitätsnetzwerk</strong><span>Nur geprüfte SIA/ISO-konforme Lieferanten</span></div></div>
-          <div class="sa-benefit slide-left"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="sa-benefit-text"><strong>Wachstumspotenzial</strong><span>Marktposition stärken im Schweizer Baumarkt</span></div></div>
+          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div><div class="sa-benefit-text"><strong>Garantiertes Volumen</strong><span>Gebündelte Aufträge statt Einzelanfragen</span></div></div>
+          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="sa-benefit-text"><strong>Planungssicherheit</strong><span>Regelmässige Bedarfsmeldungen im Voraus</span></div></div>
+          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="sa-benefit-text"><strong>Neue Kundschaft</strong><span>Zugang zu Schweizer KMU-Baufirmen</span></div></div>
+          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div class="sa-benefit-text"><strong>Schnelle Zahlung</strong><span>Klare Zahlungsbedingungen, 14 Tage netto</span></div></div>
+          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="sa-benefit-text"><strong>Qualitätsnetzwerk</strong><span>Nur geprüfte SIA/ISO-konforme Lieferanten</span></div></div>
+          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="sa-benefit-text"><strong>Wachstumspotenzial</strong><span>Marktposition stärken im Schweizer Baumarkt</span></div></div>
         </div>
       </div>
-      <div class="reveal reveal-d2">
+      <div>
         <div class="sa-form-card">
         <form id="form-supplier" onsubmit="submitSupplier(event)" novalidate>
           <div class="form-grid">
@@ -1234,7 +1134,7 @@ footer{background:var(--dark);padding:72px 0 0}
 <section id="about" class="section">
   <div class="container">
     <div class="about-layout">
-      <div class="reveal">
+      <div>
         <div class="about-left-card">
           <p class="about-quote">"Der Schweizer Baumarkt ist fragmentiert. SourceOn schafft die Bündelungsmacht, die KMU alleine nicht haben."</p>
           <div class="about-attr">— SourceOn, Zürich</div>
@@ -1244,7 +1144,7 @@ footer{background:var(--dark);padding:72px 0 0}
           </div>
         </div>
       </div>
-      <div class="reveal reveal-d2">
+      <div>
         <div class="label">Über uns</div>
         <h2 class="h2">Bündelungsmacht für alle Baufirmen.</h2>
         <p style="font-size:.92rem;color:var(--body);line-height:1.75;margin-top:16px;margin-bottom:24px">SourceOn wurde mit einer einfachen Überzeugung gegründet: Zu viele Baufirmen — vom KMU bis zum Grosskonzern — zahlen mehr als nötig für Baumaterial. Nicht weil es keine günstigeren Preise gibt, sondern weil sie alleine zu wenig Volumen haben um sie zu bekommen. Wir ändern das — für alle.</p>
@@ -1261,7 +1161,7 @@ footer{background:var(--dark);padding:72px 0 0}
 
 <!-- CTA BANNER -->
 <section id="cta-banner">
-  <div class="container reveal" style="position:relative;z-index:1">
+  <div class="container" style="position:relative;z-index:1">
     <h2 class="cta-title">Bereit für tiefere Einkaufspreise?</h2>
     <p class="cta-sub">Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
     <div class="cta-btns">
@@ -1275,7 +1175,7 @@ footer{background:var(--dark);padding:72px 0 0}
 <section id="contact" class="section">
   <div class="container">
     <div class="contact-layout">
-      <div class="reveal">
+      <div>
         <div class="label">Materialbedarf melden</div>
         <h2 class="h2" style="font-size:clamp(24px,3vw,38px)">Jetzt Materialbedarf melden</h2>
         <p class="contact-desc">Kostenlos und unverbindlich. Wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</p>
@@ -1287,7 +1187,7 @@ footer{background:var(--dark);padding:72px 0 0}
           <p style="font-size:.8rem;color:var(--body);line-height:1.6">Sende uns einfach deinen Materialbedarf in eigenen Worten — kein spezielles Format nötig. Wir kümmern uns um den Rest.</p>
         </div>
       </div>
-      <div class="reveal reveal-d2">
+      <div>
         <div class="contact-form-card">
           <form id="form-contact" onsubmit="submitContact(event)" novalidate>
             <div class="form-grid">
@@ -1494,24 +1394,11 @@ document.getElementById('calc-input').addEventListener('input',function(){
 });
 updateCalc(150000);
 
-// SCROLL REVEAL
+// SCROLL REVEAL — only hero, process, forwhom, why sections
 const ro=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});
 },{threshold:0.1});
-document.querySelectorAll('.reveal,.slide-left,.mat-card').forEach(el=>ro.observe(el));
-
-// STEP CARD 3D FLIP
-const stepCards=document.querySelectorAll('.step-card');
-const flipObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      const i=Array.from(stepCards).indexOf(e.target);
-      setTimeout(()=>e.target.classList.add('flip-in'),i*200);
-      flipObs.unobserve(e.target);
-    }
-  });
-},{threshold:0.2});
-stepCards.forEach(c=>flipObs.observe(c));
+document.querySelectorAll('.reveal,.slide-left').forEach(el=>ro.observe(el));
 
 // COUNTERS
 function countEl(el,dur){
@@ -1634,51 +1521,21 @@ function submitSupplier(e){
   }
 }
 
-// PROCESS BEAM SWEEP + STAGGER GLOW
+// PROCESS STEP FADE-IN
 (function(){
   var wrap=document.getElementById('steps-wrap');
-  var beam=document.getElementById('steps-beam');
-  if(!wrap||!beam)return;
-  var fired=false;
+  if(!wrap)return;
+  var cards=Array.from(wrap.querySelectorAll('.step-card'));
   var obs=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
-      if(e.isIntersecting&&!fired){
-        fired=true;
-        beam.classList.add('beam-run');
-        var cards=Array.from(wrap.querySelectorAll('.step-card'));
-        cards.forEach(function(card,i){
-          setTimeout(function(){
-            card.classList.add('step-glow');
-          },1600+i*300);
-        });
-      }
-    });
-  },{threshold:0.3});
-  obs.observe(wrap);
-})();
-
-// COMPARISON ITEMS STAGGER SLIDE
-(function(){
-  var leftItems=document.querySelectorAll('.cmp-left .cmp-item');
-  var rightItems=document.querySelectorAll('.cmp-right .cmp-item');
-  function addStagger(items,dir){
-    items.forEach(function(el,i){
-      el.style.opacity='0';
-      el.style.transform='translateX('+(dir==='left'?'-30px':'30px')+')';
-      el.style.transition='opacity .55s ease '+(.08*i)+'s,transform .55s ease '+(.08*i)+'s';
-    });
-  }
-  addStagger(leftItems,'left');addStagger(rightItems,'right');
-  var cmpObs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
       if(e.isIntersecting){
-        var els=e.target.querySelectorAll('.cmp-item');
-        els.forEach(function(el){el.style.opacity='1';el.style.transform='translateX(0)';});
-        cmpObs.unobserve(e.target);
+        var idx=cards.indexOf(e.target);
+        setTimeout(function(){e.target.classList.add('step-visible');},idx*80);
+        obs.unobserve(e.target);
       }
     });
-  },{threshold:0.15});
-  document.querySelectorAll('.cmp-left,.cmp-right').forEach(function(el){cmpObs.observe(el);});
+  },{threshold:0.2});
+  cards.forEach(function(c){obs.observe(c);});
 })();
 </script>
 </body>
