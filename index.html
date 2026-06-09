@@ -414,6 +414,72 @@ footer{background:var(--dark);padding:72px 0 0}
 /* Slide left */
 .slide-left{opacity:0;transform:translateX(-28px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
 .slide-left.visible{opacity:1;transform:translateX(0)}
+
+/* ZAHLEN SECTION */
+#zahlen{background:var(--dark);padding:100px 0;position:relative;overflow:hidden}
+#zahlen::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;background:radial-gradient(circle,rgba(232,160,32,.06) 0%,transparent 65%);pointer-events:none}
+.zahlen-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px;position:relative;z-index:1}
+.zahlen-card{background:rgba(255,255,255,.05);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px;transition:border-color .25s,background .25s}
+.zahlen-card:hover{background:rgba(255,255,255,.08);border-color:rgba(232,160,32,.3)}
+.zahlen-num{font-size:clamp(26px,3.5vw,38px);font-weight:800;color:var(--gold);letter-spacing:-0.03em;line-height:1;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.zahlen-label{font-size:.85rem;color:rgba(255,255,255,.75);line-height:1.5;margin-bottom:4px;font-weight:500}
+.zahlen-source{font-size:.72rem;color:rgba(255,255,255,.3);font-style:italic}
+.zahlen-statement{font-size:clamp(16px,2vw,20px);font-weight:700;color:var(--gold);text-align:center;margin-top:52px;letter-spacing:-0.01em;position:relative;z-index:1;max-width:700px;margin-left:auto;margin-right:auto}
+@media(max-width:900px){.zahlen-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.zahlen-grid{grid-template-columns:1fr}}
+
+/* BUNDLING DIAGRAM SECTION */
+#bundling{background:var(--bg);padding:100px 0}
+.bd-diagram{display:flex;align-items:center;justify-content:center;gap:0;margin-top:56px;flex-wrap:wrap;gap:0}
+.bd-companies{display:flex;flex-direction:column;gap:14px}
+.bd-company{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:14px 20px;min-width:155px;box-shadow:var(--sh-sm);opacity:0;transform:translateX(-44px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.bd-company.bd-in{opacity:1;transform:translateX(0)}
+.bd-company:nth-child(2){transition-delay:.12s}
+.bd-company:nth-child(3){transition-delay:.24s}
+.bd-company-name{font-size:.85rem;font-weight:700;color:var(--navy);margin-bottom:2px}
+.bd-company-vol{font-size:.78rem;color:var(--body)}
+.bd-arrows{display:flex;flex-direction:column;justify-content:space-around;align-items:center;padding:0 18px;min-height:160px}
+.bd-arrow-line{width:36px;height:2px;background:var(--gold);position:relative;flex-shrink:0}
+.bd-arrow-line::after{content:'';position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left:8px solid var(--gold)}
+.bd-sourceon-card{background:linear-gradient(145deg,var(--dark) 0%,var(--dark3) 100%);border-radius:var(--r-lg);padding:28px 22px;text-align:center;min-width:168px;border:1px solid rgba(232,160,32,.35);box-shadow:var(--sh-gold);opacity:0;transform:scale(0.85);transition:opacity .6s .3s var(--ease),transform .6s .3s var(--ease)}
+.bd-sourceon-card.bd-in{opacity:1;transform:scale(1)}
+.bd-sourceon-logo{font-size:.95rem;font-weight:800;color:#fff;letter-spacing:-.01em}
+.bd-sourceon-logo span{color:var(--gold)}
+.bd-sourceon-vol{font-size:1.4rem;font-weight:800;color:var(--gold);margin:10px 0 4px;letter-spacing:-0.03em}
+.bd-sourceon-sub{font-size:.72rem;color:rgba(255,255,255,.5)}
+.bd-arrow-right{display:flex;align-items:center;padding:0 18px}
+.bd-arrow-right-line{width:48px;height:2px;background:var(--green);position:relative}
+.bd-arrow-right-line::after{content:'';position:absolute;right:-1px;top:-4px;border:5px solid transparent;border-left:8px solid var(--green)}
+.bd-lieferant-card{background:#fff;border:2px solid var(--green);border-radius:var(--r-lg);padding:28px 22px;text-align:center;min-width:155px;box-shadow:0 4px 24px rgba(22,163,74,.15);opacity:0;transform:translateX(44px);transition:opacity .6s .5s var(--ease),transform .6s .5s var(--ease)}
+.bd-lieferant-card.bd-in{opacity:1;transform:translateX(0)}
+.bd-lieferant-label{font-size:.72rem;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.07em;margin-bottom:8px}
+.bd-lieferant-rabatt{font-size:1.5rem;font-weight:800;color:var(--green);letter-spacing:-0.03em}
+.bd-lieferant-sub{font-size:.75rem;color:var(--body);margin-top:4px}
+.bd-savings{text-align:center;margin-top:52px}
+.bd-savings-num{font-size:clamp(32px,5vw,56px);font-weight:800;color:var(--gold);letter-spacing:-0.04em;line-height:1}
+.bd-savings-label{font-size:1rem;color:var(--body);margin-top:10px}
+.bd-savings-note{font-size:.75rem;color:var(--muted);margin-top:8px;font-style:italic}
+@media(max-width:700px){.bd-diagram{flex-direction:column;gap:16px}.bd-arrows{flex-direction:row;min-height:auto;padding:8px 0}.bd-arrow-right{display:none}}
+
+/* MULTI-MATERIAL FORM */
+.material-rows{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
+.material-row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:start}
+.material-row.first-row{grid-template-columns:1fr 1fr}
+.mat-remove-btn{width:36px;height:42px;display:flex;align-items:center;justify-content:center;background:none;border:1.5px solid var(--border);border-radius:8px;color:var(--muted);font-size:16px;cursor:pointer;transition:all .15s;flex-shrink:0;margin-top:0;align-self:end;padding:0}
+.mat-remove-btn:hover{border-color:#ef4444;color:#ef4444;background:#fef2f2}
+.add-material-btn{display:inline-flex;align-items:center;gap:6px;font-size:.83rem;font-weight:600;color:var(--gold);background:none;border:none;cursor:pointer;padding:4px 0;transition:opacity .15s}
+.add-material-btn:hover{opacity:.75}
+/* File upload */
+.file-upload-zone{border:2px dashed var(--border);border-radius:10px;padding:24px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;margin-top:8px;position:relative}
+.file-upload-zone:hover,.file-upload-zone.drag-over{border-color:var(--gold);background:var(--gold-dim)}
+.file-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.file-upload-icon{font-size:1.5rem;margin-bottom:6px;color:var(--muted)}
+.file-upload-text{font-size:.82rem;color:var(--body)}
+.file-upload-hint{font-size:.74rem;color:var(--muted);margin-top:3px}
+.file-selected{display:none;align-items:center;gap:8px;margin-top:8px;font-size:.82rem;color:var(--green);font-weight:500}
+.file-selected.show{display:flex}
+.file-remove{font-size:.78rem;color:var(--muted);cursor:pointer;text-decoration:underline;margin-left:4px}
+.file-remove:hover{color:#ef4444}
 </style>
 </head>
 <body>
@@ -752,34 +818,96 @@ footer{background:var(--dark);padding:72px 0 0}
   </div>
 </section>
 
-<!-- HOW IT WORKS (FLOW) -->
-<section id="case">
+<!-- ZAHLEN & FAKTEN -->
+<section id="zahlen">
   <div class="container">
-    <div class="text-center reveal" style="position:relative;z-index:1;margin-bottom:0">
-      <div class="label label-dark">So funktioniert es</div>
-      <h2 class="h2" style="color:#fff">So entsteht deine Ersparnis.</h2>
+    <div class="text-center reveal" style="position:relative;z-index:1">
+      <div class="label label-dark">ZAHLEN &amp; FAKTEN</div>
+      <h2 class="h2" style="color:#fff">Was Bündelung wirklich bedeutet.</h2>
     </div>
-    <div class="flow-cards">
-      <div class="flow-card flow-card-1 reveal">
-        <div class="flow-num">01</div>
-        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
-        <div class="flow-title">Du meldest deinen Bedarf</div>
-        <p class="flow-sub">Material, Menge, Zeitraum. Dauert 2 Minuten. Kein Aufwand, keine Verpflichtung.</p>
+    <div class="zahlen-grid">
+      <div class="zahlen-card reveal reveal-d1">
+        <div class="zahlen-num" data-count-chf="23.9">CHF 0 Mrd.</div>
+        <div class="zahlen-label">Baumarkt Schweiz 2025</div>
+        <div class="zahlen-source">Quelle: SBV Schweizer Baumeisterverband</div>
       </div>
-      <div class="flow-card flow-card-2 reveal">
-        <div class="flow-num">02</div>
-        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5.5" y2="16.5"/><line x1="12" y1="8" x2="18.5" y2="16.5"/><line x1="5.5" y1="16.5" x2="18.5" y2="16.5"/></svg></div>
-        <div class="flow-title">SourceOn bündelt &amp; verhandelt</div>
-        <p class="flow-sub">Dein Bedarf wird mit anderen Baufirmen gebündelt. Wir verhandeln Mengenrabatte direkt beim Lieferanten.</p>
+      <div class="zahlen-card reveal reveal-d2">
+        <div class="zahlen-num" data-count="98" data-suffix="%">0%</div>
+        <div class="zahlen-label">der CH-Baufirmen sind KMU</div>
+        <div class="zahlen-source">Quelle: Bundesamt für Statistik BFS</div>
       </div>
-      <div class="flow-card flow-card-3 reveal">
-        <div class="flow-num">03</div>
-        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg></div>
-        <div class="flow-title">Du sparst — garantiert</div>
-        <p class="flow-sub">Direktlieferung auf deine Baustelle. Du zahlst nur wenn wir günstiger sind als dein bisheriger Preis.</p>
+      <div class="zahlen-card reveal reveal-d3">
+        <div class="zahlen-num">40–70%</div>
+        <div class="zahlen-label">der Baukosten entfallen auf Material</div>
+        <div class="zahlen-source">Quelle: McKinsey Global Institute 2023</div>
+      </div>
+      <div class="zahlen-card reveal reveal-d1">
+        <div class="zahlen-num">10–25%</div>
+        <div class="zahlen-label">Einsparpotenzial durch Bündelung</div>
+        <div class="zahlen-source">Quelle: GPO-Studie 2024</div>
+      </div>
+      <div class="zahlen-card reveal reveal-d2">
+        <div class="zahlen-num">48h</div>
+        <div class="zahlen-label">bis zum ersten konkreten Angebot</div>
+        <div class="zahlen-source">SourceOn Serviceversprechen</div>
+      </div>
+      <div class="zahlen-card reveal reveal-d3">
+        <div class="zahlen-num">CHF 0</div>
+        <div class="zahlen-label">Provision wenn keine Ersparnis erzielt</div>
+        <div class="zahlen-source">Erfolgsbasiertes Modell — kein Risiko</div>
       </div>
     </div>
-    <p class="flow-statement reveal">Kein Erfolg — keine Provision. Kein Risiko für dich.</p>
+    <p class="zahlen-statement reveal">Jede Bestellung die du alleine aufgibst kostet dich mehr als nötig.</p>
+  </div>
+</section>
+
+<!-- BUNDLING IN DER PRAXIS -->
+<section id="bundling" class="section">
+  <div class="container">
+    <div class="text-center reveal">
+      <div class="label">BÜNDELUNG IN DER PRAXIS</div>
+      <h2 class="h2">Ein Auftrag. Drei Baufirmen. Eine Bestellung.</h2>
+      <p class="subtitle" style="margin-top:14px">So entsteht die Einkaufsmacht, die jede einzelne Firma alleine nie hätte.</p>
+    </div>
+    <div class="bd-diagram" id="bd-diagram">
+      <div class="bd-companies">
+        <div class="bd-company">
+          <div class="bd-company-name">Firma A</div>
+          <div class="bd-company-vol">Beton — 80 m³</div>
+        </div>
+        <div class="bd-company">
+          <div class="bd-company-name">Firma B</div>
+          <div class="bd-company-vol">Beton — 60 m³</div>
+        </div>
+        <div class="bd-company">
+          <div class="bd-company-name">Firma C</div>
+          <div class="bd-company-vol">Beton — 40 m³</div>
+        </div>
+      </div>
+      <div class="bd-arrows">
+        <div class="bd-arrow-line"></div>
+        <div class="bd-arrow-line"></div>
+        <div class="bd-arrow-line"></div>
+      </div>
+      <div class="bd-sourceon-card">
+        <div class="bd-sourceon-logo">source<span>ON</span></div>
+        <div class="bd-sourceon-vol">180 m³</div>
+        <div class="bd-sourceon-sub">gebündelt</div>
+      </div>
+      <div class="bd-arrow-right">
+        <div class="bd-arrow-right-line"></div>
+      </div>
+      <div class="bd-lieferant-card">
+        <div class="bd-lieferant-label">Lieferant</div>
+        <div class="bd-lieferant-rabatt">−12%</div>
+        <div class="bd-lieferant-sub">Mengenrabatt</div>
+      </div>
+    </div>
+    <div class="bd-savings reveal">
+      <div class="bd-savings-num">CHF 17'550</div>
+      <div class="bd-savings-label">Netto-Ersparnis — für alle drei Firmen zusammen</div>
+      <div class="bd-savings-note">Rechenbeispiel basierend auf realen Marktkonditionen.</div>
+    </div>
   </div>
 </section>
 
@@ -895,17 +1023,13 @@ footer{background:var(--dark);padding:72px 0 0}
       </div>
       <div class="reveal reveal-d2">
         <div class="label">Über uns</div>
-        <h2 class="h2">Bündelungsmacht für den Mittelstand.</h2>
-        <p style="font-size:.92rem;color:var(--body);line-height:1.75;margin-top:16px;margin-bottom:24px">SourceOn wurde mit einer einfachen Überzeugung gegründet: Schweizer KMU-Baufirmen zahlen zu viel für Baumaterial — nicht weil es keine günstigeren Preise gibt, sondern weil sie alleine zu wenig Volumen haben, um sie zu bekommen. Wir ändern das.</p>
+        <h2 class="h2">Bündelungsmacht für alle Baufirmen.</h2>
+        <p style="font-size:.92rem;color:var(--body);line-height:1.75;margin-top:16px;margin-bottom:24px">SourceOn wurde mit einer einfachen Überzeugung gegründet: Zu viele Baufirmen — vom KMU bis zum Grosskonzern — zahlen mehr als nötig für Baumaterial. Nicht weil es keine günstigeren Preise gibt, sondern weil sie alleine zu wenig Volumen haben um sie zu bekommen. Wir ändern das — für alle.</p>
         <div class="about-features">
           <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><strong>Erfolgsbasiertes Modell</strong><span>2.25% Provision nur bei nachgewiesener Ersparnis</span></div></div>
           <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><strong>Schweizer Qualitätsstandards</strong><span>SIA/ISO-konforme Lieferanten, SN EN Normen</span></div></div>
           <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div><strong>Schnelle Abwicklung</strong><span>Erste Angebote innerhalb von 48 Stunden</span></div></div>
           <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><strong>Persönliche Betreuung</strong><span>Direkter Ansprechpartner für jede Anfrage</span></div></div>
-        </div>
-        <div class="founder">
-          <div class="founder-avatar">👤</div>
-          <div><div class="founder-name">[Dein Name]</div><div class="founder-role">Gründer &amp; CEO, SourceOn</div></div>
         </div>
       </div>
     </div>
@@ -951,19 +1075,29 @@ footer{background:var(--dark);padding:72px 0 0}
               <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" class="form-input" id="c-email" required/><div class="form-error" id="e-c-email">Gültige E-Mail</div></div>
               <div class="form-group"><label class="form-label">Telefon *</label><input type="tel" class="form-input" id="c-phone" required/><div class="form-error" id="e-c-phone">Pflichtfeld</div></div>
             </div>
-            <div class="form-grid">
-              <div class="form-group"><label class="form-label">Materialart *</label>
-                <select class="form-select" id="c-material" required>
-                  <option value="">Bitte wählen</option>
-                  <option>Beton</option><option>Armierungsstahl</option><option>Kies &amp; Splitt</option>
-                  <option>Mauerwerk &amp; Ziegel</option><option>Dämmung</option><option>Schalung</option>
-                  <option>Mörtel</option><option>Sanitär &amp; HLKS</option><option>Holz &amp; Baustoffe</option>
-                  <option>Stahl &amp; Metall</option><option>Dach &amp; Fassade</option>
-                  <option>Mehrere Materialien</option><option>Andere</option>
-                </select>
-                <div class="form-error" id="e-c-material">Bitte wählen</div>
+            <div class="form-group">
+              <label class="form-label">Material &amp; Menge *</label>
+              <div class="material-rows" id="material-rows">
+                <div class="material-row first-row">
+                  <select class="form-select mat-sel"><option value="">Material wählen</option><option>Beton</option><option>Armierungsstahl</option><option>Kies &amp; Splitt</option><option>Mauerwerk &amp; Ziegel</option><option>Dämmung</option><option>Schalung</option><option>Mörtel</option><option>Sanitär &amp; HLKS</option><option>Holz &amp; Baustoffe</option><option>Stahl &amp; Metall</option><option>Dach &amp; Fassade</option><option>Andere</option></select>
+                  <input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³"/>
+                </div>
               </div>
-              <div class="form-group"><label class="form-label">Benötigte Menge *</label><input type="text" class="form-input" id="c-qty" placeholder="z.B. 200 m³ oder 5 Tonnen" required/><div class="form-error" id="e-c-qty">Pflichtfeld</div></div>
+              <div class="form-error" id="e-c-material">Bitte mindestens ein Material mit Menge angeben</div>
+              <button type="button" class="add-material-btn" id="add-material-btn" onclick="addMaterialRow()">＋ Weiteres Material hinzufügen</button>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Unterlagen hochladen <span style="font-weight:400;color:var(--body)">(optional)</span></label>
+              <div class="file-upload-zone" id="file-upload-zone">
+                <input type="file" id="c-file" accept=".pdf,.xlsx,.xls,.csv,.jpg,.jpeg,.png" onchange="handleFileSelect(this)"/>
+                <div class="file-upload-icon">📎</div>
+                <div class="file-upload-text">Datei hier ablegen oder klicken zum Auswählen</div>
+                <div class="file-upload-hint">PDF, Excel, CSV, JPG, PNG — max. 10 MB</div>
+              </div>
+              <div class="file-selected" id="file-selected">
+                <span>✓</span><span id="file-name"></span>
+                <span class="file-remove" onclick="removeFile()">Datei entfernen</span>
+              </div>
             </div>
             <div class="form-grid">
               <div class="form-group"><label class="form-label">Gewünschter Lieferzeitraum *</label>
@@ -1157,8 +1291,9 @@ const flipObs=new IntersectionObserver(entries=>{
 stepCards.forEach(c=>flipObs.observe(c));
 
 // COUNTERS
-function countEl(el){
-  const t0=performance.now(),dur=1200;
+function countEl(el,dur){
+  dur=dur||1200;
+  const t0=performance.now();
   if(el.dataset.count!==undefined){
     const target=parseFloat(el.dataset.count),suffix=el.dataset.suffix||'',dec=parseInt(el.dataset.dec||0);
     const iv=setInterval(()=>{
@@ -1182,19 +1317,88 @@ function countEl(el){
     },16);
   }
 }
+// Hero stats: fire immediately on page load with 2000ms duration
+document.querySelectorAll('.hero-stats [data-count],.hero-stats [data-count-chf]').forEach(el=>countEl(el,2000));
+// All other counters: scroll-triggered
 const co=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){countEl(e.target);co.unobserve(e.target);}});
 },{threshold:0.3});
-document.querySelectorAll('[data-count],[data-count-chf],[data-count-chf-k]').forEach(el=>co.observe(el));
+document.querySelectorAll('[data-count],[data-count-chf],[data-count-chf-k]').forEach(el=>{
+  if(!el.closest('.hero-stats'))co.observe(el);
+});
+
+// BUNDLING DIAGRAM ANIMATION
+const bdObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.currentTarget.querySelectorAll('.bd-company,.bd-sourceon-card,.bd-lieferant-card').forEach(el=>el.classList.add('bd-in'));
+      bdObs.unobserve(e.currentTarget);
+    }
+  });
+},{threshold:0.2});
+const bdDiagram=document.getElementById('bd-diagram');
+if(bdDiagram)bdObs.observe(bdDiagram);
 
 // FORMS
 function req(id,errId){const ok=document.getElementById(id).value.trim().length>0;document.getElementById(errId).style.display=ok?'none':'block';return ok;}
 function emailOk(id,errId){const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById(id).value.trim());document.getElementById(errId).style.display=ok?'none':'block';return ok;}
 function selOk(id,errId){const ok=document.getElementById(id).value!=='';document.getElementById(errId).style.display=ok?'none':'block';return ok;}
 
+// MULTI-MATERIAL ROWS
+let matRowCount=1;
+const MAT_OPTIONS='<option value="">Material wählen</option><option>Beton</option><option>Armierungsstahl</option><option>Kies &amp; Splitt</option><option>Mauerwerk &amp; Ziegel</option><option>Dämmung</option><option>Schalung</option><option>Mörtel</option><option>Sanitär &amp; HLKS</option><option>Holz &amp; Baustoffe</option><option>Stahl &amp; Metall</option><option>Dach &amp; Fassade</option><option>Andere</option>';
+function addMaterialRow(){
+  if(matRowCount>=10)return;
+  matRowCount++;
+  const rows=document.getElementById('material-rows');
+  const div=document.createElement('div');
+  div.className='material-row';
+  div.innerHTML='<select class="form-select mat-sel">'+MAT_OPTIONS+'</select><input type="text" class="form-input mat-qty" placeholder="z.B. 50 Tonnen"/><button type="button" class="mat-remove-btn" onclick="removeMaterialRow(this)" title="Entfernen">✕</button>';
+  rows.appendChild(div);
+  if(matRowCount>=10)document.getElementById('add-material-btn').style.display='none';
+}
+function removeMaterialRow(btn){
+  btn.closest('.material-row').remove();
+  matRowCount--;
+  document.getElementById('add-material-btn').style.display='';
+}
+function validateMaterials(){
+  const rows=document.querySelectorAll('#material-rows .material-row');
+  const ok=Array.from(rows).some(r=>r.querySelector('.mat-sel').value&&r.querySelector('.mat-qty').value.trim());
+  document.getElementById('e-c-material').style.display=ok?'none':'block';
+  return ok;
+}
+
+// FILE UPLOAD
+function handleFileSelect(input){
+  const file=input.files[0];
+  if(!file)return;
+  if(file.size>10*1024*1024){alert('Datei ist grösser als 10 MB. Bitte wähle eine kleinere Datei.');input.value='';return;}
+  document.getElementById('file-name').textContent=file.name;
+  document.getElementById('file-selected').classList.add('show');
+}
+function removeFile(){
+  document.getElementById('c-file').value='';
+  document.getElementById('file-name').textContent='';
+  document.getElementById('file-selected').classList.remove('show');
+}
+// Drag & drop
+(function(){
+  const zone=document.getElementById('file-upload-zone');
+  if(!zone)return;
+  zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag-over');});
+  zone.addEventListener('dragleave',()=>zone.classList.remove('drag-over'));
+  zone.addEventListener('drop',e=>{
+    e.preventDefault();zone.classList.remove('drag-over');
+    const file=e.dataTransfer.files[0];
+    if(file){document.getElementById('c-file').files=e.dataTransfer.files;handleFileSelect(document.getElementById('c-file'));}
+  });
+})();
+
 function submitContact(e){
   e.preventDefault();
-  if([req('c-company','e-c-company'),req('c-name','e-c-name'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone'),selOk('c-material','e-c-material'),req('c-qty','e-c-qty'),selOk('c-timing','e-c-timing'),req('c-canton','e-c-canton')].every(Boolean)){
+  const matOk=validateMaterials();
+  if([req('c-company','e-c-company'),req('c-name','e-c-name'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone'),matOk,selOk('c-timing','e-c-timing'),req('c-canton','e-c-canton')].every(Boolean)){
     document.getElementById('form-contact').style.display='none';
     document.getElementById('success-contact').classList.add('show');
   }
