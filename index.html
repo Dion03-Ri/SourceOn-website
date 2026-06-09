@@ -3,1009 +3,880 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>SourceOn — Digitale Beschaffungsplattform für die Bauindustrie</title>
-<meta name="description" content="SourceOn optimiert deinen Materialeinkauf durch intelligente Bündelung und direkten Lieferantenzugang. Keine Fixkosten. Nur bei Einsparung."/>
+<title>SourceOn — Beschaffungsvermittlung für Baumaterialien</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#050c18;--bg2:#080f1f;--bg3:#0c1729;--bg4:#101e35;
-  --gold:#E8A020;--gold-lt:#f5c248;--gold-dk:#c47d10;
-  --gold-glow:rgba(232,160,32,.14);--gold-glow2:rgba(232,160,32,.06);
-  --blue:#3b82f6;--blue-dk:#1d4ed8;--teal:#06b6d4;
-  --text:#ddeaf8;--text-sub:rgba(180,210,240,.58);--text-muted:rgba(150,190,230,.32);
-  --border:rgba(255,255,255,.065);--border2:rgba(255,255,255,.1);
-  --border-gold:rgba(232,160,32,.22);
-  --glass:rgba(255,255,255,.032);--glass2:rgba(255,255,255,.055);
-  --r:12px;--r2:16px;--r3:20px;--r4:24px;
+  --bg:#06090f;--bg2:#0b1020;--bg3:#111827;
+  --navy:#1B3A5C;--navy-dk:#0d1f33;
+  --gold:#E8A020;--gold-h:#f5b830;--gold-dim:rgba(232,160,32,.12);--gold-border:rgba(232,160,32,.3);
+  --text:#e2eaf5;--text-muted:#7a90a8;--text-dim:#4a607a;
+  --border:rgba(255,255,255,.07);--border-md:rgba(255,255,255,.12);
+  --sh:0 4px 24px rgba(0,0,0,.4);
+  --r:14px;
 }
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'Inter',-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:'Inter',-apple-system,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
-button,input,textarea,select{font-family:inherit;border:none;background:none;cursor:pointer}
 img{display:block;max-width:100%}
-.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
 
-/* ─── GRID BG ─── */
-body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(rgba(255,255,255,.025) 1px,transparent 1px);background-size:32px 32px;pointer-events:none;z-index:0}
+/* ── UTILITY ─────────────────────────────────────── */
+.container{max-width:1200px;margin:0 auto;padding:0 28px}
+.container-sm{max-width:800px;margin:0 auto;padding:0 28px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+.tag{display:inline-flex;align-items:center;gap:6px;background:var(--gold-dim);border:1px solid var(--gold-border);color:var(--gold);font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:5px 12px;border-radius:100px}
+.tag svg{width:12px;height:12px;fill:var(--gold)}
 
-/* ─── ORB ─── */
-.orb{position:absolute;border-radius:50%;pointer-events:none;z-index:0}
+/* ── BUTTONS ─────────────────────────────────────── */
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:inherit;font-size:.92rem;font-weight:700;border:none;cursor:pointer;border-radius:10px;transition:all .18s;white-space:nowrap;text-decoration:none}
+.btn-lg{padding:16px 30px;font-size:1rem;border-radius:12px}
+.btn-gold{background:var(--gold);color:#000}
+.btn-gold:hover{background:var(--gold-h);transform:translateY(-1px);box-shadow:0 8px 24px rgba(232,160,32,.35)}
+.btn-outline{background:transparent;color:var(--gold);border:1.5px solid var(--gold-border)}
+.btn-outline:hover{background:var(--gold-dim);border-color:var(--gold)}
+.btn-ghost{background:rgba(255,255,255,.07);color:var(--text);border:1px solid var(--border-md)}
+.btn-ghost:hover{background:rgba(255,255,255,.12)}
 
-/* ─── NAV ─── */
-nav{position:fixed;top:0;left:0;right:0;z-index:900;height:66px;
-  background:rgba(5,12,24,.86);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border)}
-.nav-in{max-width:1200px;margin:0 auto;padding:0 32px;height:100%;display:flex;align-items:center;gap:8px}
-.nav-logo{font-size:1.2rem;font-weight:800;letter-spacing:-.05em;color:#fff;margin-right:16px;flex-shrink:0}
-.nav-logo em{font-style:normal;color:var(--gold)}
-.nav-links{display:flex;align-items:center;gap:1px;flex:1}
-.nav-links a{font-size:.855rem;font-weight:500;color:var(--text-sub);padding:7px 12px;border-radius:8px;transition:all .16s;white-space:nowrap}
-.nav-links a:hover,.nav-links a.act{color:#fff;background:var(--glass2)}
-.nav-r{display:flex;align-items:center;gap:8px;flex-shrink:0}
-.nav-login{font-size:.855rem;font-weight:600;color:var(--text-sub);padding:7px 14px;border-radius:8px;transition:all .16s;border:1px solid var(--border)}
-.nav-login:hover{color:#fff;border-color:var(--border2)}
-.nav-btn{font-size:.855rem;font-weight:700;background:var(--gold);color:#05111f;padding:8px 18px;border-radius:9px;transition:all .2s;letter-spacing:-.01em}
-.nav-btn:hover{background:var(--gold-lt);transform:translateY(-1px)}
-.burger{display:none;flex-direction:column;gap:4.5px;padding:6px;border-radius:7px;transition:background .15s}
-.burger:hover{background:var(--glass2)}
-.burger span{display:block;width:20px;height:1.8px;background:#fff;border-radius:2px;transition:all .22s}
-
-/* ─── HERO ─── */
-#hero{min-height:100vh;display:flex;align-items:center;padding:100px 0 60px;position:relative;overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
-.h-badge{display:inline-flex;align-items:center;gap:8px;background:var(--gold-glow);border:1px solid var(--border-gold);color:var(--gold-lt);font-size:.74rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:28px}
-.h-badge span{width:5px;height:5px;background:var(--gold);border-radius:50%;display:block;animation:p 2s ease-in-out infinite}
-@keyframes p{0%,100%{opacity:1}50%{opacity:.35}}
-.h1{font-size:clamp(2.8rem,5.8vw,4.8rem);font-weight:900;letter-spacing:-.055em;line-height:1.03;color:#fff;margin-bottom:22px}
-.h1 em{font-style:normal;color:var(--gold)}
-.h-sub{font-size:clamp(.96rem,1.7vw,1.1rem);color:var(--text-sub);line-height:1.74;max-width:480px;margin-bottom:40px}
-.h-btns{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:56px}
-.btn-p{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#05111f;font-size:.93rem;font-weight:700;padding:13px 26px;border-radius:10px;transition:all .2s;letter-spacing:-.01em}
-.btn-p:hover{background:var(--gold-lt);transform:translateY(-2px);box-shadow:0 8px 28px rgba(232,160,32,.28)}
-.btn-p svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.btn-s{display:inline-flex;align-items:center;gap:8px;background:transparent;color:var(--text);font-size:.93rem;font-weight:600;padding:12px 22px;border-radius:10px;border:1px solid var(--border2);transition:all .2s}
-.btn-s:hover{background:var(--glass2);border-color:rgba(255,255,255,.18);transform:translateY(-1px)}
-.btn-s svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.h-stats{display:flex;gap:0;border:1px solid var(--border);border-radius:14px;background:var(--glass);backdrop-filter:blur(8px);overflow:hidden}
-.h-stat{padding:16px 24px;border-right:1px solid var(--border)}
-.h-stat:last-child{border-right:none}
-.h-stat-n{font-size:1.55rem;font-weight:900;letter-spacing:-.04em;color:#fff;line-height:1}
-.h-stat-n em{font-style:normal;color:var(--gold)}
-.h-stat-l{font-size:.73rem;color:var(--text-sub);margin-top:3px;font-weight:500}
-
-/* ─── PRODUCT MOCK ─── */
-.mock{position:relative;z-index:1}
-.mock-window{background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r4);overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.05);position:relative}
-.mock-bar{background:var(--bg4);border-bottom:1px solid var(--border);padding:14px 20px;display:flex;align-items:center;justify-content:space-between}
-.mock-dots{display:flex;gap:6px}
-.mock-dot{width:10px;height:10px;border-radius:50%}
-.mock-title{font-size:.78rem;font-weight:600;color:var(--text-sub);letter-spacing:.04em}
-.mock-badge{font-size:.68rem;font-weight:700;background:rgba(34,197,94,.15);color:#4ade80;border:1px solid rgba(74,222,128,.2);padding:2px 10px;border-radius:100px}
-.mock-body{padding:20px}
-.mock-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-.mock-hd-title{font-size:.82rem;font-weight:700;color:#fff}
-.mock-btn-sm{font-size:.7rem;font-weight:700;background:var(--gold);color:#05111f;padding:5px 12px;border-radius:6px}
-.mock-row{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:9px;margin-bottom:6px;background:rgba(255,255,255,.025);border:1px solid var(--border)}
-.mock-row:hover{background:rgba(255,255,255,.04)}
-.mock-row-id{font-size:.7rem;font-weight:700;color:var(--gold);font-family:monospace;min-width:90px}
-.mock-row-name{font-size:.74rem;color:var(--text-sub);flex:1}
-.mock-row-vol{font-size:.72rem;font-weight:600;color:var(--text-muted);min-width:50px;text-align:right}
-.mock-row-save{font-size:.72rem;font-weight:700;color:#4ade80;min-width:38px;text-align:right}
-.mock-row-status{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.st-done{background:rgba(74,222,128,.15);color:#4ade80}
-.st-pend{background:rgba(251,191,36,.15);color:#fbbf24}
-.st-new{background:rgba(59,130,246,.15);color:#60a5fa}
-.mock-row-status svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
-.mock-divider{height:1px;background:var(--border);margin:14px 0}
-.mock-footer{display:flex;justify-content:space-between;align-items:center}
-.mock-saving-label{font-size:.74rem;color:var(--text-sub)}
-.mock-saving-val{font-size:1.1rem;font-weight:800;letter-spacing:-.03em;color:var(--gold)}
-.mock-bar-wrap{margin-top:8px}
-.mock-bar-label{display:flex;justify-content:space-between;font-size:.68rem;color:var(--text-muted);margin-bottom:4px}
-.mock-progress{height:5px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden}
-.mock-progress-fill{height:100%;background:linear-gradient(90deg,var(--gold-dk),var(--gold-lt));border-radius:4px;width:73%}
-.mock-glow{position:absolute;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(232,160,32,.12) 0%,transparent 70%);top:-40px;right:-40px;pointer-events:none}
-.mock-float{position:absolute;background:var(--bg3);border:1px solid var(--border-gold);border-radius:12px;padding:12px 16px;bottom:-28px;right:-20px;min-width:160px;box-shadow:0 8px 32px rgba(0,0,0,.4)}
-.mock-float-top{font-size:.68rem;color:var(--text-sub);margin-bottom:4px}
-.mock-float-val{font-size:1.4rem;font-weight:900;color:var(--gold);letter-spacing:-.04em;line-height:1}
-.mock-float-sub{font-size:.68rem;color:#4ade80;margin-top:2px}
-
-/* ─── LOGOS ─── */
-#logos{padding:48px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;z-index:1}
-.logos-label{font-size:.74rem;font-weight:600;color:var(--text-muted);letter-spacing:.1em;text-transform:uppercase;text-align:center;margin-bottom:28px}
-.logos-row{display:flex;align-items:center;justify-content:center;gap:40px;flex-wrap:wrap}
-.logo-item{font-size:.9rem;font-weight:700;color:var(--text-muted);letter-spacing:-.02em;transition:color .2s;white-space:nowrap}
-.logo-item:hover{color:var(--text-sub)}
-
-/* ─── SECTION BASE ─── */
-.sec{padding:112px 0;position:relative;overflow:hidden}
-.sec-line{border:none;border-top:1px solid var(--border);margin:0;position:relative;z-index:1}
-.stag{font-size:.7rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;display:flex;align-items:center;gap:9px}
-.stag::before{content:'';display:block;width:20px;height:1.5px;background:var(--gold);border-radius:2px}
-.sh2{font-size:clamp(1.85rem,3.6vw,2.85rem);font-weight:900;letter-spacing:-.044em;line-height:1.1;color:#fff;margin-bottom:14px}
-.sh2 em{font-style:normal;color:var(--gold)}
-.ssub{font-size:clamp(.93rem,1.6vw,1.04rem);color:var(--text-sub);line-height:1.75;max-width:560px}
-
-/* ─── FEATURES ─── */
-.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px;border:1px solid var(--border);border-radius:var(--r3);overflow:hidden}
-.feat-c{background:var(--glass);padding:40px 36px;transition:background .22s;position:relative;overflow:hidden;cursor:default}
-.feat-c:hover{background:var(--glass2)}
-.feat-c::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .28s}
-.feat-c:hover::after{opacity:1}
-.feat-ic{width:46px;height:46px;background:var(--gold-glow);border:1px solid var(--border-gold);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:22px}
-.feat-ic svg{width:21px;height:21px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.feat-c h3{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:10px;letter-spacing:-.02em}
-.feat-c p{font-size:.88rem;color:var(--text-sub);line-height:1.72}
-.feat-more{display:inline-flex;align-items:center;gap:5px;font-size:.79rem;font-weight:600;color:var(--gold);margin-top:18px;opacity:.75;transition:opacity .2s;background:none;border:none;padding:0;cursor:pointer}
-.feat-c:hover .feat-more{opacity:1}
-.feat-more svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s}
-.feat-c:hover .feat-more svg{transform:translateX(3px)}
-
-/* ─── PROCESS ─── */
-.proc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px;position:relative;z-index:1}
-.proc-grid::before{content:'';position:absolute;top:52px;left:calc(50%/3 * 2 - 8px);right:calc(50%/3 * 2 - 8px);height:1px;background:linear-gradient(90deg,transparent,var(--border-gold),transparent);z-index:-1}
-.proc-c{text-align:center;padding:40px 28px;background:var(--glass);border:1px solid var(--border);border-radius:var(--r3);transition:all .24s;position:relative}
-.proc-c:hover{border-color:var(--border-gold);transform:translateY(-4px)}
-.proc-num{width:52px;height:52px;border-radius:50%;background:var(--gold-glow);border:1px solid var(--border-gold);color:var(--gold);font-size:1rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;letter-spacing:-.02em}
-.proc-c h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:10px;letter-spacing:-.02em}
-.proc-c p{font-size:.87rem;color:var(--text-sub);line-height:1.7}
-.proc-tag{display:inline-block;font-size:.7rem;font-weight:700;color:var(--text-muted);background:rgba(255,255,255,.04);border:1px solid var(--border);padding:3px 10px;border-radius:6px;margin-top:14px}
-
-/* ─── MATERIALS ─── */
-.mat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:56px}
-.mat-c{background:var(--glass);border:1px solid var(--border);border-radius:var(--r2);padding:24px;transition:all .22s;cursor:pointer}
-.mat-c:hover{border-color:var(--border-gold);background:var(--glass2);transform:translateY(-3px)}
-.mat-ic{width:40px;height:40px;background:var(--gold-glow);border:1px solid var(--border-gold);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
-.mat-ic svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.mat-c h4{font-size:.93rem;font-weight:700;color:#fff;margin-bottom:5px}
-.mat-c p{font-size:.8rem;color:var(--text-sub);line-height:1.55}
-.mat-norm{font-size:.69rem;font-weight:600;color:var(--gold);background:var(--gold-glow2);border:1px solid var(--border-gold);padding:2px 8px;border-radius:5px;margin-top:10px;display:inline-block}
-
-/* ─── CALCULATOR ─── */
-.calc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center;position:relative;z-index:1}
-.c-label{font-size:.76rem;font-weight:600;color:var(--text-sub);text-transform:uppercase;letter-spacing:.09em;margin-bottom:9px}
-.c-amt{font-size:2.5rem;font-weight:900;letter-spacing:-.05em;color:#fff;line-height:1;margin-bottom:28px}
-.c-amt em{font-style:normal;color:var(--gold)}
-input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:5px;border-radius:3px;outline:none;background:rgba(255,255,255,.1);cursor:pointer;margin-bottom:8px}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--gold);border:2.5px solid var(--bg);cursor:pointer;transition:transform .14s;box-shadow:0 0 12px rgba(232,160,32,.4)}
-input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.18)}
-input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--gold);border:2.5px solid var(--bg);cursor:pointer}
-.c-ticks{display:flex;justify-content:space-between;font-size:.72rem;color:var(--text-muted);margin-bottom:32px}
-.c-note{font-size:.76rem;color:var(--text-muted);line-height:1.6;margin-top:16px}
-.c-results{display:flex;flex-direction:column;gap:12px}
-.c-res{background:var(--glass);border:1px solid var(--border);border-radius:14px;padding:20px 24px;display:flex;justify-content:space-between;align-items:center;transition:border-color .22s}
-.c-res.hi{background:rgba(232,160,32,.065);border-color:var(--border-gold)}
-.c-res-l{font-size:.82rem;color:var(--text-sub);font-weight:500}
-.c-res-v{font-size:1.3rem;font-weight:800;letter-spacing:-.03em;color:#fff}
-.c-res.hi .c-res-v{color:var(--gold)}
-.c-cta{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;background:var(--gold);color:#05111f;font-size:.93rem;font-weight:700;padding:14px;border-radius:10px;margin-top:8px;border:none;cursor:pointer;transition:all .2s}
-.c-cta:hover{background:var(--gold-lt);transform:translateY(-1px)}
-.c-cta svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* ─── PRICING ─── */
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
-.price-c{background:var(--glass);border:1px solid var(--border);border-radius:var(--r3);padding:36px 32px;transition:all .24s;position:relative;overflow:hidden}
-.price-c:hover{transform:translateY(-4px)}
-.price-c.featured{background:rgba(232,160,32,.06);border-color:var(--border-gold)}
-.price-c.featured::before{content:'Empfohlen';position:absolute;top:16px;right:16px;font-size:.68rem;font-weight:700;background:var(--gold);color:#05111f;padding:3px 10px;border-radius:100px;text-transform:uppercase;letter-spacing:.05em}
-.price-name{font-size:.78rem;font-weight:700;color:var(--text-sub);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px}
-.price-val{font-size:2.2rem;font-weight:900;letter-spacing:-.05em;color:#fff;line-height:1;margin-bottom:6px}
-.price-val em{font-style:normal;color:var(--gold)}
-.price-sub{font-size:.8rem;color:var(--text-sub);margin-bottom:28px;line-height:1.5}
-.price-features{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
-.pf{display:flex;align-items:flex-start;gap:10px;font-size:.85rem;color:var(--text-sub)}
-.pf svg{width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:2px}
-.price-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;font-size:.88rem;font-weight:700;padding:12px;border-radius:9px;transition:all .2s;cursor:pointer;border:none}
-.price-btn-outline{background:transparent;color:var(--text);border:1px solid var(--border2)}
-.price-btn-outline:hover{background:var(--glass2);border-color:rgba(255,255,255,.2)}
-.price-btn-gold{background:var(--gold);color:#05111f}
-.price-btn-gold:hover{background:var(--gold-lt);transform:translateY(-1px)}
-
-/* ─── CTA BAND ─── */
-#cta-band{padding:96px 0;position:relative;overflow:hidden;z-index:1}
-.cta-inner{background:linear-gradient(135deg,rgba(15,34,60,.96),rgba(8,15,26,.98));border:1px solid var(--border-gold);border-radius:24px;padding:72px 56px;position:relative;overflow:hidden}
-.cta-glow{position:absolute;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(232,160,32,.1) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
-.cta-inner h2{font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;letter-spacing:-.044em;color:#fff;margin-bottom:14px;position:relative}
-.cta-inner h2 em{font-style:normal;color:var(--gold)}
-.cta-inner p{font-size:1rem;color:var(--text-sub);margin-bottom:40px;position:relative;max-width:540px}
-.cta-form{display:flex;gap:10px;flex-wrap:wrap;position:relative;max-width:500px}
-.cta-input{flex:1;min-width:200px;background:rgba(255,255,255,.06);border:1px solid var(--border2);color:var(--text);font-size:.92rem;padding:13px 16px;border-radius:10px;outline:none;transition:border-color .2s}
-.cta-input:focus{border-color:var(--border-gold)}
-.cta-input::placeholder{color:var(--text-muted)}
-.cta-send{background:var(--gold);color:#05111f;font-size:.92rem;font-weight:700;padding:13px 24px;border-radius:10px;border:none;cursor:pointer;transition:all .2s;white-space:nowrap}
-.cta-send:hover{background:var(--gold-lt);transform:translateY(-1px)}
-.cta-note{font-size:.76rem;color:var(--text-muted);margin-top:12px;position:relative}
-
-/* ─── CONTACT ─── */
-#contact{padding:112px 0;position:relative;overflow:hidden}
-.contact-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:72px;align-items:start;margin-top:60px}
-.c-info{display:flex;flex-direction:column;gap:20px}
-.ci{display:flex;align-items:flex-start;gap:14px}
-.ci-ic{width:38px;height:38px;background:var(--gold-glow);border:1px solid var(--border-gold);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.ci-ic svg{width:17px;height:17px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.ci h4{font-size:.88rem;font-weight:700;color:#fff;margin-bottom:3px}
-.ci p{font-size:.84rem;color:var(--text-sub);line-height:1.6}
-.c-form-wrap{background:var(--glass);border:1px solid var(--border);border-radius:var(--r3);padding:40px}
-.form-row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-.fg{margin-bottom:14px}
-.fg:last-child{margin-bottom:0}
-.fl{display:block;font-size:.76rem;font-weight:600;color:var(--text-sub);margin-bottom:7px;text-transform:uppercase;letter-spacing:.07em}
-.fi{width:100%;background:rgba(255,255,255,.046);border:1px solid var(--border);color:var(--text);font-size:.91rem;padding:11px 15px;border-radius:9px;outline:none;transition:border-color .2s}
-.fi:focus{border-color:var(--border-gold)}
-.fi::placeholder{color:var(--text-muted)}
-textarea.fi{resize:vertical;min-height:96px}
-.ferr{color:#f87171;font-size:.75rem;margin-top:4px;display:none}
-.f-btn{width:100%;background:var(--gold);color:#05111f;font-size:.93rem;font-weight:700;padding:13px;border-radius:9px;border:none;cursor:pointer;transition:all .2s;margin-top:6px}
-.f-btn:hover{background:var(--gold-lt);transform:translateY(-1px)}
-.f-suc{display:none;text-align:center;padding:28px 0}
-.f-suc svg{width:44px;height:44px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round;margin:0 auto 14px}
-.f-suc h4{font-size:1rem;font-weight:700;color:#fff;margin-bottom:8px}
-.f-suc p{font-size:.87rem;color:var(--text-sub)}
-
-/* ─── FOOTER ─── */
-footer{background:var(--bg2);border-top:1px solid var(--border);padding:64px 0 32px;position:relative;z-index:1}
-.ft{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:40px;margin-bottom:44px}
-.fb-brand p{font-size:.84rem;color:var(--text-sub);line-height:1.7;margin-top:12px;max-width:240px}
-.fb-tag{font-size:.79rem;font-weight:700;color:var(--gold);margin-top:10px;opacity:.85}
-.fc h4{font-size:.75rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.11em;margin-bottom:18px}
-.fc a{display:block;font-size:.84rem;color:var(--text-sub);margin-bottom:10px;transition:color .18s}
-.fc a:hover{color:var(--gold)}
-.fb-bot{border-top:1px solid var(--border);padding-top:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.fb-copy{font-size:.79rem;color:var(--text-muted)}
-.fb-leg{display:flex;gap:16px}
-.fb-leg a{font-size:.79rem;color:var(--text-muted);transition:color .18s}
-.fb-leg a:hover{color:var(--gold)}
-
-/* ─── MODAL SYSTEM ─── */
-.m-overlay{position:fixed;inset:0;background:rgba(4,10,20,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:1800;opacity:0;pointer-events:none;transition:opacity .28s}
-.m-overlay.open{opacity:1;pointer-events:all}
-.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-48%) scale(.97);z-index:1900;width:min(660px,94vw);max-height:88vh;overflow-y:auto;background:var(--bg3);border:1px solid var(--border2);border-radius:22px;padding:48px;opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.16,1,.3,1);scrollbar-width:thin}
-.modal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%) scale(1)}
-.modal::-webkit-scrollbar{width:4px}
-.modal::-webkit-scrollbar-track{background:transparent}
-.modal::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:4px}
-.m-close{position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text-sub);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .18s}
-.m-close:hover{background:rgba(255,255,255,.1);color:#fff}
-.m-close svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.m-ic{width:52px;height:52px;background:var(--gold-glow);border:1px solid var(--border-gold);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:22px}
-.m-ic svg{width:24px;height:24px;stroke:var(--gold);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.m-title{font-size:1.45rem;font-weight:800;color:#fff;letter-spacing:-.034em;margin-bottom:10px}
-.m-sub{font-size:.9rem;color:var(--gold);font-weight:600;margin-bottom:20px}
-.m-text{font-size:.91rem;color:var(--text-sub);line-height:1.78}
-.m-text p{margin-bottom:14px}
-.m-text p:last-child{margin-bottom:0}
-.m-list{display:flex;flex-direction:column;gap:10px;margin:18px 0}
-.m-li{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;color:var(--text-sub)}
-.m-li svg{width:15px;height:15px;stroke:var(--gold);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0;margin-top:3px}
-.m-divider{height:1px;background:var(--border);margin:22px 0}
-.m-cta{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#05111f;font-size:.88rem;font-weight:700;padding:12px 22px;border-radius:9px;border:none;cursor:pointer;transition:all .2s;margin-top:4px}
-.m-cta:hover{background:var(--gold-lt);transform:translateY(-1px)}
-.m-cta svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* ─── DEMO MODAL ─── */
-#m-demo .mock-window{margin-top:20px}
-
-/* ─── SIGN UP MODAL ─── */
-.auth-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:10px;padding:3px;margin-bottom:28px}
-.auth-tab{flex:1;text-align:center;font-size:.84rem;font-weight:600;color:var(--text-sub);padding:8px;border-radius:7px;cursor:pointer;transition:all .18s}
-.auth-tab.act{background:var(--gold);color:#05111f}
-
-/* ─── ANIMATE ─── */
-.fu{opacity:0;transform:translateY(24px);transition:opacity .55s ease,transform .55s ease}
-.fu.in{opacity:1;transform:none}
-.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}.d6{transition-delay:.48s}
-
-/* ─── RESPONSIVE ─── */
-@media(max-width:1024px){
-  .hero-grid{grid-template-columns:1fr;gap:48px}
-  .mock{display:none}
-  .feat-grid{grid-template-columns:1fr 1fr}
-  .proc-grid{grid-template-columns:1fr}
-  .mat-grid{grid-template-columns:repeat(2,1fr)}
-  .calc-wrap{grid-template-columns:1fr;gap:40px}
-  .pricing-grid{grid-template-columns:1fr}
-  .contact-grid{grid-template-columns:1fr;gap:40px}
-  .ft{grid-template-columns:1fr 1fr}
-  .cta-inner{padding:48px 32px}
-  .h-stats{flex-wrap:wrap}
-}
-@media(max-width:700px){
-  .wrap{padding:0 20px}
+/* ── NAV ─────────────────────────────────────────── */
+nav{position:sticky;top:0;z-index:200;background:rgba(6,9,15,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:70px}
+.nav-logo{font-size:1.3rem;font-weight:900;letter-spacing:-.04em;color:#fff}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:4px}
+.nav-links a{color:var(--text-muted);font-size:.88rem;font-weight:500;padding:6px 14px;border-radius:8px;transition:all .18s}
+.nav-links a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+.nav-cta{margin-left:12px}
+@media(max-width:768px){
   .nav-links{display:none}
-  .nav-links.open{display:flex;flex-direction:column;position:fixed;top:66px;left:0;right:0;background:rgba(5,12,24,.97);backdrop-filter:blur(20px);padding:16px;border-bottom:1px solid var(--border);gap:2px}
-  .nav-links a{padding:11px 14px}
-  .nav-links.open .nav-btn,.nav-links.open .nav-login{display:flex;width:100%;text-align:center;justify-content:center;margin:3px 0}
-  .nav-r .nav-login{display:none}
-  .nav-r .nav-btn{display:none}
-  .burger{display:flex}
-  .feat-grid,.pricing-grid{grid-template-columns:1fr}
-  .mat-grid{grid-template-columns:1fr 1fr}
-  .form-row2{grid-template-columns:1fr}
-  .h-stats{flex-direction:column;max-width:220px}
-  .h-stat{border-right:none!important;border-bottom:1px solid var(--border)}
-  .h-stat:last-child{border-bottom:none}
-  .cta-inner{padding:36px 22px}
-  .ft{grid-template-columns:1fr}
-  .fb-bot{flex-direction:column;text-align:center}
-  .modal{padding:32px 22px}
+  .nav-cta{display:none}
+  .mob-cta{display:flex!important}
+}
+.mob-cta{display:none;margin-left:auto}
+
+/* ── HERO ─────────────────────────────────────────── */
+.hero{position:relative;overflow:hidden;padding:110px 0 90px}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(232,160,32,.13) 0%,transparent 70%);pointer-events:none}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px;pointer-events:none;mask-image:radial-gradient(ellipse 90% 80% at 50% 0%,#000 40%,transparent 100%)}
+.hero-inner{position:relative;text-align:center}
+.hero-eyebrow{margin-bottom:28px}
+.hero h1{font-size:clamp(2.6rem,6vw,5rem);font-weight:900;letter-spacing:-.05em;line-height:1.05;color:#fff;margin-bottom:24px}
+.hero h1 em{font-style:normal;color:var(--gold)}
+.hero-sub{font-size:clamp(1rem,2vw,1.2rem);color:var(--text-muted);max-width:580px;margin:0 auto 40px;line-height:1.65}
+.hero-ctas{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap}
+.hero-promise{margin-top:28px;font-size:.85rem;color:var(--text-dim);display:flex;align-items:center;justify-content:center;gap:6px}
+.hero-promise svg{width:14px;height:14px;fill:var(--gold);flex-shrink:0}
+.hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:72px}
+.stat-cell{background:var(--bg2);padding:28px 24px;text-align:center}
+.stat-val{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1}
+.stat-val span{color:var(--gold)}
+.stat-lbl{font-size:.8rem;color:var(--text-muted);margin-top:6px;font-weight:500}
+@media(max-width:600px){.hero-stats{grid-template-columns:1fr}.stat-cell:not(:last-child){border-bottom:1px solid var(--border)}}
+
+/* ── PROMISE BAND ────────────────────────────────── */
+.promise-band{background:var(--gold);padding:18px 0}
+.promise-band .container{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.promise-band p{font-size:1.05rem;font-weight:800;color:#000;letter-spacing:-.01em;text-align:center}
+.promise-band svg{width:20px;height:20px;fill:#000;flex-shrink:0}
+
+/* ── SECTION HEADERS ─────────────────────────────── */
+.sec-head{text-align:center;margin-bottom:64px}
+.sec-head .tag{margin-bottom:20px}
+.sec-head h2{font-size:clamp(1.9rem,4vw,3rem);font-weight:900;letter-spacing:-.04em;color:#fff;line-height:1.1;margin-bottom:16px}
+.sec-head p{font-size:1.05rem;color:var(--text-muted);max-width:560px;margin:0 auto}
+
+/* ── MATERIALS ───────────────────────────────────── */
+.materials{padding:96px 0}
+.mat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-top:48px}
+.mat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:18px 20px;transition:border-color .2s,transform .2s}
+.mat-card:hover{border-color:var(--gold-border);transform:translateY(-2px)}
+.mat-id{font-size:.72rem;font-weight:700;color:var(--gold);letter-spacing:.06em;margin-bottom:8px;font-family:monospace}
+.mat-cat{font-size:.75rem;color:var(--text-dim);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+.mat-name{font-size:.9rem;font-weight:600;color:var(--text);line-height:1.4}
+.mat-norm{font-size:.75rem;color:var(--text-dim);margin-top:6px}
+.mat-show-more{text-align:center;margin-top:32px}
+
+/* ── HOW IT WORKS ────────────────────────────────── */
+.how{padding:96px 0;background:var(--bg2)}
+.steps-wrap{position:relative;margin-top:64px}
+.steps-svg-wrap{position:absolute;top:0;left:50%;transform:translateX(-50%);width:100%;max-width:900px;pointer-events:none;z-index:0}
+.steps-svg-wrap svg{width:100%;height:auto}
+.steps-grid{position:relative;z-index:1;display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:900px;margin:0 auto}
+.step{padding:40px 32px;text-align:center}
+.step-num{width:48px;height:48px;border-radius:50%;background:var(--gold);color:#000;font-size:1.1rem;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;position:relative;z-index:2}
+.step h3{font-size:1.05rem;font-weight:800;color:#fff;margin-bottom:10px}
+.step p{font-size:.88rem;color:var(--text-muted);line-height:1.65}
+@media(max-width:700px){
+  .steps-grid{grid-template-columns:1fr}
+  .steps-svg-wrap{display:none}
+}
+
+/* ── CALCULATOR ──────────────────────────────────── */
+.calc-sec{padding:96px 0}
+.calc-card{background:var(--bg2);border:1px solid var(--border);border-radius:24px;padding:56px 48px;max-width:700px;margin:0 auto;text-align:center}
+.calc-card h2{font-size:clamp(1.6rem,3vw,2.2rem);font-weight:900;letter-spacing:-.04em;color:#fff;margin-bottom:8px}
+.calc-card .sub{font-size:.95rem;color:var(--text-muted);margin-bottom:40px}
+.arc-wrap{position:relative;width:280px;height:150px;margin:0 auto 32px}
+.arc-wrap svg{width:100%;height:auto;overflow:visible}
+.arc-center-val{position:absolute;bottom:0;left:50%;transform:translateX(-50%);text-align:center;pointer-events:none}
+.arc-chf{font-size:2rem;font-weight:900;color:#fff;letter-spacing:-.04em;line-height:1}
+.arc-label{font-size:.75rem;color:var(--text-muted);margin-top:3px}
+.calc-slider-wrap{margin:28px 0 24px}
+.calc-slider-wrap label{font-size:.85rem;font-weight:600;color:var(--text-muted);display:block;margin-bottom:14px}
+.calc-slider-wrap label strong{color:var(--text);font-size:1rem}
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:4px;background:var(--border-md);border-radius:4px;outline:none;cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--gold);cursor:pointer;transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+.calc-result-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.calc-result-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:16px 24px;min-width:140px}
+.calc-result-box .r-val{font-size:1.4rem;font-weight:900;color:#fff;letter-spacing:-.03em}
+.calc-result-box .r-val.gold{color:var(--gold)}
+.calc-result-box .r-lbl{font-size:.75rem;color:var(--text-muted);margin-top:4px}
+.calc-cta{margin-top:32px}
+
+/* ── FEATURES ────────────────────────────────────── */
+.features{padding:96px 0;background:var(--bg2)}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:16px}
+.feat-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:32px;transition:border-color .2s,transform .2s;cursor:default}
+.feat-card:hover{border-color:var(--gold-border);transform:translateY(-3px)}
+.feat-icon{width:44px;height:44px;background:var(--gold-dim);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:20px}
+.feat-icon svg{width:22px;height:22px;fill:var(--gold)}
+.feat-card h3{font-size:1rem;font-weight:800;color:#fff;margin-bottom:10px}
+.feat-card p{font-size:.88rem;color:var(--text-muted);line-height:1.65;margin-bottom:18px}
+.feat-more{font-size:.82rem;font-weight:700;color:var(--gold);display:inline-flex;align-items:center;gap:5px;cursor:pointer;background:none;border:none;padding:0;font-family:inherit;transition:gap .18s}
+.feat-more:hover{gap:9px}
+.feat-more svg{width:14px;height:14px;fill:var(--gold)}
+
+/* ── COMPARISON TABLE ────────────────────────────── */
+.compare{padding:96px 0}
+.cmp-table{width:100%;border-collapse:collapse;margin-top:48px;border-radius:16px;overflow:hidden;border:1px solid var(--border)}
+.cmp-table thead tr{background:var(--bg3)}
+.cmp-table th{padding:20px 24px;text-align:left;font-size:.85rem;font-weight:700;color:var(--text-muted);letter-spacing:.04em;text-transform:uppercase;border-bottom:1px solid var(--border)}
+.cmp-table th:first-child{width:40%}
+.cmp-table th:last-child{color:var(--gold)}
+.cmp-table td{padding:16px 24px;font-size:.92rem;border-bottom:1px solid var(--border);background:var(--bg2)}
+.cmp-table tr:last-child td{border-bottom:none}
+.cmp-table td:first-child{color:var(--text);font-weight:500}
+.cmp-table td:nth-child(2){color:#ef4444}
+.cmp-table td:last-child{color:#22c55e}
+.cmp-no{display:flex;align-items:center;gap:8px}
+.cmp-no svg{width:16px;height:16px;flex-shrink:0}
+.cmp-yes{display:flex;align-items:center;gap:8px}
+.cmp-yes svg{width:16px;height:16px;flex-shrink:0}
+@media(max-width:600px){
+  .cmp-table th,.cmp-table td{padding:12px 14px;font-size:.82rem}
+}
+
+/* ── TRUST ───────────────────────────────────────── */
+.trust{padding:80px 0;background:var(--bg2)}
+.trust-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:48px}
+.trust-card{background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:28px;text-align:center}
+.trust-card svg{width:28px;height:28px;fill:var(--gold);margin:0 auto 14px}
+.trust-card h4{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:8px}
+.trust-card p{font-size:.83rem;color:var(--text-muted);line-height:1.6}
+
+/* ── CTA BAND ─────────────────────────────────────── */
+.cta-band{padding:100px 0;background:linear-gradient(135deg,#0d1a2a 0%,#0f1e35 50%,#0a1422 100%);position:relative;overflow:hidden;text-align:center}
+.cta-band::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 50%,rgba(232,160,32,.12),transparent 70%);pointer-events:none}
+.cta-band h2{font-size:clamp(2rem,5vw,3.5rem);font-weight:900;letter-spacing:-.05em;color:#fff;margin-bottom:16px;position:relative}
+.cta-band h2 em{font-style:normal;color:var(--gold)}
+.cta-band p{font-size:1.05rem;color:var(--text-muted);margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto;position:relative}
+.cta-band-btns{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;position:relative}
+.cta-band .promise{margin-top:20px;font-size:.82rem;color:var(--text-dim);position:relative}
+
+/* ── CONTACT ─────────────────────────────────────── */
+.contact{padding:96px 0}
+.contact-inner{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.contact-info h2{font-size:clamp(1.7rem,3.5vw,2.4rem);font-weight:900;letter-spacing:-.04em;color:#fff;margin-bottom:16px}
+.contact-info p{color:var(--text-muted);font-size:.95rem;line-height:1.7;margin-bottom:28px}
+.contact-detail{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.contact-detail svg{width:18px;height:18px;fill:var(--gold);flex-shrink:0}
+.contact-detail span{font-size:.9rem;color:var(--text-muted)}
+.contact-detail a{color:var(--text-muted);transition:color .18s}
+.contact-detail a:hover{color:var(--gold)}
+.contact-form{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:40px}
+.contact-form h3{font-size:1.15rem;font-weight:800;color:#fff;margin-bottom:24px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;font-size:.82rem;font-weight:600;color:var(--text-muted);margin-bottom:7px;letter-spacing:.02em}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--bg);border:1.5px solid var(--border-md);border-radius:10px;padding:12px 16px;color:var(--text);font-family:inherit;font-size:.9rem;outline:none;transition:border-color .18s;-webkit-appearance:none}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold)}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-err{color:#ef4444;font-size:.78rem;margin-top:5px;display:none}
+.form-group.error .form-err{display:block}
+.form-group.error input,.form-group.error textarea{border-color:#ef4444}
+.form-success{display:none;background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);border-radius:12px;padding:20px;text-align:center;color:#22c55e;font-weight:600;margin-top:16px}
+@media(max-width:820px){
+  .contact-inner{grid-template-columns:1fr;gap:40px}
+}
+
+/* ── FOOTER ──────────────────────────────────────── */
+footer{background:var(--navy-dk);padding:40px 0 28px;border-top:1px solid var(--border)}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px}
+.footer-logo{font-size:1.1rem;font-weight:900;letter-spacing:-.03em;color:#fff}
+.footer-logo span{color:var(--gold)}
+.footer-links{display:flex;gap:6px;flex-wrap:wrap}
+.footer-links a{color:var(--text-dim);font-size:.83rem;padding:5px 10px;border-radius:6px;transition:color .18s}
+.footer-links a:hover{color:var(--gold)}
+.footer-copy{color:var(--text-dim);font-size:.8rem;margin-top:20px;text-align:center;padding-top:20px;border-top:1px solid var(--border)}
+
+/* ── MODALS ──────────────────────────────────────── */
+#m-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;opacity:0;pointer-events:none;transition:opacity .25s;backdrop-filter:blur(6px)}
+#m-overlay.open{opacity:1;pointer-events:all}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-44%);z-index:501;background:var(--bg2);border:1px solid var(--border-md);border-radius:20px;width:min(92vw,640px);max-height:90vh;overflow-y:auto;padding:40px;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+.modal.open{opacity:1;pointer-events:all;transform:translate(-50%,-50%)}
+.modal-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--text-muted);transition:background .18s}
+.modal-close:hover{background:rgba(255,255,255,.15)}
+.modal-close svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2}
+.modal h2{font-size:1.4rem;font-weight:900;color:#fff;margin-bottom:8px;letter-spacing:-.03em}
+.modal .modal-sub{font-size:.9rem;color:var(--text-muted);margin-bottom:28px;line-height:1.6}
+.modal-cta-wrap{margin-top:28px;padding-top:24px;border-top:1px solid var(--border);display:flex;gap:12px;flex-wrap:wrap}
+
+/* order form modal */
+#modal-order{width:min(92vw,760px)}
+.order-cats{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-bottom:24px}
+.order-cat-head{font-size:.78rem;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.07em;grid-column:1/-1;margin-top:8px;margin-bottom:4px}
+.order-item{display:flex;align-items:flex-start;gap:10px;padding:10px 12px;background:var(--bg);border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:border-color .18s}
+.order-item:hover,.order-item.selected{border-color:var(--gold-border);background:var(--gold-dim)}
+.order-item input[type=checkbox]{accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;margin-top:2px}
+.order-item-lbl{flex:1}
+.order-item-id{font-size:.7rem;font-family:monospace;color:var(--gold);font-weight:700}
+.order-item-name{font-size:.82rem;color:var(--text);font-weight:500;line-height:1.4}
+
+/* ── SCROLL ANIMATIONS ───────────────────────────── */
+.fade-up{opacity:0;transform:translateY(28px);transition:opacity .55s,transform .55s}
+.fade-up.in{opacity:1;transform:none}
+
+/* ── RESPONSIVE ──────────────────────────────────── */
+@media(max-width:900px){.steps-grid{grid-template-columns:1fr;max-width:480px}}
+@media(max-width:700px){
+  .calc-card{padding:36px 24px}
+  .calc-result-row{gap:10px}
+  .modal{padding:28px 22px}
+  .contact-form{padding:28px 22px}
 }
 </style>
 </head>
 <body>
 
-<!-- OVERLAYS -->
-<div class="m-overlay" id="m-overlay" onclick="closeModal()"></div>
-
-<!-- MODALS -->
-<div class="modal" id="m-bundle" role="dialog" aria-modal="true">
-  <button class="m-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <div class="m-ic"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
-  <div class="m-title">Intelligente Nachfragebündelung</div>
-  <div class="m-sub">Mehr Volumen. Bessere Preise.</div>
-  <div class="m-text">
-    <p>SourceOn aggregiert den Materialbedarf mehrerer Bauunternehmen und kombiniert gleichartige Bestellungen zu Sammelaufträgen. Dadurch entsteht Einkaufsvolumen, das du als einzelnes Unternehmen nie erreichen würdest.</p>
-    <p>Das Resultat: Lieferanten gewähren Mengenrabatte auf Basis des Gesamtvolumens — die Lieferung erfolgt jedoch individuell direkt auf deine Baustelle.</p>
-  </div>
-  <div class="m-list">
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Automatisches Matching mit anderen Bestellungen derselben Materialart</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Mengenrabatt auf Gesamtvolumen, Lieferung je Baustelle einzeln</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Vollständig anonym — deine Konkurrenten sehen deine Preise nicht</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Durchschnittliche Zusatzeinsparung von 4–8% gegenüber Einzelbestellung</div>
-  </div>
-  <div class="m-divider"></div>
-  <button class="m-cta" onclick="closeModal();scrollTo({top:document.getElementById('contact').offsetTop-72,behavior:'smooth'})">Jetzt Zugang anfordern <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-</div>
-
-<div class="modal" id="m-direct" role="dialog" aria-modal="true">
-  <button class="m-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <div class="m-ic"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
-  <div class="m-title">Direktlieferung auf deine Baustelle</div>
-  <div class="m-sub">Kein Lager. Kein Umweg. Direkt.</div>
-  <div class="m-text">
-    <p>SourceOn fungiert als reiner Vermittler — du kaufst direkt vom Lieferanten. Das Material wird direkt auf deine Baustelle geliefert. SourceOn hält kein eigenes Lager und ist nicht Käufer oder Verkäufer der Materialien.</p>
-    <p>Du erhältst Lieferscheine und Rechnungen direkt vom Lieferanten, mit voller Rückverfolgbarkeit und Normkonformitätsnachweisen.</p>
-  </div>
-  <div class="m-list">
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Kaufvertrag direkt zwischen dir und dem Lieferanten</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Lieferschein und Rechnung auf deine Firma ausgestellt</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Sendungsverfolgung über die SourceOn-Plattform</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Lieferung an mehrere Adressen pro Bestellung möglich</div>
-  </div>
-  <div class="m-divider"></div>
-  <button class="m-cta" onclick="closeModal();scrollTo({top:document.getElementById('contact').offsetTop-72,behavior:'smooth'})">Jetzt Zugang anfordern <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-</div>
-
-<div class="modal" id="m-data" role="dialog" aria-modal="true">
-  <button class="m-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <div class="m-ic"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-  <div class="m-title">Datenbasierte Preisoptimierung</div>
-  <div class="m-sub">Strukturiert. Auswertbar. Nachvollziehbar.</div>
-  <div class="m-text">
-    <p>SourceOn strukturiert alle Angebote auf Basis eines einheitlichen Produktkatalogs (SourceOn-IDs). Materialien werden nach Norm und Spezifikation kategorisiert — dadurch sind Preisvergleiche erstmals wirklich äpfel-mit-äpfel möglich.</p>
-    <p>Du erhältst nach jeder Beschaffung ein vollständiges Reporting: Referenzpreis, Einkaufspreis, Einsparung in CHF und Prozent.</p>
-  </div>
-  <div class="m-list">
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Einheitlicher Produktkatalog (SO-ID-System) für faire Vergleiche</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Strukturierte Angebotsauswertung statt manueller Vergleiche</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Einsparungs-Dashboard mit Historik je Materialart</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Exportierbare Berichte für interne Auswertungen</div>
-  </div>
-  <div class="m-divider"></div>
-  <button class="m-cta" onclick="closeModal();scrollTo({top:document.getElementById('contact').offsetTop-72,behavior:'smooth'})">Jetzt Zugang anfordern <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-</div>
-
-<div class="modal" id="m-norm" role="dialog" aria-modal="true">
-  <button class="m-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <div class="m-ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-  <div class="m-title">Normkonformität &amp; Qualität</div>
-  <div class="m-sub">Geprüft nach SIA und SN-Normen.</div>
-  <div class="m-text">
-    <p>Jedes Material im SourceOn-Katalog ist mit den gültigen Schweizer und europäischen Normen verknüpft. Lieferanten müssen bei Onboarding Konformitätsnachweise erbringen und werden laufend überwacht.</p>
-    <p>Bei Baukontrolle oder Revision hast du jederzeit Zugriff auf alle Konformitätserklärungen, Prüfberichte und Materialherkunftsnachweise — direkt aus der Plattform.</p>
-  </div>
-  <div class="m-list">
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Alle Materialien mit Norm-Tag versehen (SN EN, SIA, CE)</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> CE-Konformitätserklärungen auf Knopfdruck abrufbar</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Lieferantenqualifikation vor Aufnahme ins Netzwerk</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Kein Risiko bei Baurevision oder Abnahmeprüfung</div>
-  </div>
-  <div class="m-divider"></div>
-  <button class="m-cta" onclick="closeModal();scrollTo({top:document.getElementById('contact').offsetTop-72,behavior:'smooth'})">Jetzt Zugang anfordern <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-</div>
-
-<div class="modal" id="m-network" role="dialog" aria-modal="true">
-  <button class="m-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <div class="m-ic"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-  <div class="m-title">Geprüftes Lieferantennetzwerk</div>
-  <div class="m-sub">Qualifiziert. Zuverlässig. Skalierbar.</div>
-  <div class="m-text">
-    <p>SourceOn betreibt ein kuratiertes Netzwerk aus Lieferanten in der Schweiz, Deutschland, Österreich und Benelux. Jeder Lieferant durchläuft ein Onboarding mit Qualitäts- und Zuverlässigkeitsprüfung.</p>
-    <p>Das Netzwerk wächst kontinuierlich — durch neue Partner und gezielte Erweiterung für spezifische Materialgruppen und Regionen.</p>
-  </div>
-  <div class="m-list">
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Lieferanten in CH, DE, AT und Benelux</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Onboarding mit Qualitäts- und Finanzprüfung</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Lieferzuverlässigkeit-Rating nach jeder Transaktion</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Automatische Suche nach dem besten Lieferanten je Materialart</div>
-  </div>
-  <div class="m-divider"></div>
-  <button class="m-cta" onclick="closeModal();scrollTo({top:document.getElementById('contact').offsetTop-72,behavior:'smooth'})">Jetzt Zugang anfordern <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-</div>
-
-<div class="modal" id="m-savings" role="dialog" aria-modal="true">
-  <button class="m-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <div class="m-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-  <div class="m-title">Erfolgsprovision — nur bei Einsparung</div>
-  <div class="m-sub">Du zahlst erst, wenn wir dir sparen.</div>
-  <div class="m-text">
-    <p>SourceOn verdient ausschliesslich dann, wenn du weniger zahlst als bisher. Das schafft vollständige Interessengleichheit: Je mehr wir für dich einsparen, desto besser für uns beide.</p>
-    <p>Kein Abonnement, keine Setup-Gebühren, keine Fixkosten. Unsere Vergütung ist eine Marge auf den optimierten Einkaufspreis — nur wenn dieser unter deinem bisherigen Referenzpreis liegt.</p>
-  </div>
-  <div class="m-list">
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Keine Fixkosten, kein Abo, kein Risiko</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Vergütung nur bei nachgewiesener Einsparung</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Volle Transparenz über Referenzpreis und Einkaufspreis</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Kein Angebot annehmen, wenn du nicht zufrieden bist</div>
-  </div>
-  <div class="m-divider"></div>
-  <button class="m-cta" onclick="closeModal();scrollTo({top:document.getElementById('calc').offsetTop-72,behavior:'smooth'})">Sparpotenzial berechnen <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-</div>
-
-<!-- DEMO MODAL -->
-<div class="modal" id="m-demo" role="dialog" aria-modal="true" style="width:min(780px,96vw)">
-  <button class="m-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <div class="m-title">SourceOn Platform Preview</div>
-  <div class="m-sub" style="margin-bottom:24px">So sieht dein Dashboard aus — nach dem ersten Login.</div>
-  <div class="mock-window">
-    <div class="mock-bar">
-      <div class="mock-dots"><div class="mock-dot" style="background:#ff5f57"></div><div class="mock-dot" style="background:#febc2e"></div><div class="mock-dot" style="background:#28c840"></div></div>
-      <div class="mock-title">SourceOn Platform · Dashboard</div>
-      <div class="mock-badge">● Live</div>
-    </div>
-    <div class="mock-body">
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:18px">
-        <div style="background:rgba(232,160,32,.07);border:1px solid var(--border-gold);border-radius:10px;padding:14px">
-          <div style="font-size:.7rem;color:var(--text-sub);margin-bottom:4px">Einsparung YTD</div>
-          <div style="font-size:1.4rem;font-weight:800;color:var(--gold);letter-spacing:-.03em">CHF 47'320</div>
-          <div style="font-size:.68rem;color:#4ade80;margin-top:2px">+12.4% vs. Vorjahr</div>
-        </div>
-        <div style="background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:14px">
-          <div style="font-size:.7rem;color:var(--text-sub);margin-bottom:4px">Offene Anfragen</div>
-          <div style="font-size:1.4rem;font-weight:800;color:#fff;letter-spacing:-.03em">3</div>
-          <div style="font-size:.68rem;color:var(--text-muted);margin-top:2px">2 mit Angebot bereit</div>
-        </div>
-        <div style="background:var(--glass);border:1px solid var(--border);border-radius:10px;padding:14px">
-          <div style="font-size:.7rem;color:var(--text-sub);margin-bottom:4px">Abgeschlossen</div>
-          <div style="font-size:1.4rem;font-weight:800;color:#fff;letter-spacing:-.03em">18</div>
-          <div style="font-size:.68rem;color:var(--text-muted);margin-top:2px">Beschaffungen total</div>
-        </div>
-      </div>
-      <div class="mock-header"><div class="mock-hd-title">Aktive Beschaffungen</div><div class="mock-btn-sm">+ Neue Anfrage</div></div>
-      <div class="mock-row">
-        <div class="mock-row-id">SO-BET-002</div>
-        <div class="mock-row-name">Beton C25/30, 200 m³</div>
-        <div class="mock-row-vol">200 m³</div>
-        <div class="mock-row-save">−18%</div>
-        <div class="mock-row-status st-done"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
-      </div>
-      <div class="mock-row">
-        <div class="mock-row-id">SO-STL-011</div>
-        <div class="mock-row-name">Betonstahl B500B, 4.2 t</div>
-        <div class="mock-row-vol">4.2 t</div>
-        <div class="mock-row-save">−14%</div>
-        <div class="mock-row-status st-pend"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-      </div>
-      <div class="mock-row">
-        <div class="mock-row-id">SO-ISO-007</div>
-        <div class="mock-row-name">EPS 035, 860 m²</div>
-        <div class="mock-row-vol">860 m²</div>
-        <div class="mock-row-save">−12%</div>
-        <div class="mock-row-status st-new"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
-      </div>
-      <div class="mock-divider"></div>
-      <div class="mock-bar-wrap">
-        <div class="mock-bar-label"><span>Einsparquote Gesamt</span><span style="color:var(--gold)">14.8%</span></div>
-        <div class="mock-progress"><div class="mock-progress-fill"></div></div>
-      </div>
-    </div>
-  </div>
-  <div class="m-divider"></div>
-  <button class="m-cta" onclick="closeModal();scrollTo({top:document.getElementById('contact').offsetTop-72,behavior:'smooth'})">Jetzt Zugang anfordern <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-</div>
-
-<!-- SIGN UP / LOGIN MODAL -->
-<div class="modal" id="m-signup" role="dialog" aria-modal="true">
-  <button class="m-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <div class="m-title" style="margin-bottom:6px">Zugang zur Plattform</div>
-  <p style="font-size:.88rem;color:var(--text-sub);margin-bottom:24px">Tritt der Beta bei und erhalte frühzeitigen Zugang zur SourceOn-Plattform.</p>
-  <div class="auth-tabs">
-    <div class="auth-tab act" onclick="switchTab(this,'tab-register')">Registrieren</div>
-    <div class="auth-tab" onclick="switchTab(this,'tab-login')">Anmelden</div>
-  </div>
-  <div id="tab-register">
-    <form id="reg-form" novalidate>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-        <div><label class="fl">Vorname *</label><input class="fi" id="r-fname" type="text" placeholder="Max"/><div class="ferr" id="re-fname">Pflichtfeld</div></div>
-        <div><label class="fl">Nachname *</label><input class="fi" id="r-lname" type="text" placeholder="Muster"/><div class="ferr" id="re-lname">Pflichtfeld</div></div>
-      </div>
-      <div style="margin-bottom:12px"><label class="fl">Unternehmen *</label><input class="fi" id="r-co" type="text" placeholder="Muster Bau AG"/><div class="ferr" id="re-co">Pflichtfeld</div></div>
-      <div style="margin-bottom:12px"><label class="fl">E-Mail *</label><input class="fi" id="r-email" type="email" placeholder="max@firma.ch"/><div class="ferr" id="re-email">Gültige E-Mail</div></div>
-      <div style="margin-bottom:20px"><label class="fl">Telefon *</label><input class="fi" id="r-phone" type="tel" placeholder="+41 79 000 00 00"/><div class="ferr" id="re-phone">Pflichtfeld</div></div>
-      <button type="submit" class="f-btn">Beta-Zugang anfordern</button>
-      <p style="font-size:.74rem;color:var(--text-muted);text-align:center;margin-top:12px">Mit der Registrierung stimmst du unseren <a href="agb.html" style="color:var(--gold)">AGB</a> zu.</p>
-    </form>
-    <div class="f-suc" id="reg-suc">
-      <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      <h4>Anfrage erhalten!</h4>
-      <p>Wir schalten deinen Zugang manuell frei und melden uns innerhalb von 48 Stunden.</p>
-    </div>
-  </div>
-  <div id="tab-login" style="display:none">
-    <div style="text-align:center;padding:32px 0">
-      <div style="width:52px;height:52px;background:var(--gold-glow);border:1px solid var(--border-gold);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
-        <svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:var(--gold);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      </div>
-      <h4 style="color:#fff;font-size:1rem;font-weight:700;margin-bottom:8px">Plattform in Beta</h4>
-      <p style="font-size:.88rem;color:var(--text-sub);line-height:1.7;margin-bottom:24px">Das SourceOn-Dashboard wird aktuell für erste Kunden freigeschaltet. Registriere dich für frühzeitigen Zugang.</p>
-      <button class="f-btn" onclick="switchTabByName('tab-register')">Jetzt registrieren</button>
-    </div>
-  </div>
-</div>
-
-<!-- MATERIAL MODALS -->
-<div class="modal" id="m-beton" role="dialog" aria-modal="true">
-  <button class="m-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <div class="m-ic"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-  <div class="m-title">Beton &amp; Zement</div>
-  <div class="m-sub">Transportbeton, Fertigteile, Zement, Mörtel</div>
-  <div class="m-text"><p>Normgerecht nach SN EN 206 und SIA 262. Wir bündeln Betonbestellungen über mehrere Baustellen und verhandeln Tagespreise direkt mit Betonwerken. Lieferung in dein Planquadrat, getrennte Lieferscheine je Baustelle.</p></div>
-  <div class="m-list">
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Expositionsklassen XC, XD, XF, XA auf Anfrage</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Druckfestigkeitsklassen C20/25 bis C40/50</div>
-    <div class="m-li"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Werkfrischer Transportbeton und Fertigteile</div>
-  </div>
-  <div class="m-divider"></div>
-  <button class="m-cta" onclick="closeModal();scrollTo({top:document.getElementById('contact').offsetTop-72,behavior:'smooth'})">Material anfragen <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-</div>
-
-<!-- ═══════════════════════════════════════════ -->
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-in">
-    <a href="#" class="nav-logo">Source<em>On</em></a>
-    <div class="nav-links" id="nav-links">
-      <a href="#features">Plattform</a>
+<!-- ═══════════════════════════════════════════════════════ NAV -->
+<nav>
+  <div class="nav-inner container">
+    <a href="#" class="nav-logo">Source<span>On</span></a>
+    <div class="nav-links">
       <a href="#materials">Materialien</a>
-      <a href="#calc">Sparpotenzial</a>
-      <a href="#pricing">Preise</a>
+      <a href="#how">So funktioniert's</a>
+      <a href="#features">Leistungen</a>
+      <a href="#compare">Vergleich</a>
       <a href="#contact">Kontakt</a>
     </div>
-    <div class="nav-r">
-      <button class="nav-login" onclick="openModal('m-signup')">Anmelden</button>
-      <button class="nav-btn" onclick="openModal('m-signup')">Jetzt starten →</button>
-    </div>
-    <button class="burger" id="burger" aria-label="Menü"><span></span><span></span><span></span></button>
+    <button class="btn btn-gold nav-cta" onclick="openModal('modal-order')">Jetzt Angebot anfordern</button>
+    <button class="btn btn-gold mob-cta" onclick="openModal('modal-order')">Angebot</button>
   </div>
 </nav>
 
-<!-- ═══ HERO ═══ -->
-<section id="hero">
-  <div class="orb" style="width:700px;height:700px;top:-200px;right:-150px;background:radial-gradient(circle,rgba(232,160,32,.12) 0%,transparent 65%);filter:blur(80px)"></div>
-  <div class="orb" style="width:500px;height:500px;bottom:-100px;left:-150px;background:radial-gradient(circle,rgba(59,130,246,.15) 0%,transparent 65%);filter:blur(80px)"></div>
-  <div class="wrap">
-    <div class="hero-grid">
-      <div class="hero-left fu">
-        <div class="h-badge"><span></span>Digitale Beschaffungsplattform · Beta</div>
-        <h1 class="h1">Baumaterial.<br/>Beschaffen.<br/><em>Smarter.</em></h1>
-        <p class="h-sub">SourceOn optimiert deinen gesamten Materialeinkauf — durch intelligente Nachfragebündelung, direkten Lieferantenzugang und datenbasierte Preisoptimierung. Keine Fixkosten. Nur bei Einsparung.</p>
-        <div class="h-btns">
-          <button class="btn-p" onclick="openModal('m-signup')">
-            Kostenlos starten
-            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-          </button>
-          <button class="btn-s" onclick="openModal('m-demo')">
-            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
-            Demo ansehen
-          </button>
-        </div>
-        <div class="h-stats">
-          <div class="h-stat"><div class="h-stat-n">10–18<em>%</em></div><div class="h-stat-l">Ø Einsparung</div></div>
-          <div class="h-stat"><div class="h-stat-n">CHF <em>0</em></div><div class="h-stat-l">Fixkosten</div></div>
-          <div class="h-stat"><div class="h-stat-n">48<em>h</em></div><div class="h-stat-l">Erstes Angebot</div></div>
-        </div>
+<!-- ═══════════════════════════════════════════════════════ HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="container hero-inner">
+    <div class="hero-eyebrow">
+      <span class="tag">
+        <svg viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>
+        Schweizer Beschaffungsvermittlung
+      </span>
+    </div>
+    <h1>Baumaterialien günstiger.<br><em>Garantiert.</em></h1>
+    <p class="hero-sub">SourceOn bündelt den Materialbedarf Schweizer Bauunternehmen und verhandelt direkt mit Lieferanten — ohne Aufwand für dich.</p>
+    <div class="hero-ctas">
+      <button class="btn btn-gold btn-lg" onclick="openModal('modal-order')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Jetzt Einsparung berechnen
+      </button>
+      <a href="#how" class="btn btn-ghost btn-lg">Wie es funktioniert</a>
+    </div>
+    <div class="hero-promise">
+      <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <span>Sie zahlen nur wenn wir Ihnen sparen — keine Provision ohne Einsparung</span>
+    </div>
+    <div class="hero-stats fade-up">
+      <div class="stat-cell">
+        <div class="stat-val">bis <span>25%</span></div>
+        <div class="stat-lbl">Einsparung auf Materialeinkauf</div>
       </div>
-      <div class="mock fu d3">
-        <div class="mock-glow"></div>
-        <div class="mock-window">
-          <div class="mock-bar">
-            <div class="mock-dots"><div class="mock-dot" style="background:#ff5f57"></div><div class="mock-dot" style="background:#febc2e"></div><div class="mock-dot" style="background:#28c840"></div></div>
-            <div class="mock-title">SourceOn Platform</div>
-            <div class="mock-badge">● Live</div>
-          </div>
-          <div class="mock-body">
-            <div class="mock-header"><div class="mock-hd-title">Aktive Beschaffungen</div><div class="mock-btn-sm">+ Neue Anfrage</div></div>
-            <div class="mock-row"><div class="mock-row-id">SO-BET-002</div><div class="mock-row-name">Beton C25/30</div><div class="mock-row-vol">200 m³</div><div class="mock-row-save">−18%</div><div class="mock-row-status st-done"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div></div>
-            <div class="mock-row"><div class="mock-row-id">SO-STL-011</div><div class="mock-row-name">Betonstahl B500B</div><div class="mock-row-vol">4.2 t</div><div class="mock-row-save">−14%</div><div class="mock-row-status st-pend"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div></div>
-            <div class="mock-row"><div class="mock-row-id">SO-ISO-007</div><div class="mock-row-name">EPS Dämmung 035</div><div class="mock-row-vol">860 m²</div><div class="mock-row-save">−12%</div><div class="mock-row-status st-new"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div></div>
-            <div class="mock-divider"></div>
-            <div style="display:flex;justify-content:space-between;align-items:flex-end">
-              <div><div class="mock-saving-label">Einsparung YTD</div><div class="mock-saving-val">CHF 47'320</div></div>
-              <div style="text-align:right"><div style="font-size:.68rem;color:var(--text-muted)">Einsparquote</div><div style="font-size:.92rem;font-weight:700;color:var(--gold)">14.8%</div></div>
-            </div>
-            <div class="mock-bar-wrap" style="margin-top:10px">
-              <div class="mock-progress"><div class="mock-progress-fill"></div></div>
-            </div>
-          </div>
+      <div class="stat-cell">
+        <div class="stat-val"><span>2.25%</span></div>
+        <div class="stat-lbl">Provision — nur bei Einsparung</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-val"><span>21+</span></div>
+        <div class="stat-lbl">Materialarten im Netzwerk</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ PROMISE BAND -->
+<div class="promise-band">
+  <div class="container">
+    <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+    <p>Sie zahlen nur wenn wir Ihnen sparen — Erfolgsbasierte Provision, keine versteckten Kosten, keine Abos.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ MATERIALS -->
+<section class="materials" id="materials">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <span class="tag">Materialien</span>
+      <h2>Unser Beschaffungsnetzwerk</h2>
+      <p>21 standardisierte Materialarten nach Schweizer Normen — direkt vom Lieferanten zu dir.</p>
+    </div>
+    <div class="mat-grid fade-up">
+      <div class="mat-card"><div class="mat-id">SO-BET-001</div><div class="mat-cat">Beton</div><div class="mat-name">Konstruktionsbeton C20/25</div><div class="mat-norm">SN EN 206 · m³</div></div>
+      <div class="mat-card"><div class="mat-id">SO-BET-002</div><div class="mat-cat">Beton</div><div class="mat-name">Konstruktionsbeton C25/30</div><div class="mat-norm">SN EN 206 · m³</div></div>
+      <div class="mat-card"><div class="mat-id">SO-BET-003</div><div class="mat-cat">Beton</div><div class="mat-name">Konstruktionsbeton C30/37</div><div class="mat-norm">SN EN 206 · m³</div></div>
+      <div class="mat-card"><div class="mat-id">SO-BET-004</div><div class="mat-cat">Beton</div><div class="mat-name">Unterbeton / Magerbeton C8/10</div><div class="mat-norm">SN EN 206 · m³</div></div>
+      <div class="mat-card"><div class="mat-id">SO-BET-005</div><div class="mat-cat">Beton</div><div class="mat-name">Bodenplattenbeton C25/30 WU</div><div class="mat-norm">SN EN 206 · m³</div></div>
+      <div class="mat-card"><div class="mat-id">SO-ARM-001</div><div class="mat-cat">Armierung</div><div class="mat-name">Betonstahl B500B Ø6mm</div><div class="mat-norm">SN EN 10080 · kg</div></div>
+      <div class="mat-card"><div class="mat-id">SO-ARM-002</div><div class="mat-cat">Armierung</div><div class="mat-name">Betonstahl B500B Ø10mm</div><div class="mat-norm">SN EN 10080 · kg</div></div>
+      <div class="mat-card"><div class="mat-id">SO-ARM-003</div><div class="mat-cat">Armierung</div><div class="mat-name">Betonstahl B500B Ø12mm</div><div class="mat-norm">SN EN 10080 · kg</div></div>
+      <div class="mat-card"><div class="mat-id">SO-ARM-004</div><div class="mat-cat">Armierung</div><div class="mat-name">Betonstahlmatte Q188A</div><div class="mat-norm">SN EN 10080 · m²</div></div>
+      <div class="mat-card"><div class="mat-id">SO-ARM-005</div><div class="mat-cat">Armierung</div><div class="mat-name">Betonstahlmatte Q257A</div><div class="mat-norm">SN EN 10080 · m²</div></div>
+      <div class="mat-card"><div class="mat-id">SO-MAU-001</div><div class="mat-cat">Mauerwerk</div><div class="mat-name">Backsteinziegel NF 24×11.5×7.1cm</div><div class="mat-norm">SN EN 771-1 · Stk.</div></div>
+      <div class="mat-card"><div class="mat-id">SO-MAU-002</div><div class="mat-cat">Mauerwerk</div><div class="mat-name">Leichtbaustein 29×14×19cm</div><div class="mat-norm">SN EN 771-3 · Stk.</div></div>
+      <div class="mat-card"><div class="mat-id">SO-MAU-003</div><div class="mat-cat">Mauerwerk</div><div class="mat-name">Kalksandstein KS-L 2DF 240</div><div class="mat-norm">SN EN 771-2 · Stk.</div></div>
+      <div class="mat-card"><div class="mat-id">SO-SCH-001</div><div class="mat-cat">Schalung</div><div class="mat-name">Schaltafel 3-S 21mm 200×50cm</div><div class="mat-norm">— · Stk.</div></div>
+      <div class="mat-card"><div class="mat-id">SO-SCH-002</div><div class="mat-cat">Schalung</div><div class="mat-name">Schaltafel 3-S 21mm 250×50cm</div><div class="mat-norm">— · Stk.</div></div>
+      <div class="mat-card"><div class="mat-id">SO-DAE-001</div><div class="mat-cat">Dämmung</div><div class="mat-name">EPS-Dämmplatte 100mm</div><div class="mat-norm">SN EN 13163 · m²</div></div>
+      <div class="mat-card"><div class="mat-id">SO-DAE-002</div><div class="mat-cat">Dämmung</div><div class="mat-name">Mineralwolle Platte 80mm</div><div class="mat-norm">SN EN 13162 · m²</div></div>
+      <div class="mat-card"><div class="mat-id">SO-AUF-001</div><div class="mat-cat">Auffüllung</div><div class="mat-name">Kies 0–32mm</div><div class="mat-norm">SIA 318 · t</div></div>
+      <div class="mat-card"><div class="mat-id">SO-AUF-002</div><div class="mat-cat">Auffüllung</div><div class="mat-name">Splitt 8–16mm</div><div class="mat-norm">SIA 318 · t</div></div>
+      <div class="mat-card"><div class="mat-id">SO-MOR-001</div><div class="mat-cat">Mörtel</div><div class="mat-name">Mauermörtel MG II 25kg</div><div class="mat-norm">SN EN 998-2 · Sack</div></div>
+      <div class="mat-card"><div class="mat-id">SO-MOR-002</div><div class="mat-cat">Mörtel</div><div class="mat-name">Ausgleichsmörtel selbstnivell. 25kg</div><div class="mat-norm">SN EN 13813 · Sack</div></div>
+    </div>
+    <div class="mat-show-more fade-up">
+      <button class="btn btn-outline" onclick="openModal('modal-order')">Material anfragen →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <span class="tag">Prozess</span>
+      <h2>In drei Schritten zu günstigeren Materialien</h2>
+      <p>Kein Aufwand auf deiner Seite — du sagst uns was du brauchst, wir holen das beste Angebot.</p>
+    </div>
+    <div class="steps-wrap">
+      <!-- Animated snake SVG line -->
+      <div class="steps-svg-wrap" aria-hidden="true">
+        <svg viewBox="0 0 900 180" fill="none" xmlns="http://www.w3.org/2000/svg" id="snake-svg">
+          <path id="snake-path" d="M 150 90 C 220 90, 250 40, 300 40 C 350 40, 380 140, 450 140 C 520 140, 550 40, 600 40 C 650 40, 680 90, 750 90" stroke="url(#snakeGrad)" stroke-width="3" stroke-linecap="round" fill="none" stroke-dasharray="1000" stroke-dashoffset="1000"/>
+          <defs>
+            <linearGradient id="snakeGrad" x1="150" y1="90" x2="750" y2="90" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#E8A020" stop-opacity="0.3"/>
+              <stop offset="50%" stop-color="#E8A020"/>
+              <stop offset="100%" stop-color="#E8A020" stop-opacity="0.3"/>
+            </linearGradient>
+          </defs>
+          <!-- Dot markers at step centers -->
+          <circle cx="150" cy="90" r="8" fill="#E8A020" opacity="0"/>
+          <circle cx="450" cy="90" r="8" fill="#E8A020" opacity="0"/>
+          <circle cx="750" cy="90" r="8" fill="#E8A020" opacity="0"/>
+        </svg>
+      </div>
+      <div class="steps-grid">
+        <div class="step fade-up">
+          <div class="step-num">1</div>
+          <h3>Bedarf melden</h3>
+          <p>Du teilst uns deinen Materialbedarf mit — Materialart, Menge, Liefertermin und Baustelle. Per Formular in 2 Minuten.</p>
         </div>
-        <div class="mock-float">
-          <div class="mock-float-top">Letzte Einsparung</div>
-          <div class="mock-float-val">CHF 8'640</div>
-          <div class="mock-float-sub">↑ Beton Sammelbestellung</div>
+        <div class="step fade-up" style="transition-delay:.12s">
+          <div class="step-num">2</div>
+          <h3>Wir verhandeln</h3>
+          <p>SourceOn bündelt Bedarfe mehrerer Bauunternehmen und holt Konkurrenzangebote bei qualifizierten Lieferanten ein.</p>
+        </div>
+        <div class="step fade-up" style="transition-delay:.24s">
+          <div class="step-num">3</div>
+          <h3>Du sparst</h3>
+          <p>Du erhältst das beste Angebot mit dokumentierter Einsparung. Der Lieferant liefert direkt — SourceOn rechnet nur bei Erfolg ab.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- LOGOS -->
-<div id="logos" style="position:relative;z-index:1">
-  <div class="wrap">
-    <div class="logos-label">Aktive in der Baubranche · Schweiz</div>
-    <div class="logos-row">
-      <span class="logo-item">Hoch- &amp; Tiefbau</span>
-      <span class="logo-item" style="color:var(--border2)">·</span>
-      <span class="logo-item">Generalunternehmen</span>
-      <span class="logo-item" style="color:var(--border2)">·</span>
-      <span class="logo-item">Renovation &amp; Sanierung</span>
-      <span class="logo-item" style="color:var(--border2)">·</span>
-      <span class="logo-item">Tiefbau &amp; Infrastruktur</span>
-      <span class="logo-item" style="color:var(--border2)">·</span>
-      <span class="logo-item">Holzbau</span>
+<!-- ═══════════════════════════════════════════════════════ CALCULATOR -->
+<section class="calc-sec" id="calculator">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <span class="tag">Kalkulator</span>
+      <h2>Wie viel kannst du sparen?</h2>
+      <p>Schieb den Regler auf dein jährliches Materialvolumen und sieh deine potenzielle Ersparnis.</p>
+    </div>
+    <div class="calc-card fade-up">
+      <div class="arc-wrap">
+        <svg viewBox="0 0 280 150" id="arc-svg" overflow="visible">
+          <!-- Background arc -->
+          <path id="arc-bg" d="" stroke="rgba(255,255,255,0.08)" stroke-width="18" fill="none" stroke-linecap="round"/>
+          <!-- Filled arc -->
+          <path id="arc-fill" d="" stroke="url(#arcGrad)" stroke-width="18" fill="none" stroke-linecap="round"/>
+          <!-- Tick marks -->
+          <g id="arc-ticks" opacity="0.4"></g>
+          <!-- Percentage text in center -->
+          <text id="arc-pct" x="140" y="130" text-anchor="middle" font-family="Inter,sans-serif" font-size="32" font-weight="900" fill="white">10%</text>
+          <text x="140" y="152" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#7a90a8">Einsparung</text>
+          <defs>
+            <linearGradient id="arcGrad" x1="0" y1="0" x2="280" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#E8A020"/>
+              <stop offset="100%" stop-color="#f5c248"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="calc-slider-wrap">
+        <label>Jährliches Materialvolumen: <strong id="vol-display">CHF 150'000</strong></label>
+        <input type="range" id="vol-slider" min="50000" max="2000000" step="10000" value="150000"/>
+      </div>
+      <div class="calc-result-row">
+        <div class="calc-result-box">
+          <div class="r-val" id="res-save">CHF 15'000</div>
+          <div class="r-lbl">Potenzielle Jahresersparnis</div>
+        </div>
+        <div class="calc-result-box">
+          <div class="r-val gold" id="res-prov">CHF 3'375</div>
+          <div class="r-lbl">SourceOn Provision (2.25%)</div>
+        </div>
+        <div class="calc-result-box">
+          <div class="r-val gold" id="res-net">CHF 11'625</div>
+          <div class="r-lbl">Netto-Vorteil für dich</div>
+        </div>
+      </div>
+      <div class="calc-cta">
+        <button class="btn btn-gold btn-lg" onclick="openModal('modal-order')">Angebot anfordern — kostenlos</button>
+      </div>
     </div>
   </div>
-</div>
-<hr class="sec-line"/>
+</section>
 
-<!-- FEATURES -->
-<section class="sec" id="features">
-  <div class="orb" style="width:600px;height:600px;top:-100px;right:-180px;background:radial-gradient(circle,rgba(232,160,32,.08) 0%,transparent 65%);filter:blur(80px);position:absolute"></div>
-  <div class="wrap">
-    <div class="fu">
-      <div class="stag">Plattform</div>
-      <h2 class="sh2">Alles was du für deinen<br/>Materialeinkauf brauchst.</h2>
-      <p class="ssub">Eine Plattform. Sechs Kernfunktionen. Vollständig integriert.</p>
+<!-- ═══════════════════════════════════════════════════════ FEATURES -->
+<section class="features" id="features">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <span class="tag">Leistungen</span>
+      <h2>Was SourceOn für dich macht</h2>
+      <p>Vollständige Beschaffungsvermittlung — vom Bedarfsanalyse bis zur Lieferdokumentation.</p>
     </div>
-    <div class="feat-grid fu" style="margin-top:48px">
-      <div class="feat-c">
-        <div class="feat-ic"><svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></div>
-        <h3>Nachfragebündelung</h3>
-        <p>Dein Bedarf wird automatisch mit anderen Bestellungen kombiniert. Du bekommst Mengenrabatte — ohne mehr zu bestellen.</p>
-        <button class="feat-more" onclick="openModal('m-bundle')">Mehr erfahren <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+    <div class="feat-grid">
+      <div class="feat-card fade-up">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
+        <h3>Bedarfsanalyse</h3>
+        <p>Wir analysieren deinen Materialbedarf und identifizieren Einsparpotenziale auf Basis aktueller Marktpreise.</p>
+        <button class="feat-more" onclick="openModal('modal-feat1')">Mehr erfahren <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
       </div>
-      <div class="feat-c">
-        <div class="feat-ic"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
+      <div class="feat-card fade-up" style="transition-delay:.08s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
+        <h3>Bedarfsbündelung</h3>
+        <p>Durch die Zusammenführung von Bedarfen mehrerer Bauunternehmen erzielen wir Mengenrabatte die du allein nie bekämst.</p>
+        <button class="feat-more" onclick="openModal('modal-feat2')">Mehr erfahren <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+      <div class="feat-card fade-up" style="transition-delay:.16s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg></div>
+        <h3>Lieferantenverhandlung</h3>
+        <p>Unsere Branchenexpertise und unser Netzwerk ermöglichen uns Preisverhandlungen auf Augenhöhe mit Lieferanten.</p>
+        <button class="feat-more" onclick="openModal('modal-feat3')">Mehr erfahren <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+      <div class="feat-card fade-up" style="transition-delay:.24s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
+        <h3>Transparenz & Reporting</h3>
+        <p>Vollständige Dokumentation aller eingeholten Angebote, Einsparungen und Provisionen — nachvollziehbar und prüfbar.</p>
+        <button class="feat-more" onclick="openModal('modal-feat4')">Mehr erfahren <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+      </div>
+      <div class="feat-card fade-up" style="transition-delay:.32s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg></div>
         <h3>Direktlieferung</h3>
-        <p>Kaufvertrag direkt zwischen dir und dem Lieferanten. Lieferung direkt auf deine Baustelle. SourceOn hält kein Lager.</p>
-        <button class="feat-more" onclick="openModal('m-direct')">Mehr erfahren <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+        <p>Der Lieferant liefert direkt auf deine Baustelle — kein Zwischenlager, keine Umwege, keine Mehrkosten.</p>
+        <button class="feat-more" onclick="openModal('modal-feat5')">Mehr erfahren <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
       </div>
-      <div class="feat-c">
-        <div class="feat-ic"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-        <h3>Datenoptimierung</h3>
-        <p>Strukturierter Produktkatalog, automatisierte Angebotsauswertung und Einsparungs-Reporting nach jeder Bestellung.</p>
-        <button class="feat-more" onclick="openModal('m-data')">Mehr erfahren <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-      </div>
-      <div class="feat-c">
-        <div class="feat-ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <h3>Normkonformität</h3>
-        <p>Alle Materialien mit SIA- und SN-Norm verknüpft. CE-Konformitätsnachweise abrufbar. Null Risiko bei Revision.</p>
-        <button class="feat-more" onclick="openModal('m-norm')">Mehr erfahren <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-      </div>
-      <div class="feat-c">
-        <div class="feat-ic"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <h3>Lieferantennetzwerk</h3>
-        <p>Kuratiertes Netzwerk aus geprüften Lieferanten in CH, DE, AT und Benelux — mit Zuverlässigkeits-Rating.</p>
-        <button class="feat-more" onclick="openModal('m-network')">Mehr erfahren <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
-      </div>
-      <div class="feat-c">
-        <div class="feat-ic"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-        <h3>Nur bei Einsparung</h3>
-        <p>Keine Fixkosten. Keine Abogebühren. Unsere Vergütung entsteht ausschliesslich wenn du günstiger einkaufst als bisher.</p>
-        <button class="feat-more" onclick="openModal('m-savings')">Mehr erfahren <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      <div class="feat-card fade-up" style="transition-delay:.40s">
+        <div class="feat-icon"><svg viewBox="0 0 24 24"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div>
+        <h3>Umgehungsschutz</h3>
+        <p>Deine Lieferantenbeziehungen bleiben geschützt. Unsere AGB sichern beide Seiten klar nach Schweizer OR ab.</p>
+        <button class="feat-more" onclick="openModal('modal-feat6')">Mehr erfahren <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
       </div>
     </div>
   </div>
 </section>
-<hr class="sec-line"/>
 
-<!-- PROCESS -->
-<section class="sec" id="how">
-  <div class="wrap">
-    <div class="fu" style="text-align:center">
-      <div class="stag" style="justify-content:center">Ablauf</div>
-      <h2 class="sh2">In drei Schritten zur Bestellung.</h2>
-      <p class="ssub" style="margin:0 auto">Keine komplizierte Integration. Keine Einarbeitungszeit. Direkt loslegen.</p>
+<!-- ═══════════════════════════════════════════════════════ COMPARISON -->
+<section class="compare" id="compare">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <span class="tag">Vergleich</span>
+      <h2>Mit oder ohne SourceOn?</h2>
+      <p>Was du gewinnst — und was du ohne uns verlierst.</p>
     </div>
-    <div class="proc-grid">
-      <div class="proc-c fu d1">
-        <div class="proc-num">01</div>
-        <h3>Bedarf eingeben</h3>
-        <p>Material, Menge, Liefertermin und Baustelle in die Plattform eingeben. Dauert unter 5 Minuten.</p>
-        <span class="proc-tag">Ø 4 Minuten</span>
+    <div class="fade-up" style="overflow-x:auto">
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th>Kriterium</th>
+            <th>Ohne SourceOn</th>
+            <th>Mit SourceOn</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Preisverhandlung</td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>Einzeln, ohne Hebelwirkung</span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Gebündelt mit Marktkenntnis</span></td>
+          </tr>
+          <tr>
+            <td>Lieferantenvergleich</td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>Zeitaufwändig, lückenhaft</span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Systematisch & vollständig</span></td>
+          </tr>
+          <tr>
+            <td>Einsparungsnachweis</td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>Nicht dokumentiert</span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Vollständig dokumentiert</span></td>
+          </tr>
+          <tr>
+            <td>Kosten bei kein Erfolg</td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>Interner Aufwand trotzdem</span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Null — keine Provision ohne Erfolg</span></td>
+          </tr>
+          <tr>
+            <td>Zeitaufwand intern</td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>Hoch (Anfragen, Vergleiche)</span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Minimal — SourceOn übernimmt</span></td>
+          </tr>
+          <tr>
+            <td>Zugang zu Netzwerk</td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>Eigene Kontakte begrenzt</span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Breites Lieferantennetzwerk CH + EU</span></td>
+          </tr>
+          <tr>
+            <td>Normenkonforme Qualität</td>
+            <td><span class="cmp-no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 18L18 6M6 6l12 12"/></svg>Eigenverantwortlich prüfen</span></td>
+            <td><span class="cmp-yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>Nur geprüfte Lieferanten (SN EN)</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ TRUST -->
+<section class="trust">
+  <div class="container">
+    <div class="sec-head fade-up">
+      <span class="tag">Vertrauen</span>
+      <h2>Warum Bauunternehmen SourceOn vertrauen</h2>
+    </div>
+    <div class="trust-grid">
+      <div class="trust-card fade-up">
+        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <h4>Schweizer Recht</h4>
+        <p>Alle Verträge nach OR Art. 412 ff. — klarer Rechtsstatus als Mäkler, Gerichtsstand Zürich.</p>
       </div>
-      <div class="proc-c fu d2">
-        <div class="proc-num">02</div>
-        <h3>Optimiertes Angebot erhalten</h3>
-        <p>SourceOn matcht deinen Bedarf, holt Angebote ein und präsentiert dir das beste Resultat mit Einsparungsnachweis.</p>
-        <span class="proc-tag">Innerhalb 48h</span>
+      <div class="trust-card fade-up" style="transition-delay:.08s">
+        <svg viewBox="0 0 24 24"><path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <h4>Kein Risiko</h4>
+        <p>Provision nur bei nachweisbarer Einsparung. Kein Erfolg — keine Kosten.</p>
       </div>
-      <div class="proc-c fu d3">
-        <div class="proc-num">03</div>
-        <h3>Direkt bestellen</h3>
-        <p>Angebot annehmen, Kaufvertrag direkt mit dem Lieferanten abschliessen. Material kommt auf deine Baustelle.</p>
-        <span class="proc-tag">1 Klick</span>
+      <div class="trust-card fade-up" style="transition-delay:.16s">
+        <svg viewBox="0 0 24 24"><path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+        <h4>Volle Transparenz</h4>
+        <p>Alle Lieferantenangebote werden auf Wunsch vollständig offengelegt.</p>
+      </div>
+      <div class="trust-card fade-up" style="transition-delay:.24s">
+        <svg viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        <h4>Schnell &amp; einfach</h4>
+        <p>Anfrage in 2 Minuten — erstes Angebot innerhalb von 48 Stunden.</p>
       </div>
     </div>
   </div>
 </section>
-<hr class="sec-line"/>
 
-<!-- MATERIALS -->
-<section class="sec" id="materials">
-  <div class="orb" style="width:500px;height:500px;bottom:-100px;left:-150px;background:radial-gradient(circle,rgba(59,130,246,.1) 0%,transparent 65%);filter:blur(80px);position:absolute"></div>
-  <div class="wrap">
-    <div class="fu">
-      <div class="stag">Materialien</div>
-      <h2 class="sh2">Was du über SourceOn beziehen kannst.</h2>
-      <p class="ssub">Von Beton bis Leerrohre — normgerecht, schweizweit, termingerecht.</p>
+<!-- ═══════════════════════════════════════════════════════ CTA BAND -->
+<section class="cta-band">
+  <div class="container">
+    <h2>Starte heute.<br><em>Bezahle nur wenn du sparst.</em></h2>
+    <p>Keine Abos, keine Vorauszahlungen, kein Risiko. Einfach Bedarf melden — wir erledigen den Rest.</p>
+    <div class="cta-band-btns">
+      <button class="btn btn-gold btn-lg" onclick="openModal('modal-order')">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+        Jetzt Angebot anfordern
+      </button>
+      <a href="#contact" class="btn btn-ghost btn-lg">Rückruf anfordern</a>
     </div>
-    <div class="mat-grid" style="margin-top:48px">
-      <div class="mat-c fu d1" onclick="openModal('m-beton')">
-        <div class="mat-ic"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-        <h4>Beton &amp; Zement</h4>
-        <p>Transportbeton, Fertigteile, Mörtel</p>
-        <span class="mat-norm">SN EN 206</span>
-      </div>
-      <div class="mat-c fu d2" onclick="openModal('m-signup')">
-        <div class="mat-ic"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><line x1="5" y1="6" x2="19" y2="6"/><line x1="5" y1="18" x2="19" y2="18"/></svg></div>
-        <h4>Bewehrungsstahl</h4>
-        <p>Betonstahl, Matten, Träger</p>
-        <span class="mat-norm">EN 10080</span>
-      </div>
-      <div class="mat-c fu d3" onclick="openModal('m-signup')">
-        <div class="mat-ic"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
-        <h4>Isolierung &amp; Dämmung</h4>
-        <p>Mineralwolle, EPS, XPS</p>
-        <span class="mat-norm">SIA 180</span>
-      </div>
-      <div class="mat-c fu d4" onclick="openModal('m-signup')">
-        <div class="mat-ic"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
-        <h4>Mauersteine &amp; Ziegel</h4>
-        <p>Kalksandstein, Backstein, Poroton</p>
-        <span class="mat-norm">SIA 266</span>
-      </div>
-      <div class="mat-c fu d1" onclick="openModal('m-signup')">
-        <div class="mat-ic"><svg viewBox="0 0 24 24"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg></div>
-        <h4>Rohre &amp; Leerrohre</h4>
-        <p>PE, PP, PVC, Stahlrohre</p>
-        <span class="mat-norm">SN EN 1401</span>
-      </div>
-      <div class="mat-c fu d2" onclick="openModal('m-signup')">
-        <div class="mat-ic"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
-        <h4>Holz &amp; Holzwerkstoffe</h4>
-        <p>Konstruktionsholz, BSH, OSB</p>
-        <span class="mat-norm">SIA 265</span>
-      </div>
-      <div class="mat-c fu d3" onclick="openModal('m-signup')">
-        <div class="mat-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
-        <h4>Haustechnik</h4>
-        <p>Sanitär, Heizung, Lüftung, Elektro</p>
-        <span class="mat-norm">SIA 380</span>
-      </div>
-      <div class="mat-c fu d4" onclick="openModal('m-signup')">
-        <div class="mat-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
-        <h4>Weitere Materialien</h4>
-        <p>Tiefbau, Dachbau, Spezialbedarf</p>
-        <span class="mat-norm">Auf Anfrage</span>
-      </div>
-    </div>
+    <p class="promise">Sie zahlen nur wenn wir Ihnen sparen — Provision 2.25% nur bei Einsparung</p>
   </div>
 </section>
-<hr class="sec-line"/>
 
-<!-- CALCULATOR -->
-<section class="sec" id="calc">
-  <div class="wrap">
-    <div class="calc-wrap">
-      <div class="fu">
-        <div class="stag">Sparpotenzial</div>
-        <h2 class="sh2">Wie viel kannst<br/>du sparen?</h2>
-        <p class="ssub" style="margin-bottom:36px">Berechne dein Einsparpotenzial basierend auf deinem Jahresbudget.</p>
-        <div class="c-label">Jährliches Materialbudget</div>
-        <div class="c-amt">CHF <em id="amt-disp">500'000</em></div>
-        <input type="range" id="calc-slider" min="50000" max="2000000" step="10000" value="500000"/>
-        <div class="c-ticks"><span>50k</span><span>500k</span><span>1M</span><span>2M</span></div>
-        <p class="c-note">Einsparungsrate: &lt;200k = 8% · &lt;500k = 12% · &lt;1M = 15% · ≥1M = 18%<br/>Vergütung wird nur bei nachgewiesener Einsparung fällig.</p>
-      </div>
-      <div class="c-results fu d2">
-        <div class="c-res">
-          <div><div class="c-res-l">Brutto-Einsparung</div><div style="font-size:.72rem;color:var(--text-muted)">Vor Plattformvergütung</div></div>
-          <div class="c-res-v" id="brutto-disp">CHF 60'000</div>
+<!-- ═══════════════════════════════════════════════════════ CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-info fade-up">
+        <span class="tag" style="margin-bottom:24px">Kontakt</span>
+        <h2>Sprich direkt mit uns</h2>
+        <p>Du hast Fragen zu SourceOn, möchtest einen Rückruf oder einfach mehr wissen? Schreib uns — wir melden uns innerhalb eines Werktags.</p>
+        <div class="contact-detail">
+          <svg viewBox="0 0 24 24"><path d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+          <a href="mailto:info@sourceon.ch">info@sourceon.ch</a>
         </div>
-        <div class="c-res">
-          <div><div class="c-res-l">Plattformvergütung</div><div style="font-size:.72rem;color:var(--text-muted)">Anteil am optimierten Preis</div></div>
-          <div class="c-res-v" id="prov-disp" style="color:#f87171">− CHF 11'250</div>
+        <div class="contact-detail">
+          <svg viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+          <span>Zürich, Schweiz</span>
         </div>
-        <div class="c-res hi">
-          <div><div class="c-res-l">Deine Netto-Einsparung</div><div style="font-size:.72rem;color:var(--gold);opacity:.7">Was wirklich bei dir bleibt</div></div>
-          <div class="c-res-v" id="netto-disp">CHF 48'750</div>
-        </div>
-        <button class="c-cta" onclick="openModal('m-signup')">
-          Jetzt Zugang anfordern
-          <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </button>
-      </div>
-    </div>
-  </div>
-</section>
-<hr class="sec-line"/>
-
-<!-- PRICING -->
-<section class="sec" id="pricing">
-  <div class="orb" style="width:600px;height:600px;top:-100px;left:-200px;background:radial-gradient(circle,rgba(232,160,32,.07) 0%,transparent 65%);filter:blur(80px);position:absolute"></div>
-  <div class="wrap">
-    <div class="fu" style="text-align:center">
-      <div class="stag" style="justify-content:center">Preise</div>
-      <h2 class="sh2">Einfach. Transparent.<br/><em>Nur bei Einsparung.</em></h2>
-      <p class="ssub" style="margin:0 auto">Kein Abo. Keine Setupgebühr. Keine versteckten Kosten.</p>
-    </div>
-    <div class="pricing-grid">
-      <div class="price-c fu d1">
-        <div class="price-name">Starter</div>
-        <div class="price-val">CHF <em>0</em></div>
-        <div class="price-sub">Fixkosten pro Monat<br/>Ideal für erste Beschaffungen</div>
-        <div class="price-features">
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Bis 3 Anfragen pro Monat</div>
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Zugang zum Materialmarkt</div>
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Einsparungs-Reporting</div>
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Plattformvergütung bei Einsparung</div>
-        </div>
-        <button class="price-btn price-btn-outline" onclick="openModal('m-signup')">Kostenlos starten</button>
-      </div>
-      <div class="price-c featured fu d2">
-        <div class="price-name">Professional</div>
-        <div class="price-val">CHF <em>0</em></div>
-        <div class="price-sub">Fixkosten · Unlimitierte Anfragen<br/>Für aktive Bauunternehmen</div>
-        <div class="price-features">
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Unlimitierte Beschaffungsanfragen</div>
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Priorisierte Angebotsbearbeitung (24h)</div>
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Vollständiges Dashboard &amp; Historik</div>
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Normkonformitätsnachweise inkl.</div>
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Dedizierter Ansprechpartner</div>
-        </div>
-        <button class="price-btn price-btn-gold" onclick="openModal('m-signup')">Jetzt starten →</button>
-      </div>
-      <div class="price-c fu d3">
-        <div class="price-name">Enterprise</div>
-        <div class="price-val" style="font-size:1.5rem">Individuell</div>
-        <div class="price-sub">Für grosse Baugruppen und GU<br/>mit hohem Volumen</div>
-        <div class="price-features">
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Alles aus Professional</div>
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Individuelle Vergütungsstruktur</div>
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Systemintegration (API/ERP)</div>
-          <div class="pf"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Rahmenverträge mit Lieferanten</div>
-        </div>
-        <button class="price-btn price-btn-outline" onclick="scrollTo({top:document.getElementById('contact').offsetTop-72,behavior:'smooth'})">Gespräch vereinbaren</button>
-      </div>
-    </div>
-  </div>
-</section>
-<hr class="sec-line"/>
-
-<!-- CTA BAND -->
-<div id="cta-band">
-  <div class="wrap">
-    <div class="cta-inner fu">
-      <div class="cta-glow"></div>
-      <h2>Starte heute.<br/><em>Bezahle nur wenn du sparst.</em></h2>
-      <p>Sende uns deine erste Materialanfrage — kostenlos, ohne Verpflichtung, in unter 5 Minuten.</p>
-      <div class="cta-form">
-        <input class="cta-input" id="cta-email" type="email" placeholder="deine@firma.ch"/>
-        <button class="cta-send" onclick="ctaSubmit()">Zugang anfordern</button>
-      </div>
-      <div class="cta-note">Keine Kreditkarte. Keine Fixkosten. Kündigung jederzeit.</div>
-    </div>
-  </div>
-</div>
-<hr class="sec-line"/>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="wrap">
-    <div class="contact-grid">
-      <div class="fu">
-        <div class="stag">Kontakt</div>
-        <h2 class="sh2">Sprich direkt<br/>mit uns.</h2>
-        <p style="font-size:.93rem;color:var(--text-sub);line-height:1.78;margin-bottom:36px">Kein Verkaufsgespräch, kein Druck. Sende uns deine Anfrage und wir zeigen dir kostenlos, was du sparen kannst.</p>
-        <div class="c-info">
-          <div class="ci"><div class="ci-ic"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><h4>E-Mail</h4><p><a href="mailto:info@sourceon.ch" style="color:var(--gold)">info@sourceon.ch</a></p></div></div>
-          <div class="ci"><div class="ci-ic"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></div><div><h4>Standort</h4><p>Zürich, Schweiz</p></div></div>
-          <div class="ci"><div class="ci-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div><h4>Antwortzeit</h4><p>Innerhalb 48 Stunden</p></div></div>
+        <div style="margin-top:32px;padding:24px;background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--r)">
+          <p style="font-size:.9rem;color:var(--text);font-weight:600;margin-bottom:6px">Lieber direkt zum Bestellformular?</p>
+          <p style="font-size:.83rem;color:var(--text-muted);margin-bottom:14px">Material anfragen, SO-IDs wählen, Mengen angeben — in 2 Minuten.</p>
+          <button class="btn btn-gold" onclick="openModal('modal-order')">Zum Bestellformular →</button>
         </div>
       </div>
-      <div class="fu d2">
-        <div class="c-form-wrap">
-          <form id="contact-form" novalidate>
-            <div class="form-row2">
-              <div><label class="fl">Vorname *</label><input class="fi" id="f-fname" type="text" placeholder="Max"/><div class="ferr" id="e-fname">Pflichtfeld</div></div>
-              <div><label class="fl">Nachname *</label><input class="fi" id="f-lname" type="text" placeholder="Muster"/><div class="ferr" id="e-lname">Pflichtfeld</div></div>
+      <div class="contact-form fade-up" style="transition-delay:.12s">
+        <h3>Nachricht senden</h3>
+        <form id="contact-form" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="c-name">Name *</label>
+              <input type="text" id="c-name" placeholder="Max Muster" required/>
+              <div class="form-err">Bitte gib deinen Namen ein.</div>
             </div>
-            <div class="fg"><label class="fl">Unternehmen *</label><input class="fi" id="f-company" type="text" placeholder="Muster Bau AG"/><div class="ferr" id="e-company">Pflichtfeld</div></div>
-            <div class="form-row2">
-              <div><label class="fl">E-Mail *</label><input class="fi" id="f-email" type="email" placeholder="max@firma.ch"/><div class="ferr" id="e-email">Gültige E-Mail</div></div>
-              <div><label class="fl">Telefon *</label><input class="fi" id="f-phone" type="tel" placeholder="+41 79 000 00 00"/><div class="ferr" id="e-phone">Pflichtfeld</div></div>
+            <div class="form-group">
+              <label for="c-company">Unternehmen</label>
+              <input type="text" id="c-company" placeholder="Muster Bau AG"/>
             </div>
-            <div class="fg">
-              <label class="fl">Jährliches Materialbudget</label>
-              <select class="fi" id="f-budget"><option value="">Bitte wählen</option><option>CHF 50'000 – 200'000</option><option>CHF 200'000 – 500'000</option><option>CHF 500'000 – 1'000'000</option><option>Über CHF 1'000'000</option></select>
-            </div>
-            <div class="fg"><label class="fl">Nachricht</label><textarea class="fi" id="f-msg" placeholder="Welche Materialien beschaffst du aktuell? Wie gross ist dein nächstes Projekt?"></textarea></div>
-            <button type="submit" class="f-btn">Anfrage senden</button>
-          </form>
-          <div class="f-suc" id="cf-suc">
-            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-            <h4>Vielen Dank!</h4>
-            <p>Wir melden uns innerhalb von 48 Stunden.</p>
           </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="c-email">E-Mail *</label>
+              <input type="email" id="c-email" placeholder="max@muster.ch" required/>
+              <div class="form-err">Bitte gib eine gültige E-Mail ein.</div>
+            </div>
+            <div class="form-group">
+              <label for="c-phone">Telefon (für Rückruf)</label>
+              <input type="tel" id="c-phone" placeholder="+41 79 123 45 67"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="c-msg">Nachricht *</label>
+            <textarea id="c-msg" placeholder="Deine Frage, dein Anliegen oder Rückrufwunsch..." required></textarea>
+            <div class="form-err">Bitte schreib uns eine Nachricht.</div>
+          </div>
+          <button type="submit" class="btn btn-gold btn-lg" style="width:100%;justify-content:center">Nachricht senden</button>
+        </form>
+        <div class="form-success" id="contact-success">
+          ✓ Danke! Wir melden uns innerhalb eines Werktags bei dir.
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ═══════════════════════════════════════════════════════ FOOTER -->
 <footer>
-  <div class="wrap" style="max-width:1200px">
-    <div class="ft">
-      <div class="fb-brand">
-        <div style="font-size:1.18rem;font-weight:800;letter-spacing:-.05em;color:#fff">Source<em style="font-style:normal;color:var(--gold)">On</em></div>
-        <p>Digitale Beschaffungsplattform für die Bauindustrie. Keine Fixkosten. Nur bei Einsparung.</p>
-        <div class="fb-tag">Du zahlst erst, wenn wir dir sparen.</div>
-      </div>
-      <div class="fc">
-        <h4>Plattform</h4>
-        <a href="#features">Features</a>
-        <a href="#how">So funktioniert's</a>
-        <a href="#materials">Materialien</a>
-        <a href="#calc">Sparpotenzial</a>
-        <a href="#pricing">Preise</a>
-      </div>
-      <div class="fc">
-        <h4>Unternehmen</h4>
-        <a href="#contact">Kontakt</a>
-        <a href="mailto:info@sourceon.ch">info@sourceon.ch</a>
-      </div>
-      <div class="fc">
-        <h4>Rechtliches</h4>
-        <a href="impressum.html">Impressum</a>
-        <a href="datenschutz.html">Datenschutz</a>
-        <a href="agb.html">AGB</a>
-      </div>
+  <div class="container footer-inner">
+    <div class="footer-logo">Source<span>On</span></div>
+    <div class="footer-links">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="agb.html">AGB</a>
     </div>
-    <div class="fb-bot">
-      <span class="fb-copy">© 2026 SourceOn, Zürich</span>
-      <div class="fb-leg"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a><a href="agb.html">AGB</a></div>
-    </div>
+  </div>
+  <div class="container footer-copy">
+    <p>© 2026 SourceOn, Zürich — Beschaffungsvermittlung für Baumaterialien nach OR Art. 412 ff.</p>
   </div>
 </footer>
 
+<!-- ═══════════════════════════════════════════════════════ OVERLAY -->
+<div id="m-overlay" onclick="closeModal()"></div>
+
+<!-- ═══════════════════════════════════════════════════════ MODAL: ORDER FORM -->
+<div class="modal" id="modal-order" role="dialog" aria-modal="true" aria-labelledby="mo-title">
+  <button class="modal-close" onclick="closeModal()" aria-label="Schliessen"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <h2 id="mo-title">Materialanfrage stellen</h2>
+  <p class="modal-sub">Wähle die Materialien und gib deine Kontaktdaten an. Wir melden uns mit einem Angebot innerhalb von 48 Stunden.</p>
+  <form id="order-form" novalidate>
+    <div style="margin-bottom:20px">
+      <div style="font-size:.82rem;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px">Materialien auswählen *</div>
+      <div class="order-cats">
+        <div class="order-cat-head">Beton</div>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-BET-001"/><div class="order-item-lbl"><div class="order-item-id">SO-BET-001</div><div class="order-item-name">Konstruktionsbeton C20/25</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-BET-002"/><div class="order-item-lbl"><div class="order-item-id">SO-BET-002</div><div class="order-item-name">Konstruktionsbeton C25/30</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-BET-003"/><div class="order-item-lbl"><div class="order-item-id">SO-BET-003</div><div class="order-item-name">Konstruktionsbeton C30/37</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-BET-004"/><div class="order-item-lbl"><div class="order-item-id">SO-BET-004</div><div class="order-item-name">Unterbeton / Magerbeton C8/10</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-BET-005"/><div class="order-item-lbl"><div class="order-item-id">SO-BET-005</div><div class="order-item-name">Bodenplattenbeton C25/30 WU</div></div></label>
+        <div class="order-cat-head">Armierung</div>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-ARM-001"/><div class="order-item-lbl"><div class="order-item-id">SO-ARM-001</div><div class="order-item-name">Betonstahl B500B Ø6mm</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-ARM-002"/><div class="order-item-lbl"><div class="order-item-id">SO-ARM-002</div><div class="order-item-name">Betonstahl B500B Ø10mm</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-ARM-003"/><div class="order-item-lbl"><div class="order-item-id">SO-ARM-003</div><div class="order-item-name">Betonstahl B500B Ø12mm</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-ARM-004"/><div class="order-item-lbl"><div class="order-item-id">SO-ARM-004</div><div class="order-item-name">Betonstahlmatte Q188A</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-ARM-005"/><div class="order-item-lbl"><div class="order-item-id">SO-ARM-005</div><div class="order-item-name">Betonstahlmatte Q257A</div></div></label>
+        <div class="order-cat-head">Mauerwerk · Schalung · Dämmung · Auffüllung · Mörtel</div>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-MAU-001"/><div class="order-item-lbl"><div class="order-item-id">SO-MAU-001</div><div class="order-item-name">Backsteinziegel NF</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-MAU-002"/><div class="order-item-lbl"><div class="order-item-id">SO-MAU-002</div><div class="order-item-name">Leichtbaustein 29×14×19cm</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-MAU-003"/><div class="order-item-lbl"><div class="order-item-id">SO-MAU-003</div><div class="order-item-name">Kalksandstein KS-L 2DF</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-SCH-001"/><div class="order-item-lbl"><div class="order-item-id">SO-SCH-001</div><div class="order-item-name">Schaltafel 3-S 200×50cm</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-SCH-002"/><div class="order-item-lbl"><div class="order-item-id">SO-SCH-002</div><div class="order-item-name">Schaltafel 3-S 250×50cm</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-DAE-001"/><div class="order-item-lbl"><div class="order-item-id">SO-DAE-001</div><div class="order-item-name">EPS-Dämmplatte 100mm</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-DAE-002"/><div class="order-item-lbl"><div class="order-item-id">SO-DAE-002</div><div class="order-item-name">Mineralwolle Platte 80mm</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-AUF-001"/><div class="order-item-lbl"><div class="order-item-id">SO-AUF-001</div><div class="order-item-name">Kies 0–32mm</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-AUF-002"/><div class="order-item-lbl"><div class="order-item-id">SO-AUF-002</div><div class="order-item-name">Splitt 8–16mm</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-MOR-001"/><div class="order-item-lbl"><div class="order-item-id">SO-MOR-001</div><div class="order-item-name">Mauermörtel MG II 25kg</div></div></label>
+        <label class="order-item"><input type="checkbox" name="mat" value="SO-MOR-002"/><div class="order-item-lbl"><div class="order-item-id">SO-MOR-002</div><div class="order-item-name">Ausgleichsmörtel 25kg</div></div></label>
+      </div>
+      <div class="form-err" id="mat-err" style="display:none">Bitte wähle mindestens ein Material aus.</div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="o-name">Name *</label>
+        <input type="text" id="o-name" placeholder="Max Muster" required/>
+        <div class="form-err">Pflichtfeld</div>
+      </div>
+      <div class="form-group">
+        <label for="o-company">Unternehmen *</label>
+        <input type="text" id="o-company" placeholder="Muster Bau AG" required/>
+        <div class="form-err">Pflichtfeld</div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="o-email">E-Mail *</label>
+        <input type="email" id="o-email" placeholder="max@muster.ch" required/>
+        <div class="form-err">Gültige E-Mail eingeben</div>
+      </div>
+      <div class="form-group">
+        <label for="o-phone">Telefon</label>
+        <input type="tel" id="o-phone" placeholder="+41 79 123 45 67"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="o-volume">Geschätztes Materialvolumen (CHF, optional)</label>
+      <input type="text" id="o-volume" placeholder="z.B. 150'000"/>
+    </div>
+    <div class="form-group">
+      <label for="o-note">Hinweise zur Lieferung / Baustelle</label>
+      <textarea id="o-note" placeholder="Lieferadresse, Termin, besondere Anforderungen..."></textarea>
+    </div>
+    <button type="submit" class="btn btn-gold btn-lg" style="width:100%;justify-content:center">Anfrage senden — kostenlos &amp; unverbindlich</button>
+    <p style="font-size:.75rem;color:var(--text-dim);text-align:center;margin-top:12px">Sie zahlen nur wenn wir Ihnen sparen. Provision 2.25% nur bei nachgewiesener Einsparung.</p>
+  </form>
+  <div class="form-success" id="order-success">
+    ✓ Anfrage eingegangen! Wir melden uns innerhalb von 48 Stunden mit einem Angebot.
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ FEATURE MODALS -->
+<div class="modal" id="modal-feat1" role="dialog" aria-modal="true">
+  <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <h2>Bedarfsanalyse</h2>
+  <p class="modal-sub">Wir analysieren systematisch welche Materialien du für deine Projekte benötigst und wo die grössten Einsparpotenziale liegen.</p>
+  <ul style="color:var(--text-muted);font-size:.9rem;line-height:1.8;padding-left:20px;margin-bottom:16px">
+    <li>Erfassung aller relevanten Materialarten nach SO-ID</li>
+    <li>Vergleich mit aktuellen Schweizer Marktpreisen</li>
+    <li>Identifikation von Positionen mit hohem Volumen / hohem Einsparpotenzial</li>
+    <li>Empfehlung der Beschaffungsstrategie</li>
+  </ul>
+  <div class="modal-cta-wrap">
+    <button class="btn btn-gold" onclick="closeModal();openModal('modal-order')">Jetzt Anfrage stellen →</button>
+    <button class="btn btn-ghost" onclick="closeModal()">Schliessen</button>
+  </div>
+</div>
+
+<div class="modal" id="modal-feat2" role="dialog" aria-modal="true">
+  <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <h2>Bedarfsbündelung</h2>
+  <p class="modal-sub">Das Herzstück von SourceOn: Wir bündeln die Bedarfe mehrerer Bauunternehmen und erzielen so Mengenrabatte, die kein Einzelunternehmen alleine erreichen kann.</p>
+  <ul style="color:var(--text-muted);font-size:.9rem;line-height:1.8;padding-left:20px;margin-bottom:16px">
+    <li>Anonyme Bündelung — deine Konkurrenten erfahren nichts über deinen Bedarf</li>
+    <li>Grössere Abnahmemengen = bessere Konditionen beim Lieferanten</li>
+    <li>Einsparungen von 10% bis 25% je nach Volumen</li>
+    <li>Direktlieferung bleibt zu dir — keine gemeinsame Logistik nötig</li>
+  </ul>
+  <div class="modal-cta-wrap">
+    <button class="btn btn-gold" onclick="closeModal();openModal('modal-order')">Jetzt Anfrage stellen →</button>
+    <button class="btn btn-ghost" onclick="closeModal()">Schliessen</button>
+  </div>
+</div>
+
+<div class="modal" id="modal-feat3" role="dialog" aria-modal="true">
+  <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <h2>Lieferantenverhandlung</h2>
+  <p class="modal-sub">Wir führen Preisverhandlungen mit qualifizierten Lieferanten in der Schweiz und Europa — mit Branchenkenntnis und Verhandlungsstärke.</p>
+  <ul style="color:var(--text-muted);font-size:.9rem;line-height:1.8;padding-left:20px;margin-bottom:16px">
+    <li>Angebote von mindestens 3 qualifizierten Lieferanten</li>
+    <li>Prüfung auf Normkonformität (SN EN, SIA)</li>
+    <li>Verhandlung von Preis, Liefertermin und Konditionen</li>
+    <li>Vollständige Dokumentation aller Angebote</li>
+  </ul>
+  <div class="modal-cta-wrap">
+    <button class="btn btn-gold" onclick="closeModal();openModal('modal-order')">Jetzt Anfrage stellen →</button>
+    <button class="btn btn-ghost" onclick="closeModal()">Schliessen</button>
+  </div>
+</div>
+
+<div class="modal" id="modal-feat4" role="dialog" aria-modal="true">
+  <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <h2>Transparenz &amp; Reporting</h2>
+  <p class="modal-sub">Du hast jederzeit vollen Einblick in was SourceOn tut und was es kostet — alles ist nachvollziehbar und prüfbar.</p>
+  <ul style="color:var(--text-muted);font-size:.9rem;line-height:1.8;padding-left:20px;margin-bottom:16px">
+    <li>Alle Lieferantenangebote werden auf Verlangen offengelegt</li>
+    <li>Klare Dokumentation der erzielten Einsparung vs. Referenzpreis</li>
+    <li>Provision wird nachvollziehbar berechnet (2.25% des Materialwerts)</li>
+    <li>Kein Provision wenn keine Einsparung — schriftlich in den AGB</li>
+  </ul>
+  <div class="modal-cta-wrap">
+    <button class="btn btn-gold" onclick="closeModal();openModal('modal-order')">Jetzt Anfrage stellen →</button>
+    <button class="btn btn-ghost" onclick="closeModal()">Schliessen</button>
+  </div>
+</div>
+
+<div class="modal" id="modal-feat5" role="dialog" aria-modal="true">
+  <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <h2>Direktlieferung</h2>
+  <p class="modal-sub">Der Kaufvertrag kommt direkt zwischen dir und dem Lieferanten zustande. SourceOn koordiniert — ohne selbst Käufer oder Verkäufer zu sein.</p>
+  <ul style="color:var(--text-muted);font-size:.9rem;line-height:1.8;padding-left:20px;margin-bottom:16px">
+    <li>Lieferant liefert direkt auf deine Baustelle</li>
+    <li>Rechnung kommt direkt vom Lieferanten</li>
+    <li>SourceOn stellt separate Provisionsrechnung nach Lieferung</li>
+    <li>Kein Zwischenlager, keine Umwege, kein Mehraufwand</li>
+  </ul>
+  <div class="modal-cta-wrap">
+    <button class="btn btn-gold" onclick="closeModal();openModal('modal-order')">Jetzt Anfrage stellen →</button>
+    <button class="btn btn-ghost" onclick="closeModal()">Schliessen</button>
+  </div>
+</div>
+
+<div class="modal" id="modal-feat6" role="dialog" aria-modal="true">
+  <button class="modal-close" onclick="closeModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <h2>Umgehungsschutz</h2>
+  <p class="modal-sub">Unsere AGB nach Schweizer OR schützen sowohl SourceOn als auch dich — klare Regeln für eine faire Zusammenarbeit.</p>
+  <ul style="color:var(--text-muted);font-size:.9rem;line-height:1.8;padding-left:20px;margin-bottom:16px">
+    <li>Vermittelte Lieferanten dürfen 24 Monate nicht direkt umgangen werden</li>
+    <li>SourceOn legt alle Lieferantenangebote auf Anfrage offen</li>
+    <li>Provision nur bei nachgewiesener Einsparung — schriftlich garantiert</li>
+    <li>Gerichtsstand Zürich, Schweizer Recht nach OR Art. 412 ff.</li>
+  </ul>
+  <div class="modal-cta-wrap">
+    <button class="btn btn-gold" onclick="closeModal();openModal('modal-order')">Jetzt Anfrage stellen →</button>
+    <a href="agb.html" class="btn btn-ghost" target="_blank">AGB lesen</a>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════ SCRIPTS -->
 <script>
-// ─── MODAL SYSTEM ───
+// ── Modal system ──────────────────────────────────────────────────
 let activeModal=null;
 function openModal(id){
-  if(activeModal)document.getElementById(activeModal).classList.remove('open');
+  if(activeModal){document.getElementById(activeModal).classList.remove('open')}
   activeModal=id;
   document.getElementById('m-overlay').classList.add('open');
   document.getElementById(id).classList.add('open');
@@ -1018,96 +889,118 @@ function closeModal(){
 }
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
 
-// ─── AUTH TABS ───
-function switchTab(el,tabId){
-  el.parentElement.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('act'));
-  el.classList.add('act');
-  document.getElementById('tab-register').style.display=tabId==='tab-register'?'':'none';
-  document.getElementById('tab-login').style.display=tabId==='tab-login'?'':'none';
-}
-function switchTabByName(tabId){
-  const tabs=document.querySelectorAll('#m-signup .auth-tab');
-  tabs.forEach(t=>t.classList.remove('act'));
-  if(tabId==='tab-register')tabs[0].classList.add('act');
-  document.getElementById('tab-register').style.display=tabId==='tab-register'?'':'none';
-  document.getElementById('tab-login').style.display=tabId==='tab-login'?'':'none';
-}
-
-// ─── NAV BURGER ───
-const burger=document.getElementById('burger');
-const navLinks=document.getElementById('nav-links');
-burger.addEventListener('click',()=>{
-  const open=navLinks.classList.toggle('open');
-  const sp=burger.querySelectorAll('span');
-  if(open){sp[0].style.cssText='transform:translateY(6.8px) rotate(45deg)';sp[1].style.cssText='opacity:0';sp[2].style.cssText='transform:translateY(-6.8px) rotate(-45deg)';}
-  else sp.forEach(s=>s.style.cssText='');
+// Highlight selected order items
+document.querySelectorAll('.order-item input[type=checkbox]').forEach(cb=>{
+  cb.addEventListener('change',()=>{
+    cb.closest('.order-item').classList.toggle('selected',cb.checked);
+  });
 });
-document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>{
-  navLinks.classList.remove('open');
-  burger.querySelectorAll('span').forEach(s=>s.style.cssText='');
-}));
 
-// ─── ACTIVE NAV ───
-const secs=[...document.querySelectorAll('section[id],div[id]')].filter(s=>s.id!=='logos'&&s.id!=='cta-band');
-const nas=[...document.querySelectorAll('.nav-links a[href^="#"]')];
-window.addEventListener('scroll',()=>{
-  const y=scrollY+100;
-  secs.forEach(s=>{if(y>=s.offsetTop&&y<s.offsetTop+s.offsetHeight){nas.forEach(a=>a.classList.remove('act'));const a=document.querySelector(`.nav-links a[href="#${s.id}"]`);if(a)a.classList.add('act');}});
-},{passive:true});
-
-// ─── INTERSECTION OBSERVER ───
-const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}}),{threshold:.1});
-document.querySelectorAll('.fu').forEach(el=>io.observe(el));
-
-// ─── CALCULATOR ───
-const slider=document.getElementById('calc-slider');
-const fmt=n=>n.toLocaleString('de-CH');
-const rate=a=>a<200000?.08:a<500000?.12:a<1000000?.15:.18;
-function upd(){
-  const a=+slider.value;const b=Math.round(a*rate(a));const p=Math.round(a*.0225);
-  const pct=(a-50000)/(2000000-50000)*100;
-  slider.style.background=`linear-gradient(90deg,var(--gold) ${pct}%,rgba(255,255,255,.1) ${pct}%)`;
-  document.getElementById('amt-disp').textContent=fmt(a);
-  document.getElementById('brutto-disp').textContent='CHF '+fmt(b);
-  document.getElementById('prov-disp').textContent='− CHF '+fmt(p);
-  document.getElementById('netto-disp').textContent='CHF '+fmt(b-p);
+// ── Arc gauge calculator ──────────────────────────────────────────
+function polar(cx,cy,r,deg){
+  const rad=(deg-180)*Math.PI/180;
+  return{x:cx+r*Math.cos(rad),y:cy+r*Math.sin(rad)};
 }
-slider.addEventListener('input',upd);upd();
+function arcPath(cx,cy,r,startDeg,endDeg){
+  const s=polar(cx,cy,r,startDeg),e=polar(cx,cy,r,endDeg);
+  const large=endDeg-startDeg>180?1:0;
+  return`M${s.x.toFixed(2)},${s.y.toFixed(2)} A${r},${r} 0 ${large} 1 ${e.x.toFixed(2)},${e.y.toFixed(2)}`;
+}
+const CX=140,CY=140,R=110,START=0,END=180;
+const arcBg=document.getElementById('arc-bg');
+const arcFill=document.getElementById('arc-fill');
+const arcPct=document.getElementById('arc-pct');
+arcBg.setAttribute('d',arcPath(CX,CY,R,START,END));
 
-// ─── CONTACT FORM ───
+function savingsRate(v){return v<200000?.10:v<500000?.15:v<1000000?.20:.25;}
+function updateCalc(){
+  const v=+document.getElementById('vol-slider').value;
+  const rate=savingsRate(v);
+  const pct=Math.round(rate*100);
+  const degEnd=START+END*rate/0.25;
+  arcFill.setAttribute('d',arcPath(CX,CY,R,START,Math.min(degEnd,END)));
+  arcPct.textContent=pct+'%';
+  const save=v*rate;
+  const prov=v*0.0225;
+  const net=save-prov;
+  const fmt=n=>Math.round(n).toLocaleString('de-CH');
+  document.getElementById('vol-display').textContent='CHF '+fmt(v);
+  document.getElementById('res-save').textContent='CHF '+fmt(save);
+  document.getElementById('res-prov').textContent='CHF '+fmt(prov);
+  document.getElementById('res-net').textContent='CHF '+fmt(net);
+}
+document.getElementById('vol-slider').addEventListener('input',updateCalc);
+updateCalc();
+
+// ── Snake SVG animation ───────────────────────────────────────────
+function animateSnake(){
+  const path=document.getElementById('snake-path');
+  if(!path)return;
+  const len=path.getTotalLength();
+  path.style.strokeDasharray=len;
+  path.style.strokeDashoffset=len;
+  path.style.transition='none';
+  requestAnimationFrame(()=>{
+    path.style.transition='stroke-dashoffset 1.8s cubic-bezier(.4,0,.2,1)';
+    path.style.strokeDashoffset='0';
+  });
+}
+
+// ── Scroll animations ─────────────────────────────────────────────
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('in');
+      if(e.target.closest('.steps-wrap')){animateSnake();}
+      observer.unobserve(e.target);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+
+// ── Contact form ──────────────────────────────────────────────────
 document.getElementById('contact-form').addEventListener('submit',function(e){
   e.preventDefault();
-  const r=[{id:'f-fname',err:'e-fname',ok:v=>v.trim()},{id:'f-lname',err:'e-lname',ok:v=>v.trim()},{id:'f-company',err:'e-company',ok:v=>v.trim()},{id:'f-email',err:'e-email',ok:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)},{id:'f-phone',err:'e-phone',ok:v=>v.trim().length>6}];
   let ok=true;
-  r.forEach(x=>{const err=document.getElementById(x.err);if(!x.ok(document.getElementById(x.id).value)){err.style.display='block';ok=false;}else err.style.display='none';});
+  const fields=[
+    {id:'c-name',check:v=>v.trim().length>0},
+    {id:'c-email',check:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)},
+    {id:'c-msg',check:v=>v.trim().length>0},
+  ];
+  fields.forEach(f=>{
+    const el=document.getElementById(f.id);
+    const grp=el.closest('.form-group');
+    if(!f.check(el.value)){grp.classList.add('error');ok=false;}
+    else grp.classList.remove('error');
+  });
   if(!ok)return;
-  this.style.display='none';document.getElementById('cf-suc').style.display='block';
+  this.style.display='none';
+  document.getElementById('contact-success').style.display='block';
 });
 
-// ─── REGISTER FORM ───
-document.getElementById('reg-form').addEventListener('submit',function(e){
+// ── Order form ────────────────────────────────────────────────────
+document.getElementById('order-form').addEventListener('submit',function(e){
   e.preventDefault();
-  const r=[{id:'r-fname',err:'re-fname',ok:v=>v.trim()},{id:'r-lname',err:'re-lname',ok:v=>v.trim()},{id:'r-co',err:'re-co',ok:v=>v.trim()},{id:'r-email',err:'re-email',ok:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)},{id:'r-phone',err:'re-phone',ok:v=>v.trim().length>6}];
+  const checked=[...document.querySelectorAll('#order-form input[name=mat]:checked')];
+  const matErr=document.getElementById('mat-err');
+  if(checked.length===0){matErr.style.display='block';return;}
+  matErr.style.display='none';
   let ok=true;
-  r.forEach(x=>{const err=document.getElementById(x.err);if(!x.ok(document.getElementById(x.id).value)){err.style.display='block';ok=false;}else err.style.display='none';});
+  const fields=[
+    {id:'o-name',check:v=>v.trim().length>0},
+    {id:'o-company',check:v=>v.trim().length>0},
+    {id:'o-email',check:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)},
+  ];
+  fields.forEach(f=>{
+    const el=document.getElementById(f.id);
+    const grp=el.closest('.form-group');
+    if(!f.check(el.value)){grp.classList.add('error');ok=false;}
+    else grp.classList.remove('error');
+  });
   if(!ok)return;
-  this.style.display='none';document.getElementById('reg-suc').style.display='block';
+  this.style.display='none';
+  document.getElementById('order-success').style.display='block';
 });
-
-// ─── CTA BAND ───
-function ctaSubmit(){
-  const v=document.getElementById('cta-email').value;
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){document.getElementById('cta-email').style.borderColor='#f87171';return;}
-  document.getElementById('cta-email').style.borderColor='';
-  document.getElementById('r-email').value=v;
-  openModal('m-signup');
-}
-
-// ─── SMOOTH SCROLL ───
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',function(e){
-  const t=document.querySelector(this.getAttribute('href'));
-  if(t){e.preventDefault();scrollTo({top:t.offsetTop-72,behavior:'smooth'});}
-}));
 </script>
 </body>
 </html>
