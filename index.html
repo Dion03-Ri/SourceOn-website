@@ -120,13 +120,14 @@ a{color:inherit;text-decoration:none}
 
 /* PROCESS */
 #process{background:var(--bg)}
-.steps-svg-wrap{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
-.steps-svg-wrap svg{width:100%;height:100%;overflow:visible}
-.process-path{fill:none;stroke:var(--gold);stroke-width:2;stroke-linecap:round;opacity:.55}
-.process-dot{fill:var(--gold);filter:drop-shadow(0 0 4px rgba(232,160,32,.8))}
 .steps-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:64px;position:relative}
-.steps-wrap::before{display:none}
-.step-card{text-align:center;padding:0 20px;position:relative;z-index:1}
+.steps-wrap::before{content:'';position:absolute;top:48px;left:calc(12.5% + 12px);right:calc(12.5% + 12px);height:1px;background:repeating-linear-gradient(to right,rgba(232,160,32,.3) 0,rgba(232,160,32,.3) 6px,transparent 6px,transparent 14px);z-index:0}
+.steps-beam-wrap{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;z-index:0}
+.steps-beam{position:absolute;top:0;bottom:0;left:0;width:60px;background:linear-gradient(90deg,transparent,rgba(232,160,32,.45),transparent);opacity:0;will-change:transform}
+.steps-beam.beam-run{opacity:1;animation:beamSweep 1.5s ease-in-out forwards}
+@keyframes beamSweep{from{transform:translateX(-100%)}to{transform:translateX(calc(100vw + 100%))}}
+.step-card{text-align:center;padding:0 20px;position:relative;z-index:1;border-left:3px solid transparent;transition:border-color .3s,box-shadow .3s}
+.step-card.step-glow{border-left-color:var(--gold);box-shadow:0 0 20px rgba(232,160,32,.4)}
 .step-num{font-size:3rem;font-weight:800;line-height:1;margin-bottom:8px;background:linear-gradient(135deg,var(--gold) 0%,rgba(232,160,32,.25) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .step-icon{width:60px;height:60px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;transition:all .25s var(--ease)}
 .step-card:hover .step-icon{background:var(--gold);border-color:var(--gold);transform:translateY(-4px)}
@@ -201,38 +202,19 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 @media(max-width:900px){.calc-layout{grid-template-columns:1fr;gap:40px}}
 
 /* WHY */
-#why{background:var(--dark)}
-.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px}
-@keyframes whyIn{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-@keyframes iconPulse{0%,100%{box-shadow:0 0 0 0 rgba(232,160,32,.5)}50%{box-shadow:0 0 0 10px rgba(232,160,32,0)}}
-@keyframes particleBurst{0%{opacity:1;transform:translate(var(--px),var(--py)) scale(1)}100%{opacity:0;transform:translate(calc(var(--px)*3),calc(var(--py)*3)) scale(0)}}
-@keyframes borderClockwise{0%{clip-path:inset(0 100% 0 0)}25%{clip-path:inset(0 0 0 0 round 20px)}100%{clip-path:inset(0 0 0 0 round 20px)}}
-.why-card{background:#0F2238;border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:36px 28px 32px;box-shadow:0 4px 24px rgba(0,0,0,.3);transition:background .3s,transform .3s,box-shadow .3s,border-color .3s;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;text-align:center;aspect-ratio:1/1.3}
-.why-card.why-animated{animation:whyIn .55s var(--ease) both}
-.why-card:nth-child(1){animation-delay:.05s}
-.why-card:nth-child(2){animation-delay:.2s}
-.why-card:nth-child(3){animation-delay:.35s}
-.why-card:nth-child(4){animation-delay:.1s}
-.why-card:nth-child(5){animation-delay:.25s}
-.why-card:nth-child(6){animation-delay:.4s}
-.why-card::before{content:'';position:absolute;inset:0;border-radius:20px;border:2px solid transparent;background:linear-gradient(#0F2238,#0F2238) padding-box,linear-gradient(135deg,var(--gold) 0%,transparent 50%) border-box;opacity:0;transition:opacity .4s}
-.why-card:hover::before{opacity:1}
-.why-card:hover{background:#1B3A5C;transform:translateY(-12px);box-shadow:0 20px 48px rgba(0,0,0,.4),0 0 0 1px rgba(232,160,32,.2)}
-.why-icon{width:60px;height:60px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;margin-bottom:20px;transition:transform .3s var(--ease),box-shadow .3s;flex-shrink:0;position:relative;z-index:1}
-.why-card:hover .why-icon{transform:scale(1.2);animation:iconPulse 1s ease-in-out infinite}
-.why-icon svg{width:26px;height:26px;color:#0F2238;transition:none}
-.why-title{font-size:18px;font-weight:700;color:#fff;margin-bottom:10px;transition:color .3s;position:relative;z-index:1}
-.why-card:hover .why-title{color:var(--gold)}
-.why-desc{font-size:.84rem;color:#94A3B8;line-height:1.65;position:relative;z-index:1}
-.why-particle{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--gold);pointer-events:none;opacity:0;z-index:2}
-.why-card:hover .why-particle{animation:particleBurst .6s ease-out forwards}
-.why-particle:nth-child(1){--px:-12px;--py:-18px;top:calc(36px + 30px);left:50%;animation-delay:.0s}
-.why-particle:nth-child(2){--px:14px;--py:-16px;top:calc(36px + 30px);left:50%;animation-delay:.05s}
-.why-particle:nth-child(3){--px:18px;--py:8px;top:calc(36px + 30px);left:50%;animation-delay:.1s}
-.why-particle:nth-child(4){--px:-16px;--py:10px;top:calc(36px + 30px);left:50%;animation-delay:.08s}
-.why-particle:nth-child(5){--px:4px;--py:-20px;top:calc(36px + 30px);left:50%;animation-delay:.03s}
-@media(max-width:900px){.why-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.why-grid{grid-template-columns:1fr;}.why-card{aspect-ratio:auto}}
+#why{background:var(--bg)}
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;margin-top:56px;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.why-card{background:#fff;padding:24px;display:flex;align-items:flex-start;gap:16px;transition:background .2s,border-left-color .2s;border-left:3px solid transparent;position:relative}
+.why-card:not(:last-child):not(:nth-child(2n)){border-right:1px solid var(--border)}
+.why-card:nth-child(n+3){border-top:1px solid var(--border)}
+.why-card:hover{background:#F8FAFC;border-left-color:var(--gold)}
+.why-icon{width:44px;height:44px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.why-icon svg{width:20px;height:20px;color:var(--gold)}
+.why-body{flex:1;min-width:0}
+.why-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:5px}
+.why-desc{font-size:.83rem;color:var(--body);line-height:1.6}
+@media(max-width:640px){.why-grid{grid-template-columns:1fr}}
+@media(max-width:640px){.why-card:not(:last-child){border-bottom:1px solid var(--border)}.why-card{border-right:none!important}}
 
 /* MATERIALS */
 #materials{background:var(--bg2)}
@@ -527,16 +509,9 @@ footer{background:var(--dark);padding:72px 0 0}
 /* Hero entrance animation */
 @keyframes heroEntrance{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 .hero-content{animation:heroEntrance 1.2s var(--ease) both}
-
-/* Cursor glow (desktop only) */
-#cursor-glow{position:fixed;top:0;left:0;width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,rgba(232,160,32,.25) 0%,transparent 70%);pointer-events:none;transform:translate(-50%,-50%);z-index:9999;transition:transform .15s,opacity .3s;opacity:0}
-@media(hover:hover){#cursor-glow{display:block}}
-@media(hover:none){#cursor-glow{display:none!important}}
 </style>
 </head>
 <body>
-<div id="cursor-glow"></div>
-
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-inner">
@@ -605,7 +580,7 @@ footer{background:var(--dark);padding:72px 0 0}
       <p class="subtitle" style="margin-top:16px">Kein Aufwand auf deiner Seite — du meldest den Bedarf, wir übernehmen alles.</p>
     </div>
     <div class="steps-wrap" id="steps-wrap">
-      <div class="steps-svg-wrap"><svg id="steps-svg" viewBox="0 0 1000 100" preserveAspectRatio="none"><path id="process-path" class="process-path" d=""/><circle id="process-dot" class="process-dot" r="5" cx="-20" cy="50"/></svg></div>
+      <div class="steps-beam-wrap"><div class="steps-beam" id="steps-beam"></div></div>
       <div class="step-card reveal reveal-d1">
         <div class="step-num">01</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
@@ -750,45 +725,33 @@ footer{background:var(--dark);padding:72px 0 0}
 <section id="why" class="section">
   <div class="container">
     <div class="text-center reveal">
-      <div class="label label-dark">Warum SourceOn</div>
-      <h2 class="h2" style="color:#fff">Sechs Gründe — die niemand sonst bietet.</h2>
+      <div class="label">Warum SourceOn</div>
+      <h2 class="h2">Sechs Gründe — die niemand sonst bietet.</h2>
     </div>
     <div class="why-grid">
       <div class="why-card reveal reveal-d1">
-        <span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span>
         <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-        <div class="why-title">Nachfragebündelung</div>
-        <p class="why-desc">Mehrere Kunden, ein Auftrag. Mengenrabatte, die kein Einzelkunde je bekäme. Das ist der strukturelle Kern.</p>
+        <div class="why-body"><div class="why-title">Nachfragebündelung</div><p class="why-desc">Mehrere Kunden, ein Auftrag. Mengenrabatte, die kein Einzelkunde je bekäme. Das ist der strukturelle Kern.</p></div>
       </div>
       <div class="why-card reveal reveal-d2">
-        <span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span>
         <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-        <div class="why-title">Zahlung nur bei Ersparnis</div>
-        <p class="why-desc">Keine Fixgebühr. Kein Abo. 2.25% nur wenn du wirklich günstiger einkaufst. Kein Erfolg — keine Kosten.</p>
-      </div>
-      <div class="why-card reveal reveal-d3">
-        <span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span>
-        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
-        <div class="why-title">KI + Expertise</div>
-        <p class="why-desc">KI analysiert Angebote in Sekunden. Erfahrene Verhandler setzen das beste Ergebnis durch.</p>
+        <div class="why-body"><div class="why-title">Zahlung nur bei Ersparnis</div><p class="why-desc">Keine Fixgebühr. Kein Abo. 2.25% nur wenn du wirklich günstiger einkaufst. Kein Erfolg — keine Kosten.</p></div>
       </div>
       <div class="why-card reveal reveal-d1">
-        <span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span>
-        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
-        <div class="why-title">Null Aufwand</div>
-        <p class="why-desc">Wir holen alle Offerten ein, vergleichen und verhandeln. Dein Bauleiter bleibt auf der Baustelle.</p>
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg></div>
+        <div class="why-body"><div class="why-title">KI + Expertise</div><p class="why-desc">KI analysiert Angebote in Sekunden. Erfahrene Verhandler setzen das beste Ergebnis durch.</p></div>
       </div>
       <div class="why-card reveal reveal-d2">
-        <span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span>
-        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
-        <div class="why-title">Schweizer Fokus</div>
-        <p class="why-desc">Lokale Lieferanten, Schweizer Normen SN EN und SIA, Deutsch — kurze Wege, klare Kommunikation.</p>
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div>
+        <div class="why-body"><div class="why-title">Null Aufwand</div><p class="why-desc">Wir holen alle Offerten ein, vergleichen und verhandeln. Dein Bauleiter bleibt auf der Baustelle.</p></div>
       </div>
-      <div class="why-card reveal reveal-d3">
-        <span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span><span class="why-particle"></span>
+      <div class="why-card reveal reveal-d1">
+        <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
+        <div class="why-body"><div class="why-title">Schweizer Fokus</div><p class="why-desc">Lokale Lieferanten, Schweizer Normen SN EN und SIA, Deutsch — kurze Wege, klare Kommunikation.</p></div>
+      </div>
+      <div class="why-card reveal reveal-d2">
         <div class="why-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></div>
-        <div class="why-title">Volle Transparenz</div>
-        <p class="why-desc">Du siehst alle Angebote. Keine Kickbacks. Keine versteckten Kosten. Vollständige Dokumentation.</p>
+        <div class="why-body"><div class="why-title">Volle Transparenz</div><p class="why-desc">Du siehst alle Angebote. Keine Kickbacks. Keine versteckten Kosten. Vollständige Dokumentation.</p></div>
       </div>
     </div>
   </div>
@@ -883,7 +846,7 @@ footer{background:var(--dark);padding:72px 0 0}
   <div class="container">
     <div class="text-center reveal" style="position:relative;z-index:1">
       <div class="label label-dark">ZAHLEN &amp; FAKTEN</div>
-      <h2 class="h2" style="color:#fff">Was Bündelung wirklich bedeutet.</h2>
+      <h2 class="h2" style="color:#fff">Der Schweizer Baumarkt — in Zahlen.</h2>
     </div>
     <div class="zahlen-grid">
       <div class="zahlen-card reveal reveal-d1">
@@ -922,12 +885,11 @@ footer{background:var(--dark);padding:72px 0 0}
     <h2 class="h2" style="color:#fff;margin-top:0;margin-bottom:12px">Gemeinsam stärker einkaufen.</h2>
     <p class="subtitle subtitle-dark" style="margin:0 auto">Sieh wie SourceOn Materialbedarf bündelt und Mengenrabatte erzielt.</p>
   </div>
-  <div id="webgl-wrap" style="width:100%;height:700px;position:relative;cursor:crosshair">
+  <div id="webgl-wrap" style="width:100%;height:580px;position:relative;cursor:crosshair">
     <canvas id="bundling-canvas" style="display:block;width:100%;height:100%"></canvas>
   </div>
   <div style="text-align:center;padding:32px 0 80px;position:relative;z-index:2">
-    <p style="font-size:clamp(17px,2.2vw,22px);font-weight:800;color:#E8A020;letter-spacing:-0.02em;padding:0 20px">CHF 17'550 Netto-Ersparnis — für drei Baufirmen auf einer einzigen Bestellung.</p>
-    <p style="font-size:.78rem;color:#94A3B8;margin-top:8px;font-style:italic">Rechenbeispiel basierend auf realen Marktkonditionen.</p>
+    <p style="font-size:.9rem;color:#94A3B8;font-style:italic;padding:0 20px">Materialfluss in Echtzeit — SourceOn verbindet Baufirmen mit Lieferanten.</p>
   </div>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -938,315 +900,225 @@ footer{background:var(--dark);padding:72px 0 0}
   if(!wrap||!canvas||typeof THREE==='undefined')return;
 
   var isMobile=window.innerWidth<640;
-  var H=isMobile?500:700;
+  var H=isMobile?380:580;
   var W=wrap.offsetWidth||window.innerWidth;
+  wrap.style.height=H+'px';
   canvas.style.height=H+'px';
 
   var scene=new THREE.Scene();
   scene.background=new THREE.Color(0x0F2238);
-  scene.fog=new THREE.FogExp2(0x0F2238,0.028);
+  scene.fog=new THREE.FogExp2(0x0A1628,0.04);
 
-  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,300);
-  camera.position.set(0,4,18);
-  camera.lookAt(0,0,0);
+  var camera=new THREE.PerspectiveCamera(60,W/H,0.1,200);
+  camera.position.set(0,1.5,10);
+  camera.lookAt(0,0.5,0);
 
-  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
+  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.setSize(W,H);
 
   // Lighting
-  scene.add(new THREE.AmbientLight(0x1B3A5C,1.2));
-  var goldLight=new THREE.PointLight(0xE8A020,2.5,30);
-  goldLight.position.set(0,0,0);
-  scene.add(goldLight);
-  var dirLight=new THREE.DirectionalLight(0xffffff,0.6);
-  dirLight.position.set(6,10,5);
+  scene.add(new THREE.AmbientLight(0x1B3A5C,0.6));
+  var hubLight=new THREE.PointLight(0xE8A020,2,20);
+  hubLight.position.set(0,0.5,0);
+  scene.add(hubLight);
+  var dirLight=new THREE.DirectionalLight(0xffffff,0.5);
+  dirLight.position.set(4,8,5);
   scene.add(dirLight);
 
-  // Grid at bottom
-  var grid=new THREE.GridHelper(30,24,0x1B3A5C,0x1B3A5C);
-  grid.position.y=-2.8;
-  grid.material.opacity=0.35;grid.material.transparent=true;
-  scene.add(grid);
-
-  // Stars
-  var sCnt=200,sBuf=new Float32Array(sCnt*3);
-  for(var i=0;i<sCnt*3;i++)sBuf[i]=(Math.random()-.5)*100;
-  var sGeo=new THREE.BufferGeometry();
-  sGeo.setAttribute('position',new THREE.BufferAttribute(sBuf,3));
-  var stars=new THREE.Points(sGeo,new THREE.PointsMaterial({color:0xffffff,size:0.1,transparent:true,opacity:0.55}));
-  scene.add(stars);
-
   // Sprite label helper
-  function mkLabel(txt,col,sz){
+  function mkLabel(txt,col,bg){
     var c=document.createElement('canvas');
-    c.width=512;c.height=96;
+    c.width=256;c.height=56;
     var ctx=c.getContext('2d');
-    ctx.font='bold '+(sz||28)+'px Inter,sans-serif';
+    if(bg){
+      ctx.fillStyle=bg;
+      var rx=8;
+      ctx.beginPath();
+      ctx.moveTo(rx,0);ctx.lineTo(c.width-rx,0);ctx.quadraticCurveTo(c.width,0,c.width,rx);
+      ctx.lineTo(c.width,c.height-rx);ctx.quadraticCurveTo(c.width,c.height,c.width-rx,c.height);
+      ctx.lineTo(rx,c.height);ctx.quadraticCurveTo(0,c.height,0,c.height-rx);
+      ctx.lineTo(0,rx);ctx.quadraticCurveTo(0,0,rx,0);ctx.closePath();ctx.fill();
+    }
+    ctx.font='bold 22px Inter,sans-serif';
     ctx.fillStyle=col||'#ffffff';
-    ctx.textAlign='center';
-    ctx.textBaseline='middle';
-    ctx.fillText(txt,256,48);
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(txt,128,28);
     var tex=new THREE.CanvasTexture(c);
     var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false}));
-    sp.scale.set(5.5,1.1,1);
+    sp.scale.set(2.8,0.62,1);
     return sp;
   }
 
   // Positions
-  var restPos=[
-    new THREE.Vector3(-3.8,0,2.2),
-    new THREE.Vector3(3.8,0,2.2),
-    new THREE.Vector3(-1.2,0,-3.2)
+  var compPos=[
+    new THREE.Vector3(-3,2,0),
+    new THREE.Vector3(3,2,0),
+    new THREE.Vector3(0,-1,0)
   ];
-  var startPos=[
-    new THREE.Vector3(-16,4,10),
-    new THREE.Vector3(16,4,10),
-    new THREE.Vector3(-9,-5,-14)
-  ];
+  var hubPos=new THREE.Vector3(0,0.5,0);
+  var supPos=new THREE.Vector3(4.5,0.5,0);
 
-  // Octahedron company objects (diamonds)
-  var octGeo=new THREE.OctahedronGeometry(0.77,0);
-  var boxes=[],boxLabels=[],boxNames=[];
-  var BLABELS=['80 m³ Beton','60 m³ Beton','40 m³ Beton'];
-  var BNAMES=['Firma A','Firma B','Firma C'];
+  // Company spheres + rings
+  var compMeshes=[];
   for(var i=0;i<3;i++){
-    var bmat=new THREE.MeshPhongMaterial({color:0x2E75B6,emissive:0x0d2d5a,transparent:true,opacity:0});
-    var bm=new THREE.Mesh(octGeo,bmat);
-    bm.position.copy(startPos[i]);
-    bm.visible=false;
-    // wireframe overlay
-    var wfGeo=new THREE.WireframeGeometry(octGeo);
-    var wfLine=new THREE.LineSegments(wfGeo,new THREE.LineBasicMaterial({color:0x5ab0ff,transparent:true,opacity:0.35}));
-    bm.add(wfLine);
-    scene.add(bm);
-    boxes.push(bm);
-    var lb=mkLabel(BLABELS[i],'#E8A020',24);
-    lb.position.set(0,1.4,0);lb.visible=false;
-    bm.add(lb);boxLabels.push(lb);
-    var ln=mkLabel(BNAMES[i],'#ffffff',22);
-    ln.position.set(0,0.9,0);ln.visible=false;
-    bm.add(ln);boxNames.push(ln);
+    var sm=new THREE.Mesh(
+      new THREE.SphereGeometry(0.4,24,24),
+      new THREE.MeshPhongMaterial({color:0x2E75B6,emissive:0x1B3A5C,shininess:100,transparent:true,opacity:0.9})
+    );
+    sm.position.copy(compPos[i]);
+    scene.add(sm);
+    compMeshes.push(sm);
+    var ring=new THREE.Mesh(
+      new THREE.TorusGeometry(0.55,0.04,8,40),
+      new THREE.MeshPhongMaterial({color:0xE8A020,emissive:0x704010,shininess:80})
+    );
+    ring.position.copy(compPos[i]);
+    scene.add(ring);
+    sm.userData.ring=ring;
+    var lbl=mkLabel('Baufirma','#ffffff','rgba(15,34,56,0.85)');
+    lbl.position.copy(compPos[i]);
+    lbl.position.y+=0.75;
+    scene.add(lbl);
   }
 
-  // Central sphere
-  var sphere=new THREE.Mesh(
-    new THREE.SphereGeometry(0.9,32,32),
-    new THREE.MeshPhongMaterial({color:0xE8A020,emissive:0xb06000,transparent:true,opacity:0})
+  // Hub icosahedron
+  var hub=new THREE.Mesh(
+    new THREE.IcosahedronGeometry(0.8,0),
+    new THREE.MeshPhongMaterial({color:0xE8A020,emissive:0x854F0B,shininess:200})
   );
-  sphere.visible=false;
-  scene.add(sphere);
-  var sphereLbl=mkLabel('SourceOn','#E8A020',28);
-  sphereLbl.position.set(0,1.7,0);
-  sphere.add(sphereLbl);
+  hub.position.copy(hubPos);
+  scene.add(hub);
+  var hubLbl=mkLabel('sourceON','#E8A020','rgba(15,34,56,0.85)');
+  hubLbl.position.set(0,1.55,0);
+  hub.add(hubLbl);
 
-  // Teal torus (Lieferant)
-  var greenBox=new THREE.Mesh(
-    new THREE.TorusGeometry(0.85,0.32,16,48),
-    new THREE.MeshPhongMaterial({color:0x0D9488,emissive:0x064e47,transparent:true,opacity:0})
+  // Supplier octahedron
+  var sup=new THREE.Mesh(
+    new THREE.OctahedronGeometry(0.5,0),
+    new THREE.MeshPhongMaterial({color:0x0D9488,emissive:0x065148,shininess:100})
   );
-  greenBox.position.set(7.5,0,0);
-  greenBox.visible=false;
-  scene.add(greenBox);
-  var gLbl=mkLabel('180 m³ — 12% Rabatt','#4ade80',20);
-  gLbl.position.set(0,1.5,0);gLbl.visible=false;greenBox.add(gLbl);
-  var gName=mkLabel('Lieferant','#ffffff',20);
-  gName.position.set(0,0.9,0);gName.visible=false;greenBox.add(gName);
+  sup.position.copy(supPos);
+  scene.add(sup);
+  var supLbl=mkLabel('Lieferant','#ffffff','rgba(15,34,56,0.85)');
+  supLbl.position.copy(supPos);supLbl.position.y+=0.9;
+  scene.add(supLbl);
 
-  // Beam
-  var beam=new THREE.Mesh(
-    new THREE.CylinderGeometry(0.07,0.07,7.5,8),
-    new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0})
-  );
-  beam.rotation.z=Math.PI/2;
-  beam.position.set(3.75,0,0);
-  beam.visible=false;
-  scene.add(beam);
-
-  // Flow particles
-  var PCNT=150,pBuf=new Float32Array(PCNT*3);
-  var pGeo=new THREE.BufferGeometry();
-  pGeo.setAttribute('position',new THREE.BufferAttribute(pBuf,3));
-  var particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.13,transparent:true,opacity:0}));
-  scene.add(particles);
-
-  // Explosion particles
-  var ECNT=100,eBuf=new Float32Array(ECNT*3);
-  var eGeo=new THREE.BufferGeometry();
-  eGeo.setAttribute('position',new THREE.BufferAttribute(eBuf,3));
-  var eVel=[];
-  for(var i=0;i<ECNT;i++){
-    var th=Math.random()*Math.PI*2,ph=Math.random()*Math.PI;
-    eVel.push(new THREE.Vector3(
-      Math.sin(ph)*Math.cos(th),Math.sin(ph)*Math.sin(th),Math.cos(ph)
-    ).multiplyScalar(.07+Math.random()*.1));
+  // Tubes from companies to hub
+  var curves=[];
+  for(var i=0;i<3;i++){
+    var cx=(compPos[i].x+hubPos.x)/2+(Math.random()-.5)*0.5;
+    var cy2=(compPos[i].y+hubPos.y)/2;
+    var cz=(compPos[i].z+hubPos.z)/2;
+    var curve=new THREE.CatmullRomCurve3([
+      compPos[i].clone(),
+      new THREE.Vector3(cx,cy2,cz),
+      hubPos.clone()
+    ]);
+    curves.push(curve);
+    var tubeGeo=new THREE.TubeGeometry(curve,20,0.025,6,false);
+    var tubeMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.3});
+    var tube=new THREE.Mesh(tubeGeo,tubeMat);
+    scene.add(tube);
+    curve.userData={mat:tubeMat};
   }
-  var explParts=new THREE.Points(eGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.11,transparent:true,opacity:0}));
-  scene.add(explParts);
 
-  // Savings sprites
-  var SAV_TEXTS=["+CHF 5'850","+CHF 4'388","+CHF 2'925"];
-  var savSprites=SAV_TEXTS.map(function(t,i){
-    var s=mkLabel(t,'#E8A020',22);
-    s.position.copy(restPos[i]);s.position.y+=2;
-    s.visible=false;scene.add(s);return s;
-  });
+  // Hub to supplier tube
+  var hubSupCurve=new THREE.CatmullRomCurve3([
+    hubPos.clone(),
+    new THREE.Vector3(2.5,1.2,0),
+    supPos.clone()
+  ]);
+  var hubSupMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.3});
+  scene.add(new THREE.Mesh(new THREE.TubeGeometry(hubSupCurve,20,0.04,6,false),hubSupMat));
 
-  // Checkmarks
-  var checkSprites=restPos.map(function(p){
-    var s=mkLabel('✓','#4ade80',36);
-    s.position.copy(p);s.position.y+=1.6;
-    s.visible=false;scene.add(s);return s;
-  });
+  // Particles company->hub (20 each)
+  var PARTS_PER=20;
+  var compParticles=[];
+  for(var i=0;i<3;i++){
+    var pts=[];
+    for(var j=0;j<PARTS_PER;j++){
+      var pm=new THREE.Mesh(
+        new THREE.SphereGeometry(0.05,6,6),
+        new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.85})
+      );
+      pm.userData.t=j/PARTS_PER;
+      scene.add(pm);pts.push(pm);
+    }
+    compParticles.push(pts);
+  }
 
-  // Mouse/touch
-  var mx=0,my=0,camRX=0,camRY=0;
+  // Particles hub->supplier (30)
+  var SUP_PARTS=30;
+  var supParticles=[];
+  for(var j=0;j<SUP_PARTS;j++){
+    var pm=new THREE.Mesh(
+      new THREE.SphereGeometry(0.05,6,6),
+      new THREE.MeshBasicMaterial({color:0x0D9488,transparent:true,opacity:0.85})
+    );
+    pm.userData.t=j/SUP_PARTS;
+    scene.add(pm);supParticles.push(pm);
+  }
+
+  // Mouse
+  var tmx=0,tmy=0,cmx=0,cmy=0;
   wrap.addEventListener('mousemove',function(e){
     var r=wrap.getBoundingClientRect();
-    mx=(e.clientX-r.left)/r.width-.5;
-    my=(e.clientY-r.top)/r.height-.5;
+    tmx=(e.clientX-r.left)/r.width-.5;
+    tmy=(e.clientY-r.top)/r.height-.5;
   });
-  wrap.addEventListener('touchmove',function(e){
-    var t=e.touches[0],r=wrap.getBoundingClientRect();
-    mx=(t.clientX-r.left)/r.width-.5;
-    my=(t.clientY-r.top)/r.height-.5;
-  },{passive:true});
-  window.addEventListener('deviceorientation',function(e){
-    mx=Math.max(-.5,Math.min(.5,(e.gamma||0)/30));
-    my=Math.max(-.5,Math.min(.5,(e.beta||0)/60-.3));
-  });
-
-  function lerp(a,b,t){return a+(b-a)*t;}
-  function eOut(t){return 1-Math.pow(1-Math.min(1,t),3);}
-  function eIO(t){t=Math.min(1,t);return t<.5?2*t*t:-1+(4-2*t)*t;}
 
   var t0=performance.now();
+  function lerp(a,b,t){return a+(b-a)*t;}
+
   function animate(){
     requestAnimationFrame(animate);
     var now=(performance.now()-t0)/1000;
-    var cy=now%8;
 
-    stars.rotation.y=now*.025;stars.rotation.x=now*.008;
-    sphere.rotation.y=now*.3;sphere.rotation.x=now*.12;
+    // Camera auto-orbit
+    var angle=now*0.12;
+    var camR=10;
+    camera.position.x=Math.sin(angle)*camR;
+    camera.position.z=Math.cos(angle)*camR;
+    camera.position.y=1.5+Math.sin(now*0.3)*0.5;
+    cmx=lerp(cmx,tmx,0.03);cmy=lerp(cmy,tmy,0.03);
+    camera.position.x+=cmx*3;camera.position.y+=cmy*1.5;
+    camera.lookAt(0,0.5,0);
 
-    // Camera mouse tracking
-    camRX=lerp(camRX,-my*.08,.05);
-    camRY=lerp(camRY,mx*.08,.05);
-    camera.position.x=Math.sin(camRY)*14;
-    camera.position.y=4+camRX*6;
-    camera.position.z=Math.cos(camRY)*18;
-    camera.lookAt(0,0,0);
+    // Hub rotate
+    hub.rotation.y=now*0.6;hub.rotation.x=now*0.3;hub.rotation.z=now*0.15;
+    hubLight.intensity=1.8+Math.sin(now*2.5)*0.5;
 
-    goldLight.intensity=2+Math.sin(now*2.5)*.6;
-
-    // Reset helpers
-    function showBox(i,op,vis){
-      boxes[i].visible=true;boxes[i].material.opacity=op;
-      boxLabels[i].visible=vis;boxNames[i].visible=vis;
+    // Rings
+    for(var i=0;i<3;i++){
+      if(compMeshes[i].userData.ring)
+        compMeshes[i].userData.ring.rotation.y=now*(0.4+i*0.1);
     }
-    function hideBox(i){boxes[i].visible=false;}
-    function hideAll(){
-      boxes.forEach(function(b){b.visible=false;});
-      sphere.visible=false;greenBox.visible=false;beam.visible=false;
-      particles.material.opacity=0;explParts.material.opacity=0;
-      savSprites.forEach(function(s){s.visible=false;});
-      checkSprites.forEach(function(s){s.visible=false;});
-    }
+    sup.rotation.y=now*0.5;sup.rotation.x=now*0.2;
 
-    // Phase 1: 0–2s boxes fly in
-    if(cy<2){
-      hideAll();
-      var t=cy/2;
-      for(var i=0;i<3;i++){
-        var delay=i*.2,lt=eOut(Math.max(0,(t-delay*.5)/.8));
-        boxes[i].visible=true;
-        boxes[i].position.lerpVectors(startPos[i],restPos[i],lt);
-        boxes[i].material.opacity=lt*.85;
-        boxes[i].rotation.y=(1-lt)*Math.PI*.4;
-        var vis=lt>.25;
-        boxLabels[i].visible=vis;boxNames[i].visible=vis;
+    // Tube pulse
+    var pulse=0.2+Math.sin(now*Math.PI)*0.15;
+    for(var i=0;i<curves.length;i++){
+      if(curves[i].userData&&curves[i].userData.mat)
+        curves[i].userData.mat.opacity=pulse;
+    }
+    hubSupMat.opacity=pulse*1.3;
+
+    // Company->hub particles
+    for(var i=0;i<3;i++){
+      for(var j=0;j<PARTS_PER;j++){
+        var p=compParticles[i][j];
+        p.userData.t=(p.userData.t+0.005)%1;
+        var pt=curves[i].getPoint(p.userData.t);
+        p.position.copy(pt);
       }
     }
-    // Phase 2: 2–4s sphere + particles
-    else if(cy<4){
-      var t=(cy-2)/2;
-      for(var i=0;i<3;i++){
-        boxes[i].visible=true;
-        boxes[i].position.copy(restPos[i]);
-        boxes[i].material.opacity=.85;
-        boxes[i].rotation.y=0;
-        boxLabels[i].visible=true;boxNames[i].visible=true;
-      }
-      sphere.visible=true;
-      sphere.material.opacity=eOut(Math.min(1,t*4));
-      sphere.scale.setScalar(1+Math.sin(t*Math.PI*4)*.07+t*.12);
-      sphereLbl.visible=t>.1;
-      greenBox.visible=false;beam.visible=false;explParts.material.opacity=0;
-      savSprites.forEach(function(s){s.visible=false;});
-      checkSprites.forEach(function(s){s.visible=false;});
-      if(t>.1){
-        particles.material.opacity=Math.min(1,(t-.1)*4)*.75;
-        var pa=pGeo.getAttribute('position');
-        for(var i=0;i<PCNT;i++){
-          var si=i%3,src=restPos[si];
-          var frac=((i/PCNT)+t*1.8)%1;
-          pa.setXYZ(i,lerp(src.x,0,frac)+(Math.random()-.5)*.15,lerp(src.y,0,frac),lerp(src.z,0,frac)+(Math.random()-.5)*.15);
-        }
-        pa.needsUpdate=true;
-      } else particles.material.opacity=0;
-    }
-    // Phase 3: 4–6s explosion + lieferant
-    else if(cy<6){
-      var t=(cy-4)/2;
-      for(var i=0;i<3;i++){
-        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
-        boxes[i].material.opacity=.85;
-        boxLabels[i].visible=true;boxNames[i].visible=true;
-      }
-      sphere.visible=true;sphere.material.opacity=.9;
-      sphere.scale.setScalar(1+t*.08);sphereLbl.visible=true;
-      particles.material.opacity=0;
-      if(t<.5){
-        var ef=1-t/.5;
-        explParts.material.opacity=ef*.85;
-        var ea=eGeo.getAttribute('position');
-        for(var i=0;i<ECNT;i++){var d=t*10;ea.setXYZ(i,eVel[i].x*d,eVel[i].y*d,eVel[i].z*d);}
-        ea.needsUpdate=true;
-      } else explParts.material.opacity=0;
-      var ap=eOut(Math.max(0,(t-.25)/.4));
-      greenBox.visible=true;greenBox.material.opacity=ap*.85;
-      greenBox.scale.setScalar(ap+.001);
-      gLbl.visible=ap>.3;gName.visible=ap>.3;
-      beam.visible=ap>.1;beam.material.opacity=ap*.7;
-      savSprites.forEach(function(s){s.visible=false;});
-      checkSprites.forEach(function(s){s.visible=false;});
-    }
-    // Phase 4: 6–8s savings + fade
-    else{
-      var t=(cy-6)/2;
-      var fa=Math.max(0,1-(t-.75)/.25);
-      for(var i=0;i<3;i++){
-        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
-        boxes[i].material.opacity=.85*fa;
-        boxLabels[i].visible=fa>.1;boxNames[i].visible=fa>.1;
-      }
-      sphere.visible=fa>.05;sphere.material.opacity=.9*fa;sphereLbl.visible=fa>.1;
-      greenBox.visible=fa>.05;greenBox.material.opacity=.85*fa;
-      gLbl.visible=fa>.2;gName.visible=fa>.2;
-      beam.visible=fa>.05;beam.material.opacity=.7*fa;
-      particles.material.opacity=0;explParts.material.opacity=0;
-      for(var i=0;i<3;i++){
-        var dl=i*.12,lt=eOut(Math.max(0,(t-dl)*5));
-        var sf=lt*(1-Math.max(0,(t-.65)/.3));
-        savSprites[i].visible=lt>.0;
-        savSprites[i].position.copy(restPos[i]);
-        savSprites[i].position.y=2+lt*1.8;
-        if(savSprites[i].material)savSprites[i].material.opacity=sf;
-        var cl=eOut(Math.max(0,(t-dl)*.5*5));
-        checkSprites[i].visible=cl>.0;
-        checkSprites[i].position.copy(restPos[i]);checkSprites[i].position.y=1.6;
-        if(checkSprites[i].material)checkSprites[i].material.opacity=cl*fa;
-      }
+    // Hub->supplier particles
+    for(var j=0;j<SUP_PARTS;j++){
+      var p=supParticles[j];
+      p.userData.t=(p.userData.t+0.008)%1;
+      var pt=hubSupCurve.getPoint(p.userData.t);
+      p.position.copy(pt);
     }
 
     renderer.render(scene,camera);
@@ -1254,8 +1126,8 @@ footer{background:var(--dark);padding:72px 0 0}
   animate();
 
   window.addEventListener('resize',function(){
-    var nW=wrap.offsetWidth,nH=window.innerWidth<640?500:700;
-    canvas.style.height=nH+'px';
+    var nW=wrap.offsetWidth,nH=window.innerWidth<640?380:580;
+    wrap.style.height=nH+'px';canvas.style.height=nH+'px';
     camera.aspect=nW/nH;camera.updateProjectionMatrix();
     renderer.setSize(nW,nH);
   });
@@ -1762,129 +1634,27 @@ function submitSupplier(e){
   }
 }
 
-// CURSOR GLOW
-(function(){
-  var g=document.getElementById('cursor-glow');
-  if(!g)return;
-  var gx=0,gy=0,cx=0,cy=0;
-  document.addEventListener('mousemove',function(e){cx=e.clientX;cy=e.clientY;});
-  document.addEventListener('mouseenter',function(){g.style.opacity='1';});
-  document.addEventListener('mouseleave',function(){g.style.opacity='0';});
-  (function loop(){
-    gx+=(cx-gx)*.12;gy+=(cy-gy)*.12;
-    g.style.left=gx+'px';g.style.top=gy+'px';
-    requestAnimationFrame(loop);
-  })();
-})();
-
-// PROCESS SVG ANIMATED PATH
+// PROCESS BEAM SWEEP + STAGGER GLOW
 (function(){
   var wrap=document.getElementById('steps-wrap');
-  var svg=document.getElementById('steps-svg');
-  var path=document.getElementById('process-path');
-  var dot=document.getElementById('process-dot');
-  if(!wrap||!path||!dot)return;
-
-  function buildPath(){
-    var cards=wrap.querySelectorAll('.step-card');
-    if(cards.length<2)return;
-    var wr=wrap.getBoundingClientRect();
-    var points=[];
-    cards.forEach(function(card){
-      var r=card.getBoundingClientRect();
-      var icon=card.querySelector('.step-icon');
-      var iy=icon?icon.getBoundingClientRect().top+icon.offsetHeight/2:r.top+48;
-      points.push({x:r.left+r.width/2-wr.left,y:iy-wr.top});
-    });
-    var W=wr.width,H=wr.height;
-    var vbH=Math.max(100,H);
-    svg.setAttribute('viewBox','0 0 '+W+' '+vbH);
-    var d='M '+points[0].x+' '+points[0].y;
-    for(var i=1;i<points.length;i++){
-      var px=points[i-1],nx=points[i];
-      var cpx=(px.x+nx.x)/2;
-      d+=' C '+cpx+' '+px.y+' '+cpx+' '+nx.y+' '+nx.x+' '+nx.y;
-    }
-    path.setAttribute('d',d);
-    var len=path.getTotalLength();
-    return{len:len,points:points,W:W,vbH:vbH};
-  }
-
-  var drawn=false;
-  var dotT=0,dotDir=1,dotAF=null;
-  var cardPoints=[];
-
-  function animateDot(len,cards){
-    cancelAnimationFrame(dotAF);
-    var speed=len/3000;
-    var last=performance.now();
-    function step(now){
-      var dt=now-last;last=now;
-      dotT+=speed*dt*dotDir;
-      if(dotT>=len){dotT=len;dotDir=-1;}
-      if(dotT<=0){dotT=0;dotDir=1;}
-      var p=path.getPointAtLength(dotT);
-      dot.setAttribute('cx',p.x);
-      dot.setAttribute('cy',p.y);
-      // pulse nearest card
-      var frac=dotT/len;
-      var idx=Math.round(frac*(cards.length-1));
-      idx=Math.max(0,Math.min(cards.length-1,idx));
-      cards.forEach(function(c,i){
-        if(i===idx&&Math.abs(frac-i/(cards.length-1))<0.08){
-          c.style.boxShadow='0 0 30px rgba(232,160,32,0.6)';
-          setTimeout(function(){c.style.boxShadow='';},500);
-        }
-      });
-      dotAF=requestAnimationFrame(step);
-    }
-    dotAF=requestAnimationFrame(step);
-  }
-
+  var beam=document.getElementById('steps-beam');
+  if(!wrap||!beam)return;
+  var fired=false;
   var obs=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
-      if(e.isIntersecting&&!drawn){
-        drawn=true;
-        var info=buildPath();
-        if(!info)return;
-        var len=info.len;
+      if(e.isIntersecting&&!fired){
+        fired=true;
+        beam.classList.add('beam-run');
         var cards=Array.from(wrap.querySelectorAll('.step-card'));
-        path.style.strokeDasharray=len;
-        path.style.strokeDashoffset=len;
-        path.style.transition='stroke-dashoffset 2s ease';
-        requestAnimationFrame(function(){
-          path.style.strokeDashoffset='0';
+        cards.forEach(function(card,i){
+          setTimeout(function(){
+            card.classList.add('step-glow');
+          },1600+i*300);
         });
-        setTimeout(function(){animateDot(len,cards);},2100);
       }
     });
   },{threshold:0.3});
   obs.observe(wrap);
-
-  window.addEventListener('resize',function(){
-    if(drawn){
-      var info=buildPath();
-      if(info){
-        path.style.transition='none';
-        path.style.strokeDasharray=info.len;
-        path.style.strokeDashoffset='0';
-      }
-    }
-  });
-})();
-
-// WHY CARDS STAGGER ENTRANCE
-(function(){
-  var whyCards=document.querySelectorAll('.why-card');
-  var whyObs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        e.target.classList.add('why-animated');
-        whyObs.unobserve(e.target);
-      }
-    });
-  },{threshold:0.1});
-  whyCards.forEach(function(c){whyObs.observe(c);});
 })();
 
 // COMPARISON ITEMS STAGGER SLIDE
