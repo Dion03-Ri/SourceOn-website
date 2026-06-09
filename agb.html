@@ -5,178 +5,128 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>AGB — SourceOn</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --navy:#1B3A5C;--navy-dk:#112336;--navy-md:#254d7a;
-  --gold:#E8A020;--gold-h:#f0b840;--gold-dim:rgba(232,160,32,.13);
-  --white:#fff;--text:#1E293B;
-  --g50:#F8FAFC;--g100:#F1F5F9;--g200:#E2E8F0;
-  --g400:#94A3B8;--g500:#64748B;--g600:#475569;
-}
-html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'Inter',-apple-system,sans-serif;color:var(--text);background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
-a{color:var(--navy);text-decoration:none}
-a:hover{color:var(--gold)}
-nav{position:sticky;top:0;z-index:100;background:rgba(27,58,92,.96);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.09)}
-.nav-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:68px}
-.nav-logo{font-size:1.25rem;font-weight:800;color:#fff;letter-spacing:-.03em}
-.nav-logo span{color:var(--gold)}
-.nav-back{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.7);font-size:.9rem;font-weight:500;transition:color .2s}
-.nav-back:hover{color:var(--gold)}
-.nav-back svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-.page-hero{background:var(--navy);padding:72px 0 56px}
-.page-hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:900;letter-spacing:-.04em;color:#fff;margin-bottom:12px}
-.page-hero p{color:rgba(255,255,255,.6);font-size:.95rem}
-.container{max-width:800px;margin:0 auto;padding:0 24px}
-.legal-body{padding:64px 0 96px}
-.legal-section{margin-bottom:40px}
-.legal-section h2{font-size:1.1rem;font-weight:700;color:var(--navy);margin-bottom:14px;padding-bottom:10px;border-bottom:2px solid var(--g100)}
-.legal-section h3{font-size:.95rem;font-weight:700;color:var(--navy);margin:20px 0 8px}
-.legal-section p{color:var(--g600);line-height:1.75;margin-bottom:10px}
-.legal-section p:last-child{margin-bottom:0}
-.legal-section ul{margin:10px 0 10px 20px;color:var(--g600);line-height:1.75}
-.legal-section ul li{margin-bottom:6px}
-.legal-section a{color:var(--navy);font-weight:500}
-.legal-section a:hover{color:var(--gold)}
-.highlight-box{background:var(--gold-dim);border:1px solid rgba(232,160,32,.3);border-radius:12px;padding:20px 24px;margin:20px 0;display:flex;gap:14px;align-items:flex-start}
-.highlight-box svg{width:20px;height:20px;flex-shrink:0;margin-top:2px;fill:var(--gold)}
-.highlight-box p{color:var(--text);font-size:.93rem;line-height:1.7;margin:0;font-weight:500}
-footer{background:var(--navy-dk);padding:32px 0;text-align:center}
-footer p{color:rgba(255,255,255,.4);font-size:.85rem}
-footer a{color:rgba(255,255,255,.5);margin:0 12px}
-footer a:hover{color:var(--gold)}
+body{font-family:'Inter',-apple-system,sans-serif;color:#0F172A;background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+.nav{background:#0F2238;padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:20px;font-weight:800;color:#fff;text-decoration:none}.logo span{color:#E8A020}
+.back{font-size:.83rem;color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s}.back:hover{color:#fff}
+.hero{background:#0F2238;padding:60px 0 56px;text-align:center}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;color:#fff;letter-spacing:-0.02em}
+.hero p{color:#94A3B8;margin-top:10px;font-size:.9rem}
+.content{max-width:760px;margin:0 auto;padding:64px 48px 100px}
+h2{font-size:1.2rem;font-weight:700;color:#0F2238;margin:36px 0 12px;padding-bottom:8px;border-bottom:1px solid #E2E8F0}
+h2:first-child{margin-top:0}
+p{font-size:.9rem;color:#475569;line-height:1.75;margin-bottom:10px}
+ul{margin:8px 0 12px 20px;font-size:.9rem;color:#475569;line-height:1.75}
+li{margin-bottom:4px}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(232,160,32,.12);border:1px solid rgba(232,160,32,.3);color:#E8A020;border-radius:100px;padding:4px 12px;margin-bottom:36px}
+.highlight{background:#F8FAFC;border:1px solid #E2E8F0;border-left:3px solid #E8A020;border-radius:8px;padding:16px 20px;margin:16px 0}
+.highlight p{margin:0;font-size:.88rem;color:#1B3A5C;font-weight:500}
+.update{font-size:.78rem;color:#94A3B8;margin-bottom:32px}
+footer{background:#0F2238;text-align:center;padding:24px;font-size:.78rem;color:rgba(255,255,255,.3)}
+footer a{color:#E8A020;text-decoration:none}
+@media(max-width:640px){.content{padding:40px 24px 80px}.nav{padding:0 20px}}
 </style>
 </head>
 <body>
-
-<nav>
-  <div class="nav-inner">
-    <a href="index.html" class="nav-logo">Source<span>On</span></a>
-    <a href="index.html" class="nav-back">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      Zurück zur Website
-    </a>
-  </div>
+<nav class="nav">
+  <a class="logo" href="index.html">source<span>ON</span></a>
+  <a class="back" href="index.html">← Zurück zur Website</a>
 </nav>
-
-<div class="page-hero">
-  <div class="container">
-    <h1>Allgemeine Geschäftsbedingungen</h1>
-    <p>Stand: Juni 2026 — SourceOn, Zürich</p>
-  </div>
+<div class="hero">
+  <div class="tag">Rechtliches</div>
+  <h1>Allgemeine Geschäftsbedingungen</h1>
+  <p>Mäklervertrag gemäss Schweizer OR Art. 412 ff.</p>
 </div>
+<div class="content">
+  <p class="update">Stand: Juni 2026 — Version 1.0</p>
 
-<div class="legal-body">
-  <div class="container">
+  <h2>§ 1 Geltungsbereich und Vertragsparteien</h2>
+  <p>Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Leistungen von <strong>SourceOn</strong> (nachfolgend "Vermittler") gegenüber Auftraggebern (Baufirmen, Handwerksbetriebe, Investoren, Planer — nachfolgend "Auftraggeber") sowie gegenüber Lieferanten.</p>
+  <p>SourceOn ist ein Beschaffungsvermittler (Mäkler) im Sinne von OR Art. 412 ff. und tritt ausschliesslich als Vermittler auf. SourceOn ist weder Käufer noch Verkäufer der vermittelten Waren.</p>
+  <p>Mit der Nutzung der Dienstleistungen von SourceOn (Einreichung einer Anfrage, Annahme eines Angebots, Unterzeichnung eines Vermittlungsvertrags) akzeptiert der Auftraggeber diese AGB vollumfänglich.</p>
 
-    <div class="legal-section">
-      <h2>§ 1 Geltungsbereich und Vertragsparteien</h2>
-      <p>Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Leistungen von <strong>SourceOn</strong> (nachfolgend «SourceOn» oder «Mäkler») gegenüber Auftraggebern (nachfolgend «Auftraggeber») im Bereich der Beschaffungsvermittlung für Baumaterialien.</p>
-      <p>SourceOn tritt ausschliesslich als Mäkler im Sinne von Art. 412 ff. des Schweizerischen Obligationenrechts (OR) auf. SourceOn ist weder Käufer noch Verkäufer der vermittelten Waren und wird nicht Vertragspartei der zwischen Auftraggeber und Lieferant abgeschlossenen Verträge.</p>
-      <p>Abweichende Bedingungen des Auftraggebers gelten nur, wenn SourceOn diesen ausdrücklich und schriftlich zugestimmt hat.</p>
-    </div>
+  <h2>§ 2 Leistungsgegenstand</h2>
+  <p>SourceOn erbringt folgende Leistungen:</p>
+  <ul>
+    <li>Bündelung des Materialbedarfs mehrerer Auftraggeber zur Erzielung von Mengenrabatten</li>
+    <li>Einholung von mindestens drei Vergleichsangeboten bei geprüften Lieferanten</li>
+    <li>Verhandlung mit Lieferanten im Auftrag und Interesse des Auftraggebers</li>
+    <li>Vermittlung des günstigsten Angebots an den Auftraggeber</li>
+    <li>Dokumentation der erzielten Ersparnis</li>
+  </ul>
+  <p>SourceOn schliesst keine Kaufverträge im eigenen Namen ab. Der Kaufvertrag über die Materiallieferung kommt direkt zwischen dem Auftraggeber und dem Lieferanten zustande.</p>
 
-    <div class="legal-section">
-      <h2>§ 2 Leistungen von SourceOn</h2>
-      <p>SourceOn erbringt folgende Leistungen:</p>
-      <ul>
-        <li>Analyse des Materialbedarfs des Auftraggebers</li>
-        <li>Identifikation geeigneter Lieferanten im Schweizer und europäischen Markt</li>
-        <li>Einholung und Vergleich von Angeboten auf Basis des Materialbedarfs</li>
-        <li>Verhandlung günstigerer Konditionen durch Bündelung von Bedarfen</li>
-        <li>Koordination der Direktlieferung vom Lieferanten zum Auftraggeber</li>
-        <li>Dokumentation und Reporting der erzielten Einsparungen</li>
-      </ul>
-      <p>SourceOn schuldet dem Auftraggeber eine sorgfältige Vermittlungstätigkeit, keinen bestimmten Beschaffungserfolg. Die Verantwortung für die Qualität, Lieferfähigkeit und Vertragserfüllung liegt beim jeweiligen Lieferanten.</p>
-    </div>
+  <h2>§ 3 Provision und Vergütung</h2>
+  <div class="highlight"><p>SourceOn erhebt eine Provision von <strong>2.25% des Materialwerts (Netto-Materialkosten)</strong> — ausschliesslich dann, wenn eine nachgewiesene Ersparnis gegenüber dem Marktpreis erzielt wurde. Keine Ersparnis = keine Provision.</p></div>
+  <p>Die Provision wird fällig, wenn:</p>
+  <ul>
+    <li>Der Auftraggeber das von SourceOn vermittelte Angebot annimmt</li>
+    <li>Die Materiallieferung durch den Lieferanten erfolgt ist</li>
+    <li>Die Ersparnis gegenüber dem zuvor dokumentierten Marktpreis nachweislich besteht</li>
+  </ul>
+  <p>Die Provision berechnet sich auf den Netto-Materialwert (exkl. MwSt.) der tatsächlich gelieferten Menge.</p>
+  <p><strong>Zahlungsfrist:</strong> 14 Tage nach Rechnungsstellung. Bei Verzug gelten die gesetzlichen Verzugszinsregelungen (OR Art. 104).</p>
+  <p>Keine Provision wird erhoben, wenn:</p>
+  <ul>
+    <li>SourceOn kein günstigeres Angebot als der bisherige Marktpreis findet</li>
+    <li>Der Auftraggeber das Angebot nicht annimmt</li>
+    <li>Die Lieferung durch den Lieferanten nicht erfolgt</li>
+  </ul>
 
-    <div class="legal-section">
-      <h2>§ 3 Mäklerprovision</h2>
+  <h2>§ 4 Pflichten des Auftraggebers</h2>
+  <p>Der Auftraggeber verpflichtet sich:</p>
+  <ul>
+    <li>Vollständige und korrekte Angaben zu Materialbedarf, Menge und Lieferterminen zu machen</li>
+    <li>Den aktuellen Marktpreis (Vergleichspreis) auf Anfrage wahrheitsgemäss mitzuteilen</li>
+    <li>Angebote innerhalb der vereinbarten Frist zu prüfen und zu entscheiden</li>
+    <li>Die fällige Provision innerhalb von 14 Tagen nach Rechnungsstellung zu bezahlen</li>
+    <li>Vermittlungsleistungen nicht zu umgehen (Direktkontaktaufnahme mit vom Vermittler vorgeschlagenen Lieferanten ohne Zustimmung von SourceOn ist untersagt)</li>
+  </ul>
 
-      <div class="highlight-box">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        <p>SourceOn arbeitet ausschliesslich erfolgsbasiert: Eine Provision wird nur fällig, wenn SourceOn eine nachweisbare Einsparung gegenüber dem bisher vom Auftraggeber bezahlten Marktpreis erzielt.</p>
-      </div>
+  <h2>§ 5 Pflichten von SourceOn</h2>
+  <p>SourceOn verpflichtet sich:</p>
+  <ul>
+    <li>Mindestens 3 Angebote einzuholen (soweit am Markt verfügbar)</li>
+    <li>Transparente Dokumentation aller eingeholten Angebote</li>
+    <li>Ausschliesslich im Interesse des Auftraggebers zu handeln</li>
+    <li>Keine Kickbacks oder Provisionen von Lieferanten anzunehmen</li>
+    <li>Datenschutz und Vertraulichkeit der Auftraggeberangaben zu wahren</li>
+    <li>Lieferanten auf SIA/ISO-Konformität und Zuverlässigkeit zu prüfen</li>
+  </ul>
 
-      <h3>3.1 Höhe der Provision</h3>
-      <p>Die Provision beträgt <strong>2,25% des Materialwerts</strong> (Einkaufspreis netto ohne MWST) der über SourceOn bezogenen Materialien. Die Provision wird auf den tatsächlich über SourceOn abgewickelten Materialeinkauf berechnet.</p>
+  <h2>§ 6 Haftung und Haftungsausschluss</h2>
+  <p>SourceOn haftet als Vermittler und nicht als Vertragspartei des Kaufvertrags. Daher haftet SourceOn <strong>nicht</strong> für:</p>
+  <ul>
+    <li>Qualitätsmängel der gelieferten Materialien</li>
+    <li>Lieferverzögerungen durch den Lieferanten</li>
+    <li>Preisänderungen nach Vertragsabschluss zwischen Auftraggeber und Lieferant</li>
+    <li>Insolvenz des Lieferanten</li>
+    <li>Schäden, die durch falsche Angaben des Auftraggebers entstehen</li>
+  </ul>
+  <p>SourceOn haftet für nachweislich durch SourceOn verursachte Schäden bis zur Höhe der in der jeweiligen Transaktion verdienten Provision, maximal CHF 10'000 pro Schadensfall. Weitergehende Schadensersatzansprüche sind ausgeschlossen, soweit gesetzlich zulässig.</p>
 
-      <h3>3.2 Fälligkeit</h3>
-      <p>Die Provision wird fällig, sobald der zwischen Auftraggeber und Lieferant geschlossene Kaufvertrag erfüllt ist (d.h. Lieferung erfolgt und Rechnung bezahlt). Die Provisionsrechnung wird von SourceOn nach Lieferungsnachweis gestellt und ist innerhalb von 30 Tagen zahlbar.</p>
+  <h2>§ 7 Vertraulichkeit</h2>
+  <p>Beide Parteien verpflichten sich zur Vertraulichkeit über alle im Rahmen der Zusammenarbeit erhaltenen Informationen. Diese Pflicht gilt auch nach Beendigung der Zusammenarbeit für die Dauer von 3 Jahren.</p>
 
-      <h3>3.3 Keine Provision ohne Einsparung</h3>
-      <p>Erzielt SourceOn im Einzelfall keine Einsparung gegenüber dem Referenzpreis des Auftraggebers, entfällt die Provision vollständig. Der Referenzpreis ist durch den Auftraggeber zu Beginn der Zusammenarbeit zu dokumentieren.</p>
+  <h2>§ 8 Laufzeit und Kündigung</h2>
+  <p>Der Vermittlungsvertrag beginnt mit der Auftragserteilung (Einreichung der Anfrage) und endet mit der vollständigen Abwicklung des jeweiligen Auftrags (Lieferung + Zahlung der Provision).</p>
+  <p>Rahmenvereinbarungen können von beiden Seiten mit 30 Tagen Vorankündigung schriftlich gekündigt werden.</p>
 
-      <h3>3.4 Transparenz</h3>
-      <p>SourceOn legt auf Verlangen die eingeholten Lieferantenangebote offen und weist die erzielte Einsparung sowie die daraus berechnete Provision nachvollziehbar aus.</p>
-    </div>
+  <h2>§ 9 Anwendbares Recht und Gerichtsstand</h2>
+  <p>Diese AGB sowie alle Rechtsbeziehungen zwischen SourceOn und dem Auftraggeber unterliegen ausschliesslich <strong>Schweizer Recht</strong>, unter Ausschluss des UN-Kaufrechts (CISG).</p>
+  <p>Ausschliesslicher <strong>Gerichtsstand</strong> für alle Streitigkeiten ist <strong>Zürich, Schweiz</strong>. SourceOn behält sich vor, den Auftraggeber auch an seinem Sitz zu belangen.</p>
 
-    <div class="legal-section">
-      <h2>§ 4 Pflichten des Auftraggebers</h2>
-      <p>Der Auftraggeber verpflichtet sich:</p>
-      <ul>
-        <li>Vollständige und korrekte Angaben zum Materialbedarf zu machen</li>
-        <li>Vergleichspreise (Referenzpreise) auf Anfrage von SourceOn offenzulegen</li>
-        <li>Lieferanten, die von SourceOn vermittelt wurden, nicht unter Umgehung von SourceOn direkt zu kontaktieren oder zu beauftragen (Umgehungsverbot für 24 Monate ab erster Vermittlung)</li>
-        <li>Rechnungen der Lieferanten fristgerecht zu begleichen</li>
-      </ul>
-      <p>Bei Verletzung des Umgehungsverbots hat SourceOn Anspruch auf die entgangene Provision, mindestens jedoch CHF 2'000.–.</p>
-    </div>
+  <h2>§ 10 Salvatorische Klausel</h2>
+  <p>Sollten einzelne Bestimmungen dieser AGB unwirksam oder undurchführbar sein oder werden, so berührt dies die Wirksamkeit der übrigen Bestimmungen nicht. Die unwirksame Bestimmung ist durch eine wirksame zu ersetzen, die dem wirtschaftlichen Zweck am nächsten kommt.</p>
 
-    <div class="legal-section">
-      <h2>§ 5 Haftung</h2>
-      <p>SourceOn haftet nicht für:</p>
-      <ul>
-        <li>Die Qualität, Beschaffenheit oder Konformität der gelieferten Materialien mit Normen (z.B. SN EN 206, SIA 118)</li>
-        <li>Lieferverzögerungen, Lieferausfälle oder sonstige Leistungsstörungen des Lieferanten</li>
-        <li>Schäden, die durch die Verwendung der vermittelten Materialien entstehen</li>
-        <li>Kursrisiken bei international beschafften Materialien</li>
-      </ul>
-      <p>Die Haftung von SourceOn für leichte Fahrlässigkeit ist ausgeschlossen. Bei grober Fahrlässigkeit oder Vorsatz haftet SourceOn auf den tatsächlichen Schaden, begrenzt auf die im betreffenden Auftrag vereinbarte Provision.</p>
-    </div>
-
-    <div class="legal-section">
-      <h2>§ 6 Vertraulichkeit</h2>
-      <p>Beide Parteien verpflichten sich, alle im Rahmen der Zusammenarbeit erhaltenen vertraulichen Informationen (insbesondere Preise, Lieferantenbeziehungen, Geschäftsdaten) streng vertraulich zu behandeln und nicht an Dritte weiterzugeben. Diese Verpflichtung besteht auch nach Beendigung der Zusammenarbeit fort.</p>
-    </div>
-
-    <div class="legal-section">
-      <h2>§ 7 Vertragsdauer und Kündigung</h2>
-      <p>Der Vermittlungsauftrag wird für jeden Materialbedarf separat erteilt und gilt als abgeschlossen, wenn SourceOn ein oder mehrere geeignete Angebote vorlegt.</p>
-      <p>Eine längerfristige Rahmenvereinbarung kann schriftlich vereinbart werden. Sie ist von jeder Partei mit einer Frist von 30 Tagen auf das Ende eines Monats kündbar, sofern keine laufenden Beschaffungsvorgänge offen sind.</p>
-    </div>
-
-    <div class="legal-section">
-      <h2>§ 8 Änderungen der AGB</h2>
-      <p>SourceOn behält sich vor, diese AGB jederzeit anzupassen. Änderungen werden dem Auftraggeber mindestens 30 Tage vor Inkrafttreten schriftlich oder per E-Mail mitgeteilt. Widerspricht der Auftraggeber nicht innerhalb von 14 Tagen, gelten die neuen AGB als akzeptiert.</p>
-    </div>
-
-    <div class="legal-section">
-      <h2>§ 9 Anwendbares Recht und Gerichtsstand</h2>
-      <p>Diese AGB und alle zwischen SourceOn und dem Auftraggeber geschlossenen Verträge unterliegen ausschliesslich Schweizer Recht unter Ausschluss des UN-Kaufrechts (CISG).</p>
-      <p>Ausschliesslicher Gerichtsstand für alle Streitigkeiten aus oder im Zusammenhang mit diesen AGB ist <strong>Zürich, Schweiz</strong>.</p>
-    </div>
-
-    <div class="legal-section">
-      <h2>§ 10 Salvatorische Klausel</h2>
-      <p>Sollten einzelne Bestimmungen dieser AGB unwirksam oder undurchführbar sein oder werden, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt. Die unwirksame Bestimmung ist durch eine wirksame zu ersetzen, die dem wirtschaftlichen Zweck der unwirksamen Regelung am nächsten kommt.</p>
-    </div>
-
-  </div>
+  <h2>§ 11 Änderungen der AGB</h2>
+  <p>SourceOn behält sich das Recht vor, diese AGB jederzeit zu ändern. Änderungen werden dem Auftraggeber mindestens 30 Tage vor Inkrafttreten mitgeteilt. Die Nutzung der Dienstleistungen nach Inkrafttreten der Änderungen gilt als Zustimmung.</p>
 </div>
-
 <footer>
-  <div class="container" style="max-width:1200px">
-    <p>© 2026 SourceOn, Zürich &nbsp;·&nbsp;
-      <a href="impressum.html">Impressum</a>
-      <a href="datenschutz.html">Datenschutz</a>
-      <a href="agb.html">AGB</a>
-    </p>
-  </div>
+  <a href="index.html">SourceOn</a> &nbsp;·&nbsp; <a href="impressum.html">Impressum</a> &nbsp;·&nbsp; <a href="datenschutz.html">Datenschutz</a>
 </footer>
-
 </body>
 </html>
