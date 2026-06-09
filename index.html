@@ -480,9 +480,45 @@ footer{background:var(--dark);padding:72px 0 0}
 .file-selected.show{display:flex}
 .file-remove{font-size:.78rem;color:var(--muted);cursor:pointer;text-decoration:underline;margin-left:4px}
 .file-remove:hover{color:#ef4444}
+
+/* CHANGE 4 — VISUAL VARIETY */
+/* Why cards: border-radius 20px + animated gold top border */
+.why-card{border-radius:20px!important}
+.why-card::before{content:'';position:absolute;top:0;left:0;height:3px;width:0;background:var(--gold);border-radius:20px 20px 0 0;transition:width .3s var(--ease);z-index:2}
+.why-card:hover::before{width:100%}
+
+/* Materials cards: rotated icon + perspective tilt on hover */
+.mat-icon{transform:rotate(45deg);transition:background .25s,transform .25s var(--ease)}
+.mat-icon svg{transform:rotate(-45deg);transition:transform .25s var(--ease)}
+.mat-card:hover{transform:perspective(600px) rotateY(3deg) translateY(-4px)!important}
+.mat-card:hover .mat-icon{transform:rotate(45deg) scale(1.1)}
+
+/* Zahlen cards: inner glow + pill on mobile */
+.zahlen-card{box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+.zahlen-card:hover{box-shadow:inset 0 0 24px rgba(232,160,32,.06),0 4px 20px rgba(0,0,0,.25);border-radius:24px}
+@media(max-width:480px){.zahlen-card{border-radius:100px!important;padding:20px 28px}}
+
+/* Comparison divider animated pulse */
+@keyframes dividerPulse{0%,100%{opacity:.2;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.15),transparent)}50%{opacity:1;background:linear-gradient(to bottom,transparent,rgba(232,160,32,.5),transparent)}}
+.cmp-split-divider{animation:dividerPulse 3s ease-in-out infinite}
+
+/* For whom featured card: floating animation */
+@keyframes floatCard{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.fw-card-featured{animation:floatCard 3s ease-in-out infinite}
+.fw-card-featured:hover{animation-play-state:paused}
+
+/* Hero entrance animation */
+@keyframes heroEntrance{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.hero-content{animation:heroEntrance 1.2s var(--ease) both}
+
+/* Cursor glow (desktop only) */
+#cursor-glow{position:fixed;top:0;left:0;width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,rgba(232,160,32,.25) 0%,transparent 70%);pointer-events:none;transform:translate(-50%,-50%);z-index:9999;transition:transform .15s,opacity .3s;opacity:0}
+@media(hover:hover){#cursor-glow{display:block}}
+@media(hover:none){#cursor-glow{display:none!important}}
 </style>
 </head>
 <body>
+<div id="cursor-glow"></div>
 
 <!-- NAV -->
 <nav id="nav">
@@ -532,8 +568,8 @@ footer{background:var(--dark);padding:72px 0 0}
         <div class="stat-label">Partnerlieferanten<br>verifiziert</div>
       </div>
       <div class="stat-col">
-        <div class="stat-num" data-count-chf="23.9">CHF 0</div>
-        <div class="stat-label">Baumarkt CH 2025<br>— SBV</div>
+        <div class="stat-num">CHF 8–10 Mrd.</div>
+        <div class="stat-label">Einkaufsvolumen<br>Baumarkt CH</div>
       </div>
       <div class="stat-col">
         <div class="stat-num" data-count="98" data-suffix="%">0%</div>
@@ -827,89 +863,368 @@ footer{background:var(--dark);padding:72px 0 0}
     </div>
     <div class="zahlen-grid">
       <div class="zahlen-card reveal reveal-d1">
-        <div class="zahlen-num" data-count-chf="23.9">CHF 0 Mrd.</div>
-        <div class="zahlen-label">Baumarkt Schweiz 2025</div>
-        <div class="zahlen-source">Quelle: SBV Schweizer Baumeisterverband</div>
+        <div class="zahlen-num">CHF 8–10 Mrd.</div>
+        <div class="zahlen-label">Jährliches Einkaufsvolumen Baumarkt CH</div>
       </div>
       <div class="zahlen-card reveal reveal-d2">
         <div class="zahlen-num" data-count="98" data-suffix="%">0%</div>
         <div class="zahlen-label">der CH-Baufirmen sind KMU</div>
-        <div class="zahlen-source">Quelle: Bundesamt für Statistik BFS</div>
       </div>
       <div class="zahlen-card reveal reveal-d3">
         <div class="zahlen-num">40–70%</div>
         <div class="zahlen-label">der Baukosten entfallen auf Material</div>
-        <div class="zahlen-source">Quelle: McKinsey Global Institute 2023</div>
       </div>
       <div class="zahlen-card reveal reveal-d1">
-        <div class="zahlen-num">10–25%</div>
-        <div class="zahlen-label">Einsparpotenzial durch Bündelung</div>
-        <div class="zahlen-source">Quelle: GPO-Studie 2024</div>
+        <div class="zahlen-num">Bis 30%+</div>
+        <div class="zahlen-label">Einsparung je nach Volumen und Material</div>
       </div>
       <div class="zahlen-card reveal reveal-d2">
         <div class="zahlen-num">48h</div>
         <div class="zahlen-label">bis zum ersten konkreten Angebot</div>
-        <div class="zahlen-source">SourceOn Serviceversprechen</div>
       </div>
       <div class="zahlen-card reveal reveal-d3">
         <div class="zahlen-num">CHF 0</div>
         <div class="zahlen-label">Provision wenn keine Ersparnis erzielt</div>
-        <div class="zahlen-source">Erfolgsbasiertes Modell — kein Risiko</div>
       </div>
     </div>
     <p class="zahlen-statement reveal">Jede Bestellung die du alleine aufgibst kostet dich mehr als nötig.</p>
   </div>
 </section>
 
-<!-- BUNDLING IN DER PRAXIS -->
-<section id="bundling" class="section">
-  <div class="container">
-    <div class="text-center reveal">
-      <div class="label">BÜNDELUNG IN DER PRAXIS</div>
-      <h2 class="h2">Ein Auftrag. Drei Baufirmen. Eine Bestellung.</h2>
-      <p class="subtitle" style="margin-top:14px">So entsteht die Einkaufsmacht, die jede einzelne Firma alleine nie hätte.</p>
-    </div>
-    <div class="bd-diagram" id="bd-diagram">
-      <div class="bd-companies">
-        <div class="bd-company">
-          <div class="bd-company-name">Firma A</div>
-          <div class="bd-company-vol">Beton — 80 m³</div>
-        </div>
-        <div class="bd-company">
-          <div class="bd-company-name">Firma B</div>
-          <div class="bd-company-vol">Beton — 60 m³</div>
-        </div>
-        <div class="bd-company">
-          <div class="bd-company-name">Firma C</div>
-          <div class="bd-company-vol">Beton — 40 m³</div>
-        </div>
-      </div>
-      <div class="bd-arrows">
-        <div class="bd-arrow-line"></div>
-        <div class="bd-arrow-line"></div>
-        <div class="bd-arrow-line"></div>
-      </div>
-      <div class="bd-sourceon-card">
-        <div class="bd-sourceon-logo">source<span>ON</span></div>
-        <div class="bd-sourceon-vol">180 m³</div>
-        <div class="bd-sourceon-sub">gebündelt</div>
-      </div>
-      <div class="bd-arrow-right">
-        <div class="bd-arrow-right-line"></div>
-      </div>
-      <div class="bd-lieferant-card">
-        <div class="bd-lieferant-label">Lieferant</div>
-        <div class="bd-lieferant-rabatt">−12%</div>
-        <div class="bd-lieferant-sub">Mengenrabatt</div>
-      </div>
-    </div>
-    <div class="bd-savings reveal">
-      <div class="bd-savings-num">CHF 17'550</div>
-      <div class="bd-savings-label">Netto-Ersparnis — für alle drei Firmen zusammen</div>
-      <div class="bd-savings-note">Rechenbeispiel basierend auf realen Marktkonditionen.</div>
-    </div>
+<!-- BÜNDELUNG VISUALISIERT (Three.js WebGL) -->
+<section id="bundling" style="background:#0F2238;position:relative;overflow:hidden">
+  <div style="text-align:center;padding:80px 0 32px;position:relative;z-index:2">
+    <div class="label label-dark">BÜNDELUNG VISUALISIERT</div>
+    <h2 class="h2" style="color:#fff;margin-top:0;margin-bottom:12px">Gemeinsam stärker einkaufen.</h2>
+    <p class="subtitle subtitle-dark" style="margin:0 auto">Sieh wie SourceOn Materialbedarf bündelt und Mengenrabatte erzielt.</p>
+  </div>
+  <div id="webgl-wrap" style="width:100%;height:600px;position:relative;cursor:crosshair">
+    <canvas id="bundling-canvas" style="display:block;width:100%;height:100%"></canvas>
+  </div>
+  <div style="text-align:center;padding:32px 0 80px;position:relative;z-index:2">
+    <p style="font-size:clamp(17px,2.2vw,22px);font-weight:800;color:#E8A020;letter-spacing:-0.02em;padding:0 20px">CHF 17'550 Netto-Ersparnis — für drei Baufirmen auf einer einzigen Bestellung.</p>
+    <p style="font-size:.78rem;color:#94A3B8;margin-top:8px;font-style:italic">Rechenbeispiel basierend auf realen Marktkonditionen.</p>
   </div>
 </section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  var wrap=document.getElementById('webgl-wrap');
+  var canvas=document.getElementById('bundling-canvas');
+  if(!wrap||!canvas||typeof THREE==='undefined')return;
+
+  var isMobile=window.innerWidth<640;
+  var H=isMobile?400:600;
+  var W=wrap.offsetWidth||window.innerWidth;
+  canvas.style.height=H+'px';
+
+  var scene=new THREE.Scene();
+  scene.background=new THREE.Color(0x0F2238);
+
+  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,300);
+  camera.position.set(0,4,14);
+  camera.lookAt(0,0,0);
+
+  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(W,H);
+
+  // Lighting
+  scene.add(new THREE.AmbientLight(0x1B3A5C,1.2));
+  var goldLight=new THREE.PointLight(0xE8A020,2.5,30);
+  goldLight.position.set(0,0,0);
+  scene.add(goldLight);
+  var dirLight=new THREE.DirectionalLight(0xffffff,0.6);
+  dirLight.position.set(6,10,5);
+  scene.add(dirLight);
+
+  // Stars
+  var sCnt=200,sBuf=new Float32Array(sCnt*3);
+  for(var i=0;i<sCnt*3;i++)sBuf[i]=(Math.random()-.5)*100;
+  var sGeo=new THREE.BufferGeometry();
+  sGeo.setAttribute('position',new THREE.BufferAttribute(sBuf,3));
+  var stars=new THREE.Points(sGeo,new THREE.PointsMaterial({color:0xffffff,size:0.1,transparent:true,opacity:0.55}));
+  scene.add(stars);
+
+  // Sprite label helper
+  function mkLabel(txt,col,sz){
+    var c=document.createElement('canvas');
+    c.width=320;c.height=72;
+    var ctx=c.getContext('2d');
+    ctx.font='bold '+(sz||24)+'px Inter,sans-serif';
+    ctx.fillStyle=col||'#ffffff';
+    ctx.textAlign='center';
+    ctx.textBaseline='middle';
+    ctx.fillText(txt,160,36);
+    var tex=new THREE.CanvasTexture(c);
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false}));
+    sp.scale.set(4.2,0.95,1);
+    return sp;
+  }
+
+  // Positions
+  var restPos=[
+    new THREE.Vector3(-3.8,0,2.2),
+    new THREE.Vector3(3.8,0,2.2),
+    new THREE.Vector3(-1.2,0,-3.2)
+  ];
+  var startPos=[
+    new THREE.Vector3(-16,4,10),
+    new THREE.Vector3(16,4,10),
+    new THREE.Vector3(-9,-5,-14)
+  ];
+
+  // Blue boxes
+  var boxGeo=new THREE.BoxGeometry(1.6,1.1,1.6);
+  var boxes=[],boxLabels=[],boxNames=[];
+  var BLABELS=['80 m³ Beton','60 m³ Beton','40 m³ Beton'];
+  var BNAMES=['Firma A','Firma B','Firma C'];
+  for(var i=0;i<3;i++){
+    var bmat=new THREE.MeshPhongMaterial({color:0x1a4a8a,emissive:0x0d2d5a,transparent:true,opacity:0});
+    var bm=new THREE.Mesh(boxGeo,bmat);
+    bm.position.copy(startPos[i]);
+    bm.visible=false;
+    scene.add(bm);
+    boxes.push(bm);
+    var lb=mkLabel(BLABELS[i],'#E8A020',22);
+    lb.position.set(0,1.3,0);lb.visible=false;
+    bm.add(lb);boxLabels.push(lb);
+    var ln=mkLabel(BNAMES[i],'#ffffff',20);
+    ln.position.set(0,0.8,0);ln.visible=false;
+    bm.add(ln);boxNames.push(ln);
+  }
+
+  // Central sphere
+  var sphere=new THREE.Mesh(
+    new THREE.SphereGeometry(0.9,32,32),
+    new THREE.MeshPhongMaterial({color:0xE8A020,emissive:0xb06000,transparent:true,opacity:0})
+  );
+  sphere.visible=false;
+  scene.add(sphere);
+  var sphereLbl=mkLabel('SourceOn','#E8A020',28);
+  sphereLbl.position.set(0,1.7,0);
+  sphere.add(sphereLbl);
+
+  // Green box (Lieferant)
+  var greenBox=new THREE.Mesh(
+    new THREE.BoxGeometry(2.2,1.6,1.6),
+    new THREE.MeshPhongMaterial({color:0x16a34a,emissive:0x0a5c28,transparent:true,opacity:0})
+  );
+  greenBox.position.set(7.5,0,0);
+  greenBox.visible=false;
+  scene.add(greenBox);
+  var gLbl=mkLabel('180 m³ — 12% Rabatt','#4ade80',20);
+  gLbl.position.set(0,1.5,0);gLbl.visible=false;greenBox.add(gLbl);
+  var gName=mkLabel('Lieferant','#ffffff',20);
+  gName.position.set(0,0.9,0);gName.visible=false;greenBox.add(gName);
+
+  // Beam
+  var beam=new THREE.Mesh(
+    new THREE.CylinderGeometry(0.07,0.07,7.5,8),
+    new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0})
+  );
+  beam.rotation.z=Math.PI/2;
+  beam.position.set(3.75,0,0);
+  beam.visible=false;
+  scene.add(beam);
+
+  // Flow particles
+  var PCNT=150,pBuf=new Float32Array(PCNT*3);
+  var pGeo=new THREE.BufferGeometry();
+  pGeo.setAttribute('position',new THREE.BufferAttribute(pBuf,3));
+  var particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.13,transparent:true,opacity:0}));
+  scene.add(particles);
+
+  // Explosion particles
+  var ECNT=100,eBuf=new Float32Array(ECNT*3);
+  var eGeo=new THREE.BufferGeometry();
+  eGeo.setAttribute('position',new THREE.BufferAttribute(eBuf,3));
+  var eVel=[];
+  for(var i=0;i<ECNT;i++){
+    var th=Math.random()*Math.PI*2,ph=Math.random()*Math.PI;
+    eVel.push(new THREE.Vector3(
+      Math.sin(ph)*Math.cos(th),Math.sin(ph)*Math.sin(th),Math.cos(ph)
+    ).multiplyScalar(.07+Math.random()*.1));
+  }
+  var explParts=new THREE.Points(eGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.11,transparent:true,opacity:0}));
+  scene.add(explParts);
+
+  // Savings sprites
+  var SAV_TEXTS=["+CHF 5'850","+CHF 4'388","+CHF 2'925"];
+  var savSprites=SAV_TEXTS.map(function(t,i){
+    var s=mkLabel(t,'#E8A020',22);
+    s.position.copy(restPos[i]);s.position.y+=2;
+    s.visible=false;scene.add(s);return s;
+  });
+
+  // Checkmarks
+  var checkSprites=restPos.map(function(p){
+    var s=mkLabel('✓','#4ade80',36);
+    s.position.copy(p);s.position.y+=1.6;
+    s.visible=false;scene.add(s);return s;
+  });
+
+  // Mouse/touch
+  var mx=0,my=0,camRX=0,camRY=0;
+  wrap.addEventListener('mousemove',function(e){
+    var r=wrap.getBoundingClientRect();
+    mx=(e.clientX-r.left)/r.width-.5;
+    my=(e.clientY-r.top)/r.height-.5;
+  });
+  wrap.addEventListener('touchmove',function(e){
+    var t=e.touches[0],r=wrap.getBoundingClientRect();
+    mx=(t.clientX-r.left)/r.width-.5;
+    my=(t.clientY-r.top)/r.height-.5;
+  },{passive:true});
+  window.addEventListener('deviceorientation',function(e){
+    mx=Math.max(-.5,Math.min(.5,(e.gamma||0)/30));
+    my=Math.max(-.5,Math.min(.5,(e.beta||0)/60-.3));
+  });
+
+  function lerp(a,b,t){return a+(b-a)*t;}
+  function eOut(t){return 1-Math.pow(1-Math.min(1,t),3);}
+  function eIO(t){t=Math.min(1,t);return t<.5?2*t*t:-1+(4-2*t)*t;}
+
+  var t0=performance.now();
+  function animate(){
+    requestAnimationFrame(animate);
+    var now=(performance.now()-t0)/1000;
+    var cy=now%8;
+
+    stars.rotation.y=now*.025;stars.rotation.x=now*.008;
+
+    // Camera mouse tracking
+    camRX=lerp(camRX,-my*.08,.05);
+    camRY=lerp(camRY,mx*.08,.05);
+    camera.position.x=Math.sin(camRY)*14;
+    camera.position.y=4+camRX*6;
+    camera.position.z=Math.cos(camRY)*14;
+    camera.lookAt(0,0,0);
+
+    goldLight.intensity=2+Math.sin(now*2.5)*.6;
+
+    // Reset helpers
+    function showBox(i,op,vis){
+      boxes[i].visible=true;boxes[i].material.opacity=op;
+      boxLabels[i].visible=vis;boxNames[i].visible=vis;
+    }
+    function hideBox(i){boxes[i].visible=false;}
+    function hideAll(){
+      boxes.forEach(function(b){b.visible=false;});
+      sphere.visible=false;greenBox.visible=false;beam.visible=false;
+      particles.material.opacity=0;explParts.material.opacity=0;
+      savSprites.forEach(function(s){s.visible=false;});
+      checkSprites.forEach(function(s){s.visible=false;});
+    }
+
+    // Phase 1: 0–2s boxes fly in
+    if(cy<2){
+      hideAll();
+      var t=cy/2;
+      for(var i=0;i<3;i++){
+        var delay=i*.2,lt=eOut(Math.max(0,(t-delay*.5)/.8));
+        boxes[i].visible=true;
+        boxes[i].position.lerpVectors(startPos[i],restPos[i],lt);
+        boxes[i].material.opacity=lt*.85;
+        boxes[i].rotation.y=(1-lt)*Math.PI*.4;
+        var vis=lt>.25;
+        boxLabels[i].visible=vis;boxNames[i].visible=vis;
+      }
+    }
+    // Phase 2: 2–4s sphere + particles
+    else if(cy<4){
+      var t=(cy-2)/2;
+      for(var i=0;i<3;i++){
+        boxes[i].visible=true;
+        boxes[i].position.copy(restPos[i]);
+        boxes[i].material.opacity=.85;
+        boxes[i].rotation.y=0;
+        boxLabels[i].visible=true;boxNames[i].visible=true;
+      }
+      sphere.visible=true;
+      sphere.material.opacity=eOut(Math.min(1,t*4));
+      sphere.scale.setScalar(1+Math.sin(t*Math.PI*4)*.07+t*.12);
+      sphereLbl.visible=t>.1;
+      greenBox.visible=false;beam.visible=false;explParts.material.opacity=0;
+      savSprites.forEach(function(s){s.visible=false;});
+      checkSprites.forEach(function(s){s.visible=false;});
+      if(t>.1){
+        particles.material.opacity=Math.min(1,(t-.1)*4)*.75;
+        var pa=pGeo.getAttribute('position');
+        for(var i=0;i<PCNT;i++){
+          var si=i%3,src=restPos[si];
+          var frac=((i/PCNT)+t*1.8)%1;
+          pa.setXYZ(i,lerp(src.x,0,frac)+(Math.random()-.5)*.15,lerp(src.y,0,frac),lerp(src.z,0,frac)+(Math.random()-.5)*.15);
+        }
+        pa.needsUpdate=true;
+      } else particles.material.opacity=0;
+    }
+    // Phase 3: 4–6s explosion + lieferant
+    else if(cy<6){
+      var t=(cy-4)/2;
+      for(var i=0;i<3;i++){
+        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
+        boxes[i].material.opacity=.85;
+        boxLabels[i].visible=true;boxNames[i].visible=true;
+      }
+      sphere.visible=true;sphere.material.opacity=.9;
+      sphere.scale.setScalar(1+t*.08);sphereLbl.visible=true;
+      particles.material.opacity=0;
+      if(t<.5){
+        var ef=1-t/.5;
+        explParts.material.opacity=ef*.85;
+        var ea=eGeo.getAttribute('position');
+        for(var i=0;i<ECNT;i++){var d=t*10;ea.setXYZ(i,eVel[i].x*d,eVel[i].y*d,eVel[i].z*d);}
+        ea.needsUpdate=true;
+      } else explParts.material.opacity=0;
+      var ap=eOut(Math.max(0,(t-.25)/.4));
+      greenBox.visible=true;greenBox.material.opacity=ap*.85;
+      greenBox.scale.setScalar(ap+.001);
+      gLbl.visible=ap>.3;gName.visible=ap>.3;
+      beam.visible=ap>.1;beam.material.opacity=ap*.7;
+      savSprites.forEach(function(s){s.visible=false;});
+      checkSprites.forEach(function(s){s.visible=false;});
+    }
+    // Phase 4: 6–8s savings + fade
+    else{
+      var t=(cy-6)/2;
+      var fa=Math.max(0,1-(t-.75)/.25);
+      for(var i=0;i<3;i++){
+        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
+        boxes[i].material.opacity=.85*fa;
+        boxLabels[i].visible=fa>.1;boxNames[i].visible=fa>.1;
+      }
+      sphere.visible=fa>.05;sphere.material.opacity=.9*fa;sphereLbl.visible=fa>.1;
+      greenBox.visible=fa>.05;greenBox.material.opacity=.85*fa;
+      gLbl.visible=fa>.2;gName.visible=fa>.2;
+      beam.visible=fa>.05;beam.material.opacity=.7*fa;
+      particles.material.opacity=0;explParts.material.opacity=0;
+      for(var i=0;i<3;i++){
+        var dl=i*.12,lt=eOut(Math.max(0,(t-dl)*5));
+        var sf=lt*(1-Math.max(0,(t-.65)/.3));
+        savSprites[i].visible=lt>.0;
+        savSprites[i].position.copy(restPos[i]);
+        savSprites[i].position.y=2+lt*1.8;
+        if(savSprites[i].material)savSprites[i].material.opacity=sf;
+        var cl=eOut(Math.max(0,(t-dl)*.5*5));
+        checkSprites[i].visible=cl>.0;
+        checkSprites[i].position.copy(restPos[i]);checkSprites[i].position.y=1.6;
+        if(checkSprites[i].material)checkSprites[i].material.opacity=cl*fa;
+      }
+    }
+
+    renderer.render(scene,camera);
+  }
+  animate();
+
+  window.addEventListener('resize',function(){
+    var nW=wrap.offsetWidth,nH=window.innerWidth<640?400:600;
+    canvas.style.height=nH+'px';
+    camera.aspect=nW/nH;camera.updateProjectionMatrix();
+    renderer.setSize(nW,nH);
+  });
+})();
+</script>
 
 <!-- SUPPLIER APPLICATION -->
 <section id="supplier-apply" class="section">
@@ -1410,6 +1725,45 @@ function submitSupplier(e){
     document.getElementById('success-supplier').classList.add('show');
   }
 }
+
+// CURSOR GLOW
+(function(){
+  var g=document.getElementById('cursor-glow');
+  if(!g)return;
+  var gx=0,gy=0,cx=0,cy=0;
+  document.addEventListener('mousemove',function(e){cx=e.clientX;cy=e.clientY;});
+  document.addEventListener('mouseenter',function(){g.style.opacity='1';});
+  document.addEventListener('mouseleave',function(){g.style.opacity='0';});
+  (function loop(){
+    gx+=(cx-gx)*.12;gy+=(cy-gy)*.12;
+    g.style.left=gx+'px';g.style.top=gy+'px';
+    requestAnimationFrame(loop);
+  })();
+})();
+
+// COMPARISON ITEMS STAGGER SLIDE
+(function(){
+  var leftItems=document.querySelectorAll('.cmp-left .cmp-item');
+  var rightItems=document.querySelectorAll('.cmp-right .cmp-item');
+  function addStagger(items,dir){
+    items.forEach(function(el,i){
+      el.style.opacity='0';
+      el.style.transform='translateX('+(dir==='left'?'-30px':'30px')+')';
+      el.style.transition='opacity .55s ease '+(.08*i)+'s,transform .55s ease '+(.08*i)+'s';
+    });
+  }
+  addStagger(leftItems,'left');addStagger(rightItems,'right');
+  var cmpObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var els=e.target.querySelectorAll('.cmp-item');
+        els.forEach(function(el){el.style.opacity='1';el.style.transform='translateX(0)';});
+        cmpObs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.15});
+  document.querySelectorAll('.cmp-left,.cmp-right').forEach(function(el){cmpObs.observe(el);});
+})();
 </script>
 </body>
 </html>
