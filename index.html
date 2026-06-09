@@ -337,6 +337,83 @@ footer{background:var(--dark);padding:72px 0 0}
 .modal h2{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
 .modal-sub{font-size:.85rem;color:var(--body);margin-bottom:28px;line-height:1.6}
 @media(max-width:480px){.form-grid{grid-template-columns:1fr}.form-checks{grid-template-columns:1fr}.form-checks-3{grid-template-columns:repeat(2,1fr)}.modal{padding:28px 20px}}
+
+/* FIX4 — COMPARISON SPLIT */
+#comparison{background:var(--bg)}
+.cmp-split{display:grid;grid-template-columns:1fr 1fr;max-width:960px;margin:56px auto 0;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-lg);position:relative}
+.cmp-split-divider{position:absolute;left:50%;top:8%;bottom:8%;width:1px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.15),transparent);z-index:10;pointer-events:none}
+.cmp-left{background:var(--dark);padding:44px 48px}
+.cmp-right{background:#fff;padding:44px 48px}
+.cmp-col-title{font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px;padding-bottom:14px}
+.cmp-left .cmp-col-title{color:rgba(255,255,255,.35);border-bottom:1px solid rgba(255,255,255,.08)}
+.cmp-right .cmp-col-title{color:var(--navy);border-bottom:1px solid var(--border)}
+.cmp-items{display:flex;flex-direction:column;gap:16px}
+.cmp-item{display:flex;align-items:flex-start;gap:12px;font-size:.88rem;line-height:1.55}
+.cmp-left .cmp-item{color:rgba(255,255,255,.5)}
+.cmp-right .cmp-item{color:var(--navy);font-weight:500}
+.cmp-ico{width:18px;height:18px;flex-shrink:0;margin-top:2px}
+.cmp-ico-x{color:#DC2626}.cmp-ico-ok{color:var(--gold)}
+.cmp-left.reveal{opacity:0;transform:translateX(-40px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.cmp-right.reveal{opacity:0;transform:translateX(40px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.cmp-left.visible,.cmp-right.visible{opacity:1;transform:translateX(0)}
+@media(max-width:700px){.cmp-split{grid-template-columns:1fr}.cmp-split-divider{display:none}.cmp-right{border-top:1px solid var(--border)}}
+@media(max-width:640px){.cmp-left,.cmp-right{padding:28px 24px}}
+
+/* FIX5 — FLOW SECTION */
+#case{background:var(--dark);padding:100px 0;position:relative;overflow:hidden}
+#case::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(232,160,32,.07) 0%,transparent 65%);pointer-events:none}
+.flow-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px;position:relative;z-index:1}
+.flow-card{background:rgba(255,255,255,.05);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:36px 32px;text-align:center;transition:border-color .25s,background .25s}
+.flow-card:hover{background:rgba(255,255,255,.08);border-color:rgba(232,160,32,.3)}
+.flow-card-1.reveal{opacity:0;transform:translateX(-40px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.flow-card-2.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s .15s var(--ease),transform .7s .15s var(--ease)}
+.flow-card-3.reveal{opacity:0;transform:translateX(40px);transition:opacity .7s .05s var(--ease),transform .7s .05s var(--ease)}
+.flow-card.visible{opacity:1;transform:translate(0,0)}
+.flow-num{font-size:2.2rem;font-weight:800;color:rgba(232,160,32,.2);letter-spacing:-0.05em;line-height:1;margin-bottom:16px}
+.flow-icon{width:56px;height:56px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;transition:all .25s}
+.flow-card:hover .flow-icon{background:var(--gold);border-color:var(--gold)}
+.flow-card:hover .flow-icon svg{color:#fff!important}
+.flow-icon svg{width:26px;height:26px;color:var(--gold);transition:color .25s}
+.flow-title{font-size:17px;font-weight:700;color:#fff;margin-bottom:10px;letter-spacing:-.01em}
+.flow-sub{font-size:.84rem;color:var(--muted);line-height:1.65}
+.flow-statement{font-size:clamp(20px,2.5vw,28px);font-weight:800;color:var(--gold);text-align:center;margin-top:56px;letter-spacing:-0.02em;position:relative;z-index:1}
+@media(max-width:700px){.flow-cards{grid-template-columns:1fr;max-width:400px;margin-left:auto;margin-right:auto}}
+
+/* FIX6 — SUPPLIER SECTION */
+#supplier-apply{background:linear-gradient(145deg,#0d1f36 0%,var(--dark3) 50%,#0d1f36 100%);position:relative;overflow:hidden}
+#supplier-apply::before{content:'PARTNER';position:absolute;right:-40px;top:50%;transform:translateY(-50%) rotate(90deg);font-size:180px;font-weight:800;color:rgba(255,255,255,.02);letter-spacing:.2em;pointer-events:none;white-space:nowrap;z-index:0}
+#supplier-apply .container{position:relative;z-index:1}
+#supplier-apply .label{color:var(--gold);background:rgba(232,160,32,.15);border-color:rgba(232,160,32,.35)}
+#supplier-apply .h2{color:#fff}
+#supplier-apply .subtitle{color:var(--muted)}
+#supplier-apply .sa-benefit-text strong{color:#fff}
+.sa-benefit.slide-left{opacity:0;transform:translateX(-28px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.sa-benefit.slide-left.visible{opacity:1;transform:translateX(0)}
+.sa-form-card{background:#fff;border-radius:var(--r-lg);padding:40px;box-shadow:var(--sh-lg);border-top:3px solid var(--gold)}
+.sa-form-card .form-input:focus,.sa-form-card .form-select:focus,.sa-form-card .form-textarea:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(232,160,32,.12)}
+
+/* FIX7 — UNIFIED CONTACT */
+#contact{background:var(--bg)}
+.contact-form-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:44px;box-shadow:var(--sh-md)}
+
+/* FIX8 — EXTRA ANIMATIONS */
+/* Step 3D flip */
+.steps-wrap{perspective:1200px}
+.step-card{transform:rotateY(90deg);opacity:0;transition:transform .6s var(--ease),opacity .5s var(--ease);transform-origin:center center}
+.step-card.flip-in{transform:rotateY(0deg);opacity:1}
+/* Why shimmer */
+.why-card{overflow:hidden;position:relative}
+.why-card::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 0%,rgba(232,160,32,.06) 50%,transparent 100%);transform:translateX(-100%);transition:transform .55s var(--ease);pointer-events:none}
+.why-card:hover::after{transform:translateX(100%)}
+/* Mat pop-in */
+.mat-card{transform:scale(0.85);opacity:0;transition:transform .5s var(--ease),opacity .5s var(--ease),border-color .25s,box-shadow .25s}
+.mat-card.visible{transform:scale(1);opacity:1}
+/* Hero word stagger */
+.hw{display:inline-block;opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.hw.in{opacity:1;transform:translateY(0)}
+/* Slide left */
+.slide-left{opacity:0;transform:translateX(-28px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.slide-left.visible{opacity:1;transform:translateX(0)}
 </style>
 </head>
 <body>
@@ -353,7 +430,7 @@ footer{background:var(--dark);padding:72px 0 0}
       <li><a href="#contact">Kontakt</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn btn-gold btn-md" onclick="openModal('m-order')">Materialbedarf melden</button>
+      <button class="btn btn-gold btn-md" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
       <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
   </div>
@@ -366,7 +443,7 @@ footer{background:var(--dark);padding:72px 0 0}
   <a href="#suppliers" onclick="toggleNav()">Lieferanten</a>
   <a href="#about" onclick="toggleNav()">Über uns</a>
   <a href="#contact" onclick="toggleNav()">Kontakt</a>
-  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();openModal('m-order')">Materialbedarf melden</button>
+  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
 </div>
 
 <!-- HERO -->
@@ -376,10 +453,10 @@ footer{background:var(--dark);padding:72px 0 0}
   <div class="hero-dots"></div>
   <div class="hero-content">
     <div class="hero-badge">✦ Schweizer B2B Beschaffungsvermittler</div>
-    <h1 class="hero-h1">Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span></h1>
+    <h1 class="hero-h1" id="hero-h1">Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span></h1>
     <p class="hero-sub">SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme. Ohne Aufwand, ohne Risiko, ohne Fixkosten.</p>
     <div class="hero-btns">
-      <button class="btn btn-gold btn-lg" onclick="openModal('m-order')">Materialbedarf melden</button>
+      <button class="btn btn-gold btn-lg" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
       <a href="#process" class="btn btn-outline-w btn-lg">Wie es funktioniert →</a>
     </div>
     <div class="hero-scroll-pill" onclick="document.getElementById('calculator').scrollIntoView({behavior:'smooth'})">↓ Berechne deine potenzielle Ersparnis</div>
@@ -390,11 +467,11 @@ footer{background:var(--dark);padding:72px 0 0}
       </div>
       <div class="stat-col">
         <div class="stat-num" data-count-chf="23.9">CHF 0</div>
-        <div class="stat-label">Baumarkt Schweiz 2025<br>— SBV</div>
+        <div class="stat-label">Baumarkt CH 2025<br>— SBV</div>
       </div>
       <div class="stat-col">
-        <div class="stat-num" data-count="2.25" data-suffix="%" data-dec="2">0%</div>
-        <div class="stat-label">Provision nur bei<br>nachgewiesener Ersparnis</div>
+        <div class="stat-num" data-count="98" data-suffix="%">0%</div>
+        <div class="stat-label">der CH-Baufirmen<br>sind KMU — BFS</div>
       </div>
     </div>
   </div>
@@ -467,9 +544,11 @@ footer{background:var(--dark);padding:72px 0 0}
     <div class="fw-grid">
       <div class="fw-card fw-card-featured reveal reveal-d1">
         <div class="fw-badge">Most popular</div>
-        <div class="fw-title">KMU-Baufirmen &amp; Generalunternehmer</div>
+        <div class="fw-title">Bauunternehmen aller Grössen</div>
+        <p style="font-size:.82rem;color:rgba(255,255,255,.55);line-height:1.6;margin-bottom:18px">Von KMU bis Grosskonzern — SourceOn schafft Einkaufsmacht für jeden der Baumaterial beschafft.</p>
         <ul class="fw-checks">
           <li><span>Einkaufspreise wie Grosskonzerne</span></li>
+          <li><span>Profitabel ab CHF 50k Jahresvolumen — skaliert mit deiner Grösse</span></li>
           <li><span>Kein Mindestumsatz, keine Bindung</span></li>
           <li><span>Direktlieferung auf die Baustelle</span></li>
           <li><span>Zahlung nur bei echter Ersparnis</span></li>
@@ -523,7 +602,7 @@ footer{background:var(--dark);padding:72px 0 0}
         </div>
         <div class="calc-range-labels"><span>CHF 50'000</span><span>CHF 10'000'000</span></div>
         <input type="text" class="calc-text-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" value="150'000"/>
-        <div class="calc-tier-label">Ø Rabatt: <span class="calc-tier-rate" id="calc-rate">10%</span> — <span id="calc-tier-name">Erste Bündelung</span></div>
+        <div class="calc-tier-label">Ø Rabatt: <span class="calc-tier-rate" id="calc-rate">10%</span></div>
       </div>
       <div class="reveal reveal-d2">
         <div class="calc-card">
@@ -533,11 +612,11 @@ footer{background:var(--dark);padding:72px 0 0}
           </div>
           <div class="calc-divider"></div>
           <div class="calc-row-net">
-            <div class="calc-row-label">Netto-Einsparpotenzial</div>
+            <div class="calc-row-label">Netto-Einsparpotenzial (nach Provision)</div>
             <div class="calc-row-val" id="calc-net">CHF 11'625</div>
           </div>
           <div class="calc-cta">
-            <button class="btn btn-gold btn-lg btn-full" onclick="openModal('m-order')">Angebot anfordern — kostenlos</button>
+            <button class="btn btn-gold btn-lg btn-full" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden — kostenlos</button>
           </div>
           <p class="calc-disclaimer">Unverbindliche Schätzung basierend auf Schweizer Marktdaten (SBV, McKinsey 2023, GPO-Studien 2024). Einsparungen variieren je nach Material, Volumen und Lieferant.</p>
           <p class="calc-footnote">* Ab CHF 500'000 Jahresvolumen individuelle Konditionen möglich.</p>
@@ -640,53 +719,67 @@ footer{background:var(--dark);padding:72px 0 0}
 <!-- COMPARISON -->
 <section id="comparison" class="section">
   <div class="container">
-    <div class="text-center reveal">
+    <div class="text-center reveal" style="margin-bottom:0">
       <h2 class="h2">Mit oder ohne SourceOn?</h2>
     </div>
-    <div class="cmp-table reveal">
-      <div class="cmp-head">
-        <div class="cmp-head-cell">Kriterium</div>
-        <div class="cmp-head-cell">😟 Ohne SourceOn</div>
-        <div class="cmp-head-cell"><em>✓</em> Mit SourceOn</div>
+    <div class="cmp-split">
+      <div class="cmp-split-divider"></div>
+      <div class="cmp-left reveal">
+        <div class="cmp-col-title">Ohne SourceOn</div>
+        <div class="cmp-items">
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Einzeln verhandeln — ohne Volumen, ohne Hebelwirkung</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Zeitaufwand intern — Offerten, Vergleiche, Telefonate</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Keine Transparenz — du weisst nie ob du gut einkaufst</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Kein Nachweis — Einsparungen nicht dokumentiert</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Aufwand trotzdem — auch ohne Ergebnis</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Begrenzte Lieferanten — nur eigene Kontakte</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Normprüfung — eigenverantwortlich, fehleranfällig</span></div>
+        </div>
       </div>
-      <div class="cmp-row"><div class="cmp-cell">Preisverhandlung</div><div class="cmp-cell"><span class="cmp-x">✗</span> Alleine, wenig Hebel</div><div class="cmp-cell"><span class="cmp-ok">✓</span> Gebündeltes Volumen</div></div>
-      <div class="cmp-row"><div class="cmp-cell">Lieferantenvergleich</div><div class="cmp-cell"><span class="cmp-x">✗</span> Zeitaufwand intern</div><div class="cmp-cell"><span class="cmp-ok">✓</span> Min. 3 Angebote</div></div>
-      <div class="cmp-row"><div class="cmp-cell">Einsparungsnachweis</div><div class="cmp-cell"><span class="cmp-x">✗</span> Kein Tracking</div><div class="cmp-cell"><span class="cmp-ok">✓</span> Vollständig dokumentiert</div></div>
-      <div class="cmp-row"><div class="cmp-cell">Kosten ohne Erfolg</div><div class="cmp-cell"><span class="cmp-x">✗</span> Intern trotzdem Aufwand</div><div class="cmp-cell"><span class="cmp-ok">✓</span> Null Kosten</div></div>
-      <div class="cmp-row"><div class="cmp-cell">Zeitaufwand intern</div><div class="cmp-cell"><span class="cmp-x">✗</span> Hoch</div><div class="cmp-cell"><span class="cmp-ok">✓</span> Minimal (2 Min.)</div></div>
-      <div class="cmp-row"><div class="cmp-cell">Lieferantennetzwerk</div><div class="cmp-cell"><span class="cmp-x">✗</span> Bekannte Kontakte</div><div class="cmp-cell"><span class="cmp-ok">✓</span> CH-weit, wachsend</div></div>
-      <div class="cmp-row"><div class="cmp-cell">Normkonformität SN EN</div><div class="cmp-cell"><span class="cmp-x">✗</span> Eigenverantwortung</div><div class="cmp-cell"><span class="cmp-ok">✓</span> Geprüft &amp; garantiert</div></div>
+      <div class="cmp-right reveal">
+        <div class="cmp-col-title">Mit SourceOn</div>
+        <div class="cmp-items">
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>Gebündeltes Volumen — Mengenrabatte wie Grosskonzerne</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>Zwei Minuten Aufwand — wir übernehmen alles</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>Volle Transparenz — du siehst alle Angebote</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>Vollständig dokumentiert — Einsparung nachgewiesen</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>Kein Erfolg — keine Provision. Null Risiko.</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>20+ geprüfte Partnerlieferanten schweizweit</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>SIA/ISO-konforme Lieferanten — geprüft &amp; garantiert</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- CASE STUDY -->
+<!-- HOW IT WORKS (FLOW) -->
 <section id="case">
   <div class="container">
-    <div class="text-center reveal" style="position:relative;z-index:1">
-      <div class="label label-dark">Rechenbeispiel — basierend auf realen Marktkonditionen</div>
-      <div class="case-qmark">"</div>
-      <p class="case-quote">"Mit SourceOn haben wir auf einer einzigen Betonlieferung CHF 17'550 netto gespart — ohne einen einzigen Anruf selbst machen zu müssen."</p>
-      <p class="case-attr">— Rechenbeispiel, KMU-Baufirma Zürich, Beton C25/30 Grossvolumen</p>
-      <div class="case-stats">
-        <div class="case-stat">
-          <div class="case-stat-num" data-count-chf-k="180000">CHF 0</div>
-          <div class="case-stat-label">Gebündeltes Volumen</div>
-        </div>
-        <div class="case-stat">
-          <div class="case-stat-num" data-count="12" data-suffix="%">0%</div>
-          <div class="case-stat-label">Mengenrabatt</div>
-        </div>
-        <div class="case-stat">
-          <div class="case-stat-num" data-count-chf-k="4050">CHF 0</div>
-          <div class="case-stat-label">Provision (2.25%)</div>
-        </div>
-        <div class="case-stat">
-          <div class="case-stat-num" data-count-chf-k="17550">CHF 0</div>
-          <div class="case-stat-label">Netto-Ersparnis</div>
-        </div>
+    <div class="text-center reveal" style="position:relative;z-index:1;margin-bottom:0">
+      <div class="label label-dark">So funktioniert es</div>
+      <h2 class="h2" style="color:#fff">So entsteht deine Ersparnis.</h2>
+    </div>
+    <div class="flow-cards">
+      <div class="flow-card flow-card-1 reveal">
+        <div class="flow-num">01</div>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+        <div class="flow-title">Du meldest deinen Bedarf</div>
+        <p class="flow-sub">Material, Menge, Zeitraum. Dauert 2 Minuten. Kein Aufwand, keine Verpflichtung.</p>
+      </div>
+      <div class="flow-card flow-card-2 reveal">
+        <div class="flow-num">02</div>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><circle cx="5" cy="19" r="3"/><circle cx="19" cy="19" r="3"/><line x1="12" y1="8" x2="5.5" y2="16.5"/><line x1="12" y1="8" x2="18.5" y2="16.5"/><line x1="5.5" y1="16.5" x2="18.5" y2="16.5"/></svg></div>
+        <div class="flow-title">SourceOn bündelt &amp; verhandelt</div>
+        <p class="flow-sub">Dein Bedarf wird mit anderen Baufirmen gebündelt. Wir verhandeln Mengenrabatte direkt beim Lieferanten.</p>
+      </div>
+      <div class="flow-card flow-card-3 reveal">
+        <div class="flow-num">03</div>
+        <div class="flow-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23,6 13.5,15.5 8.5,10.5 1,18"/><polyline points="17,6 23,6 23,12"/></svg></div>
+        <div class="flow-title">Du sparst — garantiert</div>
+        <p class="flow-sub">Direktlieferung auf deine Baustelle. Du zahlst nur wenn wir günstiger sind als dein bisheriger Preis.</p>
       </div>
     </div>
+    <p class="flow-statement reveal">Kein Erfolg — keine Provision. Kein Risiko für dich.</p>
   </div>
 </section>
 
@@ -699,15 +792,16 @@ footer{background:var(--dark);padding:72px 0 0}
         <h2 class="h2">Werden Sie SourceOn-Partnerlieferant.</h2>
         <p class="subtitle" style="margin-top:14px">Wir suchen zuverlässige Schweizer Lieferanten für unser wachsendes Netzwerk.</p>
         <div class="sa-benefits">
-          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div><div class="sa-benefit-text"><strong>Garantiertes Volumen</strong><span>Gebündelte Aufträge statt Einzelanfragen</span></div></div>
-          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="sa-benefit-text"><strong>Planungssicherheit</strong><span>Regelmässige Bedarfsmeldungen im Voraus</span></div></div>
-          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="sa-benefit-text"><strong>Neue Kundschaft</strong><span>Zugang zu Schweizer KMU-Baufirmen</span></div></div>
-          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div class="sa-benefit-text"><strong>Schnelle Zahlung</strong><span>Klare Zahlungsbedingungen, 14 Tage netto</span></div></div>
-          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="sa-benefit-text"><strong>Qualitätsnetzwerk</strong><span>Nur geprüfte SIA/ISO-konforme Lieferanten</span></div></div>
-          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="sa-benefit-text"><strong>Wachstumspotenzial</strong><span>Marktposition stärken im Schweizer Baumarkt</span></div></div>
+          <div class="sa-benefit slide-left"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div><div class="sa-benefit-text"><strong>Garantiertes Volumen</strong><span>Gebündelte Aufträge statt Einzelanfragen</span></div></div>
+          <div class="sa-benefit slide-left"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="sa-benefit-text"><strong>Planungssicherheit</strong><span>Regelmässige Bedarfsmeldungen im Voraus</span></div></div>
+          <div class="sa-benefit slide-left"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="sa-benefit-text"><strong>Neue Kundschaft</strong><span>Zugang zu Schweizer KMU-Baufirmen</span></div></div>
+          <div class="sa-benefit slide-left"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div class="sa-benefit-text"><strong>Schnelle Zahlung</strong><span>Klare Zahlungsbedingungen, 14 Tage netto</span></div></div>
+          <div class="sa-benefit slide-left"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="sa-benefit-text"><strong>Qualitätsnetzwerk</strong><span>Nur geprüfte SIA/ISO-konforme Lieferanten</span></div></div>
+          <div class="sa-benefit slide-left"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="sa-benefit-text"><strong>Wachstumspotenzial</strong><span>Marktposition stärken im Schweizer Baumarkt</span></div></div>
         </div>
       </div>
       <div class="reveal reveal-d2">
+        <div class="sa-form-card">
         <form id="form-supplier" onsubmit="submitSupplier(event)" novalidate>
           <div class="form-grid">
             <div class="form-group"><label class="form-label">Firmenname *</label><input type="text" class="form-input" id="sa-company" required/><div class="form-error" id="e-sa-company">Pflichtfeld</div></div>
@@ -779,6 +873,7 @@ footer{background:var(--dark);padding:72px 0 0}
           <button type="submit" class="btn btn-gold btn-lg btn-full">Jetzt als Partnerlieferant bewerben</button>
           <div class="form-success" id="success-supplier"><span>✓</span> Vielen Dank! Wir melden uns innerhalb von 48 Stunden.</div>
         </form>
+        </div>
       </div>
     </div>
   </div>
@@ -823,52 +918,72 @@ footer{background:var(--dark);padding:72px 0 0}
     <h2 class="cta-title">Bereit für tiefere Einkaufspreise?</h2>
     <p class="cta-sub">Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
     <div class="cta-btns">
-      <button class="btn btn-gold btn-lg" onclick="openModal('m-order')">Materialbedarf melden</button>
+      <button class="btn btn-gold btn-lg" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
       <a href="mailto:info@sourceon.ch" class="btn btn-outline-w btn-lg">info@sourceon.ch</a>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- CONTACT / UNIFIED FORM -->
 <section id="contact" class="section">
   <div class="container">
     <div class="contact-layout">
       <div class="reveal">
-        <h2 class="h2" style="font-size:clamp(24px,3vw,36px)">Jetzt Materialbedarf melden</h2>
-        <p class="contact-desc">Teile uns deinen Bedarf mit — wir holen die Angebote ein und melden uns innerhalb von 48 Stunden mit einem konkreten Ergebnis.</p>
+        <div class="label">Materialbedarf melden</div>
+        <h2 class="h2" style="font-size:clamp(24px,3vw,38px)">Jetzt Materialbedarf melden</h2>
+        <p class="contact-desc">Kostenlos und unverbindlich. Wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</p>
         <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.93 5.93l1.3-1.31a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+41 44 000 00 00</div>
         <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>info@sourceon.ch</div>
         <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Zürich, Schweiz</div>
+        <div style="margin-top:32px;padding:20px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:var(--r)">
+          <p style="font-size:.83rem;color:var(--navy);font-weight:600;margin-bottom:4px">Wie es funktioniert</p>
+          <p style="font-size:.8rem;color:var(--body);line-height:1.6">Sende uns einfach deinen Materialbedarf in eigenen Worten — kein spezielles Format nötig. Wir kümmern uns um den Rest.</p>
+        </div>
       </div>
       <div class="reveal reveal-d2">
-        <form id="form-contact" onsubmit="submitContact(event)" novalidate>
-          <div class="form-grid">
-            <div class="form-group"><label class="form-label">Unternehmen *</label><input type="text" class="form-input" id="c-company" required/><div class="form-error" id="e-c-company">Pflichtfeld</div></div>
-            <div class="form-group"><label class="form-label">Vorname *</label><input type="text" class="form-input" id="c-fname" required/><div class="form-error" id="e-c-fname">Pflichtfeld</div></div>
-          </div>
-          <div class="form-grid">
-            <div class="form-group"><label class="form-label">Nachname *</label><input type="text" class="form-input" id="c-lname" required/><div class="form-error" id="e-c-lname">Pflichtfeld</div></div>
-            <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" class="form-input" id="c-email" required/><div class="form-error" id="e-c-email">Gültige E-Mail</div></div>
-          </div>
-          <div class="form-grid">
-            <div class="form-group"><label class="form-label">Telefon *</label><input type="tel" class="form-input" id="c-phone" required/><div class="form-error" id="e-c-phone">Pflichtfeld</div></div>
-            <div class="form-group"><label class="form-label">Materialart</label>
-              <select class="form-select" id="c-material">
-                <option value="">Bitte wählen</option>
-                <option>Beton</option><option>Armierungsstahl</option><option>Kies &amp; Splitt</option>
-                <option>Mauerwerk &amp; Ziegel</option><option>Dämmung</option><option>Schalung</option>
-                <option>Mörtel</option><option>Sanitär &amp; HLKS</option><option>Mehrere Materialien</option><option>Andere</option>
-              </select>
+        <div class="contact-form-card">
+          <form id="form-contact" onsubmit="submitContact(event)" novalidate>
+            <div class="form-grid">
+              <div class="form-group"><label class="form-label">Firmenname *</label><input type="text" class="form-input" id="c-company" required/><div class="form-error" id="e-c-company">Pflichtfeld</div></div>
+              <div class="form-group"><label class="form-label">Ansprechperson *</label><input type="text" class="form-input" id="c-name" required/><div class="form-error" id="e-c-name">Pflichtfeld</div></div>
             </div>
-          </div>
-          <div class="form-grid">
-            <div class="form-group"><label class="form-label">Menge / Volumen</label><input type="text" class="form-input" id="c-qty" placeholder="z.B. 200 m³ oder CHF 80'000"/></div>
-            <div class="form-group"><label class="form-label">Lieferdatum</label><input type="date" class="form-input" id="c-date"/></div>
-          </div>
-          <div class="form-group"><label class="form-label">Projektbeschreibung</label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und der benötigten Materialien…"></textarea></div>
-          <button type="submit" class="btn btn-navy btn-lg btn-full">Anfrage absenden →</button>
-          <div class="form-success" id="success-contact"><span>✓</span> Vielen Dank — wir melden uns innerhalb von 48 Stunden.</div>
-        </form>
+            <div class="form-grid">
+              <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" class="form-input" id="c-email" required/><div class="form-error" id="e-c-email">Gültige E-Mail</div></div>
+              <div class="form-group"><label class="form-label">Telefon *</label><input type="tel" class="form-input" id="c-phone" required/><div class="form-error" id="e-c-phone">Pflichtfeld</div></div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group"><label class="form-label">Materialart *</label>
+                <select class="form-select" id="c-material" required>
+                  <option value="">Bitte wählen</option>
+                  <option>Beton</option><option>Armierungsstahl</option><option>Kies &amp; Splitt</option>
+                  <option>Mauerwerk &amp; Ziegel</option><option>Dämmung</option><option>Schalung</option>
+                  <option>Mörtel</option><option>Sanitär &amp; HLKS</option><option>Holz &amp; Baustoffe</option>
+                  <option>Stahl &amp; Metall</option><option>Dach &amp; Fassade</option>
+                  <option>Mehrere Materialien</option><option>Andere</option>
+                </select>
+                <div class="form-error" id="e-c-material">Bitte wählen</div>
+              </div>
+              <div class="form-group"><label class="form-label">Benötigte Menge *</label><input type="text" class="form-input" id="c-qty" placeholder="z.B. 200 m³ oder 5 Tonnen" required/><div class="form-error" id="e-c-qty">Pflichtfeld</div></div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group"><label class="form-label">Gewünschter Lieferzeitraum *</label>
+                <select class="form-select" id="c-timing" required>
+                  <option value="">Bitte wählen</option>
+                  <option>So schnell wie möglich</option>
+                  <option>Innerhalb 1 Woche</option>
+                  <option>Innerhalb 2 Wochen</option>
+                  <option>Innerhalb 1 Monat</option>
+                  <option>Flexibel — nach Absprache</option>
+                </select>
+                <div class="form-error" id="e-c-timing">Bitte wählen</div>
+              </div>
+              <div class="form-group"><label class="form-label">Lieferadresse / Kanton *</label><input type="text" class="form-input" id="c-canton" placeholder="z.B. Zürich, Baustelle Hauptstr. 5" required/><div class="form-error" id="e-c-canton">Pflichtfeld</div></div>
+            </div>
+            <div class="form-group"><label class="form-label">Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span></label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und weitere Anforderungen…"></textarea></div>
+            <button type="submit" class="btn btn-gold btn-lg btn-full">Materialbedarf jetzt melden →</button>
+            <div class="form-success" id="success-contact"><span>✓</span> Vielen Dank — wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</div>
+          </form>
+        </div>
       </div>
     </div>
   </div>
@@ -916,32 +1031,6 @@ footer{background:var(--dark);padding:72px 0 0}
   </div>
 </footer>
 
-<!-- ORDER MODAL -->
-<div id="m-overlay" onclick="if(event.target===this)closeModal()">
-  <div class="modal" id="m-order">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <h2>Materialbedarf melden</h2>
-    <p class="modal-sub">Kostenlos und unverbindlich. Wir melden uns innerhalb von 48 Stunden.</p>
-    <form id="form-modal-order" onsubmit="submitOrder(event)" novalidate>
-      <div class="form-grid">
-        <div class="form-group"><label class="form-label">Unternehmen *</label><input type="text" class="form-input" id="mo-company" required/><div class="form-error" id="e-mo-company">Pflichtfeld</div></div>
-        <div class="form-group"><label class="form-label">Name *</label><input type="text" class="form-input" id="mo-name" required/><div class="form-error" id="e-mo-name">Pflichtfeld</div></div>
-      </div>
-      <div class="form-grid">
-        <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" class="form-input" id="mo-email" required/><div class="form-error" id="e-mo-email">Gültige E-Mail</div></div>
-        <div class="form-group"><label class="form-label">Telefon *</label><input type="tel" class="form-input" id="mo-phone" required/><div class="form-error" id="e-mo-phone">Pflichtfeld</div></div>
-      </div>
-      <div class="form-group">
-        <label class="form-label">Materialart &amp; Menge</label>
-        <p style="font-size:.77rem;color:var(--body);margin-bottom:8px;line-height:1.5">Materialbezeichnungen nach SourceOn-System, z.B. <strong>Beton C25/30 = SO-BET-002</strong>, <strong>Betonstahl B500B = SO-ARM-001</strong>. Falls du die SO-ID nicht kennst, einfach Materialbezeichnung angeben — wir ordnen zu.</p>
-        <textarea class="form-textarea" id="mo-material" placeholder="z.B. 120 m³ Beton C25/30 (SO-BET-002), Lieferung KW 28 Baustelle Zürich-Nord…" style="min-height:80px"></textarea>
-      </div>
-      <div class="form-group"><label class="form-label">Lieferdatum</label><input type="date" class="form-input" id="mo-date"/></div>
-      <button type="submit" class="btn btn-gold btn-lg btn-full">Anfrage absenden →</button>
-      <div class="form-success" id="success-order"><span>✓</span> Danke! Wir melden uns innerhalb von 48 Stunden.</div>
-    </form>
-  </div>
-</div>
 
 <script>
 // NAV
@@ -954,22 +1043,28 @@ function toggleNav(){
   document.body.style.overflow=o.classList.contains('open')?'hidden':'';
 }
 
-// MODAL
-let activeModal=null;
-function openModal(id){
-  if(activeModal)document.getElementById(activeModal).classList.remove('open');
-  activeModal=id;
-  document.getElementById('m-overlay').classList.add('open');
-  document.getElementById(id).classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeModal(){
-  if(activeModal){document.getElementById(activeModal).classList.remove('open');activeModal=null;}
-  document.getElementById('m-overlay').classList.remove('open');
-  document.body.style.overflow='';
-}
-document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
-document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>e.stopPropagation()));
+// HERO HEADLINE WORD STAGGER
+(function(){
+  const h=document.getElementById('hero-h1');
+  if(!h)return;
+  // walk text nodes and wrap words
+  function wrapWords(node){
+    if(node.nodeType===3){
+      const words=node.textContent.split(/(\s+)/);
+      const frag=document.createDocumentFragment();
+      words.forEach(w=>{
+        if(/\S/.test(w)){const s=document.createElement('span');s.className='hw';s.textContent=w;frag.appendChild(s);}
+        else if(w){frag.appendChild(document.createTextNode(w));}
+      });
+      node.parentNode.replaceChild(frag,node);
+    } else if(node.nodeType===1&&node.nodeName!=='SCRIPT'){
+      [...node.childNodes].forEach(wrapWords);
+    }
+  }
+  wrapWords(h);
+  const spans=h.querySelectorAll('.hw');
+  spans.forEach((s,i)=>setTimeout(()=>s.classList.add('in'),100+i*150));
+})();
 
 // MARQUEE
 const SUPPLIERS=[
@@ -1027,7 +1122,6 @@ function updateCalc(v){
   document.getElementById('calc-display').textContent=fmtChf(v);
   document.getElementById('calc-input').value=Math.round(v).toLocaleString('de-CH');
   document.getElementById('calc-rate').textContent=Math.round(tier.rate*100)+'%';
-  document.getElementById('calc-tier-name').textContent=tier.label;
   document.getElementById('calc-gross').textContent=fmtChf(gross);
   animateNum('calc-net',net);
   const pos=valToPos(v);
@@ -1047,7 +1141,20 @@ updateCalc(150000);
 const ro=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});
 },{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+document.querySelectorAll('.reveal,.slide-left,.mat-card').forEach(el=>ro.observe(el));
+
+// STEP CARD 3D FLIP
+const stepCards=document.querySelectorAll('.step-card');
+const flipObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const i=Array.from(stepCards).indexOf(e.target);
+      setTimeout(()=>e.target.classList.add('flip-in'),i*200);
+      flipObs.unobserve(e.target);
+    }
+  });
+},{threshold:0.2});
+stepCards.forEach(c=>flipObs.observe(c));
 
 // COUNTERS
 function countEl(el){
@@ -1085,16 +1192,9 @@ function req(id,errId){const ok=document.getElementById(id).value.trim().length>
 function emailOk(id,errId){const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById(id).value.trim());document.getElementById(errId).style.display=ok?'none':'block';return ok;}
 function selOk(id,errId){const ok=document.getElementById(id).value!=='';document.getElementById(errId).style.display=ok?'none':'block';return ok;}
 
-function submitOrder(e){
-  e.preventDefault();
-  if([req('mo-company','e-mo-company'),req('mo-name','e-mo-name'),emailOk('mo-email','e-mo-email'),req('mo-phone','e-mo-phone')].every(Boolean)){
-    document.getElementById('form-modal-order').style.display='none';
-    document.getElementById('success-order').classList.add('show');
-  }
-}
 function submitContact(e){
   e.preventDefault();
-  if([req('c-company','e-c-company'),req('c-fname','e-c-fname'),req('c-lname','e-c-lname'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone')].every(Boolean)){
+  if([req('c-company','e-c-company'),req('c-name','e-c-name'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone'),selOk('c-material','e-c-material'),req('c-qty','e-c-qty'),selOk('c-timing','e-c-timing'),req('c-canton','e-c-canton')].every(Boolean)){
     document.getElementById('form-contact').style.display='none';
     document.getElementById('success-contact').classList.add('show');
   }
