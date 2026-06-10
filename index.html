@@ -119,23 +119,19 @@ a{color:inherit;text-decoration:none}
 .reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}.reveal-d4{transition-delay:.4s}
 
 /* PROCESS */
-#process{background:var(--bg);position:relative}
-#process::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(232,160,32,.03) 1px,transparent 1px);background-size:20px 20px;pointer-events:none;z-index:0}
-.steps-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:64px;position:relative;z-index:1}
-.steps-wrap::before{content:'';position:absolute;top:30px;left:calc(12.5% + 18px);right:calc(12.5% + 18px);height:2px;background:linear-gradient(to right,rgba(232,160,32,.15) 0%,rgba(232,160,32,.55) 40%,rgba(232,160,32,.55) 60%,rgba(232,160,32,.15) 100%);z-index:0}
-.step-chevron{position:absolute;top:21px;width:18px;height:18px;z-index:3;pointer-events:none;transform:translateX(-50%)}
-.step-chevron:nth-of-type(1){left:25%}.step-chevron:nth-of-type(2){left:50%}.step-chevron:nth-of-type(3){left:75%}
-.step-card{text-align:center;padding:24px 20px 20px;position:relative;z-index:2;background:#fff;opacity:0;transition:opacity .4s ease,border-left-color .4s ease;border-left:3px solid rgba(232,160,32,0)}
-.step-card.step-visible{opacity:1;border-left-color:rgba(232,160,32,.7)}
-.step-num-badge{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);width:32px;height:32px;border-radius:50%;background:var(--gold);color:#0F172A;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;z-index:4;box-shadow:0 2px 8px rgba(232,160,32,.4)}
+#process{background:#fff}
+.steps-wrap{display:grid;grid-template-columns:1fr auto 1fr auto 1fr auto 1fr;gap:0;margin-top:64px;position:relative;align-items:start}
+.steps-connector{display:flex;align-items:center;justify-content:center;padding-top:24px;pointer-events:none}
+.steps-connector-line{width:40px;height:1px;background:rgba(232,160,32,.3)}
+.step-card{text-align:center;padding:32px 24px;position:relative;background:#fff;border:1px solid #E2E8F0;border-radius:12px;opacity:0;transition:opacity .4s ease,box-shadow .4s ease;margin:0 8px}
+.step-card.step-visible{opacity:1;box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.step-num-circle{width:48px;height:48px;border-radius:50%;border:2px solid #E8A020;background:transparent;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:18px;font-weight:600;color:#E8A020;line-height:1}
+.step-num-badge{display:none}
 .step-num{display:none}
-.step-icon{width:60px;height:60px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin:16px auto 20px;transition:all .25s var(--ease)}
-.step-card:hover .step-icon{background:var(--gold);border-color:var(--gold);transform:translateY(-4px)}
-.step-card:hover .step-icon svg{color:#fff!important}
-.step-icon svg{width:26px;height:26px;color:var(--gold);transition:color .25s}
-.step-title{font-size:17px;font-weight:700;color:var(--text);margin-bottom:10px}
-.step-desc{font-size:.85rem;color:var(--body);line-height:1.65}
-@media(max-width:900px){.steps-wrap{grid-template-columns:repeat(2,1fr);gap:40px}.steps-wrap::before{display:none}.step-chevron{display:none}}
+.step-icon{display:none}
+.step-title{font-size:17px;font-weight:700;color:#0F172A;margin-bottom:10px}
+.step-desc{font-size:.85rem;color:#475569;line-height:1.6}
+@media(max-width:900px){.steps-wrap{grid-template-columns:repeat(2,1fr);gap:24px}.steps-connector{display:none}}
 @media(max-width:480px){.steps-wrap{grid-template-columns:1fr}}
 
 /* MARQUEE */
@@ -254,17 +250,19 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 #chat-send svg{width:16px;height:16px;color:#0F172A}
 
 /* FAQ */
-#faq{background:var(--bg)}
-.faq-list{margin-top:56px;display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
-.faq-item{border-bottom:1px solid var(--border)}
+#faq{background:#0F2238;padding:100px 0}
+.faq-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 60px;margin-top:56px}
+.faq-col{border-left:3px solid #E8A020;padding-left:32px}
+.faq-item{border-bottom:1px solid rgba(255,255,255,.08);padding:0}
 .faq-item:last-child{border-bottom:none}
-.faq-q{width:100%;background:none;border:none;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;text-align:left;font-family:inherit;font-size:.95rem;font-weight:600;color:var(--text);transition:background .2s}
-.faq-q:hover{background:var(--bg2)}
-.faq-q.open{color:var(--navy)}
-.faq-chevron{width:20px;height:20px;flex-shrink:0;color:var(--gold);transition:transform .3s var(--ease)}
-.faq-q.open .faq-chevron{transform:rotate(180deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .35s var(--ease)}
-.faq-a-inner{padding:0 28px 22px;font-size:.88rem;color:var(--body);line-height:1.75}
+.faq-q{width:100%;background:none;border:none;padding:20px 0;display:flex;align-items:center;gap:12px;cursor:pointer;text-align:left;font-family:inherit;font-size:1rem;font-weight:500;color:#fff;transition:color .2s}
+.faq-q-icon{width:16px;height:16px;flex-shrink:0;color:#E8A020;opacity:.6;margin-top:1px}
+.faq-q-text{flex:1}
+.faq-toggle{flex-shrink:0;width:22px;height:22px;color:var(--gold);font-size:20px;line-height:1;font-weight:300;display:flex;align-items:center;justify-content:center}
+.faq-q.open .faq-q-text{color:var(--gold)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.faq-a-inner{padding:0 0 20px 28px;font-size:.9rem;color:#94A3B8;line-height:1.7}
+@media(max-width:768px){.faq-cols{grid-template-columns:1fr;gap:0}}
 
 /* MATERIALS */
 #materials{background:var(--bg2)}
@@ -590,7 +588,6 @@ footer{background:var(--dark);padding:72px 0 0}
     <p class="hero-sub">SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme. Ohne Aufwand, ohne Risiko, ohne Fixkosten.</p>
     <div class="hero-btns">
       <button class="btn btn-gold btn-lg" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
-      <p style="font-size:13px;font-style:italic;color:var(--muted);margin-top:8px">Kostenlos · Unverbindlich · Antwort in 48h</p>
       <a href="#process" class="btn btn-outline-w btn-lg">Wie es funktioniert →</a>
     </div>
     <div class="hero-scroll-pill" onclick="document.getElementById('calculator').scrollIntoView({behavior:'smooth'})">↓ Berechne deine potenzielle Ersparnis</div>
@@ -620,26 +617,26 @@ footer{background:var(--dark);padding:72px 0 0}
       <p class="subtitle" style="margin-top:16px">Kein Aufwand auf deiner Seite — du meldest den Bedarf, wir übernehmen alles.</p>
     </div>
     <div class="steps-wrap" id="steps-wrap">
-      <svg class="step-chevron" viewBox="0 0 18 18" fill="none"><polyline points="5,3 13,9 5,15" stroke="#E8A020" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <svg class="step-chevron" viewBox="0 0 18 18" fill="none"><polyline points="5,3 13,9 5,15" stroke="#E8A020" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <svg class="step-chevron" viewBox="0 0 18 18" fill="none"><polyline points="5,3 13,9 5,15" stroke="#E8A020" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      <div class="step-card" id="step-card-0"><div class="step-num-badge">1</div>
-        <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+      <div class="step-card" id="step-card-0">
+        <div class="step-num-circle">1</div>
         <div class="step-title">Bedarf melden</div>
         <p class="step-desc">Du teilst uns Materialart, Menge und Liefertermin mit. Dauert zwei Minuten.</p>
       </div>
-      <div class="step-card" id="step-card-1"><div class="step-num-badge">2</div>
-        <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
+      <div class="steps-connector"><div class="steps-connector-line"></div></div>
+      <div class="step-card" id="step-card-1">
+        <div class="step-num-circle">2</div>
         <div class="step-title">Bündeln</div>
         <p class="step-desc">SourceOn matcht deinen Bedarf mit anderen Baufirmen für echtes Einkaufsvolumen.</p>
       </div>
-      <div class="step-card" id="step-card-2"><div class="step-num-badge">3</div>
-        <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+      <div class="steps-connector"><div class="steps-connector-line"></div></div>
+      <div class="step-card" id="step-card-2">
+        <div class="step-num-circle">3</div>
         <div class="step-title">Vergleichen &amp; Verhandeln</div>
         <p class="step-desc">KI-Analyse und erfahrene Verhandler holen mindestens 3 Angebote ein.</p>
       </div>
-      <div class="step-card" id="step-card-3"><div class="step-num-badge">4</div>
-        <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div>
+      <div class="steps-connector"><div class="steps-connector-line"></div></div>
+      <div class="step-card" id="step-card-3">
+        <div class="step-num-circle">4</div>
         <div class="step-title">Du sparst potenziell</div>
         <p class="step-desc">Direktlieferung auf deine Baustelle. Provision nur wenn du wirklich günstiger einkaufst.</p>
       </div>
@@ -751,7 +748,6 @@ footer{background:var(--dark);padding:72px 0 0}
           </div>
           <div class="calc-cta">
             <button class="btn btn-gold btn-lg btn-full" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden — kostenlos</button>
-          <p style="font-size:13px;font-style:italic;color:var(--muted);margin-top:8px;text-align:center">Kostenlos · Unverbindlich · Antwort in 48h</p>
           </div>
           <p class="calc-disclaimer">Unverbindliche Schätzung basierend auf Schweizer Marktdaten (SBV, McKinsey 2023, GPO-Studien 2024). Potenzielle Einsparungen variieren je nach Material, Volumen und Lieferant.</p>
           <p class="calc-footnote">* Ab CHF 500'000 Jahresvolumen individuelle Konditionen möglich.</p>
@@ -1359,51 +1355,55 @@ footer{background:var(--dark);padding:72px 0 0}
 <section id="faq" class="section">
   <div class="container">
     <div class="text-center reveal">
-      <div class="label">FAQ</div>
-      <h2 class="h2">Häufig gestellte Fragen.</h2>
-      <p class="subtitle" style="margin-top:14px">Alles was du über SourceOn wissen musst.</p>
+      <div class="label label-dark">FAQ</div>
+      <h2 class="h2" style="color:#fff">Häufig gestellte Fragen.</h2>
+      <p class="subtitle subtitle-dark" style="margin-top:14px">Alles was du über SourceOn wissen musst — klar und direkt.</p>
     </div>
-    <div class="faq-list">
+    <div class="faq-cols">
+    <div class="faq-col">
       <div class="faq-item">
-        <button class="faq-q open" onclick="toggleFaq(this)">Was kostet mich SourceOn wenn ich nichts spare?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg></button>
+        <button class="faq-q open" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Was kostet mich SourceOn wenn ich nichts spare?</span><span class="faq-toggle">−</span></button>
         <div class="faq-a" style="max-height:200px"><div class="faq-a-inner">Gar nichts. SourceOn verlangt ausschliesslich eine Provision von 2.25% auf den Materialwert — und das nur dann, wenn wir dir tatsächlich günstiger einkaufen als dein bisheriger Preis. Sparst du nichts, zahlst du nichts. Kein Abo, keine Fixgebühr, kein Risiko.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Wie lange dauert es bis ich ein Angebot bekomme?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg></button>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Wie lange dauert es bis ich ein Angebot bekomme?</span><span class="faq-toggle">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">In der Regel erhältst du innerhalb von 48 Stunden ein konkretes Angebot. Bei Standardmaterialien wie Beton oder Armierungsstahl oft schneller. Bei komplexen oder grossen Bestellungen kann es etwas länger dauern — du wirst immer proaktiv informiert.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Muss ich einen Vertrag unterschreiben?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg></button>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Muss ich einen Vertrag unterschreiben?</span><span class="faq-toggle">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">Für den ersten Auftrag reicht eine einfache Auftragsbestätigung. Für eine langfristige Zusammenarbeit schliessen wir eine Vermittlungsvereinbarung ab — diese schützt beide Seiten und regelt die Provision transparent.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Was passiert wenn die Lieferung fehlerhaft ist?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg></button>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Was passiert wenn die Lieferung fehlerhaft ist?</span><span class="faq-toggle">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">SourceOn ist Vermittler, kein Händler. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Bei Mängeln haftet der Lieferant direkt dir gegenüber gemäss Schweizer OR. Wir unterstützen dich bei der Kommunikation mit dem Lieferanten.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Für welche Materialien ist SourceOn geeignet?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg></button>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Für welche Materialien ist SourceOn geeignet?</span><span class="faq-toggle">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">SourceOn deckt alle wichtigen Baustoffe ab: Beton, Armierungsstahl, Kies &amp; Splitt, Mauerwerk, Dämmung, Schalung, Mörtel, Sanitär &amp; HLKS und weitere. Auch Sondermaterialien können auf Anfrage beschafft werden.</div></div>
       </div>
+          </div>
+    <div class="faq-col">
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Ab welchem Bestellvolumen lohnt sich SourceOn?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg></button>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Ab welchem Bestellvolumen lohnt sich SourceOn?</span><span class="faq-toggle">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">SourceOn ist ab einem Jahresvolumen von rund CHF 50'000 sinnvoll. Je höher dein Volumen, desto grösser der Bündelungseffekt und desto mehr kannst du sparen. Nutze unseren Rechner um dein persönliches Einsparpotenzial zu berechnen.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Wird das Material direkt auf meine Baustelle geliefert?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg></button>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Wird das Material direkt auf meine Baustelle geliefert?</span><span class="faq-toggle">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">Ja — immer. Der Lieferant liefert direkt auf deine Baustelle. Es gibt keine Zwischenlagerung bei SourceOn. Du koordinierst den Lieferzeitpunkt direkt mit SourceOn, wir leiten alles weiter.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Wie funktioniert die Bündelung genau?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg></button>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Wie funktioniert die Bündelung genau?</span><span class="faq-toggle">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">Wenn mehrere Baufirmen dasselbe Material in ähnlichem Zeitraum benötigen, fasst SourceOn diese Bestellungen zu einem Gesamtauftrag zusammen. Der Lieferant erhält einen Grossauftrag und gibt dafür Mengenrabatte — diese werden vollständig an dich weitergegeben, abzüglich unserer 2.25% Provision.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Sind meine Bestelldaten sicher?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg></button>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Sind meine Bestelldaten sicher?</span><span class="faq-toggle">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">Ja. Alle Daten werden vertraulich behandelt und nicht an Dritte weitergegeben. Preisangebote von Lieferanten sind streng vertraulich. SourceOn unterliegt dem Schweizer Datenschutzgesetz (DSG).</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">Kann ich SourceOn auch als Grossunternehmen nutzen?<svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg></button>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Kann ich SourceOn auch als Grossunternehmen nutzen?</span><span class="faq-toggle">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">Absolut. Obwohl unsere Kernzielgruppe KMU-Baufirmen sind, profitieren auch Generalunternehmer und Grosskonzerne von unserem Netzwerk und unserer Verhandlungsmacht. Ab CHF 500'000 Jahresvolumen bieten wir individuelle Konditionen an.</div></div>
       </div>
+    </div>
     </div>
   </div>
 </section>
@@ -1415,7 +1415,6 @@ footer{background:var(--dark);padding:72px 0 0}
     <p class="cta-sub">Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
     <div class="cta-btns">
       <button class="btn btn-gold btn-lg" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
-      <p style="font-size:13px;font-style:italic;color:var(--muted);margin-top:8px">Kostenlos · Unverbindlich · Antwort in 48h</p>
       <a href="mailto:info@SourceOn.ch" class="btn btn-outline-w btn-lg">info@SourceOn.ch</a>
     </div>
   </div>
@@ -1864,9 +1863,14 @@ function toggleFaq(btn){
   const isOpen=btn.classList.contains('open');
   document.querySelectorAll('.faq-q.open').forEach(function(q){
     q.classList.remove('open');
+    const t=q.querySelector('.faq-toggle');if(t)t.textContent='+';
     q.closest('.faq-item').querySelector('.faq-a').style.maxHeight='0';
   });
-  if(!isOpen){btn.classList.add('open');ans.style.maxHeight=ans.scrollHeight+'px';}
+  if(!isOpen){
+    btn.classList.add('open');
+    ans.style.maxHeight=ans.scrollHeight+'px';
+    const t=btn.querySelector('.faq-toggle');if(t)t.textContent='−';
+  }
 }
 
 </script>
