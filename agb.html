@@ -1,104 +1,132 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>AGB — SourceOn</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;color:#0F172A;background:#fff;line-height:1.75;-webkit-font-smoothing:antialiased}
-.wrap{max-width:760px;margin:0 auto;padding:60px 32px}
-.back{display:inline-flex;align-items:center;gap:8px;color:#E8A020;font-size:14px;font-weight:600;text-decoration:none;margin-bottom:48px}
-.back:hover{text-decoration:underline}
-h1{font-size:36px;font-weight:800;letter-spacing:-0.02em;color:#0F172A;margin-bottom:8px}
-.meta{font-size:13px;color:#94A3B8;margin-bottom:48px}
-h2{font-size:20px;font-weight:700;color:#0F172A;margin:40px 0 12px}
-p,li{font-size:15px;color:#475569;margin-bottom:10px}
-ul{padding-left:20px;margin-bottom:12px}
-li{margin-bottom:6px}
-hr{border:none;border-top:1px solid #E2E8F0;margin:40px 0}
-.highlight{background:#F0FDF4;border-left:3px solid #10B981;padding:16px 20px;border-radius:0 8px 8px 0;margin:20px 0}
-.highlight p{color:#065F46;margin-bottom:0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,sans-serif;color:#0F172A;background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+.nav{background:#0F2238;padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:20px;font-weight:800;color:#fff;text-decoration:none}.logo span{color:#E8A020}
+.back{font-size:.83rem;color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s}.back:hover{color:#fff}
+.hero{background:#0F2238;padding:60px 0 56px;text-align:center}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;color:#fff;letter-spacing:-0.02em}
+.hero p{color:#94A3B8;margin-top:10px;font-size:.9rem}
+.content{max-width:760px;margin:0 auto;padding:64px 48px 100px}
+h2{font-size:1.2rem;font-weight:700;color:#0F2238;margin:36px 0 12px;padding-bottom:8px;border-bottom:1px solid #E2E8F0}
+h2:first-child{margin-top:0}
+p{font-size:.9rem;color:#475569;line-height:1.75;margin-bottom:10px}
+ul{margin:8px 0 12px 20px;font-size:.9rem;color:#475569;line-height:1.75}
+li{margin-bottom:4px}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(232,160,32,.12);border:1px solid rgba(232,160,32,.3);color:#E8A020;border-radius:100px;padding:4px 12px;margin-bottom:36px}
+.highlight{background:#F8FAFC;border:1px solid #E2E8F0;border-left:3px solid #E8A020;border-radius:8px;padding:16px 20px;margin:16px 0}
+.highlight p{margin:0;font-size:.88rem;color:#1B3A5C;font-weight:500}
+.update{font-size:.78rem;color:#94A3B8;margin-bottom:32px}
+footer{background:#0F2238;text-align:center;padding:24px;font-size:.78rem;color:rgba(255,255,255,.3)}
+footer a{color:#E8A020;text-decoration:none}
+@media(max-width:640px){.content{padding:40px 24px 80px}.nav{padding:0 20px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <a href="index.html" class="back">← Zurück zu SourceOn</a>
+<nav class="nav">
+  <a class="logo" href="index.html">source<span>ON</span></a>
+  <a class="back" href="index.html">← Zurück zur Website</a>
+</nav>
+<div class="hero">
+  <div class="tag">Rechtliches</div>
   <h1>Allgemeine Geschäftsbedingungen</h1>
-  <p class="meta">Stand: Januar 2026 | Mäklerverhältnis gemäss Art. 412 ff. OR</p>
-
-  <h2>1. Geltungsbereich</h2>
-  <p>Diese AGB gelten für alle Vermittlungsleistungen von SourceOn (nachfolgend «Vermittler») gegenüber Auftraggebern (nachfolgend «Kunde») im Zusammenhang mit der Beschaffung von Baumaterialien und Bauprodukten in der Schweiz.</p>
-  <p>Abweichende Bedingungen des Kunden gelten nur, wenn SourceOn diesen ausdrücklich schriftlich zugestimmt hat.</p>
-
-  <h2>2. Vermittlungsauftrag</h2>
-  <p>SourceOn erbringt ausschliesslich Vermittlungsleistungen im Sinne des Mäklervertrags (Art. 412 ff. OR). SourceOn:</p>
-  <ul>
-    <li>kauft zu keinem Zeitpunkt selbst Baumaterialien</li>
-    <li>wird niemals Vertragspartei des Kaufvertrags zwischen Kunde und Lieferant</li>
-    <li>handelt als unabhängiger Intermediär</li>
-    <li>bündelt Bedarfe mehrerer Kunden für bessere Konditionen beim Lieferanten</li>
-  </ul>
-
-  <div class="highlight">
-    <p><strong>Der Kaufvertrag kommt direkt zwischen dem Kunden und dem Lieferanten zustande.</strong> SourceOn ist nicht Partei dieses Vertrags.</p>
-  </div>
-
-  <h2>3. Provision — nur bei bestätigter Ersparnis</h2>
-  <p>Die Provision von <strong>2.25%</strong> auf den Netto-Materialwert wird ausschliesslich unter folgenden Voraussetzungen fällig:</p>
-  <ul>
-    <li>SourceOn hat dem Kunden ein konkretes Angebot vorgelegt</li>
-    <li>Der Kunde hat das Angebot ausdrücklich bestätigt (schriftlich oder digital)</li>
-    <li>Der Kunde hat bestätigt, dass das Angebot günstiger ist als sein bisheriger Beschaffungspreis</li>
-    <li>Der Kaufvertrag mit dem Lieferanten wurde abgeschlossen</li>
-  </ul>
-  <p>Ohne diese Bestätigung durch den Kunden entsteht keinerlei Provisionspflicht.</p>
-
-  <h2>4. Entscheidungsfreiheit des Kunden</h2>
-  <p>Der Kunde ist zu keinem Zeitpunkt verpflichtet, ein von SourceOn vermitteltes Angebot anzunehmen. Insbesondere:</p>
-  <ul>
-    <li>Kein Angebot führt automatisch zu einer Bestellung</li>
-    <li>Kein Auftrag entsteht ohne ausdrückliche Bestätigung durch den Kunden</li>
-    <li>Die Ablehnung eines Angebots begründet keine Kostenfolge</li>
-    <li>Es gibt kein Mindestvolumen, keine Mindestlaufzeit und keine Abonnementverpflichtung</li>
-  </ul>
-
-  <h2>5. Pflichten des Kunden</h2>
-  <p>Der Kunde verpflichtet sich:</p>
-  <ul>
-    <li>Korrekte Angaben zu Materialart, Menge und Lieferzeitraum zu machen</li>
-    <li>SourceOn über eine bestehende Lieferbeziehung für das angefragte Material zu informieren</li>
-    <li>Angebote vertraulich zu behandeln und nicht an Dritte weiterzugeben</li>
-    <li>Bei Auftragsbestätigung die Provision fristgerecht zu entrichten</li>
-  </ul>
-
-  <h2>6. Haftungsausschluss</h2>
-  <p>SourceOn haftet nicht für:</p>
-  <ul>
-    <li>Mängel oder Schäden, die aus dem Kaufvertrag zwischen Kunde und Lieferant entstehen</li>
-    <li>Lieferverzögerungen seitens des Lieferanten</li>
-    <li>Qualitätsmängel des gelieferten Materials (Haftung liegt beim Lieferanten gemäss Kaufrecht OR)</li>
-    <li>Indirekte Schäden oder entgangenen Gewinn</li>
-  </ul>
-  <p>Die Haftung von SourceOn ist in jedem Fall auf den Betrag der in der betreffenden Transaktion angefallenen Provision begrenzt.</p>
-
-  <h2>7. Vertraulichkeit</h2>
-  <p>Beide Parteien verpflichten sich, alle im Rahmen der Geschäftsbeziehung erhaltenen vertraulichen Informationen (insbesondere Preise, Mengen, Lieferanten) vertraulich zu behandeln und nicht an Dritte weiterzugeben.</p>
-
-  <h2>8. Anwendbares Recht und Gerichtsstand</h2>
-  <p>Diese AGB sowie alle sich daraus ergebenden Rechtsbeziehungen unterstehen ausschliesslich Schweizer Recht. Als Gerichtsstand wird Zürich, Schweiz, vereinbart.</p>
-
-  <h2>9. Salvatorische Klausel</h2>
-  <p>Sollte eine Bestimmung dieser AGB unwirksam sein, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt. An die Stelle der unwirksamen Bestimmung tritt eine Regelung, die dem wirtschaftlichen Zweck am nächsten kommt.</p>
-
-  <h2>10. Änderungen</h2>
-  <p>SourceOn behält sich das Recht vor, diese AGB anzupassen. Die jeweils gültige Version ist auf der Website sourceon.ch abrufbar. Für laufende Aufträge gelten die AGB in der Fassung zum Zeitpunkt der Auftragsbestätigung.</p>
-
-  <hr>
-  <p style="font-size:13px;color:#94A3B8">Bei Fragen zu diesen AGB: <a href="mailto:info@sourceon.ch" style="color:#E8A020">info@sourceon.ch</a></p>
+  <p>Mäklervertrag gemäss Schweizer OR Art. 412 ff.</p>
 </div>
+<div class="content">
+  <p class="update">Stand: Juni 2026 — Version 1.0</p>
+
+  <h2>§ 1 Geltungsbereich und Vertragsparteien</h2>
+  <p>Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Leistungen von <strong>SourceOn</strong> (nachfolgend "Vermittler") gegenüber Auftraggebern (Baufirmen, Handwerksbetriebe, Investoren, Planer — nachfolgend "Auftraggeber") sowie gegenüber Lieferanten.</p>
+  <p>SourceOn ist ein Beschaffungsvermittler (Mäkler) im Sinne von OR Art. 412 ff. und tritt ausschliesslich als Vermittler auf. SourceOn ist weder Käufer noch Verkäufer der vermittelten Waren.</p>
+  <p>Mit der Nutzung der Dienstleistungen von SourceOn (Einreichung einer Anfrage, Annahme eines Angebots, Unterzeichnung eines Vermittlungsvertrags) akzeptiert der Auftraggeber diese AGB vollumfänglich.</p>
+
+  <h2>§ 2 Leistungsgegenstand</h2>
+  <p>SourceOn erbringt folgende Leistungen:</p>
+  <ul>
+    <li>Bündelung des Materialbedarfs mehrerer Auftraggeber zur Erzielung von Mengenrabatten</li>
+    <li>Einholung von mindestens drei Vergleichsangeboten bei geprüften Lieferanten</li>
+    <li>Verhandlung mit Lieferanten im Auftrag und Interesse des Auftraggebers</li>
+    <li>Vermittlung des günstigsten Angebots an den Auftraggeber</li>
+    <li>Dokumentation der erzielten Ersparnis</li>
+  </ul>
+  <p>SourceOn schliesst keine Kaufverträge im eigenen Namen ab. Der Kaufvertrag über die Materiallieferung kommt direkt zwischen dem Auftraggeber und dem Lieferanten zustande.</p>
+
+  <h2>§ 3 Provision und Vergütung</h2>
+  <div class="highlight"><p>SourceOn erhebt eine Provision von <strong>2.25% des Materialwerts (Netto-Materialkosten)</strong> — ausschliesslich dann, wenn eine nachgewiesene Ersparnis gegenüber dem Marktpreis erzielt wurde. Keine Ersparnis = keine Provision.</p></div>
+  <p>Die Provision wird fällig, wenn:</p>
+  <ul>
+    <li>Der Auftraggeber das von SourceOn vermittelte Angebot annimmt</li>
+    <li>Die Materiallieferung durch den Lieferanten erfolgt ist</li>
+    <li>Die Ersparnis gegenüber dem zuvor dokumentierten Marktpreis nachweislich besteht</li>
+  </ul>
+  <p>Die Provision berechnet sich auf den Netto-Materialwert (exkl. MwSt.) der tatsächlich gelieferten Menge.</p>
+  <p><strong>Zahlungsfrist:</strong> 14 Tage nach Rechnungsstellung. Bei Verzug gelten die gesetzlichen Verzugszinsregelungen (OR Art. 104).</p>
+  <p>Keine Provision wird erhoben, wenn:</p>
+  <ul>
+    <li>SourceOn kein günstigeres Angebot als der bisherige Marktpreis findet</li>
+    <li>Der Auftraggeber das Angebot nicht annimmt</li>
+    <li>Die Lieferung durch den Lieferanten nicht erfolgt</li>
+  </ul>
+
+  <h2>§ 4 Pflichten des Auftraggebers</h2>
+  <p>Der Auftraggeber verpflichtet sich:</p>
+  <ul>
+    <li>Vollständige und korrekte Angaben zu Materialbedarf, Menge und Lieferterminen zu machen</li>
+    <li>Den aktuellen Marktpreis (Vergleichspreis) auf Anfrage wahrheitsgemäss mitzuteilen</li>
+    <li>Angebote innerhalb der vereinbarten Frist zu prüfen und zu entscheiden</li>
+    <li>Die fällige Provision innerhalb von 14 Tagen nach Rechnungsstellung zu bezahlen</li>
+    <li>Vermittlungsleistungen nicht zu umgehen (Direktkontaktaufnahme mit vom Vermittler vorgeschlagenen Lieferanten ohne Zustimmung von SourceOn ist untersagt)</li>
+  </ul>
+
+  <h2>§ 5 Pflichten von SourceOn</h2>
+  <p>SourceOn verpflichtet sich:</p>
+  <ul>
+    <li>Mindestens 3 Angebote einzuholen (soweit am Markt verfügbar)</li>
+    <li>Transparente Dokumentation aller eingeholten Angebote</li>
+    <li>Ausschliesslich im Interesse des Auftraggebers zu handeln</li>
+    <li>Keine Kickbacks oder Provisionen von Lieferanten anzunehmen</li>
+    <li>Datenschutz und Vertraulichkeit der Auftraggeberangaben zu wahren</li>
+    <li>Lieferanten auf SIA/ISO-Konformität und Zuverlässigkeit zu prüfen</li>
+  </ul>
+
+  <h2>§ 6 Haftung und Haftungsausschluss</h2>
+  <p>SourceOn haftet als Vermittler und nicht als Vertragspartei des Kaufvertrags. Daher haftet SourceOn <strong>nicht</strong> für:</p>
+  <ul>
+    <li>Qualitätsmängel der gelieferten Materialien</li>
+    <li>Lieferverzögerungen durch den Lieferanten</li>
+    <li>Preisänderungen nach Vertragsabschluss zwischen Auftraggeber und Lieferant</li>
+    <li>Insolvenz des Lieferanten</li>
+    <li>Schäden, die durch falsche Angaben des Auftraggebers entstehen</li>
+  </ul>
+  <p>SourceOn haftet für nachweislich durch SourceOn verursachte Schäden bis zur Höhe der in der jeweiligen Transaktion verdienten Provision, maximal CHF 10'000 pro Schadensfall. Weitergehende Schadensersatzansprüche sind ausgeschlossen, soweit gesetzlich zulässig.</p>
+
+  <h2>§ 7 Vertraulichkeit</h2>
+  <p>Beide Parteien verpflichten sich zur Vertraulichkeit über alle im Rahmen der Zusammenarbeit erhaltenen Informationen. Diese Pflicht gilt auch nach Beendigung der Zusammenarbeit für die Dauer von 3 Jahren.</p>
+
+  <h2>§ 8 Laufzeit und Kündigung</h2>
+  <p>Der Vermittlungsvertrag beginnt mit der Auftragserteilung (Einreichung der Anfrage) und endet mit der vollständigen Abwicklung des jeweiligen Auftrags (Lieferung + Zahlung der Provision).</p>
+  <p>Rahmenvereinbarungen können von beiden Seiten mit 30 Tagen Vorankündigung schriftlich gekündigt werden.</p>
+
+  <h2>§ 9 Anwendbares Recht und Gerichtsstand</h2>
+  <p>Diese AGB sowie alle Rechtsbeziehungen zwischen SourceOn und dem Auftraggeber unterliegen ausschliesslich <strong>Schweizer Recht</strong>, unter Ausschluss des UN-Kaufrechts (CISG).</p>
+  <p>Ausschliesslicher <strong>Gerichtsstand</strong> für alle Streitigkeiten ist <strong>Zürich, Schweiz</strong>. SourceOn behält sich vor, den Auftraggeber auch an seinem Sitz zu belangen.</p>
+
+  <h2>§ 10 Salvatorische Klausel</h2>
+  <p>Sollten einzelne Bestimmungen dieser AGB unwirksam oder undurchführbar sein oder werden, so berührt dies die Wirksamkeit der übrigen Bestimmungen nicht. Die unwirksame Bestimmung ist durch eine wirksame zu ersetzen, die dem wirtschaftlichen Zweck am nächsten kommt.</p>
+
+  <h2>§ 11 Änderungen der AGB</h2>
+  <p>SourceOn behält sich das Recht vor, diese AGB jederzeit zu ändern. Änderungen werden dem Auftraggeber mindestens 30 Tage vor Inkrafttreten mitgeteilt. Die Nutzung der Dienstleistungen nach Inkrafttreten der Änderungen gilt als Zustimmung.</p>
+</div>
+<footer>
+  <a href="index.html">SourceOn</a> &nbsp;·&nbsp; <a href="impressum.html">Impressum</a> &nbsp;·&nbsp; <a href="datenschutz.html">Datenschutz</a>
+</footer>
 </body>
 </html>

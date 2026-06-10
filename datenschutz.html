@@ -1,89 +1,135 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Datenschutzerklärung — SourceOn</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Datenschutz — SourceOn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;color:#0F172A;background:#fff;line-height:1.75;-webkit-font-smoothing:antialiased}
-.wrap{max-width:760px;margin:0 auto;padding:60px 32px}
-.back{display:inline-flex;align-items:center;gap:8px;color:#E8A020;font-size:14px;font-weight:600;text-decoration:none;margin-bottom:48px}
-.back:hover{text-decoration:underline}
-h1{font-size:36px;font-weight:800;letter-spacing:-0.02em;color:#0F172A;margin-bottom:8px}
-.meta{font-size:13px;color:#94A3B8;margin-bottom:48px}
-h2{font-size:20px;font-weight:700;color:#0F172A;margin:40px 0 12px}
-p,li{font-size:15px;color:#475569;margin-bottom:12px}
-ul{padding-left:20px;margin-bottom:12px}
-li{margin-bottom:6px}
-hr{border:none;border-top:1px solid #E2E8F0;margin:40px 0}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,sans-serif;color:#0F172A;background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
+.nav{background:#0F2238;padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:20px;font-weight:800;color:#fff;text-decoration:none}.logo span{color:#E8A020}
+.back{font-size:.83rem;color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s}.back:hover{color:#fff}
+.hero{background:#0F2238;padding:60px 0 56px;text-align:center}
+.hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;color:#fff;letter-spacing:-0.02em}
+.hero p{color:#94A3B8;margin-top:10px;font-size:.9rem}
+.content{max-width:760px;margin:0 auto;padding:64px 48px 100px}
+h2{font-size:1.2rem;font-weight:700;color:#0F2238;margin:36px 0 12px;padding-bottom:8px;border-bottom:1px solid #E2E8F0}
+h2:first-child{margin-top:0}
+h3{font-size:1rem;font-weight:700;color:#1B3A5C;margin:22px 0 8px}
+p{font-size:.9rem;color:#475569;line-height:1.75;margin-bottom:10px}
+ul{margin:8px 0 12px 20px;font-size:.9rem;color:#475569;line-height:1.75}
+li{margin-bottom:4px}
+.tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(232,160,32,.12);border:1px solid rgba(232,160,32,.3);color:#E8A020;border-radius:100px;padding:4px 12px;margin-bottom:36px}
+.update{font-size:.78rem;color:#94A3B8;margin-bottom:32px}
+footer{background:#0F2238;text-align:center;padding:24px;font-size:.78rem;color:rgba(255,255,255,.3)}
+footer a{color:#E8A020;text-decoration:none}
+@media(max-width:640px){.content{padding:40px 24px 80px}.nav{padding:0 20px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <a href="index.html" class="back">← Zurück zu SourceOn</a>
+<nav class="nav">
+  <a class="logo" href="index.html">source<span>ON</span></a>
+  <a class="back" href="index.html">← Zurück zur Website</a>
+</nav>
+<div class="hero">
+  <div class="tag">Rechtliches</div>
   <h1>Datenschutzerklärung</h1>
-  <p class="meta">Stand: Januar 2026 | Gültig gemäss Schweizer DSG (Bundesgesetz über den Datenschutz)</p>
+  <p>Gemäss Schweizer DSG (nDSG) und EU-DSGVO</p>
+</div>
+<div class="content">
+  <p class="update">Stand: Juni 2026</p>
 
-  <h2>1. Verantwortlicher</h2>
-  <p>SourceOn<br>Zürich, Schweiz<br>E-Mail: info@sourceon.ch</p>
+  <h2>1. Verantwortliche Stelle</h2>
+  <p>Verantwortlich für die Verarbeitung Ihrer personenbezogenen Daten ist:</p>
+  <p><strong>SourceOn</strong><br/>[Adresse], [PLZ] Zürich, Schweiz<br/>E-Mail: info@sourceon.ch<br/>Telefon: +41 44 000 00 00</p>
 
-  <h2>2. Datenerhebung</h2>
-  <p>Wir erheben personenbezogene Daten, wenn Sie:</p>
+  <h2>2. Welche Daten wir erheben</h2>
+  <h3>Kontakt- und Bestellformulare</h3>
+  <p>Wenn Sie unser Kontaktformular oder das Bestellformular für Materialien nutzen, erheben wir:</p>
   <ul>
-    <li>das Kontaktformular ausfüllen</li>
-    <li>sich als Partnerlieferant bewerben</li>
-    <li>unsere Website besuchen (technische Daten via Server-Logs)</li>
-    <li>Cookies akzeptieren</li>
+    <li>Name, Vorname, Nachname</li>
+    <li>Unternehmensname</li>
+    <li>E-Mail-Adresse</li>
+    <li>Telefonnummer</li>
+    <li>Projektbeschreibung und Materialbedarf</li>
+    <li>Gewünschtes Lieferdatum</li>
   </ul>
-  <p>Erhobene Datenkategorien: Name, Firmenname, E-Mail-Adresse, Telefonnummer, Adresse, Projektangaben, technische Daten (IP-Adresse, Browser, Betriebssystem).</p>
-
-  <h2>3. Verwendungszweck</h2>
-  <p>Wir verarbeiten Ihre Daten ausschliesslich für folgende Zwecke:</p>
+  <h3>Lieferantenregistrierung</h3>
+  <p>Bei der Bewerbung als Partnerlieferant erheben wir zusätzlich:</p>
   <ul>
-    <li>Bearbeitung Ihrer Anfrage und Erstellung von Angeboten</li>
-    <li>Vermittlung von Materiallieferungen</li>
-    <li>Kommunikation mit Ihnen zu laufenden Aufträgen</li>
-    <li>Verbesserung unserer Dienstleistungen (anonymisiert)</li>
-    <li>Erfüllung gesetzlicher Pflichten</li>
+    <li>Firmenname und Website</li>
+    <li>Jahreskapazität und Materialgruppen</li>
+    <li>Regionen und Zertifizierungen</li>
   </ul>
+  <h3>Technische Daten</h3>
+  <p>Bei jedem Besuch unserer Website werden automatisch technische Daten erfasst (IP-Adresse, Browser-Typ, Betriebssystem, Referrer-URL, Datum/Zeit des Zugriffs). Diese Daten werden ausschliesslich zur Sicherstellung des Betriebs verwendet.</p>
 
-  <h2>4. Weitergabe von Daten</h2>
-  <p>Ihre Daten werden nicht an Dritte verkauft. Eine Weitergabe erfolgt ausschliesslich:</p>
+  <h2>3. Zweck der Datenverarbeitung</h2>
+  <p>Wir verwenden Ihre Daten ausschliesslich für folgende Zwecke:</p>
   <ul>
-    <li>An Partnerlieferanten — nur soweit für die Auftragsabwicklung notwendig und von Ihnen gewünscht</li>
-    <li>An Behörden — nur wenn gesetzlich verpflichtend</li>
+    <li>Bearbeitung und Beantwortung Ihrer Anfragen</li>
+    <li>Vermittlung von Materialbeschaffungsangeboten</li>
+    <li>Aufbau und Verwaltung des Lieferantennetzwerks</li>
+    <li>Abwicklung von Vermittlungsverträgen gemäss OR Art. 412 ff.</li>
+    <li>Verbesserung unserer Website und Dienstleistungen</li>
   </ul>
-  <p>Alle Partnerlieferanten sind vertraglich zur Vertraulichkeit verpflichtet.</p>
 
-  <h2>5. Aufbewahrung</h2>
-  <p>Wir bewahren Ihre Daten so lange auf, wie es für den Verwendungszweck notwendig ist oder gesetzliche Aufbewahrungsfristen (OR: 10 Jahre für Buchungsbelege) es erfordern. Anfragen ohne Auftrag werden nach 12 Monaten gelöscht.</p>
+  <h2>4. Rechtsgrundlage</h2>
+  <p>Die Verarbeitung Ihrer Daten erfolgt auf Basis von:</p>
+  <ul>
+    <li><strong>Vertragserfüllung (Art. 6 Abs. 1 lit. b DSGVO):</strong> zur Anbahnung und Abwicklung von Vermittlungsverträgen</li>
+    <li><strong>Einwilligung (Art. 6 Abs. 1 lit. a DSGVO):</strong> bei freiwilliger Kontaktaufnahme</li>
+    <li><strong>Berechtigte Interessen (Art. 6 Abs. 1 lit. f DSGVO):</strong> für den Betrieb und die Verbesserung der Website</li>
+  </ul>
 
-  <h2>6. Cookies</h2>
-  <p>Unsere Website verwendet nur technisch notwendige Cookies (z.B. Cookie-Consent-Speicherung). Wir setzen keine Tracking-Cookies von Drittanbietern ein, solange Sie nicht ausdrücklich zustimmen.</p>
+  <h2>5. Aufbewahrungsfristen</h2>
+  <p>Ihre Daten werden nur so lange aufbewahrt, wie es für den jeweiligen Zweck notwendig ist:</p>
+  <ul>
+    <li>Kontaktanfragen: 2 Jahre nach Abschluss der Anfrage</li>
+    <li>Vertragsdaten: 10 Jahre gemäss OR Art. 962 (gesetzliche Aufbewahrungspflicht)</li>
+    <li>Technische Logdaten: 90 Tage</li>
+    <li>Lieferantenregistrierungen: bis zur Kündigung der Partnerschaft + 2 Jahre</li>
+  </ul>
+
+  <h2>6. Datenweitergabe</h2>
+  <p>Wir geben Ihre Daten nicht an Dritte weiter, ausser:</p>
+  <ul>
+    <li>An Lieferanten im Rahmen der Angebotsvermittlung (nur nach Ihrer Freigabe)</li>
+    <li>An IT-Dienstleister im Rahmen der Auftragsverarbeitung (mit entsprechenden Verträgen)</li>
+    <li>Wenn gesetzlich dazu verpflichtet (Behörden)</li>
+  </ul>
+  <p>Eine Weitergabe in Länder ausserhalb der Schweiz oder EU erfolgt nur mit angemessenem Datenschutzniveau.</p>
 
   <h2>7. Ihre Rechte</h2>
-  <p>Gemäss Schweizer DSG haben Sie folgende Rechte:</p>
+  <p>Sie haben folgende Rechte bezüglich Ihrer personenbezogenen Daten:</p>
   <ul>
-    <li>Auskunftsrecht: Sie können jederzeit Auskunft über Ihre gespeicherten Daten verlangen</li>
-    <li>Berichtigungsrecht: Unrichtige Daten können Sie berichtigen lassen</li>
-    <li>Löschungsrecht: Sie können die Löschung Ihrer Daten verlangen (sofern keine Aufbewahrungspflichten bestehen)</li>
-    <li>Datenübertragbarkeit: Sie können Ihre Daten in maschinenlesbarem Format erhalten</li>
-    <li>Widerspruchsrecht: Sie können der Verarbeitung widersprechen</li>
+    <li><strong>Auskunft:</strong> Welche Daten wir über Sie gespeichert haben</li>
+    <li><strong>Berichtigung:</strong> Unrichtige Daten korrigieren lassen</li>
+    <li><strong>Löschung:</strong> Daten löschen lassen ("Recht auf Vergessenwerden")</li>
+    <li><strong>Einschränkung:</strong> Verarbeitung einschränken lassen</li>
+    <li><strong>Widerspruch:</strong> Der Verarbeitung widersprechen</li>
+    <li><strong>Datenübertragbarkeit:</strong> Daten in maschinenlesbarem Format erhalten</li>
+    <li><strong>Widerruf:</strong> Erteilte Einwilligung jederzeit widerrufen</li>
   </ul>
-  <p>Zur Ausübung Ihrer Rechte wenden Sie sich an: info@sourceon.ch</p>
+  <p>Für die Ausübung Ihrer Rechte wenden Sie sich an: info@sourceon.ch</p>
 
-  <h2>8. Datensicherheit</h2>
-  <p>Wir schützen Ihre Daten durch technische und organisatorische Massnahmen (TOM) gemäss aktuellem Stand der Technik. Die Übertragung erfolgt verschlüsselt via HTTPS/TLS.</p>
+  <h2>8. Beschwerderecht</h2>
+  <p>Sie haben das Recht, sich beim Eidgenössischen Datenschutz- und Öffentlichkeitsbeauftragten (EDÖB) zu beschweren: <strong>www.edoeb.admin.ch</strong></p>
 
-  <h2>9. Änderungen</h2>
-  <p>Wir behalten uns das Recht vor, diese Datenschutzerklärung bei Bedarf anzupassen. Die jeweils aktuelle Version ist auf dieser Seite abrufbar.</p>
+  <h2>9. Cookies und Tracking</h2>
+  <p>Diese Website verwendet keine Tracking-Cookies von Drittanbietern und setzt keine Marketing- oder Analyse-Cookies. Es werden ausschliesslich technisch notwendige Session-Cookies verwendet, die beim Schliessen des Browsers gelöscht werden.</p>
 
-  <hr>
-  <p style="font-size:13px;color:#94A3B8">Bei Fragen zur Datenschutzerklärung: <a href="mailto:info@sourceon.ch" style="color:#E8A020">info@sourceon.ch</a></p>
+  <h2>10. Datensicherheit</h2>
+  <p>Wir setzen technische und organisatorische Massnahmen ein, um Ihre Daten vor unbefugtem Zugriff, Verlust oder Missbrauch zu schützen. Die Übertragung erfolgt verschlüsselt (TLS/HTTPS).</p>
+
+  <h2>11. Änderungen</h2>
+  <p>Wir behalten uns das Recht vor, diese Datenschutzerklärung jederzeit anzupassen. Die aktuelle Version ist stets auf dieser Seite abrufbar.</p>
 </div>
+<footer>
+  <a href="index.html">SourceOn</a> &nbsp;·&nbsp; <a href="impressum.html">Impressum</a> &nbsp;·&nbsp; <a href="agb.html">AGB</a>
+</footer>
 </body>
 </html>
