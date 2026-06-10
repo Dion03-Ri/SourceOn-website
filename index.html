@@ -119,19 +119,23 @@ a{color:inherit;text-decoration:none}
 .reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}.reveal-d4{transition-delay:.4s}
 
 /* PROCESS */
-#process{background:var(--bg)}
-.steps-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:64px;position:relative}
-.steps-wrap::before{content:'';position:absolute;top:30px;left:calc(12.5% + 12px);right:calc(12.5% + 12px);height:2px;background:repeating-linear-gradient(to right,var(--gold) 0,var(--gold) 8px,transparent 8px,transparent 18px);opacity:.35;z-index:0}
-.step-card{text-align:center;padding:0 20px;position:relative;z-index:2;background:#fff;opacity:0;transition:opacity .4s ease}
-.step-card.step-visible{opacity:1}
+#process{background:var(--bg);position:relative}
+#process::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(232,160,32,.03) 1px,transparent 1px);background-size:20px 20px;pointer-events:none;z-index:0}
+.steps-wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:64px;position:relative;z-index:1}
+.steps-wrap::before{content:'';position:absolute;top:30px;left:calc(12.5% + 18px);right:calc(12.5% + 18px);height:2px;background:linear-gradient(to right,rgba(232,160,32,.15) 0%,rgba(232,160,32,.55) 40%,rgba(232,160,32,.55) 60%,rgba(232,160,32,.15) 100%);z-index:0}
+.step-chevron{position:absolute;top:21px;width:18px;height:18px;z-index:3;pointer-events:none;transform:translateX(-50%)}
+.step-chevron:nth-of-type(1){left:25%}.step-chevron:nth-of-type(2){left:50%}.step-chevron:nth-of-type(3){left:75%}
+.step-card{text-align:center;padding:24px 20px 20px;position:relative;z-index:2;background:#fff;opacity:0;transition:opacity .4s ease,border-left-color .4s ease;border-left:3px solid rgba(232,160,32,0)}
+.step-card.step-visible{opacity:1;border-left-color:rgba(232,160,32,.7)}
+.step-num-badge{position:absolute;top:0;left:50%;transform:translate(-50%,-50%);width:32px;height:32px;border-radius:50%;background:var(--gold);color:#0F172A;font-size:.75rem;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1;z-index:4;box-shadow:0 2px 8px rgba(232,160,32,.4)}
 .step-num{display:none}
-.step-icon{width:60px;height:60px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;transition:all .25s var(--ease)}
+.step-icon{width:60px;height:60px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:var(--r);display:flex;align-items:center;justify-content:center;margin:16px auto 20px;transition:all .25s var(--ease)}
 .step-card:hover .step-icon{background:var(--gold);border-color:var(--gold);transform:translateY(-4px)}
 .step-card:hover .step-icon svg{color:#fff!important}
 .step-icon svg{width:26px;height:26px;color:var(--gold);transition:color .25s}
 .step-title{font-size:17px;font-weight:700;color:var(--text);margin-bottom:10px}
 .step-desc{font-size:.85rem;color:var(--body);line-height:1.65}
-@media(max-width:900px){.steps-wrap{grid-template-columns:repeat(2,1fr);gap:40px}.steps-wrap::before{display:none}}
+@media(max-width:900px){.steps-wrap{grid-template-columns:repeat(2,1fr);gap:40px}.steps-wrap::before{display:none}.step-chevron{display:none}}
 @media(max-width:480px){.steps-wrap{grid-template-columns:1fr}}
 
 /* MARQUEE */
@@ -153,6 +157,7 @@ a{color:inherit;text-decoration:none}
 .marquee-gap{margin-top:14px}
 
 /* FOR WHOM */
+.fw-card.reveal{opacity:1!important;transform:none!important}
 #forwhom{background:var(--bg)}
 .fw-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:56px}
 .fw-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:36px;box-shadow:var(--sh-md);position:relative;overflow:hidden}
@@ -502,7 +507,7 @@ footer{background:var(--dark);padding:72px 0 0}
     <ul class="nav-links">
       <li><a href="#process">Wie es funktioniert</a></li>
       <li><a href="#forwhom">Für wen</a></li>
-      <li><a href="#suppliers">Lieferanten</a></li>
+      <li><a href="#supplier-apply">Lieferant werden</a></li>
       <li><a href="#about">Über uns</a></li>
       <li><a href="#contact">Kontakt</a></li>
     </ul>
@@ -517,7 +522,7 @@ footer{background:var(--dark);padding:72px 0 0}
   <button id="nav-close" onclick="toggleNav()">✕</button>
   <a href="#process" onclick="toggleNav()">Wie es funktioniert</a>
   <a href="#forwhom" onclick="toggleNav()">Für wen</a>
-  <a href="#suppliers" onclick="toggleNav()">Lieferanten</a>
+  <a href="#supplier-apply" onclick="toggleNav()">Lieferant werden</a>
   <a href="#about" onclick="toggleNav()">Über uns</a>
   <a href="#contact" onclick="toggleNav()">Kontakt</a>
   <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
@@ -563,22 +568,25 @@ footer{background:var(--dark);padding:72px 0 0}
       <p class="subtitle" style="margin-top:16px">Kein Aufwand auf deiner Seite — du meldest den Bedarf, wir übernehmen alles.</p>
     </div>
     <div class="steps-wrap" id="steps-wrap">
-      <div class="step-card" id="step-card-0">
+      <svg class="step-chevron" viewBox="0 0 18 18" fill="none"><polyline points="5,3 13,9 5,15" stroke="#E8A020" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="step-chevron" viewBox="0 0 18 18" fill="none"><polyline points="5,3 13,9 5,15" stroke="#E8A020" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg class="step-chevron" viewBox="0 0 18 18" fill="none"><polyline points="5,3 13,9 5,15" stroke="#E8A020" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div class="step-card" id="step-card-0"><div class="step-num-badge">1</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
         <div class="step-title">Bedarf melden</div>
         <p class="step-desc">Du teilst uns Materialart, Menge und Liefertermin mit. Dauert zwei Minuten.</p>
       </div>
-      <div class="step-card" id="step-card-1">
+      <div class="step-card" id="step-card-1"><div class="step-num-badge">2</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
         <div class="step-title">Bündeln</div>
         <p class="step-desc">SourceOn matcht deinen Bedarf mit anderen Baufirmen für echtes Einkaufsvolumen.</p>
       </div>
-      <div class="step-card" id="step-card-2">
+      <div class="step-card" id="step-card-2"><div class="step-num-badge">3</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
         <div class="step-title">Vergleichen &amp; Verhandeln</div>
         <p class="step-desc">KI-Analyse und erfahrene Verhandler holen mindestens 3 Angebote ein.</p>
       </div>
-      <div class="step-card" id="step-card-3">
+      <div class="step-card" id="step-card-3"><div class="step-num-badge">4</div>
         <div class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div>
         <div class="step-title">Du sparst potenziell</div>
         <p class="step-desc">Direktlieferung auf deine Baustelle. Provision nur wenn du wirklich günstiger einkaufst.</p>
@@ -1393,7 +1401,7 @@ footer{background:var(--dark);padding:72px 0 0}
         <ul>
           <li><a href="#process">Wie es funktioniert</a></li>
           <li><a href="#forwhom">Für wen</a></li>
-          <li><a href="#suppliers">Lieferanten</a></li>
+          <li><a href="#supplier-apply">Lieferant werden</a></li>
           <li><a href="#calculator">Einsparkalkulator</a></li>
           <li><a href="#materials">Materialien</a></li>
         </ul>
