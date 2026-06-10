@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>SourceOn — Du zahlst erst, wenn wir dir sparen.</title>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
+<meta property="og:title" content="SourceOn — Du zahlst erst, wenn wir dir sparen."/>
+<meta property="og:description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte die kein Einzelkunde alleine bekäme. 2.25% Provision — nur bei Ersparnis."/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://sourceon.ch"/>
+<meta property="og:image" content="https://sourceon.ch/og-image.jpg"/>
+<meta property="og:locale" content="de_CH"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="SourceOn — Smarter Materialeinkauf für Schweizer Baufirmen"/>
+<meta name="twitter:description" content="Mengenrabatte durch Bündelung. Ohne Aufwand, ohne Risiko. Du zahlst erst wenn wir dir sparen."/>
+<meta name="keywords" content="Materialeinkauf Schweiz, Baumaterial günstig, Bündelung Baubranche, Beschaffung KMU Bau, SourceOn"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
@@ -26,9 +36,91 @@
   --ease:cubic-bezier(0.4,0,0.2,1);
 }
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'Inter',-apple-system,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:'Inter',-apple-system,sans-serif;color:var(--text);background:var(--bg);line-height:1.75;font-size:16px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 
+
+
+/* HERO LAYOUT TWO-COL */
+#hero{align-items:stretch;text-align:left}
+.hero-layout{display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center;position:relative;z-index:10;max-width:1200px;width:100%;padding:0 48px}
+.hero-text{max-width:560px}
+.hero-text .hero-sub{margin-left:0}
+.hero-text .hero-btns{justify-content:flex-start}
+.hero-text .hero-scroll-pill{display:none}
+.hero-mockup{width:420px;flex-shrink:0}
+.mockup-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:24px;animation:mockupFloat 3s ease-in-out infinite}
+@keyframes mockupFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.mockup-bar{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.mockup-dots{display:flex;gap:6px}
+.mockup-dot{width:10px;height:10px;border-radius:50%}
+.mockup-dot-r{background:#ff5f57}.mockup-dot-y{background:#febc2e}.mockup-dot-g{background:#28c840}
+.mockup-title{flex:1;text-align:center;font-size:13px;font-weight:500;color:rgba(255,255,255,.7)}
+.mockup-tabs{display:flex;gap:0;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:12px}
+.mockup-tab{font-size:.75rem;font-weight:600;color:rgba(255,255,255,.4);padding:4px 0;cursor:default}
+.mockup-tab.active{color:var(--gold);border-bottom:2px solid var(--gold);margin-bottom:-13px}
+.mockup-rows{display:flex;flex-direction:column;gap:0}
+.mockup-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.mockup-row:last-child{border-bottom:none}
+.mockup-mat{font-size:.82rem;font-weight:600;color:#fff;flex:1}
+.mockup-qty{font-size:.77rem;color:rgba(255,255,255,.45);width:64px;text-align:center}
+.mockup-badge{font-size:.67rem;font-weight:700;padding:3px 9px;border-radius:100px;white-space:nowrap}
+.mockup-badge-gold{background:rgba(232,160,32,.18);color:#E8A020;border:1px solid rgba(232,160,32,.3)}
+.mockup-badge-blue{background:rgba(59,130,246,.18);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
+.mockup-badge-green{background:rgba(22,163,74,.18);color:#4ade80;border:1px solid rgba(22,163,74,.3)}
+.mockup-summary{background:rgba(15,34,56,.6);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 16px;margin:16px 0 14px}
+.mockup-sum-label{font-size:.72rem;color:rgba(148,163,184,.8);margin-bottom:6px}
+.mockup-sum-value{font-size:1.35rem;font-weight:700;color:var(--gold);letter-spacing:-0.02em}
+.mockup-progress-label{font-size:.72rem;color:rgba(255,255,255,.45);margin-bottom:6px}
+.mockup-progress-wrap{height:5px;background:rgba(255,255,255,.1);border-radius:100px;overflow:hidden}
+.mockup-progress-bar{height:100%;width:68%;background:linear-gradient(90deg,var(--gold),#FFD700);border-radius:100px}
+@media(max-width:1024px){.hero-layout{grid-template-columns:1fr;gap:48px}.hero-text{max-width:100%}#hero{text-align:center}.hero-text .hero-btns{justify-content:center}.hero-text .hero-sub{margin:0 auto 40px}.hero-mockup{display:none}}
+.hero-stats-wrap{position:relative;z-index:10;width:100%;max-width:1200px;padding:0 48px;margin-top:40px}
+@media(max-width:1024px){.hero-stats-wrap{padding:0 24px}}
+
+
+
+
+
+/* BACK-TO-TOP */
+#back-top{position:fixed;bottom:28px;left:28px;width:44px;height:44px;border-radius:50%;background:var(--gold);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(232,160,32,.4);z-index:7000;opacity:0;transform:translateY(10px);transition:opacity .3s,transform .3s;pointer-events:none}
+#back-top.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+#back-top svg{width:18px;height:18px;color:#0F172A}
+
+/* COOKIE BANNER */
+#cookie-banner{position:fixed;bottom:0;left:0;right:0;background:#0F2238;border-top:1px solid rgba(255,255,255,.1);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;z-index:9999;transform:translateY(100%);transition:transform .4s ease;flex-wrap:wrap}
+#cookie-banner.show{transform:translateY(0)}
+.cookie-text{font-size:.84rem;color:rgba(148,163,184,.9);line-height:1.5;flex:1}
+.cookie-text a{color:var(--gold);text-decoration:underline}
+.cookie-btns{display:flex;gap:10px;flex-shrink:0}
+
+/* PAGE TRANSITIONS */
+.page-fade{opacity:0;transition:opacity .15s ease}
+
+/* LIGHT/DARK MODE */
+body{transition:background-color .3s,color .3s}
+.mode-toggle{display:flex;align-items:center;justify-content:center;width:44px;height:24px;border-radius:100px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);cursor:pointer;position:relative;transition:all .2s;flex-shrink:0}
+.mode-toggle-knob{width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;left:2px;transition:transform .25s var(--ease);display:flex;align-items:center;justify-content:center;font-size:11px}
+body.light-mode .mode-toggle-knob{transform:translateX(20px)}
+body.light-mode{--bg:#F8FAFC;--bg2:#EFF3F8;--text:#0F172A;--body:#334155;--border:#CBD5E1;--border-md:#94A3B8}
+body.light-mode #hero,body.light-mode #hero .hero-bg{background:#1B3A5C}
+body.light-mode .hero-sub{color:#c8d8e8}
+
+/* MICRO-INTERACTIONS */
+.nav-links a{position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:var(--gold);transition:width .2s ease}
+.nav-links a:hover::after{width:100%}
+.fw-card:hover{border-color:var(--gold)!important;transition:border-color .2s}
+.mat-card:hover{border-color:var(--gold)!important;transition:border-color .2s}
+input[type=text]:focus,input[type=email]:focus,input[type=tel]:focus,input[type=number]:focus,select:focus,textarea:focus{box-shadow:0 0 0 3px rgba(232,160,32,.15)!important;border-color:#E8A020!important;transition:box-shadow .2s,border-color .2s}
+.footer-col ul a{transition:color .15s}
+.footer-col ul a:hover{color:var(--gold)}
+.marquee-row1:hover .marquee-track,.marquee-row2:hover .marquee-track{animation-play-state:paused}
+.mq-card:hover{transform:scale(1.02);box-shadow:0 8px 32px rgba(232,160,32,.28)}
+
+/* GRADIENT SHIMMER */
+.gold-shimmer{background:linear-gradient(135deg,#E8A020 0%,#FFD700 50%,#E8A020 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 200%;animation:gradientShift 3s ease infinite}
+@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 /* LAYOUT */
 .container{max-width:1200px;margin:0 auto;padding:0 48px}
 .section{padding:120px 0}
@@ -36,12 +128,12 @@ a{color:inherit;text-decoration:none}
 @media(max-width:640px){.container{padding:0 20px}.section{padding:60px 0}}
 
 /* LABELS */
-.label{display:inline-flex;align-items:center;gap:7px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:100px;padding:5px 14px;margin-bottom:20px}
+.label{display:inline-flex;align-items:center;gap:7px;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:100px;padding:5px 14px;margin-bottom:20px}
 .label-green{color:var(--green);background:var(--green-bg);border-color:var(--green-b)}
 .label-dark{color:var(--gold);background:rgba(232,160,32,.15);border-color:rgba(232,160,32,.35)}
 
 /* HEADINGS */
-.h2{font-size:clamp(32px,4vw,48px);font-weight:700;line-height:1.15;letter-spacing:-0.02em}
+.h2{font-size:clamp(32px,4.5vw,52px);font-weight:800;line-height:1.12;letter-spacing:-0.03em}
 .subtitle{font-size:clamp(16px,2vw,18px);color:var(--body);line-height:1.75;max-width:600px}
 .subtitle-dark{color:var(--muted)}
 .text-center{text-align:center}.text-center .subtitle{margin:0 auto}
@@ -68,7 +160,7 @@ a{color:inherit;text-decoration:none}
 .nav-logo{font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#fff;cursor:pointer}
 .nav-logo span{color:var(--gold)}
 .nav-links{display:flex;gap:36px;list-style:none}
-.nav-links a{font-size:.86rem;font-weight:500;color:rgba(255,255,255,.75);transition:color .2s}
+.nav-links a{font-size:.875rem;font-weight:500;letter-spacing:.01em;color:rgba(255,255,255,.75);transition:color .2s}
 .nav-links a:hover{color:#fff}
 .nav-right{display:flex;align-items:center;gap:12px}
 #nav-hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px}
@@ -100,8 +192,8 @@ a{color:inherit;text-decoration:none}
 .hero-content{position:relative;z-index:10;max-width:900px;padding:0 24px}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:7px 18px;margin-bottom:32px;animation:pulseBadge 3s ease-in-out infinite}
 @keyframes pulseBadge{0%,100%{box-shadow:0 0 0 0 rgba(232,160,32,.35)}50%{box-shadow:0 0 0 8px rgba(232,160,32,0)}}
-.hero-h1{font-size:clamp(42px,6.5vw,72px);font-weight:800;line-height:1.08;letter-spacing:-0.03em;color:#fff;margin-bottom:24px}
-.hero-sub{color:var(--muted);font-size:clamp(16px,2vw,19px);line-height:1.75;max-width:640px;margin:0 auto 40px}
+.hero-h1{font-size:clamp(48px,7vw,80px);font-weight:900;line-height:1.05;letter-spacing:-0.04em;color:#fff;margin-bottom:24px}
+.hero-sub{color:#8899AA;font-size:clamp(16px,2vw,18px);font-weight:400;line-height:1.8;max-width:640px;margin:0 auto 40px}
 .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
 .hero-scroll-pill{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.45);font-size:.8rem;font-weight:500;border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:8px 20px;cursor:pointer;transition:all .2s;animation:bouncePill 2.5s ease-in-out infinite;margin-bottom:64px}
 .hero-scroll-pill:hover{color:var(--gold);border-color:var(--gold-b)}
@@ -545,7 +637,7 @@ footer{background:var(--dark);padding:72px 0 0}
 
 /* Hero entrance animation */
 @keyframes heroEntrance{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-.hero-content{animation:heroEntrance 1.2s var(--ease) both}
+.hero-layout,.hero-stats-wrap{animation:heroEntrance 1.2s var(--ease) both}
 </style>
 </head>
 <body>
@@ -561,6 +653,7 @@ footer{background:var(--dark);padding:72px 0 0}
       <li><a href="#contact">Kontakt</a></li>
     </ul>
     <div class="nav-right">
+      <button class="mode-toggle" id="mode-toggle" onclick="toggleMode()" title="Dark/Light Mode"><span class="mode-toggle-knob">🌙</span></button>
       <button class="btn btn-gold btn-md" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
       <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
@@ -579,18 +672,41 @@ footer{background:var(--dark);padding:72px 0 0}
 
 <!-- HERO -->
 <section id="hero">
-  <div class="hero-bg"></div>
+  <div class="hero-bg"><div style="position:absolute;inset:0;background-image:url('data:image/svg+xml,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"200\" height=\"200\"><filter id=\"n\"><feTurbulence type=\"fractalNoise\" baseFrequency=\"0.65\" numOctaves=\"3\" stitchTiles=\"stitch\"/></filter><rect width=\"200\" height=\"200\" filter=\"url(%23n)\" opacity=\"0.03\"/></svg>');opacity:.03;pointer-events:none;z-index:1"></div></div>
   <div class="hero-mesh"></div>
   <div class="hero-dots"></div>
-  <div class="hero-content">
-    <div class="hero-badge">✦ Schweizer B2B Beschaffungsvermittler</div>
-    <h1 class="hero-h1" id="hero-h1">Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span></h1>
-    <p class="hero-sub">SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme. Ohne Aufwand, ohne Risiko, ohne Fixkosten.</p>
-    <div class="hero-btns">
-      <button class="btn btn-gold btn-lg" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
-      <a href="#process" class="btn btn-outline-w btn-lg">Wie es funktioniert →</a>
+  <div class="hero-layout">
+    <div class="hero-text">
+      <div class="hero-badge">✦ Schweizer B2B Beschaffungsvermittler</div>
+      <h1 class="hero-h1" id="hero-h1">Du zahlst erst,<br><span class="gold">wenn wir dir <span class="gold-shimmer">sparen.</span></span></h1>
+      <p class="hero-sub">SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme. Ohne Aufwand, ohne Risiko, ohne Fixkosten.</p>
+      <div class="hero-btns">
+        <button class="btn btn-gold btn-lg" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
+        <a href="#process" class="btn btn-outline-w btn-lg">Wie es funktioniert →</a>
+      </div>
     </div>
-    <div class="hero-scroll-pill" onclick="document.getElementById('calculator').scrollIntoView({behavior:'smooth'})">↓ Berechne deine potenzielle Ersparnis</div>
+    <div class="hero-mockup">
+      <div class="mockup-card">
+        <div class="mockup-bar">
+          <div class="mockup-dots"><div class="mockup-dot mockup-dot-r"></div><div class="mockup-dot mockup-dot-y"></div><div class="mockup-dot mockup-dot-g"></div></div>
+          <div class="mockup-title">SourceOn — Bestellübersicht</div>
+        </div>
+        <div class="mockup-tabs"><div class="mockup-tab active">Aktive Bestellungen</div></div>
+        <div class="mockup-rows">
+          <div class="mockup-row"><span class="mockup-mat">Beton C25/30</span><span class="mockup-qty">180 m³</span><span class="mockup-badge mockup-badge-gold">In Verhandlung</span></div>
+          <div class="mockup-row"><span class="mockup-mat">Armierungsstahl</span><span class="mockup-qty">4.2 t</span><span class="mockup-badge mockup-badge-blue">Gebündelt</span></div>
+          <div class="mockup-row"><span class="mockup-mat">Kies &amp; Splitt</span><span class="mockup-qty">60 m³</span><span class="mockup-badge mockup-badge-green">Geliefert</span></div>
+        </div>
+        <div class="mockup-summary">
+          <div class="mockup-sum-label">Potenzielle Ersparnis diese Woche</div>
+          <div class="mockup-sum-value">CHF 12'450</div>
+        </div>
+        <div class="mockup-progress-label">3 von 4 Bündelungen abgeschlossen</div>
+        <div class="mockup-progress-wrap"><div class="mockup-progress-bar"></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats-wrap">
     <div class="hero-stats">
       <div class="stat-col">
         <div class="stat-num" data-count="20" data-suffix="+">0+</div>
@@ -605,7 +721,6 @@ footer{background:var(--dark);padding:72px 0 0}
         <div class="stat-label">der CH-Baufirmen<br>sind KMU — BFS</div>
       </div>
     </div>
-  </div>
 </section>
 
 <!-- PROCESS -->
@@ -921,15 +1036,39 @@ footer{background:var(--dark);padding:72px 0 0}
     <p class="subtitle subtitle-dark" style="margin:0 auto">Sieh wie SourceOn Materialbedarf bündelt und Mengenrabatte erzielt.</p>
   </div>
   <div id="webgl-wrap" style="width:100%;height:600px;position:relative">
-    <canvas id="bundling-canvas" style="display:block;width:100%;height:100%"></canvas>
+    <div id="bundling-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:.9rem;letter-spacing:.05em">Wird geladen…</div>
+    <canvas id="bundling-canvas" style="display:none;width:100%;height:100%"></canvas>
   </div>
   <div style="text-align:center;padding:24px 0 0;position:relative;z-index:2">
     <p style="font-size:.85rem;color:#94A3B8;font-style:italic;padding:0 20px">SourceOn verbindet Baufirmen mit Lieferanten.</p>
   </div>
 </section>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 (function(){
+var threeLoaded=false;
+var bundlingObs=new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting && !threeLoaded){
+      threeLoaded=true;
+      bundlingObs.disconnect();
+      var s=document.createElement('script');
+      s.src='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+      s.onload=function(){initBundling();};
+      document.head.appendChild(s);
+    }
+  });
+},{threshold:0.1});
+var bSection=document.getElementById('bundling');
+if(bSection)bundlingObs.observe(bSection);
+})();
+function initBundling(){
+var ph=document.getElementById('bundling-placeholder');
+if(ph)ph.style.display='none';
+var cv=document.getElementById('bundling-canvas');
+if(cv)cv.style.display='block';
+</script>
+<script id="three-main">
+
   var wrap=document.getElementById('webgl-wrap');
   var canvas=document.getElementById('bundling-canvas');
   if(!wrap||!canvas||typeof THREE==='undefined')return;
@@ -1222,7 +1361,7 @@ footer{background:var(--dark);padding:72px 0 0}
     camera.aspect=nW/nH;camera.updateProjectionMatrix();
     renderer.setSize(nW,nH);
   });
-})();
+
 </script>
 
 <!-- SUPPLIER APPLICATION -->
@@ -1524,9 +1663,9 @@ footer{background:var(--dark);padding:72px 0 0}
       <div class="footer-col">
         <h4>Rechtliches</h4>
         <ul>
-          <li><a href="datenschutz.html">Datenschutz</a></li>
-          <li><a href="impressum.html">Impressum</a></li>
-          <li><a href="agb.html">AGB</a></li>
+          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutz</a></li>
+          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer">Impressum</a></li>
+          <li><a href="agb.html" target="_blank" rel="noopener noreferrer">AGB</a></li>
         </ul>
       </div>
     </div>
@@ -1571,6 +1710,7 @@ function toggleNav(){
   const spans=h.querySelectorAll('.hw');
   spans.forEach((s,i)=>setTimeout(()=>s.classList.add('in'),100+i*150));
 })();
+} // end initBundling
 
 // MARQUEE
 const SUPPLIERS=[
@@ -1873,6 +2013,62 @@ function toggleFaq(btn){
   }
 }
 
+
+// DARK/LIGHT MODE
+function toggleMode(){
+  var b=document.body;
+  var isLight=b.classList.toggle('light-mode');
+  var k=document.querySelector('.mode-toggle-knob');
+  if(k)k.textContent=isLight?'☀️':'🌙';
+  localStorage.setItem('colorMode',isLight?'light':'dark');
+}
+(function(){
+  if(localStorage.getItem('colorMode')==='light'){
+    document.body.classList.add('light-mode');
+    var k=document.querySelector('.mode-toggle-knob');
+    if(k)k.textContent='☀️';
+  }
+})();
+
+// SMOOTH NAV TRANSITIONS
+document.querySelectorAll('#nav a[href^="#"],#nav-overlay a[href^="#"]').forEach(function(link){
+  link.addEventListener('click',function(e){
+    var target=document.querySelector(this.getAttribute('href'));
+    if(!target)return;
+    e.preventDefault();
+    var main=document.getElementById('hero')||document.body;
+    document.body.classList.add('page-fade');
+    setTimeout(function(){
+      target.scrollIntoView({behavior:'smooth'});
+      setTimeout(function(){document.body.classList.remove('page-fade');},150);
+    },150);
+  });
+});
+
+// COOKIE BANNER
+(function(){
+  if(!localStorage.getItem('cookieConsent')){
+    setTimeout(function(){
+      var b=document.getElementById('cookie-banner');
+      if(b)b.classList.add('show');
+    },1500);
+  }
+})();
+function cookieChoice(v){
+  localStorage.setItem('cookieConsent',v);
+  var b=document.getElementById('cookie-banner');
+  if(b){b.style.transform='translateY(100%)';setTimeout(function(){b.style.display='none';},400);}
+}
+
+// BACK-TO-TOP
+window.addEventListener('scroll',function(){
+  var btn=document.getElementById('back-top');
+  if(btn){
+    if(window.scrollY>400)btn.classList.add('visible');
+    else btn.classList.remove('visible');
+  }
+});
+
 </script>
 
 <!-- CHAT WIDGET -->
@@ -1898,6 +2094,16 @@ function toggleFaq(btn){
       <input type="text" id="chat-input" placeholder="Frage stellen…" onkeydown="if(event.key==='Enter')chatSend()"/>
       <button id="chat-send" onclick="chatSend()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg></button>
     </div>
+  </div>
+</div>
+
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Nach oben"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18,15 12,9 6,15"/></svg></button>
+<!-- COOKIE BANNER -->
+<div id="cookie-banner">
+  <p class="cookie-text">Wir verwenden Cookies um dein Erlebnis zu verbessern und die Nutzung unserer Website zu analysieren. Weitere Informationen in unserer <a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung</a>.</p>
+  <div class="cookie-btns">
+    <button class="btn btn-outline-w btn-md" onclick="cookieChoice('declined')">Ablehnen</button>
+    <button class="btn btn-gold btn-md" onclick="cookieChoice('accepted')">Akzeptieren</button>
   </div>
 </div>
 </body>
