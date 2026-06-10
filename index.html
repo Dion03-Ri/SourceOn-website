@@ -6,11 +6,12 @@
 <title>SourceOn — Du zahlst erst, wenn wir dir sparen.</title>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <meta property="og:title" content="SourceOn — Du zahlst erst, wenn wir dir sparen."/>
-<meta property="og:description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte die kein Einzelkunde alleine bekäme. 2.25% Provision — nur bei Ersparnis."/>
+<meta property="og:description" content="Schweizer B2B Beschaffungsvermittler für die Baubranche. Mengenrabatte durch Bündelung, 2.25% Provision nur bei bestätigter Ersparnis."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://sourceon.ch"/>
 <meta property="og:image" content="https://sourceon.ch/og-image.jpg"/>
 <meta property="og:locale" content="de_CH"/>
+<meta property="og:site_name" content="SourceOn"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="SourceOn — Smarter Materialeinkauf für Schweizer Baufirmen"/>
 <meta name="twitter:description" content="Mengenrabatte durch Bündelung. Ohne Aufwand, ohne Risiko. Du zahlst erst wenn wir dir sparen."/>
@@ -43,37 +44,43 @@ a{color:inherit;text-decoration:none}
 
 /* HERO LAYOUT TWO-COL */
 #hero{align-items:stretch;text-align:left}
-.hero-layout{display:grid;grid-template-columns:1fr 420px;gap:60px;align-items:center;position:relative;z-index:10;max-width:1200px;width:100%;padding:0 48px}
+.hero-layout{display:grid;grid-template-columns:55% 45%;gap:48px;align-items:center;position:relative;z-index:10;max-width:1200px;width:100%;padding:0 48px}
 .hero-text{max-width:560px}
 .hero-text .hero-sub{margin-left:0}
 .hero-text .hero-btns{justify-content:flex-start}
 .hero-text .hero-scroll-pill{display:none}
 .hero-mockup{width:420px;flex-shrink:0}
-.mockup-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:16px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:24px;animation:mockupFloat 3s ease-in-out infinite}
+.mockup-card{background:rgba(15,34,56,.85);border:1px solid rgba(232,160,32,.2);border-radius:20px;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:24px;box-shadow:0 25px 50px rgba(0,0,0,.4);animation:mockupFloat 3s ease-in-out infinite}
 @keyframes mockupFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-.mockup-bar{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.mockup-bar{display:flex;align-items:center;gap:8px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,.07)}
 .mockup-dots{display:flex;gap:6px}
 .mockup-dot{width:10px;height:10px;border-radius:50%}
-.mockup-dot-r{background:#ff5f57}.mockup-dot-y{background:#febc2e}.mockup-dot-g{background:#28c840}
+.mockup-dot-r{background:#ef4444}.mockup-dot-y{background:#f59e0b}.mockup-dot-g{background:#10b981}
 .mockup-title{flex:1;text-align:center;font-size:13px;font-weight:500;color:rgba(255,255,255,.7)}
-.mockup-tabs{display:flex;gap:0;margin-bottom:16px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:12px}
-.mockup-tab{font-size:.75rem;font-weight:600;color:rgba(255,255,255,.4);padding:4px 0;cursor:default}
-.mockup-tab.active{color:var(--gold);border-bottom:2px solid var(--gold);margin-bottom:-13px}
-.mockup-rows{display:flex;flex-direction:column;gap:0}
-.mockup-row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.mockup-section-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.mockup-rows{display:flex;flex-direction:column;gap:0;margin-bottom:14px}
+.mockup-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.06)}
 .mockup-row:last-child{border-bottom:none}
-.mockup-mat{font-size:.82rem;font-weight:600;color:#fff;flex:1}
-.mockup-qty{font-size:.77rem;color:rgba(255,255,255,.45);width:64px;text-align:center}
-.mockup-badge{font-size:.67rem;font-weight:700;padding:3px 9px;border-radius:100px;white-space:nowrap}
+.mockup-icon{width:32px;height:32px;background:#1B3A5C;border-radius:6px;flex-shrink:0}
+.mockup-info{flex:1;min-width:0}
+.mockup-mat{font-size:.84rem;font-weight:700;color:#fff;display:block}
+.mockup-qty{font-size:.75rem;color:rgba(148,163,184,.8)}
+.mockup-badge{font-size:.66rem;font-weight:700;padding:3px 9px;border-radius:100px;white-space:nowrap}
 .mockup-badge-gold{background:rgba(232,160,32,.18);color:#E8A020;border:1px solid rgba(232,160,32,.3)}
 .mockup-badge-blue{background:rgba(59,130,246,.18);color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
-.mockup-badge-green{background:rgba(22,163,74,.18);color:#4ade80;border:1px solid rgba(22,163,74,.3)}
-.mockup-summary{background:rgba(15,34,56,.6);border:1px solid rgba(255,255,255,.08);border-radius:10px;padding:14px 16px;margin:16px 0 14px}
-.mockup-sum-label{font-size:.72rem;color:rgba(148,163,184,.8);margin-bottom:6px}
-.mockup-sum-value{font-size:1.35rem;font-weight:700;color:var(--gold);letter-spacing:-0.02em}
-.mockup-progress-label{font-size:.72rem;color:rgba(255,255,255,.45);margin-bottom:6px}
-.mockup-progress-wrap{height:5px;background:rgba(255,255,255,.1);border-radius:100px;overflow:hidden}
-.mockup-progress-bar{height:100%;width:68%;background:linear-gradient(90deg,var(--gold),#FFD700);border-radius:100px}
+.mockup-badge-green{background:rgba(16,185,129,.18);color:#34d399;border:1px solid rgba(16,185,129,.3)}
+.mockup-divider{height:1px;background:rgba(255,255,255,.07);margin:14px 0}
+.mockup-summary{background:rgba(0,0,0,.25);border-radius:12px;padding:14px 16px;margin-bottom:14px}
+.mockup-sum-label{font-size:11px;font-weight:600;letter-spacing:.04em;color:rgba(148,163,184,.8);text-transform:uppercase;margin-bottom:4px}
+.mockup-sum-value{font-size:28px;font-weight:800;color:var(--gold);letter-spacing:-0.03em;line-height:1}
+.mockup-progress-wrap-outer{margin-bottom:14px}
+.mockup-progress-label-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.mockup-progress-lbl{font-size:.72rem;color:rgba(255,255,255,.45)}
+.mockup-progress-pct{font-size:.72rem;font-weight:700;color:var(--gold)}
+.mockup-progress-bg{height:6px;background:rgba(255,255,255,.08);border-radius:100px;overflow:hidden}
+.mockup-progress-fill{height:100%;width:72%;background:linear-gradient(90deg,var(--gold),#FFD700);border-radius:100px}
+.mockup-cta{font-size:13px;font-weight:600;color:var(--gold);text-align:right;cursor:default}
+.hero-layout{grid-template-columns:55% 45%}
 @media(max-width:1024px){.hero-layout{grid-template-columns:1fr;gap:48px}.hero-text{max-width:100%}#hero{text-align:center}.hero-text .hero-btns{justify-content:center}.hero-text .hero-sub{margin:0 auto 40px}.hero-mockup{display:none}}
 .hero-stats-wrap{position:relative;z-index:10;width:100%;max-width:1200px;padding:0 48px;margin-top:40px}
 @media(max-width:1024px){.hero-stats-wrap{padding:0 24px}}
@@ -88,13 +95,25 @@ a{color:inherit;text-decoration:none}
 #back-top svg{width:18px;height:18px;color:#0F172A}
 
 /* COOKIE BANNER */
-#cookie-banner{position:fixed;bottom:0;left:0;right:0;background:#0F2238;border-top:1px solid rgba(255,255,255,.1);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;z-index:9999;transform:translateY(100%);transition:transform .4s ease;flex-wrap:wrap}
+#cookie-banner{position:fixed;bottom:0;left:0;right:0;background:#0F2238;border-top:1px solid rgba(232,160,32,.2);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;z-index:9999;transform:translateY(100%);transition:transform .4s ease;flex-wrap:wrap}
 #cookie-banner.show{transform:translateY(0)}
 .cookie-text{font-size:.84rem;color:rgba(148,163,184,.9);line-height:1.5;flex:1}
 .cookie-text a{color:var(--gold);text-decoration:underline}
 .cookie-btns{display:flex;gap:10px;flex-shrink:0}
 
 /* PAGE TRANSITIONS */
+
+
+/* HERO SCROLL INDICATOR */
+.hero-scroll-indicator{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:4px;color:rgba(255,255,255,.35);font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;animation:scrollBounce 2s ease-in-out infinite;z-index:10;transition:opacity .4s}
+.hero-scroll-indicator svg{width:20px;height:20px}
+.hero-scroll-indicator.hidden{opacity:0;pointer-events:none}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* SCROLL MARGIN */
+section[id]{scroll-margin-top:80px}
+body.transitioning{pointer-events:none;opacity:.97}
+
 .page-fade{opacity:0;transition:opacity .15s ease}
 
 /* LIGHT/DARK MODE */
@@ -102,11 +121,19 @@ body{transition:background-color .3s,color .3s}
 .mode-toggle{display:flex;align-items:center;justify-content:center;width:44px;height:24px;border-radius:100px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);cursor:pointer;position:relative;transition:all .2s;flex-shrink:0}
 .mode-toggle-knob{width:18px;height:18px;border-radius:50%;background:#fff;position:absolute;left:2px;transition:transform .25s var(--ease);display:flex;align-items:center;justify-content:center;font-size:11px}
 body.light-mode .mode-toggle-knob{transform:translateX(20px)}
-body.light-mode{--bg:#F8FAFC;--bg2:#EFF3F8;--text:#0F172A;--body:#334155;--border:#CBD5E1;--border-md:#94A3B8}
+html.light-mode body,body.light-mode{--bg:#F8FAFC;--bg2:#FFFFFF;--text:#0F172A;--body:#334155;--border:#CBD5E1;--border-md:#94A3B8}
 body.light-mode #hero,body.light-mode #hero .hero-bg{background:#1B3A5C}
 body.light-mode .hero-sub{color:#c8d8e8}
 
 /* MICRO-INTERACTIONS */
+
+/* MICRO-INTERACTIONS EXTENDED */
+.step-card:hover,.mat-card:hover{border-color:rgba(232,160,32,.4)!important;box-shadow:0 4px 20px rgba(232,160,32,.1)!important;transition:border-color .2s,box-shadow .2s}
+.faq-q:hover .faq-q-text{color:var(--gold);transition:color .2s}
+.mat-card:hover{background:#F8FAFC}
+.btn{transition:transform .15s,box-shadow .2s,background .2s}
+.btn:hover{transform:translateY(-2px) scale(1.02)}
+
 .nav-links a{position:relative}
 .nav-links a::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:var(--gold);transition:width .2s ease}
 .nav-links a:hover::after{width:100%}
@@ -119,8 +146,8 @@ input[type=text]:focus,input[type=email]:focus,input[type=tel]:focus,input[type=
 .mq-card:hover{transform:scale(1.02);box-shadow:0 8px 32px rgba(232,160,32,.28)}
 
 /* GRADIENT SHIMMER */
-.gold-shimmer{background:linear-gradient(135deg,#E8A020 0%,#FFD700 50%,#E8A020 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200% 200%;animation:gradientShift 3s ease infinite}
-@keyframes gradientShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.gold-shimmer,.gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#FBBF24 30%,#E8A020 60%,#D97706 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;background-size:200%;animation:shimmer 4s linear infinite}
+@keyframes shimmer{0%{background-position:0% center}100%{background-position:200% center}}
 /* LAYOUT */
 .container{max-width:1200px;margin:0 auto;padding:0 48px}
 .section{padding:120px 0}
@@ -128,12 +155,12 @@ input[type=text]:focus,input[type=email]:focus,input[type=tel]:focus,input[type=
 @media(max-width:640px){.container{padding:0 20px}.section{padding:60px 0}}
 
 /* LABELS */
-.label{display:inline-flex;align-items:center;gap:7px;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:100px;padding:5px 14px;margin-bottom:20px}
+.label{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:100px;padding:5px 14px;margin-bottom:20px}
 .label-green{color:var(--green);background:var(--green-bg);border-color:var(--green-b)}
 .label-dark{color:var(--gold);background:rgba(232,160,32,.15);border-color:rgba(232,160,32,.35)}
 
 /* HEADINGS */
-.h2{font-size:clamp(32px,4.5vw,52px);font-weight:800;line-height:1.12;letter-spacing:-0.03em}
+.h2{font-size:clamp(36px,5vw,56px);font-weight:800;line-height:1.1;letter-spacing:-0.03em}
 .subtitle{font-size:clamp(16px,2vw,18px);color:var(--body);line-height:1.75;max-width:600px}
 .subtitle-dark{color:var(--muted)}
 .text-center{text-align:center}.text-center .subtitle{margin:0 auto}
@@ -192,8 +219,8 @@ input[type=text]:focus,input[type=email]:focus,input[type=tel]:focus,input[type=
 .hero-content{position:relative;z-index:10;max-width:900px;padding:0 24px}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:7px 18px;margin-bottom:32px;animation:pulseBadge 3s ease-in-out infinite}
 @keyframes pulseBadge{0%,100%{box-shadow:0 0 0 0 rgba(232,160,32,.35)}50%{box-shadow:0 0 0 8px rgba(232,160,32,0)}}
-.hero-h1{font-size:clamp(48px,7vw,80px);font-weight:900;line-height:1.05;letter-spacing:-0.04em;color:#fff;margin-bottom:24px}
-.hero-sub{color:#8899AA;font-size:clamp(16px,2vw,18px);font-weight:400;line-height:1.8;max-width:640px;margin:0 auto 40px}
+.hero-h1{font-size:clamp(52px,7vw,88px);font-weight:900;line-height:1.05;letter-spacing:-0.04em;color:#fff;margin-bottom:24px}
+.hero-sub{color:#8899AA;font-size:18px;font-weight:400;line-height:1.8;max-width:640px;margin:0 auto 40px}
 .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
 .hero-scroll-pill{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.45);font-size:.8rem;font-weight:500;border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:8px 20px;cursor:pointer;transition:all .2s;animation:bouncePill 2.5s ease-in-out infinite;margin-bottom:64px}
 .hero-scroll-pill:hover{color:var(--gold);border-color:var(--gold-b)}
@@ -691,18 +718,22 @@ footer{background:var(--dark);padding:72px 0 0}
           <div class="mockup-dots"><div class="mockup-dot mockup-dot-r"></div><div class="mockup-dot mockup-dot-y"></div><div class="mockup-dot mockup-dot-g"></div></div>
           <div class="mockup-title">SourceOn — Bestellübersicht</div>
         </div>
-        <div class="mockup-tabs"><div class="mockup-tab active">Aktive Bestellungen</div></div>
+        <div class="mockup-section-label">Aktive Bestellungen</div>
         <div class="mockup-rows">
-          <div class="mockup-row"><span class="mockup-mat">Beton C25/30</span><span class="mockup-qty">180 m³</span><span class="mockup-badge mockup-badge-gold">In Verhandlung</span></div>
-          <div class="mockup-row"><span class="mockup-mat">Armierungsstahl</span><span class="mockup-qty">4.2 t</span><span class="mockup-badge mockup-badge-blue">Gebündelt</span></div>
-          <div class="mockup-row"><span class="mockup-mat">Kies &amp; Splitt</span><span class="mockup-qty">60 m³</span><span class="mockup-badge mockup-badge-green">Geliefert</span></div>
+          <div class="mockup-row"><div class="mockup-icon"></div><div class="mockup-info"><span class="mockup-mat">Beton C25/30</span><span class="mockup-qty">180 m³</span></div><span class="mockup-badge mockup-badge-blue">Gebündelt</span></div>
+          <div class="mockup-row"><div class="mockup-icon"></div><div class="mockup-info"><span class="mockup-mat">Armierungsstahl B500B</span><span class="mockup-qty">12 t</span></div><span class="mockup-badge mockup-badge-gold">In Verhandlung</span></div>
+          <div class="mockup-row"><div class="mockup-icon"></div><div class="mockup-info"><span class="mockup-mat">Kies 0–32mm</span><span class="mockup-qty">45 t</span></div><span class="mockup-badge mockup-badge-green">Angebot eingegangen</span></div>
         </div>
+        <div class="mockup-divider"></div>
         <div class="mockup-summary">
-          <div class="mockup-sum-label">Potenzielle Ersparnis diese Woche</div>
-          <div class="mockup-sum-value">CHF 12'450</div>
+          <div class="mockup-sum-label">Potenzielle Ersparnis</div>
+          <div class="mockup-sum-value">CHF 14'850</div>
         </div>
-        <div class="mockup-progress-label">3 von 4 Bündelungen abgeschlossen</div>
-        <div class="mockup-progress-wrap"><div class="mockup-progress-bar"></div></div>
+        <div class="mockup-progress-wrap-outer">
+          <div class="mockup-progress-label-row"><span class="mockup-progress-lbl">Bündelungsgrad</span><span class="mockup-progress-pct">72%</span></div>
+          <div class="mockup-progress-bg"><div class="mockup-progress-fill"></div></div>
+        </div>
+        <div class="mockup-cta">Angebot ansehen →</div>
       </div>
     </div>
   </div>
@@ -721,6 +752,7 @@ footer{background:var(--dark);padding:72px 0 0}
         <div class="stat-label">der CH-Baufirmen<br>sind KMU — BFS</div>
       </div>
     </div>
+  <div class="hero-scroll-indicator" id="hero-scroll-ind" onclick="document.getElementById('process').scrollIntoView({behavior:'smooth'})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"/></svg><span>Scroll</span></div>
 </section>
 
 <!-- PROCESS -->
@@ -740,20 +772,20 @@ footer{background:var(--dark);padding:72px 0 0}
       <div class="steps-connector"><div class="steps-connector-line"></div></div>
       <div class="step-card" id="step-card-1">
         <div class="step-num-circle">2</div>
-        <div class="step-title">Bündeln</div>
-        <p class="step-desc">SourceOn matcht deinen Bedarf mit anderen Baufirmen für echtes Einkaufsvolumen.</p>
+        <div class="step-title">Bündeln &amp; Verhandeln</div>
+        <p class="step-desc">SourceOn matcht deinen Bedarf mit anderen Baufirmen für echtes Einkaufsvolumen und holt Bestpreise ein.</p>
       </div>
       <div class="steps-connector"><div class="steps-connector-line"></div></div>
       <div class="step-card" id="step-card-2">
         <div class="step-num-circle">3</div>
-        <div class="step-title">Vergleichen &amp; Verhandeln</div>
-        <p class="step-desc">KI-Analyse und erfahrene Verhandler holen mindestens 3 Angebote ein.</p>
+        <div class="step-title">Du erhältst ein Angebot</div>
+        <p class="step-desc">Du bekommst ein konkretes Angebot mit dem gebündelten Preis. Kein Auftrag, keine Kosten — du entscheidest.</p>
       </div>
       <div class="steps-connector"><div class="steps-connector-line"></div></div>
       <div class="step-card" id="step-card-3">
         <div class="step-num-circle">4</div>
-        <div class="step-title">Du sparst potenziell</div>
-        <p class="step-desc">Direktlieferung auf deine Baustelle. Provision nur wenn du wirklich günstiger einkaufst.</p>
+        <div class="step-title">Du entscheidest — wir liefern</div>
+        <p class="step-desc">Nur wenn das Angebot günstiger ist als dein bisheriger Preis bestätigst du. Dann läuft alles automatisch — Direktlieferung auf deine Baustelle.</p>
       </div>
     </div>
   </div>
@@ -973,6 +1005,7 @@ footer{background:var(--dark);padding:72px 0 0}
           <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Kein Nachweis — Einsparungen nicht transparent</span></div>
           <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Aufwand trotzdem — auch ohne Ergebnis</span></div>
           <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Begrenzte Lieferanten — nur eigene Kontakte</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Entscheidungsfreiheit — kein Vergleich möglich</span></div>
           <div class="cmp-item"><svg class="cmp-ico cmp-ico-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg><span>Normprüfung — eigenverantwortlich, fehleranfällig</span></div>
         </div>
       </div>
@@ -985,6 +1018,7 @@ footer{background:var(--dark);padding:72px 0 0}
           <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>Vollständig dokumentiert — Einsparung nachgewiesen</span></div>
           <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>Kein Erfolg — keine Provision. Null Risiko.</span></div>
           <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>20+ geprüfte Partnerlieferanten schweizweit</span></div>
+          <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>Entscheidungsfreiheit — du siehst das Angebot zuerst und entscheidest</span></div>
           <div class="cmp-item"><svg class="cmp-ico cmp-ico-ok" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20,6 9,17 4,12"/></svg><span>SIA/ISO-konforme Lieferanten — geprüft &amp; garantiert</span></div>
         </div>
       </div>
@@ -1036,7 +1070,7 @@ footer{background:var(--dark);padding:72px 0 0}
     <p class="subtitle subtitle-dark" style="margin:0 auto">Sieh wie SourceOn Materialbedarf bündelt und Mengenrabatte erzielt.</p>
   </div>
   <div id="webgl-wrap" style="width:100%;height:600px;position:relative">
-    <div id="bundling-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:.9rem;letter-spacing:.05em">Wird geladen…</div>
+    <div id="bundling-placeholder" style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#94A3B8;font-size:.9rem;letter-spacing:.05em">Visualisierung wird geladen...</div>
     <canvas id="bundling-canvas" style="display:none;width:100%;height:100%"></canvas>
   </div>
   <div style="text-align:center;padding:24px 0 0;position:relative;z-index:2">
@@ -1502,7 +1536,7 @@ if(cv)cv.style.display='block';
     <div class="faq-col">
       <div class="faq-item">
         <button class="faq-q open" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Was kostet mich SourceOn wenn ich nichts spare?</span><span class="faq-toggle">−</span></button>
-        <div class="faq-a" style="max-height:200px"><div class="faq-a-inner">Gar nichts. SourceOn verlangt ausschliesslich eine Provision von 2.25% auf den Materialwert — und das nur dann, wenn wir dir tatsächlich günstiger einkaufen als dein bisheriger Preis. Sparst du nichts, zahlst du nichts. Kein Abo, keine Fixgebühr, kein Risiko.</div></div>
+        <div class="faq-a" style="max-height:200px"><div class="faq-a-inner">Gar nichts. SourceOn legt dir zuerst ein konkretes Angebot vor. Du entscheidest ob es günstiger ist als dein bisheriger Lieferant. Nur wenn du zustimmst geht der Auftrag weiter — und erst dann fällt die Provision an. Kein Abo, keine Fixgebühr, kein Risiko.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Wie lange dauert es bis ich ein Angebot bekomme?</span><span class="faq-toggle">+</span></button>
@@ -2017,6 +2051,7 @@ function toggleFaq(btn){
 // DARK/LIGHT MODE
 function toggleMode(){
   var b=document.body;
+  document.documentElement.classList.toggle('light-mode');
   var isLight=b.classList.toggle('light-mode');
   var k=document.querySelector('.mode-toggle-knob');
   if(k)k.textContent=isLight?'☀️':'🌙';
@@ -2051,7 +2086,7 @@ document.querySelectorAll('#nav a[href^="#"],#nav-overlay a[href^="#"]').forEach
     setTimeout(function(){
       var b=document.getElementById('cookie-banner');
       if(b)b.classList.add('show');
-    },1500);
+    },2000);
   }
 })();
 function cookieChoice(v){
@@ -2068,6 +2103,13 @@ window.addEventListener('scroll',function(){
     else btn.classList.remove('visible');
   }
 });
+
+
+// HERO SCROLL INDICATOR
+window.addEventListener('scroll',function(){
+  var ind=document.getElementById('hero-scroll-ind');
+  if(ind && window.scrollY > 60) ind.classList.add('hidden');
+},{once:true});
 
 </script>
 
