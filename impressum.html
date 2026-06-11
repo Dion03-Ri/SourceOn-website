@@ -1,74 +1,100 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Impressum — SourceOn</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',-apple-system,sans-serif;color:#0F172A;background:#fff;line-height:1.6;-webkit-font-smoothing:antialiased}
-.nav{background:#0F2238;padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between}
-.logo{font-size:20px;font-weight:800;color:#fff;text-decoration:none}.logo span{color:#E8A020}
-.back{font-size:.83rem;color:rgba(255,255,255,.6);text-decoration:none;transition:color .2s}.back:hover{color:#fff}
-.hero{background:#0F2238;padding:60px 0 56px;text-align:center}
-.hero h1{font-size:clamp(28px,4vw,42px);font-weight:800;color:#fff;letter-spacing:-0.02em}
-.hero p{color:#94A3B8;margin-top:10px;font-size:.9rem}
-.content{max-width:760px;margin:0 auto;padding:64px 48px 100px}
-h2{font-size:1.2rem;font-weight:700;color:#0F2238;margin:36px 0 12px;padding-bottom:8px;border-bottom:1px solid #E2E8F0}
-h2:first-child{margin-top:0}
-p{font-size:.9rem;color:#475569;line-height:1.75;margin-bottom:10px}
-.tag{display:inline-block;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:rgba(232,160,32,.12);border:1px solid rgba(232,160,32,.3);color:#E8A020;border-radius:100px;padding:4px 12px;margin-bottom:36px}
-footer{background:#0F2238;text-align:center;padding:24px;font-size:.78rem;color:rgba(255,255,255,.3)}
-footer a{color:#E8A020;text-decoration:none}
-@media(max-width:640px){.content{padding:40px 24px 80px}.nav{padding:0 20px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impressum – SourceOn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #060D1A;
+      color: #FFFFFF;
+      line-height: 1.7;
+      padding: 2rem 1rem 4rem;
+    }
+    .container { max-width: 760px; margin: 0 auto; }
+    .back-link {
+      display: inline-block;
+      margin-bottom: 2.5rem;
+      color: #E8A020;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+    .back-link:hover { text-decoration: underline; }
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #E8A020;
+      margin-bottom: 0.5rem;
+    }
+    .subtitle {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.45);
+      margin-bottom: 3rem;
+    }
+    h2 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #E8A020;
+      margin-top: 2.5rem;
+      margin-bottom: 0.75rem;
+    }
+    p { color: rgba(255,255,255,0.8); margin-bottom: 0.75rem; }
+    a { color: #E8A020; }
+    .info-block {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .info-block p { margin-bottom: 0.25rem; }
+    hr { border: none; border-top: 1px solid rgba(255,255,255,0.08); margin: 3rem 0 0; }
+  </style>
 </head>
 <body>
-<nav class="nav">
-  <a class="logo" href="index.html">source<span>ON</span></a>
-  <a class="back" href="index.html">← Zurück zur Website</a>
-</nav>
-<div class="hero">
-  <div class="tag">Rechtliches</div>
-  <h1>Impressum</h1>
-  <p>Gesetzlich vorgeschriebene Angaben gemäss Schweizer Recht</p>
-</div>
-<div class="content">
-  <h2>Angaben gemäss OR Art. 944</h2>
-  <p><strong>Firmenbezeichnung:</strong> SourceOn</p>
-  <p><strong>Rechtsform:</strong> Einzelunternehmen / [Rechtsform ergänzen]</p>
-  <p><strong>UID:</strong> CHE-[XXX.XXX.XXX] (Eintragung ausstehend)</p>
-  <p><strong>Sitz:</strong> Zürich, Schweiz</p>
-  <p><strong>Gründungsjahr:</strong> 2026</p>
+  <div class="container">
+    <a class="back-link" href="index.html">← Zurück zu SourceOn</a>
 
-  <h2>Kontakt</h2>
-  <p><strong>Adresse:</strong> [Strasse und Hausnummer], [PLZ] Zürich</p>
-  <p><strong>Telefon:</strong> +41 44 000 00 00</p>
-  <p><strong>E-Mail:</strong> info@sourceon.ch</p>
-  <p><strong>Website:</strong> www.sourceon.ch</p>
+    <h1>Impressum</h1>
+    <p class="subtitle">Angaben gemäss Art. 13 ZGB und anwendbarem Schweizer Recht</p>
 
-  <h2>Verantwortliche Person</h2>
-  <p><strong>Name:</strong> [Vorname Nachname]</p>
-  <p><strong>Funktion:</strong> Gründer &amp; CEO</p>
-  <p><strong>E-Mail:</strong> info@sourceon.ch</p>
+    <h2>Unternehmensangaben</h2>
+    <div class="info-block">
+      <p><strong>SourceOn</strong></p>
+      <p>Musterstrasse 1</p>
+      <p>8001 Zürich</p>
+      <p>Schweiz</p>
+    </div>
 
-  <h2>Tätigkeit</h2>
-  <p>SourceOn ist ein Beschaffungsvermittler (Mäkler) gemäss OR Art. 412 ff. für die Schweizer Baubranche. Das Unternehmen vermittelt Materiallieferungen zwischen Baufirmen und Lieferanten und erhebt eine erfolgsbasierte Provision von 2.25% ausschliesslich bei nachgewiesener Ersparnis gegenüber dem Marktpreis.</p>
+    <h2>Handelsregisternummer</h2>
+    <div class="info-block">
+      <p>CHE-XXX.XXX.XXX (Platzhalter)</p>
+    </div>
 
-  <h2>Haftungsausschluss</h2>
-  <p>SourceOn übernimmt keine Gewähr für die Richtigkeit, Vollständigkeit und Aktualität der auf dieser Website enthaltenen Informationen. SourceOn tritt als Vermittler auf und ist weder Käufer noch Verkäufer der vermittelten Waren.</p>
-  <p>Alle Preisberechnungen auf dieser Website sind unverbindliche Schätzungen basierend auf Marktdaten. Individuelle Ergebnisse können abweichen.</p>
+    <h2>Kontakt</h2>
+    <div class="info-block">
+      <p>E-Mail: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a></p>
+      <p>Website: <a href="https://www.sourceon.ch" target="_blank" rel="noopener">www.sourceon.ch</a></p>
+    </div>
 
-  <h2>Urheberrecht</h2>
-  <p>Die auf dieser Website veröffentlichten Inhalte sind urheberrechtlich geschützt. Jede Verwendung ohne schriftliche Genehmigung von SourceOn ist untersagt.</p>
+    <h2>Verantwortlich für den Inhalt</h2>
+    <p>SourceOn, Musterstrasse 1, 8001 Zürich</p>
 
-  <h2>Anwendbares Recht</h2>
-  <p>Es gilt ausschliesslich Schweizer Recht. Gerichtsstand ist Zürich, Schweiz.</p>
-</div>
-<footer>
-  <a href="index.html">SourceOn</a> &nbsp;·&nbsp; <a href="datenschutz.html">Datenschutz</a> &nbsp;·&nbsp; <a href="agb.html">AGB</a>
-</footer>
+    <h2>Haftungsausschluss</h2>
+    <p>Alle Angaben auf dieser Website wurden sorgfältig geprüft. Dennoch können wir keine Gewähr für die Aktualität, Richtigkeit und Vollständigkeit der bereitgestellten Informationen übernehmen. SourceOn behält sich das Recht vor, Inhalte jederzeit und ohne Vorankündigung zu ändern.</p>
+    <p>Links zu externen Websites liegen ausserhalb unseres Verantwortungsbereichs. Für den Inhalt verlinkter Seiten sind ausschliesslich deren Betreiber verantwortlich.</p>
+
+    <h2>Urheberrecht</h2>
+    <p>Sämtliche Inhalte dieser Website (Texte, Grafiken, Logos) sind urheberrechtlich geschützt. Eine Vervielfältigung, Bearbeitung oder Verbreitung bedarf der vorherigen schriftlichen Zustimmung von SourceOn.</p>
+
+    <h2>Streitbeilegung</h2>
+    <p>SourceOn ist nicht verpflichtet und nicht bereit, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen. Bei Streitigkeiten gilt Schweizer Recht; Gerichtsstand ist Zürich.</p>
+
+    <hr>
+  </div>
 </body>
 </html>
