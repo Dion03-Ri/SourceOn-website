@@ -619,9 +619,23 @@ footer{background:var(--dark);padding:72px 0 0}
     <div style="position:relative;margin-top:56px">
       <!-- Timeline line -->
       <div style="position:absolute;top:28px;left:calc(12.5% + 0px);right:calc(12.5% + 0px);height:2px;background:rgba(255,255,255,0.1);z-index:0"></div>
-      <!-- Animated dot -->
-      <div style="position:absolute;top:22px;left:calc(12.5%);width:14px;height:14px;background:var(--gold);border-radius:50%;box-shadow:0 0 14px var(--gold);z-index:1;animation:processDot 4s ease-in-out infinite"></div>
-      <style>@keyframes processDot{0%{left:calc(12.5%)}100%{left:calc(87.5% - 14px)}}@media(prefers-reduced-motion:reduce){.no-anim{animation:none!important}}</style>
+      <!-- Animated icons per segment -->
+      <style>
+        @keyframes iconLupe{0%,5%{left:calc(12.5% - 7px)}95%,100%{left:calc(37.5% - 7px)}}
+        @keyframes iconContract{0%,5%{left:calc(37.5% - 7px)}95%,100%{left:calc(62.5% - 7px)}}
+        @keyframes iconDeal{0%,5%{left:calc(62.5% - 7px)}95%,100%{left:calc(87.5% - 7px)}}
+        .proc-icon{position:absolute;top:14px;width:28px;height:28px;border-radius:50%;background:var(--dark);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;z-index:2;box-shadow:0 0 10px rgba(232,160,32,0.5)}
+        .proc-icon svg{width:13px;height:13px;stroke:var(--gold);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+      </style>
+      <div class="proc-icon" style="animation:iconLupe 2.8s ease-in-out infinite;animation-delay:0s">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </div>
+      <div class="proc-icon" style="animation:iconContract 2.8s ease-in-out infinite;animation-delay:0.9s">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="9" y1="13" x2="15" y2="13"/><polyline points="9,17 11,19 15,15"/></svg>
+      </div>
+      <div class="proc-icon" style="animation:iconDeal 2.8s ease-in-out infinite;animation-delay:1.8s">
+        <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      </div>
       <div style="display:flex;justify-content:space-between;position:relative;z-index:2">
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px">
           <div style="width:56px;height:56px;border-radius:50%;background:var(--gold);color:var(--dark2);font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;z-index:3">1</div>
@@ -943,138 +957,174 @@ footer{background:var(--dark);padding:72px 0 0}
         <a href="#contact" class="cta-btn">Kostenlose Analyse starten</a>
       </div>
       <div style="position:relative">
-        <!-- Isometric AI / supply-chain graphic -->
-        <svg viewBox="0 0 480 380" xmlns="http://www.w3.org/2000/svg" style="width:100%;filter:drop-shadow(0 20px 60px rgba(232,160,32,0.12))">
+        <!-- Static isometric SourceOn platform illustration -->
+        <svg viewBox="0 0 480 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;filter:drop-shadow(0 24px 64px rgba(232,160,32,0.13))">
           <defs>
-            <linearGradient id="tg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#1B3A5C"/><stop offset="100%" stop-color="#0C1B30"/></linearGradient>
-            <linearGradient id="tg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#254d7a"/><stop offset="100%" stop-color="#1B3A5C"/></linearGradient>
-            <linearGradient id="tg3" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#E8A020" stop-opacity="0"/><stop offset="50%" stop-color="#E8A020" stop-opacity="0.8"/><stop offset="100%" stop-color="#E8A020" stop-opacity="0"/></linearGradient>
-            <linearGradient id="tgGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F0B840"/><stop offset="100%" stop-color="#E8A020"/></linearGradient>
-            <filter id="tglow"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <filter id="tglow2"><feGaussianBlur stdDeviation="6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <linearGradient id="iso-gold" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F0B840"/><stop offset="100%" stop-color="#C87C10"/></linearGradient>
+            <linearGradient id="iso-blue-face" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#163050"/><stop offset="100%" stop-color="#0C1B30"/></linearGradient>
+            <linearGradient id="iso-blue-top" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1E4A7A"/><stop offset="100%" stop-color="#163050"/></linearGradient>
+            <linearGradient id="iso-green-face" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#0A3028"/><stop offset="100%" stop-color="#071E18"/></linearGradient>
+            <linearGradient id="iso-green-top" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#134E38"/><stop offset="100%" stop-color="#0A3028"/></linearGradient>
+            <filter id="iso-glow"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <filter id="iso-glow-sm"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
           </defs>
 
-          <!-- Base platform -->
-          <ellipse cx="240" cy="320" rx="200" ry="28" fill="rgba(232,160,32,0.06)" stroke="rgba(232,160,32,0.15)" stroke-width="1"/>
-          <ellipse cx="240" cy="320" rx="140" ry="18" fill="rgba(232,160,32,0.04)"/>
+          <!-- Ground shadow / platform base -->
+          <ellipse cx="240" cy="355" rx="195" ry="22" fill="rgba(0,0,0,0.25)"/>
+          <ellipse cx="240" cy="350" rx="185" ry="16" fill="rgba(232,160,32,0.05)" stroke="rgba(232,160,32,0.12)" stroke-width="1"/>
 
-          <!-- Grid floor lines -->
-          <line x1="60" y1="310" x2="420" y2="310" stroke="rgba(232,160,32,0.08)" stroke-width="1"/>
-          <line x1="80" y1="318" x2="400" y2="318" stroke="rgba(232,160,32,0.05)" stroke-width="1"/>
-          <line x1="240" y1="295" x2="240" y2="326" stroke="rgba(232,160,32,0.1)" stroke-width="1"/>
-          <line x1="140" y1="300" x2="140" y2="325" stroke="rgba(232,160,32,0.06)" stroke-width="1"/>
-          <line x1="340" y1="300" x2="340" y2="325" stroke="rgba(232,160,32,0.06)" stroke-width="1"/>
+          <!-- Isometric grid floor -->
+          <!-- horizontal lines -->
+          <line x1="60" y1="320" x2="420" y2="320" stroke="rgba(232,160,32,0.07)" stroke-width="1"/>
+          <line x1="60" y1="335" x2="420" y2="335" stroke="rgba(232,160,32,0.05)" stroke-width="1"/>
+          <!-- diagonal grid left-to-right -->
+          <line x1="100" y1="295" x2="240" y2="355" stroke="rgba(232,160,32,0.05)" stroke-width="1"/>
+          <line x1="170" y1="295" x2="310" y2="355" stroke="rgba(232,160,32,0.05)" stroke-width="1"/>
+          <line x1="310" y1="295" x2="170" y2="355" stroke="rgba(232,160,32,0.05)" stroke-width="1"/>
+          <line x1="380" y1="295" x2="240" y2="355" stroke="rgba(232,160,32,0.05)" stroke-width="1"/>
 
-          <!-- Left company node — isometric box -->
-          <g transform="translate(82,180)">
-            <polygon points="0,-28 32,-14 32,20 0,34" fill="#0C1B30" stroke="rgba(99,155,220,0.5)" stroke-width="1"/>
-            <polygon points="0,-28 -32,-14 -32,20 0,34" fill="#07101E" stroke="rgba(99,155,220,0.3)" stroke-width="1"/>
-            <polygon points="-32,-14 0,-28 32,-14 0,0" fill="#1B3A5C" stroke="rgba(99,155,220,0.5)" stroke-width="1"/>
-            <!-- window lights -->
-            <rect x="-10" y="-10" width="6" height="5" rx="1" fill="rgba(232,160,32,0.7)"/>
-            <rect x="2" y="-10" width="6" height="5" rx="1" fill="rgba(232,160,32,0.4)"/>
-            <rect x="-10" y="0" width="6" height="5" rx="1" fill="rgba(99,155,220,0.5)"/>
+          <!-- ═══ LEFT SIDE — Company buildings (Baufirmen) ═══ -->
+
+          <!-- Building A — tall, back-left -->
+          <g transform="translate(88,200)">
+            <!-- right face -->
+            <polygon points="0,-60 36,-42 36,30 0,48" fill="url(#iso-blue-face)" stroke="rgba(99,155,220,0.35)" stroke-width="1"/>
+            <!-- left face -->
+            <polygon points="0,-60 -36,-42 -36,30 0,48" fill="#07101E" stroke="rgba(99,155,220,0.2)" stroke-width="1"/>
+            <!-- top -->
+            <polygon points="-36,-42 0,-60 36,-42 0,-24" fill="url(#iso-blue-top)" stroke="rgba(99,155,220,0.45)" stroke-width="1"/>
+            <!-- window grid right face -->
+            <rect x="4" y="-40" width="8" height="6" rx="1" fill="rgba(232,160,32,0.75)"/>
+            <rect x="16" y="-40" width="8" height="6" rx="1" fill="rgba(232,160,32,0.45)"/>
+            <rect x="4" y="-28" width="8" height="6" rx="1" fill="rgba(99,155,220,0.55)"/>
+            <rect x="16" y="-28" width="8" height="6" rx="1" fill="rgba(232,160,32,0.6)"/>
+            <rect x="4" y="-16" width="8" height="6" rx="1" fill="rgba(232,160,32,0.35)"/>
+            <rect x="16" y="-16" width="8" height="6" rx="1" fill="rgba(99,155,220,0.4)"/>
           </g>
-          <text x="82" y="235" text-anchor="middle" fill="#93C5FD" font-family="Inter,sans-serif" font-size="10" font-weight="600">Firma A</text>
+          <text x="88" y="262" text-anchor="middle" fill="#93C5FD" font-family="Inter,sans-serif" font-size="10" font-weight="600" letter-spacing="0.03em">Firma A</text>
 
-          <!-- Middle-left company node -->
-          <g transform="translate(140,230)">
-            <polygon points="0,-22 26,-11 26,16 0,27" fill="#0C1B30" stroke="rgba(99,155,220,0.4)" stroke-width="1"/>
-            <polygon points="0,-22 -26,-11 -26,16 0,27" fill="#07101E" stroke="rgba(99,155,220,0.2)" stroke-width="1"/>
-            <polygon points="-26,-11 0,-22 26,-11 0,0" fill="#163050" stroke="rgba(99,155,220,0.4)" stroke-width="1"/>
-            <rect x="-8" y="-8" width="5" height="4" rx="1" fill="rgba(232,160,32,0.6)"/>
-            <rect x="2" y="-8" width="5" height="4" rx="1" fill="rgba(232,160,32,0.3)"/>
+          <!-- Building B — shorter, front-left -->
+          <g transform="translate(148,248)">
+            <polygon points="0,-44 28,-30 28,22 0,36" fill="url(#iso-blue-face)" stroke="rgba(99,155,220,0.3)" stroke-width="1"/>
+            <polygon points="0,-44 -28,-30 -28,22 0,36" fill="#07101E" stroke="rgba(99,155,220,0.15)" stroke-width="1"/>
+            <polygon points="-28,-30 0,-44 28,-30 0,-16" fill="url(#iso-blue-top)" stroke="rgba(99,155,220,0.35)" stroke-width="1"/>
+            <rect x="3" y="-28" width="7" height="5" rx="1" fill="rgba(232,160,32,0.65)"/>
+            <rect x="14" y="-28" width="7" height="5" rx="1" fill="rgba(99,155,220,0.5)"/>
+            <rect x="3" y="-18" width="7" height="5" rx="1" fill="rgba(232,160,32,0.4)"/>
+            <rect x="14" y="-18" width="7" height="5" rx="1" fill="rgba(232,160,32,0.55)"/>
           </g>
-          <text x="140" y="278" text-anchor="middle" fill="#93C5FD" font-family="Inter,sans-serif" font-size="10" font-weight="600">Firma B</text>
+          <text x="148" y="296" text-anchor="middle" fill="#93C5FD" font-family="Inter,sans-serif" font-size="10" font-weight="600" letter-spacing="0.03em">Firma B</text>
 
-          <!-- Right company node -->
-          <g transform="translate(395,185)">
-            <polygon points="0,-24 28,-12 28,18 0,30" fill="#0C1B30" stroke="rgba(16,185,129,0.5)" stroke-width="1"/>
-            <polygon points="0,-24 -28,-12 -28,18 0,30" fill="#07101E" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
-            <polygon points="-28,-12 0,-24 28,-12 0,0" fill="#0C2E28" stroke="rgba(16,185,129,0.5)" stroke-width="1"/>
-            <rect x="-9" y="-8" width="5" height="4" rx="1" fill="rgba(16,185,129,0.7)"/>
-            <rect x="2" y="-8" width="5" height="4" rx="1" fill="rgba(16,185,129,0.4)"/>
+          <!-- Building C — small, back-far-left -->
+          <g transform="translate(52,250)">
+            <polygon points="0,-30 20,-20 20,14 0,24" fill="url(#iso-blue-face)" stroke="rgba(99,155,220,0.25)" stroke-width="1"/>
+            <polygon points="0,-30 -20,-20 -20,14 0,24" fill="#07101E" stroke="rgba(99,155,220,0.12)" stroke-width="1"/>
+            <polygon points="-20,-20 0,-30 20,-20 0,-10" fill="url(#iso-blue-top)" stroke="rgba(99,155,220,0.3)" stroke-width="1"/>
+            <rect x="2" y="-16" width="6" height="4" rx="1" fill="rgba(232,160,32,0.5)"/>
+            <rect x="10" y="-16" width="6" height="4" rx="1" fill="rgba(99,155,220,0.4)"/>
           </g>
-          <text x="395" y="238" text-anchor="middle" fill="#6EE7B7" font-family="Inter,sans-serif" font-size="10" font-weight="600">Lieferant</text>
+          <text x="52" y="286" text-anchor="middle" fill="#6B8EAE" font-family="Inter,sans-serif" font-size="9" font-weight="500">Firma C</text>
 
-          <!-- Connection lines with animated flow -->
-          <line x1="114" y1="205" x2="200" y2="175" stroke="rgba(232,160,32,0.2)" stroke-width="1" stroke-dasharray="4,4"/>
-          <line x1="154" y1="238" x2="210" y2="200" stroke="rgba(232,160,32,0.2)" stroke-width="1" stroke-dasharray="4,4"/>
-          <line x1="278" y1="175" x2="365" y2="192" stroke="rgba(16,185,129,0.25)" stroke-width="1.5" stroke-dasharray="5,3"/>
+          <!-- ═══ RIGHT SIDE — Supplier (green) ═══ -->
 
-          <!-- Animated flow dots on lines -->
-          <circle r="3" fill="#E8A020" opacity="0.9" filter="url(#tglow)">
-            <animateMotion dur="2.2s" repeatCount="indefinite" begin="0s" path="M114,205 Q160,185 200,175"/>
-          </circle>
-          <circle r="2.5" fill="#E8A020" opacity="0.6">
-            <animateMotion dur="2.2s" repeatCount="indefinite" begin="0.8s" path="M114,205 Q160,185 200,175"/>
-          </circle>
-          <circle r="3" fill="#E8A020" opacity="0.9" filter="url(#tglow)">
-            <animateMotion dur="1.9s" repeatCount="indefinite" begin="0.3s" path="M154,238 Q185,215 210,200"/>
-          </circle>
-          <circle r="2.5" fill="#E8A020" opacity="0.6">
-            <animateMotion dur="1.9s" repeatCount="indefinite" begin="1.1s" path="M154,238 Q185,215 210,200"/>
-          </circle>
-          <circle r="3.5" fill="#10B981" opacity="0.9" filter="url(#tglow)">
-            <animateMotion dur="1.6s" repeatCount="indefinite" begin="0s" path="M278,175 Q320,183 365,192"/>
-          </circle>
-          <circle r="2.5" fill="#10B981" opacity="0.7">
-            <animateMotion dur="1.6s" repeatCount="indefinite" begin="0.6s" path="M278,175 Q320,183 365,192"/>
-          </circle>
+          <!-- Supplier warehouse A — large -->
+          <g transform="translate(390,210)">
+            <polygon points="0,-48 38,-28 38,28 0,48" fill="url(#iso-green-face)" stroke="rgba(16,185,129,0.4)" stroke-width="1"/>
+            <polygon points="0,-48 -38,-28 -38,28 0,48" fill="#040E0B" stroke="rgba(16,185,129,0.2)" stroke-width="1"/>
+            <polygon points="-38,-28 0,-48 38,-28 0,-8" fill="url(#iso-green-top)" stroke="rgba(16,185,129,0.5)" stroke-width="1"/>
+            <!-- warehouse doors -->
+            <rect x="8" y="4" width="16" height="18" rx="2" fill="rgba(7,16,30,0.6)" stroke="rgba(16,185,129,0.35)" stroke-width="1"/>
+            <line x1="16" y1="4" x2="16" y2="22" stroke="rgba(16,185,129,0.2)" stroke-width="1"/>
+            <!-- status lights -->
+            <rect x="4" y="-28" width="6" height="5" rx="1" fill="rgba(16,185,129,0.7)"/>
+            <rect x="14" y="-28" width="6" height="5" rx="1" fill="rgba(16,185,129,0.45)"/>
+            <rect x="24" y="-28" width="6" height="5" rx="1" fill="rgba(16,185,129,0.6)"/>
+            <rect x="4" y="-18" width="6" height="5" rx="1" fill="rgba(16,185,129,0.4)"/>
+          </g>
+          <text x="390" y="272" text-anchor="middle" fill="#6EE7B7" font-family="Inter,sans-serif" font-size="10" font-weight="600" letter-spacing="0.03em">Lieferant</text>
 
-          <!-- Central AI hub — isometric hexagonal platform -->
-          <g transform="translate(240,160)">
-            <!-- Platform layers -->
-            <polygon points="0,50 -52,24 -52,-10 0,-36 52,-10 52,24" fill="rgba(232,160,32,0.07)" stroke="rgba(232,160,32,0.25)" stroke-width="1"/>
-            <polygon points="0,38 -42,17 -42,-6 0,-26 42,-6 42,17" fill="rgba(232,160,32,0.10)" stroke="rgba(232,160,32,0.35)" stroke-width="1"/>
-            <polygon points="0,26 -32,10 -32,-4 0,-18 32,-4 32,10" fill="rgba(232,160,32,0.14)" stroke="rgba(232,160,32,0.5)" stroke-width="1.5"/>
-
-            <!-- Core sphere glow -->
-            <circle cx="0" cy="-10" r="22" fill="rgba(232,160,32,0.08)">
-              <animate attributeName="r" values="20;26;20" dur="3s" repeatCount="indefinite"/>
-              <animate attributeName="opacity" values="0.15;0.04;0.15" dur="3s" repeatCount="indefinite"/>
-            </circle>
-            <circle cx="0" cy="-10" r="15" fill="url(#tgGold)" filter="url(#tglow2)"/>
-            <circle cx="0" cy="-10" r="12" fill="url(#tgGold)"/>
-
-            <!-- AI circuit lines on sphere -->
-            <line x1="-8" y1="-10" x2="8" y2="-10" stroke="rgba(7,16,30,0.6)" stroke-width="1.5"/>
-            <line x1="0" y1="-18" x2="0" y2="-2" stroke="rgba(7,16,30,0.6)" stroke-width="1.5"/>
-            <circle cx="-5" cy="-13" r="1.5" fill="rgba(7,16,30,0.8)"/>
-            <circle cx="5" cy="-7" r="1.5" fill="rgba(7,16,30,0.8)"/>
-
-            <!-- Orbit ring -->
-            <ellipse cx="0" cy="-6" rx="28" ry="8" fill="none" stroke="rgba(232,160,32,0.35)" stroke-width="1" stroke-dasharray="3,3">
-              <animateTransform attributeName="transform" type="rotate" from="0 0 -6" to="360 0 -6" dur="8s" repeatCount="indefinite"/>
-            </ellipse>
-
-            <!-- Label -->
-            <text x="0" y="14" text-anchor="middle" fill="#E8A020" font-family="Inter,sans-serif" font-size="9" font-weight="700" letter-spacing="0.08em">SOURCE ON</text>
+          <!-- Supplier warehouse B — smaller -->
+          <g transform="translate(428,258)">
+            <polygon points="0,-30 22,-18 22,18 0,30" fill="url(#iso-green-face)" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
+            <polygon points="0,-30 -22,-18 -22,18 0,30" fill="#040E0B" stroke="rgba(16,185,129,0.15)" stroke-width="1"/>
+            <polygon points="-22,-18 0,-30 22,-18 0,-6" fill="url(#iso-green-top)" stroke="rgba(16,185,129,0.35)" stroke-width="1"/>
+            <rect x="3" y="-10" width="10" height="12" rx="1" fill="rgba(7,16,30,0.6)" stroke="rgba(16,185,129,0.3)" stroke-width="1"/>
           </g>
 
-          <!-- Floating data chips -->
-          <g opacity="0.85">
-            <rect x="42" y="100" width="64" height="22" rx="11" fill="rgba(7,16,30,0.8)" stroke="rgba(232,160,32,0.4)" stroke-width="1"/>
-            <text x="74" y="115" text-anchor="middle" fill="#E8A020" font-family="Inter,sans-serif" font-size="9" font-weight="600">Preisanalyse</text>
-          </g>
-          <g opacity="0.75">
-            <rect x="340" y="100" width="68" height="22" rx="11" fill="rgba(7,16,30,0.8)" stroke="rgba(16,185,129,0.4)" stroke-width="1"/>
-            <text x="374" y="115" text-anchor="middle" fill="#6EE7B7" font-family="Inter,sans-serif" font-size="9" font-weight="600">Bündelung</text>
-          </g>
-          <g opacity="0.7">
-            <rect x="180" y="40" width="80" height="22" rx="11" fill="rgba(7,16,30,0.8)" stroke="rgba(232,160,32,0.35)" stroke-width="1"/>
-            <text x="220" y="55" text-anchor="middle" fill="#E8A020" font-family="Inter,sans-serif" font-size="9" font-weight="600">KI-Optimierung</text>
+          <!-- ═══ CONNECTION LINES — static dashed ═══ -->
+          <!-- Firma A → Hub -->
+          <path d="M124,215 Q175,195 210,185" stroke="rgba(232,160,32,0.3)" stroke-width="1.5" stroke-dasharray="5,4" fill="none"/>
+          <!-- Firma B → Hub -->
+          <path d="M172,255 Q195,235 215,210" stroke="rgba(232,160,32,0.25)" stroke-width="1.5" stroke-dasharray="5,4" fill="none"/>
+          <!-- Firma C → Hub -->
+          <path d="M70,262 Q140,235 205,195" stroke="rgba(232,160,32,0.18)" stroke-width="1" stroke-dasharray="4,5" fill="none"/>
+          <!-- Hub → Lieferant -->
+          <path d="M274,185 Q320,185 355,200" stroke="rgba(16,185,129,0.35)" stroke-width="1.5" stroke-dasharray="5,4" fill="none"/>
+          <!-- Static flow dots on company→hub lines -->
+          <circle cx="167" cy="205" r="3" fill="#E8A020" opacity="0.7" filter="url(#iso-glow-sm)"/>
+          <circle cx="194" cy="220" r="2.5" fill="#E8A020" opacity="0.5"/>
+          <!-- Static dot on hub→supplier line -->
+          <circle cx="315" cy="192" r="3" fill="#10B981" opacity="0.7" filter="url(#iso-glow-sm)"/>
+
+          <!-- ═══ CENTER — SourceOn Hub ═══ -->
+          <g transform="translate(242,170)">
+            <!-- Hex platform layers -->
+            <polygon points="0,52 -54,26 -54,-10 0,-36 54,-10 54,26" fill="rgba(232,160,32,0.06)" stroke="rgba(232,160,32,0.18)" stroke-width="1"/>
+            <polygon points="0,40 -44,18 -44,-6 0,-26 44,-6 44,18" fill="rgba(232,160,32,0.09)" stroke="rgba(232,160,32,0.28)" stroke-width="1"/>
+            <polygon points="0,28 -34,12 -34,-2 0,-16 34,-2 34,12" fill="rgba(232,160,32,0.13)" stroke="rgba(232,160,32,0.45)" stroke-width="1.5"/>
+
+            <!-- Hub body — gold chip block -->
+            <polygon points="0,12 -18,4 -18,-16 0,-24 18,-16 18,4" fill="#0C1B30" stroke="rgba(232,160,32,0.6)" stroke-width="1.5"/>
+            <!-- Chip top face -->
+            <polygon points="-18,-16 0,-24 18,-16 0,-8" fill="#1B3A5C" stroke="rgba(232,160,32,0.7)" stroke-width="1.5"/>
+            <!-- Gold accent top -->
+            <polygon points="-10,-12 0,-17 10,-12 0,-7" fill="url(#iso-gold)" filter="url(#iso-glow-sm)"/>
+
+            <!-- Circuit trace lines on body -->
+            <line x1="-14" y1="-12" x2="-8" y2="-12" stroke="rgba(232,160,32,0.5)" stroke-width="1"/>
+            <line x1="8" y1="-12" x2="14" y2="-12" stroke="rgba(232,160,32,0.5)" stroke-width="1"/>
+            <line x1="-14" y1="-6" x2="-8" y2="-6" stroke="rgba(232,160,32,0.35)" stroke-width="1"/>
+            <line x1="8" y1="-6" x2="14" y2="-6" stroke="rgba(232,160,32,0.35)" stroke-width="1"/>
+            <!-- Pin dots -->
+            <circle cx="-14" cy="-12" r="1.5" fill="#E8A020" opacity="0.8"/>
+            <circle cx="14" cy="-12" r="1.5" fill="#E8A020" opacity="0.8"/>
+            <circle cx="-14" cy="-6" r="1.5" fill="#E8A020" opacity="0.55"/>
+            <circle cx="14" cy="-6" r="1.5" fill="#E8A020" opacity="0.55"/>
+
+            <!-- Hub label -->
+            <text x="0" y="22" text-anchor="middle" fill="#E8A020" font-family="Inter,sans-serif" font-size="9" font-weight="800" letter-spacing="0.1em">SOURCE ON</text>
+            <text x="0" y="33" text-anchor="middle" fill="rgba(232,160,32,0.55)" font-family="Inter,sans-serif" font-size="7.5" font-weight="500" letter-spacing="0.06em">HUB</text>
           </g>
 
-          <!-- Pulse rings emanating from center -->
-          <circle cx="240" cy="150" r="45" fill="none" stroke="rgba(232,160,32,0.15)" stroke-width="1">
-            <animate attributeName="r" values="32;70;32" dur="4s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0.3;0;0.3" dur="4s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="240" cy="150" r="45" fill="none" stroke="rgba(232,160,32,0.1)" stroke-width="1">
-            <animate attributeName="r" values="32;90;32" dur="4s" begin="1s" repeatCount="indefinite"/>
-            <animate attributeName="opacity" values="0.2;0;0.2" dur="4s" begin="1s" repeatCount="indefinite"/>
-          </circle>
+          <!-- ═══ FLOATING DATA CARDS ═══ -->
+          <!-- Card: Preisanalyse (top-left) -->
+          <g>
+            <rect x="28" y="88" width="90" height="44" rx="8" fill="rgba(7,16,30,0.92)" stroke="rgba(232,160,32,0.35)" stroke-width="1"/>
+            <text x="73" y="108" text-anchor="middle" fill="#E8A020" font-family="Inter,sans-serif" font-size="9" font-weight="700">Preisanalyse</text>
+            <line x1="38" y1="116" x2="108" y2="116" stroke="rgba(232,160,32,0.15)" stroke-width="1"/>
+            <text x="73" y="127" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Inter,sans-serif" font-size="8">−18% Einsparung</text>
+          </g>
+
+          <!-- Card: Bündelung (top-right) -->
+          <g>
+            <rect x="358" y="72" width="88" height="44" rx="8" fill="rgba(7,16,30,0.92)" stroke="rgba(16,185,129,0.35)" stroke-width="1"/>
+            <text x="402" y="92" text-anchor="middle" fill="#6EE7B7" font-family="Inter,sans-serif" font-size="9" font-weight="700">Bündelung</text>
+            <line x1="368" y1="100" x2="436" y2="100" stroke="rgba(16,185,129,0.15)" stroke-width="1"/>
+            <text x="402" y="111" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Inter,sans-serif" font-size="8">3 Firmen aktiv</text>
+          </g>
+
+          <!-- Card: KI-Optimierung (top-center) -->
+          <g>
+            <rect x="174" y="28" width="96" height="44" rx="8" fill="rgba(7,16,30,0.92)" stroke="rgba(232,160,32,0.28)" stroke-width="1"/>
+            <text x="222" y="48" text-anchor="middle" fill="#E8A020" font-family="Inter,sans-serif" font-size="9" font-weight="700">KI-Optimierung</text>
+            <line x1="184" y1="56" x2="262" y2="56" stroke="rgba(232,160,32,0.15)" stroke-width="1"/>
+            <text x="222" y="67" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Inter,sans-serif" font-size="8">340+ Lieferanten</text>
+          </g>
+
+          <!-- Connector lines from cards to hub -->
+          <line x1="118" y1="110" x2="200" y2="152" stroke="rgba(232,160,32,0.12)" stroke-width="1" stroke-dasharray="3,4"/>
+          <line x1="358" y1="94" x2="282" y2="152" stroke="rgba(16,185,129,0.12)" stroke-width="1" stroke-dasharray="3,4"/>
+          <line x1="222" y1="72" x2="242" y2="138" stroke="rgba(232,160,32,0.1)" stroke-width="1" stroke-dasharray="3,4"/>
         </svg>
       </div>
     </div>
