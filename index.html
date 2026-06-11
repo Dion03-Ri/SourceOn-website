@@ -1142,6 +1142,54 @@ footer{background:var(--dark);padding:72px 0 0}
     s.visible=false;scene.add(s);return s;
   });
 
+  /* ── Pop-up info labels ── */
+  function mkInfoLabel(txt,col,sz,w,h){
+    var c=document.createElement('canvas');
+    c.width=w||420;c.height=h||64;
+    var ctx=c.getContext('2d');
+    ctx.fillStyle='rgba(7,16,30,0.82)';
+    ctx.beginPath();
+    ctx.roundRect?ctx.roundRect(2,2,c.width-4,c.height-4,10):ctx.rect(2,2,c.width-4,c.height-4);
+    ctx.fill();
+    ctx.strokeStyle=col||'#E8A020';ctx.lineWidth=1.5;
+    ctx.beginPath();
+    ctx.roundRect?ctx.roundRect(2,2,c.width-4,c.height-4,10):ctx.rect(2,2,c.width-4,c.height-4);
+    ctx.stroke();
+    ctx.font='bold '+(sz||18)+'px Inter,sans-serif';
+    ctx.fillStyle=col||'#E8A020';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillText(txt,c.width/2,c.height/2);
+    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthTest:false,opacity:0}));
+    sp.scale.set((c.width/c.height)*1.8,1.8,1);
+    sp.visible=false;scene.add(sp);return sp;
+  }
+
+  /* Phase 1 labels — near each Firma as it flies in */
+  var lblFirmaA=mkInfoLabel('80 m³ Beton • Firma A','#60A5FA',16,360,52);
+  lblFirmaA.position.set(-3.8,2.8,2.2);
+  var lblFirmaB=mkInfoLabel('60 m³ Stahl • Firma B','#60A5FA',16,360,52);
+  lblFirmaB.position.set(3.8,2.8,2.2);
+  var lblFirmaC=mkInfoLabel('40 m³ Holz • Firma C','#60A5FA',16,360,52);
+  lblFirmaC.position.set(-1.2,2.8,-3.2);
+
+  /* Phase 2 label — when particles flow to center */
+  var lblBuendeln=mkInfoLabel('Volumen wird gebündelt…','#E8A020',18,400,60);
+  lblBuendeln.position.set(0,3.2,0);
+
+  /* Phase 3 labels — when flow hits lieferant */
+  var lblVolumen=mkInfoLabel('Grosses Volumen','#E8A020',20,360,56);
+  lblVolumen.position.set(7.5,2.8,0);
+  var lblRabatt=mkInfoLabel('Mengenrabatt verhandelt','#4ade80',18,380,56);
+  lblRabatt.position.set(7.5,-2.2,0);
+
+  /* Phase 4 final labels */
+  var lblResult=mkInfoLabel('✓  Direktlieferung auf die Baustelle','#4ade80',17,500,58);
+  lblResult.position.set(0,-3.2,0);
+  var lblProvision=mkInfoLabel('Provision nur bei nachgewiesener Ersparnis','#E8A020',15,540,52);
+  lblProvision.position.set(0,-4.6,0);
+
+  var allInfoLabels=[lblFirmaA,lblFirmaB,lblFirmaC,lblBuendeln,lblVolumen,lblRabatt,lblResult,lblProvision];
+
   /* Mouse parallax */
   var mx=0,my=0,camRX=0,camRY=0;
   wrap.addEventListener('mousemove',function(e){
@@ -1177,6 +1225,13 @@ footer{background:var(--dark);padding:72px 0 0}
       particles.material.opacity=0;explParts.material.opacity=0;
       savSprites.forEach(function(s){s.visible=false;});
       checkSprites.forEach(function(s){s.visible=false;});
+      allInfoLabels.forEach(function(s){s.visible=false;if(s.material)s.material.opacity=0;});
+    }
+    function fadeLabel(sp,show,t,delay,speed){
+      delay=delay||0;speed=speed||4;
+      var a=show?eOut(Math.max(0,(t-delay)*speed)):Math.max(0,1-(t-delay)*speed);
+      sp.visible=a>0.01;
+      if(sp.material)sp.material.opacity=Math.min(1,a);
     }
 
     /* Phase 1: 0-2s — boxes fly in */
@@ -1191,6 +1246,10 @@ footer{background:var(--dark);padding:72px 0 0}
         boxes[i].rotation.y=(1-lt)*Math.PI*.4;
         var vis=lt>.25;boxLabels[i].visible=vis;boxNames[i].visible=vis;
       }
+      /* Firma info labels pop in after box arrives */
+      fadeLabel(lblFirmaA, true, t, 0.55, 5);
+      fadeLabel(lblFirmaB, true, t, 0.70, 5);
+      fadeLabel(lblFirmaC, true, t, 0.85, 5);
     }
     /* Phase 2: 2-4s — sphere + particles */
     else if(cy<4){
@@ -1207,6 +1266,10 @@ footer{background:var(--dark);padding:72px 0 0}
       greenBox.visible=false;beam.visible=false;explParts.material.opacity=0;
       savSprites.forEach(function(s){s.visible=false;});
       checkSprites.forEach(function(s){s.visible=false;});
+      allInfoLabels.forEach(function(s){if(s!==lblBuendeln){s.visible=false;if(s.material)s.material.opacity=0;}});
+      /* "Volumen wird gebündelt" pops when particles start flowing */
+      var t2=(cy-2)/2;
+      fadeLabel(lblBuendeln, t2<0.85, t2, 0.1, 4);
       if(t>.1){
         particles.material.opacity=Math.min(1,(t-.1)*4)*.75;
         var pa=pGeo.getAttribute('position');
@@ -1243,6 +1306,13 @@ footer{background:var(--dark);padding:72px 0 0}
       beam.visible=ap>.1;beam.material.opacity=ap*.7;
       savSprites.forEach(function(s){s.visible=false;});
       checkSprites.forEach(function(s){s.visible=false;});
+      /* Pop-ups when lieferant + beam appear */
+      var t3=(cy-4)/2;
+      fadeLabel(lblVolumen, ap>.4, t3, 0.55, 4);
+      fadeLabel(lblRabatt,  ap>.6, t3, 0.70, 4);
+      [lblFirmaA,lblFirmaB,lblFirmaC,lblBuendeln,lblResult,lblProvision].forEach(function(s){
+        s.visible=false;if(s.material)s.material.opacity=0;
+      });
     }
     /* Phase 4: 6-8s — savings + fade out */
     else{
@@ -1269,6 +1339,13 @@ footer{background:var(--dark);padding:72px 0 0}
         checkSprites[i].position.copy(restPos[i]);checkSprites[i].position.y=1.6;
         if(checkSprites[i].material)checkSprites[i].material.opacity=cl*fa;
       }
+      /* Final info labels */
+      var t4=(cy-6)/2;
+      fadeLabel(lblResult,    t4>0.15&&fa>0.2, t4, 0.2, 3);
+      fadeLabel(lblProvision, t4>0.35&&fa>0.2, t4, 0.4, 3);
+      [lblFirmaA,lblFirmaB,lblFirmaC,lblBuendeln,lblVolumen,lblRabatt].forEach(function(s){
+        s.visible=false;if(s.material)s.material.opacity=0;
+      });
     }
 
     renderer.render(scene,camera);
