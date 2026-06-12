@@ -31,7 +31,7 @@ a{color:inherit;text-decoration:none}
 
 /* LAYOUT */
 .container{max-width:1200px;margin:0 auto;padding:0 48px}
-.section{padding:120px 0}
+.section{padding:128px 0}
 @media(max-width:900px){.container{padding:0 28px}.section{padding:80px 0}}
 @media(max-width:640px){.container{padding:0 20px}.section{padding:60px 0}}
 
@@ -48,7 +48,7 @@ a{color:inherit;text-decoration:none}
 .gold{color:var(--gold)}
 
 /* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:all .22s var(--ease);white-space:nowrap;text-decoration:none;border-radius:10px;position:relative;overflow:hidden;letter-spacing:-.01em}
+.btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:all 0.2s cubic-bezier(0.16,1,0.3,1);white-space:nowrap;text-decoration:none;border-radius:10px;position:relative;overflow:hidden;letter-spacing:-.01em}
 .btn-lg{padding:15px 30px;font-size:.96rem}
 .btn-md{padding:11px 22px;font-size:.87rem}
 .btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);transition:left .4s}
@@ -64,7 +64,7 @@ a{color:inherit;text-decoration:none}
 /* NAV */
 #nav{position:fixed;top:0;left:0;right:0;z-index:900;transition:all .3s var(--ease);box-shadow:none}
 #nav .nav-inner{display:flex;align-items:center;justify-content:space-between;height:68px;padding:0 48px;max-width:1400px;margin:0 auto}
-#nav.scrolled{background:rgba(3,9,26,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);box-shadow:none}
+#nav.scrolled{background:rgba(6,13,26,0.92);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid rgba(255,255,255,0.06);transition:all 0.3s ease}
 .nav-logo{font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#fff;cursor:pointer}
 .nav-logo span{color:var(--gold)}
 .nav-links{display:flex;gap:36px;list-style:none}
@@ -81,7 +81,7 @@ a{color:inherit;text-decoration:none}
 @media(max-width:900px){.nav-links{display:none}#nav-hamburger{display:flex}#nav .nav-inner{padding:0 24px}}
 
 /* HERO */
-#hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:120px 0 80px}
+#hero{min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;position:relative;overflow:hidden;padding:120px 0 80px}
 .hero-bg{position:absolute;inset:0;background:#030B1E}
 .hero-mesh{position:absolute;inset:0;z-index:1;
   background:radial-gradient(ellipse 80% 60% at 20% 30%,rgba(27,58,92,.75) 0%,transparent 60%),
@@ -97,16 +97,16 @@ a{color:inherit;text-decoration:none}
   background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);
   background-size:30px 30px;
   mask-image:radial-gradient(ellipse 85% 80% at 50% 50%,#000 30%,transparent 100%)}
-.hero-content{position:relative;z-index:10;max-width:900px;padding:0 24px}
+.hero-content{position:relative;z-index:10;max-width:640px;padding:0 24px 0 48px;text-align:left}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);border-radius:100px;padding:7px 18px;margin-bottom:32px;animation:pulseBadge 3s ease-in-out infinite}
 @keyframes pulseBadge{0%,100%{box-shadow:0 0 0 0 rgba(232,160,32,.35)}50%{box-shadow:0 0 0 8px rgba(232,160,32,0)}}
-.hero-h1{font-size:clamp(42px,6.5vw,72px);font-weight:800;line-height:1.08;letter-spacing:-0.03em;color:#fff;margin-bottom:24px}
-.hero-sub{color:var(--muted);font-size:clamp(16px,2vw,19px);line-height:1.75;max-width:640px;margin:0 auto 40px}
-.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
+.hero-h1{font-size:clamp(42px,6.5vw,72px);font-weight:900;line-height:1.0;letter-spacing:-0.04em;color:#fff;margin-bottom:24px}
+.hero-sub{color:var(--muted);font-size:clamp(16px,2vw,19px);line-height:1.75;max-width:640px;margin:0 0 40px}
+.hero-btns{display:flex;gap:14px;justify-content:flex-start;flex-wrap:wrap;margin-bottom:48px}
 .hero-scroll-pill{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.45);font-size:.8rem;font-weight:500;border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:8px 20px;cursor:pointer;transition:all .2s;animation:bouncePill 2.5s ease-in-out infinite;margin-bottom:64px}
 .hero-scroll-pill:hover{color:var(--gold);border-color:var(--gold-b)}
 @keyframes bouncePill{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
-.hero-stats{background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:28px 48px;display:flex;width:100%;max-width:760px;margin:0 auto}
+.hero-stats{background:rgba(255,255,255,.06);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:28px 48px;display:flex;width:100%;max-width:760px;margin:0}
 .stat-col{flex:1;text-align:center;position:relative}
 .stat-col+.stat-col::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);height:40%;width:1px;background:rgba(255,255,255,.1)}
 .stat-num{font-size:clamp(22px,3vw,30px);font-weight:800;color:var(--gold);letter-spacing:-0.03em;font-variant-numeric:tabular-nums;line-height:1.1;margin-bottom:4px}
@@ -114,8 +114,9 @@ a{color:inherit;text-decoration:none}
 @media(max-width:640px){.hero-stats{flex-direction:column;gap:20px;padding:24px 28px}.stat-col+.stat-col::before{width:40%;height:1px;top:0;left:30%}}
 
 /* REVEAL */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .65s var(--ease),transform .65s var(--ease)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s cubic-bezier(0.16,1,0.3,1),transform 0.6s cubic-bezier(0.16,1,0.3,1)}
 .reveal.visible{opacity:1;transform:translateY(0)}
+
 .reveal-d1{transition-delay:.1s}.reveal-d2{transition-delay:.2s}.reveal-d3{transition-delay:.3s}.reveal-d4{transition-delay:.4s}
 
 /* PROCESS */
@@ -370,7 +371,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .form-success.show{display:flex}
 
 /* FOOTER */
-footer{background:var(--dark);padding:72px 0 0}
+footer{background:var(--dark);padding:72px 0 0;position:relative;overflow:hidden;border-top:1px solid rgba(232,160,32,0.15)}
 .footer-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:48px;margin-bottom:56px}
 .footer-brand p{font-size:.83rem;color:var(--muted);line-height:1.7;max-width:260px;margin-top:14px}
 .footer-col h4{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);margin-bottom:18px}
@@ -546,6 +547,27 @@ footer{background:var(--dark);padding:72px 0 0}
 /* Hero entrance animation */
 @keyframes heroEntrance{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 .hero-content{animation:heroEntrance 1.2s var(--ease) both}
+
+#hero::after{content:'';position:absolute;inset:0;z-index:3;pointer-events:none;mix-blend-mode:overlay;opacity:0.035;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");background-size:200px 200px}
+
+.stat-num,.zahlen-num,.calc-result-val{font-family:'SF Mono','Fira Code','Roboto Mono',monospace}
+
+.why-card:hover,.fw-card:hover{border-color:rgba(232,160,32,0.35)!important;transition:border-color 0.2s}
+
+.proc-timeline{display:flex;justify-content:space-between;position:relative;gap:0}
+.proc-timeline::before{content:'';position:absolute;top:20px;left:calc(12.5%);right:calc(12.5%);height:2px;background:rgba(232,160,32,0.2);z-index:0}
+.proc-step{flex:1;display:flex;flex-direction:column;align-items:flex-start;padding:0 24px;position:relative;z-index:1}
+.proc-num{font-family:'SF Mono','Fira Code',monospace;font-size:0.75rem;font-weight:700;color:var(--gold);letter-spacing:0.1em;margin-bottom:16px;background:var(--dark);padding:0 8px 0 0}
+.proc-title{font-size:1rem;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.3}
+.proc-desc{font-size:0.82rem;color:var(--body);line-height:1.6}
+@media(max-width:768px){.proc-timeline{flex-direction:column;gap:32px}.proc-timeline::before{top:0;bottom:0;left:20px;right:auto;width:2px;height:auto}}
+
+.mq-wrap:hover .marquee-track{animation-duration:60s!important}
+.mq-wrap{-webkit-mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%);mask-image:linear-gradient(to right,transparent 0%,black 8%,black 92%,transparent 100%)}
+
+.btn-outline-w:hover{background:rgba(255,255,255,0.06)}
+
+*:focus-visible{outline:2px solid #E8A020!important;outline-offset:3px!important}
 </style>
 </head>
 <body>
@@ -582,7 +604,9 @@ footer{background:var(--dark);padding:72px 0 0}
   <div class="hero-bg"></div>
   <div class="hero-mesh"></div>
   <div class="hero-dots"></div>
-  <div class="hero-content">
+<div style="position:absolute;top:-100px;left:-100px;width:600px;height:600px;background:radial-gradient(circle,rgba(232,160,32,0.07),transparent 70%);filter:blur(120px);z-index:0;pointer-events:none"></div>
+  <div style="position:absolute;bottom:-100px;right:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(46,117,182,0.08),transparent 70%);filter:blur(100px);z-index:0;pointer-events:none"></div>
+    <div class="hero-content">
     <div class="hero-badge">✦ Schweizer B2B Beschaffungsvermittler</div>
     <h1 class="hero-h1" id="hero-h1">Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span></h1>
     <p class="hero-sub">SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme. Ohne Aufwand, ohne Risiko, ohne Fixkosten.</p>
@@ -614,7 +638,7 @@ footer{background:var(--dark);padding:72px 0 0}
     <div class="reveal" style="max-width:640px">
       <div class="label">So funktioniert es</div>
       <h2 class="h2">Wie SourceOn funktioniert</h2>
-      <p class="subtitle" style="margin-top:16px">Vier Schritte – von der Analyse bis zur Ersparnis. Sie behalten jederzeit die volle Kontrolle.</p>
+      <p class="subtitle" style="margin-top:16px">Vier Schritte – von der Analyse bis zur Ersparnis. du behalten jederzeit die volle Kontrolle.</p>
     </div>
     <div style="position:relative;margin-top:56px">
       <!-- Timeline line -->
@@ -640,22 +664,22 @@ footer{background:var(--dark);padding:72px 0 0}
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px">
           <div style="width:56px;height:56px;border-radius:50%;background:var(--gold);color:var(--dark2);font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;z-index:3">1</div>
           <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Kostenlose Analyse</div>
-          <p style="font-size:13px;color:var(--body);line-height:1.6">Wir analysieren Ihre aktuellen Einkaufsdaten kostenlos und identifizieren Einsparpotenziale.</p>
+          <p style="font-size:13px;color:var(--body);line-height:1.6">Wir analysieren deine aktuellen Einkaufsdaten kostenlos und identifizieren Einsparpotenziale.</p>
         </div>
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px">
           <div style="width:56px;height:56px;border-radius:50%;background:var(--gold);color:var(--dark2);font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;z-index:3">2</div>
           <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Angebot erhalten</div>
-          <p style="font-size:13px;color:var(--body);line-height:1.6">SourceOn präsentiert Ihnen ein konkretes Angebot mit klaren Preisen und Konditionen.</p>
+          <p style="font-size:13px;color:var(--body);line-height:1.6">SourceOn präsentiert dir ein konkretes Angebot mit klaren Preisen und Konditionen.</p>
         </div>
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px">
           <div style="width:56px;height:56px;border-radius:50%;background:var(--gold);color:var(--dark2);font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;z-index:3">3</div>
-          <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Sie entscheiden</div>
-          <p style="font-size:13px;color:var(--body);line-height:1.6">Sie vergleichen frei. Nur wenn unser Angebot günstiger ist und Sie es annehmen, entsteht eine Provision.</p>
+          <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">du entscheiden</div>
+          <p style="font-size:13px;color:var(--body);line-height:1.6">du vergleichen frei. Nur wenn unser Angebot günstiger ist und du es annehmen, entsteht eine Provision.</p>
         </div>
         <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px">
           <div style="width:56px;height:56px;border-radius:50%;background:var(--gold);color:var(--dark2);font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;z-index:3">4</div>
-          <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Provision auf Ersparnis</div>
-          <p style="font-size:13px;color:var(--body);line-height:1.6">2,25% Provision – ausschliesslich auf die tatsächliche Ersparnis, nie auf den Gesamtpreis.</p>
+          <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Du sparst — garantiert</div>
+          <p style="font-size:13px;color:var(--body);line-height:1.6">Direktlieferung auf deine Baustelle. Du zahlst 2.25% Provision — ausschliesslich auf die erzielte Ersparnis. Kein Ergebnis, keine Kosten.</p>
         </div>
       </div>
     </div>
@@ -742,27 +766,29 @@ footer{background:var(--dark);padding:72px 0 0}
       <h2 class="h2" style="color:#fff">Wie viel könntest du sparen?</h2>
       <p class="subtitle subtitle-dark" style="margin-top:14px">Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.</p>
     </div>
+    <div id="calc-bg-num" style="position:absolute;font-size:120px;font-weight:900;color:#fff;opacity:0.04;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;font-family:'SF Mono',monospace;white-space:nowrap"></div>
     <div class="calc-layout">
       <div class="reveal reveal-d1">
         <div class="calc-vol-display" id="calc-display">CHF 150'000</div>
         <div class="calc-slider-wrap">
           <input type="range" id="calc-slider" min="0" max="100" value="18" step="0.1" style="--pct:18%"/>
-        </div>
+        
+        <div style="height:2px;background:rgba(255,255,255,0.08);border-radius:2px;margin-top:8px;position:relative"><div id="calc-progress" style="height:100%;background:var(--gold);border-radius:2px;width:18%;transition:width 0.3s ease"></div></div>
         <div class="calc-range-labels"><span>CHF 50'000</span><span>CHF 10'000'000</span></div>
         <input type="text" class="calc-text-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" value="150'000"/>
         <p style="font-size:.75rem;color:var(--muted);font-style:italic;margin-top:8px">Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.</p>
         <div class="calc-tier-label">Ø Rabatt: <span class="calc-tier-rate" id="calc-rate">10%</span></div>
       </div>
       <div class="reveal reveal-d2">
-        <div class="calc-card">
+        <div class="calc-card" style="border:1px solid rgba(232,160,32,0.15);background:rgba(232,160,32,0.03)">
           <div class="calc-row-gross">
             <div class="calc-row-label">Bruttoersparnis (vor Provision)</div>
-            <div class="calc-row-val" id="calc-gross">CHF 15'000</div>
+            <div class="calc-row-val calc-result-val" id="calc-gross">CHF 15'000</div>
           </div>
           <div class="calc-divider"></div>
           <div class="calc-row-net">
             <div class="calc-row-label">Netto-Einsparpotenzial (nach Provision)</div>
-            <div class="calc-row-val" id="calc-net">CHF 11'625</div>
+            <div class="calc-row-val calc-result-val" id="calc-net">CHF 11'625</div>
           </div>
           <div class="calc-cta">
             <button class="btn btn-gold btn-lg btn-full" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden — kostenlos</button>
@@ -868,7 +894,7 @@ footer{background:var(--dark);padding:72px 0 0}
       <p class="subtitle" style="margin-top:12px;margin-bottom:40px">Was kostet Einzelbeschaffung wirklich – und was bringt die Bündelung?</p>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;border:1px solid rgba(255,255,255,0.1);border-radius:16px;overflow:hidden">
-      <div style="display:flex;flex-direction:column">
+      <div style="display:flex;flex-direction:column;background:rgba(220,38,38,0.04);border-left:3px solid rgba(220,38,38,0.3)">
         <div style="padding:20px 28px;font-size:15px;font-weight:700;background:rgba(148,163,184,0.08);color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.08)">Einzelbeschaffung</div>
         <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:var(--body)"><svg style="width:18px;height:18px;flex-shrink:0;color:#f87171" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Schwache Verhandlungsposition</div>
         <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:var(--body)"><svg style="width:18px;height:18px;flex-shrink:0;color:#f87171" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Hoher Zeitaufwand intern</div>
@@ -877,13 +903,13 @@ footer{background:var(--dark);padding:72px 0 0}
         <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:var(--body)"><svg style="width:18px;height:18px;flex-shrink:0;color:#f87171" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Keine Wahl bei Angeboten</div>
         <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;font-size:14px;color:var(--body)"><svg style="width:18px;height:18px;flex-shrink:0;color:#f87171" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Fixkosten unabhängig vom Ergebnis</div>
       </div>
-      <div style="display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,0.1)">
+      <div style="display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,0.1);background:rgba(16,185,129,0.04);border-left:3px solid rgba(16,185,129,0.3)">
         <div style="padding:20px 28px;font-size:15px;font-weight:700;background:rgba(232,160,32,0.08);color:var(--gold);border-bottom:1px solid rgba(255,255,255,0.08)">Mit SourceOn</div>
         <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#fff"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Gebündeltes Verhandlungsgewicht</div>
         <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#fff"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Analyse in 48 Stunden</div>
         <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#fff"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Vollständige Preistransparenz</div>
         <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#fff"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Geprüfte, zertifizierte Partner</div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#fff"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Entscheidungsfreiheit immer bei Ihnen</div>
+        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#fff"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Entscheidungsfreiheit immer bei dir</div>
         <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;font-size:14px;color:#fff"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>2,25% nur auf tatsächliche Ersparnis</div>
       </div>
     </div>
@@ -933,8 +959,8 @@ footer{background:var(--dark);padding:72px 0 0}
       <div>
         <div class="label label-dark">Technologie</div>
         <h2 class="h2" style="margin-top:0;margin-bottom:16px">KI-gestützte Marktanalyse</h2>
-        <p style="font-size:16px;color:rgba(240,244,255,0.82);line-height:1.7;margin-bottom:20px">Unsere KI analysiert Marktpreise in Echtzeit und erkennt Optimierungspotenziale in Ihren Einkaufsdaten – bevor Sie überhaupt anfragen.</p>
-        <p style="font-size:15px;color:rgba(240,244,255,0.7);line-height:1.7;margin-bottom:28px">Über 340 Lieferantendatenpunkte werden täglich aktualisiert. Ihre Anfragen werden mit historischen Preisen abgeglichen, um die bestmöglichen Konditionen zu identifizieren.</p>
+        <p style="font-size:16px;color:rgba(240,244,255,0.82);line-height:1.7;margin-bottom:20px">Unsere KI analysiert Marktpreise in Echtzeit und erkennt Optimierungspotenziale in deinen Einkaufsdaten – bevor du überhaupt anfragen.</p>
+        <p style="font-size:15px;color:rgba(240,244,255,0.7);line-height:1.7;margin-bottom:28px">Über 340 Lieferantendatenpunkte werden täglich aktualisiert. deine Anfragen werden mit historischen Preisen abgeglichen, um die bestmöglichen Konditionen zu identifizieren.</p>
         <a href="#contact" class="cta-btn">Analyse anfragen</a>
       </div>
       <div style="position:relative">
@@ -1406,7 +1432,7 @@ footer{background:var(--dark);padding:72px 0 0}
     <div class="sa-layout">
       <div>
         <div class="label">Partnerlieferanten</div>
-        <h2 class="h2">Werden Sie SourceOn-Partnerlieferant.</h2>
+        <h2 class="h2">Werden du SourceOn-Partnerlieferant.</h2>
         <p class="subtitle" style="margin-top:14px">Wir suchen zuverlässige Schweizer Lieferanten für unser wachsendes Netzwerk.</p>
         <div class="sa-benefits">
           <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div><div class="sa-benefit-text"><strong>Garantiertes Volumen</strong><span>Gebündelte Aufträge statt Einzelanfragen</span></div></div>
@@ -1486,7 +1512,7 @@ footer{background:var(--dark);padding:72px 0 0}
               <label class="form-check"><input type="checkbox"/><span>Minergie</span></label>
             </div>
           </div>
-          <div class="form-group"><label class="form-label">Bemerkungen</label><textarea class="form-textarea" id="sa-notes" placeholder="Weitere Informationen zu Ihrem Angebot…"></textarea></div>
+          <div class="form-group"><label class="form-label">Bemerkungen</label><textarea class="form-textarea" id="sa-notes" placeholder="Weitere Informationen zu deinem Angebot…"></textarea></div>
           <button type="submit" class="btn btn-gold btn-lg btn-full">Jetzt als Partnerlieferant bewerben</button>
           <div class="form-success" id="success-supplier"><span>✓</span> Vielen Dank! Wir melden uns innerhalb von 48 Stunden.</div>
         </form>
@@ -1674,7 +1700,8 @@ footer{background:var(--dark);padding:72px 0 0}
 
 <!-- FOOTER -->
 <footer>
-  <div class="container">
+  <div style="position:absolute;font-size:120px;font-weight:900;color:#fff;opacity:0.03;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;white-space:nowrap;letter-spacing:-0.04em">SourceOn</div>
+    <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="nav-logo">source<span>ON</span></div>
@@ -1718,7 +1745,7 @@ footer{background:var(--dark);padding:72px 0 0}
 <script>
 // NAV
 window.addEventListener('scroll',()=>{
-  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
+  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
 });
 function toggleNav(){
   const o=document.getElementById('nav-overlay');
@@ -1798,6 +1825,31 @@ function animateNum(id,target){
     if(p>=1)clearInterval(animTimer);
   },16);
 }
+
+var calcAnimFrom={brutto:0,netto:0};
+var calcAnimTo={brutto:0,netto:0};
+var calcAnimRAF=null;
+function animateCalcNumbers(fromB,toB,fromN,toN){
+  if(calcAnimRAF)cancelAnimationFrame(calcAnimRAF);
+  var start=null,dur=400;
+  calcAnimFrom={brutto:fromB,netto:fromN};
+  calcAnimTo={brutto:toB,netto:toN};
+  function step(ts){
+    if(!start)start=ts;
+    var p=Math.min(1,(ts-start)/dur);
+    var e=1-Math.pow(1-p,3);
+    var b=Math.round(calcAnimFrom.brutto+(calcAnimTo.brutto-calcAnimFrom.brutto)*e);
+    var n=Math.round(calcAnimFrom.netto+(calcAnimTo.netto-calcAnimFrom.netto)*e);
+    var bEl=document.getElementById('calc-gross');
+    var nEl=document.getElementById('calc-net');
+    if(bEl)bEl.textContent="CHF "+b.toLocaleString('de-CH');
+    if(nEl)nEl.textContent="CHF "+n.toLocaleString('de-CH');
+    if(p<1)calcAnimRAF=requestAnimationFrame(step);
+    else{calcAnimFrom.brutto=toB;calcAnimFrom.netto=toN;}
+  }
+  calcAnimRAF=requestAnimationFrame(step);
+}
+
 function updateCalc(v,fromSlider){
   v=Math.max(MIN_V,fromSlider?Math.min(MAX_V,v):v);
   const tier=getTier(v);
@@ -1805,11 +1857,14 @@ function updateCalc(v,fromSlider){
   document.getElementById('calc-display').textContent=fmtChf(v);
   if(fromSlider)document.getElementById('calc-input').value=Math.round(v).toLocaleString('de-CH');
   document.getElementById('calc-rate').textContent=Math.round(tier.rate*100)+'%';
-  document.getElementById('calc-gross').textContent=fmtChf(gross);
-  animateNum('calc-net',net);
+  animateCalcNumbers(calcAnimFrom.brutto||parseFloat((document.getElementById('calc-gross').textContent||'0').replace(/[^0-9]/g,'')),gross,calcAnimFrom.netto||parseFloat((document.getElementById('calc-net').textContent||'0').replace(/[^0-9]/g,'')),net);
   const pos=valToPos(Math.min(v,MAX_V));
   const sl=document.getElementById('calc-slider');
   sl.value=pos;sl.style.setProperty('--pct',pos+'%');
+  var bgNum=document.getElementById('calc-bg-num');
+  if(bgNum)bgNum.textContent='CHF '+Math.round(v).toLocaleString('de-CH');
+  var prog=document.getElementById('calc-progress');
+  if(prog)prog.style.width=Math.max(2,pos)+'%';
 }
 document.getElementById('calc-slider').addEventListener('input',function(){
   this.style.setProperty('--pct',this.value+'%');updateCalc(posToVal(+this.value),true);
@@ -2077,6 +2132,16 @@ function toggleFaq(btn){
     </div>
   </div>
 </div>
+
+
+<script>
+(function(){
+  var els=document.querySelectorAll('.section h2,.section .label,.why-card,.fw-card,.zahlen-card,.mq-card,.faq-item');
+  els.forEach(function(el,i){el.classList.add('reveal');el.style.transitionDelay=(i%5)*80+'ms'});
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible')}})},{threshold:0.15});
+  els.forEach(function(el){io.observe(el)});
+})();
+</script>
 
 </body>
 </html>
