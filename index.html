@@ -575,6 +575,31 @@ footer{background:var(--dark);padding:72px 0 0}
 .subtitle-dark{color:rgba(141,160,187,0.9)!important}
 #hero{align-items:flex-start!important;text-align:left!important}
 #hero .hero-content{text-align:left!important;align-items:flex-start!important}
+
+/* ─── ELITE UPGRADES ─── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(232,160,32,0.28);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:rgba(232,160,32,0.5)}
+::selection{background:rgba(232,160,32,0.2);color:inherit}
+/* Card hover glow */
+.why-card,.fw-card,.zahlen-card,.mq-card{transition:transform 0.22s ease,box-shadow 0.22s ease,border-color 0.22s ease}
+.why-card:hover{transform:translateY(-4px)!important;box-shadow:0 24px 64px rgba(0,0,0,.12),0 0 0 1px rgba(232,160,32,0.2)!important;border-color:rgba(232,160,32,0.35)!important}
+.fw-card:hover:not(.fw-card-featured){transform:translateY(-4px)!important;border-color:rgba(232,160,32,0.35)!important}
+/* Focus */
+*:focus-visible{outline:2px solid rgba(232,160,32,0.7)!important;outline-offset:3px!important;border-radius:4px!important}
+/* Marquee fade edges */
+.marquee-outer{-webkit-mask-image:linear-gradient(to right,transparent 0%,#000 7%,#000 93%,transparent 100%);mask-image:linear-gradient(to right,transparent 0%,#000 7%,#000 93%,transparent 100%)}
+/* Monospace numbers */
+.stat-num,.zahlen-num{font-family:'SF Mono','Fira Code','Roboto Mono',monospace!important}
+/* Gold gradient text utility */
+.grad-gold{background:linear-gradient(135deg,#F0B840,#E8A020,#F0B840);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+/* Better button shimmer */
+.btn{overflow:hidden;position:relative}
+.btn::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transition:left .45s ease;pointer-events:none}
+.btn:hover::after{left:100%}
+/* Nav enhanced */
+#nav.scrolled{background:rgba(3,8,20,0.88)!important;backdrop-filter:blur(24px) saturate(180%)!important;-webkit-backdrop-filter:blur(24px) saturate(180%)!important;border-bottom:1px solid rgba(232,160,32,0.07)!important}
 </style>
 </head>
 <body>
@@ -608,6 +633,7 @@ footer{background:var(--dark);padding:72px 0 0}
 
 <!-- HERO -->
 <section id="hero">
+  <canvas id="hero-particles" style="position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0.55"></canvas>
   <canvas id="hero-particles" style="position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0.6"></canvas>
   <div class="hero-bg"></div>
   <div class="hero-mesh"></div>
@@ -1338,6 +1364,11 @@ footer{background:var(--dark);padding:72px 0 0}
   );
   sphere.visible=false;
   scene.add(sphere);
+  /* Orbit torus rings */
+  var ring1=new THREE.Mesh(new THREE.TorusGeometry(1.9,0.022,8,80),new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0}));
+  ring1.rotation.x=Math.PI/3;ring1.visible=false;sphere.add(ring1);
+  var ring2=new THREE.Mesh(new THREE.TorusGeometry(2.6,0.016,8,80),new THREE.MeshBasicMaterial({color:0x3B82F6,transparent:true,opacity:0}));
+  ring2.rotation.x=Math.PI/5;ring2.rotation.z=Math.PI/4;ring2.visible=false;sphere.add(ring2);
   var ring1=new THREE.Mesh(new THREE.TorusGeometry(1.8,0.025,8,80),new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0}));ring1.rotation.x=Math.PI/3;ring1.visible=false;sphere.add(ring1);
   var ring2=new THREE.Mesh(new THREE.TorusGeometry(2.4,0.018,8,80),new THREE.MeshBasicMaterial({color:0x3B82F6,transparent:true,opacity:0}));ring2.rotation.x=Math.PI/5;ring2.rotation.z=Math.PI/4;ring2.visible=false;sphere.add(ring2);
   var sphereLbl=mkLabel('SourceOn','#E8A020',28);
@@ -1422,6 +1453,8 @@ footer{background:var(--dark);padding:72px 0 0}
 
     stars.rotation.y=now*.025;stars.rotation.x=now*.008;
     sphere.rotation.y=now*.3;
+    if(ring1)ring1.rotation.z=now*.45;
+    if(ring2)ring2.rotation.y=now*.28;
     ring1.rotation.z=now*.4;ring2.rotation.y=now*.25;
 
     camRX=lerp(camRX,-my*.08,.05);
@@ -1436,6 +1469,7 @@ footer{background:var(--dark);padding:72px 0 0}
     function hideAll(){
       boxes.forEach(function(b){b.visible=false;});
       sphere.visible=false;greenBox.visible=false;beam.visible=false;
+      if(ring1)ring1.visible=false;if(ring2)ring2.visible=false;
       ring1.visible=false;ring2.visible=false;
       particles.material.opacity=0;explParts.material.opacity=0;
       savSprites.forEach(function(s){s.visible=false;});
@@ -1518,7 +1552,9 @@ footer{background:var(--dark);padding:72px 0 0}
         boxes[i].material.opacity=.85*fa;
         boxLabels[i].visible=fa>.1;boxNames[i].visible=fa>.1;
       }
-      sphere.visible=fa>.05;sphere.material.opacity=.9*fa;sphereLbl.visible=fa>.1;
+      sphere.visible=fa>.05;sphere.material.opacity=.9*fa;
+      if(ring1){ring1.visible=fa>.05;ring1.material.opacity=.75*fa;}
+      if(ring2){ring2.visible=fa>.05;ring2.material.opacity=.45*fa;}sphereLbl.visible=fa>.1;
       ring1.visible=fa>.05;ring2.visible=fa>.05;ring1.material.opacity=.7*fa;ring2.material.opacity=.4*fa;
       greenBox.visible=fa>.05;greenBox.material.opacity=.85*fa;
       gLbl.visible=fa>.2;gName.visible=fa>.2;
@@ -1724,6 +1760,7 @@ footer{background:var(--dark);padding:72px 0 0}
 
 <!-- FOOTER -->
 <footer style="position:relative;overflow:hidden">
+  <div style="position:absolute;font-size:clamp(72px,12vw,130px);font-weight:900;color:#000;opacity:0.04;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;white-space:nowrap;letter-spacing:-0.04em;user-select:none">SourceOn</div>
   <div class="container">
     <div style="position:absolute;font-size:clamp(80px,12vw,140px);font-weight:900;color:#fff;opacity:0.025;left:50%;top:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;white-space:nowrap;letter-spacing:-0.04em;user-select:none">SourceOn</div>
     <div class="footer-grid">
@@ -2179,5 +2216,58 @@ function toggleFaq(btn){
   els.forEach(function(el){io.observe(el)});
 })();
 </script>
+
+<script>
+/* Scroll reveal */
+(function(){
+  var s=document.createElement('style');
+  s.textContent='.sr{opacity:0;transform:translateY(28px);transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1),transform 0.7s cubic-bezier(0.16,1,0.3,1)}.sr.in{opacity:1;transform:none}';
+  document.head.appendChild(s);
+  var sels=['.why-card','.fw-card','.zahlen-card','.mq-card','.faq-item','.mat-card','.about-feature'];
+  var els=[];
+  sels.forEach(function(q){document.querySelectorAll(q).forEach(function(e){els.push(e)})});
+  els.forEach(function(e,i){e.classList.add('sr');e.style.transitionDelay=(i%5*80)+'ms'});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in')})},{threshold:0.12});
+  els.forEach(function(e){io.observe(e)});
+})();
+/* Hero stat counters */
+(function(){
+  function run(el){
+    var t=parseInt(el.getAttribute('data-count')),s=el.getAttribute('data-suffix')||'';
+    if(isNaN(t))return;
+    var d=0,dur=1500,b=null;
+    function step(ts){if(!b)b=ts;var p=Math.min(1,(ts-b)/dur),e=1-Math.pow(1-p,4);
+      el.textContent=Math.round(e*t)+s;if(p<1)requestAnimationFrame(step);else el.textContent=t+s;}
+    requestAnimationFrame(step);
+  }
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){run(e.target);io.unobserve(e.target);}})},{threshold:0.5});
+  document.querySelectorAll('[data-count]').forEach(function(e){io.observe(e);});
+})();
+/* Canvas particle field on hero */
+(function(){
+  var c=document.getElementById('hero-particles');
+  if(!c)return;
+  var ctx=c.getContext('2d'),W,H,pts=[];
+  function sz(){W=c.width=c.offsetWidth;H=c.height=c.offsetHeight}
+  sz();window.addEventListener('resize',sz);
+  for(var i=0;i<100;i++)pts.push({x:Math.random()*1600,y:Math.random()*900,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:Math.random()*1.4+.3,a:Math.random()*.45+.1,g:Math.random()>.65});
+  var mx=800,my=450;
+  var h=document.getElementById('hero');
+  if(h)h.addEventListener('mousemove',function(e){var r=h.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top;});
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(var i=0;i<pts.length;i++){for(var j=i+1;j<pts.length;j++){var dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);if(d<155){ctx.beginPath();ctx.strokeStyle='rgba(232,160,32,'+(0.065*(1-d/155))+')';ctx.lineWidth=.6;ctx.moveTo(pts[i].x,pts[i].y);ctx.lineTo(pts[j].x,pts[j].y);ctx.stroke();}}}
+    for(var i=0;i<pts.length;i++){var p=pts[i],ex=mx-p.x,ey=my-p.y,ed=Math.sqrt(ex*ex+ey*ey);
+      if(ed<220){p.vx+=ex/ed*.014;p.vy+=ey/ed*.014;}
+      var sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);if(sp>1){p.vx/=sp;p.vy/=sp;}
+      p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=W;if(p.x>W)p.x=0;if(p.y<0)p.y=H;if(p.y>H)p.y=0;
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.g?'rgba(232,160,32,'+p.a+')':'rgba(255,255,255,'+(p.a*.55)+')';ctx.fill();}
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+</script>
+
 </body>
 </html>
