@@ -633,7 +633,6 @@ footer{background:var(--dark);padding:72px 0 0}
 
 <!-- HERO -->
 <section id="hero">
-  <canvas id="hero-particles" style="position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0.55"></canvas>
   <canvas id="hero-particles" style="position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0.6"></canvas>
   <div class="hero-bg"></div>
   <div class="hero-mesh"></div>
@@ -1369,8 +1368,6 @@ footer{background:var(--dark);padding:72px 0 0}
   ring1.rotation.x=Math.PI/3;ring1.visible=false;sphere.add(ring1);
   var ring2=new THREE.Mesh(new THREE.TorusGeometry(2.6,0.016,8,80),new THREE.MeshBasicMaterial({color:0x3B82F6,transparent:true,opacity:0}));
   ring2.rotation.x=Math.PI/5;ring2.rotation.z=Math.PI/4;ring2.visible=false;sphere.add(ring2);
-  var ring1=new THREE.Mesh(new THREE.TorusGeometry(1.8,0.025,8,80),new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0}));ring1.rotation.x=Math.PI/3;ring1.visible=false;sphere.add(ring1);
-  var ring2=new THREE.Mesh(new THREE.TorusGeometry(2.4,0.018,8,80),new THREE.MeshBasicMaterial({color:0x3B82F6,transparent:true,opacity:0}));ring2.rotation.x=Math.PI/5;ring2.rotation.z=Math.PI/4;ring2.visible=false;sphere.add(ring2);
   var sphereLbl=mkLabel('SourceOn','#E8A020',28);
   sphereLbl.position.set(0,1.7,0);
   sphere.add(sphereLbl);
