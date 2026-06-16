@@ -311,9 +311,24 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 @media(max-width:640px){.mat-grid{grid-template-columns:repeat(2,1fr)}}
 
 /* COMPARISON */
-#comparison{background:var(--bg)}
-.cmp-table{max-width:800px;margin:56px auto 0;border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-md)}
-.cmp-head{display:grid;grid-template-columns:1fr 1fr 1fr}
+#comparison{background:var(--dark);position:relative;overflow:hidden}
+#comparison::before{content:'';position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(232,160,32,.08) 0%,transparent 65%);pointer-events:none}
+.cmp-split{display:grid;grid-template-columns:1fr 1fr;max-width:900px;margin:64px auto 0;border-radius:var(--r-lg);overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.4);position:relative;z-index:1}
+.cmp-col{display:flex;flex-direction:column}
+.cmp-col-bad{background:rgba(255,255,255,.03)}
+.cmp-col-good{background:linear-gradient(155deg,rgba(232,160,32,.1) 0%,rgba(232,160,32,.03) 100%);border-left:1px solid rgba(232,160,32,.15)}
+.cmp-col-head{padding:26px 32px;font-size:.95rem;font-weight:800;letter-spacing:-0.01em}
+.cmp-col-bad .cmp-col-head{color:var(--muted);border-bottom:1px solid rgba(255,255,255,.08)}
+.cmp-col-good .cmp-col-head{color:var(--gold);border-bottom:1px solid rgba(232,160,32,.18);display:flex;align-items:center;gap:8px}
+.cmp-row{display:flex;align-items:center;gap:12px;padding:18px 32px;font-size:.88rem;border-bottom:1px solid rgba(255,255,255,.06);transition:background .2s}
+.cmp-col-bad .cmp-row{color:rgba(255,255,255,.55)}
+.cmp-col-good .cmp-row{color:#fff}
+.cmp-row svg{width:18px;height:18px;flex-shrink:0}
+.cmp-col-bad .cmp-row svg{color:#f87171}
+.cmp-col-good .cmp-row svg{color:#4ade80}
+.cmp-row-strong{font-weight:700}
+.cmp-col-good .cmp-row-strong{color:var(--gold);background:rgba(232,160,32,.08)}
+@media(max-width:640px){.cmp-split{grid-template-columns:1fr}.cmp-col-good{border-left:none;border-top:1px solid rgba(232,160,32,.15)}.cmp-row,.cmp-col-head{padding:16px 22px}}
 .cmp-head-cell{padding:18px 24px;font-size:.82rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--body);background:var(--bg2)}
 .cmp-head-cell:nth-child(2){background:#fff5e0;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px}
 .cmp-head-cell:nth-child(3){background:var(--navy);color:#fff;text-align:center;display:flex;align-items:center;justify-content:center;gap:6px}
@@ -923,29 +938,29 @@ footer{background:var(--dark);padding:72px 0 0}
 <!-- COMPARISON -->
 <section id="comparison" class="section">
   <div class="container">
-    <div class="text-center" style="margin-bottom:0">
-      <div class="label">Vergleich</div>
-      <h2 class="h2">Der Unterschied ist messbar</h2>
-      <p class="subtitle" style="margin-top:12px;margin-bottom:40px">Was kostet Einzelbeschaffung wirklich – und was bringt die Bündelung?</p>
+    <div class="text-center reveal" style="margin-bottom:0">
+      <div class="label label-dark">Vergleich</div>
+      <h2 class="h2" style="color:#fff">Der Unterschied ist messbar</h2>
+      <p class="subtitle subtitle-dark" style="margin:14px auto 0">Was kostet Einzelbeschaffung wirklich – und was bringt die Bündelung?</p>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;border:1px solid rgba(255,255,255,0.1);border-radius:16px;overflow:hidden">
-      <div style="display:flex;flex-direction:column">
-        <div style="padding:20px 28px;font-size:15px;font-weight:700;background:rgba(148,163,184,0.08);color:var(--muted);border-bottom:1px solid rgba(255,255,255,0.08)">Einzelbeschaffung</div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:var(--body)"><svg style="width:18px;height:18px;flex-shrink:0;color:#f87171" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Schwache Verhandlungsposition</div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:var(--body)"><svg style="width:18px;height:18px;flex-shrink:0;color:#f87171" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Hoher Zeitaufwand intern</div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:var(--body)"><svg style="width:18px;height:18px;flex-shrink:0;color:#f87171" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Intransparente Preise</div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:var(--body)"><svg style="width:18px;height:18px;flex-shrink:0;color:#f87171" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Kein Lieferantenaudit</div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:var(--body);background:rgba(232,160,32,0.05);border-left:2px solid rgba(232,160,32,0.4)"><svg style="width:18px;height:18px;flex-shrink:0;color:#f87171" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg><span style="font-weight:600">Keine Wahl bei Angeboten</span></div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;font-size:14px;color:var(--body)"><svg style="width:18px;height:18px;flex-shrink:0;color:#f87171" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Fixkosten unabhängig vom Ergebnis</div>
+    <div class="cmp-split reveal">
+      <div class="cmp-col cmp-col-bad">
+        <div class="cmp-col-head">Einzelbeschaffung</div>
+        <div class="cmp-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Schwache Verhandlungsposition</div>
+        <div class="cmp-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Hoher Zeitaufwand intern</div>
+        <div class="cmp-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Intransparente Preise</div>
+        <div class="cmp-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Kein Lieferantenaudit</div>
+        <div class="cmp-row cmp-row-strong"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Keine Wahl bei Angeboten</div>
+        <div class="cmp-row" style="border-bottom:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>Fixkosten unabhängig vom Ergebnis</div>
       </div>
-      <div style="display:flex;flex-direction:column;border-left:1px solid rgba(255,255,255,0.1)">
-        <div style="padding:20px 28px;font-size:15px;font-weight:700;background:rgba(232,160,32,0.08);color:var(--gold);border-bottom:1px solid rgba(255,255,255,0.08)">Mit SourceOn</div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#fff"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Gebündeltes Verhandlungsgewicht</div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#fff"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Analyse in 48 Stunden</div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#fff"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Vollständige Preistransparenz</div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#fff"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Geprüfte, zertifizierte Partner</div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,0.06);font-size:14px;color:#fff;background:rgba(232,160,32,0.08);border-right:2px solid rgba(232,160,32,0.6)"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg><span style="font-weight:700;color:var(--gold)">Entscheidungsfreiheit immer bei Ihnen</span></div>
-        <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;font-size:14px;color:#fff"><svg style="width:18px;height:18px;flex-shrink:0;color:#10B981" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>2,25% nur auf tatsächliche Ersparnis</div>
+      <div class="cmp-col cmp-col-good">
+        <div class="cmp-col-head">✦ Mit SourceOn</div>
+        <div class="cmp-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Gebündeltes Verhandlungsgewicht</div>
+        <div class="cmp-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Analyse in 48 Stunden</div>
+        <div class="cmp-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Vollständige Preistransparenz</div>
+        <div class="cmp-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Geprüfte, zertifizierte Partner</div>
+        <div class="cmp-row cmp-row-strong"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>Entscheidungsfreiheit immer bei Ihnen</div>
+        <div class="cmp-row" style="border-bottom:none"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="9,12 11,14 15,10"/></svg>2,25% nur auf tatsächliche Ersparnis</div>
       </div>
     </div>
   </div>
