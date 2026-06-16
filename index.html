@@ -162,9 +162,10 @@ a{color:inherit;text-decoration:none}
 .marquee-row1:hover .marquee-track,.marquee-row2:hover .marquee-track{animation-play-state:paused}
 @keyframes mqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes mqR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-.mq-card{flex-shrink:0;background:#1B3A5C;border:1px solid rgba(232,160,32,.12);border-left:3px solid var(--gold);border-radius:var(--r);padding:22px 28px;min-width:230px;box-shadow:0 4px 20px rgba(232,160,32,.15);transition:border-color .2s,transform .2s,box-shadow .2s;position:relative;overflow:hidden}
+.mq-card{flex-shrink:0;display:flex;align-items:center;gap:16px;background:linear-gradient(155deg,#16314F 0%,#0F2238 100%);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:20px 26px;min-width:260px;box-shadow:0 4px 20px rgba(0,0,0,.25);transition:border-color .25s,transform .3s var(--ease),box-shadow .25s;position:relative;overflow:hidden}
 .mq-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.08),transparent);pointer-events:none}
-.mq-card:hover{transform:translateY(-4px);box-shadow:0 8px 32px rgba(232,160,32,.25);border-color:rgba(232,160,32,.4)}
+.mq-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 8px 32px rgba(232,160,32,.22);border-color:rgba(232,160,32,.4)}
+.mq-mark{flex-shrink:0;width:42px;height:42px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(232,160,32,.28),rgba(232,160,32,.05));border:1px solid rgba(232,160,32,.35);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:var(--gold)}
 .mq-name{font-size:.9rem;font-weight:700;color:#fff;margin-bottom:4px}
 .mq-cat{font-size:.78rem;color:#94A3B8}
 .mq-note{text-align:center;margin-top:28px;font-size:.82rem;color:rgba(148,163,184,.7);font-style:italic}
@@ -243,6 +244,23 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .why-card-light .why-desc{color:var(--body)}
 @media(max-width:900px){.why-grid{grid-template-columns:1fr 1fr}.why-card:nth-child(1){grid-column:span 2}}
 @media(max-width:640px){.why-grid{grid-template-columns:1fr}.why-card:nth-child(1){grid-column:span 1}}
+
+.process-section{background:var(--dark);position:relative;overflow:hidden}
+.process-section::before{content:'';position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(232,160,32,.08) 0%,transparent 65%);pointer-events:none}
+.process-section .label{color:var(--gold)}
+.process-section .h2{color:#fff}
+.process-section .subtitle{color:rgba(255,255,255,.6)}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:64px;background:rgba(255,255,255,.08);border-radius:var(--r-lg);overflow:hidden;position:relative;z-index:1}
+.process-card{background:#0A1424;padding:44px 32px;transition:background .35s var(--ease),transform .35s var(--ease)}
+.process-card:hover{background:#0F1E36;transform:translateY(-4px)}
+.process-num{font-size:15px;font-weight:800;color:var(--gold);letter-spacing:.04em;margin-bottom:28px;font-family:var(--mono,inherit)}
+.process-title{font-size:19px;font-weight:800;color:#fff;letter-spacing:-0.015em;margin-bottom:14px}
+.process-text{font-size:.86rem;line-height:1.7;color:rgba(255,255,255,.55)}
+.process-card-accent{background:linear-gradient(160deg,rgba(232,160,32,.16) 0%,#0A1424 70%)}
+.process-card-accent .process-num{color:var(--gold)}
+.process-card-accent:hover{background:linear-gradient(160deg,rgba(232,160,32,.24) 0%,#0F1E36 70%)}
+@media(max-width:900px){.process-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.process-grid{grid-template-columns:1fr}}
 
 
 
@@ -702,40 +720,33 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 </section>
 
 <!-- PROCESS -->
-<section id="process" class="section">
+<section id="process" class="section process-section">
   <div class="container">
     <div class="reveal" style="max-width:640px">
       <div class="label">So funktioniert es</div>
-      <h2 class="h2">Wie SourceOn funktioniert</h2>
-      <p class="subtitle" style="margin-top:16px">Vier Schritte – von der Analyse bis zur Ersparnis. Sie behalten jederzeit die volle Kontrolle.</p>
+      <h2 class="h2">Vier Schritte.<br>Eine Entscheidung.</h2>
+      <p class="subtitle" style="margin-top:16px">Von der Analyse bis zur Ersparnis — Sie behalten jederzeit die volle Kontrolle.</p>
     </div>
-    <div style="position:relative;margin-top:56px">
-      <!-- Timeline line -->
-      <div style="position:absolute;top:28px;left:calc(12.5% + 0px);right:calc(12.5% + 0px);height:2px;background:rgba(255,255,255,0.1);z-index:0"></div>
-      <!-- Animated dot -->
-      <div style="position:absolute;top:22px;left:calc(12.5%);width:14px;height:14px;background:var(--gold);border-radius:50%;box-shadow:0 0 14px var(--gold);z-index:1;animation:processDot 4s ease-in-out infinite"></div>
-      <style>@keyframes processDot{0%{left:calc(12.5%)}100%{left:calc(87.5% - 14px)}}@media(prefers-reduced-motion:reduce){.no-anim{animation:none!important}}</style>
-      <div style="display:flex;justify-content:space-between;position:relative;z-index:2">
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px">
-          <div style="width:56px;height:56px;border-radius:50%;background:var(--gold);color:var(--dark2);font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;z-index:3">1</div>
-          <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Kostenlose Analyse</div>
-          <p style="font-size:13px;color:var(--body);line-height:1.6">Wir analysieren Ihre aktuellen Einkaufsdaten kostenlos und identifizieren Einsparpotenziale.</p>
-        </div>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px">
-          <div style="width:56px;height:56px;border-radius:50%;background:var(--gold);color:var(--dark2);font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;z-index:3">2</div>
-          <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Angebot erhalten</div>
-          <p style="font-size:13px;color:var(--body);line-height:1.6">SourceOn präsentiert Ihnen ein konkretes Angebot mit klaren Preisen und Konditionen.</p>
-        </div>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px">
-          <div style="width:56px;height:56px;border-radius:50%;background:var(--gold);color:var(--dark2);font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;z-index:3">3</div>
-          <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Sie entscheiden</div>
-          <p style="font-size:13px;color:var(--body);line-height:1.6">Sie vergleichen frei. Nur wenn unser Angebot günstiger ist und Sie es annehmen, entsteht eine Provision.</p>
-        </div>
-        <div style="flex:1;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 16px">
-          <div style="width:56px;height:56px;border-radius:50%;background:var(--gold);color:var(--dark2);font-size:22px;font-weight:900;display:flex;align-items:center;justify-content:center;margin-bottom:20px;position:relative;z-index:3">4</div>
-          <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:8px">Provision auf Ersparnis</div>
-          <p style="font-size:13px;color:var(--body);line-height:1.6">2,25% Provision – ausschliesslich auf die tatsächliche Ersparnis, nie auf den Gesamtpreis.</p>
-        </div>
+    <div class="process-grid">
+      <div class="process-card reveal reveal-d1">
+        <div class="process-num">01</div>
+        <h3 class="process-title">Kostenlose Analyse</h3>
+        <p class="process-text">Wir analysieren Ihre aktuellen Einkaufsdaten kostenlos und identifizieren konkrete Einsparpotenziale.</p>
+      </div>
+      <div class="process-card reveal reveal-d2">
+        <div class="process-num">02</div>
+        <h3 class="process-title">Angebot erhalten</h3>
+        <p class="process-text">SourceOn präsentiert Ihnen ein konkretes Angebot mit klaren Preisen und Konditionen.</p>
+      </div>
+      <div class="process-card reveal reveal-d3">
+        <div class="process-num">03</div>
+        <h3 class="process-title">Sie entscheiden</h3>
+        <p class="process-text">Sie vergleichen frei. Nur wenn unser Angebot günstiger ist und Sie es annehmen, entsteht eine Provision.</p>
+      </div>
+      <div class="process-card process-card-accent reveal reveal-d4">
+        <div class="process-num">04</div>
+        <h3 class="process-title">Provision auf Ersparnis</h3>
+        <p class="process-text">2,25% Provision — ausschliesslich auf die tatsächliche Ersparnis, nie auf den Gesamtpreis.</p>
       </div>
     </div>
   </div>
@@ -1790,7 +1801,8 @@ function buildMQ(id,items){
   const t=document.getElementById(id);
   [...items,...items].forEach(s=>{
     const d=document.createElement('div');d.className='mq-card';
-    d.innerHTML='<div class="mq-name">'+s.name+'</div><div class="mq-cat">'+s.cat+'</div>';
+    const initial=s.name.trim().charAt(0);
+    d.innerHTML='<div class="mq-mark">'+initial+'</div><div><div class="mq-name">'+s.name+'</div><div class="mq-cat">'+s.cat+'</div></div>';
     t.appendChild(d);
   });
 }
