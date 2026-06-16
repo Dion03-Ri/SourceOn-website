@@ -117,7 +117,9 @@ a{color:inherit;text-decoration:none}
 .story-sentence .word.gold-lit{color:var(--gold)}
 .bignum-section{background:#000;padding:180px 0;text-align:center}
 .bignum-figure{font-size:clamp(64px,11vw,140px);font-weight:800;letter-spacing:-0.04em;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
-.bignum-caption{font-size:clamp(16px,1.6vw,20px);color:var(--gold);font-weight:600;margin-top:20px}
+.bignum-caption{font-size:clamp(16px,1.6vw,20px);color:rgba(255,255,255,.55);font-weight:500;margin-top:20px;line-height:1.7}
+.bignum-cta{color:var(--gold);font-weight:700;text-decoration:none;display:inline-block;margin-top:14px;border-bottom:1px solid transparent;transition:border-color .2s}
+.bignum-cta:hover{border-color:var(--gold)}
 .hero-scroll-pill{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.45);font-size:.8rem;font-weight:500;border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:8px 20px;cursor:pointer;transition:all .2s;animation:bouncePill 2.5s ease-in-out infinite;margin-bottom:64px}
 .hero-scroll-pill:hover{color:var(--gold);border-color:var(--gold-b)}
 @keyframes bouncePill{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
@@ -234,13 +236,12 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 /* WHY */
 #why{background:var(--bg2);position:relative}
 .why-list{margin-top:72px;max-width:880px;margin-left:auto;margin-right:auto}
-.why-row{display:grid;grid-template-columns:80px 280px 1fr;align-items:start;gap:32px;padding:36px 0;border-top:1px solid var(--border);transition:background .25s var(--ease)}
+.why-row{display:grid;grid-template-columns:280px 1fr;align-items:start;gap:32px;padding:36px 0;border-top:1px solid var(--border);transition:background .25s var(--ease)}
 .why-list .why-row:last-child{border-bottom:1px solid var(--border)}
 .why-row:hover{background:rgba(232,160,32,.04)}
-.why-row-num{font-size:1.6rem;font-weight:800;color:var(--gold);letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
 .why-row-title{font-size:1.15rem;font-weight:800;color:var(--navy);letter-spacing:-0.015em;line-height:1.3}
 .why-row-desc{font-size:.92rem;line-height:1.7;color:var(--body)}
-@media(max-width:760px){.why-row{grid-template-columns:48px 1fr;grid-template-rows:auto auto}.why-row-desc{grid-column:2}}
+@media(max-width:760px){.why-row{grid-template-columns:1fr}}
 
 .process-section{background:var(--dark);position:relative;overflow:hidden}
 .process-section::before{content:'';position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(232,160,32,.08) 0%,transparent 65%);pointer-events:none}
@@ -319,6 +320,17 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 #materials{background:var(--bg2)}
 .mat-norms-section{background:var(--dark);position:relative;overflow:hidden}
 .mat-norms-section .label{color:var(--gold)}
+.mat-lookup{max-width:680px;margin:56px auto 0;position:relative;z-index:1}
+.mat-lookup-select{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:18px 20px;color:#fff;font-size:1rem;font-family:inherit;outline:none;cursor:pointer;transition:border-color .2s,background .2s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E8A020' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 18px center;background-size:18px}
+.mat-lookup-select:focus,.mat-lookup-select:hover{border-color:var(--gold-b);background-color:rgba(232,160,32,.05)}
+.mat-lookup-select option{background:#0D1E30;color:#fff}
+.mat-lookup-result{margin-top:18px;background:linear-gradient(155deg,#16314F 0%,#0A1A2E 100%);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:30px 32px;display:flex;align-items:center;gap:24px}
+.mat-lookup-id{font-size:clamp(20px,2.4vw,28px);font-weight:800;color:var(--gold);letter-spacing:-0.01em;font-variant-numeric:tabular-nums;flex-shrink:0}
+.mat-lookup-meta{flex:1;min-width:0}
+.mat-lookup-name{font-size:1rem;font-weight:700;color:#fff;letter-spacing:-0.01em;line-height:1.4}
+.mat-lookup-cat{font-size:.8rem;color:rgba(255,255,255,.5);margin-top:4px}
+.mat-lookup-badge{flex-shrink:0;font-size:.7rem;font-weight:700;letter-spacing:.04em;color:var(--green);background:rgba(74,222,128,.1);border:1px solid rgba(74,222,128,.25);border-radius:100px;padding:7px 14px;white-space:nowrap}
+@media(max-width:640px){.mat-lookup-result{flex-wrap:wrap;gap:12px}.mat-lookup-badge{order:3}}
 .mat-section{background:var(--dark);position:relative;overflow:hidden}
 .mat-section::before{content:'';position:absolute;top:-10%;left:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(232,160,32,.07) 0%,transparent 65%);pointer-events:none}
 .mat-section .label{color:var(--gold)}
@@ -849,8 +861,8 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <!-- BIG NUMBER -->
 <section id="bignum" class="bignum-section">
   <div class="container">
-    <div class="bignum-figure">28%</div>
-    <p class="bignum-caption">Maximaler Rabatt, den unsere Bündelungsmacht erzielt.</p>
+    <div class="bignum-figure">40–70%</div>
+    <p class="bignum-caption">So viel der Gesamtkosten einer Baufirma sind reine Materialkosten.<br><a href="#calculator" class="bignum-cta">Berechne, wie viel du mit SourceOn sparen kannst →</a></p>
   </div>
 </section>
 
@@ -863,32 +875,26 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     </div>
     <div class="why-list">
       <div class="why-row reveal reveal-d1">
-        <div class="why-row-num">01</div>
         <div class="why-row-title">Nachfragebündelung</div>
         <p class="why-row-desc">Drei Baufirmen bestellen je 60m³ Beton — SourceOn bündelt zu 180m³. Der Lieferant gibt 12% Rabatt. Ohne Bündelung: kein Rabatt.</p>
       </div>
       <div class="why-row reveal reveal-d2">
-        <div class="why-row-num">02</div>
         <div class="why-row-title">Zahlung nur bei Ersparnis</div>
         <p class="why-row-desc">Wir verdienen 2.25% Provision — aber nur auf die erzielte Ersparnis. Kein Ergebnis, keine Kosten. Dein Risiko: null.</p>
       </div>
       <div class="why-row reveal reveal-d1">
-        <div class="why-row-num">03</div>
         <div class="why-row-title">KI + Schweizer Expertise</div>
         <p class="why-row-desc">Unser System vergleicht Angebote in Sekunden. Unsere Verhandler kennen den Schweizer Markt und holen das Maximum raus.</p>
       </div>
       <div class="why-row reveal reveal-d2">
-        <div class="why-row-num">04</div>
         <div class="why-row-title">Null Aufwand für dich</div>
         <p class="why-row-desc">Du meldest deinen Bedarf in 2 Minuten. Wir übernehmen Lieferantensuche, Angebotsvergleich, Verhandlung und Koordination.</p>
       </div>
       <div class="why-row reveal reveal-d1">
-        <div class="why-row-num">05</div>
         <div class="why-row-title">Direkt zum Lieferanten</div>
         <p class="why-row-desc">SourceOn kauft nie selbst Material. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Wir sind Vermittler — kein Zwischenhändler.</p>
       </div>
       <div class="why-row reveal reveal-d2">
-        <div class="why-row-num">06</div>
         <div class="why-row-title">Schweizer Normen garantiert</div>
         <p class="why-row-desc">Alle Materialien entsprechen SN EN und SIA Normen. Alle Lieferanten sind persönlich geprüft. Keine Kompromisse bei Qualität.</p>
       </div>
@@ -904,40 +910,61 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <h2 class="h2" style="color:#fff">Jedes Material.<br>Eine Norm.</h2>
       <p class="subtitle subtitle-dark" style="margin:14px auto 0">Alle Materialien, die SourceOn vermittelt, erfüllen die SourceOn-Prüfkriterien — SN EN und SIA-konform, lückenlos dokumentiert.</p>
     </div>
+    <div class="mat-lookup reveal">
+      <select id="mat-lookup-select" class="mat-lookup-select">
+        <option value="">Material wählen, um SourceOn-ID zu sehen…</option>
+      </select>
+      <div class="mat-lookup-result" id="mat-lookup-result">
+        <div class="mat-lookup-id" id="mat-lookup-id">SO–000</div>
+        <div class="mat-lookup-meta">
+          <div class="mat-lookup-name" id="mat-lookup-name">Noch kein Material ausgewählt</div>
+          <div class="mat-lookup-cat" id="mat-lookup-cat">—</div>
+        </div>
+        <div class="mat-lookup-badge">✓ SN EN / SIA</div>
+      </div>
+    </div>
   </div>
   <div class="mat-strip-outer" style="margin-top:56px">
     <div class="mat-strip-track" id="mat-strip-track">
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <span>Beton</span>
+        <span>Transportbeton &amp; Pumpbeton</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg></div>
-        <span>Armierungsstahl</span>
+        <span>Armierung &amp; Bewehrung</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l9-3 9 3v12l-9 3-9-3V6z"/></svg></div>
-        <span>Kies &amp; Splitt</span>
+        <span>Kies, Splitt &amp; Sand</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-        <span>Mauerwerk</span>
+        <span>Mauerwerk &amp; Mörtel</span>
+      </a>
+      <a href="#materials" class="mat-strip-item">
+        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,17 10,11 4,5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
+        <span>Schalung &amp; Stützen</span>
+      </a>
+      <a href="#materials" class="mat-strip-item">
+        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 21v-5h6v5"/></svg></div>
+        <span>Betonfertigteile</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
         <span>Dämmung</span>
       </a>
       <a href="#materials" class="mat-strip-item">
-        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,17 10,11 4,5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
-        <span>Schalung</span>
+        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="13" x2="16" y2="13"/></svg></div>
+        <span>Gipskarton &amp; Ständerwerk</span>
       </a>
       <a href="#materials" class="mat-strip-item">
-        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-        <span>Mörtel</span>
+        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg></div>
+        <span>Bedachung &amp; Fassade</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <span>Sanitär &amp; HLKS</span>
+        <span>Haustechnik &amp; Rohrleitungen</span>
       </a>
     </div>
   </div>
@@ -1860,6 +1887,44 @@ function buildMQ(id,items){
   });
 }
 buildMQ('mq1',SUPPLIERS);
+
+// MATERIAL LOOKUP
+const MATERIAL_DB=[
+  {cat:'Rohbau Kern',items:['Transportbeton C20/25','Transportbeton C25/30','Transportbeton C30/37','Transportbeton C35/45','Pumpbeton XC4 druckwasserdicht','Armierungsstahl Ø 8mm','Armierungsstahl Ø 10mm','Armierungsstahl Ø 12mm','Armierungsstahl Ø 16mm','Armierungsstahl Ø 20mm','Armierungsmatte Q188','Armierungsmatte Q257','Armierungsmatte Q335','Betonstahlkörbe vorgefertigt','Kies 0–32mm','Kies 0–16mm','Splitt 8–16mm','Splitt 16–32mm','Sand 0–4mm','Hochlochziegel 15cm','Hochlochziegel 20cm','Hochlochziegel 25cm','Kalksandstein 15cm','Porenbetonstein 20cm','Mauermörtel MG II','Mauermörtel MG III','Putzmörtel Innen GP','Putzmörtel Aussen R','Estrichmörtel CT-C25','Klebemörtel C1 Fliesen','Schalungsplatte 21mm','Schalungsplatte 27mm','Systemschalung Wand Miet','Träger H20 Holzträger','Stahlstützen ausziehbar','Betonfertigteil Treppe','Betonfertigteil Deckenplatte Spannbeton','Betonfertigteil Stütze']},
+  {cat:'Ausbau',items:['EPS-Dämmplatte 100mm Perimeter','EPS-Dämmplatte 140mm Fassade WDVS','EPS-Dämmplatte 200mm Flachdach','Mineralwolle 80mm Trennwand','Mineralwolle 120mm Steildach','XPS-Dämmplatte 80mm Bodenplatte','Gipskartonplatte GKB 12.5mm Standard','Gipskartonplatte GKBI 12.5mm Feuchtraum','Gipskartonplatte GKF 12.5mm Brandschutz','Metallständerwerk CW 75mm','Metallanschlussprofil UA 75mm','Tondachziegel Standard','Betonroofziegel','Dachabdichtungsbahn EPDM 1.5mm','Fassadenplatte Faserzement hinterlüftet']},
+  {cat:'Haustechnik',items:['Kunststoffrohr PVC-U DN 110 Abwasser','Kunststoffrohr PP DN 50 Entwässerung','Kupferrohr 22mm Trinkwasser','Verbundrohr PE-RT/Al 16mm Heizung','Heizungsverteiler Fussbodenheizung']},
+];
+const MAT_CODE={'Rohbau Kern':'RB','Ausbau':'AB','Haustechnik':'HT'};
+(function(){
+  const sel=document.getElementById('mat-lookup-select');
+  if(!sel)return;
+  MATERIAL_DB.forEach(group=>{
+    const og=document.createElement('optgroup');
+    og.label=group.cat;
+    group.items.forEach((name,i)=>{
+      const id='SO-'+MAT_CODE[group.cat]+'-'+String(i+1).padStart(2,'0');
+      const opt=document.createElement('option');
+      opt.value=id;
+      opt.textContent=name;
+      opt.dataset.cat=group.cat;
+      opt.dataset.name=name;
+      og.appendChild(opt);
+    });
+    sel.appendChild(og);
+  });
+  sel.addEventListener('change',()=>{
+    const opt=sel.options[sel.selectedIndex];
+    if(!opt.value){
+      document.getElementById('mat-lookup-id').textContent='SO–000';
+      document.getElementById('mat-lookup-name').textContent='Noch kein Material ausgewählt';
+      document.getElementById('mat-lookup-cat').textContent='—';
+      return;
+    }
+    document.getElementById('mat-lookup-id').textContent=opt.value;
+    document.getElementById('mat-lookup-name').textContent=opt.dataset.name;
+    document.getElementById('mat-lookup-cat').textContent=opt.dataset.cat;
+  });
+})();
 (function(){
   const track=document.getElementById('mat-strip-track');
   if(track)track.innerHTML+=track.innerHTML;
