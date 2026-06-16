@@ -66,7 +66,8 @@ a{color:inherit;text-decoration:none}
 .btn-full{width:100%;justify-content:center}
 
 /* NAV */
-#nav{position:fixed;top:0;left:0;right:0;z-index:900;transition:all .3s var(--ease);box-shadow:none;background:transparent}
+#nav{position:fixed;top:0;left:0;right:0;z-index:900;transition:transform .4s var(--ease),background .3s var(--ease);box-shadow:none;background:transparent}
+#nav.nav-hidden{transform:translateY(-100%)}
 #nav .nav-inner{display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 48px;max-width:1400px;margin:0 auto}
 #nav.scrolled{background:rgba(3,11,30,.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,.07);box-shadow:none}
 .nav-logo{font-size:22px;font-weight:800;letter-spacing:-0.02em;color:#fff;cursor:pointer}
@@ -106,7 +107,17 @@ a{color:inherit;text-decoration:none}
 @keyframes pulseBadge{0%,100%{box-shadow:0 0 0 0 rgba(232,160,32,.35)}50%{box-shadow:0 0 0 8px rgba(232,160,32,0)}}
 .hero-h1{font-size:clamp(56px,9vw,96px);font-weight:900;line-height:1.04;letter-spacing:-0.04em;color:#fff;margin-bottom:28px}
 .hero-sub{color:var(--muted);font-size:clamp(17px,2vw,20px);line-height:1.7;max-width:600px;margin:0 auto 40px}
-.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:48px}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.hero-chevron{position:absolute;bottom:36px;left:50%;transform:translateX(-50%);z-index:10;color:rgba(255,255,255,.4);font-size:22px;cursor:pointer;animation:bouncePill 2.5s ease-in-out infinite;transition:color .2s}
+.hero-chevron:hover{color:var(--gold)}
+.story-section{background:var(--dark);padding:200px 0;display:flex;align-items:center;min-height:90vh}
+.story-sentence{font-size:clamp(26px,4vw,46px);font-weight:700;line-height:1.5;letter-spacing:-0.01em;max-width:980px;margin:0 auto;color:rgba(255,255,255,.18)}
+.story-sentence .word{transition:color .25s}
+.story-sentence .word.lit{color:#fff}
+.story-sentence .word.gold-lit{color:var(--gold)}
+.bignum-section{background:#000;padding:180px 0;text-align:center}
+.bignum-figure{font-size:clamp(64px,11vw,140px);font-weight:800;letter-spacing:-0.04em;color:#fff;line-height:1;font-variant-numeric:tabular-nums}
+.bignum-caption{font-size:clamp(16px,1.6vw,20px);color:var(--gold);font-weight:600;margin-top:20px}
 .hero-scroll-pill{display:inline-flex;align-items:center;gap:8px;color:rgba(255,255,255,.45);font-size:.8rem;font-weight:500;border:1px solid rgba(255,255,255,.1);border-radius:100px;padding:8px 20px;cursor:pointer;transition:all .2s;animation:bouncePill 2.5s ease-in-out infinite;margin-bottom:64px}
 .hero-scroll-pill:hover{color:var(--gold);border-color:var(--gold-b)}
 @keyframes bouncePill{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
@@ -676,28 +687,20 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="hero-mesh"></div>
   <div class="hero-dots"></div>
   <div class="hero-content">
-    <div class="hero-badge">✦ Schweizer B2B Beschaffungsvermittler</div>
     <h1 class="hero-h1" id="hero-h1">Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span></h1>
-    <p class="hero-sub">SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme. Ohne Aufwand, ohne Risiko, ohne Fixkosten.</p>
+    <p class="hero-sub">SourceOn bündelt den Materialeinkauf Schweizer Baufirmen und erzielt Rabatte, die kein Einzelkunde alleine bekäme.</p>
     <div class="hero-btns">
       <button class="btn btn-gold btn-lg" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
       <a href="#process" class="btn btn-outline-w btn-lg">Wie es funktioniert →</a>
     </div>
-    <div class="hero-scroll-pill" onclick="document.getElementById('calculator').scrollIntoView({behavior:'smooth'})">↓ Berechne deine potenzielle Ersparnis</div>
-    <div class="hero-stats">
-      <div class="stat-col">
-        <div class="stat-num" data-count="20" data-suffix="+">0+</div>
-        <div class="stat-label">Partnerlieferanten<br>verifiziert</div>
-      </div>
-      <div class="stat-col">
-        <div class="stat-num">CHF 8–10 Mrd.</div>
-        <div class="stat-label">Einkaufsvolumen<br>Baumarkt CH</div>
-      </div>
-      <div class="stat-col">
-        <div class="stat-num" data-count="98" data-suffix="%">0%</div>
-        <div class="stat-label">der CH-Baufirmen<br>sind KMU — BFS</div>
-      </div>
-    </div>
+  </div>
+  <div class="hero-chevron" onclick="document.getElementById('mat-strip').scrollIntoView({behavior:'smooth'})">↓</div>
+</section>
+
+<!-- WORD REVEAL -->
+<section id="story" class="story-section">
+  <div class="container">
+    <p class="story-sentence" id="story-sentence">Drei Baufirmen kaufen einzeln und zahlen den vollen Preis. SourceOn bündelt ihren Bedarf, verhandelt mit der Marktmacht aller drei zugleich und gibt jeder einzelnen Firma den Rabatt einer Grossbestellung weiter.</p>
   </div>
 </section>
 
@@ -747,27 +750,27 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <div class="reveal" style="max-width:640px">
       <div class="label">So funktioniert es</div>
       <h2 class="h2">Vier Schritte.<br>Eine Entscheidung.</h2>
-      <p class="subtitle" style="margin-top:16px">Von der Analyse bis zur Ersparnis — Sie behalten jederzeit die volle Kontrolle.</p>
+      <p class="subtitle" style="margin-top:16px">Von der Analyse bis zur Ersparnis — du behältst jederzeit die volle Kontrolle.</p>
     </div>
     <div class="process-grid">
       <div class="process-card reveal reveal-d1">
         <div class="process-num">01</div>
         <h3 class="process-title">Kostenlose Analyse</h3>
-        <p class="process-text">Wir analysieren Ihre aktuellen Einkaufsdaten kostenlos und identifizieren konkrete Einsparpotenziale.</p>
+        <p class="process-text">Wir analysieren deine aktuellen Einkaufsdaten kostenlos und identifizieren konkrete Einsparpotenziale.</p>
       </div>
       <div class="process-card reveal reveal-d2">
         <div class="process-num">02</div>
         <h3 class="process-title">Angebot erhalten</h3>
-        <p class="process-text">SourceOn präsentiert Ihnen ein konkretes Angebot mit klaren Preisen und Konditionen.</p>
+        <p class="process-text">SourceOn präsentiert dir ein konkretes Angebot mit klaren Preisen und Konditionen.</p>
       </div>
       <div class="process-card reveal reveal-d3">
         <div class="process-num">03</div>
-        <h3 class="process-title">Sie entscheiden</h3>
-        <p class="process-text">Sie vergleichen frei. Nur wenn unser Angebot günstiger ist und Sie es annehmen, entsteht eine Provision.</p>
+        <h3 class="process-title">Du entscheidest</h3>
+        <p class="process-text">Du vergleichst frei. Nur wenn unser Angebot günstiger ist und du es annimmst, entsteht eine Provision.</p>
       </div>
       <div class="process-card process-card-accent reveal reveal-d4">
         <div class="process-num">04</div>
-        <h3 class="process-title">Provision auf Ersparnis</h3>
+        <h3 class="process-title">Du sparst — garantiert.</h3>
         <p class="process-text">2,25% Provision — ausschliesslich auf die tatsächliche Ersparnis, nie auf den Gesamtpreis.</p>
       </div>
     </div>
@@ -891,6 +894,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- BIG NUMBER -->
+<section id="bignum" class="bignum-section">
+  <div class="container">
+    <div class="bignum-figure">CHF 17&#8217;550</div>
+    <p class="bignum-caption">Netto-Ersparnis auf einer einzigen Bestellung.</p>
   </div>
 </section>
 
@@ -1712,14 +1723,38 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 <script>
 // NAV
+let lastScrollY=window.scrollY;
 window.addEventListener('scroll',()=>{
-  document.getElementById('nav').classList.toggle('scrolled',window.scrollY>40);
+  const nav=document.getElementById('nav');
+  const y=window.scrollY;
+  nav.classList.toggle('scrolled',y>40);
+  if(y>140&&y>lastScrollY){nav.classList.add('nav-hidden')}
+  else if(y<lastScrollY){nav.classList.remove('nav-hidden')}
+  lastScrollY=y;
 });
 function toggleNav(){
   const o=document.getElementById('nav-overlay');
   o.classList.toggle('open');
   document.body.style.overflow=o.classList.contains('open')?'hidden':'';
 }
+
+// STORY SENTENCE SCROLL REVEAL
+(function(){
+  const el=document.getElementById('story-sentence');
+  if(!el)return;
+  const text=el.textContent;
+  el.innerHTML=text.split(' ').map(w=>'<span class="word">'+w+'</span>').join(' ');
+  const words=el.querySelectorAll('.word');
+  function update(){
+    const rect=el.parentElement.parentElement.getBoundingClientRect();
+    const vh=window.innerHeight;
+    const progress=Math.min(1,Math.max(0,(vh*0.8-rect.top)/(rect.height-vh*0.2)));
+    const litCount=Math.round(progress*words.length);
+    words.forEach((w,i)=>w.classList.toggle('lit',i<litCount));
+  }
+  window.addEventListener('scroll',update,{passive:true});
+  update();
+})();
 
 // HERO HEADLINE WORD STAGGER
 (function(){
