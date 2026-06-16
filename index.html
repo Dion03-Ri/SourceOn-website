@@ -318,16 +318,25 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
 /* MATERIALS */
 #materials{background:var(--bg2)}
-.mat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:64px}
-.mat-card{background:#fff;border:1px solid var(--border);border-radius:var(--r-lg);padding:36px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;box-shadow:var(--sh-sm);transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)}
-.mat-card:hover{transform:translateY(-6px);box-shadow:var(--sh-lg);border-color:var(--gold-b)}
-.mat-card-gold{border-color:var(--gold-b);background:var(--gold-dim)}
-.mat-icon{width:64px;height:64px;background:var(--navy);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:20px;box-shadow:0 8px 24px rgba(27,58,92,.18)}
-.mat-card-gold .mat-icon{background:var(--gold);box-shadow:0 8px 24px rgba(232,160,32,.3)}
-.mat-icon svg{width:26px;height:26px;color:#fff}
+.mat-section{background:var(--dark);position:relative;overflow:hidden}
+.mat-section::before{content:'';position:absolute;top:-10%;left:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(232,160,32,.07) 0%,transparent 65%);pointer-events:none}
+.mat-section .label{color:var(--gold)}
+.mat-section .h2{color:#fff}
+.mat-section .subtitle{color:rgba(255,255,255,.6)}
+.mat-intro{position:relative;z-index:1;max-width:640px}
+.mat-intro-badge{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:9px 18px;border-radius:100px;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.3);color:var(--gold);font-size:.78rem;font-weight:700;letter-spacing:.02em}
+.mat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:64px;position:relative;z-index:1}
+.mat-card{background:linear-gradient(155deg,#10233C 0%,#0A1628 100%);border:1px solid rgba(255,255,255,.07);border-radius:var(--r-lg);padding:36px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)}
+.mat-card:hover{transform:translateY(-6px);border-color:rgba(232,160,32,.35);box-shadow:0 16px 40px rgba(232,160,32,.18)}
+.mat-card-gold{border-color:rgba(232,160,32,.4);background:linear-gradient(155deg,rgba(232,160,32,.16) 0%,#10233C 100%)}
+.mat-icon{width:64px;height:64px;background:radial-gradient(circle at 30% 30%,rgba(232,160,32,.22),rgba(232,160,32,.04));border:1px solid rgba(232,160,32,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:20px;color:var(--gold)}
+.mat-icon svg{color:var(--gold)}
+.mat-card-gold .mat-icon{background:var(--gold);border-color:var(--gold)}
+.mat-card-gold .mat-icon svg{color:var(--dark2)}
+.mat-icon svg{width:26px;height:26px}
 .mat-card:hover .mat-icon{transform:scale(1.1)}
-.mat-name{font-size:.95rem;font-weight:700;color:var(--navy);margin-bottom:5px}
-.mat-desc{font-size:.78rem;color:var(--body)}
+.mat-name{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:5px}
+.mat-desc{font-size:.78rem;color:rgba(255,255,255,.5)}
 @media(max-width:900px){.mat-grid{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:640px){.mat-grid{grid-template-columns:repeat(2,1fr)}}
 
@@ -466,26 +475,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .modal-sub{font-size:.85rem;color:var(--body);margin-bottom:28px;line-height:1.6}
 @media(max-width:480px){.form-grid{grid-template-columns:1fr}.form-checks{grid-template-columns:1fr}.form-checks-3{grid-template-columns:repeat(2,1fr)}.modal{padding:28px 20px}}
 
-/* FIX4 — COMPARISON SPLIT */
-#comparison{background:var(--bg)}
-.cmp-split{display:grid;grid-template-columns:1fr 1fr;max-width:960px;margin:56px auto 0;border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-lg);position:relative}
-.cmp-split-divider{position:absolute;left:50%;top:8%;bottom:8%;width:1px;background:linear-gradient(to bottom,transparent,rgba(255,255,255,.15),transparent);z-index:10;pointer-events:none}
-.cmp-left{background:var(--dark);padding:44px 48px}
-.cmp-right{background:#fff;padding:44px 48px}
-.cmp-col-title{font-size:.82rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px;padding-bottom:14px}
-.cmp-left .cmp-col-title{color:rgba(255,255,255,.35);border-bottom:1px solid rgba(255,255,255,.08)}
-.cmp-right .cmp-col-title{color:var(--navy);border-bottom:1px solid var(--border)}
-.cmp-items{display:flex;flex-direction:column;gap:16px}
-.cmp-item{display:flex;align-items:flex-start;gap:12px;font-size:.88rem;line-height:1.55}
-.cmp-left .cmp-item{color:rgba(255,255,255,.5)}
-.cmp-right .cmp-item{color:var(--navy);font-weight:500}
-.cmp-ico{width:18px;height:18px;flex-shrink:0;margin-top:2px}
-.cmp-ico-x{color:#DC2626}.cmp-ico-ok{color:var(--gold)}
-.cmp-left.reveal{opacity:0;transform:translateX(-40px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.cmp-right.reveal{opacity:0;transform:translateX(40px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
-.cmp-left.visible,.cmp-right.visible{opacity:1;transform:translateX(0)}
-@media(max-width:700px){.cmp-split{grid-template-columns:1fr}.cmp-split-divider{display:none}.cmp-right{border-top:1px solid var(--border)}}
-@media(max-width:640px){.cmp-left,.cmp-right{padding:28px 24px}}
 
 /* FIX5 — FLOW SECTION */
 #case{background:var(--dark);padding:100px 0;position:relative;overflow:hidden}
@@ -545,6 +534,33 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .zahlen-statement{font-size:clamp(16px,2vw,20px);font-weight:700;color:var(--gold);text-align:center;margin-top:52px;letter-spacing:-0.01em;position:relative;z-index:1;max-width:700px;margin-left:auto;margin-right:auto}
 @media(max-width:900px){.zahlen-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.zahlen-grid{grid-template-columns:1fr}}
+
+/* TECHNOLOGIE */
+.tech-section{background:var(--dark3);position:relative;overflow:hidden}
+.tech-section::before{content:'';position:absolute;top:20%;right:-15%;width:600px;height:600px;background:radial-gradient(circle,rgba(232,160,32,.08) 0%,transparent 65%);pointer-events:none}
+.tech-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
+.tech-panel{background:#0A1628;border:1px solid rgba(232,160,32,.18);border-radius:var(--r-lg);box-shadow:0 24px 60px rgba(0,0,0,.4),0 0 0 1px rgba(255,255,255,.03) inset;overflow:hidden}
+.tech-panel-bar{display:flex;align-items:center;gap:7px;padding:14px 18px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06)}
+.tech-panel-bar span{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.15)}
+.tech-panel-bar span:nth-child(1){background:#E8A020}
+.tech-panel-title{margin-left:10px;font-size:.78rem;color:rgba(255,255,255,.4);font-weight:600;letter-spacing:.02em}
+.tech-panel-body{padding:32px 28px}
+.tech-scan-row{display:flex;align-items:center;gap:10px;font-size:.8rem;color:rgba(255,255,255,.45);margin-bottom:26px}
+.tech-scan-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(232,160,32,.6);animation:techPulse 1.8s ease-out infinite}
+@keyframes techPulse{0%{box-shadow:0 0 0 0 rgba(232,160,32,.5)}70%{box-shadow:0 0 0 8px rgba(232,160,32,0)}100%{box-shadow:0 0 0 0 rgba(232,160,32,0)}}
+.tech-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:30px}
+.tech-kpi{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px 14px;text-align:center}
+.tech-kpi-num{font-size:22px;font-weight:800;color:var(--gold);letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+.tech-kpi-label{font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px;line-height:1.4}
+.tech-bars{display:flex;flex-direction:column;gap:16px}
+.tech-bar-row{display:grid;grid-template-columns:110px 1fr 44px;align-items:center;gap:12px}
+.tech-bar-label{font-size:.76rem;color:rgba(255,255,255,.55)}
+.tech-bar-track{height:7px;background:rgba(255,255,255,.07);border-radius:100px;overflow:hidden}
+.tech-bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),#fff3d6);border-radius:100px;transition:width 1.2s var(--ease)}
+.tech-panel.visible .tech-bar-fill{width:var(--w)}
+.tech-bar-pct{font-size:.76rem;font-weight:700;color:var(--gold);text-align:right}
+@media(max-width:900px){.tech-layout{grid-template-columns:1fr;gap:40px}.tech-kpi-grid{gap:10px}}
+@media(max-width:480px){.tech-bar-row{grid-template-columns:80px 1fr 38px}}
 
 /* BUNDLING DIAGRAM SECTION */
 #bundling{background:var(--bg);padding:100px 0}
@@ -909,11 +925,13 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 </section>
 
 <!-- MATERIALS -->
-<section id="materials" class="section">
+<section id="materials" class="section mat-section">
   <div class="container">
-    <div class="text-center reveal">
+    <div class="mat-intro reveal">
       <div class="label">Materialien</div>
-      <h2 class="h2">SourceOn deckt alle wichtigen Materialgruppen ab.</h2>
+      <h2 class="h2">Ein Lieferant.<br>Neun Kategorien.</h2>
+      <p class="subtitle" style="margin-top:18px;max-width:480px">Von Rohbau bis Haustechnik — SourceOn bündelt den gesamten Materialeinkauf Ihrer Baustelle unter einem Dach.</p>
+      <div class="mat-intro-badge">9 Materialgruppen · 20+ geprüfte Lieferanten</div>
     </div>
     <div class="mat-grid">
       <div class="mat-card">
@@ -960,9 +978,8 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <section id="comparison" class="section">
   <div class="container">
     <div class="text-center reveal" style="margin-bottom:0">
-      <div class="label label-dark">Vergleich</div>
-      <h2 class="h2" style="color:#fff">Der Unterschied ist messbar</h2>
-      <p class="subtitle subtitle-dark" style="margin:14px auto 0">Was kostet Einzelbeschaffung wirklich – und was bringt die Bündelung?</p>
+      <div class="label label-dark">Allein vs. gebündelt</div>
+      <h2 class="h2" style="color:#fff">Gleiches Material.<br>Andere Preisklasse.</h2>
     </div>
     <div class="cmp-split reveal">
       <div class="cmp-col cmp-col-bad">
@@ -1024,97 +1041,47 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 </section>
 
 <!-- TECHNOLOGIE -->
-<section id="technologie" class="section" style="background:var(--dark3)">
+<section id="technologie" class="section tech-section">
   <div class="container">
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center">
+    <div class="tech-layout">
       <div>
-        <div class="label label-dark">Technologie</div>
-        <h2 class="h2" style="margin-top:0;margin-bottom:16px">KI-gestützte Marktanalyse</h2>
-        <p class="subtitle subtitle-dark" style="margin-bottom:20px">Unsere KI analysiert Marktpreise in Echtzeit und erkennt Optimierungspotenziale in Ihren Einkaufsdaten – bevor Sie überhaupt anfragen.</p>
-        <p style="font-size:15px;color:var(--body);line-height:1.7;margin-bottom:28px">Über 340 Lieferantendatenpunkte werden täglich aktualisiert. Ihre Anfragen werden mit historischen Preisen abgeglichen, um die bestmöglichen Konditionen zu identifizieren.</p>
+        <div class="label">Technologie</div>
+        <h2 class="h2" style="margin-top:0;margin-bottom:16px;color:#fff">Die Maschine hinter<br>jedem Angebot.</h2>
+        <p class="subtitle" style="color:rgba(255,255,255,.6);margin-bottom:20px">Unsere Engine analysiert Marktpreise in Echtzeit und erkennt Optimierungspotenziale in Ihren Einkaufsdaten — bevor Sie überhaupt anfragen.</p>
+        <p style="font-size:15px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:28px">Über 340 Lieferantendatenpunkte werden täglich aktualisiert. Ihre Anfragen werden mit historischen Preisen abgeglichen, um die bestmöglichen Konditionen zu identifizieren.</p>
         <a href="#contact" class="btn btn-gold btn-lg">Analyse anfragen</a>
       </div>
-      <div style="position:relative">
-        <div style="position:absolute;top:-30px;right:-30px;width:220px;height:220px;background:radial-gradient(circle,rgba(232,160,32,.12) 0%,transparent 70%);pointer-events:none;z-index:0"></div>
-        <svg viewBox="0 0 460 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:var(--r-lg);background:#0a1628;border:1px solid rgba(232,160,32,0.2);box-shadow:0 24px 60px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.03) inset;position:relative;z-index:1">
-          <defs>
-            <linearGradient id="barGrad1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8A020" stop-opacity="0.9"/><stop offset="100%" stop-color="#E8A020" stop-opacity="0.2"/></linearGradient>
-            <linearGradient id="barGrad2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#10B981" stop-opacity="0.9"/><stop offset="100%" stop-color="#10B981" stop-opacity="0.2"/></linearGradient>
-            <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#E8A020" stop-opacity="0"/><stop offset="50%" stop-color="#E8A020"/><stop offset="100%" stop-color="#E8A020" stop-opacity="0"/></linearGradient>
-          </defs>
-          <!-- Grid lines -->
-          <line x1="60" y1="40" x2="430" y2="40" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-          <line x1="60" y1="100" x2="430" y2="100" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-          <line x1="60" y1="160" x2="430" y2="160" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-          <line x1="60" y1="220" x2="430" y2="220" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-          <line x1="60" y1="270" x2="430" y2="270" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
-          <!-- Y axis labels -->
-          <text x="50" y="44" text-anchor="end" fill="#475569" font-family="Inter" font-size="10">30%</text>
-          <text x="50" y="104" text-anchor="end" fill="#475569" font-family="Inter" font-size="10">22%</text>
-          <text x="50" y="164" text-anchor="end" fill="#475569" font-family="Inter" font-size="10">15%</text>
-          <text x="50" y="224" text-anchor="end" fill="#475569" font-family="Inter" font-size="10">7%</text>
-          <text x="50" y="274" text-anchor="end" fill="#475569" font-family="Inter" font-size="10">0%</text>
-          <!-- Bars: Marktpreis (gold) vs SourceOn (green) pairs -->
-          <!-- Category 1: Büromaterial -->
-          <rect x="75" y="175" width="22" height="95" fill="url(#barGrad1)" rx="3">
-            <animate attributeName="height" from="0" to="95" dur="1.2s" fill="freeze" begin="0.2s"/>
-            <animate attributeName="y" from="270" to="175" dur="1.2s" fill="freeze" begin="0.2s"/>
-          </rect>
-          <rect x="100" y="213" width="22" height="57" fill="url(#barGrad2)" rx="3">
-            <animate attributeName="height" from="0" to="57" dur="1.2s" fill="freeze" begin="0.4s"/>
-            <animate attributeName="y" from="270" to="213" dur="1.2s" fill="freeze" begin="0.4s"/>
-          </rect>
-          <!-- Category 2: Verpackung -->
-          <rect x="140" y="150" width="22" height="120" fill="url(#barGrad1)" rx="3">
-            <animate attributeName="height" from="0" to="120" dur="1.2s" fill="freeze" begin="0.3s"/>
-            <animate attributeName="y" from="270" to="150" dur="1.2s" fill="freeze" begin="0.3s"/>
-          </rect>
-          <rect x="165" y="196" width="22" height="74" fill="url(#barGrad2)" rx="3">
-            <animate attributeName="height" from="0" to="74" dur="1.2s" fill="freeze" begin="0.5s"/>
-            <animate attributeName="y" from="270" to="196" dur="1.2s" fill="freeze" begin="0.5s"/>
-          </rect>
-          <!-- Category 3: Reinigung -->
-          <rect x="205" y="165" width="22" height="105" fill="url(#barGrad1)" rx="3">
-            <animate attributeName="height" from="0" to="105" dur="1.2s" fill="freeze" begin="0.4s"/>
-            <animate attributeName="y" from="270" to="165" dur="1.2s" fill="freeze" begin="0.4s"/>
-          </rect>
-          <rect x="230" y="200" width="22" height="70" fill="url(#barGrad2)" rx="3">
-            <animate attributeName="height" from="0" to="70" dur="1.2s" fill="freeze" begin="0.6s"/>
-            <animate attributeName="y" from="270" to="200" dur="1.2s" fill="freeze" begin="0.6s"/>
-          </rect>
-          <!-- Category 4: IT -->
-          <rect x="270" y="130" width="22" height="140" fill="url(#barGrad1)" rx="3">
-            <animate attributeName="height" from="0" to="140" dur="1.2s" fill="freeze" begin="0.5s"/>
-            <animate attributeName="y" from="270" to="130" dur="1.2s" fill="freeze" begin="0.5s"/>
-          </rect>
-          <rect x="295" y="178" width="22" height="92" fill="url(#barGrad2)" rx="3">
-            <animate attributeName="height" from="0" to="92" dur="1.2s" fill="freeze" begin="0.7s"/>
-            <animate attributeName="y" from="270" to="178" dur="1.2s" fill="freeze" begin="0.7s"/>
-          </rect>
-          <!-- Category 5: Arbeitsschutz -->
-          <rect x="335" y="155" width="22" height="115" fill="url(#barGrad1)" rx="3">
-            <animate attributeName="height" from="0" to="115" dur="1.2s" fill="freeze" begin="0.6s"/>
-            <animate attributeName="y" from="270" to="155" dur="1.2s" fill="freeze" begin="0.6s"/>
-          </rect>
-          <rect x="360" y="195" width="22" height="75" fill="url(#barGrad2)" rx="3">
-            <animate attributeName="height" from="0" to="75" dur="1.2s" fill="freeze" begin="0.8s"/>
-            <animate attributeName="y" from="270" to="195" dur="1.2s" fill="freeze" begin="0.8s"/>
-          </rect>
-          <!-- Savings line -->
-          <polyline points="86,175 151,150 216,165 281,130 346,155" fill="none" stroke="url(#lineGrad)" stroke-width="2" stroke-dasharray="4,3" opacity="0.6"/>
-          <!-- X axis labels -->
-          <text x="97" y="292" text-anchor="middle" fill="#475569" font-family="Inter" font-size="9">Büro</text>
-          <text x="162" y="292" text-anchor="middle" fill="#475569" font-family="Inter" font-size="9">Verpack.</text>
-          <text x="227" y="292" text-anchor="middle" fill="#475569" font-family="Inter" font-size="9">Reinigung</text>
-          <text x="292" y="292" text-anchor="middle" fill="#475569" font-family="Inter" font-size="9">IT</text>
-          <text x="357" y="292" text-anchor="middle" fill="#475569" font-family="Inter" font-size="9">Schutz</text>
-          <!-- Legend -->
-          <rect x="70" y="312" width="10" height="10" fill="#E8A020" rx="2"/>
-          <text x="84" y="321" fill="#94A3B8" font-family="Inter" font-size="10">Marktpreis</text>
-          <rect x="160" y="312" width="10" height="10" fill="#10B981" rx="2"/>
-          <text x="174" y="321" fill="#94A3B8" font-family="Inter" font-size="10">Mit SourceOn</text>
-          <text x="280" y="321" fill="#E8A020" font-family="Inter" font-size="10" font-weight="700">Ø 14% Ersparnis</text>
-        </svg>
+      <div class="tech-panel reveal">
+        <div class="tech-panel-bar">
+          <span></span><span></span><span></span>
+          <div class="tech-panel-title">SourceOn Engine — Live</div>
+        </div>
+        <div class="tech-panel-body">
+          <div class="tech-scan-row">
+            <div class="tech-scan-dot"></div>
+            <span>Marktdaten werden abgeglichen …</span>
+          </div>
+          <div class="tech-kpi-grid">
+            <div class="tech-kpi">
+              <div class="tech-kpi-num" data-count="340" data-suffix="+">0+</div>
+              <div class="tech-kpi-label">Datenpunkte / Tag</div>
+            </div>
+            <div class="tech-kpi">
+              <div class="tech-kpi-num" data-count="3" data-suffix="">0</div>
+              <div class="tech-kpi-label">Angebote min. verglichen</div>
+            </div>
+            <div class="tech-kpi">
+              <div class="tech-kpi-num" data-count="48" data-suffix="h">0h</div>
+              <div class="tech-kpi-label">bis zum Ergebnis</div>
+            </div>
+          </div>
+          <div class="tech-bars">
+            <div class="tech-bar-row"><span class="tech-bar-label">Beton</span><div class="tech-bar-track"><div class="tech-bar-fill" style="--w:78%"></div></div><span class="tech-bar-pct">−22%</span></div>
+            <div class="tech-bar-row"><span class="tech-bar-label">Armierungsstahl</span><div class="tech-bar-track"><div class="tech-bar-fill" style="--w:64%"></div></div><span class="tech-bar-pct">−18%</span></div>
+            <div class="tech-bar-row"><span class="tech-bar-label">Dämmung</span><div class="tech-bar-track"><div class="tech-bar-fill" style="--w:55%"></div></div><span class="tech-bar-pct">−15%</span></div>
+            <div class="tech-bar-row"><span class="tech-bar-label">Sanitär &amp; HLKS</span><div class="tech-bar-track"><div class="tech-bar-fill" style="--w:70%"></div></div><span class="tech-bar-pct">−20%</span></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
