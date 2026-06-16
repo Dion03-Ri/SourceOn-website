@@ -50,6 +50,8 @@ a{color:inherit;text-decoration:none}
 .subtitle-dark{color:var(--muted)}
 .text-center{text-align:center}.text-center .subtitle{margin:0 auto}
 .gold{color:var(--gold)}
+.hero-h1 .gold{background:linear-gradient(95deg,#F3C25F 0%,var(--gold) 45%,#F3C25F 100%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:goldShine 5s linear infinite}
+@keyframes goldShine{to{background-position:200% center}}
 
 /* BUTTONS */
 .btn{display:inline-flex;align-items:center;gap:9px;font-family:inherit;font-size:.9rem;font-weight:700;border:none;cursor:pointer;transition:all .22s var(--ease);white-space:nowrap;text-decoration:none;border-radius:100px;position:relative;overflow:hidden;letter-spacing:-.01em}
@@ -87,6 +89,8 @@ a{color:inherit;text-decoration:none}
 /* HERO */
 #hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:120px 0 80px}
 .hero-bg{position:absolute;inset:0;background:#0F2238}
+.hero-orb{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:1100px;height:1100px;background:radial-gradient(circle,rgba(232,160,32,.16) 0%,rgba(232,160,32,.05) 35%,transparent 65%);z-index:1;pointer-events:none;animation:orbPulse 6s ease-in-out infinite}
+@keyframes orbPulse{0%,100%{opacity:.7;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}}
 .hero-mesh{position:absolute;inset:0;z-index:1;
   background:radial-gradient(ellipse 80% 60% at 20% 30%,rgba(27,58,92,.75) 0%,transparent 60%),
   radial-gradient(ellipse 60% 50% at 80% 70%,rgba(10,26,50,.8) 0%,transparent 55%),
@@ -231,8 +235,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .why-card:hover{transform:translateY(-6px) scale(1.01);box-shadow:var(--sh-lg)}
 .why-card-dark{background:linear-gradient(155deg,#0F2238 0%,#0A1A2E 100%)}
 .why-card-light{background:#fff;border:1px solid var(--border)}
-.why-card:nth-child(1){grid-column:span 2}
-.why-card:nth-child(1)::after{content:'';position:absolute;top:-30%;right:-20%;width:260px;height:260px;background:radial-gradient(circle,rgba(232,160,32,.14) 0%,transparent 70%);pointer-events:none}
+.why-card-dark::after{content:'';position:absolute;top:-30%;right:-20%;width:220px;height:220px;background:radial-gradient(circle,rgba(232,160,32,.1) 0%,transparent 70%);pointer-events:none}
 .why-icon{width:56px;height:56px;background:radial-gradient(circle at 30% 30%,rgba(232,160,32,.22),rgba(232,160,32,.04));border:1px solid rgba(232,160,32,.35);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:24px;box-shadow:0 0 0 6px rgba(232,160,32,.05);transition:transform .3s var(--ease)}
 .why-card:hover .why-icon{transform:scale(1.1) rotate(-4deg)}
 .why-icon svg{width:25px;height:25px;color:var(--gold)}
@@ -242,23 +245,28 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .why-desc{font-size:.88rem;line-height:1.7}
 .why-card-dark .why-desc{color:rgba(255,255,255,.65)}
 .why-card-light .why-desc{color:var(--body)}
-@media(max-width:900px){.why-grid{grid-template-columns:1fr 1fr}.why-card:nth-child(1){grid-column:span 2}}
-@media(max-width:640px){.why-grid{grid-template-columns:1fr}.why-card:nth-child(1){grid-column:span 1}}
+@media(max-width:900px){.why-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.why-grid{grid-template-columns:1fr}}
 
 .process-section{background:var(--dark);position:relative;overflow:hidden}
 .process-section::before{content:'';position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(232,160,32,.08) 0%,transparent 65%);pointer-events:none}
 .process-section .label{color:var(--gold)}
 .process-section .h2{color:#fff}
 .process-section .subtitle{color:rgba(255,255,255,.6)}
-.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:64px;background:rgba(255,255,255,.08);border-radius:var(--r-lg);overflow:hidden;position:relative;z-index:1}
-.process-card{background:#0A1424;padding:44px 32px;transition:background .35s var(--ease),transform .35s var(--ease)}
+.process-section::after{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.05) 1px,transparent 1px);background-size:26px 26px;pointer-events:none;mask-image:radial-gradient(ellipse 70% 60% at 50% 40%,#000 0%,transparent 75%)}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:64px;background:rgba(255,255,255,.08);border-radius:var(--r-lg);overflow:hidden;position:relative;z-index:1;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+.process-card{background:#0A1424;padding:44px 32px;transition:background .35s var(--ease),transform .35s var(--ease);position:relative}
 .process-card:hover{background:#0F1E36;transform:translateY(-4px)}
-.process-num{font-size:15px;font-weight:800;color:var(--gold);letter-spacing:.04em;margin-bottom:28px;font-family:var(--mono,inherit)}
+.process-icon{width:48px;height:48px;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(232,160,32,.22),rgba(232,160,32,.05));border:1px solid rgba(232,160,32,.3);display:flex;align-items:center;justify-content:center;color:var(--gold);margin-bottom:22px}
+.process-icon svg{width:22px;height:22px}
+.process-num{font-size:15px;font-weight:800;color:var(--gold);letter-spacing:.04em;margin-bottom:14px}
 .process-title{font-size:19px;font-weight:800;color:#fff;letter-spacing:-0.015em;margin-bottom:14px}
 .process-text{font-size:.86rem;line-height:1.7;color:rgba(255,255,255,.55)}
+.process-arrow{display:none;position:absolute;top:50%;right:-13px;transform:translateY(-50%);width:26px;height:26px;color:rgba(255,255,255,.18);z-index:2;background:#070D18;border-radius:50%;padding:5px}
 .process-card-accent{background:linear-gradient(160deg,rgba(232,160,32,.16) 0%,#0A1424 70%)}
 .process-card-accent .process-num{color:var(--gold)}
 .process-card-accent:hover{background:linear-gradient(160deg,rgba(232,160,32,.24) 0%,#0F1E36 70%)}
+@media(min-width:901px){.process-arrow{display:flex}}
 @media(max-width:900px){.process-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.process-grid{grid-template-columns:1fr}}
 
@@ -323,22 +331,28 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .mat-section .label{color:var(--gold)}
 .mat-section .h2{color:#fff}
 .mat-section .subtitle{color:rgba(255,255,255,.6)}
-.mat-intro{position:relative;z-index:1;max-width:640px}
-.mat-intro-badge{display:inline-flex;align-items:center;gap:8px;margin-top:24px;padding:9px 18px;border-radius:100px;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.3);color:var(--gold);font-size:.78rem;font-weight:700;letter-spacing:.02em}
-.mat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:64px;position:relative;z-index:1}
-.mat-card{background:linear-gradient(155deg,#10233C 0%,#0A1628 100%);border:1px solid rgba(255,255,255,.07);border-radius:var(--r-lg);padding:36px 20px;display:flex;flex-direction:column;align-items:center;text-align:center;gap:0;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease)}
-.mat-card:hover{transform:translateY(-6px);border-color:rgba(232,160,32,.35);box-shadow:0 16px 40px rgba(232,160,32,.18)}
-.mat-card-gold{border-color:rgba(232,160,32,.4);background:linear-gradient(155deg,rgba(232,160,32,.16) 0%,#10233C 100%)}
-.mat-icon{width:64px;height:64px;background:radial-gradient(circle at 30% 30%,rgba(232,160,32,.22),rgba(232,160,32,.04));border:1px solid rgba(232,160,32,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-bottom:20px;color:var(--gold)}
-.mat-icon svg{color:var(--gold)}
-.mat-card-gold .mat-icon{background:var(--gold);border-color:var(--gold)}
-.mat-card-gold .mat-icon svg{color:var(--dark2)}
-.mat-icon svg{width:26px;height:26px}
-.mat-card:hover .mat-icon{transform:scale(1.1)}
-.mat-name{font-size:.95rem;font-weight:700;color:#fff;margin-bottom:5px}
-.mat-desc{font-size:.78rem;color:rgba(255,255,255,.5)}
-@media(max-width:900px){.mat-grid{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:640px){.mat-grid{grid-template-columns:repeat(2,1fr)}}
+.bento-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto;gap:18px;margin-top:64px;position:relative;z-index:1}
+.bento-tile{border-radius:var(--r-lg);padding:36px 34px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:220px;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.bento-tile:hover{transform:translateY(-5px)}
+.bento-tile-xl{grid-column:span 2;grid-row:span 2;justify-content:flex-start;min-height:464px}
+.bento-wide{grid-column:span 2}
+.bento-navy{background:linear-gradient(155deg,#16314F 0%,#0A1A2E 100%);border:1px solid rgba(255,255,255,.07)}
+.bento-gold{background:linear-gradient(155deg,#E8A020 0%,#B97D14 100%)}
+.bento-teal{background:linear-gradient(155deg,#0F3D3A 0%,#0A2826 100%);border:1px solid rgba(70,200,180,.15)}
+.bento-dark{background:linear-gradient(155deg,#1A1A1A 0%,#0A0A0A 100%);border:1px solid rgba(255,255,255,.07)}
+.bento-charcoal{background:linear-gradient(155deg,#10233C 0%,#0A1628 100%);border:1px solid rgba(255,255,255,.07);flex-direction:row;align-items:center;gap:24px;justify-content:flex-start}
+.bento-charcoal .bento-icon{margin-bottom:0}
+.bento-tag{display:inline-block;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gold);background:rgba(232,160,32,.12);border:1px solid rgba(232,160,32,.3);border-radius:100px;padding:6px 14px;margin-bottom:24px;width:fit-content}
+.bento-big{font-size:clamp(24px,2.6vw,32px);font-weight:800;color:#fff;letter-spacing:-0.02em;line-height:1.2;margin-bottom:16px}
+.bento-icon{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;color:#fff;margin-bottom:20px;flex-shrink:0}
+.bento-gold .bento-icon{color:#3A2B05}
+.bento-icon svg{width:22px;height:22px}
+.bento-num{font-size:1.4rem;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:10px;font-variant-numeric:tabular-nums}
+.bento-text{font-size:.86rem;line-height:1.65;color:rgba(255,255,255,.7)}
+.bento-gold .bento-text{color:rgba(40,28,2,.78)}
+.bento-tile-xl .bento-text{color:rgba(255,255,255,.6);max-width:380px}
+@media(max-width:900px){.bento-grid{grid-template-columns:repeat(2,1fr)}.bento-tile-xl{grid-column:span 2}.bento-wide{grid-column:span 2}}
+@media(max-width:640px){.bento-grid{grid-template-columns:1fr}.bento-tile-xl,.bento-wide{grid-column:span 1}.bento-tile-xl{min-height:auto}.bento-charcoal{flex-direction:column;align-items:flex-start}}
 
 /* COMPARISON */
 #comparison{background:var(--dark);position:relative;overflow:hidden}
@@ -667,6 +681,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <!-- HERO -->
 <section id="hero">
   <div class="hero-bg"></div>
+  <div class="hero-orb"></div>
   <div class="hero-mesh"></div>
   <div class="hero-dots"></div>
   <div class="hero-content">
@@ -745,21 +760,28 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     </div>
     <div class="process-grid">
       <div class="process-card reveal reveal-d1">
+        <div class="process-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
         <div class="process-num">01</div>
         <h3 class="process-title">Kostenlose Analyse</h3>
         <p class="process-text">Wir analysieren Ihre aktuellen Einkaufsdaten kostenlos und identifizieren konkrete Einsparpotenziale.</p>
+        <svg class="process-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
       </div>
       <div class="process-card reveal reveal-d2">
+        <div class="process-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14,2 14,8 20,8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="15" y2="17"/></svg></div>
         <div class="process-num">02</div>
         <h3 class="process-title">Angebot erhalten</h3>
         <p class="process-text">SourceOn präsentiert Ihnen ein konkretes Angebot mit klaren Preisen und Konditionen.</p>
+        <svg class="process-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
       </div>
       <div class="process-card reveal reveal-d3">
+        <div class="process-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
         <div class="process-num">03</div>
         <h3 class="process-title">Sie entscheiden</h3>
         <p class="process-text">Sie vergleichen frei. Nur wenn unser Angebot günstiger ist und Sie es annehmen, entsteht eine Provision.</p>
+        <svg class="process-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12,5 19,12 12,19"/></svg>
       </div>
       <div class="process-card process-card-accent reveal reveal-d4">
+        <div class="process-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
         <div class="process-num">04</div>
         <h3 class="process-title">Provision auf Ersparnis</h3>
         <p class="process-text">2,25% Provision — ausschliesslich auf die tatsächliche Ersparnis, nie auf den Gesamtpreis.</p>
@@ -893,7 +915,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="container">
     <div class="text-center reveal">
       <div class="label">Warum SourceOn</div>
-      <h2 class="h2">Sechs Gründe — die niemand sonst bietet.</h2>
+      <h2 class="h2">Gebaut, um zu sparen.<br>Nicht, um zu verkaufen.</h2>
     </div>
     <div class="why-grid">
       <div class="why-card why-card-dark reveal reveal-d1">
@@ -927,48 +949,35 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <!-- MATERIALS -->
 <section id="materials" class="section mat-section">
   <div class="container">
-    <div class="mat-intro reveal">
-      <div class="label">Materialien</div>
-      <h2 class="h2">Ein Lieferant.<br>Neun Kategorien.</h2>
-      <p class="subtitle" style="margin-top:18px;max-width:480px">Von Rohbau bis Haustechnik — SourceOn bündelt den gesamten Materialeinkauf Ihrer Baustelle unter einem Dach.</p>
-      <div class="mat-intro-badge">9 Materialgruppen · 20+ geprüfte Lieferanten</div>
+    <div class="text-center reveal">
+      <div class="label">Abdeckung</div>
+      <h2 class="h2">Alles aus einer Hand.<br>Nichts aus zweiter.</h2>
     </div>
-    <div class="mat-grid">
-      <div class="mat-card">
-        <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <div><div class="mat-name">Beton</div><div class="mat-desc">C20–C30, SN EN 206</div></div>
+    <div class="bento-grid">
+      <div class="bento-tile bento-tile-xl bento-navy reveal reveal-d1">
+        <div class="bento-tag">9 Materialgruppen</div>
+        <div class="bento-big">Vom Rohbau<br>bis zur Haustechnik.</div>
+        <p class="bento-text">Beton, Armierungsstahl, Mauerwerk, Dämmung, Schalung, Mörtel, Kies, Sanitär &amp; HLKS — alles über einen einzigen Ansprechpartner beschafft.</p>
       </div>
-      <div class="mat-card">
-        <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg></div>
-        <div><div class="mat-name">Armierungsstahl</div><div class="mat-desc">B500B, SN EN 10080</div></div>
+      <div class="bento-tile bento-gold reveal reveal-d2">
+        <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></svg></div>
+        <div class="bento-num">SN EN / SIA</div>
+        <p class="bento-text">Jedes Material entspricht Schweizer Normen — lückenlos dokumentiert.</p>
       </div>
-      <div class="mat-card">
-        <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l9-3 9 3v12l-9 3-9-3V6z"/></svg></div>
-        <div><div class="mat-name">Kies &amp; Splitt</div><div class="mat-desc">0–32 mm, SIA 318</div></div>
+      <div class="bento-tile bento-teal reveal reveal-d3">
+        <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <div class="bento-num" data-count="20" data-suffix="+">0+</div>
+        <p class="bento-text">geprüfte Partnerlieferanten in der ganzen Schweiz.</p>
       </div>
-      <div class="mat-card">
-        <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-        <div><div class="mat-name">Mauerwerk &amp; Ziegel</div><div class="mat-desc">SN EN 771</div></div>
+      <div class="bento-tile bento-dark reveal reveal-d4">
+        <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
+        <div class="bento-num">Direkt</div>
+        <p class="bento-text">Lieferung direkt ab Werk auf Ihre Baustelle — ohne Umwege.</p>
       </div>
-      <div class="mat-card">
-        <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <div><div class="mat-name">Dämmung</div><div class="mat-desc">EPS/Mineralwolle, SN EN 13163</div></div>
-      </div>
-      <div class="mat-card">
-        <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,17 10,11 4,5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
-        <div><div class="mat-name">Schalung</div><div class="mat-desc">Dreischichtplatten</div></div>
-      </div>
-      <div class="mat-card">
-        <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-        <div><div class="mat-name">Mörtel</div><div class="mat-desc">MG II, SN EN 998</div></div>
-      </div>
-      <div class="mat-card">
-        <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <div><div class="mat-name">Sanitär &amp; HLKS</div><div class="mat-desc">Heizung, Lüftung, Klima, Sanitär</div></div>
-      </div>
-      <div class="mat-card mat-card-gold">
-        <div class="mat-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
-        <div><div class="mat-name" style="color:var(--gold)">Weitere auf Anfrage</div><div class="mat-desc">Individuelle Materialgruppen möglich</div></div>
+      <div class="bento-tile bento-wide bento-charcoal reveal reveal-d1">
+        <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
+        <div class="bento-num">Sonderfall? Kein Problem.</div>
+        <p class="bento-text">Material nicht in der Liste? Wir erweitern unser Lieferantennetz gezielt für Ihren Bedarf — auf Anfrage.</p>
       </div>
     </div>
   </div>
@@ -979,7 +988,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="container">
     <div class="text-center reveal" style="margin-bottom:0">
       <div class="label label-dark">Allein vs. gebündelt</div>
-      <h2 class="h2" style="color:#fff">Gleiches Material.<br>Andere Preisklasse.</h2>
+      <h2 class="h2" style="color:#fff">Zwei Wege.<br>Ein Resultat entscheidet.</h2>
     </div>
     <div class="cmp-split reveal">
       <div class="cmp-col cmp-col-bad">
