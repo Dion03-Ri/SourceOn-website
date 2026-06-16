@@ -171,10 +171,11 @@ a{color:inherit;text-decoration:none}
 .marquee-row1 .marquee-track{animation:mqL 46s linear infinite}
 .marquee-row1:hover .marquee-track{animation-play-state:paused}
 @keyframes mqL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.mq-card{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:0 56px;border-right:1px solid rgba(255,255,255,.08)}
-.mq-name{font-size:1.05rem;font-weight:800;color:rgba(255,255,255,.85);letter-spacing:-0.01em;white-space:nowrap;transition:color .25s}
-.mq-card:hover .mq-name{color:var(--gold)}
-.mq-cat{font-size:.72rem;color:rgba(148,163,184,.65);text-transform:uppercase;letter-spacing:.06em;white-space:nowrap}
+.mq-card{flex-shrink:0;display:flex;align-items:baseline;gap:10px;padding:0 40px;position:relative}
+.mq-card::after{content:'·';position:absolute;right:0;color:rgba(255,255,255,.2);font-size:1.2rem}
+.mq-name{font-size:.95rem;font-weight:600;color:rgba(255,255,255,.5);letter-spacing:.04em;text-transform:uppercase;white-space:nowrap;transition:color .3s}
+.mq-card:hover .mq-name{color:#fff}
+.mq-cat{font-size:.78rem;color:rgba(148,163,184,.4);white-space:nowrap}
 .mq-note{text-align:center;margin-top:28px;font-size:.82rem;color:rgba(148,163,184,.7);font-style:italic}
 
 /* FOR WHOM */
@@ -246,15 +247,13 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .process-section .label{color:var(--gold)}
 .process-section .h2{color:#fff}
 .process-section .subtitle{color:rgba(255,255,255,.6)}
-.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:64px;background:rgba(255,255,255,.08);border-radius:var(--r-lg);overflow:hidden;position:relative;z-index:1}
-.process-card{background:#0A1424;padding:48px 36px;position:relative;overflow:hidden;transition:background .35s var(--ease),transform .35s var(--ease)}
-.process-card:hover{background:#0F1E36;transform:translateY(-4px)}
-.process-num{position:absolute;top:18px;right:22px;font-size:72px;font-weight:800;color:rgba(255,255,255,.05);letter-spacing:-0.03em;line-height:1;font-variant-numeric:tabular-nums;z-index:0;pointer-events:none}
-.process-title{position:relative;z-index:1;font-size:21px;font-weight:800;color:#fff;letter-spacing:-0.015em;margin-bottom:14px;margin-top:8px}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:64px;position:relative;z-index:1}
+.process-card{background:linear-gradient(155deg,#16314F 0%,#0A1A2E 100%);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:40px 32px;position:relative;overflow:hidden;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.process-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(0,0,0,.35)}
+.process-title{position:relative;z-index:1;font-size:21px;font-weight:800;color:#fff;letter-spacing:-0.015em;margin-bottom:14px}
 .process-text{position:relative;z-index:1;font-size:.9rem;line-height:1.75;color:rgba(255,255,255,.55)}
-.process-card-accent{background:linear-gradient(160deg,rgba(232,160,32,.16) 0%,#0A1424 70%)}
-.process-card-accent .process-num{color:rgba(232,160,32,.18)}
-.process-card-accent:hover{background:linear-gradient(160deg,rgba(232,160,32,.24) 0%,#0F1E36 70%)}
+.process-card-accent{background:linear-gradient(155deg,#3a2a08 0%,#1c1404 100%);border-color:rgba(232,160,32,.25)}
+.process-card-accent:hover{box-shadow:0 20px 50px rgba(232,160,32,.18)}
 .process-foot{display:flex;align-items:center;gap:18px;margin-top:36px;padding-top:32px;border-top:1px solid rgba(255,255,255,.08);position:relative;z-index:1}
 .process-foot-dots{display:flex;gap:8px;flex-shrink:0}
 .process-foot-dots span{width:8px;height:8px;border-radius:50%;background:var(--gold)}
@@ -318,14 +317,23 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
 /* MATERIALS */
 #materials{background:var(--bg2)}
+.mat-norms-section{background:var(--dark);position:relative;overflow:hidden}
+.mat-norms-section .label{color:var(--gold)}
 .mat-section{background:var(--dark);position:relative;overflow:hidden}
 .mat-section::before{content:'';position:absolute;top:-10%;left:-10%;width:600px;height:600px;background:radial-gradient(circle,rgba(232,160,32,.07) 0%,transparent 65%);pointer-events:none}
 .mat-section .label{color:var(--gold)}
 .mat-section .h2{color:#fff}
 .mat-section .subtitle{color:rgba(255,255,255,.6)}
 .bento-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto;gap:18px;margin-top:64px;position:relative;z-index:1}
-.bento-tile{border-radius:var(--r-lg);padding:36px 34px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:220px;transition:transform .35s var(--ease),box-shadow .35s var(--ease)}
+.bento-tile{border-radius:var(--r-lg);padding:36px 34px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;min-height:220px;transition:transform .35s var(--ease),box-shadow .35s var(--ease);cursor:pointer}
 .bento-tile:hover{transform:translateY(-5px)}
+.bento-modal{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;background:rgba(5,10,18,.7);backdrop-filter:blur(6px);padding:24px}
+.bento-modal.open{display:flex}
+.bento-modal-card{background:linear-gradient(155deg,#16314F 0%,#0A1A2E 100%);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:44px 40px;max-width:480px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.bento-modal-card h3{color:#fff;font-size:1.3rem;font-weight:800;letter-spacing:-0.015em;margin-bottom:16px}
+.bento-modal-card p{color:rgba(255,255,255,.7);font-size:.92rem;line-height:1.75}
+.bento-modal-close{position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:14px;cursor:pointer;transition:background .2s}
+.bento-modal-close:hover{background:rgba(255,255,255,.16)}
 .bento-tile-xl{grid-column:span 2;grid-row:span 2;justify-content:flex-start;min-height:464px}
 .bento-wide{grid-column:span 2}
 .bento-full{grid-column:span 4}
@@ -350,23 +358,19 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 /* COMPARISON */
 #comparison{background:var(--dark);position:relative;overflow:hidden}
 #comparison::before{content:'';position:absolute;top:30%;left:50%;transform:translate(-50%,-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(232,160,32,.08) 0%,transparent 65%);pointer-events:none}
-.cmp2-panel{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;max-width:980px;margin:72px auto 0;position:relative;z-index:1;gap:8px}
-.cmp2-side{padding:48px 40px;text-align:center}
-.cmp2-label{font-size:.82rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:22px}
-.cmp2-side-bad .cmp2-label{color:var(--muted)}
-.cmp2-side-good .cmp2-label{color:var(--gold)}
-.cmp2-figure{font-size:clamp(40px,5.5vw,64px);font-weight:800;letter-spacing:-0.03em;line-height:1;font-variant-numeric:tabular-nums}
-.cmp2-side-bad .cmp2-figure{color:rgba(255,255,255,.4);text-decoration:line-through;text-decoration-color:rgba(255,255,255,.25);text-decoration-thickness:2px}
-.cmp2-side-good .cmp2-figure{color:#fff}
-.cmp2-figure span{font-size:.4em;font-weight:600;margin-left:4px}
-.cmp2-note{font-size:.85rem;color:rgba(255,255,255,.5);margin-top:16px;max-width:240px;margin-left:auto;margin-right:auto}
-.cmp2-divider{display:flex;align-items:center;justify-content:center;width:1px;height:160px;background:rgba(255,255,255,.12);position:relative}
-.cmp2-divider span{position:absolute;background:var(--gold);color:#1a1206;font-weight:800;font-size:.85rem;padding:8px 14px;border-radius:100px;white-space:nowrap;box-shadow:0 8px 24px rgba(232,160,32,.35)}
-@media(max-width:760px){.cmp2-panel{grid-template-columns:1fr;gap:24px}.cmp2-divider{width:160px;height:1px;margin:0 auto}}
-.cmp2-points{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;max-width:980px;margin:64px auto 0;text-align:center}
-.cmp2-point-num{font-size:.78rem;font-weight:700;color:var(--gold);letter-spacing:.05em;text-transform:uppercase;margin-bottom:10px}
-.cmp2-point-text{font-size:.92rem;color:rgba(255,255,255,.7);line-height:1.6}
-@media(max-width:760px){.cmp2-points{grid-template-columns:1fr;gap:28px}}
+.spec-table{max-width:760px;margin:72px auto 0;background:#fff;border-radius:var(--r-lg);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.4);position:relative;z-index:1}
+.spec-row{display:grid;grid-template-columns:1.4fr 1fr 1fr;align-items:center;border-bottom:1px solid var(--border)}
+.spec-row:last-child{border-bottom:none}
+.spec-label{padding:20px 28px;font-size:.86rem;color:var(--body);font-weight:600}
+.spec-col{padding:20px 20px;text-align:center;font-size:.92rem;color:var(--body);font-weight:600}
+.spec-col-active{background:rgba(232,160,32,.06);color:var(--navy)}
+.spec-head{background:var(--bg2)}
+.spec-head .spec-col{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+.spec-head .spec-col-active{color:var(--gold);background:rgba(232,160,32,.12)}
+.spec-x{color:#b3463f}
+.spec-ok{color:var(--green)}
+.spec-strong{font-size:1.1rem;font-weight:800;color:var(--gold)}
+@media(max-width:640px){.spec-label,.spec-col{padding:14px 10px;font-size:.78rem}.spec-strong{font-size:.95rem}}
 
 /* CASE STUDY */
 #case{background:var(--dark);padding:100px 0;position:relative;overflow:hidden}
@@ -645,7 +649,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <li><a href="#contact">Kontakt</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn btn-gold btn-md" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
+      <button class="btn btn-gold btn-md" onclick="smoothScrollToEl(document.getElementById('contact'))">Materialbedarf melden</button>
       <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
   </div>
@@ -658,7 +662,16 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <a href="#supplier-apply" onclick="toggleNav()">Lieferant werden</a>
   <a href="#about" onclick="toggleNav()">Über uns</a>
   <a href="#contact" onclick="toggleNav()">Kontakt</a>
-  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
+  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();smoothScrollToEl(document.getElementById('contact'))">Materialbedarf melden</button>
+</div>
+
+<!-- BENTO DETAIL MODAL -->
+<div id="bento-modal" class="bento-modal">
+  <div class="bento-modal-card">
+    <button class="bento-modal-close" onclick="closeBentoModal()">✕</button>
+    <h3 id="bento-modal-title"></h3>
+    <p id="bento-modal-text"></p>
+  </div>
 </div>
 
 <!-- HERO -->
@@ -670,11 +683,11 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <h1 class="hero-h1" id="hero-h1">Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span></h1>
     <p class="hero-sub">Schweizer Baufirmen sparen bis zu 30% beim Materialeinkauf — ohne Risiko, ohne Vorauskosten.</p>
     <div class="hero-btns">
-      <button class="btn btn-gold btn-lg" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
+      <button class="btn btn-gold btn-lg" onclick="smoothScrollToEl(document.getElementById('contact'))">Materialbedarf melden</button>
       <a href="#process" class="btn btn-outline-w btn-lg">Wie es funktioniert →</a>
     </div>
   </div>
-  <div class="hero-chevron" onclick="document.getElementById('mat-strip').scrollIntoView({behavior:'smooth'})">↓</div>
+  <div class="hero-chevron" onclick="smoothScrollToEl(document.getElementById('story'))">↓</div>
 </section>
 
 <!-- WORD REVEAL -->
@@ -683,47 +696,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <p class="story-sentence" id="story-sentence">Drei Baufirmen kaufen einzeln und zahlen den vollen Preis. SourceOn bündelt ihren Bedarf, verhandelt mit der Marktmacht aller drei zugleich und gibt jeder einzelnen Firma den Rabatt einer Grossbestellung weiter.</p>
   </div>
 </section>
-
-<!-- MATERIAL STRIP -->
-<section id="mat-strip">
-  <div class="mat-strip-outer">
-    <div class="mat-strip-track" id="mat-strip-track">
-      <a href="#materials" class="mat-strip-item">
-        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <span>Beton</span>
-      </a>
-      <a href="#materials" class="mat-strip-item">
-        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg></div>
-        <span>Armierungsstahl</span>
-      </a>
-      <a href="#materials" class="mat-strip-item">
-        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l9-3 9 3v12l-9 3-9-3V6z"/></svg></div>
-        <span>Kies &amp; Splitt</span>
-      </a>
-      <a href="#materials" class="mat-strip-item">
-        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-        <span>Mauerwerk</span>
-      </a>
-      <a href="#materials" class="mat-strip-item">
-        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <span>Dämmung</span>
-      </a>
-      <a href="#materials" class="mat-strip-item">
-        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,17 10,11 4,5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
-        <span>Schalung</span>
-      </a>
-      <a href="#materials" class="mat-strip-item">
-        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-        <span>Mörtel</span>
-      </a>
-      <a href="#materials" class="mat-strip-item">
-        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <span>Sanitär &amp; HLKS</span>
-      </a>
-    </div>
-  </div>
-</section>
-
 <!-- PROCESS -->
 <section id="process" class="section process-section">
   <div class="container">
@@ -734,22 +706,18 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     </div>
     <div class="process-grid">
       <div class="process-card reveal reveal-d1">
-        <div class="process-num">01</div>
         <h3 class="process-title">Kostenlose Analyse</h3>
         <p class="process-text">Wir analysieren deine aktuellen Einkaufsdaten kostenlos und identifizieren konkrete Einsparpotenziale.</p>
       </div>
       <div class="process-card reveal reveal-d2">
-        <div class="process-num">02</div>
         <h3 class="process-title">Angebot erhalten</h3>
         <p class="process-text">SourceOn präsentiert dir ein konkretes Angebot mit klaren Preisen und Konditionen.</p>
       </div>
       <div class="process-card reveal reveal-d3">
-        <div class="process-num">03</div>
         <h3 class="process-title">Du entscheidest</h3>
         <p class="process-text">Du vergleichst frei. Nur wenn unser Angebot günstiger ist und du es annimmst, entsteht eine Provision.</p>
       </div>
       <div class="process-card process-card-accent reveal reveal-d4">
-        <div class="process-num">04</div>
         <h3 class="process-title">Du sparst — garantiert.</h3>
         <p class="process-text">2,25% Provision — ausschliesslich auf die tatsächliche Ersparnis, nie auf den Gesamtpreis.</p>
       </div>
@@ -868,7 +836,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
             <div class="calc-row-val" id="calc-net">CHF 11'625</div>
           </div>
           <div class="calc-cta">
-            <button class="btn btn-gold btn-lg btn-full" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden — kostenlos</button>
+            <button class="btn btn-gold btn-lg btn-full" onclick="smoothScrollToEl(document.getElementById('contact'))">Materialbedarf melden — kostenlos</button>
           </div>
           <p class="calc-disclaimer">Unverbindliche Schätzung basierend auf Schweizer Marktdaten (SBV, McKinsey 2023, GPO-Studien 2024). Potenzielle Einsparungen variieren je nach Material, Volumen und Lieferant.</p>
           <p class="calc-footnote">* Ab CHF 500'000 Jahresvolumen individuelle Konditionen möglich.</p>
@@ -881,8 +849,8 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <!-- BIG NUMBER -->
 <section id="bignum" class="bignum-section">
   <div class="container">
-    <div class="bignum-figure">120+</div>
-    <p class="bignum-caption">Abgeschlossene Beschaffungen für Schweizer Baufirmen.</p>
+    <div class="bignum-figure">28%</div>
+    <p class="bignum-caption">Maximaler Rabatt, den unsere Bündelungsmacht erzielt.</p>
   </div>
 </section>
 
@@ -928,40 +896,88 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   </div>
 </section>
 
+<!-- MATERIALS & NORMS -->
+<section id="mat-norms" class="section mat-norms-section">
+  <div class="container">
+    <div class="text-center reveal">
+      <div class="label">Material &amp; Norm</div>
+      <h2 class="h2" style="color:#fff">Jedes Material.<br>Eine Norm.</h2>
+      <p class="subtitle subtitle-dark" style="margin:14px auto 0">Alle Materialien, die SourceOn vermittelt, erfüllen die SourceOn-Prüfkriterien — SN EN und SIA-konform, lückenlos dokumentiert.</p>
+    </div>
+  </div>
+  <div class="mat-strip-outer" style="margin-top:56px">
+    <div class="mat-strip-track" id="mat-strip-track">
+      <a href="#materials" class="mat-strip-item">
+        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <span>Beton</span>
+      </a>
+      <a href="#materials" class="mat-strip-item">
+        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg></div>
+        <span>Armierungsstahl</span>
+      </a>
+      <a href="#materials" class="mat-strip-item">
+        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l9-3 9 3v12l-9 3-9-3V6z"/></svg></div>
+        <span>Kies &amp; Splitt</span>
+      </a>
+      <a href="#materials" class="mat-strip-item">
+        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+        <span>Mauerwerk</span>
+      </a>
+      <a href="#materials" class="mat-strip-item">
+        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <span>Dämmung</span>
+      </a>
+      <a href="#materials" class="mat-strip-item">
+        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,17 10,11 4,5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
+        <span>Schalung</span>
+      </a>
+      <a href="#materials" class="mat-strip-item">
+        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <span>Mörtel</span>
+      </a>
+      <a href="#materials" class="mat-strip-item">
+        <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <span>Sanitär &amp; HLKS</span>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- MATERIALS -->
 <section id="materials" class="section mat-section">
   <div class="container">
     <div class="text-center reveal">
       <div class="label">Abdeckung</div>
-      <h2 class="h2">Alles aus einer Hand.<br>Nichts aus zweiter.</h2>
+      <h2 class="h2">Eine Schnittstelle.<br>Jedes Material.</h2>
+      <p class="subtitle" style="margin-top:14px">Klicke auf ein Feld für Details.</p>
     </div>
     <div class="bento-grid">
-      <div class="bento-tile bento-tile-xl bento-navy reveal reveal-d1">
+      <div class="bento-tile bento-tile-xl bento-navy reveal reveal-d1" data-detail-title="9 Materialgruppen" data-detail-text="Beton, Armierungsstahl, Mauerwerk, Dämmung, Schalung, Mörtel, Kies, Sanitär &amp; HLKS. Statt neun Lieferanten, neun Verträge und neun Ansprechpartner zu koordinieren, läuft jede Anfrage über SourceOn — wir übernehmen Auswahl, Verhandlung und Koordination für jede einzelne Materialgruppe.">
         <div class="bento-tag">9 Materialgruppen</div>
         <div class="bento-big">Vom Rohbau<br>bis zur Haustechnik.</div>
         <p class="bento-text">Beton, Armierungsstahl, Mauerwerk, Dämmung, Schalung, Mörtel, Kies, Sanitär &amp; HLKS — alles über einen einzigen Ansprechpartner beschafft.</p>
       </div>
-      <div class="bento-tile bento-gold reveal reveal-d2">
+      <div class="bento-tile bento-gold reveal reveal-d2" data-detail-title="SN EN / SIA" data-detail-text="Jeder Lieferant wird vor der Aufnahme ins Netzwerk geprüft. Materialdaten, Zertifikate und Prüfberichte werden lückenlos dokumentiert und auf Anfrage zur Verfügung gestellt — damit du dich auf jede Lieferung verlassen kannst.">
         <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></svg></div>
         <div class="bento-num">SN EN / SIA</div>
         <p class="bento-text">Jedes Material entspricht Schweizer Normen — lückenlos dokumentiert.</p>
       </div>
-      <div class="bento-tile bento-teal reveal reveal-d3">
+      <div class="bento-tile bento-teal reveal reveal-d3" data-detail-title="20+ Partnerlieferanten" data-detail-text="Über 20 persönlich geprüfte Lieferanten in der ganzen Schweiz — von regionalen Spezialisten bis zu nationalen Grossbetrieben. Das Netzwerk wächst laufend, abgestimmt auf die Nachfrage unserer Kunden.">
         <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
         <div class="bento-num" data-count="20" data-suffix="+">0+</div>
         <p class="bento-text">geprüfte Partnerlieferanten in der ganzen Schweiz.</p>
       </div>
-      <div class="bento-tile bento-dark reveal reveal-d4">
+      <div class="bento-tile bento-dark reveal reveal-d4" data-detail-title="Direkt ab Werk" data-detail-text="Keine Zwischenlager, keine Umwege: Material wird direkt vom Werk des Lieferanten auf deine Baustelle geliefert. Das spart Zeit, reduziert Bruch und hält die Logistikkette einfach.">
         <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
         <div class="bento-num">Direkt</div>
         <p class="bento-text">Lieferung direkt ab Werk auf Ihre Baustelle — ohne Umwege.</p>
       </div>
-      <div class="bento-tile bento-navy reveal reveal-d4">
+      <div class="bento-tile bento-navy reveal reveal-d4" data-detail-title="CH-weite Logistik" data-detail-text="Ob Genf, St. Gallen oder irgendwo dazwischen — die Lieferlogistik wird für jeden Standort organisiert. Du musst dich um Transport und Termine nicht selbst kümmern.">
         <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16,8 20,8 23,11 23,16 16,16"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
         <div class="bento-num">CH-weit</div>
         <p class="bento-text">Von Genf bis St. Gallen — Logistik organisiert, ohne dass du dich kümmern musst.</p>
       </div>
-      <div class="bento-tile bento-full bento-charcoal reveal reveal-d1">
+      <div class="bento-tile bento-full bento-charcoal reveal reveal-d1" data-detail-title="Sonderfall? Kein Problem." data-detail-text="Material nicht in der Liste? Wir erweitern unser Lieferantennetz gezielt für deinen Bedarf — auf Anfrage prüfen wir neue Partner und nehmen sie ins Netzwerk auf, sobald sie unsere Qualitätskriterien erfüllen.">
         <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
         <div class="bento-num">Sonderfall? Kein Problem.</div>
         <p class="bento-text">Material nicht in der Liste? Wir erweitern unser Lieferantennetz gezielt für Ihren Bedarf — auf Anfrage.</p>
@@ -977,31 +993,36 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <div class="label label-dark">Allein vs. gebündelt</div>
       <h2 class="h2" style="color:#fff">Gleiches Material.<br>Andere Preisklasse.</h2>
     </div>
-    <div class="cmp2-panel reveal">
-      <div class="cmp2-side cmp2-side-bad">
-        <div class="cmp2-label">Einzelbeschaffung</div>
-        <div class="cmp2-figure">CHF 142<span>/m³</span></div>
-        <p class="cmp2-note">Listenpreis ohne Verhandlungsmacht.</p>
+    <div class="spec-table reveal">
+      <div class="spec-row spec-head">
+        <div class="spec-label"></div>
+        <div class="spec-col">Einzelbeschaffung</div>
+        <div class="spec-col spec-col-active">Mit SourceOn</div>
       </div>
-      <div class="cmp2-divider"><span>–17%</span></div>
-      <div class="cmp2-side cmp2-side-good">
-        <div class="cmp2-label">✦ Mit SourceOn</div>
-        <div class="cmp2-figure">CHF 118<span>/m³</span></div>
-        <p class="cmp2-note">Gleiches Material, gleicher Lieferant.</p>
+      <div class="spec-row">
+        <div class="spec-label">Preis pro m³ Beton</div>
+        <div class="spec-col">CHF 142</div>
+        <div class="spec-col spec-col-active spec-strong">CHF 118</div>
       </div>
-    </div>
-    <div class="cmp2-points reveal">
-      <div>
-        <div class="cmp2-point-num">Verhandlung</div>
-        <p class="cmp2-point-text">Gebündeltes Volumen statt einzelner Anfragen.</p>
+      <div class="spec-row">
+        <div class="spec-label">Verhandlungsmacht</div>
+        <div class="spec-col spec-x">Einzelvolumen</div>
+        <div class="spec-col spec-col-active spec-ok">Gebündelt</div>
       </div>
-      <div>
-        <div class="cmp2-point-num">Transparenz</div>
-        <p class="cmp2-point-text">Vollständige Preisoffenlegung, jederzeit.</p>
+      <div class="spec-row">
+        <div class="spec-label">Preistransparenz</div>
+        <div class="spec-col spec-x">Begrenzt</div>
+        <div class="spec-col spec-col-active spec-ok">Vollständig</div>
       </div>
-      <div>
-        <div class="cmp2-point-num">Risiko</div>
-        <p class="cmp2-point-text">2,25% nur auf die tatsächliche Ersparnis.</p>
+      <div class="spec-row">
+        <div class="spec-label">Lieferantenprüfung</div>
+        <div class="spec-col spec-x">Eigenrecherche</div>
+        <div class="spec-col spec-col-active spec-ok">SIA/ISO-geprüft</div>
+      </div>
+      <div class="spec-row">
+        <div class="spec-label">Risiko</div>
+        <div class="spec-col spec-x">Fixkosten</div>
+        <div class="spec-col spec-col-active spec-ok">2,25% nur auf Ersparnis</div>
       </div>
     </div>
   </div>
@@ -1596,7 +1617,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <h2 class="cta-title">Bereit für tiefere Einkaufspreise?</h2>
     <p class="cta-sub">Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
     <div class="cta-btns">
-      <button class="btn btn-gold btn-lg" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Materialbedarf melden</button>
+      <button class="btn btn-gold btn-lg" onclick="smoothScrollToEl(document.getElementById('contact'))">Materialbedarf melden</button>
       <a href="mailto:info@SourceOn.ch" class="btn btn-outline-w btn-lg">info@SourceOn.ch</a>
     </div>
   </div>
@@ -1721,6 +1742,45 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 
 <script>
+// SMOOTH ANCHOR SCROLL (Apple-style eased "whoosh")
+function easeInOutQuint(t){return t<.5?16*t*t*t*t*t:1-Math.pow(-2*t+2,5)/2;}
+function smoothScrollToEl(target,duration){
+  duration=duration||850;
+  const startY=window.scrollY;
+  const endY=target.getBoundingClientRect().top+startY;
+  const dist=endY-startY;
+  const t0=performance.now();
+  function step(now){
+    const p=Math.min(1,(now-t0)/duration);
+    window.scrollTo(0,startY+dist*easeInOutQuint(p));
+    if(p<1)requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',function(e){
+    const id=a.getAttribute('href');
+    if(id.length<2)return;
+    const target=document.querySelector(id);
+    if(!target)return;
+    e.preventDefault();
+    smoothScrollToEl(target);
+  });
+});
+
+// BENTO TILE DETAIL MODAL
+function closeBentoModal(){document.getElementById('bento-modal').classList.remove('open');}
+document.querySelectorAll('.bento-tile[data-detail-title]').forEach(tile=>{
+  tile.addEventListener('click',()=>{
+    document.getElementById('bento-modal-title').textContent=tile.getAttribute('data-detail-title');
+    document.getElementById('bento-modal-text').textContent=tile.getAttribute('data-detail-text');
+    document.getElementById('bento-modal').classList.add('open');
+  });
+});
+document.getElementById('bento-modal').addEventListener('click',e=>{
+  if(e.target.id==='bento-modal')closeBentoModal();
+});
+
 // NAV
 let lastScrollY=window.scrollY;
 window.addEventListener('scroll',()=>{
