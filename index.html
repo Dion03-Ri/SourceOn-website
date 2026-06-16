@@ -184,7 +184,7 @@ a{color:inherit;text-decoration:none}
 .fw-icon svg{width:26px;height:26px;color:var(--gold)}
 .fw-card-featured .fw-icon{background:radial-gradient(circle at 30% 30%,rgba(232,160,32,.28),rgba(232,160,32,.04));border-color:rgba(232,160,32,.45);box-shadow:0 0 0 6px rgba(232,160,32,.08),0 0 24px rgba(232,160,32,.15)}
 .fw-card:hover .fw-icon{transform:scale(1.08);transition:transform .3s var(--ease)}
-.fw-title{font-size:21px;font-weight:800;margin-bottom:20px;color:var(--text);letter-spacing:-0.01em;line-height:1.25}
+.fw-title{font-size:21px;font-weight:800;margin-bottom:20px;color:var(--text);letter-spacing:-0.01em;line-height:1.25;overflow-wrap:break-word;hyphens:auto}
 .fw-card-featured .fw-title{color:#fff}
 .fw-checks{list-style:none;display:flex;flex-direction:column;gap:13px;margin-top:auto}
 .fw-checks li{display:flex;align-items:flex-start;gap:10px;font-size:.87rem;color:var(--body);line-height:1.55}
@@ -220,15 +220,18 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .calc-footnote{font-size:.72rem;color:rgba(255,255,255,.22);margin-top:8px}
 @media(max-width:900px){.calc-layout{grid-template-columns:1fr;gap:40px}}
 
-/* WHY */
-#why{background:var(--bg2);position:relative}
-.why-list{margin-top:72px;max-width:880px;margin-left:auto;margin-right:auto}
-.why-row{display:grid;grid-template-columns:280px 1fr;align-items:start;gap:32px;padding:36px 0;border-top:1px solid var(--border);transition:background .25s var(--ease)}
-.why-list .why-row:last-child{border-bottom:1px solid var(--border)}
-.why-row:hover{background:rgba(232,160,32,.04)}
-.why-row-title{font-size:1.15rem;font-weight:800;color:var(--navy);letter-spacing:-0.015em;line-height:1.3}
-.why-row-desc{font-size:.92rem;line-height:1.7;color:var(--body)}
-@media(max-width:760px){.why-row{grid-template-columns:1fr}}
+/* WHY — Apple-style glass feature grid */
+.why-section{background:radial-gradient(ellipse 80% 60% at 50% 0%,#10243a 0%,var(--dark) 55%);position:relative;overflow:hidden}
+.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px;position:relative;z-index:1}
+.why-card{background:rgba(255,255,255,.04);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:38px 32px;transition:transform .4s var(--ease),background .4s var(--ease),border-color .4s var(--ease)}
+.why-card:hover{transform:translateY(-6px);background:rgba(255,255,255,.06);border-color:rgba(232,160,32,.3)}
+.why-card-icon{width:50px;height:50px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:24px;color:var(--gold);transition:transform .35s var(--ease)}
+.why-card-icon svg{width:22px;height:22px}
+.why-card:hover .why-card-icon{transform:scale(1.08)}
+.why-card-title{font-size:1.1rem;font-weight:600;color:#fff;letter-spacing:-0.01em;line-height:1.3;margin-bottom:12px}
+.why-card-desc{font-size:.88rem;line-height:1.7;color:rgba(255,255,255,.55)}
+@media(max-width:900px){.why-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.why-grid{grid-template-columns:1fr}}
 
 .process-section{background:var(--dark);position:relative;overflow:hidden}
 .process-section::before{content:'';position:absolute;top:-20%;left:50%;transform:translateX(-50%);width:900px;height:900px;background:radial-gradient(circle,rgba(232,160,32,.08) 0%,transparent 65%);pointer-events:none}
@@ -538,30 +541,13 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .tech-section{background:var(--dark3);position:relative;overflow:hidden}
 .tech-section::before{content:'';position:absolute;top:20%;right:-15%;width:600px;height:600px;background:radial-gradient(circle,rgba(232,160,32,.08) 0%,transparent 65%);pointer-events:none}
 .tech-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
-.tech-panel-stage{perspective:1800px}
-.tech-panel{background:#0A1628;border:1px solid rgba(232,160,32,.18);border-radius:var(--r-lg);box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.03) inset;overflow:hidden;position:relative;transform-style:preserve-3d;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s var(--ease);will-change:transform}
-.tech-panel-sheen{position:absolute;inset:0;background:linear-gradient(125deg,rgba(255,255,255,.08) 0%,transparent 35%,transparent 65%,rgba(255,255,255,.04) 100%);pointer-events:none;mix-blend-mode:screen}
-.tech-panel-bar{display:flex;align-items:center;gap:7px;padding:14px 18px;background:rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.06)}
-.tech-panel-bar span{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.15)}
-.tech-panel-bar span:nth-child(1){background:#E8A020}
-.tech-panel-title{margin-left:10px;font-size:.78rem;color:rgba(255,255,255,.4);font-weight:600;letter-spacing:.02em}
-.tech-panel-body{padding:32px 28px}
-.tech-scan-row{display:flex;align-items:center;gap:10px;font-size:.8rem;color:rgba(255,255,255,.45);margin-bottom:26px}
-.tech-scan-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(232,160,32,.6);animation:techPulse 1.8s ease-out infinite}
-@keyframes techPulse{0%{box-shadow:0 0 0 0 rgba(232,160,32,.5)}70%{box-shadow:0 0 0 8px rgba(232,160,32,0)}100%{box-shadow:0 0 0 0 rgba(232,160,32,0)}}
-.tech-kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:30px}
-.tech-kpi{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:16px 14px;text-align:center}
-.tech-kpi-num{font-size:22px;font-weight:800;color:var(--gold);letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
-.tech-kpi-label{font-size:.68rem;color:rgba(255,255,255,.4);margin-top:4px;line-height:1.4}
-.tech-bars{display:flex;flex-direction:column;gap:16px}
-.tech-bar-row{display:grid;grid-template-columns:110px 1fr 44px;align-items:center;gap:12px}
-.tech-bar-label{font-size:.76rem;color:rgba(255,255,255,.55)}
-.tech-bar-track{height:7px;background:rgba(255,255,255,.07);border-radius:100px;overflow:hidden}
-.tech-bar-fill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),#fff3d6);border-radius:100px;transition:width 1.2s var(--ease)}
-.tech-panel.visible .tech-bar-fill{width:var(--w)}
-.tech-bar-pct{font-size:.76rem;font-weight:700;color:var(--gold);text-align:right}
-@media(max-width:900px){.tech-layout{grid-template-columns:1fr;gap:40px}.tech-kpi-grid{gap:10px}}
-@media(max-width:480px){.tech-bar-row{grid-template-columns:80px 1fr 38px}}
+.engine-stage{position:relative;border-radius:var(--r-lg);overflow:hidden;background:radial-gradient(circle at 50% 40%,#0c2138 0%,#060e1a 70%);box-shadow:0 30px 70px rgba(0,0,0,.5),0 0 0 1px rgba(232,160,32,.12) inset;aspect-ratio:1/0.95}
+.engine-stage canvas{display:block;width:100%;height:100%}
+.engine-kpis{position:absolute;left:0;right:0;bottom:0;display:flex;gap:14px;padding:22px 26px;background:linear-gradient(0deg,rgba(6,14,26,.85) 0%,transparent 100%)}
+.engine-kpi{flex:1;text-align:center}
+.engine-kpi-num{font-size:22px;font-weight:700;color:var(--gold);letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
+.engine-kpi-label{font-size:.68rem;color:rgba(255,255,255,.5);margin-top:4px}
+@media(max-width:900px){.tech-layout{grid-template-columns:1fr;gap:40px}}
 
 /* BUNDLING DIAGRAM SECTION */
 #bundling{background:var(--bg);padding:100px 0}
@@ -719,7 +705,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
       <div class="process-card process-card-accent reveal reveal-d4">
         <h3 class="process-title">Du sparst — garantiert</h3>
-        <p class="process-text">Direktlieferung auf deine Baustelle. 2.25% Provision ausschliesslich auf die erzielte Ersparnis. Kein Ergebnis — keine Kosten.</p>
+        <p class="process-text">Direktlieferung auf deine Baustelle. Du zahlst nur, wenn dir tatsächlich Geld gespart wird. Kein Ergebnis — keine Kosten.</p>
       </div>
     </div>
     <div class="process-foot reveal">
@@ -855,36 +841,42 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 </section>
 
 <!-- WHY SourceOn -->
-<section id="why" class="section">
+<section id="why" class="section why-section">
   <div class="container">
     <div class="text-center reveal">
       <div class="label">Warum SourceOn</div>
-      <h2 class="h2">Sechs Gründe — die niemand sonst bietet.</h2>
+      <h2 class="h2" style="color:#fff">Sechs Gründe — die niemand sonst bietet.</h2>
     </div>
-    <div class="why-list">
-      <div class="why-row reveal reveal-d1">
-        <div class="why-row-title">Nachfragebündelung</div>
-        <p class="why-row-desc">Drei Baufirmen bestellen je 60m³ Beton — SourceOn bündelt zu 180m³. Der Lieferant gibt 12% Rabatt. Ohne Bündelung: kein Rabatt.</p>
+    <div class="why-grid">
+      <div class="why-card reveal reveal-d1">
+        <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.6 10.5 15.4 7M8.6 13.5 15.4 17"/></svg></div>
+        <h3 class="why-card-title">Nachfragebündelung</h3>
+        <p class="why-card-desc">Drei Baufirmen bestellen je 60m³ Beton — SourceOn bündelt zu 180m³. Der Lieferant gibt 12% Rabatt. Ohne Bündelung: kein Rabatt.</p>
       </div>
-      <div class="why-row reveal reveal-d2">
-        <div class="why-row-title">Zahlung nur bei Ersparnis</div>
-        <p class="why-row-desc">Wir verdienen 2.25% Provision — aber nur auf die erzielte Ersparnis. Kein Ergebnis, keine Kosten. Dein Risiko: null.</p>
+      <div class="why-card reveal reveal-d2">
+        <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+        <h3 class="why-card-title">Zahlung nur bei Ersparnis</h3>
+        <p class="why-card-desc">Wir verdienen 2.25% Provision — aber nur auf die erzielte Ersparnis. Kein Ergebnis, keine Kosten. Dein Risiko: null.</p>
       </div>
-      <div class="why-row reveal reveal-d1">
-        <div class="why-row-title">KI + Schweizer Expertise</div>
-        <p class="why-row-desc">Unser System vergleicht Angebote in Sekunden. Unsere Verhandler kennen den Schweizer Markt und holen das Maximum raus.</p>
+      <div class="why-card reveal reveal-d3">
+        <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 2v10l7 4"/></svg></div>
+        <h3 class="why-card-title">KI + Schweizer Expertise</h3>
+        <p class="why-card-desc">Unser System vergleicht Angebote in Sekunden. Unsere Verhandler kennen den Schweizer Markt und holen das Maximum raus.</p>
       </div>
-      <div class="why-row reveal reveal-d2">
-        <div class="why-row-title">Null Aufwand für dich</div>
-        <p class="why-row-desc">Du meldest deinen Bedarf in 2 Minuten. Wir übernehmen Lieferantensuche, Angebotsvergleich, Verhandlung und Koordination.</p>
+      <div class="why-card reveal reveal-d1">
+        <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
+        <h3 class="why-card-title">Null Aufwand für dich</h3>
+        <p class="why-card-desc">Du meldest deinen Bedarf in 2 Minuten. Wir übernehmen Lieferantensuche, Angebotsvergleich, Verhandlung und Koordination.</p>
       </div>
-      <div class="why-row reveal reveal-d1">
-        <div class="why-row-title">Direkt zum Lieferanten</div>
-        <p class="why-row-desc">SourceOn kauft nie selbst Material. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Wir sind Vermittler — kein Zwischenhändler.</p>
+      <div class="why-card reveal reveal-d2">
+        <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <h3 class="why-card-title">Direkt zum Lieferanten</h3>
+        <p class="why-card-desc">SourceOn kauft nie selbst Material. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Wir sind Vermittler — kein Zwischenhändler.</p>
       </div>
-      <div class="why-row reveal reveal-d2">
-        <div class="why-row-title">Schweizer Normen garantiert</div>
-        <p class="why-row-desc">Alle Materialien entsprechen SN EN und SIA Normen. Alle Lieferanten sind persönlich geprüft. Keine Kompromisse bei Qualität.</p>
+      <div class="why-card reveal reveal-d3">
+        <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></svg></div>
+        <h3 class="why-card-title">Schweizer Normen garantiert</h3>
+        <p class="why-card-desc">Alle Materialien entsprechen SN EN und SIA Normen. Alle Lieferanten sind persönlich geprüft. Keine Kompromisse bei Qualität.</p>
       </div>
     </div>
   </div>
@@ -912,7 +904,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       </div>
     </div>
   </div>
-  <div class="mat-strip-outer" style="margin-top:56px">
+  <div class="mat-strip-outer" style="margin-top:120px">
     <div class="mat-strip-track" id="mat-strip-track">
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
@@ -1090,40 +1082,12 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         <p style="font-size:15px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:28px">Über 340 Lieferantendatenpunkte werden täglich aktualisiert. Ihre Anfragen werden mit historischen Preisen abgeglichen, um die bestmöglichen Konditionen zu identifizieren.</p>
         <a href="#contact" class="btn btn-gold btn-lg">Analyse anfragen</a>
       </div>
-      <div class="tech-panel-stage reveal">
-       <div class="tech-panel" id="tech-panel">
-        <div class="tech-panel-bar">
-          <span></span><span></span><span></span>
-          <div class="tech-panel-title">SourceOn Engine — Live</div>
+      <div class="engine-stage reveal">
+        <canvas id="engine-canvas"></canvas>
+        <div class="engine-kpis">
+          <div class="engine-kpi"><div class="engine-kpi-num" data-count="340" data-suffix="+">0+</div><div class="engine-kpi-label">Datenpunkte / Tag</div></div>
+          <div class="engine-kpi"><div class="engine-kpi-num" data-count="48" data-suffix="h">0h</div><div class="engine-kpi-label">bis zum Ergebnis</div></div>
         </div>
-        <div class="tech-panel-body">
-          <div class="tech-scan-row">
-            <div class="tech-scan-dot"></div>
-            <span>Marktdaten werden abgeglichen …</span>
-          </div>
-          <div class="tech-kpi-grid">
-            <div class="tech-kpi">
-              <div class="tech-kpi-num" data-count="340" data-suffix="+">0+</div>
-              <div class="tech-kpi-label">Datenpunkte / Tag</div>
-            </div>
-            <div class="tech-kpi">
-              <div class="tech-kpi-num" data-count="3" data-suffix="">0</div>
-              <div class="tech-kpi-label">Angebote min. verglichen</div>
-            </div>
-            <div class="tech-kpi">
-              <div class="tech-kpi-num" data-count="48" data-suffix="h">0h</div>
-              <div class="tech-kpi-label">bis zum Ergebnis</div>
-            </div>
-          </div>
-          <div class="tech-bars">
-            <div class="tech-bar-row"><span class="tech-bar-label">Beton</span><div class="tech-bar-track"><div class="tech-bar-fill" style="--w:78%"></div></div><span class="tech-bar-pct">−22%</span></div>
-            <div class="tech-bar-row"><span class="tech-bar-label">Armierungsstahl</span><div class="tech-bar-track"><div class="tech-bar-fill" style="--w:64%"></div></div><span class="tech-bar-pct">−18%</span></div>
-            <div class="tech-bar-row"><span class="tech-bar-label">Dämmung</span><div class="tech-bar-track"><div class="tech-bar-fill" style="--w:55%"></div></div><span class="tech-bar-pct">−15%</span></div>
-            <div class="tech-bar-row"><span class="tech-bar-label">Sanitär &amp; HLKS</span><div class="tech-bar-track"><div class="tech-bar-fill" style="--w:70%"></div></div><span class="tech-bar-pct">−20%</span></div>
-          </div>
-        </div>
-        <div class="tech-panel-sheen"></div>
-       </div>
       </div>
     </div>
   </div>
@@ -1561,7 +1525,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         <h2 class="h2">Bündelungsmacht für alle Baufirmen.</h2>
         <p style="font-size:.92rem;color:var(--body);line-height:1.75;margin-top:16px;margin-bottom:24px">SourceOn wurde mit einer einfachen Überzeugung gegründet: Zu viele Baufirmen — vom KMU bis zum Grosskonzern — zahlen mehr als nötig für Baumaterial. Nicht weil es keine günstigeren Preise gibt, sondern weil sie alleine zu wenig Volumen haben um sie zu bekommen. Wir ändern das — für alle.</p>
         <div class="about-features">
-          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><strong>Erfolgsbasiertes Modell</strong><span>2.25% Provision nur bei nachgewiesener Ersparnis</span></div></div>
+          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><strong>Erfolgsbasiertes Modell</strong><span>Du zahlst nur, wenn dir gespart wird</span></div></div>
           <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><strong>Schweizer Qualitätsstandards</strong><span>SIA/ISO-konforme Lieferanten, SN EN Normen</span></div></div>
           <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div><strong>Schnelle Abwicklung</strong><span>Erste Angebote innerhalb von 48 Stunden</span></div></div>
           <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><strong>Persönliche Betreuung</strong><span>Direkter Ansprechpartner für jede Anfrage</span></div></div>
@@ -1885,20 +1849,99 @@ buildMQ('mq1',SUPPLIERS);
   if(track)track.innerHTML+=track.innerHTML;
 })();
 
-// TECH PANEL 3D TILT (Apple product-shot style)
+// ENGINE VISUAL — dramatic 3D-style data/compute grid (Apple chip-reveal aesthetic)
 (function(){
-  const stage=document.querySelector('.tech-panel-stage');
-  const panel=document.getElementById('tech-panel');
-  if(!stage||!panel)return;
-  stage.addEventListener('mousemove',e=>{
-    const r=stage.getBoundingClientRect();
-    const px=(e.clientX-r.left)/r.width-.5;
-    const py=(e.clientY-r.top)/r.height-.5;
-    panel.style.transform='rotateY('+(px*10)+'deg) rotateX('+(py*-10)+'deg) translateZ(10px)';
-  });
-  stage.addEventListener('mouseleave',()=>{
-    panel.style.transform='rotateY(0deg) rotateX(0deg)';
-  });
+  const canvas=document.getElementById('engine-canvas');
+  if(!canvas)return;
+  const ctx=canvas.getContext('2d');
+  let w,h,dpr;
+  function resize(){
+    dpr=window.devicePixelRatio||1;
+    w=canvas.clientWidth;h=canvas.clientHeight;
+    canvas.width=w*dpr;canvas.height=h*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resize();
+  window.addEventListener('resize',resize);
+
+  const GRID=9;
+  const nodes=[];
+  for(let i=0;i<GRID;i++)for(let j=0;j<GRID;j++){
+    nodes.push({gx:i,gy:j,phase:Math.random()*Math.PI*2,speed:.6+Math.random()*.8});
+  }
+  const links=[];
+  for(let i=0;i<26;i++){
+    links.push({a:nodes[Math.floor(Math.random()*nodes.length)],b:nodes[Math.floor(Math.random()*nodes.length)],t:Math.random(),speed:.002+Math.random()*.004});
+  }
+
+  function project(gx,gy,t){
+    const cx=w/2,cy=h*.52;
+    const cellW=w*.072,cellH=h*.066;
+    const rot=t*.00012;
+    const ox=(gx-(GRID-1)/2),oy=(gy-(GRID-1)/2);
+    const x=ox*cellW*Math.cos(rot)-oy*cellH*.35*Math.sin(rot);
+    const y=ox*cellW*.22*Math.sin(rot)+oy*cellH;
+    const depth=Math.sin(rot+ox*.3+oy*.3);
+    return{x:cx+x,y:cy+y-depth*10,scale:1+depth*.25,depth};
+  }
+
+  function draw(t){
+    ctx.clearRect(0,0,w,h);
+    const pts=nodes.map(n=>{
+      const p=project(n.gx,n.gy,t);
+      const pulse=.5+.5*Math.sin(t*.0016*n.speed+n.phase);
+      return{...p,n,pulse};
+    });
+    pts.sort((a,b)=>a.depth-b.depth);
+
+    // base lattice lines
+    ctx.lineWidth=1;
+    for(let i=0;i<GRID;i++){
+      ctx.beginPath();
+      for(let j=0;j<GRID;j++){
+        const p=project(i,j,t);
+        j===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);
+      }
+      ctx.strokeStyle='rgba(232,160,32,.08)';
+      ctx.stroke();
+    }
+    for(let j=0;j<GRID;j++){
+      ctx.beginPath();
+      for(let i=0;i<GRID;i++){
+        const p=project(i,j,t);
+        i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);
+      }
+      ctx.strokeStyle='rgba(232,160,32,.08)';
+      ctx.stroke();
+    }
+
+    // flowing data links
+    links.forEach(l=>{
+      l.t+=l.speed;if(l.t>1)l.t=0;
+      const pa=project(l.a.gx,l.a.gy,t),pb=project(l.b.gx,l.b.gy,t);
+      const mx=pa.x+(pb.x-pa.x)*l.t,my=pa.y+(pb.y-pa.y)*l.t;
+      const grad=ctx.createLinearGradient(pa.x,pa.y,pb.x,pb.y);
+      grad.addColorStop(0,'rgba(232,160,32,0)');
+      grad.addColorStop(1,'rgba(232,160,32,.18)');
+      ctx.strokeStyle=grad;ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(pa.x,pa.y);ctx.lineTo(pb.x,pb.y);ctx.stroke();
+      ctx.beginPath();ctx.arc(mx,my,2.2,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,220,150,.9)';ctx.fill();
+    });
+
+    // glowing nodes
+    pts.forEach(p=>{
+      const r=(1.6+p.pulse*2.2)*p.scale;
+      const alpha=.25+p.pulse*.55;
+      ctx.beginPath();ctx.arc(p.x,p.y,r*3,0,Math.PI*2);
+      ctx.fillStyle='rgba(232,160,32,'+(alpha*.08)+')';ctx.fill();
+      ctx.beginPath();ctx.arc(p.x,p.y,r,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,210,120,'+alpha+')';ctx.fill();
+    });
+
+    requestAnimationFrame(draw);
+  }
+  requestAnimationFrame(draw);
 })();
 
 // MATERIAL LOOKUP
