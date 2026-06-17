@@ -679,6 +679,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <li><a href="#supplier-apply">Lieferant werden</a></li>
       <li><a href="#about">Über uns</a></li>
       <li><a href="#contact">Kontakt</a></li>
+      <li><a href="supplier-login.html" style="color:#94A3B8;font-size:13px">Lieferanten-Login</a></li>
     </ul>
     <div class="nav-right">
       <button class="btn btn-gold btn-md" onclick="smoothScrollToEl(document.getElementById('contact'))">Materialbedarf melden</button>
@@ -1299,7 +1300,8 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           </div>
           <div class="form-group"><label class="form-label">Bemerkungen</label><textarea class="form-textarea" id="sa-notes" placeholder="Weitere Informationen zu Ihrem Angebot…"></textarea></div>
           <button type="submit" class="btn btn-gold btn-lg btn-full">Jetzt als Partnerlieferant bewerben</button>
-          <div class="form-success" id="success-supplier"><span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank! Wir melden uns innerhalb von 48 Stunden.</div>
+          <div class="form-success" id="success-supplier"><span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden. Nach erfolgreicher Verifizierung erhältst du Zugang zum Lieferanten-Portal per E-Mail.</div>
+          <div class="form-error" id="error-supplier" style="display:none;margin-top:12px;padding:12px;border-radius:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#EF4444;font-size:14px"></div>
         </form>
         </div>
       </div>
@@ -1326,6 +1328,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   </div>
 </section>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 (function(){
   var wrap=document.getElementById('webgl-wrap');
@@ -2190,12 +2193,42 @@ function submitContact(e){
     document.getElementById('success-contact').classList.add('show');
   }
 }
-function submitSupplier(e){
+var _sbClient=window.supabase?window.supabase.createClient('https://kiyoklfuqjzrlrbtxecq.supabase.co','sb_publishable_tLgWMkxbLWUvmluogsBl1w_-8zYPa_8'):null;
+async function submitSupplier(e){
   e.preventDefault();
-  if([req('sa-company','e-sa-company'),req('sa-name','e-sa-name'),emailOk('sa-email','e-sa-email'),req('sa-phone','e-sa-phone'),selOk('sa-cap','e-sa-cap')].every(Boolean)){
-    document.getElementById('form-supplier').style.display='none';
-    document.getElementById('success-supplier').classList.add('show');
-  }
+  var errEl=document.getElementById('error-supplier');
+  errEl.style.display='none';
+  if(![req('sa-company','e-sa-company'),req('sa-name','e-sa-name'),emailOk('sa-email','e-sa-email'),req('sa-phone','e-sa-phone'),selOk('sa-cap','e-sa-cap')].every(Boolean))return;
+  var btn=document.querySelector('#form-supplier button[type=submit]');
+  btn.disabled=true;btn.textContent='Wird gesendet…';
+  var email=document.getElementById('sa-email').value.trim();
+  var tempPw='SO-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,8);
+  function getChecked(container){return Array.from(container.querySelectorAll('input[type=checkbox]:checked')).map(function(c){return c.parentElement.querySelector('span').textContent;});}
+  var formEl=document.getElementById('form-supplier');
+  var matChecks=formEl.querySelectorAll('.form-checks')[0];
+  var regChecks=formEl.querySelectorAll('.form-checks')[1];
+  var certChecks=formEl.querySelector('.form-checks-3');
+  if(!_sbClient){errEl.textContent='Verbindung fehlgeschlagen. Bitte lade die Seite neu.';errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
+  var authRes=await _sbClient.auth.signUp({email:email,password:tempPw});
+  if(authRes.error){errEl.textContent='Registrierung fehlgeschlagen: '+authRes.error.message;errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
+  var uid=authRes.data.user.id;
+  var insRes=await _sbClient.from('suppliers').insert({
+    id:uid,
+    company_name:document.getElementById('sa-company').value.trim(),
+    contact_person:document.getElementById('sa-name').value.trim(),
+    email:email,
+    phone:document.getElementById('sa-phone').value.trim(),
+    website:document.getElementById('sa-web')?document.getElementById('sa-web').value.trim():'',
+    materials:getChecked(matChecks),
+    regions:getChecked(regChecks),
+    annual_capacity:document.getElementById('sa-cap').value,
+    certifications:certChecks?getChecked(certChecks):[],
+    notes:document.getElementById('sa-notes')?document.getElementById('sa-notes').value.trim():'',
+    status:'pending'
+  });
+  if(insRes.error){errEl.textContent='Profil konnte nicht gespeichert werden: '+insRes.error.message;errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
+  formEl.style.display='none';
+  document.getElementById('success-supplier').classList.add('show');
 }
 
 // PROCESS STEP FADE-IN
