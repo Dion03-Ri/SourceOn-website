@@ -2211,7 +2211,9 @@ async function submitSupplier(e){
   if(!_sbClient){errEl.textContent='Verbindung fehlgeschlagen. Bitte lade die Seite neu.';errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
   var authRes=await _sbClient.auth.signUp({email:email,password:tempPw});
   if(authRes.error){errEl.textContent='Registrierung fehlgeschlagen: '+authRes.error.message;errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
-  var uid=authRes.data.user.id;
+  var loginRes=await _sbClient.auth.signInWithPassword({email:email,password:tempPw});
+  if(loginRes.error){errEl.textContent='Automatischer Login fehlgeschlagen: '+loginRes.error.message;errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
+  var uid=loginRes.data.user.id;
   var insRes=await _sbClient.from('suppliers').insert({
     id:uid,
     company_name:document.getElementById('sa-company').value.trim(),
