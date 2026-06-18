@@ -2228,7 +2228,9 @@ async function submitSupplier(e){
   });
   if(insRes.error){errEl.textContent='Profil konnte nicht gespeichert werden: '+insRes.error.message;errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
   formEl.style.display='none';
-  document.getElementById('success-supplier').classList.add('show');
+  var successEl=document.getElementById('success-supplier');
+  successEl.innerHTML='<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.<br><br><strong style="color:#E8A020">Dein temporäres Passwort:</strong> <code style="background:rgba(232,160,32,.12);padding:4px 10px;border-radius:6px;font-size:15px;user-select:all">'+tempPw+'</code><br><span style="font-size:13px;color:#94A3B8">Bitte notiere es dir — nach Verifizierung kannst du dich damit im <a href="supplier-login.html" style="color:#E8A020">Lieferanten-Portal</a> anmelden.</span>';
+  successEl.classList.add('show');
 }
 
 // PROCESS STEP FADE-IN

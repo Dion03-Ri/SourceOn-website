@@ -93,8 +93,16 @@ create policy "Suppliers can read only own bids"
   using (auth.uid() = supplier_id);
 
 -- ============================================================
+-- TEST-DATEN: 2 Beispiel-Ausschreibungen zum Testen
+-- ============================================================
+insert into public.bundles (material_type, total_quantity, unit, delivery_zone, delivery_timeframe, number_of_sites, special_requirements, status, bid_deadline)
+values
+  ('Beton C25/30', '180', 'm³', 'Grossraum Zürich (PLZ 80xx–81xx)', 'KW 28–30, 2026', 3, 'Pumpbeton erforderlich, Anlieferung Mo–Fr 06:00–17:00', 'open', now() + interval '14 days'),
+  ('Armierungsstahl B500B', '24', 'Tonnen', 'Region Bern (PLZ 30xx–31xx)', 'KW 30–32, 2026', 2, null, 'open', now() + interval '21 days');
+
+-- ============================================================
 -- DONE. After running this:
 -- 1. Go to Authentication → Settings → enable email/password signup
 -- 2. To verify a supplier: go to Table Editor → suppliers → change status to 'verified'
--- 3. To create test bundles: insert rows into the bundles table directly
+-- 3. Test bundles are already inserted above
 -- ============================================================
