@@ -864,7 +864,7 @@ let lastScrollY=window.scrollY;
 window.addEventListener('scroll',()=>{
   const nav=document.getElementById('nav');
   const y=window.scrollY;
-  nav.classList.toggle('scrolled',y>40);
+  nav.classList.add('scrolled');
   if(y>140&&y>lastScrollY){nav.classList.add('nav-hidden')}
   else if(y<lastScrollY){nav.classList.remove('nav-hidden')}
   lastScrollY=y;
