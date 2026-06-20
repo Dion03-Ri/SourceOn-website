@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>SourceOn — Du zahlst erst, wenn wir dir sparen.</title>
+<title>Über uns — SourceOn</title>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -713,159 +713,29 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   </div>
 </div>
 
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-mesh"></div>
-  <div class="hero-dots"></div>
-  <div class="hero-content">
-    <h1 class="hero-h1" id="hero-h1">Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span></h1>
-    <p class="hero-sub">Schweizer Baufirmen sparen bis zu 30% beim Materialeinkauf — ohne Risiko, ohne Vorauskosten.</p>
-    <div class="hero-btns">
-      <button class="btn btn-gold btn-lg" onclick="smoothScrollToEl(document.getElementById('contact'))">Materialbedarf melden</button>
-      <a href="#process" class="btn btn-outline-w btn-lg">Wie es funktioniert →</a>
-    </div>
-  </div>
-  <div class="hero-chevron" onclick="smoothScrollToEl(document.getElementById('story'))">↓</div>
-</section>
-
-
-<!-- WORD REVEAL -->
-<section id="story" class="story-section">
+<section id="about" class="section">
   <div class="container">
-    <p class="story-sentence" id="story-sentence">Kauft eine Baufirma alleine ein, hat sie nur ihr eigenes Volumen als Verhandlungsbasis — und erhält dafür meist nur durchschnittliche Konditionen vom Lieferanten. SourceOn bündelt den Bedarf mehrerer Baufirmen zu einem gemeinsamen Auftrag und erzielt mit dieser Marktmacht deutlich bessere Preise — den Rabatt einer Grossbestellung, weitergegeben an jede einzelne Firma.</p>
-  </div>
-</section>
-
-<!-- CALCULATOR -->
-<section id="calculator">
-  <div class="container">
-    <div class="text-center reveal" style="margin-bottom:56px">
-      <div class="label label-dark">Kalkulator</div>
-      <h2 class="h2" style="color:#fff">Wie viel könntest du sparen?</h2>
-      <p class="subtitle subtitle-dark" style="margin-top:14px">Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.</p>
-    </div>
-    <div class="calc-layout">
-      <div class="reveal reveal-d1">
-        <div class="calc-vol-display" id="calc-display">CHF 150'000</div>
-        <div class="calc-slider-wrap">
-          <input type="range" id="calc-slider" min="0" max="100" value="18" step="0.1" style="--pct:18%"/>
-        </div>
-        <div class="calc-range-labels"><span>CHF 50'000</span><span>CHF 10'000'000</span></div>
-        <input type="text" class="calc-text-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" value="150'000"/>
-        <p style="font-size:.75rem;color:var(--muted);font-style:italic;margin-top:8px">Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.</p>
-        <div class="calc-tier-label">Ø Rabatt: <span class="calc-tier-rate" id="calc-rate">10%</span></div>
-      </div>
-      <div class="reveal reveal-d2">
-        <div class="calc-card">
-          <div class="calc-row-gross">
-            <div class="calc-row-label">Bruttoersparnis (vor Provision)</div>
-            <div class="calc-row-val" id="calc-gross">CHF 15'000</div>
-          </div>
-          <div class="calc-divider"></div>
-          <div class="calc-row-net">
-            <div class="calc-row-label">Netto-Einsparpotenzial (nach Provision)</div>
-            <div class="calc-row-val" id="calc-net">CHF 11'625</div>
-          </div>
-          <div class="calc-cta">
-            <button class="btn btn-gold btn-lg btn-full" onclick="window.location.href='kontakt.html'">Materialbedarf melden — kostenlos</button>
-          </div>
-          <p class="calc-disclaimer">Unverbindliche Schätzung basierend auf Schweizer Marktdaten. Potenzielle Einsparungen variieren je nach Material, Volumen und Lieferant.</p>
-          <p class="calc-footnote">* Ab CHF 500'000 Jahresvolumen individuelle Konditionen möglich.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- BIG NUMBER -->
-<section id="bignum" class="bignum-section">
-  <div class="container">
-    <div class="bignum-figure">40–70%</div>
-    <p class="bignum-caption">So viel der Gesamtkosten einer Baufirma sind reine Materialkosten.<br><a href="#calculator" class="bignum-cta">Berechne, wie viel du mit SourceOn sparen kannst →</a></p>
-  </div>
-</section>
-
-
-<!-- TECHNOLOGIE -->
-<section id="technologie" class="section tech-section">
-  <div class="container">
-    <div class="tech-layout">
+    <div class="about-layout">
       <div>
-        <div class="label">Technologie</div>
-        <h2 class="h2" style="margin-top:0;margin-bottom:16px;color:#fff">Die Maschine hinter<br>jedem Angebot.</h2>
-        <p class="subtitle" style="color:rgba(255,255,255,.6);margin-bottom:20px">Unsere Engine analysiert Marktpreise in Echtzeit und erkennt Optimierungspotenziale in Ihren Einkaufsdaten — bevor Sie überhaupt anfragen.</p>
-        <p style="font-size:15px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:28px">Über 340 Lieferantendatenpunkte werden täglich aktualisiert. Ihre Anfragen werden mit historischen Preisen abgeglichen, um die bestmöglichen Konditionen zu identifizieren.</p>
-        <a href="kontakt.html" class="btn btn-gold btn-lg">Analyse anfragen</a>
+        <div class="about-left-card">
+          <p class="about-quote">"Der Schweizer Baumarkt ist fragmentiert. SourceOn schafft die Bündelungsmacht, die KMU alleine nicht haben."</p>
+          <div class="about-attr">— SourceOn, Zürich</div>
+          <div class="about-badges">
+            <span class="about-badge">Gegründet in der Schweiz</span>
+            <span class="about-badge"><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Kein Risiko für Kunden</span>
+          </div>
+        </div>
       </div>
-      <div class="engine-stage" id="engine-stage">
-        <svg class="engine-svg" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <pattern id="dieGrid" width="14" height="14" patternUnits="userSpaceOnUse">
-              <path d="M0 0H14M0 0V14" stroke="rgba(232,160,32,.18)" stroke-width="1"/>
-            </pattern>
-            <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stop-color="#FFE3A0"/>
-              <stop offset="45%" stop-color="#E8A020"/>
-              <stop offset="100%" stop-color="#E8A020" stop-opacity="0"/>
-            </radialGradient>
-            <linearGradient id="scanGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#E8A020" stop-opacity="0"/>
-              <stop offset="50%" stop-color="#FFE3A0" stop-opacity=".85"/>
-              <stop offset="100%" stop-color="#E8A020" stop-opacity="0"/>
-            </linearGradient>
-            <filter id="glowBlur" x="-100%" y="-100%" width="300%" height="300%">
-              <feGaussianBlur stdDeviation="6"/>
-            </filter>
-          </defs>
-
-          <circle class="chip-ring chip-ring-1" cx="300" cy="200" r="118"/>
-          <circle class="chip-ring chip-ring-2" cx="300" cy="200" r="142"/>
-
-          <!-- circuit traces (Manhattan-routed, radiating from chip) -->
-          <path id="trT1" class="chip-trace gold" d="M255,40 L255,110 L265,110 L265,130"/>
-          <path id="trT2" class="chip-trace gold" d="M300,40 L300,110 L300,110 L300,130"/>
-          <path id="trT3" class="chip-trace gold" d="M345,40 L345,110 L335,110 L335,130"/>
-          <path id="trB1" class="chip-trace gold" d="M255,360 L255,290 L265,290 L265,270"/>
-          <path id="trB2" class="chip-trace green" d="M300,270 L300,290 L300,290 L300,360"/>
-          <path id="trB3" class="chip-trace gold" d="M345,360 L345,290 L335,290 L335,270"/>
-          <path id="trL1" class="chip-trace gold" d="M140,155 L210,155 L210,165 L230,165"/>
-          <path id="trL2" class="chip-trace gold" d="M140,200 L210,200 L210,200 L230,200"/>
-          <path id="trL3" class="chip-trace gold" d="M140,245 L210,245 L210,235 L230,235"/>
-          <path id="trR1" class="chip-trace gold" d="M460,155 L390,155 L390,165 L370,165"/>
-          <path id="trR2" class="chip-trace gold" d="M460,200 L390,200 L390,200 L370,200"/>
-          <path id="trR3" class="chip-trace gold" d="M460,245 L390,245 L390,235 L370,235"/>
-
-          <!-- traveling signal pulses -->
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.6s" begin="indefinite" class="chipAnim" repeatCount="indefinite"><mpath href="#trT1"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.9s" begin="indefinite" class="chipAnim" repeatCount="indefinite"><mpath href="#trT2"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.7s" begin="indefinite" class="chipAnim" repeatCount="indefinite"><mpath href="#trT3"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="2s" begin="indefinite" class="chipAnim" repeatCount="indefinite"><mpath href="#trL1"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.5s" begin="indefinite" class="chipAnim" repeatCount="indefinite"><mpath href="#trL2"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.8s" begin="indefinite" class="chipAnim" repeatCount="indefinite"><mpath href="#trL3"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.6s" begin="indefinite" class="chipAnim" repeatCount="indefinite"><mpath href="#trR1"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.9s" begin="indefinite" class="chipAnim" repeatCount="indefinite"><mpath href="#trR2"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.7s" begin="indefinite" class="chipAnim" repeatCount="indefinite"><mpath href="#trR3"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="2.1s" begin="indefinite" class="chipAnim" repeatCount="indefinite"><mpath href="#trB1"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.6s" begin="indefinite" class="chipAnim" repeatCount="indefinite"><mpath href="#trB3"/></animateMotion></circle>
-          <circle class="chip-pulse green" r="4.2"><animateMotion dur="1.1s" begin="indefinite" class="chipAnim" repeatCount="indefinite"><mpath href="#trB2"/></animateMotion></circle>
-
-          <!-- outer glow under chip -->
-          <circle class="chip-underglow" cx="300" cy="200" r="90" fill="url(#coreGlow)"/>
-
-          <!-- chip body -->
-          <rect class="chip-body" x="230" y="130" width="140" height="140" rx="14"/>
-          <rect class="chip-die" x="244" y="144" width="112" height="112" rx="6" fill="url(#dieGrid)"/>
-          <rect class="chip-scan" x="244" y="144" width="112" height="20" fill="url(#scanGrad)"/>
-          <rect class="chip-core" x="284" y="184" width="32" height="32" rx="6"/>
-
-          <!-- status LEDs -->
-          <circle class="chip-led" cx="230" cy="130" r="3" style="animation-delay:.1s"/>
-          <circle class="chip-led" cx="370" cy="130" r="3" style="animation-delay:.5s"/>
-          <circle class="chip-led" cx="370" cy="270" r="3" style="animation-delay:.9s"/>
-          <circle class="chip-led" cx="230" cy="270" r="3" style="animation-delay:1.3s"/>
-        </svg>
+      <div>
+        <div class="label">Über uns</div>
+        <h2 class="h2">Bündelungsmacht für alle Baufirmen.</h2>
+        <p style="font-size:.92rem;color:var(--body);line-height:1.75;margin-top:16px;margin-bottom:24px">SourceOn wurde mit einer einfachen Überzeugung gegründet: Zu viele Baufirmen — vom KMU bis zum Grosskonzern — zahlen mehr als nötig für Baumaterial. Nicht weil es keine günstigeren Preise gibt, sondern weil sie alleine zu wenig Volumen haben um sie zu bekommen. Wir ändern das — für alle.</p>
+        <div class="about-features">
+          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><strong>Erfolgsbasiertes Modell</strong><span>Du zahlst nur, wenn dir gespart wird</span></div></div>
+          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><strong>Schweizer Qualitätsstandards</strong><span>SIA/ISO-konforme Lieferanten, SN EN Normen</span></div></div>
+          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div><strong>Schnelle Abwicklung</strong><span>Erste Angebote innerhalb von 48 Stunden</span></div></div>
+          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><strong>Persönliche Betreuung</strong><span>Direkter Ansprechpartner für jede Anfrage</span></div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -873,70 +743,59 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 
 
-
-
-<section id="bundling" style="background:radial-gradient(ellipse 90% 70% at 50% 0%,#15314f 0%,#0F2238 55%);position:relative;overflow:hidden;padding:140px 0">
-  <div style="text-align:center;padding:0 0 56px;position:relative;z-index:2" class="reveal">
-    <div class="label label-dark">BÜNDELUNG VISUALISIERT</div>
-    <h2 class="h2" style="color:#fff;margin-top:0;margin-bottom:16px">Beschaffung auf dem nächsten Level.</h2>
-    <p class="subtitle subtitle-dark" style="margin:0 auto">Sieh wie SourceOn Materialbedarf bündelt und Mengenrabatte erzielt.</p>
-  </div>
-  <div style="max-width:1100px;margin:0 auto;padding:0 24px">
-    <div id="webgl-wrap" style="width:100%;height:600px;position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 0 1px rgba(232,160,32,.15)">
-      <canvas id="bundling-canvas" style="display:block;width:100%;height:100%"></canvas>
-    </div>
-  </div>
-  <div style="text-align:center;padding:32px 0 0;position:relative;z-index:2">
-    <p style="font-size:.85rem;color:#94A3B8;font-style:italic;padding:0 20px">SourceOn verbindet Baufirmen mit Lieferanten.</p>
-  </div>
-</section>
-
-
-<!-- EXPLORE -->
-<section class="section" style="background:var(--dark);padding:100px 0">
+<!-- FAQ -->
+<section id="faq" class="section">
   <div class="container">
-    <div class="text-center reveal" style="margin-bottom:48px">
-      <div class="label label-dark">Entdecken</div>
-      <h2 class="h2" style="color:#fff">Alles über SourceOn.</h2>
+    <div class="text-center reveal">
+      <div class="label label-dark">FAQ</div>
+      <h2 class="h2" style="color:#fff">Häufig gestellte Fragen.</h2>
+      <p class="subtitle subtitle-dark" style="margin-top:14px">Alles was du über SourceOn wissen musst — klar und direkt.</p>
     </div>
-    <div class="nav-card-grid reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
-      <a href="prozess.html" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px 28px;text-decoration:none;transition:border-color .3s,background .3s,transform .3s">
-        <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px">Wie es funktioniert</h3>
-        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px">Vier Schritte vom Bedarf bis zur Lieferung — und warum es sich lohnt.</p>
-        <span style="font-size:.82rem;color:var(--gold);font-weight:600">Mehr erfahren →</span>
-      </a>
-      <a href="materialien.html" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px 28px;text-decoration:none;transition:border-color .3s,background .3s,transform .3s">
-        <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l9-3 9 3v12l-9 3-9-3V6z"/></svg></div>
-        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px">Materialien &amp; Lieferanten</h3>
-        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px">50+ Baustoffe, geprüfte Partnerlieferanten in der ganzen Schweiz.</p>
-        <span style="font-size:.82rem;color:var(--gold);font-weight:600">Mehr erfahren →</span>
-      </a>
-      <a href="fuer-wen.html" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px 28px;text-decoration:none;transition:border-color .3s,background .3s,transform .3s">
-        <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px">Für wen</h3>
-        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px">Bauunternehmen, Handwerker, Investoren und Architekten.</p>
-        <span style="font-size:.82rem;color:var(--gold);font-weight:600">Mehr erfahren →</span>
-      </a>
-      <a href="lieferant.html" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px 28px;text-decoration:none;transition:border-color .3s,background .3s,transform .3s">
-        <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px">Lieferant werden</h3>
-        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px">Verifizierter SourceOn-Partner werden und Zugang zu gebündelten Aufträgen erhalten.</p>
-        <span style="font-size:.82rem;color:var(--gold);font-weight:600">Jetzt bewerben →</span>
-      </a>
+    <div class="faq-cols">
+    <div class="faq-col">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Was kostet mich SourceOn wenn ich nichts spare?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a" style="max-height:200px"><div class="faq-a-inner">Gar nichts. SourceOn verlangt ausschliesslich eine Provision von 2.25% auf den Materialwert — und das nur dann, wenn wir dir tatsächlich günstiger einkaufen als dein bisheriger Preis. Sparst du nichts, zahlst du nichts. Kein Abo, keine Fixgebühr, kein Risiko.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Wie lange dauert es bis ich ein Angebot bekomme?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">In der Regel erhältst du innerhalb von 48 Stunden ein konkretes Angebot. Bei Standardmaterialien wie Beton oder Armierungsstahl oft schneller. Bei komplexen oder grossen Bestellungen kann es etwas länger dauern — du wirst immer proaktiv informiert.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Muss ich einen Vertrag unterschreiben?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Für den ersten Auftrag reicht eine einfache Auftragsbestätigung. Für eine langfristige Zusammenarbeit schliessen wir eine Vermittlungsvereinbarung ab — diese schützt beide Seiten und regelt die Provision transparent.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Was passiert wenn die Lieferung fehlerhaft ist?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">SourceOn ist Vermittler, kein Händler. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Bei Mängeln haftet der Lieferant direkt dir gegenüber gemäss Schweizer OR. Wir unterstützen dich bei der Kommunikation mit dem Lieferanten.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Für welche Materialien ist SourceOn geeignet?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">SourceOn deckt alle wichtigen Baustoffe ab: Beton, Armierungsstahl, Kies &amp; Splitt, Mauerwerk, Dämmung, Schalung, Mörtel, Sanitär &amp; HLKS und weitere. Auch Sondermaterialien können auf Anfrage beschafft werden.</div></div>
+      </div>
+          </div>
+    <div class="faq-col">
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Ab welchem Bestellvolumen lohnt sich SourceOn?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">SourceOn ist ab einem Jahresvolumen von rund CHF 50'000 sinnvoll. Je höher dein Volumen, desto grösser der Bündelungseffekt und desto mehr kannst du sparen. Nutze unseren Rechner um dein persönliches Einsparpotenzial zu berechnen.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Wird das Material direkt auf meine Baustelle geliefert?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Ja — immer. Der Lieferant liefert direkt auf deine Baustelle. Es gibt keine Zwischenlagerung bei SourceOn. Du koordinierst den Lieferzeitpunkt direkt mit SourceOn, wir leiten alles weiter.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Wie funktioniert die Vergabe an Lieferanten?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">SourceOn veröffentlicht gebündelte Materialpakete für verifizierte Partnerlieferanten. Diese reichen ein verdecktes Angebot ein — sie sehen die Angebote anderer Lieferanten nicht. Die Vergabe berücksichtigt Preis, Lieferfähigkeit und Zuverlässigkeit. Exakte Lieferadressen werden erst nach Zuschlag freigegeben, um die Identität der beteiligten Baufirmen während der Ausschreibung zu schützen.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Sind meine Standortdaten und Kundendaten geschützt?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Ja. Während einer Ausschreibung sehen Lieferanten nur das Liefergebiet als Zone, nicht die genaue Adresse. Konkrete Lieferadressen und Kundendaten werden erst nach verbindlichem Zuschlag freigegeben. So bleibt die Identität der beteiligten Baufirmen geschützt, bis der Auftrag fix vereinbart ist.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Kann ich SourceOn auch als Grossunternehmen nutzen?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Absolut. Obwohl unsere Kernzielgruppe KMU-Baufirmen sind, profitieren auch Generalunternehmer und Grosskonzerne von unserem Netzwerk und unserer Verhandlungsmacht. Ab CHF 500'000 Jahresvolumen bieten wir individuelle Konditionen an.</div></div>
+      </div>
     </div>
-  </div>
-</section>
-
-
-<!-- CTA BANNER -->
-<section id="cta-banner">
-  <div class="container" style="position:relative;z-index:1">
-    <h2 class="cta-title">Bereit für tiefere Einkaufspreise?</h2>
-    <p class="cta-sub">Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
-    <div class="cta-btns">
-      <button class="btn btn-gold btn-lg" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
-      <a href="mailto:info@SourceOn.ch" class="btn btn-outline-w btn-lg">info@SourceOn.ch</a>
     </div>
   </div>
 </section>
@@ -984,305 +843,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script>
-(function(){
-  var wrap=document.getElementById('webgl-wrap');
-  var canvas=document.getElementById('bundling-canvas');
-  if(!wrap||!canvas||typeof THREE==='undefined')return;
-
-  var isMobile=window.innerWidth<640;
-  var H=isMobile?400:600;
-  var W=wrap.offsetWidth||window.innerWidth;
-  wrap.style.height=H+'px';
-  canvas.style.height=H+'px';
-
-  var scene=new THREE.Scene();
-  scene.background=new THREE.Color(0x0F2238);
-
-  var camera=new THREE.PerspectiveCamera(50,W/H,0.1,300);
-  camera.position.set(0,4,14);
-  camera.lookAt(0,0,0);
-
-  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-  renderer.setSize(W,H);
-
-  /* Lighting */
-  scene.add(new THREE.AmbientLight(0x1B3A5C,1.2));
-  var goldLight=new THREE.PointLight(0xE8A020,2.5,30);
-  goldLight.position.set(0,0,0);
-  scene.add(goldLight);
-  var dirLight=new THREE.DirectionalLight(0xffffff,0.6);
-  dirLight.position.set(6,10,5);
-  scene.add(dirLight);
-
-  /* Stars */
-  var sCnt=200,sBuf=new Float32Array(sCnt*3);
-  for(var i=0;i<sCnt*3;i++)sBuf[i]=(Math.random()-.5)*100;
-  var sGeo=new THREE.BufferGeometry();
-  sGeo.setAttribute('position',new THREE.BufferAttribute(sBuf,3));
-  var stars=new THREE.Points(sGeo,new THREE.PointsMaterial({color:0xffffff,size:0.1,transparent:true,opacity:0.55}));
-  scene.add(stars);
-
-  /* Sprite label helper */
-  function mkLabel(txt,col,sz){
-    var c=document.createElement('canvas');
-    c.width=320;c.height=72;
-    var ctx=c.getContext('2d');
-    ctx.font='bold '+(sz||24)+'px Inter,sans-serif';
-    ctx.fillStyle=col||'#ffffff';
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(txt,160,36);
-    var tex=new THREE.CanvasTexture(c);
-    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false}));
-    sp.scale.set(4.2,0.95,1);
-    return sp;
-  }
-
-  /* Positions */
-  var restPos=[
-    new THREE.Vector3(-3.8,0,2.2),
-    new THREE.Vector3(3.8,0,2.2),
-    new THREE.Vector3(-1.2,0,-3.2)
-  ];
-  var startPos=[
-    new THREE.Vector3(-16,4,10),
-    new THREE.Vector3(16,4,10),
-    new THREE.Vector3(-9,-5,-14)
-  ];
-
-  /* Company boxes */
-  var boxGeo=new THREE.BoxGeometry(1.6,1.1,1.6);
-  var boxes=[],boxLabels=[],boxNames=[];
-  var BLABELS=['80 m³ Beton','60 m³ Beton','40 m³ Beton'];
-  var BNAMES=['Firma A','Firma B','Firma C'];
-  for(var i=0;i<3;i++){
-    var bmat=new THREE.MeshPhongMaterial({color:0x1a4a8a,emissive:0x0d2d5a,transparent:true,opacity:0});
-    var bm=new THREE.Mesh(boxGeo,bmat);
-    bm.position.copy(startPos[i]);
-    bm.visible=false;
-    scene.add(bm);
-    boxes.push(bm);
-    var lb=mkLabel(BLABELS[i],'#E8A020',22);
-    lb.position.set(0,1.3,0);lb.visible=false;bm.add(lb);boxLabels.push(lb);
-    var ln=mkLabel(BNAMES[i],'#ffffff',20);
-    ln.position.set(0,0.85,0);ln.visible=false;bm.add(ln);boxNames.push(ln);
-  }
-
-  /* Central SourceOn sphere */
-  var sphere=new THREE.Mesh(
-    new THREE.SphereGeometry(0.9,32,32),
-    new THREE.MeshPhongMaterial({color:0xE8A020,emissive:0xb06000,transparent:true,opacity:0})
-  );
-  sphere.visible=false;
-  scene.add(sphere);
-  var sphereLbl=mkLabel('SourceOn','#E8A020',28);
-  sphereLbl.position.set(0,1.7,0);
-  sphere.add(sphereLbl);
-
-  /* Green Lieferant box */
-  var greenBox=new THREE.Mesh(
-    new THREE.BoxGeometry(2.2,1.6,1.6),
-    new THREE.MeshPhongMaterial({color:0x16a34a,emissive:0x0a5c28,transparent:true,opacity:0})
-  );
-  greenBox.position.set(7.5,0,0);
-  greenBox.visible=false;
-  scene.add(greenBox);
-  var gLbl=mkLabel('180 m³ — 12% Rabatt','#4ade80',20);
-  gLbl.position.set(0,1.5,0);gLbl.visible=false;greenBox.add(gLbl);
-  var gName=mkLabel('Lieferant','#ffffff',20);
-  gName.position.set(0,0.9,0);gName.visible=false;greenBox.add(gName);
-
-  /* Beam sphere→lieferant */
-  var beam=new THREE.Mesh(
-    new THREE.CylinderGeometry(0.07,0.07,7.5,8),
-    new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0})
-  );
-  beam.rotation.z=Math.PI/2;
-  beam.position.set(3.75,0,0);
-  beam.visible=false;
-  scene.add(beam);
-
-  /* Flow particles */
-  var PCNT=120,pBuf=new Float32Array(PCNT*3);
-  var pGeo=new THREE.BufferGeometry();
-  pGeo.setAttribute('position',new THREE.BufferAttribute(pBuf,3));
-  var particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.13,transparent:true,opacity:0}));
-  scene.add(particles);
-
-  /* Explosion particles */
-  var ECNT=100,eBuf=new Float32Array(ECNT*3);
-  var eGeo=new THREE.BufferGeometry();
-  eGeo.setAttribute('position',new THREE.BufferAttribute(eBuf,3));
-  var eVel=[];
-  for(var i=0;i<ECNT;i++){
-    var th=Math.random()*Math.PI*2,ph=Math.random()*Math.PI;
-    eVel.push(new THREE.Vector3(
-      Math.sin(ph)*Math.cos(th),Math.sin(ph)*Math.sin(th),Math.cos(ph)
-    ).multiplyScalar(.07+Math.random()*.1));
-  }
-  var explParts=new THREE.Points(eGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.11,transparent:true,opacity:0}));
-  scene.add(explParts);
-
-  /* Savings sprites */
-  var SAV_TEXTS=["+CHF 5'850","+CHF 4'388","+CHF 2'925"];
-  var savSprites=SAV_TEXTS.map(function(t,i){
-    var s=mkLabel(t,'#E8A020',22);
-    s.position.copy(restPos[i]);s.position.y+=2;
-    s.visible=false;scene.add(s);return s;
-  });
-
-  /* Checkmarks */
-  var checkSprites=restPos.map(function(p){
-    var s=mkLabel('✓','#4ade80',36);
-    s.position.copy(p);s.position.y+=1.6;
-    s.visible=false;scene.add(s);return s;
-  });
-
-  /* Mouse parallax */
-  var mx=0,my=0,camRX=0,camRY=0;
-  wrap.addEventListener('mousemove',function(e){
-    var r=wrap.getBoundingClientRect();
-    mx=(e.clientX-r.left)/r.width-.5;
-    my=(e.clientY-r.top)/r.height-.5;
-  });
-
-  function lerp(a,b,t){return a+(b-a)*t;}
-  function eOut(t){return 1-Math.pow(1-Math.min(1,t),3);}
-
-  var t0=performance.now();
-  function animate(){
-    requestAnimationFrame(animate);
-    var now=(performance.now()-t0)/1000;
-    var cy=now%8;
-
-    stars.rotation.y=now*.025;stars.rotation.x=now*.008;
-    sphere.rotation.y=now*.3;
-
-    camRX=lerp(camRX,-my*.08,.05);
-    camRY=lerp(camRY,mx*.08,.05);
-    camera.position.x=Math.sin(camRY)*14;
-    camera.position.y=4+camRX*6;
-    camera.position.z=Math.cos(camRY)*14;
-    camera.lookAt(0,0,0);
-
-    goldLight.intensity=2+Math.sin(now*2.5)*.6;
-
-    function hideAll(){
-      boxes.forEach(function(b){b.visible=false;});
-      sphere.visible=false;greenBox.visible=false;beam.visible=false;
-      particles.material.opacity=0;explParts.material.opacity=0;
-      savSprites.forEach(function(s){s.visible=false;});
-      checkSprites.forEach(function(s){s.visible=false;});
-    }
-
-    /* Phase 1: 0-2s — boxes fly in */
-    if(cy<2){
-      hideAll();
-      var t=cy/2;
-      for(var i=0;i<3;i++){
-        var delay=i*.2,lt=eOut(Math.max(0,(t-delay*.5)/.8));
-        boxes[i].visible=true;
-        boxes[i].position.lerpVectors(startPos[i],restPos[i],lt);
-        boxes[i].material.opacity=lt*.85;
-        boxes[i].rotation.y=(1-lt)*Math.PI*.4;
-        var vis=lt>.25;boxLabels[i].visible=vis;boxNames[i].visible=vis;
-      }
-    }
-    /* Phase 2: 2-4s — sphere + particles */
-    else if(cy<4){
-      var t=(cy-2)/2;
-      for(var i=0;i<3;i++){
-        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
-        boxes[i].material.opacity=.85;boxes[i].rotation.y=0;
-        boxLabels[i].visible=true;boxNames[i].visible=true;
-      }
-      sphere.visible=true;
-      sphere.material.opacity=eOut(Math.min(1,t*4));
-      sphere.scale.setScalar(1+Math.sin(t*Math.PI*4)*.07+t*.12);
-      sphereLbl.visible=t>.1;
-      greenBox.visible=false;beam.visible=false;explParts.material.opacity=0;
-      savSprites.forEach(function(s){s.visible=false;});
-      checkSprites.forEach(function(s){s.visible=false;});
-      if(t>.1){
-        particles.material.opacity=Math.min(1,(t-.1)*4)*.75;
-        var pa=pGeo.getAttribute('position');
-        for(var i=0;i<PCNT;i++){
-          var si2=i%3,src=restPos[si2];
-          var frac=((i/PCNT)+t*1.8)%1;
-          pa.setXYZ(i,lerp(src.x,0,frac)+(Math.random()-.5)*.15,lerp(src.y,0,frac),lerp(src.z,0,frac)+(Math.random()-.5)*.15);
-        }
-        pa.needsUpdate=true;
-      } else particles.material.opacity=0;
-    }
-    /* Phase 3: 4-6s — explosion + lieferant */
-    else if(cy<6){
-      var t=(cy-4)/2;
-      for(var i=0;i<3;i++){
-        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
-        boxes[i].material.opacity=.85;
-        boxLabels[i].visible=true;boxNames[i].visible=true;
-      }
-      sphere.visible=true;sphere.material.opacity=.9;
-      sphere.scale.setScalar(1+t*.08);sphereLbl.visible=true;
-      particles.material.opacity=0;
-      if(t<.5){
-        var ef=1-t/.5;
-        explParts.material.opacity=ef*.85;
-        var ea=eGeo.getAttribute('position');
-        for(var i=0;i<ECNT;i++){var d=t*10;ea.setXYZ(i,eVel[i].x*d,eVel[i].y*d,eVel[i].z*d);}
-        ea.needsUpdate=true;
-      } else explParts.material.opacity=0;
-      var ap=eOut(Math.max(0,(t-.25)/.4));
-      greenBox.visible=true;greenBox.material.opacity=ap*.85;
-      greenBox.scale.setScalar(ap+.001);
-      gLbl.visible=ap>.3;gName.visible=ap>.3;
-      beam.visible=ap>.1;beam.material.opacity=ap*.7;
-      savSprites.forEach(function(s){s.visible=false;});
-      checkSprites.forEach(function(s){s.visible=false;});
-    }
-    /* Phase 4: 6-8s — savings + fade out */
-    else{
-      var t=(cy-6)/2;
-      var fa=Math.max(0,1-(t-.75)/.25);
-      for(var i=0;i<3;i++){
-        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
-        boxes[i].material.opacity=.85*fa;
-        boxLabels[i].visible=fa>.1;boxNames[i].visible=fa>.1;
-      }
-      sphere.visible=fa>.05;sphere.material.opacity=.9*fa;sphereLbl.visible=fa>.1;
-      greenBox.visible=fa>.05;greenBox.material.opacity=.85*fa;
-      gLbl.visible=fa>.2;gName.visible=fa>.2;
-      beam.visible=fa>.05;beam.material.opacity=.7*fa;
-      particles.material.opacity=0;explParts.material.opacity=0;
-      for(var i=0;i<3;i++){
-        var dl=i*.12,lt=eOut(Math.max(0,(t-dl)*5));
-        var sf=lt*(1-Math.max(0,(t-.65)/.3));
-        savSprites[i].visible=lt>.0;
-        savSprites[i].position.copy(restPos[i]);savSprites[i].position.y=2+lt*1.8;
-        if(savSprites[i].material)savSprites[i].material.opacity=sf;
-        var cl=eOut(Math.max(0,(t-dl)*.5*5));
-        checkSprites[i].visible=cl>.0;
-        checkSprites[i].position.copy(restPos[i]);checkSprites[i].position.y=1.6;
-        if(checkSprites[i].material)checkSprites[i].material.opacity=cl*fa;
-      }
-    }
-
-    renderer.render(scene,camera);
-  }
-  animate();
-
-  window.addEventListener('resize',function(){
-    var nW=wrap.offsetWidth,nH=window.innerWidth<640?400:600;
-    wrap.style.height=nH+'px';canvas.style.height=nH+'px';
-    camera.aspect=nW/nH;camera.updateProjectionMatrix();
-    renderer.setSize(nW,nH);
-  });
-})();
-</script>
-
 <script>
 // SMOOTH ANCHOR SCROLL
 function easeOutExpo(t){return t===1?1:1-Math.pow(2,-10*t);}
@@ -1326,46 +886,6 @@ function toggleNav(){
   document.body.style.overflow=o.classList.contains('open')?'hidden':'';
 }
 
-// STORY SENTENCE SCROLL REVEAL
-(function(){
-  const el=document.getElementById('story-sentence');
-  if(!el)return;
-  const text=el.textContent;
-  el.innerHTML=text.split(' ').map(w=>'<span class="word">'+w+'</span>').join(' ');
-  const words=el.querySelectorAll('.word');
-  function update(){
-    const rect=el.parentElement.parentElement.getBoundingClientRect();
-    const vh=window.innerHeight;
-    const progress=Math.min(1,Math.max(0,(vh*0.8-rect.top)/(rect.height-vh*0.2)));
-    const litCount=Math.round(progress*words.length);
-    words.forEach((w,i)=>w.classList.toggle('lit',i<litCount));
-  }
-  window.addEventListener('scroll',update,{passive:true});
-  update();
-})();
-
-// HERO HEADLINE WORD STAGGER
-(function(){
-  const h=document.getElementById('hero-h1');
-  if(!h)return;
-  function wrapWords(node){
-    if(node.nodeType===3){
-      const words=node.textContent.split(/(\s+)/);
-      const frag=document.createDocumentFragment();
-      words.forEach(w=>{
-        if(/\S/.test(w)){const s=document.createElement('span');s.className='hw';s.textContent=w;frag.appendChild(s);}
-        else if(w){frag.appendChild(document.createTextNode(w));}
-      });
-      node.parentNode.replaceChild(frag,node);
-    } else if(node.nodeType===1&&node.nodeName!=='SCRIPT'){
-      [...node.childNodes].forEach(wrapWords);
-    }
-  }
-  wrapWords(h);
-  const spans=h.querySelectorAll('.hw');
-  spans.forEach((s,i)=>setTimeout(()=>s.classList.add('in'),100+i*150));
-})();
-
 // SCROLL REVEAL
 const ro=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});
@@ -1385,88 +905,27 @@ function countEl(el,dur){
     },16);
   }
 }
-document.querySelectorAll('.hero-stats [data-count]').forEach(el=>countEl(el,2000));
 const co=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){countEl(e.target);co.unobserve(e.target);}});
 },{threshold:0.3});
-document.querySelectorAll('[data-count]').forEach(el=>{
-  if(!el.closest('.hero-stats'))co.observe(el);
-});
+document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
 
-// CALCULATOR
-const MIN_V=50000,MAX_V=10000000;
-const TIERS=[
-  {max:150000,rate:.07},{max:300000,rate:.10},{max:600000,rate:.13},
-  {max:1200000,rate:.16},{max:3000000,rate:.20},{max:6000000,rate:.24},{max:Infinity,rate:.28}
-];
-function posToVal(p){return Math.round(MIN_V*Math.pow(MAX_V/MIN_V,p/100)/1000)*1000;}
-function valToPos(v){return Math.log(v/MIN_V)/Math.log(MAX_V/MIN_V)*100;}
-function getTier(v){return TIERS.find(t=>v<=t.max)||TIERS[TIERS.length-1];}
-function fmtChf(n){return'CHF '+Math.round(n).toLocaleString('de-CH');}
-let animTimer=null;
-function animateNum(id,target){
-  if(animTimer)clearInterval(animTimer);
-  const el=document.getElementById(id);const t0=performance.now();
-  animTimer=setInterval(()=>{
-    const p=Math.min(1,(performance.now()-t0)/600);
-    el.textContent=fmtChf(target*(1-Math.pow(1-p,3)));
-    if(p>=1)clearInterval(animTimer);
-  },16);
-}
-function updateCalc(v,fromSlider){
-  v=Math.max(MIN_V,fromSlider?Math.min(MAX_V,v):v);
-  const tier=getTier(v);
-  const gross=v*tier.rate,net=gross-v*0.0225;
-  document.getElementById('calc-display').textContent=fmtChf(v);
-  if(fromSlider)document.getElementById('calc-input').value=Math.round(v).toLocaleString('de-CH');
-  document.getElementById('calc-rate').textContent=Math.round(tier.rate*100)+'%';
-  document.getElementById('calc-gross').textContent=fmtChf(gross);
-  animateNum('calc-net',net);
-  const pos=valToPos(Math.min(v,MAX_V));
-  const sl=document.getElementById('calc-slider');
-  sl.value=pos;sl.style.setProperty('--pct',pos+'%');
-}
-document.getElementById('calc-slider').addEventListener('input',function(){
-  this.style.setProperty('--pct',this.value+'%');updateCalc(posToVal(+this.value),true);
-});
-document.getElementById('calc-input').addEventListener('input',function(){
-  const v=parseInt(this.value.replace(/['\s.,]/g,''),10);
-  if(!isNaN(v)&&v>=MIN_V)updateCalc(v,false);
-});
-updateCalc(150000);
-
-// BUNDLING DIAGRAM ANIMATION
-const bdObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.currentTarget.querySelectorAll('.bd-company,.bd-SourceOn-card,.bd-lieferant-card').forEach(el=>el.classList.add('bd-in'));
-      bdObs.unobserve(e.currentTarget);
-    }
+// FAQ ACCORDION
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const ans=item.querySelector('.faq-a');
+  const isOpen=btn.classList.contains('open');
+  document.querySelectorAll('.faq-q.open').forEach(function(q){
+    q.classList.remove('open');
+    const t=q.querySelector('.faq-toggle');if(t)t.textContent='+';
+    q.closest('.faq-item').querySelector('.faq-a').style.maxHeight='0';
   });
-},{threshold:0.2});
-const bdDiagram=document.getElementById('bd-diagram');
-if(bdDiagram)bdObs.observe(bdDiagram);
-
-// ENGINE VISUAL
-(function(){
-  const stage=document.getElementById('engine-stage');
-  if(!stage)return;
-  const io=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting){
-        stage.classList.add('is-visible');
-        stage.querySelectorAll('animateMotion.chipAnim').forEach(function(a){
-          try{a.beginElement();}catch(err){}
-        });
-        io.disconnect();
-      }
-    });
-  },{threshold:.3});
-  io.observe(stage);
-})();
-
-// FAQ (stub for pages that might have inline FAQ)
-function toggleFaq(btn){}
+  if(!isOpen){
+    btn.classList.add('open');
+    ans.style.maxHeight=ans.scrollHeight+'px';
+    const t=btn.querySelector('.faq-toggle');if(t)t.textContent='−';
+  }
+}
 </script>
 
 <!-- CHAT WIDGET -->
