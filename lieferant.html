@@ -682,9 +682,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <li><a href="prozess.html">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html">Kalkulator</a></li>
       <li><a href="materialien.html">Materialien</a></li>
-      <li><a href="fuer-wen.html">Für wen</a></li>
+      <li><a href="fuerwen.html">Für wen</a></li>
       <li><a href="lieferant.html">Lieferant werden</a></li>
-      <li><a href="ueber-uns.html">Über uns</a></li>
+      <li><a href="ueberuns.html">Über uns</a></li>
       <li><a href="kontakt.html">Kontakt</a></li>
     </ul>
     <div class="nav-right">
@@ -698,9 +698,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   <a href="prozess.html" onclick="toggleNav()">Wie es funktioniert</a>
   <a href="kalkulator.html" onclick="toggleNav()">Kalkulator</a>
-  <a href="fuer-wen.html" onclick="toggleNav()">Für wen</a>
+  <a href="fuerwen.html" onclick="toggleNav()">Für wen</a>
   <a href="lieferant.html" onclick="toggleNav()">Lieferant werden</a>
-  <a href="ueber-uns.html" onclick="toggleNav()">Über uns</a>
+  <a href="ueberuns.html" onclick="toggleNav()">Über uns</a>
   <a href="kontakt.html" onclick="toggleNav()">Kontakt</a>
   <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
 </div>
@@ -715,11 +715,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 </div>
 
 
-<section style="background:var(--dark3);padding:20px 0">
-  <div class="container" style="text-align:right">
-    <a href="supplier-login.html" class="btn btn-outline-w btn-md">Bereits registriert? Zum Lieferanten-Login →</a>
-  </div>
-</section>
 
 
 <!-- SUPPLIER APPLICATION -->
@@ -838,7 +833,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         <h4>Leistungen</h4>
         <ul>
           <li><a href="prozess.html">Wie es funktioniert</a></li>
-          <li><a href="fuer-wen.html">Für wen</a></li>
+          <li><a href="fuerwen.html">Für wen</a></li>
           <li><a href="lieferant.html">Lieferant werden</a></li>
           <li><a href="kalkulator.html">Einsparkalkulator</a></li>
           <li><a href="materialien.html">Materialien</a></li>
@@ -847,7 +842,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <div class="footer-col">
         <h4>Unternehmen</h4>
         <ul>
-          <li><a href="ueber-uns.html">Über uns</a></li>
+          <li><a href="ueberuns.html">Über uns</a></li>
           <li><a href="kontakt.html">Kontakt</a></li>
           <li><a href="lieferant.html">Lieferant werden</a></li>
         </ul>
@@ -967,7 +962,7 @@ async function submitSupplier(e){
   if(insRes.error){errEl.textContent='Profil konnte nicht gespeichert werden: '+insRes.error.message;errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
   formEl.style.display='none';
   var successEl=document.getElementById('success-supplier');
-  successEl.innerHTML='<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.<br><br><strong style="color:#E8A020">Dein temporäres Passwort:</strong> <code style="background:rgba(232,160,32,.12);padding:4px 10px;border-radius:6px;font-size:15px;user-select:all">'+tempPw+'</code><br><span style="font-size:13px;color:#94A3B8">Bitte notiere es dir — nach Verifizierung kannst du dich damit im <a href="supplier-login.html" style="color:#E8A020">Lieferanten-Portal</a> anmelden.</span>';
+  successEl.innerHTML='<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.';
   successEl.classList.add('show');
 }
 
