@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Für wen — SourceOn</title>
+<title>Einsparkalkulator — SourceOn</title>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -672,7 +672,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 @media(max-width:900px){.nav-card-grid{grid-template-columns:1fr 1fr!important}}
 @media(max-width:640px){.nav-card-grid{grid-template-columns:1fr!important}}
 </style>
-</head>
 <body>
 <!-- NAV -->
 <nav id="nav">
@@ -705,71 +704,55 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
 </div>
 
-<!-- BENTO DETAIL MODAL -->
-<div id="bento-modal" class="bento-modal">
-  <div class="bento-modal-card">
-    <button class="bento-modal-close" onclick="closeBentoModal()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    <h3 id="bento-modal-title"></h3>
-    <p id="bento-modal-text"></p>
-  </div>
-</div>
-
-<!-- FOR WHOM -->
-<section id="forwhom" class="section">
+<!-- CALCULATOR -->
+<section id="calculator">
   <div class="container">
-    <div class="reveal text-center" style="max-width:680px;margin:0 auto">
-      <div class="label">Für wen</div>
-      <h2 class="h2">Gemacht für Schweizer Baufirmen.</h2>
-      <p class="subtitle" style="margin-top:18px">Ob Hochbau, Renovation oder Neubau — SourceOn lohnt sich für jede Grösse.</p>
+    <div class="text-center reveal" style="margin-bottom:56px">
+      <div class="label label-dark">Kalkulator</div>
+      <h2 class="h2" style="color:#fff">Wie viel könntest du sparen?</h2>
+      <p class="subtitle subtitle-dark" style="margin-top:14px">Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.</p>
     </div>
-    <div class="fw-grid">
-      <div class="fw-card fw-card-featured reveal reveal-d1">
-        <div class="fw-badge">Most popular</div>
-        <div class="fw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M4 20V10l8-6 8 6v10M9 20v-6h6v6"/></svg></div>
-        <div class="fw-title">Bauunternehmen aller Grössen</div>
-        <p style="font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.65;margin-bottom:22px">Von KMU bis Grosskonzern — SourceOn schafft Einkaufsmacht für jeden der Baumaterial beschafft.</p>
-        <ul class="fw-checks">
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Einkaufspreise wie Grosskonzerne</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Profitabel ab CHF 50k Jahresvolumen — skaliert mit deiner Grösse</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Kein Mindestumsatz, keine Bindung</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Direktlieferung auf die Baustelle</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Zahlung nur bei echter Ersparnis</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Volle Preistransparenz</span></li>
-        </ul>
+    <div class="calc-layout">
+      <div class="reveal reveal-d1">
+        <div class="calc-vol-display" id="calc-display">CHF 150'000</div>
+        <div class="calc-slider-wrap">
+          <input type="range" id="calc-slider" min="0" max="100" value="18" step="0.1" style="--pct:18%"/>
+        </div>
+        <div class="calc-range-labels"><span>CHF 50'000</span><span>CHF 10'000'000</span></div>
+        <input type="text" class="calc-text-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" value="150'000"/>
+        <p style="font-size:.75rem;color:var(--muted);font-style:italic;margin-top:8px">Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.</p>
+        <div class="calc-tier-label">Ø Rabatt: <span class="calc-tier-rate" id="calc-rate">10%</span></div>
       </div>
-      <div class="fw-card reveal reveal-d2">
-        <div class="fw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-        <div class="fw-title">Handwerksbetriebe &amp; Subunternehmer</div>
-        <p style="font-size:.85rem;color:var(--body);line-height:1.65;margin-bottom:22px">Für jedes Gewerk die passenden Konditionen — unkompliziert und schnell.</p>
-        <ul class="fw-checks">
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Alle Gewerke und Materialien</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Schnelle Abwicklung</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Keine Vorauszahlung nötig</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Persönliche Betreuung</span></li>
-        </ul>
+      <div class="reveal reveal-d2">
+        <div class="calc-card">
+          <div class="calc-row-gross">
+            <div class="calc-row-label">Bruttoersparnis (vor Provision)</div>
+            <div class="calc-row-val" id="calc-gross">CHF 15'000</div>
+          </div>
+          <div class="calc-divider"></div>
+          <div class="calc-row-net">
+            <div class="calc-row-label">Netto-Einsparpotenzial (nach Provision)</div>
+            <div class="calc-row-val" id="calc-net">CHF 11'625</div>
+          </div>
+          <div class="calc-cta">
+            <button class="btn btn-gold btn-lg btn-full" onclick="window.location.href='kontakt.html'">Materialbedarf melden — kostenlos</button>
+          </div>
+          <p class="calc-disclaimer">Unverbindliche Schätzung basierend auf Schweizer Marktdaten. Potenzielle Einsparungen variieren je nach Material, Volumen und Lieferant.</p>
+          <p class="calc-footnote">* Ab CHF 500'000 Jahresvolumen individuelle Konditionen möglich.</p>
+        </div>
       </div>
-      <div class="fw-card reveal reveal-d3">
-        <div class="fw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 21v-5h6v5M9 9h.01M9 13h.01M15 9h.01M15 13h.01"/></svg></div>
-        <div class="fw-title">Immobilieneigentümer &amp; Investoren</div>
-        <p style="font-size:.85rem;color:var(--body);line-height:1.65;margin-bottom:22px">Für Renovations- und Neubauprojekte mit geprüfter Qualität und voller Dokumentation.</p>
-        <ul class="fw-checks">
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Renovationsprojekte und Neubauten</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Mehrfamilienhäuser</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Geprüfte Qualitätsstandards</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Vollständige Dokumentation</span></li>
-        </ul>
-      </div>
-      <div class="fw-card reveal reveal-d4">
-        <div class="fw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20M2 12h20"/></svg></div>
-        <div class="fw-title">Architekten &amp; Planer</div>
-        <p style="font-size:.85rem;color:var(--body);line-height:1.65;margin-bottom:22px">Materialbeschaffung schon in der Planungsphase integriert — mit technischer Beratung.</p>
-        <ul class="fw-checks">
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Integration in frühe Planungsphase</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Technische Beratung inklusive</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Flexible Mengenpuffer</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Referenzprojekte verfügbar</span></li>
-        </ul>
-      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section id="cta-banner">
+  <div class="container" style="position:relative;z-index:1">
+    <h2 class="cta-title">Bereit für tiefere Einkaufspreise?</h2>
+    <p class="cta-sub">Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
+    <div class="cta-btns">
+      <button class="btn btn-gold btn-lg" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
+      <a href="mailto:info@SourceOn.ch" class="btn btn-outline-w btn-lg">info@SourceOn.ch</a>
     </div>
   </div>
 </section>
@@ -866,40 +849,48 @@ const ro=new IntersectionObserver(entries=>{
 },{threshold:0.1});
 document.querySelectorAll('.reveal,.slide-left').forEach(el=>ro.observe(el));
 
-// COUNTERS
-function countEl(el,dur){
-  dur=dur||1200;
-  const t0=performance.now();
-  if(el.dataset.count!==undefined){
-    const target=parseFloat(el.dataset.count),suffix=el.dataset.suffix||'',dec=parseInt(el.dataset.dec||0);
-    const iv=setInterval(()=>{
-      const p=Math.min(1,(performance.now()-t0)/dur),v=target*(1-Math.pow(1-p,3));
-      el.textContent=(dec?v.toFixed(dec):Math.round(v))+suffix;
-      if(p>=1)clearInterval(iv);
-    },16);
-  }
+// CALCULATOR
+const MIN_V=50000,MAX_V=10000000;
+const TIERS=[
+  {max:150000,rate:.07},{max:300000,rate:.10},{max:600000,rate:.13},
+  {max:1200000,rate:.16},{max:3000000,rate:.20},{max:6000000,rate:.24},{max:Infinity,rate:.28}
+];
+function posToVal(p){return Math.round(MIN_V*Math.pow(MAX_V/MIN_V,p/100)/1000)*1000;}
+function valToPos(v){return Math.log(v/MIN_V)/Math.log(MAX_V/MIN_V)*100;}
+function getTier(v){return TIERS.find(t=>v<=t.max)||TIERS[TIERS.length-1];}
+function fmtChf(n){return'CHF '+Math.round(n).toLocaleString('de-CH');}
+let animTimer=null;
+function animateNum(id,target){
+  if(animTimer)clearInterval(animTimer);
+  const el=document.getElementById(id);const t0=performance.now();
+  animTimer=setInterval(()=>{
+    const p=Math.min(1,(performance.now()-t0)/600);
+    el.textContent=fmtChf(target*(1-Math.pow(1-p,3)));
+    if(p>=1)clearInterval(animTimer);
+  },16);
 }
-const co=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){countEl(e.target);co.unobserve(e.target);}});
-},{threshold:0.3});
-document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
+function updateCalc(v,fromSlider){
+  v=Math.max(MIN_V,fromSlider?Math.min(MAX_V,v):v);
+  const tier=getTier(v);
+  const gross=v*tier.rate,net=gross-v*0.0225;
+  document.getElementById('calc-display').textContent=fmtChf(v);
+  if(fromSlider)document.getElementById('calc-input').value=Math.round(v).toLocaleString('de-CH');
+  document.getElementById('calc-rate').textContent=Math.round(tier.rate*100)+'%';
+  document.getElementById('calc-gross').textContent=fmtChf(gross);
+  animateNum('calc-net',net);
+  const pos=valToPos(Math.min(v,MAX_V));
+  const sl=document.getElementById('calc-slider');
+  sl.value=pos;sl.style.setProperty('--pct',pos+'%');
+}
+document.getElementById('calc-slider').addEventListener('input',function(){
+  this.style.setProperty('--pct',this.value+'%');updateCalc(posToVal(+this.value),true);
+});
+document.getElementById('calc-input').addEventListener('input',function(){
+  const v=parseInt(this.value.replace(/['\s.,]/g,''),10);
+  if(!isNaN(v)&&v>=MIN_V)updateCalc(v,false);
+});
+updateCalc(150000);
 
-// FAQ ACCORDION
-function toggleFaq(btn){
-  const item=btn.closest('.faq-item');
-  const ans=item.querySelector('.faq-a');
-  const isOpen=btn.classList.contains('open');
-  document.querySelectorAll('.faq-q.open').forEach(function(q){
-    q.classList.remove('open');
-    const t=q.querySelector('.faq-toggle');if(t)t.textContent='+';
-    q.closest('.faq-item').querySelector('.faq-a').style.maxHeight='0';
-  });
-  if(!isOpen){
-    btn.classList.add('open');
-    ans.style.maxHeight=ans.scrollHeight+'px';
-    const t=btn.querySelector('.faq-toggle');if(t)t.textContent='−';
-  }
-}
 </script>
 
 <!-- CHAT WIDGET -->

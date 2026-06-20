@@ -680,12 +680,12 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <a class="nav-logo" href="#hero">Source<span>On</span></a>
     <ul class="nav-links">
       <li><a href="prozess.html">Wie es funktioniert</a></li>
+      <li><a href="kalkulator.html">Kalkulator</a></li>
       <li><a href="materialien.html">Materialien</a></li>
       <li><a href="fuer-wen.html">Für wen</a></li>
       <li><a href="lieferant.html">Lieferant werden</a></li>
       <li><a href="ueber-uns.html">Über uns</a></li>
       <li><a href="kontakt.html">Kontakt</a></li>
-      <li><a href="supplier-login.html" style="color:#94A3B8;font-size:13px">Lieferanten-Login</a></li>
     </ul>
     <div class="nav-right">
       <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
@@ -697,6 +697,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   <a href="prozess.html" onclick="toggleNav()">Wie es funktioniert</a>
+  <a href="kalkulator.html" onclick="toggleNav()">Kalkulator</a>
   <a href="fuer-wen.html" onclick="toggleNav()">Für wen</a>
   <a href="lieferant.html" onclick="toggleNav()">Lieferant werden</a>
   <a href="ueber-uns.html" onclick="toggleNav()">Über uns</a>
@@ -737,53 +738,12 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   </div>
 </section>
 
-<!-- CALCULATOR -->
-<section id="calculator">
-  <div class="container">
-    <div class="text-center reveal" style="margin-bottom:56px">
-      <div class="label label-dark">Kalkulator</div>
-      <h2 class="h2" style="color:#fff">Wie viel könntest du sparen?</h2>
-      <p class="subtitle subtitle-dark" style="margin-top:14px">Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.</p>
-    </div>
-    <div class="calc-layout">
-      <div class="reveal reveal-d1">
-        <div class="calc-vol-display" id="calc-display">CHF 150'000</div>
-        <div class="calc-slider-wrap">
-          <input type="range" id="calc-slider" min="0" max="100" value="18" step="0.1" style="--pct:18%"/>
-        </div>
-        <div class="calc-range-labels"><span>CHF 50'000</span><span>CHF 10'000'000</span></div>
-        <input type="text" class="calc-text-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" value="150'000"/>
-        <p style="font-size:.75rem;color:var(--muted);font-style:italic;margin-top:8px">Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.</p>
-        <div class="calc-tier-label">Ø Rabatt: <span class="calc-tier-rate" id="calc-rate">10%</span></div>
-      </div>
-      <div class="reveal reveal-d2">
-        <div class="calc-card">
-          <div class="calc-row-gross">
-            <div class="calc-row-label">Bruttoersparnis (vor Provision)</div>
-            <div class="calc-row-val" id="calc-gross">CHF 15'000</div>
-          </div>
-          <div class="calc-divider"></div>
-          <div class="calc-row-net">
-            <div class="calc-row-label">Netto-Einsparpotenzial (nach Provision)</div>
-            <div class="calc-row-val" id="calc-net">CHF 11'625</div>
-          </div>
-          <div class="calc-cta">
-            <button class="btn btn-gold btn-lg btn-full" onclick="window.location.href='kontakt.html'">Materialbedarf melden — kostenlos</button>
-          </div>
-          <p class="calc-disclaimer">Unverbindliche Schätzung basierend auf Schweizer Marktdaten. Potenzielle Einsparungen variieren je nach Material, Volumen und Lieferant.</p>
-          <p class="calc-footnote">* Ab CHF 500'000 Jahresvolumen individuelle Konditionen möglich.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 
 <!-- BIG NUMBER -->
 <section id="bignum" class="bignum-section">
   <div class="container">
     <div class="bignum-figure">40–70%</div>
-    <p class="bignum-caption">So viel der Gesamtkosten einer Baufirma sind reine Materialkosten.<br><a href="#calculator" class="bignum-cta">Berechne, wie viel du mit SourceOn sparen kannst →</a></p>
+    <p class="bignum-caption">So viel der Gesamtkosten einer Baufirma sind reine Materialkosten.<br><a href="kalkulator.html" class="bignum-cta">Berechne, wie viel du mit SourceOn sparen kannst →</a></p>
   </div>
 </section>
 
@@ -929,6 +889,58 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 </section>
 
 
+<!-- SUPPLIERS MARQUEE -->
+<section id="suppliers">
+  <div class="container">
+    <div class="mq-header">
+      <div class="label label-green"><svg class="ic-check-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Alle Lieferanten persönlich geprüft — SIA/ISO-konform</div>
+      <h2 class="h2" style="color:#fff">Unsere Partnerlieferanten</h2>
+    </div>
+  </div>
+  <div class="marquee-outer">
+    <div class="marquee-row1"><div class="marquee-track" id="mq1"></div></div>
+  </div>
+  <div class="container">
+    <p class="mq-note">Weitere Partnerlieferanten in Aufbau. Logos werden nach Vertragsabschluss ergänzt.</p>
+  </div>
+</section>
+
+<!-- ZAHLEN & FAKTEN -->
+<section id="zahlen">
+  <div class="container">
+    <div class="text-center"><div class="label label-dark">ZAHLEN &amp; FAKTEN</div>
+      <h2 class="h2" style="color:#fff">Der Schweizer Baumarkt — in Zahlen.</h2>
+    </div>
+    <div class="zahlen-grid">
+      <div class="zahlen-card">
+        <div class="zahlen-num">CHF 8–10 Mrd.</div>
+        <div class="zahlen-label">Jährliches Einkaufsvolumen Baumarkt CH</div>
+      </div>
+      <div class="zahlen-card">
+        <div class="zahlen-num" data-count="98" data-suffix="%">0%</div>
+        <div class="zahlen-label">der CH-Baufirmen sind KMU</div>
+      </div>
+      <div class="zahlen-card">
+        <div class="zahlen-num">40–70%</div>
+        <div class="zahlen-label">der Baukosten entfallen auf Material</div>
+      </div>
+      <div class="zahlen-card">
+        <div class="zahlen-num">Bis 30%+</div>
+        <div class="zahlen-label">Potenzielle Einsparung je nach Volumen und Material</div>
+      </div>
+      <div class="zahlen-card">
+        <div class="zahlen-num">48h</div>
+        <div class="zahlen-label">bis zum ersten konkreten Angebot</div>
+      </div>
+      <div class="zahlen-card">
+        <div class="zahlen-num">3+</div>
+        <div class="zahlen-label">Offerten — Mindestanzahl Angebote pro Beschaffungsauftrag</div>
+      </div>
+    </div>
+    <p class="zahlen-statement">Jede Bestellung die du alleine aufgibst kostet dich mehr als nötig.</p>
+  </div>
+</section>
+
 <!-- CTA BANNER -->
 <section id="cta-banner">
   <div class="container" style="position:relative;z-index:1">
@@ -956,7 +968,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           <li><a href="prozess.html">Wie es funktioniert</a></li>
           <li><a href="fuer-wen.html">Für wen</a></li>
           <li><a href="lieferant.html">Lieferant werden</a></li>
-          <li><a href="index.html#calculator">Einsparkalkulator</a></li>
+          <li><a href="kalkulator.html">Einsparkalkulator</a></li>
           <li><a href="materialien.html">Materialien</a></li>
         </ul>
       </div>
@@ -1393,47 +1405,30 @@ document.querySelectorAll('[data-count]').forEach(el=>{
   if(!el.closest('.hero-stats'))co.observe(el);
 });
 
-// CALCULATOR
-const MIN_V=50000,MAX_V=10000000;
-const TIERS=[
-  {max:150000,rate:.07},{max:300000,rate:.10},{max:600000,rate:.13},
-  {max:1200000,rate:.16},{max:3000000,rate:.20},{max:6000000,rate:.24},{max:Infinity,rate:.28}
+
+// MARQUEE
+const SUPPLIERS=[
+  {name:'Beton Partner Zürich',cat:'Beton & Tiefbau'},
+  {name:'Stahlhandel Schweiz AG',cat:'Armierungsstahl'},
+  {name:'Kies & Baustoffe GmbH',cat:'Schüttgut'},
+  {name:'Mauerwerk Schweiz',cat:'Ziegel & Steine'},
+  {name:'Dämmtechnik AG',cat:'Dämmung & Isolation'},
+  {name:'Holcim Partner CH',cat:'Beton & Zement'},
+  {name:'Schalung & Bau AG',cat:'Schalungssysteme'},
+  {name:'Sanitär Schweiz GmbH',cat:'HLKS & Sanitär'},
+  {name:'Armierung Pro CH',cat:'Bewehrungsstahl'},
+  {name:'Baustoffe Regional AG',cat:'Vollsortiment'},
 ];
-function posToVal(p){return Math.round(MIN_V*Math.pow(MAX_V/MIN_V,p/100)/1000)*1000;}
-function valToPos(v){return Math.log(v/MIN_V)/Math.log(MAX_V/MIN_V)*100;}
-function getTier(v){return TIERS.find(t=>v<=t.max)||TIERS[TIERS.length-1];}
-function fmtChf(n){return'CHF '+Math.round(n).toLocaleString('de-CH');}
-let animTimer=null;
-function animateNum(id,target){
-  if(animTimer)clearInterval(animTimer);
-  const el=document.getElementById(id);const t0=performance.now();
-  animTimer=setInterval(()=>{
-    const p=Math.min(1,(performance.now()-t0)/600);
-    el.textContent=fmtChf(target*(1-Math.pow(1-p,3)));
-    if(p>=1)clearInterval(animTimer);
-  },16);
+function buildMQ(id,items){
+  const t=document.getElementById(id);
+  if(!t)return;
+  [...items,...items].forEach(s=>{
+    const d=document.createElement('div');d.className='mq-card';
+    d.innerHTML='<div class="mq-name">'+s.name+'</div><div class="mq-cat">'+s.cat+'</div>';
+    t.appendChild(d);
+  });
 }
-function updateCalc(v,fromSlider){
-  v=Math.max(MIN_V,fromSlider?Math.min(MAX_V,v):v);
-  const tier=getTier(v);
-  const gross=v*tier.rate,net=gross-v*0.0225;
-  document.getElementById('calc-display').textContent=fmtChf(v);
-  if(fromSlider)document.getElementById('calc-input').value=Math.round(v).toLocaleString('de-CH');
-  document.getElementById('calc-rate').textContent=Math.round(tier.rate*100)+'%';
-  document.getElementById('calc-gross').textContent=fmtChf(gross);
-  animateNum('calc-net',net);
-  const pos=valToPos(Math.min(v,MAX_V));
-  const sl=document.getElementById('calc-slider');
-  sl.value=pos;sl.style.setProperty('--pct',pos+'%');
-}
-document.getElementById('calc-slider').addEventListener('input',function(){
-  this.style.setProperty('--pct',this.value+'%');updateCalc(posToVal(+this.value),true);
-});
-document.getElementById('calc-input').addEventListener('input',function(){
-  const v=parseInt(this.value.replace(/['\s.,]/g,''),10);
-  if(!isNaN(v)&&v>=MIN_V)updateCalc(v,false);
-});
-updateCalc(150000);
+buildMQ('mq1',SUPPLIERS);
 
 // BUNDLING DIAGRAM ANIMATION
 const bdObs=new IntersectionObserver(entries=>{

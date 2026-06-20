@@ -680,12 +680,12 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <a class="nav-logo" href="#hero">Source<span>On</span></a>
     <ul class="nav-links">
       <li><a href="prozess.html">Wie es funktioniert</a></li>
+      <li><a href="kalkulator.html">Kalkulator</a></li>
       <li><a href="materialien.html">Materialien</a></li>
       <li><a href="fuer-wen.html">Für wen</a></li>
       <li><a href="lieferant.html">Lieferant werden</a></li>
       <li><a href="ueber-uns.html">Über uns</a></li>
       <li><a href="kontakt.html">Kontakt</a></li>
-      <li><a href="supplier-login.html" style="color:#94A3B8;font-size:13px">Lieferanten-Login</a></li>
     </ul>
     <div class="nav-right">
       <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
@@ -697,6 +697,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   <a href="prozess.html" onclick="toggleNav()">Wie es funktioniert</a>
+  <a href="kalkulator.html" onclick="toggleNav()">Kalkulator</a>
   <a href="fuer-wen.html" onclick="toggleNav()">Für wen</a>
   <a href="lieferant.html" onclick="toggleNav()">Lieferant werden</a>
   <a href="ueber-uns.html" onclick="toggleNav()">Über uns</a>
@@ -836,23 +837,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 </section>
 
 
-<!-- SUPPLIERS MARQUEE -->
-<section id="suppliers">
-  <div class="container">
-    <div class="mq-header">
-      <div class="label label-green"><svg class="ic-check-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Alle Lieferanten persönlich geprüft — SIA/ISO-konform</div>
-      <h2 class="h2" style="color:#fff">Unsere Partnerlieferanten</h2>
-    </div>
-  </div>
-  <div class="marquee-outer">
-    <div class="marquee-row1"><div class="marquee-track" id="mq1"></div></div>
-  </div>
-  <div class="container">
-    <p class="mq-note">Weitere Partnerlieferanten in Aufbau. Logos werden nach Vertragsabschluss ergänzt.</p>
-  </div>
-</section>
-
-
 <!-- FOOTER -->
 <footer>
   <div class="container">
@@ -867,7 +851,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           <li><a href="prozess.html">Wie es funktioniert</a></li>
           <li><a href="fuer-wen.html">Für wen</a></li>
           <li><a href="lieferant.html">Lieferant werden</a></li>
-          <li><a href="index.html#calculator">Einsparkalkulator</a></li>
+          <li><a href="kalkulator.html">Einsparkalkulator</a></li>
           <li><a href="materialien.html">Materialien</a></li>
         </ul>
       </div>
@@ -993,30 +977,6 @@ const MAT_CODE={'Rohbau Kern':'RB','Ausbau':'AB','Haustechnik':'HT'};
   });
 })();
 (function(){const track=document.getElementById('mat-strip-track');if(track)track.innerHTML+=track.innerHTML;})();
-
-// MARQUEE
-const SUPPLIERS=[
-  {name:'Beton Partner Zürich',cat:'Beton & Tiefbau'},
-  {name:'Stahlhandel Schweiz AG',cat:'Armierungsstahl'},
-  {name:'Kies & Baustoffe GmbH',cat:'Schüttgut'},
-  {name:'Mauerwerk Schweiz',cat:'Ziegel & Steine'},
-  {name:'Dämmtechnik AG',cat:'Dämmung & Isolation'},
-  {name:'Holcim Partner CH',cat:'Beton & Zement'},
-  {name:'Schalung & Bau AG',cat:'Schalungssysteme'},
-  {name:'Sanitär Schweiz GmbH',cat:'HLKS & Sanitär'},
-  {name:'Armierung Pro CH',cat:'Bewehrungsstahl'},
-  {name:'Baustoffe Regional AG',cat:'Vollsortiment'},
-];
-function buildMQ(id,items){
-  const t=document.getElementById(id);
-  if(!t)return;
-  [...items,...items].forEach(s=>{
-    const d=document.createElement('div');d.className='mq-card';
-    d.innerHTML='<div class="mq-name">'+s.name+'</div><div class="mq-cat">'+s.cat+'</div>';
-    t.appendChild(d);
-  });
-}
-buildMQ('mq1',SUPPLIERS);
 
 // BENTO TILE DETAIL MODAL
 function closeBentoModal(){document.getElementById('bento-modal').classList.remove('open');}
