@@ -1018,7 +1018,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     </div>
     <div class="zahlen-grid">
       <div class="zahlen-card">
-        <div class="zahlen-num">CHF 8–10 Mrd.</div>
+        <div class="zahlen-num" data-i18n="zahlen.vol_num">CHF 8-10 Mrd.</div>
         <div class="zahlen-label" data-i18n="zahlen.vol">Jährliches Einkaufsvolumen Baumarkt CH</div>
       </div>
       <div class="zahlen-card">
@@ -1026,19 +1026,19 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         <div class="zahlen-label" data-i18n="zahlen.kmu">der CH-Baufirmen sind KMU</div>
       </div>
       <div class="zahlen-card">
-        <div class="zahlen-num">40 – 70%</div>
+        <div class="zahlen-num" data-i18n="zahlen.costs_num">40 - 70%</div>
         <div class="zahlen-label" data-i18n="zahlen.costs">der Baukosten entfallen auf Material</div>
       </div>
       <div class="zahlen-card">
-        <div class="zahlen-num">Bis 30%+</div>
+        <div class="zahlen-num" data-i18n="zahlen.savings_num">30%+</div>
         <div class="zahlen-label" data-i18n="zahlen.savings">Potenzielle Einsparung je nach Volumen und Material</div>
       </div>
       <div class="zahlen-card">
-        <div class="zahlen-num">48h</div>
+        <div class="zahlen-num" data-i18n="zahlen.offer_num">48h</div>
         <div class="zahlen-label" data-i18n="zahlen.offer">bis zum ersten konkreten Angebot</div>
       </div>
       <div class="zahlen-card">
-        <div class="zahlen-num">3+</div>
+        <div class="zahlen-num" data-i18n="zahlen.quotes_num">3+</div>
         <div class="zahlen-label" data-i18n="zahlen.quotes">Offerten — Mindestanzahl Angebote pro Beschaffungsauftrag</div>
       </div>
     </div>
@@ -1070,33 +1070,33 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       <div class="footer-col">
         <h4 data-i18n="footer.services">Leistungen</h4>
         <ul>
-          <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-          <li><a href="fuerwen.html">Für wen</a></li>
-          <li><a href="lieferant.html">Lieferant werden</a></li>
+          <li><a href="index.html" data-i18n="footer.home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="footer.process">Wie es funktioniert</a></li>
+          <li><a href="fuerwen.html" data-i18n="footer.forwhom">Für wen</a></li>
+          <li><a href="lieferant.html" data-i18n="footer.supplier">Lieferant werden</a></li>
           <li><a href="kalkulator.html" data-i18n="footer.calc">Einsparkalkulator</a></li>
-          <li><a href="materialien.html">Materialien</a></li>
+          <li><a href="materialien.html" data-i18n="footer.materials">Materialien</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer.company">Unternehmen</h4>
         <ul>
-          <li><a href="ueberuns.html">Über uns</a></li>
-          <li><a href="kontakt.html">Kontakt</a></li>
-          <li><a href="lieferant.html">Lieferant werden</a></li>
+          <li><a href="ueberuns.html" data-i18n="footer.about">Über uns</a></li>
+          <li><a href="kontakt.html" data-i18n="footer.contact">Kontakt</a></li>
+          <li><a href="lieferant.html" data-i18n="footer.supplier2">Lieferant werden</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <h4 data-i18n="footer.legal">Rechtliches</h4>
         <ul>
-          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutz</a></li>
-          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer">Impressum</a></li>
-          <li><a href="agb.html" target="_blank" rel="noopener noreferrer">AGB</a></li>
+          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer" data-i18n="footer.privacy">Datenschutz</a></li>
+          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer" data-i18n="footer.imprint">Impressum</a></li>
+          <li><a href="agb.html" target="_blank" rel="noopener noreferrer" data-i18n="footer.terms">AGB</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
+      <span class="footer-copy" data-i18n="footer.copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
       <span class="footer-tagline" data-i18n="footer.tagline">Du zahlst erst, wenn wir dir sparen.</span>
     </div>
   </div>
@@ -1778,17 +1778,23 @@ var I18N={
     'suppliers.title':'Unsere Partnerlieferanten',
     'suppliers.note':'Weitere Partnerlieferanten in Aufbau. Logos werden nach Vertragsabschluss ergänzt.',
     'zahlen.label':'ZAHLEN & FAKTEN','zahlen.title':'Der Schweizer Baumarkt — in Zahlen.',
-    'zahlen.vol':'Jährliches Einkaufsvolumen Baumarkt CH','zahlen.kmu':'der CH-Baufirmen sind KMU',
+    'zahlen.vol_num':'CHF 8-10 Mrd.','zahlen.vol':'Jährliches Einkaufsvolumen Baumarkt CH',
+    'zahlen.kmu':'der CH-Baufirmen sind KMU','zahlen.costs_num':'40 - 70%',
     'zahlen.costs':'der Baukosten entfallen auf Material',
-    'zahlen.savings':'Potenzielle Einsparung je nach Volumen und Material',
-    'zahlen.offer':'bis zum ersten konkreten Angebot',
-    'zahlen.quotes':'Offerten — Mindestanzahl Angebote pro Beschaffungsauftrag',
+    'zahlen.savings_num':'30%+','zahlen.savings':'Potenzielle Einsparung je nach Volumen und Material',
+    'zahlen.offer_num':'48h','zahlen.offer':'bis zum ersten konkreten Angebot',
+    'zahlen.quotes_num':'3+','zahlen.quotes':'Offerten — Mindestanzahl Angebote pro Beschaffungsauftrag',
     'zahlen.statement':'Jede Bestellung die du alleine aufgibst kostet dich mehr als nötig.',
     'cta.title':'Bereit für tiefere Einkaufspreise?',
     'cta.sub':'Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.',
     'footer.desc':'Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.',
     'footer.services':'Leistungen','footer.company':'Unternehmen','footer.legal':'Rechtliches',
-    'footer.calc':'Einsparkalkulator','footer.tagline':'Du zahlst erst, wenn wir dir sparen.',
+    'footer.home':'Home','footer.process':'Wie es funktioniert','footer.forwhom':'Für wen',
+    'footer.supplier':'Lieferant werden','footer.calc':'Einsparkalkulator','footer.materials':'Materialien',
+    'footer.about':'Über uns','footer.contact':'Kontakt','footer.supplier2':'Lieferant werden',
+    'footer.privacy':'Datenschutz','footer.imprint':'Impressum','footer.terms':'AGB',
+    'footer.copy':'© 2026 SourceOn, Zürich — Alle Rechte vorbehalten',
+    'footer.tagline':'Du zahlst erst, wenn wir dir sparen.',
     'svg.market':'Marktpreise','svg.purchase':'Einkaufsdaten','svg.supplier':'Lieferantendaten',
     'svg.hist':'Hist. Preise','svg.requests':'Anfragen','svg.demands':'Materialbedarfe',
     'svg.optimized':'Optimiertes Angebot','svg.bestcond':'Beste Konditionen',
@@ -1829,17 +1835,23 @@ var I18N={
     'suppliers.title':'Our partner suppliers',
     'suppliers.note':'More partner suppliers in development. Logos will be added upon contract completion.',
     'zahlen.label':'FACTS & FIGURES','zahlen.title':'The Swiss construction market — in numbers.',
-    'zahlen.vol':'Annual procurement volume in the Swiss construction market','zahlen.kmu':'of Swiss construction firms are SMEs',
+    'zahlen.vol_num':'CHF 8-10 bn','zahlen.vol':'Annual procurement volume in the Swiss construction market',
+    'zahlen.kmu':'of Swiss construction firms are SMEs','zahlen.costs_num':'40 - 70%',
     'zahlen.costs':'of construction costs are material costs',
-    'zahlen.savings':'Potential savings depending on volume and material',
-    'zahlen.offer':'until the first concrete offer',
-    'zahlen.quotes':'Quotes — minimum number of offers per procurement order',
+    'zahlen.savings_num':'30%+','zahlen.savings':'Potential savings depending on volume and material',
+    'zahlen.offer_num':'48h','zahlen.offer':'until the first concrete offer',
+    'zahlen.quotes_num':'3+','zahlen.quotes':'Quotes — minimum number of offers per procurement order',
     'zahlen.statement':'Every order you place alone costs you more than necessary.',
     'cta.title':'Ready for lower purchasing prices?',
     'cta.sub':'Report your next material demand — free and without obligation. We\'ll check the savings potential and get back to you within 48 hours.',
     'footer.desc':'Swiss B2B procurement broker for the construction industry. You only pay when we save you money.',
     'footer.services':'Services','footer.company':'Company','footer.legal':'Legal',
-    'footer.calc':'Savings calculator','footer.tagline':'You only pay when we save you money.',
+    'footer.home':'Home','footer.process':'How it works','footer.forwhom':'For whom',
+    'footer.supplier':'Become a supplier','footer.calc':'Savings calculator','footer.materials':'Materials',
+    'footer.about':'About us','footer.contact':'Contact','footer.supplier2':'Become a supplier',
+    'footer.privacy':'Privacy policy','footer.imprint':'Imprint','footer.terms':'Terms & conditions',
+    'footer.copy':'© 2026 SourceOn, Zurich — All rights reserved',
+    'footer.tagline':'You only pay when we save you money.',
     'svg.market':'Market prices','svg.purchase':'Purchasing data','svg.supplier':'Supplier data',
     'svg.hist':'Hist. prices','svg.requests':'Enquiries','svg.demands':'Material demands',
     'svg.optimized':'Optimised offer','svg.bestcond':'Best conditions',
@@ -1880,16 +1892,22 @@ var I18N={
     'suppliers.title':'Nos fournisseurs partenaires',
     'suppliers.note':'D\'autres fournisseurs partenaires en cours de développement. Les logos seront ajoutés après la signature du contrat.',
     'zahlen.label':'CHIFFRES & FAITS','zahlen.title':'Le marché suisse de la construction — en chiffres.',
-    'zahlen.vol':'Volume d\'achat annuel du marché de la construction CH','zahlen.kmu':'des entreprises de construction CH sont des PME',
+    'zahlen.vol_num':'CHF 8-10 mrd','zahlen.vol':'Volume d\'achat annuel du marché de la construction CH',
+    'zahlen.kmu':'des entreprises de construction CH sont des PME','zahlen.costs_num':'40 - 70%',
     'zahlen.costs':'des coûts de construction sont des coûts de matériaux',
-    'zahlen.savings':'Économie potentielle selon le volume et le matériau',
-    'zahlen.offer':'jusqu\'à la première offre concrète',
-    'zahlen.quotes':'Offres — nombre minimum d\'offres par commande',
+    'zahlen.savings_num':'30%+','zahlen.savings':'Économie potentielle selon le volume et le matériau',
+    'zahlen.offer_num':'48h','zahlen.offer':'jusqu\'à la première offre concrète',
+    'zahlen.quotes_num':'3+','zahlen.quotes':'Offres — nombre minimum d\'offres par commande',
     'zahlen.statement':'Chaque commande que tu passes seul te coûte plus que nécessaire.',
     'cta.title':'Prêt pour des prix d\'achat plus bas?',
     'cta.sub':'Annonce ton prochain besoin en matériaux — gratuit et sans engagement. Nous vérifions le potentiel d\'économie et te répondons dans les 48 heures.',
     'footer.desc':'Courtier B2B suisse en approvisionnement pour le secteur de la construction. Tu ne paies que si on te fait économiser.',
     'footer.services':'Services','footer.company':'Entreprise','footer.legal':'Mentions légales',
+    'footer.home':'Accueil','footer.process':'Comment ça fonctionne','footer.forwhom':'Pour qui',
+    'footer.supplier':'Devenir fournisseur','footer.materials':'Matériaux',
+    'footer.about':'À propos','footer.contact':'Contact','footer.supplier2':'Devenir fournisseur',
+    'footer.privacy':'Protection des données','footer.imprint':'Mentions légales','footer.terms':'CGV',
+    'footer.copy':'© 2026 SourceOn, Zurich — Tous droits réservés',
     'footer.calc':'Calculateur d\'économies','footer.tagline':'Tu ne paies que si on te fait économiser.',
     'svg.market':'Prix du marché','svg.purchase':'Données d\'achat','svg.supplier':'Données fournisseurs',
     'svg.hist':'Prix hist.','svg.requests':'Demandes','svg.demands':'Besoins matériaux',
@@ -1931,17 +1949,23 @@ var I18N={
     'suppliers.title':'I nostri fornitori partner',
     'suppliers.note':'Altri fornitori partner in fase di sviluppo. I loghi saranno aggiunti dopo la firma del contratto.',
     'zahlen.label':'CIFRE & FATTI','zahlen.title':'Il mercato edile svizzero — in cifre.',
-    'zahlen.vol':'Volume di acquisto annuale del mercato edile CH','zahlen.kmu':'delle imprese edili CH sono PMI',
+    'zahlen.vol_num':'CHF 8-10 mrd','zahlen.vol':'Volume di acquisto annuale del mercato edile CH',
+    'zahlen.kmu':'delle imprese edili CH sono PMI','zahlen.costs_num':'40 - 70%',
     'zahlen.costs':'dei costi di costruzione sono costi di materiale',
-    'zahlen.savings':'Risparmio potenziale a seconda del volume e del materiale',
-    'zahlen.offer':'fino alla prima offerta concreta',
-    'zahlen.quotes':'Offerte — numero minimo di offerte per ordine di approvvigionamento',
+    'zahlen.savings_num':'30%+','zahlen.savings':'Risparmio potenziale a seconda del volume e del materiale',
+    'zahlen.offer_num':'48h','zahlen.offer':'fino alla prima offerta concreta',
+    'zahlen.quotes_num':'3+','zahlen.quotes':'Offerte — numero minimo di offerte per ordine di approvvigionamento',
     'zahlen.statement':'Ogni ordine che fai da solo ti costa più del necessario.',
     'cta.title':'Pronto per prezzi d\'acquisto più bassi?',
     'cta.sub':'Segnala il tuo prossimo fabbisogno di materiale — gratuito e senza impegno. Verifichiamo il potenziale di risparmio e ti rispondiamo entro 48 ore.',
     'footer.desc':'Broker B2B svizzero per l\'approvvigionamento nel settore edile. Paghi solo quando ti facciamo risparmiare.',
     'footer.services':'Servizi','footer.company':'Azienda','footer.legal':'Note legali',
-    'footer.calc':'Calcolatore di risparmio','footer.tagline':'Paghi solo quando ti facciamo risparmiare.',
+    'footer.home':'Home','footer.process':'Come funziona','footer.forwhom':'Per chi',
+    'footer.supplier':'Diventa fornitore','footer.calc':'Calcolatore di risparmio','footer.materials':'Materiali',
+    'footer.about':'Chi siamo','footer.contact':'Contatto','footer.supplier2':'Diventa fornitore',
+    'footer.privacy':'Privacy','footer.imprint':'Impressum','footer.terms':'CGC',
+    'footer.copy':'© 2026 SourceOn, Zurigo — Tutti i diritti riservati',
+    'footer.tagline':'Paghi solo quando ti facciamo risparmiare.',
     'svg.market':'Prezzi di mercato','svg.purchase':'Dati di acquisto','svg.supplier':'Dati fornitori',
     'svg.hist':'Prezzi stor.','svg.requests':'Richieste','svg.demands':'Fabbisogno materiali',
     'svg.optimized':'Offerta ottimizzata','svg.bestcond':'Migliori condizioni',
