@@ -10,6 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html:not([data-lang-ready]) body{opacity:0}html[data-lang-ready] body{opacity:1;transition:opacity .05s}
+
 :root{
   --dark:#08111E;--dark2:#060D1A;--dark3:#0D1E30;
   --navy:#1B3A5C;--navy-md:#254d7a;
@@ -1154,7 +1156,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
   var saved = localStorage.getItem('sourceon-lang');
   if (saved && saved !== 'de') {
     setLang(saved);
-  }
+  } else { document.documentElement.setAttribute('data-lang-ready',''); }
 })();
 </script>
 </body>
