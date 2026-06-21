@@ -685,7 +685,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .lang-flag{font-size:1.1rem;line-height:1}
 </style>
 <script>
-(function(){var l=localStorage.getItem('sourceon-lang');if(l&&l!=='de')document.documentElement.lang=l;})();
+(function(){
+var l=localStorage.getItem('sourceon-lang');
+if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>body{visibility:hidden}</style>');setTimeout(function(){var h=document.getElementById('_lh');if(h)h.remove();},150);}
+})();
 </script>
 </head>
 <body>
@@ -1192,6 +1195,7 @@ window.setLang=function(lang){
     btn.classList.toggle('active',btn.getAttribute('onclick').indexOf("'"+lang+"'")!==-1);
   });
   localStorage.setItem('sourceon-lang',lang);
+  var _lh=document.getElementById('_lh');if(_lh)_lh.remove();
   
   var sw=document.getElementById('lang-switch');
   if(sw)sw.classList.remove('open');

@@ -683,7 +683,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .lang-flag{font-size:1.1rem}
 </style>
 <script>
-(function(){var l=localStorage.getItem('sourceon-lang');if(l&&l!=='de')document.documentElement.lang=l;})();
+(function(){
+var l=localStorage.getItem('sourceon-lang');
+if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>body{visibility:hidden}</style>');setTimeout(function(){var h=document.getElementById('_lh');if(h)h.remove();},150);}
+})();
 </script>
 </head>
 <body>
@@ -940,9 +943,9 @@ function addMaterialRow(){
   if(matRowCount>=10)return;matRowCount++;
   const rows=document.getElementById('material-rows');
   const div=document.createElement('div');div.className='material-row';
-  div.innerHTML='<select class="form-select mat-sel">'+MAT_OPTIONS+'</select><input type="text" class="form-input mat-qty" placeholder="z.B. 50 Tonnen"/><button type="button" class="mat-remove-btn" onclick="removeMaterialRow(this)" title="Entfernen"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
+  div.innerHTML='<select class="form-select mat-sel">'+MAT_OPTIONS+'</select><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><button type="button" class="mat-remove-btn" onclick="removeMaterialRow(this)" title="Entfernen"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
   rows.appendChild(div);
-  var cl=window._currentLang||localStorage.getItem('sourceon-lang')||'de';if(cl&&cl!=='de'){translateMaterials(cl);var t=typeof I18N!=='undefined'&&I18N[cl]?I18N[cl]:null;if(t){div.querySelectorAll('[data-i18n]').forEach(function(el){if(t[el.dataset.i18n])el.textContent=t[el.dataset.i18n];});div.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){if(t[el.dataset.i18nPlaceholder])el.placeholder=t[el.dataset.i18nPlaceholder];});}}
+  var cl=window._currentLang||localStorage.getItem('sourceon-lang')||'de';if(typeof translateMaterials==='function')translateMaterials(cl);var t=typeof I18N!=='undefined'&&I18N[cl]?I18N[cl]:null;if(t){div.querySelectorAll('[data-i18n]').forEach(function(el){if(t[el.dataset.i18n])el.textContent=t[el.dataset.i18n];});div.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){if(t[el.dataset.i18nPlaceholder])el.placeholder=t[el.dataset.i18nPlaceholder];});}
   if(matRowCount>=10)document.getElementById('add-material-btn').style.display='none';
 }
 function removeMaterialRow(btn){btn.closest('.material-row').remove();matRowCount--;document.getElementById('add-material-btn').style.display='';}
@@ -1191,9 +1194,10 @@ window.setLang=function(lang){
   localStorage.setItem('sourceon-lang',lang);
   document.documentElement.lang=lang;
   window._currentLang=lang;
+  var _lh=document.getElementById('_lh');if(_lh)_lh.remove();
   
 };
-(function(){var l=localStorage.getItem('sourceon-lang');if(l&&I18N[l])setLang(l);else })();
+(function(){var l=localStorage.getItem('sourceon-lang');if(l&&I18N[l])setLang(l);})();
 document.addEventListener('click',function(e){var sw=document.getElementById('lang-switch');if(sw&&!sw.contains(e.target))sw.classList.remove('open');});
 })();
 </script>
