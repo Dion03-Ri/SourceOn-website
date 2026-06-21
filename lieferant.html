@@ -671,6 +671,17 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .nav-card-grid a:hover{border-color:rgba(232,160,32,.3)!important;background:rgba(255,255,255,.06)!important;transform:translateY(-4px)}
 @media(max-width:900px){.nav-card-grid{grid-template-columns:1fr 1fr!important}}
 @media(max-width:640px){.nav-card-grid{grid-template-columns:1fr!important}}
+.lang-switch{position:relative;margin-right:8px}
+.lang-btn{display:flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.75);background:none;border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:6px 14px;cursor:pointer;transition:all .2s}
+.lang-btn:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.lang-btn svg{width:14px;height:14px;transition:transform .2s}
+.lang-switch.open .lang-btn svg{transform:rotate(180deg)}
+.lang-dd{display:none;position:absolute;top:calc(100% + 8px);right:0;background:rgba(10,20,35,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:6px;min-width:150px;z-index:999;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.lang-switch.open .lang-dd{display:block}
+.lang-opt{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;border:none;background:none;color:rgba(255,255,255,.7);font-size:.84rem;font-weight:500;cursor:pointer;border-radius:8px;transition:all .15s;font-family:inherit;text-align:left}
+.lang-opt:hover{background:rgba(255,255,255,.08);color:#fff}
+.lang-opt.active{color:var(--gold);font-weight:600}
+.lang-flag{font-size:1.1rem;line-height:1}
 </style>
 </head>
 <body>
@@ -679,17 +690,26 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="nav-inner">
     <a class="nav-logo" href="#hero">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-      <li><a href="kalkulator.html">Kalkulator</a></li>
-      <li><a href="materialien.html">Materialien</a></li>
-      <li><a href="fuerwen.html">Für wen</a></li>
-      <li><a href="lieferant.html">Lieferant werden</a></li>
-      <li><a href="ueberuns.html">Über uns</a></li>
-      <li><a href="kontakt.html">Kontakt</a></li>
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav.process">Wie es funktioniert</a></li>
+      <li><a href="kalkulator.html" data-i18n="nav.calculator">Kalkulator</a></li>
+      <li><a href="materialien.html" data-i18n="nav.materials">Materialien</a></li>
+      <li><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a></li>
+      <li><a href="lieferant.html" data-i18n="nav.supplier">Lieferant werden</a></li>
+      <li><a href="ueberuns.html" data-i18n="nav.about">Über uns</a></li>
+      <li><a href="kontakt.html" data-i18n="nav.contact">Kontakt</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
+      <div class="lang-switch" id="lang-switch">
+        <button class="lang-btn" onclick="document.getElementById('lang-switch').classList.toggle('open')"><span id="lang-current">DE</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="lang-dd">
+          <button class="lang-opt active" onclick="setLang('de')"><span class="lang-flag">🇨🇭</span> Deutsch</button>
+          <button class="lang-opt" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span> English</button>
+          <button class="lang-opt" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span> Francais</button>
+          <button class="lang-opt" onclick="setLang('it')"><span class="lang-flag">🇮🇹</span> Italiano</button>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-md" data-i18n="nav.cta" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
       <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
   </div>
@@ -697,14 +717,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <a href="index.html" onclick="toggleNav()">Home</a>
-  <a href="prozess.html" onclick="toggleNav()">Wie es funktioniert</a>
-  <a href="kalkulator.html" onclick="toggleNav()">Kalkulator</a>
-  <a href="fuerwen.html" onclick="toggleNav()">Für wen</a>
-  <a href="lieferant.html" onclick="toggleNav()">Lieferant werden</a>
-  <a href="ueberuns.html" onclick="toggleNav()">Über uns</a>
-  <a href="kontakt.html" onclick="toggleNav()">Kontakt</a>
-  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
+  <a href="index.html" onclick="toggleNav()" data-i18n="nav.home">Home</a>
+  <a href="prozess.html" onclick="toggleNav()" data-i18n="nav.process">Wie es funktioniert</a>
+  <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav.calculator">Kalkulator</a>
+  <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav.forwhom">Für wen</a>
+  <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav.supplier">Lieferant werden</a>
+  <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav.about">Über uns</a>
+  <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav.contact">Kontakt</a>
+  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'" data-i18n="nav.cta">Materialbedarf melden</button>
 </div>
 
 <!-- BENTO DETAIL MODAL -->
@@ -724,66 +744,66 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="container">
     <div class="sa-layout">
       <div>
-        <div class="label">Partnerlieferanten</div>
-        <h2 class="h2">Werden Sie SourceOn-Partnerlieferant.</h2>
-        <p class="subtitle" style="margin-top:14px">Wir suchen zuverlässige Schweizer Lieferanten für unser wachsendes Netzwerk.</p>
+        <div class="label" data-i18n="supplier.label">Partnerlieferanten</div>
+        <h2 class="h2" data-i18n="supplier.title">Werden Sie SourceOn-Partnerlieferant.</h2>
+        <p class="subtitle" style="margin-top:14px" data-i18n="supplier.subtitle">Wir suchen zuverlässige Schweizer Lieferanten für unser wachsendes Netzwerk.</p>
         <div class="sa-benefits">
-          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div><div class="sa-benefit-text"><strong>Garantiertes Volumen</strong><span>Gebündelte Aufträge statt Einzelanfragen</span></div></div>
-          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="sa-benefit-text"><strong>Planungssicherheit</strong><span>Regelmässige Bedarfsmeldungen im Voraus</span></div></div>
-          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="sa-benefit-text"><strong>Neue Kundschaft</strong><span>Zugang zu Schweizer KMU-Baufirmen</span></div></div>
-          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div class="sa-benefit-text"><strong>Schnelle Zahlung</strong><span>Klare Zahlungsbedingungen, 14 Tage netto</span></div></div>
-          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="sa-benefit-text"><strong>Qualitätsnetzwerk</strong><span>Nur geprüfte SIA/ISO-konforme Lieferanten</span></div></div>
-          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="sa-benefit-text"><strong>Wachstumspotenzial</strong><span>Marktposition stärken im Schweizer Baumarkt</span></div></div>
+          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div><div class="sa-benefit-text"><strong data-i18n="supplier.b1.title">Garantiertes Volumen</strong><span data-i18n="supplier.b1.desc">Gebündelte Aufträge statt Einzelanfragen</span></div></div>
+          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div class="sa-benefit-text"><strong data-i18n="supplier.b2.title">Planungssicherheit</strong><span data-i18n="supplier.b2.desc">Regelmässige Bedarfsmeldungen im Voraus</span></div></div>
+          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="sa-benefit-text"><strong data-i18n="supplier.b3.title">Neue Kundschaft</strong><span data-i18n="supplier.b3.desc">Zugang zu Schweizer KMU-Baufirmen</span></div></div>
+          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><div class="sa-benefit-text"><strong data-i18n="supplier.b4.title">Schnelle Zahlung</strong><span data-i18n="supplier.b4.desc">Klare Zahlungsbedingungen, 14 Tage netto</span></div></div>
+          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="sa-benefit-text"><strong data-i18n="supplier.b5.title">Qualitätsnetzwerk</strong><span data-i18n="supplier.b5.desc">Nur geprüfte SIA/ISO-konforme Lieferanten</span></div></div>
+          <div class="sa-benefit"><div class="sa-benefit-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="sa-benefit-text"><strong data-i18n="supplier.b6.title">Wachstumspotenzial</strong><span data-i18n="supplier.b6.desc">Marktposition stärken im Schweizer Baumarkt</span></div></div>
         </div>
-        <h3 style="font-size:18px;color:#fff;margin-top:32px;margin-bottom:10px">Wie Aufträge vergeben werden.</h3>
-        <p style="font-size:15px;color:rgba(255,255,255,.55);line-height:1.7">SourceOn bündelt Bedarf von mehreren Baufirmen zu grösseren Materialpaketen. Verifizierte Partnerlieferanten erhalten Zugang zu diesen Ausschreibungen und können ein Angebot einreichen. Die Vergabe erfolgt nicht nur nach Preis, sondern auch nach Lieferfähigkeit und Zuverlässigkeit. Aus Datenschutzgründen werden Lieferadressen erst nach Zuschlag bekannt gegeben — das Ausschreibungspaket enthält Materialart, Menge, Liefergebiet (Zone) und Zeitraum.</p>
+        <h3 style="font-size:18px;color:#fff;margin-top:32px;margin-bottom:10px" data-i18n="supplier.how.title">Wie Aufträge vergeben werden.</h3>
+        <p style="font-size:15px;color:rgba(255,255,255,.55);line-height:1.7" data-i18n="supplier.how.text">SourceOn bündelt Bedarf von mehreren Baufirmen zu grösseren Materialpaketen. Verifizierte Partnerlieferanten erhalten Zugang zu diesen Ausschreibungen und können ein Angebot einreichen. Die Vergabe erfolgt nicht nur nach Preis, sondern auch nach Lieferfähigkeit und Zuverlässigkeit. Aus Datenschutzgründen werden Lieferadressen erst nach Zuschlag bekannt gegeben — das Ausschreibungspaket enthält Materialart, Menge, Liefergebiet (Zone) und Zeitraum.</p>
       </div>
       <div>
         <div class="sa-form-card">
         <form id="form-supplier" onsubmit="submitSupplier(event)" novalidate>
           <div class="form-grid">
-            <div class="form-group"><label class="form-label">Firmenname *</label><input type="text" class="form-input" id="sa-company" required/><div class="form-error" id="e-sa-company">Pflichtfeld</div></div>
-            <div class="form-group"><label class="form-label">Ansprechperson *</label><input type="text" class="form-input" id="sa-name" required/><div class="form-error" id="e-sa-name">Pflichtfeld</div></div>
+            <div class="form-group"><label class="form-label" data-i18n="form.company">Firmenname *</label><input type="text" class="form-input" id="sa-company" required/><div class="form-error" id="e-sa-company" data-i18n="form.required">Pflichtfeld</div></div>
+            <div class="form-group"><label class="form-label" data-i18n="form.contact">Ansprechperson *</label><input type="text" class="form-input" id="sa-name" required/><div class="form-error" id="e-sa-name" data-i18n="form.required">Pflichtfeld</div></div>
           </div>
           <div class="form-grid">
-            <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" class="form-input" id="sa-email" required/><div class="form-error" id="e-sa-email">Gültige E-Mail erforderlich</div></div>
-            <div class="form-group"><label class="form-label">Telefon *</label><input type="tel" class="form-input" id="sa-phone" required/><div class="form-error" id="e-sa-phone">Pflichtfeld</div></div>
+            <div class="form-group"><label class="form-label" data-i18n="form.email">E-Mail *</label><input type="email" class="form-input" id="sa-email" required/><div class="form-error" id="e-sa-email" data-i18n="form.emailError">Gültige E-Mail erforderlich</div></div>
+            <div class="form-group"><label class="form-label" data-i18n="form.phone">Telefon *</label><input type="tel" class="form-input" id="sa-phone" required/><div class="form-error" id="e-sa-phone" data-i18n="form.required">Pflichtfeld</div></div>
           </div>
-          <div class="form-group"><label class="form-label">Website (optional)</label><input type="url" class="form-input" id="sa-web" placeholder="https://"/></div>
+          <div class="form-group"><label class="form-label" data-i18n="form.website">Website (optional)</label><input type="url" class="form-input" id="sa-web" placeholder="https://"/></div>
           <div class="form-group">
-            <label class="form-label">Materialien (Mehrfachauswahl)</label>
+            <label class="form-label" data-i18n="form.materials">Materialien (Mehrfachauswahl)</label>
             <div class="form-checks">
-              <label class="form-check"><input type="checkbox"/><span>Beton</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Armierungsstahl</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Kies &amp; Splitt</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Mauerwerk &amp; Ziegel</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Dämmung</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Schalung</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Mörtel</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Holz &amp; Holzwerkstoffe</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Sanitär &amp; HLKS</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Elektro</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Farben &amp; Lacke</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Bodenbeläge</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Fenster &amp; Türen</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Vollsortiment</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.concrete">Beton</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.rebar">Armierungsstahl</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.gravel">Kies &amp; Splitt</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.masonry">Mauerwerk &amp; Ziegel</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.insulation">Dämmung</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.formwork">Schalung</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.mortar">Mörtel</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.wood">Holz &amp; Holzwerkstoffe</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.plumbing">Sanitär &amp; HLKS</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.electrical">Elektro</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.paint">Farben &amp; Lacke</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.flooring">Bodenbeläge</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.windows">Fenster &amp; Türen</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="mat.full">Vollsortiment</span></label>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Regionen (Mehrfachauswahl)</label>
+            <label class="form-label" data-i18n="form.regions">Regionen (Mehrfachauswahl)</label>
             <div class="form-checks">
-              <label class="form-check"><input type="checkbox"/><span>Zürich</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Bern</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Basel</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Luzern</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Ostschweiz</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Zentralschweiz</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Aargau</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Tessin</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Westschweiz</span></label>
-              <label class="form-check"><input type="checkbox"/><span>Ganze Schweiz</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="reg.zurich">Zürich</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="reg.bern">Bern</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="reg.basel">Basel</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="reg.lucerne">Luzern</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="reg.east">Ostschweiz</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="reg.central">Zentralschweiz</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="reg.aargau">Aargau</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="reg.ticino">Tessin</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="reg.west">Westschweiz</span></label>
+              <label class="form-check"><input type="checkbox"/><span data-i18n="reg.all">Ganze Schweiz</span></label>
             </div>
-            <p style="font-size:12px;color:#94A3B8;font-style:italic;margin-top:8px;margin-bottom:0">Hinweis: Ausschreibungen enthalten zu Beginn nur Liefergebiete als Zonen, keine genauen Adressen. Diese werden erst nach Zuschlag freigegeben.</p>
+            <p style="font-size:12px;color:#94A3B8;font-style:italic;margin-top:8px;margin-bottom:0" data-i18n="form.regionNote">Hinweis: Ausschreibungen enthalten zu Beginn nur Liefergebiete als Zonen, keine genauen Adressen. Diese werden erst nach Zuschlag freigegeben.</p>
           </div>
           <div class="form-group">
             <label class="form-label">Jahreskapazität *</label>

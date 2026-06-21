@@ -671,6 +671,18 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .nav-card-grid a:hover{border-color:rgba(232,160,32,.3)!important;background:rgba(255,255,255,.06)!important;transform:translateY(-4px)}
 @media(max-width:900px){.nav-card-grid{grid-template-columns:1fr 1fr!important}}
 @media(max-width:640px){.nav-card-grid{grid-template-columns:1fr!important}}
+
+.lang-switch{position:relative;margin-right:8px}
+.lang-btn{display:flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.75);background:none;border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:6px 14px;cursor:pointer;transition:all .2s}
+.lang-btn:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.lang-btn svg{width:14px;height:14px;transition:transform .2s}
+.lang-switch.open .lang-btn svg{transform:rotate(180deg)}
+.lang-dd{display:none;position:absolute;top:calc(100% + 8px);right:0;background:rgba(10,20,35,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:6px;min-width:150px;z-index:999;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.lang-switch.open .lang-dd{display:block}
+.lang-opt{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;border:none;background:none;color:rgba(255,255,255,.7);font-size:.84rem;font-weight:500;cursor:pointer;border-radius:8px;transition:all .15s;font-family:inherit;text-align:left}
+.lang-opt:hover{background:rgba(255,255,255,.08);color:#fff}
+.lang-opt.active{color:var(--gold);font-weight:600}
+.lang-flag{font-size:1.1rem;line-height:1}
 </style>
 </head>
 <body>
@@ -679,17 +691,26 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="nav-inner">
     <a class="nav-logo" href="#hero">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-      <li><a href="kalkulator.html">Kalkulator</a></li>
-      <li><a href="materialien.html">Materialien</a></li>
-      <li><a href="fuerwen.html">Für wen</a></li>
-      <li><a href="lieferant.html">Lieferant werden</a></li>
-      <li><a href="ueberuns.html">Über uns</a></li>
-      <li><a href="kontakt.html">Kontakt</a></li>
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
+      <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
+      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
+      <li><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a></li>
+      <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
+      <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
+      <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
+      <div class="lang-switch" id="lang-switch">
+        <button class="lang-btn" onclick="document.getElementById('lang-switch').classList.toggle('open')"><span id="lang-current">DE</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="lang-dd">
+          <button class="lang-opt active" onclick="setLang('de')"><span class="lang-flag">🇨🇭</span> Deutsch</button>
+          <button class="lang-opt" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span> English</button>
+          <button class="lang-opt" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span> Francais</button>
+          <button class="lang-opt" onclick="setLang('it')"><span class="lang-flag">🇮🇹</span> Italiano</button>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-md" data-i18n="nav_cta" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
       <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
   </div>
@@ -697,14 +718,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <a href="index.html" onclick="toggleNav()">Home</a>
-  <a href="prozess.html" onclick="toggleNav()">Wie es funktioniert</a>
-  <a href="kalkulator.html" onclick="toggleNav()">Kalkulator</a>
-  <a href="fuerwen.html" onclick="toggleNav()">Für wen</a>
-  <a href="lieferant.html" onclick="toggleNav()">Lieferant werden</a>
-  <a href="ueberuns.html" onclick="toggleNav()">Über uns</a>
-  <a href="kontakt.html" onclick="toggleNav()">Kontakt</a>
-  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
+  <a href="index.html" onclick="toggleNav()" data-i18n="nav_home">Home</a>
+  <a href="prozess.html" onclick="toggleNav()" data-i18n="nav_process">Wie es funktioniert</a>
+  <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calc">Kalkulator</a>
+  <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom">Für wen</a>
+  <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier">Lieferant werden</a>
+  <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav_about">Über uns</a>
+  <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav_contact">Kontakt</a>
+  <button class="btn btn-gold btn-lg" style="margin-top:12px" data-i18n="nav_cta" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
 </div>
 
 <!-- BENTO DETAIL MODAL -->
@@ -720,56 +741,56 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <section id="forwhom" class="section">
   <div class="container">
     <div class="reveal text-center" style="max-width:680px;margin:0 auto">
-      <div class="label">Für wen</div>
-      <h2 class="h2">Gemacht für Schweizer Baufirmen.</h2>
-      <p class="subtitle" style="margin-top:18px">Ob Hochbau, Renovation oder Neubau — SourceOn lohnt sich für jede Grösse.</p>
+      <div class="label" data-i18n="fw_label">Für wen</div>
+      <h2 class="h2" data-i18n="fw_title">Gemacht für Schweizer Baufirmen.</h2>
+      <p class="subtitle" style="margin-top:18px" data-i18n="fw_subtitle">Ob Hochbau, Renovation oder Neubau — SourceOn lohnt sich für jede Grösse.</p>
     </div>
     <div class="fw-grid">
       <div class="fw-card fw-card-featured reveal reveal-d1">
-        <div class="fw-badge">Most popular</div>
+        <div class="fw-badge" data-i18n="fw_badge">Most popular</div>
         <div class="fw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20h20M4 20V10l8-6 8 6v10M9 20v-6h6v6"/></svg></div>
-        <div class="fw-title">Bauunternehmen aller Grössen</div>
-        <p style="font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.65;margin-bottom:22px">Von KMU bis Grosskonzern — SourceOn schafft Einkaufsmacht für jeden der Baumaterial beschafft.</p>
+        <div class="fw-title" data-i18n="fw_card1_title">Bauunternehmen aller Grössen</div>
+        <p style="font-size:.85rem;color:rgba(255,255,255,.55);line-height:1.65;margin-bottom:22px" data-i18n="fw_card1_desc">Von KMU bis Grosskonzern — SourceOn schafft Einkaufsmacht für jeden der Baumaterial beschafft.</p>
         <ul class="fw-checks">
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Einkaufspreise wie Grosskonzerne</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Profitabel ab CHF 50k Jahresvolumen — skaliert mit deiner Grösse</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Kein Mindestumsatz, keine Bindung</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Direktlieferung auf die Baustelle</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Zahlung nur bei echter Ersparnis</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Volle Preistransparenz</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card1_c1">Einkaufspreise wie Grosskonzerne</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card1_c2">Profitabel ab CHF 50k Jahresvolumen — skaliert mit deiner Grösse</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card1_c3">Kein Mindestumsatz, keine Bindung</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card1_c4">Direktlieferung auf die Baustelle</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card1_c5">Zahlung nur bei echter Ersparnis</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card1_c6">Volle Preistransparenz</span></li>
         </ul>
       </div>
       <div class="fw-card reveal reveal-d2">
         <div class="fw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-        <div class="fw-title">Handwerksbetriebe &amp; Subunternehmer</div>
-        <p style="font-size:.85rem;color:var(--body);line-height:1.65;margin-bottom:22px">Für jedes Gewerk die passenden Konditionen — unkompliziert und schnell.</p>
+        <div class="fw-title" data-i18n="fw_card2_title">Handwerksbetriebe &amp; Subunternehmer</div>
+        <p style="font-size:.85rem;color:var(--body);line-height:1.65;margin-bottom:22px" data-i18n="fw_card2_desc">Für jedes Gewerk die passenden Konditionen — unkompliziert und schnell.</p>
         <ul class="fw-checks">
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Alle Gewerke und Materialien</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Schnelle Abwicklung</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Keine Vorauszahlung nötig</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Persönliche Betreuung</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card2_c1">Alle Gewerke und Materialien</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card2_c2">Schnelle Abwicklung</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card2_c3">Keine Vorauszahlung nötig</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card2_c4">Persönliche Betreuung</span></li>
         </ul>
       </div>
       <div class="fw-card reveal reveal-d3">
         <div class="fw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 21v-5h6v5M9 9h.01M9 13h.01M15 9h.01M15 13h.01"/></svg></div>
-        <div class="fw-title">Immobilieneigentümer &amp; Investoren</div>
-        <p style="font-size:.85rem;color:var(--body);line-height:1.65;margin-bottom:22px">Für Renovations- und Neubauprojekte mit geprüfter Qualität und voller Dokumentation.</p>
+        <div class="fw-title" data-i18n="fw_card3_title">Immobilieneigentümer &amp; Investoren</div>
+        <p style="font-size:.85rem;color:var(--body);line-height:1.65;margin-bottom:22px" data-i18n="fw_card3_desc">Für Renovations- und Neubauprojekte mit geprüfter Qualität und voller Dokumentation.</p>
         <ul class="fw-checks">
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Renovationsprojekte und Neubauten</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Mehrfamilienhäuser</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Geprüfte Qualitätsstandards</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Vollständige Dokumentation</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card3_c1">Renovationsprojekte und Neubauten</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card3_c2">Mehrfamilienhäuser</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card3_c3">Geprüfte Qualitätsstandards</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card3_c4">Vollständige Dokumentation</span></li>
         </ul>
       </div>
       <div class="fw-card reveal reveal-d4">
         <div class="fw-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 0 1 0 20M2 12h20"/></svg></div>
-        <div class="fw-title">Architekten &amp; Planer</div>
-        <p style="font-size:.85rem;color:var(--body);line-height:1.65;margin-bottom:22px">Materialbeschaffung schon in der Planungsphase integriert — mit technischer Beratung.</p>
+        <div class="fw-title" data-i18n="fw_card4_title">Architekten &amp; Planer</div>
+        <p style="font-size:.85rem;color:var(--body);line-height:1.65;margin-bottom:22px" data-i18n="fw_card4_desc">Materialbeschaffung schon in der Planungsphase integriert — mit technischer Beratung.</p>
         <ul class="fw-checks">
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Integration in frühe Planungsphase</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Technische Beratung inklusive</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Flexible Mengenpuffer</span></li>
-          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Referenzprojekte verfügbar</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card4_c1">Integration in frühe Planungsphase</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card4_c2">Technische Beratung inklusive</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card4_c3">Flexible Mengenpuffer</span></li>
+          <li><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="fw_card4_c4">Referenzprojekte verfügbar</span></li>
         </ul>
       </div>
     </div>
@@ -783,39 +804,39 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="nav-logo">Source<span>On</span></div>
-        <p>Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
+        <p data-i18n="footer_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
       </div>
       <div class="footer-col">
-        <h4>Leistungen</h4>
+        <h4 data-i18n="footer_services">Leistungen</h4>
         <ul>
-          <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-          <li><a href="fuerwen.html">Für wen</a></li>
-          <li><a href="lieferant.html">Lieferant werden</a></li>
-          <li><a href="kalkulator.html">Einsparkalkulator</a></li>
-          <li><a href="materialien.html">Materialien</a></li>
+          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
+          <li><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a></li>
+          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
+          <li><a href="kalkulator.html" data-i18n="footer_calc">Einsparkalkulator</a></li>
+          <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Unternehmen</h4>
+        <h4 data-i18n="footer_company">Unternehmen</h4>
         <ul>
-          <li><a href="ueberuns.html">Über uns</a></li>
-          <li><a href="kontakt.html">Kontakt</a></li>
-          <li><a href="lieferant.html">Lieferant werden</a></li>
+          <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
+          <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
+          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Rechtliches</h4>
+        <h4 data-i18n="footer_legal">Rechtliches</h4>
         <ul>
-          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutz</a></li>
-          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer">Impressum</a></li>
-          <li><a href="agb.html" target="_blank" rel="noopener noreferrer">AGB</a></li>
+          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_privacy">Datenschutz</a></li>
+          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_imprint">Impressum</a></li>
+          <li><a href="agb.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_terms">AGB</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
-      <span class="footer-tagline">Du zahlst erst, wenn wir dir sparen.</span>
+      <span class="footer-copy" data-i18n="footer_copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
+      <span class="footer-tagline" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</span>
     </div>
   </div>
 </footer>
@@ -913,7 +934,7 @@ function toggleFaq(btn){
   <div class="chat-head">
     <div class="chat-head-info">
       <div class="chat-avatar">SO</div>
-      <div><div class="chat-head-title">SourceOn Assistent</div><div class="chat-head-sub">Beantwortet alle Fragen zu SourceOn</div></div>
+      <div><div class="chat-head-title" data-i18n="chat_title">SourceOn Assistent</div><div class="chat-head-sub" data-i18n="chat_sub">Beantwortet alle Fragen zu SourceOn</div></div>
     </div>
     <button id="chat-close" onclick="toggleChat()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
@@ -945,6 +966,51 @@ function hideTyping(){const el=document.getElementById('chat-typing');if(el)el.r
 function scrollBottom(){const m=document.getElementById('chat-msgs');m.scrollTop=m.scrollHeight;}
 async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content:txt});if(history.length>20)history=history.slice(-20);if(APIKEY==='ANTHROPIC_API_KEY_HERE'){addBotMsg('Assistent wird bald verfügbar. Kontaktiere uns direkt: info@sourceon.ch');return;}showTyping();try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':APIKEY,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,system:SYSTEM,messages:history})});const d=await r.json();const reply=d.content&&d.content[0]?d.content[0].text:'Entschuldigung. Kontaktiere uns: info@sourceon.ch';hideTyping();history.push({role:'assistant',content:reply});if(history.length>20)history=history.slice(-20);addBotMsg(reply);}catch(e){hideTyping();addBotMsg('Verbindungsfehler. Kontaktiere uns: info@sourceon.ch');}
 }
+})();
+</script>
+
+
+<script>
+var I18N={
+  de:{'nav_home':'Home','nav_process':'Wie es funktioniert','nav_calc':'Kalkulator','nav_materials':'Materialien','nav_forwhom':'Für wen','nav_supplier':'Lieferant werden','nav_about':'Über uns','nav_contact':'Kontakt','nav_cta':'Materialbedarf melden','footer_desc':'Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.','footer_services':'Leistungen','footer_company':'Unternehmen','footer_legal':'Rechtliches','footer_calc':'Einsparkalkulator','footer_privacy':'Datenschutz','footer_imprint':'Impressum','footer_terms':'AGB','footer_copy':'© 2026 SourceOn, Zürich — Alle Rechte vorbehalten','footer_tagline':'Du zahlst erst, wenn wir dir sparen.','chat_title':'SourceOn Assistent','chat_sub':'Beantwortet alle Fragen zu SourceOn','fw_label':'Für wen','fw_title':'Gemacht für Schweizer Baufirmen.','fw_subtitle':'Ob Hochbau, Renovation oder Neubau — SourceOn lohnt sich für jede Grösse.','fw_badge':'Most popular','fw_card1_title':'Bauunternehmen aller Grössen','fw_card1_desc':'Von KMU bis Grosskonzern — SourceOn schafft Einkaufsmacht für jeden der Baumaterial beschafft.','fw_card1_c1':'Einkaufspreise wie Grosskonzerne','fw_card1_c2':'Profitabel ab CHF 50k Jahresvolumen — skaliert mit deiner Grösse','fw_card1_c3':'Kein Mindestumsatz, keine Bindung','fw_card1_c4':'Direktlieferung auf die Baustelle','fw_card1_c5':'Zahlung nur bei echter Ersparnis','fw_card1_c6':'Volle Preistransparenz','fw_card2_title':'Handwerksbetriebe & Subunternehmer','fw_card2_desc':'Für jedes Gewerk die passenden Konditionen — unkompliziert und schnell.','fw_card2_c1':'Alle Gewerke und Materialien','fw_card2_c2':'Schnelle Abwicklung','fw_card2_c3':'Keine Vorauszahlung nötig','fw_card2_c4':'Persönliche Betreuung','fw_card3_title':'Immobilieneigentümer & Investoren','fw_card3_desc':'Für Renovations- und Neubauprojekte mit geprüfter Qualität und voller Dokumentation.','fw_card3_c1':'Renovationsprojekte und Neubauten','fw_card3_c2':'Mehrfamilienhäuser','fw_card3_c3':'Geprüfte Qualitätsstandards','fw_card3_c4':'Vollständige Dokumentation','fw_card4_title':'Architekten & Planer','fw_card4_desc':'Materialbeschaffung schon in der Planungsphase integriert — mit technischer Beratung.','fw_card4_c1':'Integration in frühe Planungsphase','fw_card4_c2':'Technische Beratung inklusive','fw_card4_c3':'Flexible Mengenpuffer','fw_card4_c4':'Referenzprojekte verfügbar'},
+  en:{'nav_home':'Home','nav_process':'How it works','nav_calc':'Calculator','nav_materials':'Materials','nav_forwhom':'Who it's for','nav_supplier':'Become a supplier','nav_about':'About us','nav_contact':'Contact','nav_cta':'Report material demand','footer_desc':'Swiss B2B procurement broker for the construction industry. You only pay when we save you money.','footer_services':'Services','footer_company':'Company','footer_legal':'Legal','footer_calc':'Savings calculator','footer_privacy':'Privacy policy','footer_imprint':'Imprint','footer_terms':'Terms','footer_copy':'© 2026 SourceOn, Zurich — All rights reserved','footer_tagline':'You only pay when we save you money.','chat_title':'SourceOn Assistant','chat_sub':'Answers all questions about SourceOn','fw_label':'Who it's for','fw_title':'Made for Swiss construction firms.','fw_subtitle':'Whether high-rise, renovation or new build — SourceOn pays off for every size.','fw_badge':'Most popular','fw_card1_title':'Construction companies of all sizes','fw_card1_desc':'From SMEs to large corporations — SourceOn creates purchasing power for everyone who procures building materials.','fw_card1_c1':'Purchasing prices like large corporations','fw_card1_c2':'Profitable from CHF 50k annual volume — scales with your size','fw_card1_c3':'No minimum turnover, no commitment','fw_card1_c4':'Direct delivery to construction site','fw_card1_c5':'Payment only on real savings','fw_card1_c6':'Full price transparency','fw_card2_title':'Tradespeople & subcontractors','fw_card2_desc':'The right conditions for every trade — uncomplicated and fast.','fw_card2_c1':'All trades and materials','fw_card2_c2':'Fast processing','fw_card2_c3':'No advance payment required','fw_card2_c4':'Personal support','fw_card3_title':'Property owners & investors','fw_card3_desc':'For renovation and new-build projects with verified quality and full documentation.','fw_card3_c1':'Renovation and new-build projects','fw_card3_c2':'Multi-family homes','fw_card3_c3':'Verified quality standards','fw_card3_c4':'Complete documentation','fw_card4_title':'Architects & planners','fw_card4_desc':'Material procurement integrated into the planning phase — with technical consulting.','fw_card4_c1':'Integration in early planning phase','fw_card4_c2':'Technical consulting included','fw_card4_c3':'Flexible quantity buffers','fw_card4_c4':'Reference projects available'},
+  fr:{'nav_home':'Accueil','nav_process':'Comment ça marche','nav_calc':'Calculateur','nav_materials':'Matériaux','nav_forwhom':'Pour qui','nav_supplier':'Devenir fournisseur','nav_about':'À propos','nav_contact':'Contact','nav_cta':'Annoncer un besoin','footer_desc':'Courtier B2B suisse en approvisionnement pour le secteur de la construction.','footer_services':'Services','footer_company':'Entreprise','footer_legal':'Mentions légales','footer_calc':'Calculateur d'économies','footer_privacy':'Protection des données','footer_imprint':'Mentions légales','footer_terms':'CGV','footer_copy':'© 2026 SourceOn, Zurich — Tous droits réservés','footer_tagline':'Tu ne paies que si on te fait économiser.','chat_title':'Assistant SourceOn','chat_sub':'Répond à toutes les questions sur SourceOn','fw_label':'Pour qui','fw_title':'Conçu pour les entreprises de construction suisses.','fw_subtitle':'Que ce soit pour la construction, la rénovation ou le neuf — SourceOn est rentable pour toute taille.','fw_badge':'Le plus populaire','fw_card1_title':'Entreprises de construction de toutes tailles','fw_card1_desc':'Des PME aux grands groupes — SourceOn crée un pouvoir d'achat pour tous.','fw_card1_c1':'Prix d'achat comme les grands groupes','fw_card1_c2':'Rentable dès CHF 50k de volume annuel','fw_card1_c3':'Pas de chiffre d'affaires minimum','fw_card1_c4':'Livraison directe sur le chantier','fw_card1_c5':'Paiement uniquement sur économies réelles','fw_card1_c6':'Transparence totale des prix','fw_card2_title':'Artisans & sous-traitants','fw_card2_desc':'Les bonnes conditions pour chaque corps de métier — simple et rapide.','fw_card2_c1':'Tous les corps de métier','fw_card2_c2':'Traitement rapide','fw_card2_c3':'Pas de paiement anticipé','fw_card2_c4':'Accompagnement personnel','fw_card3_title':'Propriétaires & investisseurs','fw_card3_desc':'Pour les projets de rénovation et de construction neuve avec qualité vérifiée.','fw_card3_c1':'Projets de rénovation et construction neuve','fw_card3_c2':'Immeubles résidentiels','fw_card3_c3':'Standards de qualité vérifiés','fw_card3_c4':'Documentation complète','fw_card4_title':'Architectes & planificateurs','fw_card4_desc':'Approvisionnement intégré dès la phase de planification — avec conseil technique.','fw_card4_c1':'Intégration en phase de planification','fw_card4_c2':'Conseil technique inclus','fw_card4_c3':'Tampons de quantité flexibles','fw_card4_c4':'Projets de référence disponibles'},
+  it:{'nav_home':'Home','nav_process':'Come funziona','nav_calc':'Calcolatore','nav_materials':'Materiali','nav_forwhom':'Per chi','nav_supplier':'Diventa fornitore','nav_about':'Chi siamo','nav_contact':'Contatto','nav_cta':'Segnala fabbisogno materiale','footer_desc':'Broker B2B svizzero per l'approvvigionamento nel settore edile.','footer_services':'Servizi','footer_company':'Azienda','footer_legal':'Note legali','footer_calc':'Calcolatore di risparmio','footer_privacy':'Privacy','footer_imprint':'Impressum','footer_terms':'CGA','footer_copy':'© 2026 SourceOn, Zurigo — Tutti i diritti riservati','footer_tagline':'Paghi solo quando ti facciamo risparmiare.','chat_title':'Assistente SourceOn','chat_sub':'Risponde a tutte le domande su SourceOn','fw_label':'Per chi','fw_title':'Pensato per le imprese edili svizzere.','fw_subtitle':'Che sia costruzione, ristrutturazione o nuova costruzione — SourceOn conviene per ogni dimensione.','fw_badge':'Il più popolare','fw_card1_title':'Imprese edili di tutte le dimensioni','fw_card1_desc':'Dalle PMI ai grandi gruppi — SourceOn crea potere d'acquisto per tutti.','fw_card1_c1':'Prezzi d'acquisto come i grandi gruppi','fw_card1_c2':'Redditizio da CHF 50k di volume annuale','fw_card1_c3':'Nessun fatturato minimo','fw_card1_c4':'Consegna diretta in cantiere','fw_card1_c5':'Pagamento solo su risparmi reali','fw_card1_c6':'Trasparenza totale dei prezzi','fw_card2_title':'Artigiani & subappaltatori','fw_card2_desc':'Le condizioni giuste per ogni mestiere — semplice e veloce.','fw_card2_c1':'Tutti i mestieri e materiali','fw_card2_c2':'Elaborazione rapida','fw_card2_c3':'Nessun pagamento anticipato','fw_card2_c4':'Supporto personale','fw_card3_title':'Proprietari & investitori','fw_card3_desc':'Per progetti di ristrutturazione e nuova costruzione con qualità verificata.','fw_card3_c1':'Progetti di ristrutturazione e nuova costruzione','fw_card3_c2':'Case plurifamiliari','fw_card3_c3':'Standard di qualità verificati','fw_card3_c4':'Documentazione completa','fw_card4_title':'Architetti & pianificatori','fw_card4_desc':'Approvvigionamento integrato dalla fase di pianificazione — con consulenza tecnica.','fw_card4_c1':'Integrazione nella fase di pianificazione','fw_card4_c2':'Consulenza tecnica inclusa','fw_card4_c3':'Buffer di quantità flessibili','fw_card4_c4':'Progetti di riferimento disponibili'},
+};
+</script>
+
+<script>
+var LANG_NAMES={de:'DE',en:'EN',fr:'FR',it:'IT'};
+function setLang(lang){
+  if(!I18N[lang])return;
+  var dict=I18N[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key=el.getAttribute('data-i18n');
+    if(dict[key]!=null) el.textContent=dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+    var key=el.getAttribute('data-i18n-html');
+    if(dict[key]!=null) el.innerHTML=dict[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+    var key=el.getAttribute('data-i18n-placeholder');
+    if(dict[key]!=null) el.placeholder=dict[key];
+  });
+  document.getElementById('lang-current').textContent=LANG_NAMES[lang];
+  document.querySelectorAll('.lang-opt').forEach(function(b){b.classList.remove('active');});
+  var activeBtn=document.querySelector('.lang-opt[onclick*="\''+lang+'\'"]');
+  if(activeBtn)activeBtn.classList.add('active');
+  document.getElementById('lang-switch').classList.remove('open');
+  localStorage.setItem('sourceon-lang',lang);
+  document.documentElement.lang=lang;
+}
+(function(){
+  var saved=localStorage.getItem('sourceon-lang');
+  if(saved&&saved!=='de') setLang(saved);
+  document.addEventListener('click',function(e){
+    var sw=document.getElementById('lang-switch');
+    if(sw&&!sw.contains(e.target)) sw.classList.remove('open');
+  });
 })();
 </script>
 

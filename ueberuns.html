@@ -671,6 +671,18 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .nav-card-grid a:hover{border-color:rgba(232,160,32,.3)!important;background:rgba(255,255,255,.06)!important;transform:translateY(-4px)}
 @media(max-width:900px){.nav-card-grid{grid-template-columns:1fr 1fr!important}}
 @media(max-width:640px){.nav-card-grid{grid-template-columns:1fr!important}}
+
+.lang-switch{position:relative;margin-right:8px}
+.lang-btn{display:flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.75);background:none;border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:6px 14px;cursor:pointer;transition:all .2s}
+.lang-btn:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.lang-btn svg{width:14px;height:14px;transition:transform .2s}
+.lang-switch.open .lang-btn svg{transform:rotate(180deg)}
+.lang-dd{display:none;position:absolute;top:calc(100% + 8px);right:0;background:rgba(10,20,35,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:6px;min-width:150px;z-index:999;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.lang-switch.open .lang-dd{display:block}
+.lang-opt{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;border:none;background:none;color:rgba(255,255,255,.7);font-size:.84rem;font-weight:500;cursor:pointer;border-radius:8px;transition:all .15s;font-family:inherit;text-align:left}
+.lang-opt:hover{background:rgba(255,255,255,.08);color:#fff}
+.lang-opt.active{color:var(--gold);font-weight:600}
+.lang-flag{font-size:1.1rem;line-height:1}
 </style>
 </head>
 <body>
@@ -679,17 +691,26 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="nav-inner">
     <a class="nav-logo" href="#hero">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-      <li><a href="kalkulator.html">Kalkulator</a></li>
-      <li><a href="materialien.html">Materialien</a></li>
-      <li><a href="fuerwen.html">Für wen</a></li>
-      <li><a href="lieferant.html">Lieferant werden</a></li>
-      <li><a href="ueberuns.html">Über uns</a></li>
-      <li><a href="kontakt.html">Kontakt</a></li>
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
+      <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
+      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
+      <li><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a></li>
+      <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
+      <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
+      <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
+      <div class="lang-switch" id="lang-switch">
+        <button class="lang-btn" onclick="document.getElementById('lang-switch').classList.toggle('open')"><span id="lang-current">DE</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="lang-dd">
+          <button class="lang-opt active" onclick="setLang('de')"><span class="lang-flag">🇨🇭</span> Deutsch</button>
+          <button class="lang-opt" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span> English</button>
+          <button class="lang-opt" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span> Francais</button>
+          <button class="lang-opt" onclick="setLang('it')"><span class="lang-flag">🇮🇹</span> Italiano</button>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
       <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
   </div>
@@ -697,14 +718,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <a href="index.html" onclick="toggleNav()">Home</a>
-  <a href="prozess.html" onclick="toggleNav()">Wie es funktioniert</a>
-  <a href="kalkulator.html" onclick="toggleNav()">Kalkulator</a>
-  <a href="fuerwen.html" onclick="toggleNav()">Für wen</a>
-  <a href="lieferant.html" onclick="toggleNav()">Lieferant werden</a>
-  <a href="ueberuns.html" onclick="toggleNav()">Über uns</a>
-  <a href="kontakt.html" onclick="toggleNav()">Kontakt</a>
-  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
+  <a href="index.html" onclick="toggleNav()" data-i18n="nav_home">Home</a>
+  <a href="prozess.html" onclick="toggleNav()" data-i18n="nav_process">Wie es funktioniert</a>
+  <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calc">Kalkulator</a>
+  <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom">Für wen</a>
+  <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier">Lieferant werden</a>
+  <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav_about">Über uns</a>
+  <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav_contact">Kontakt</a>
+  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
 </div>
 
 <!-- BENTO DETAIL MODAL -->
@@ -721,23 +742,23 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <div class="about-layout">
       <div>
         <div class="about-left-card">
-          <p class="about-quote">"Der Schweizer Baumarkt ist fragmentiert. SourceOn schafft die Bündelungsmacht, die KMU alleine nicht haben."</p>
-          <div class="about-attr">— SourceOn, Zürich</div>
+          <p class="about-quote" data-i18n="about_quote">"Der Schweizer Baumarkt ist fragmentiert. SourceOn schafft die Bündelungsmacht, die KMU alleine nicht haben."</p>
+          <div class="about-attr" data-i18n="about_attr">— SourceOn, Zürich</div>
           <div class="about-badges">
-            <span class="about-badge">Gegründet in der Schweiz</span>
-            <span class="about-badge"><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Kein Risiko für Kunden</span>
+            <span class="about-badge" data-i18n="about_badge1">Gegründet in der Schweiz</span>
+            <span class="about-badge"><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="about_badge2">Kein Risiko für Kunden</span></span>
           </div>
         </div>
       </div>
       <div>
-        <div class="label">Über uns</div>
-        <h2 class="h2">Bündelungsmacht für alle Baufirmen.</h2>
-        <p style="font-size:.92rem;color:var(--body);line-height:1.75;margin-top:16px;margin-bottom:24px">SourceOn wurde mit einer einfachen Überzeugung gegründet: Zu viele Baufirmen — vom KMU bis zum Grosskonzern — zahlen mehr als nötig für Baumaterial. Nicht weil es keine günstigeren Preise gibt, sondern weil sie alleine zu wenig Volumen haben um sie zu bekommen. Wir ändern das — für alle.</p>
+        <div class="label" data-i18n="about_label">Über uns</div>
+        <h2 class="h2" data-i18n="about_h2">Bündelungsmacht für alle Baufirmen.</h2>
+        <p style="font-size:.92rem;color:var(--body);line-height:1.75;margin-top:16px;margin-bottom:24px" data-i18n="about_desc">SourceOn wurde mit einer einfachen Überzeugung gegründet: Zu viele Baufirmen — vom KMU bis zum Grosskonzern — zahlen mehr als nötig für Baumaterial. Nicht weil es keine günstigeren Preise gibt, sondern weil sie alleine zu wenig Volumen haben um sie zu bekommen. Wir ändern das — für alle.</p>
         <div class="about-features">
-          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><strong>Erfolgsbasiertes Modell</strong><span>Du zahlst nur, wenn dir gespart wird</span></div></div>
-          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><strong>Schweizer Qualitätsstandards</strong><span>SIA/ISO-konforme Lieferanten, SN EN Normen</span></div></div>
-          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div><strong>Schnelle Abwicklung</strong><span>Erste Angebote innerhalb von 48 Stunden</span></div></div>
-          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><strong>Persönliche Betreuung</strong><span>Direkter Ansprechpartner für jede Anfrage</span></div></div>
+          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><strong data-i18n="feat1_title">Erfolgsbasiertes Modell</strong><span data-i18n="feat1_desc">Du zahlst nur, wenn dir gespart wird</span></div></div>
+          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><strong data-i18n="feat2_title">Schweizer Qualitätsstandards</strong><span data-i18n="feat2_desc">SIA/ISO-konforme Lieferanten, SN EN Normen</span></div></div>
+          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div><strong data-i18n="feat3_title">Schnelle Abwicklung</strong><span data-i18n="feat3_desc">Erste Angebote innerhalb von 48 Stunden</span></div></div>
+          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><strong data-i18n="feat4_title">Persönliche Betreuung</strong><span data-i18n="feat4_desc">Direkter Ansprechpartner für jede Anfrage</span></div></div>
         </div>
       </div>
     </div>
@@ -750,27 +771,27 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <section id="faq" class="section">
   <div class="container">
     <div class="text-center reveal">
-      <div class="label label-dark">FAQ</div>
-      <h2 class="h2" style="color:#fff">Häufig gestellte Fragen.</h2>
-      <p class="subtitle subtitle-dark" style="margin-top:14px">Alles was du über SourceOn wissen musst — klar und direkt.</p>
+      <div class="label label-dark" data-i18n="faq_label">FAQ</div>
+      <h2 class="h2" style="color:#fff" data-i18n="faq_h2">Häufig gestellte Fragen.</h2>
+      <p class="subtitle subtitle-dark" style="margin-top:14px" data-i18n="faq_sub">Alles was du über SourceOn wissen musst — klar und direkt.</p>
     </div>
     <div class="faq-cols">
     <div class="faq-col">
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Was kostet mich SourceOn wenn ich nichts spare?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a" style="max-height:200px"><div class="faq-a-inner">Gar nichts. SourceOn verlangt ausschliesslich eine Provision von 2.25% auf den Materialwert — und das nur dann, wenn wir dir tatsächlich günstiger einkaufen als dein bisheriger Preis. Sparst du nichts, zahlst du nichts. Kein Abo, keine Fixgebühr, kein Risiko.</div></div>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text" data-i18n="faq_q1">Was kostet mich SourceOn wenn ich nichts spare?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a" style="max-height:200px"><div class="faq-a-inner" data-i18n="faq_a1">Gar nichts. SourceOn verlangt ausschliesslich eine Provision von 2.25% auf den Materialwert — und das nur dann, wenn wir dir tatsächlich günstiger einkaufen als dein bisheriger Preis. Sparst du nichts, zahlst du nichts. Kein Abo, keine Fixgebühr, kein Risiko.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Wie lange dauert es bis ich ein Angebot bekomme?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">In der Regel erhältst du innerhalb von 48 Stunden ein konkretes Angebot. Bei Standardmaterialien wie Beton oder Armierungsstahl oft schneller. Bei komplexen oder grossen Bestellungen kann es etwas länger dauern — du wirst immer proaktiv informiert.</div></div>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text" data-i18n="faq_q2">Wie lange dauert es bis ich ein Angebot bekomme?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq_a2">In der Regel erhältst du innerhalb von 48 Stunden ein konkretes Angebot. Bei Standardmaterialien wie Beton oder Armierungsstahl oft schneller. Bei komplexen oder grossen Bestellungen kann es etwas länger dauern — du wirst immer proaktiv informiert.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Muss ich einen Vertrag unterschreiben?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Für den ersten Auftrag reicht eine einfache Auftragsbestätigung. Für eine langfristige Zusammenarbeit schliessen wir eine Vermittlungsvereinbarung ab — diese schützt beide Seiten und regelt die Provision transparent.</div></div>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text" data-i18n="faq_q3">Muss ich einen Vertrag unterschreiben?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq_a3">Für den ersten Auftrag reicht eine einfache Auftragsbestätigung. Für eine langfristige Zusammenarbeit schliessen wir eine Vermittlungsvereinbarung ab — diese schützt beide Seiten und regelt die Provision transparent.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Was passiert wenn die Lieferung fehlerhaft ist?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">SourceOn ist Vermittler, kein Händler. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Bei Mängeln haftet der Lieferant direkt dir gegenüber gemäss Schweizer OR. Wir unterstützen dich bei der Kommunikation mit dem Lieferanten.</div></div>
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text" data-i18n="faq_q4">Was passiert wenn die Lieferung fehlerhaft ist?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq_a4">SourceOn ist Vermittler, kein Händler. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Bei Mängeln haftet der Lieferant direkt dir gegenüber gemäss Schweizer OR. Wir unterstützen dich bei der Kommunikation mit dem Lieferanten.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Für welche Materialien ist SourceOn geeignet?</span><span class="faq-toggle">+</span></button>

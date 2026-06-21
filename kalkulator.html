@@ -671,6 +671,18 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .nav-card-grid a:hover{border-color:rgba(232,160,32,.3)!important;background:rgba(255,255,255,.06)!important;transform:translateY(-4px)}
 @media(max-width:900px){.nav-card-grid{grid-template-columns:1fr 1fr!important}}
 @media(max-width:640px){.nav-card-grid{grid-template-columns:1fr!important}}
+
+.lang-switch{position:relative;margin-right:8px}
+.lang-btn{display:flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.75);background:none;border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:6px 14px;cursor:pointer;transition:all .2s}
+.lang-btn:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.lang-btn svg{width:14px;height:14px;transition:transform .2s}
+.lang-switch.open .lang-btn svg{transform:rotate(180deg)}
+.lang-dd{display:none;position:absolute;top:calc(100% + 8px);right:0;background:rgba(10,20,35,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:6px;min-width:150px;z-index:999;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.lang-switch.open .lang-dd{display:block}
+.lang-opt{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;border:none;background:none;color:rgba(255,255,255,.7);font-size:.84rem;font-weight:500;cursor:pointer;border-radius:8px;transition:all .15s;font-family:inherit;text-align:left}
+.lang-opt:hover{background:rgba(255,255,255,.08);color:#fff}
+.lang-opt.active{color:var(--gold);font-weight:600}
+.lang-flag{font-size:1.1rem;line-height:1}
 </style>
 <body>
 <!-- NAV -->
@@ -678,17 +690,26 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="nav-inner">
     <a class="nav-logo" href="#hero">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-      <li><a href="kalkulator.html">Kalkulator</a></li>
-      <li><a href="materialien.html">Materialien</a></li>
-      <li><a href="fuerwen.html">Für wen</a></li>
-      <li><a href="lieferant.html">Lieferant werden</a></li>
-      <li><a href="ueberuns.html">Über uns</a></li>
-      <li><a href="kontakt.html">Kontakt</a></li>
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
+      <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
+      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
+      <li><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a></li>
+      <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
+      <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
+      <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
+      <div class="lang-switch" id="lang-switch">
+        <button class="lang-btn" onclick="document.getElementById('lang-switch').classList.toggle('open')"><span id="lang-current">DE</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <div class="lang-dd">
+          <button class="lang-opt active" onclick="setLang('de')"><span class="lang-flag">🇨🇭</span> Deutsch</button>
+          <button class="lang-opt" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span> English</button>
+          <button class="lang-opt" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span> Francais</button>
+          <button class="lang-opt" onclick="setLang('it')"><span class="lang-flag">🇮🇹</span> Italiano</button>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
       <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
   </div>
@@ -696,23 +717,23 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <a href="index.html" onclick="toggleNav()">Home</a>
-  <a href="prozess.html" onclick="toggleNav()">Wie es funktioniert</a>
-  <a href="kalkulator.html" onclick="toggleNav()">Kalkulator</a>
-  <a href="fuerwen.html" onclick="toggleNav()">Für wen</a>
-  <a href="lieferant.html" onclick="toggleNav()">Lieferant werden</a>
-  <a href="ueberuns.html" onclick="toggleNav()">Über uns</a>
-  <a href="kontakt.html" onclick="toggleNav()">Kontakt</a>
-  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
+  <a href="index.html" onclick="toggleNav()" data-i18n="nav_home">Home</a>
+  <a href="prozess.html" onclick="toggleNav()" data-i18n="nav_process">Wie es funktioniert</a>
+  <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calc">Kalkulator</a>
+  <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom">Für wen</a>
+  <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier">Lieferant werden</a>
+  <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav_about">Über uns</a>
+  <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav_contact">Kontakt</a>
+  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
 </div>
 
 <!-- CALCULATOR -->
 <section id="calculator">
   <div class="container">
     <div class="text-center reveal" style="margin-bottom:56px">
-      <div class="label label-dark">Kalkulator</div>
-      <h2 class="h2" style="color:#fff">Wie viel könntest du sparen?</h2>
-      <p class="subtitle subtitle-dark" style="margin-top:14px">Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.</p>
+      <div class="label label-dark" data-i18n="calc_label">Kalkulator</div>
+      <h2 class="h2" style="color:#fff" data-i18n="calc_title">Wie viel könntest du sparen?</h2>
+      <p class="subtitle subtitle-dark" style="margin-top:14px" data-i18n="calc_subtitle">Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.</p>
     </div>
     <div class="calc-layout">
       <div class="reveal reveal-d1">
@@ -721,26 +742,26 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
           <input type="range" id="calc-slider" min="0" max="100" value="18" step="0.1" style="--pct:18%"/>
         </div>
         <div class="calc-range-labels"><span>CHF 50'000</span><span>CHF 10'000'000</span></div>
-        <input type="text" class="calc-text-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" value="150'000"/>
-        <p style="font-size:.75rem;color:var(--muted);font-style:italic;margin-top:8px">Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.</p>
-        <div class="calc-tier-label">Ø Rabatt: <span class="calc-tier-rate" id="calc-rate">10%</span></div>
+        <input type="text" class="calc-text-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" data-i18n-placeholder="calc_placeholder" value="150'000"/>
+        <p style="font-size:.75rem;color:var(--muted);font-style:italic;margin-top:8px" data-i18n="calc_manual_note">Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.</p>
+        <div class="calc-tier-label" data-i18n="calc_discount_label">Ø Rabatt: <span class="calc-tier-rate" id="calc-rate">10%</span></div>
       </div>
       <div class="reveal reveal-d2">
         <div class="calc-card">
           <div class="calc-row-gross">
-            <div class="calc-row-label">Bruttoersparnis (vor Provision)</div>
+            <div class="calc-row-label" data-i18n="calc_gross_label">Bruttoersparnis (vor Provision)</div>
             <div class="calc-row-val" id="calc-gross">CHF 15'000</div>
           </div>
           <div class="calc-divider"></div>
           <div class="calc-row-net">
-            <div class="calc-row-label">Netto-Einsparpotenzial (nach Provision)</div>
+            <div class="calc-row-label" data-i18n="calc_net_label">Netto-Einsparpotenzial (nach Provision)</div>
             <div class="calc-row-val" id="calc-net">CHF 11'625</div>
           </div>
           <div class="calc-cta">
-            <button class="btn btn-gold btn-lg btn-full" onclick="window.location.href='kontakt.html'">Materialbedarf melden — kostenlos</button>
+            <button class="btn btn-gold btn-lg btn-full" onclick="window.location.href='kontakt.html'" data-i18n="calc_cta">Materialbedarf melden — kostenlos</button>
           </div>
-          <p class="calc-disclaimer">Unverbindliche Schätzung basierend auf Schweizer Marktdaten. Potenzielle Einsparungen variieren je nach Material, Volumen und Lieferant.</p>
-          <p class="calc-footnote">* Ab CHF 500'000 Jahresvolumen individuelle Konditionen möglich.</p>
+          <p class="calc-disclaimer" data-i18n="calc_disclaimer">Unverbindliche Schätzung basierend auf Schweizer Marktdaten. Potenzielle Einsparungen variieren je nach Material, Volumen und Lieferant.</p>
+          <p class="calc-footnote" data-i18n="calc_footnote">* Ab CHF 500'000 Jahresvolumen individuelle Konditionen möglich.</p>
         </div>
       </div>
     </div>
@@ -750,10 +771,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <!-- CTA BANNER -->
 <section id="cta-banner">
   <div class="container" style="position:relative;z-index:1">
-    <h2 class="cta-title">Bereit für tiefere Einkaufspreise?</h2>
-    <p class="cta-sub">Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
+    <h2 class="cta-title" data-i18n="cta_title">Bereit für tiefere Einkaufspreise?</h2>
+    <p class="cta-sub" data-i18n="cta_sub">Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
     <div class="cta-btns">
-      <button class="btn btn-gold btn-lg" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
+      <button class="btn btn-gold btn-lg" onclick="window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
       <a href="mailto:info@SourceOn.ch" class="btn btn-outline-w btn-lg">info@SourceOn.ch</a>
     </div>
   </div>
@@ -766,39 +787,39 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="nav-logo">Source<span>On</span></div>
-        <p>Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
+        <p data-i18n="footer_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
       </div>
       <div class="footer-col">
-        <h4>Leistungen</h4>
+        <h4 data-i18n="footer_services">Leistungen</h4>
         <ul>
-          <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-          <li><a href="fuerwen.html">Für wen</a></li>
-          <li><a href="lieferant.html">Lieferant werden</a></li>
-          <li><a href="kalkulator.html">Einsparkalkulator</a></li>
-          <li><a href="materialien.html">Materialien</a></li>
+          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
+          <li><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a></li>
+          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
+          <li><a href="kalkulator.html" data-i18n="footer_calc">Einsparkalkulator</a></li>
+          <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Unternehmen</h4>
+        <h4 data-i18n="footer_company">Unternehmen</h4>
         <ul>
-          <li><a href="ueberuns.html">Über uns</a></li>
-          <li><a href="kontakt.html">Kontakt</a></li>
-          <li><a href="lieferant.html">Lieferant werden</a></li>
+          <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
+          <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
+          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Rechtliches</h4>
+        <h4 data-i18n="footer_legal">Rechtliches</h4>
         <ul>
-          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutz</a></li>
-          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer">Impressum</a></li>
-          <li><a href="agb.html" target="_blank" rel="noopener noreferrer">AGB</a></li>
+          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_privacy">Datenschutz</a></li>
+          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_imprint">Impressum</a></li>
+          <li><a href="agb.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_terms">AGB</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
-      <span class="footer-tagline">Du zahlst erst, wenn wir dir sparen.</span>
+      <span class="footer-copy" data-i18n="footer_copy">&copy; 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
+      <span class="footer-tagline" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</span>
     </div>
   </div>
 </footer>

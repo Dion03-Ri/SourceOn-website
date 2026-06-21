@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Materialien & Lieferanten — SourceOn</title>
+<title data-i18n="page_title">Materialien & Lieferanten — SourceOn</title>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -671,6 +671,18 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .nav-card-grid a:hover{border-color:rgba(232,160,32,.3)!important;background:rgba(255,255,255,.06)!important;transform:translateY(-4px)}
 @media(max-width:900px){.nav-card-grid{grid-template-columns:1fr 1fr!important}}
 @media(max-width:640px){.nav-card-grid{grid-template-columns:1fr!important}}
+
+.lang-switch{position:relative;margin-right:8px}
+.lang-btn{display:flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.75);background:none;border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:6px 14px;cursor:pointer;transition:all .2s}
+.lang-btn:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.lang-btn svg{width:14px;height:14px;transition:transform .2s}
+.lang-switch.open .lang-btn svg{transform:rotate(180deg)}
+.lang-dd{display:none;position:absolute;top:calc(100% + 8px);right:0;background:rgba(10,20,35,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:6px;min-width:150px;z-index:999;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.lang-switch.open .lang-dd{display:block}
+.lang-opt{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;border:none;background:none;color:rgba(255,255,255,.7);font-size:.84rem;font-weight:500;cursor:pointer;border-radius:8px;transition:all .15s;font-family:inherit;text-align:left}
+.lang-opt:hover{background:rgba(255,255,255,.08);color:#fff}
+.lang-opt.active{color:var(--gold);font-weight:600}
+.lang-flag{font-size:1.1rem;line-height:1}
 </style>
 </head>
 <body>
@@ -679,17 +691,29 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="nav-inner">
     <a class="nav-logo" href="#hero">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-      <li><a href="kalkulator.html">Kalkulator</a></li>
-      <li><a href="materialien.html">Materialien</a></li>
-      <li><a href="fuerwen.html">Für wen</a></li>
-      <li><a href="lieferant.html">Lieferant werden</a></li>
-      <li><a href="ueberuns.html">Über uns</a></li>
-      <li><a href="kontakt.html">Kontakt</a></li>
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
+      <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
+      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
+      <li><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a></li>
+      <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
+      <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
+      <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
+      <div class="lang-switch" id="lang-switch">
+        <button class="lang-btn" onclick="document.getElementById('lang-switch').classList.toggle('open')">
+          <span id="lang-current">DE</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="lang-dd">
+          <button class="lang-opt active" onclick="setLang('de')"><span class="lang-flag">🇨🇭</span> Deutsch</button>
+          <button class="lang-opt" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span> English</button>
+          <button class="lang-opt" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span> Francais</button>
+          <button class="lang-opt" onclick="setLang('it')"><span class="lang-flag">🇮🇹</span> Italiano</button>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-md" data-i18n="nav_cta" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
       <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
   </div>
@@ -697,14 +721,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <a href="index.html" onclick="toggleNav()">Home</a>
-  <a href="prozess.html" onclick="toggleNav()">Wie es funktioniert</a>
-  <a href="kalkulator.html" onclick="toggleNav()">Kalkulator</a>
-  <a href="fuerwen.html" onclick="toggleNav()">Für wen</a>
-  <a href="lieferant.html" onclick="toggleNav()">Lieferant werden</a>
-  <a href="ueberuns.html" onclick="toggleNav()">Über uns</a>
-  <a href="kontakt.html" onclick="toggleNav()">Kontakt</a>
-  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
+  <a href="index.html" onclick="toggleNav()" data-i18n="nav_home">Home</a>
+  <a href="prozess.html" onclick="toggleNav()" data-i18n="nav_process">Wie es funktioniert</a>
+  <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calc">Kalkulator</a>
+  <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom">Für wen</a>
+  <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier">Lieferant werden</a>
+  <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav_about">Über uns</a>
+  <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav_contact">Kontakt</a>
+  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
 </div>
 
 <!-- BENTO DETAIL MODAL -->
@@ -730,18 +754,18 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <section id="mat-norms" class="section mat-norms-section">
   <div class="container">
     <div class="text-center reveal">
-      <div class="label">Material &amp; Norm</div>
-      <h2 class="h2" style="color:#fff">Jedes Material.<br>Eine Norm.</h2>
-      <p class="subtitle subtitle-dark" style="margin:14px auto 0">Alle Materialien, die SourceOn vermittelt, erfüllen die SourceOn-Prüfkriterien — SN EN und SIA-konform, lückenlos dokumentiert.</p>
+      <div class="label" data-i18n="mat_label">Material &amp; Norm</div>
+      <h2 class="h2" style="color:#fff" data-i18n="mat_heading">Jedes Material.<br>Eine Norm.</h2>
+      <p class="subtitle subtitle-dark" style="margin:14px auto 0" data-i18n="mat_sub">Alle Materialien, die SourceOn vermittelt, erfüllen die SourceOn-Prüfkriterien — SN EN und SIA-konform, lückenlos dokumentiert.</p>
     </div>
     <div class="mat-lookup reveal">
       <select id="mat-lookup-select" class="mat-lookup-select">
-        <option value="">Material wählen, um SourceOn-ID zu sehen…</option>
+        <option value="" data-i18n="mat_select_placeholder">Material wählen, um SourceOn-ID zu sehen…</option>
       </select>
       <div class="mat-lookup-result" id="mat-lookup-result">
         <div class="mat-lookup-id" id="mat-lookup-id">SO–000</div>
         <div class="mat-lookup-meta">
-          <div class="mat-lookup-name" id="mat-lookup-name">Noch kein Material ausgewählt</div>
+          <div class="mat-lookup-name" id="mat-lookup-name" data-i18n="mat_no_selection">Noch kein Material ausgewählt</div>
           <div class="mat-lookup-cat" id="mat-lookup-cat">—</div>
         </div>
         <div class="mat-lookup-badge"><svg class="ic-check-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> SN EN / SIA</div>
@@ -799,40 +823,40 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <section id="materials" class="section mat-section">
   <div class="container">
     <div class="text-center reveal">
-      <div class="label">Abdeckung</div>
-      <h2 class="h2">Eine Schnittstelle.<br>Jedes Material.</h2>
-      <p class="subtitle" style="margin-top:14px">Klicke auf ein Feld für Details.</p>
+      <div class="label" data-i18n="coverage_label">Abdeckung</div>
+      <h2 class="h2" data-i18n="coverage_heading">Eine Schnittstelle.<br>Jedes Material.</h2>
+      <p class="subtitle" style="margin-top:14px" data-i18n="coverage_sub">Klicke auf ein Feld für Details.</p>
     </div>
     <div class="bento-grid">
       <div class="bento-tile bento-tile-xl bento-navy reveal reveal-d1" data-detail-title="3 Bereiche. Über 50 Materialien." data-detail-text="Rohbau Kern (Beton, Armierungsstahl, Mauerwerk, Schalung u.v.m.), Ausbau (Dämmung, Gipskarton, Bedachung, Fassade) und Haustechnik (Rohrleitungen, Heizungsverteiler) — jedes einzelne Material trägt eine eigene SourceOn-ID. Statt mit Dutzenden Lieferanten, Verträgen und Ansprechpartnern zu jonglieren, läuft jede Anfrage über SourceOn — wir übernehmen Auswahl, Verhandlung und Koordination für jede Materialgruppe.">
-        <div class="bento-tag">3 Bereiche, 50+ Materialien</div>
-        <div class="bento-big">Vom Rohbau<br>bis zur Haustechnik.</div>
-        <p class="bento-text">Rohbau Kern, Ausbau und Haustechnik — jedes einzelne Material dokumentiert, geprüft und über einen einzigen Ansprechpartner beschafft.</p>
+        <div class="bento-tag" data-i18n="bento_tag_areas">3 Bereiche, 50+ Materialien</div>
+        <div class="bento-big" data-i18n="bento_big_shell">Vom Rohbau<br>bis zur Haustechnik.</div>
+        <p class="bento-text" data-i18n="bento_text_shell">Rohbau Kern, Ausbau und Haustechnik — jedes einzelne Material dokumentiert, geprüft und über einen einzigen Ansprechpartner beschafft.</p>
       </div>
       <div class="bento-tile bento-gold reveal reveal-d2" data-detail-title="SN EN / SIA" data-detail-text="Jeder Lieferant wird vor der Aufnahme ins Netzwerk geprüft. Materialdaten, Zertifikate und Prüfberichte werden lückenlos dokumentiert und auf Anfrage zur Verfügung gestellt — damit du dich auf jede Lieferung verlassen kannst.">
         <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></svg></div>
         <div class="bento-num">SN EN / SIA</div>
-        <p class="bento-text">Jedes Material entspricht Schweizer Normen — lückenlos dokumentiert.</p>
+        <p class="bento-text" data-i18n="bento_text_norm">Jedes Material entspricht Schweizer Normen — lückenlos dokumentiert.</p>
       </div>
       <div class="bento-tile bento-teal reveal reveal-d3" data-detail-title="20+ Partnerlieferanten" data-detail-text="Über 20 persönlich geprüfte Lieferanten in der ganzen Schweiz — von regionalen Spezialisten bis zu nationalen Grossbetrieben. Das Netzwerk wächst laufend, abgestimmt auf die Nachfrage unserer Kunden.">
         <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
         <div class="bento-num" data-count="20" data-suffix="+">0+</div>
-        <p class="bento-text">geprüfte Partnerlieferanten in der ganzen Schweiz.</p>
+        <p class="bento-text" data-i18n="bento_text_partners">geprüfte Partnerlieferanten in der ganzen Schweiz.</p>
       </div>
       <div class="bento-tile bento-dark reveal reveal-d4" data-detail-title="Direkt ab Werk" data-detail-text="Keine Zwischenlager, keine Umwege: Material wird direkt vom Werk des Lieferanten auf deine Baustelle geliefert. Das spart Zeit, reduziert Bruch und hält die Logistikkette einfach.">
         <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg></div>
-        <div class="bento-num">Direkt</div>
-        <p class="bento-text">Lieferung direkt ab Werk auf Ihre Baustelle — ohne Umwege.</p>
+        <div class="bento-num" data-i18n="bento_num_direct">Direkt</div>
+        <p class="bento-text" data-i18n="bento_text_direct">Lieferung direkt ab Werk auf Ihre Baustelle — ohne Umwege.</p>
       </div>
       <div class="bento-tile bento-navy reveal reveal-d4" data-detail-title="CH-weite Logistik" data-detail-text="Ob Genf, St. Gallen oder irgendwo dazwischen — die Lieferlogistik wird für jeden Standort organisiert. Du musst dich um Transport und Termine nicht selbst kümmern.">
         <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16,8 20,8 23,11 23,16 16,16"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></div>
-        <div class="bento-num">CH-weit</div>
-        <p class="bento-text">Von Genf bis St. Gallen — Logistik organisiert, ohne dass du dich kümmern musst.</p>
+        <div class="bento-num" data-i18n="bento_num_chwide">CH-weit</div>
+        <p class="bento-text" data-i18n="bento_text_chwide">Von Genf bis St. Gallen — Logistik organisiert, ohne dass du dich kümmern musst.</p>
       </div>
       <div class="bento-tile bento-full bento-charcoal reveal reveal-d1" data-detail-title="Sonderfall? Kein Problem." data-detail-text="Material nicht in der Liste? Wir erweitern unser Lieferantennetz gezielt für deinen Bedarf — auf Anfrage prüfen wir neue Partner und nehmen sie ins Netzwerk auf, sobald sie unsere Qualitätskriterien erfüllen.">
         <div class="bento-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg></div>
-        <div class="bento-num">Sonderfall? Kein Problem.</div>
-        <p class="bento-text">Material nicht in der Liste? Wir erweitern unser Lieferantennetz gezielt für Ihren Bedarf — auf Anfrage.</p>
+        <div class="bento-num" data-i18n="bento_num_special">Sonderfall? Kein Problem.</div>
+        <p class="bento-text" data-i18n="bento_text_special">Material nicht in der Liste? Wir erweitern unser Lieferantennetz gezielt für Ihren Bedarf — auf Anfrage.</p>
       </div>
     </div>
   </div>
@@ -845,39 +869,39 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="nav-logo">Source<span>On</span></div>
-        <p>Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
+        <p data-i18n="footer_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
       </div>
       <div class="footer-col">
-        <h4>Leistungen</h4>
+        <h4 data-i18n="footer_services">Leistungen</h4>
         <ul>
-          <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-          <li><a href="fuerwen.html">Für wen</a></li>
-          <li><a href="lieferant.html">Lieferant werden</a></li>
-          <li><a href="kalkulator.html">Einsparkalkulator</a></li>
-          <li><a href="materialien.html">Materialien</a></li>
+          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
+          <li><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a></li>
+          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
+          <li><a href="kalkulator.html" data-i18n="footer_calc">Einsparkalkulator</a></li>
+          <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Unternehmen</h4>
+        <h4 data-i18n="footer_company">Unternehmen</h4>
         <ul>
-          <li><a href="ueberuns.html">Über uns</a></li>
-          <li><a href="kontakt.html">Kontakt</a></li>
-          <li><a href="lieferant.html">Lieferant werden</a></li>
+          <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
+          <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
+          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Rechtliches</h4>
+        <h4 data-i18n="footer_legal">Rechtliches</h4>
         <ul>
-          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutz</a></li>
-          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer">Impressum</a></li>
-          <li><a href="agb.html" target="_blank" rel="noopener noreferrer">AGB</a></li>
+          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_privacy">Datenschutz</a></li>
+          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_imprint">Impressum</a></li>
+          <li><a href="agb.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_terms">AGB</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
-      <span class="footer-tagline">Du zahlst erst, wenn wir dir sparen.</span>
+      <span class="footer-copy" data-i18n="footer_copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
+      <span class="footer-tagline" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</span>
     </div>
   </div>
 </footer>
@@ -1055,5 +1079,164 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 })();
 </script>
 
+<script>
+(function(){
+const T={
+  de:{
+    page_title:'Materialien & Lieferanten — SourceOn',
+    nav_home:'Home',nav_process:'Wie es funktioniert',nav_calc:'Kalkulator',nav_materials:'Materialien',
+    nav_forwhom:'Für wen',nav_supplier:'Lieferant werden',nav_about:'Über uns',nav_contact:'Kontakt',
+    nav_cta:'Materialbedarf melden',
+    mat_label:'Material & Norm',
+    mat_heading:'Jedes Material.<br>Eine Norm.',
+    mat_sub:'Alle Materialien, die SourceOn vermittelt, erfüllen die SourceOn-Prüfkriterien — SN EN und SIA-konform, lückenlos dokumentiert.',
+    mat_select_placeholder:'Material wählen, um SourceOn-ID zu sehen…',
+    mat_no_selection:'Noch kein Material ausgewählt',
+    coverage_label:'Abdeckung',
+    coverage_heading:'Eine Schnittstelle.<br>Jedes Material.',
+    coverage_sub:'Klicke auf ein Feld für Details.',
+    bento_tag_areas:'3 Bereiche, 50+ Materialien',
+    bento_big_shell:'Vom Rohbau<br>bis zur Haustechnik.',
+    bento_text_shell:'Rohbau Kern, Ausbau und Haustechnik — jedes einzelne Material dokumentiert, geprüft und über einen einzigen Ansprechpartner beschafft.',
+    bento_text_norm:'Jedes Material entspricht Schweizer Normen — lückenlos dokumentiert.',
+    bento_text_partners:'geprüfte Partnerlieferanten in der ganzen Schweiz.',
+    bento_num_direct:'Direkt',
+    bento_text_direct:'Lieferung direkt ab Werk auf Ihre Baustelle — ohne Umwege.',
+    bento_num_chwide:'CH-weit',
+    bento_text_chwide:'Von Genf bis St. Gallen — Logistik organisiert, ohne dass du dich kümmern musst.',
+    bento_num_special:'Sonderfall? Kein Problem.',
+    bento_text_special:'Material nicht in der Liste? Wir erweitern unser Lieferantennetz gezielt für Ihren Bedarf — auf Anfrage.',
+    footer_desc:'Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.',
+    footer_services:'Leistungen',footer_company:'Unternehmen',footer_legal:'Rechtliches',
+    footer_calc:'Einsparkalkulator',
+    footer_privacy:'Datenschutz',footer_imprint:'Impressum',footer_terms:'AGB',
+    footer_copy:'© 2026 SourceOn, Zürich — Alle Rechte vorbehalten',
+    footer_tagline:'Du zahlst erst, wenn wir dir sparen.'
+  },
+  en:{
+    page_title:'Materials & Suppliers — SourceOn',
+    nav_home:'Home',nav_process:'How it works',nav_calc:'Calculator',nav_materials:'Materials',
+    nav_forwhom:'For whom',nav_supplier:'Become a supplier',nav_about:'About us',nav_contact:'Contact',
+    nav_cta:'Report material needs',
+    mat_label:'Material & Standard',
+    mat_heading:'Every Material.<br>One Standard.',
+    mat_sub:'All materials sourced by SourceOn meet our inspection criteria — SN EN and SIA compliant, fully documented.',
+    mat_select_placeholder:'Choose a material to see SourceOn ID…',
+    mat_no_selection:'No material selected yet',
+    coverage_label:'Coverage',
+    coverage_heading:'One Interface.<br>Every Material.',
+    coverage_sub:'Click a tile for details.',
+    bento_tag_areas:'3 Areas, 50+ Materials',
+    bento_big_shell:'From structural shell<br>to building services.',
+    bento_text_shell:'Structural core, finishing and building services — every single material documented, inspected and sourced through a single point of contact.',
+    bento_text_norm:'Every material meets Swiss standards — fully documented.',
+    bento_text_partners:'certified partner suppliers across Switzerland.',
+    bento_num_direct:'Direct',
+    bento_text_direct:'Delivery directly from the factory to your construction site — no detours.',
+    bento_num_chwide:'CH-wide',
+    bento_text_chwide:'From Geneva to St. Gallen — logistics organized, without you having to worry.',
+    bento_num_special:'Special case? No problem.',
+    bento_text_special:'Material not on the list? We expand our supplier network specifically for your needs — on request.',
+    footer_desc:'Swiss B2B procurement broker for the construction industry. You only pay when we save you money.',
+    footer_services:'Services',footer_company:'Company',footer_legal:'Legal',
+    footer_calc:'Savings calculator',
+    footer_privacy:'Privacy policy',footer_imprint:'Imprint',footer_terms:'Terms',
+    footer_copy:'© 2026 SourceOn, Zurich — All rights reserved',
+    footer_tagline:'You only pay when we save you money.'
+  },
+  fr:{
+    page_title:'Matériaux & Fournisseurs — SourceOn',
+    nav_home:'Accueil',nav_process:'Comment ça marche',nav_calc:'Calculateur',nav_materials:'Matériaux',
+    nav_forwhom:'Pour qui',nav_supplier:'Devenir fournisseur',nav_about:'À propos',nav_contact:'Contact',
+    nav_cta:'Signaler un besoin',
+    mat_label:'Matériau & Norme',
+    mat_heading:'Chaque matériau.<br>Une norme.',
+    mat_sub:'Tous les matériaux fournis par SourceOn répondent à nos critères — conformes SN EN et SIA, entièrement documentés.',
+    mat_select_placeholder:'Choisir un matériau pour voir l\'ID SourceOn…',
+    mat_no_selection:'Aucun matériau sélectionné',
+    coverage_label:'Couverture',
+    coverage_heading:'Une interface.<br>Chaque matériau.',
+    coverage_sub:'Cliquez sur une tuile pour les détails.',
+    bento_tag_areas:'3 domaines, 50+ matériaux',
+    bento_big_shell:'Du gros œuvre<br>à la technique du bâtiment.',
+    bento_text_shell:'Gros œuvre, aménagement et technique du bâtiment — chaque matériau documenté, vérifié et approvisionné via un seul interlocuteur.',
+    bento_text_norm:'Chaque matériau est conforme aux normes suisses — entièrement documenté.',
+    bento_text_partners:'fournisseurs partenaires certifiés dans toute la Suisse.',
+    bento_num_direct:'Direct',
+    bento_text_direct:'Livraison directe depuis l\'usine sur votre chantier — sans détour.',
+    bento_num_chwide:'Toute la Suisse',
+    bento_text_chwide:'De Genève à St-Gall — logistique organisée, sans que vous ayez à vous en soucier.',
+    bento_num_special:'Cas particulier ? Pas de problème.',
+    bento_text_special:'Matériau pas dans la liste ? Nous élargissons notre réseau de fournisseurs pour vos besoins — sur demande.',
+    footer_desc:'Courtier B2B suisse en approvisionnement pour le secteur de la construction. Vous ne payez que lorsque nous vous faisons économiser.',
+    footer_services:'Services',footer_company:'Entreprise',footer_legal:'Mentions légales',
+    footer_calc:'Calculateur d\'économies',
+    footer_privacy:'Protection des données',footer_imprint:'Mentions légales',footer_terms:'CGV',
+    footer_copy:'© 2026 SourceOn, Zurich — Tous droits réservés',
+    footer_tagline:'Vous ne payez que lorsque nous vous faisons économiser.'
+  },
+  it:{
+    page_title:'Materiali & Fornitori — SourceOn',
+    nav_home:'Home',nav_process:'Come funziona',nav_calc:'Calcolatore',nav_materials:'Materiali',
+    nav_forwhom:'Per chi',nav_supplier:'Diventa fornitore',nav_about:'Chi siamo',nav_contact:'Contatto',
+    nav_cta:'Segnala fabbisogno',
+    mat_label:'Materiale & Norma',
+    mat_heading:'Ogni materiale.<br>Una norma.',
+    mat_sub:'Tutti i materiali forniti da SourceOn soddisfano i nostri criteri — conformi SN EN e SIA, completamente documentati.',
+    mat_select_placeholder:'Scegli un materiale per vedere l\'ID SourceOn…',
+    mat_no_selection:'Nessun materiale selezionato',
+    coverage_label:'Copertura',
+    coverage_heading:'Un\'interfaccia.<br>Ogni materiale.',
+    coverage_sub:'Clicca su un riquadro per i dettagli.',
+    bento_tag_areas:'3 aree, 50+ materiali',
+    bento_big_shell:'Dalla struttura grezza<br>all\'impiantistica.',
+    bento_text_shell:'Struttura, finiture e impiantistica — ogni singolo materiale documentato, verificato e acquistato tramite un unico referente.',
+    bento_text_norm:'Ogni materiale è conforme alle norme svizzere — completamente documentato.',
+    bento_text_partners:'fornitori partner certificati in tutta la Svizzera.',
+    bento_num_direct:'Diretto',
+    bento_text_direct:'Consegna diretta dalla fabbrica al vostro cantiere — senza deviazioni.',
+    bento_num_chwide:'Tutta la Svizzera',
+    bento_text_chwide:'Da Ginevra a San Gallo — logistica organizzata, senza che dobbiate preoccuparvene.',
+    bento_num_special:'Caso speciale? Nessun problema.',
+    bento_text_special:'Materiale non nella lista? Espandiamo la nostra rete di fornitori per le vostre esigenze — su richiesta.',
+    footer_desc:'Broker B2B svizzero per l\'approvvigionamento nel settore edile. Paghi solo quando ti facciamo risparmiare.',
+    footer_services:'Servizi',footer_company:'Azienda',footer_legal:'Note legali',
+    footer_calc:'Calcolatore di risparmio',
+    footer_privacy:'Privacy',footer_imprint:'Impressum',footer_terms:'CGC',
+    footer_copy:'© 2026 SourceOn, Zurigo — Tutti i diritti riservati',
+    footer_tagline:'Paghi solo quando ti facciamo risparmiare.'
+  }
+};
+
+function applyLang(lang){
+  const dict=T[lang]||T.de;
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    const key=el.getAttribute('data-i18n');
+    if(dict[key]!==undefined){
+      if(el.tagName==='OPTION'){el.textContent=dict[key];}
+      else if(el.tagName==='TITLE'){document.title=dict[key];}
+      else{el.innerHTML=dict[key];}
+    }
+  });
+  document.getElementById('lang-current').textContent=lang.toUpperCase();
+  document.querySelectorAll('.lang-opt').forEach(function(btn){
+    btn.classList.toggle('active',btn.getAttribute('onclick').indexOf("'"+lang+"'")!==-1);
+  });
+  document.documentElement.lang=lang;
+  document.getElementById('lang-switch').classList.remove('open');
+  try{localStorage.setItem('sourceon-lang',lang);}catch(e){}
+}
+window.setLang=applyLang;
+
+// close dropdown on outside click
+document.addEventListener('click',function(e){
+  var sw=document.getElementById('lang-switch');
+  if(sw&&!sw.contains(e.target))sw.classList.remove('open');
+});
+
+// restore saved language
+try{var saved=localStorage.getItem('sourceon-lang');if(saved&&T[saved])applyLang(saved);}catch(e){}
+})();
+</script>
 </body>
 </html>
