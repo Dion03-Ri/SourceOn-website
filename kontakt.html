@@ -671,6 +671,15 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .nav-card-grid a:hover{border-color:rgba(232,160,32,.3)!important;background:rgba(255,255,255,.06)!important;transform:translateY(-4px)}
 @media(max-width:900px){.nav-card-grid{grid-template-columns:1fr 1fr!important}}
 @media(max-width:640px){.nav-card-grid{grid-template-columns:1fr!important}}
+.lang-switch{position:relative;margin-right:8px}
+.lang-btn{display:flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.75);background:none;border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:6px 14px;cursor:pointer;transition:all .2s}
+.lang-btn:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.lang-dd{display:none;position:absolute;top:calc(100% + 6px);right:0;background:rgba(11,20,36,.97);border:1px solid rgba(255,255,255,.10);border-radius:12px;padding:6px 0;min-width:150px;z-index:9999;backdrop-filter:blur(12px)}
+.lang-switch.open .lang-dd{display:block}
+.lang-opt{display:flex;align-items:center;gap:8px;width:100%;padding:8px 16px;font-size:.85rem;color:rgba(255,255,255,.7);background:none;border:none;cursor:pointer;transition:all .15s;text-align:left}
+.lang-opt:hover{background:rgba(255,255,255,.06);color:#fff}
+.lang-opt.active{color:#E8A020;font-weight:600}
+.lang-flag{font-size:1.1rem}
 </style>
 </head>
 <body>
@@ -679,17 +688,29 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="nav-inner">
     <a class="nav-logo" href="#hero">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-      <li><a href="kalkulator.html">Kalkulator</a></li>
-      <li><a href="materialien.html">Materialien</a></li>
-      <li><a href="fuerwen.html">Für wen</a></li>
-      <li><a href="lieferant.html">Lieferant werden</a></li>
-      <li><a href="ueberuns.html">Über uns</a></li>
-      <li><a href="kontakt.html">Kontakt</a></li>
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
+      <li><a href="kalkulator.html" data-i18n="nav_calculator">Kalkulator</a></li>
+      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
+      <li><a href="fuerwen.html" data-i18n="nav_for_whom">Für wen</a></li>
+      <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
+      <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
+      <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
+      <div class="lang-switch" id="lang-switch">
+        <button class="lang-btn" onclick="document.getElementById('lang-switch').classList.toggle('open')">
+          <span id="lang-current">DE</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="lang-dd">
+          <button class="lang-opt active" onclick="setLang('de')"><span class="lang-flag">🇨🇭</span> Deutsch</button>
+          <button class="lang-opt" onclick="setLang('en')"><span class="lang-flag">🇺🇸</span> English</button>
+          <button class="lang-opt" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span> Francais</button>
+          <button class="lang-opt" onclick="setLang('it')"><span class="lang-flag">🇮🇹</span> Italiano</button>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-md" data-i18n="nav_cta" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
       <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
   </div>
@@ -697,14 +718,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <a href="index.html" onclick="toggleNav()">Home</a>
-  <a href="prozess.html" onclick="toggleNav()">Wie es funktioniert</a>
-  <a href="kalkulator.html" onclick="toggleNav()">Kalkulator</a>
-  <a href="fuerwen.html" onclick="toggleNav()">Für wen</a>
-  <a href="lieferant.html" onclick="toggleNav()">Lieferant werden</a>
-  <a href="ueberuns.html" onclick="toggleNav()">Über uns</a>
-  <a href="kontakt.html" onclick="toggleNav()">Kontakt</a>
-  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
+  <a href="index.html" data-i18n="nav_home" onclick="toggleNav()">Home</a>
+  <a href="prozess.html" data-i18n="nav_process" onclick="toggleNav()">Wie es funktioniert</a>
+  <a href="kalkulator.html" data-i18n="nav_calculator" onclick="toggleNav()">Kalkulator</a>
+  <a href="fuerwen.html" data-i18n="nav_for_whom" onclick="toggleNav()">Für wen</a>
+  <a href="lieferant.html" data-i18n="nav_supplier" onclick="toggleNav()">Lieferant werden</a>
+  <a href="ueberuns.html" data-i18n="nav_about" onclick="toggleNav()">Über uns</a>
+  <a href="kontakt.html" data-i18n="nav_contact" onclick="toggleNav()">Kontakt</a>
+  <button class="btn btn-gold btn-lg" data-i18n="nav_cta" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
 </div>
 
 <!-- BENTO DETAIL MODAL -->
@@ -721,70 +742,70 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="container">
     <div class="contact-layout">
       <div>
-        <div class="label">Materialbedarf melden</div>
-        <h2 class="h2" style="font-size:clamp(24px,3vw,38px)">Jetzt Materialbedarf melden</h2>
-        <p class="contact-desc">Kostenlos und unverbindlich. Wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</p>
-        <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.93 5.93l1.3-1.31a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>+41 44 000 00 00</div>
-        <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>info@SourceOn.ch</div>
-        <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Zürich, Schweiz</div>
+        <div class="label" data-i18n="kontakt_badge">Materialbedarf melden</div>
+        <h2 class="h2" data-i18n="kontakt_title" style="font-size:clamp(24px,3vw,38px)">Jetzt Materialbedarf melden</h2>
+        <p class="contact-desc" data-i18n="kontakt_desc">Kostenlos und unverbindlich. Wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</p>
+        <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.93 5.93l1.3-1.31a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span data-i18n="kontakt_phone">+41 44 000 00 00</span></div>
+        <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span data-i18n="kontakt_email">info@SourceOn.ch</span></div>
+        <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="kontakt_location">Zürich, Schweiz</span></div>
         <div style="margin-top:32px;padding:20px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:var(--r)">
-          <p style="font-size:.83rem;color:var(--navy);font-weight:600;margin-bottom:4px">Wie es funktioniert</p>
-          <p style="font-size:.8rem;color:var(--body);line-height:1.6">Sende uns einfach deinen Materialbedarf in eigenen Worten — kein spezielles Format nötig. Wir kümmern uns um den Rest.</p>
+          <p style="font-size:.83rem;color:var(--navy);font-weight:600;margin-bottom:4px" data-i18n="kontakt_how_title">Wie es funktioniert</p>
+          <p style="font-size:.8rem;color:var(--body);line-height:1.6" data-i18n-html="kontakt_how_text">Sende uns einfach deinen Materialbedarf in eigenen Worten — kein spezielles Format nötig. Wir kümmern uns um den Rest.</p>
         </div>
       </div>
       <div>
         <div class="contact-form-card">
           <form id="form-contact" onsubmit="submitContact(event)" novalidate>
             <div class="form-grid">
-              <div class="form-group"><label class="form-label">Firmenname *</label><input type="text" class="form-input" id="c-company" required/><div class="form-error" id="e-c-company">Pflichtfeld</div></div>
-              <div class="form-group"><label class="form-label">Ansprechperson *</label><input type="text" class="form-input" id="c-name" required/><div class="form-error" id="e-c-name">Pflichtfeld</div></div>
+              <div class="form-group"><label class="form-label" data-i18n="form_company">Firmenname *</label><input type="text" class="form-input" id="c-company" required/><div class="form-error" data-i18n="form_error_required" id="e-c-company">Pflichtfeld</div></div>
+              <div class="form-group"><label class="form-label" data-i18n="form_contact_person">Ansprechperson *</label><input type="text" class="form-input" id="c-name" required/><div class="form-error" data-i18n="form_error_required" id="e-c-name">Pflichtfeld</div></div>
             </div>
             <div class="form-grid">
-              <div class="form-group"><label class="form-label">E-Mail *</label><input type="email" class="form-input" id="c-email" required/><div class="form-error" id="e-c-email">Gültige E-Mail</div></div>
-              <div class="form-group"><label class="form-label">Telefon *</label><input type="tel" class="form-input" id="c-phone" required/><div class="form-error" id="e-c-phone">Pflichtfeld</div></div>
+              <div class="form-group"><label class="form-label" data-i18n="form_email">E-Mail *</label><input type="email" class="form-input" id="c-email" required/><div class="form-error" data-i18n="form_error_email" id="e-c-email">Gültige E-Mail</div></div>
+              <div class="form-group"><label class="form-label" data-i18n="form_phone">Telefon *</label><input type="tel" class="form-input" id="c-phone" required/><div class="form-error" data-i18n="form_error_required" id="e-c-phone">Pflichtfeld</div></div>
             </div>
             <div class="form-group">
-              <label class="form-label">Material &amp; Menge *</label>
+              <label class="form-label" data-i18n-html="form_material_qty">Material &amp; Menge *</label>
               <div class="material-rows" id="material-rows">
                 <div class="material-row first-row">
-                  <select class="form-select mat-sel"><option value="">Material wählen</option><optgroup label="Rohbau Kern"><option>Transportbeton C20/25</option><option>Transportbeton C25/30</option><option>Transportbeton C30/37</option><option>Transportbeton C35/45</option><option>Pumpbeton XC4 druckwasserdicht</option><option>Armierungsstahl 8mm</option><option>Armierungsstahl 10mm</option><option>Armierungsstahl 12mm</option><option>Armierungsstahl 16mm</option><option>Armierungsstahl 20mm</option><option>Armierungsmatte Q188</option><option>Armierungsmatte Q257</option><option>Armierungsmatte Q335</option><option>Betonstahlkoerbe vorgefertigt</option><option>Kies 0-32mm</option><option>Kies 0-16mm</option><option>Splitt 8-16mm</option><option>Splitt 16-32mm</option><option>Sand 0-4mm</option><option>Hochlochziegel 15cm</option><option>Hochlochziegel 20cm</option><option>Hochlochziegel 25cm</option><option>Kalksandstein 15cm</option><option>Porenbetonstein 20cm</option><option>Mauermoertel MG II</option><option>Mauermoertel MG III</option><option>Putzmoertel Innen GP</option><option>Putzmoertel Aussen R</option><option>Estrichmoertel CT-C25</option><option>Klebemoertel C1 Fliesen</option><option>Schalungsplatte 21mm</option><option>Schalungsplatte 27mm</option><option>Systemschalung Wand Miete</option><option>Traeger H20 Holztraeger</option><option>Stahlstuetzen ausziehbar</option><option>Betonfertigteil Treppe</option><option>Betonfertigteil Deckenplatte</option><option>Betonfertigteil Stuetze</option></optgroup><optgroup label="Ausbau"><option>EPS-Daemmplatte 100mm Perimeter</option><option>EPS-Daemmplatte 140mm Fassade</option><option>EPS-Daemmplatte 200mm Flachdach</option><option>Mineralwolle 80mm Trennwand</option><option>Mineralwolle 120mm Steildach</option><option>XPS-Daemmplatte 80mm Bodenplatte</option><option>Gipskartonplatte GKB 12.5mm</option><option>Gipskartonplatte GKBI Feuchtraum</option><option>Gipskartonplatte GKF Brandschutz</option><option>Metallstaenderwerk CW 75mm</option><option>Metallanschlussprofil UA 75mm</option><option>Tondachziegel Standard</option><option>Betonroofziegel</option><option>Dachabdichtungsbahn EPDM 1.5mm</option><option>Fassadenplatte Faserzement</option></optgroup><optgroup label="Haustechnik"><option>Kunststoffrohr PVC-U DN 110</option><option>Kunststoffrohr PP DN 50</option><option>Kupferrohr 22mm Trinkwasser</option><option>Verbundrohr PE-RT/Al 16mm</option><option>Heizungsverteiler Fussbodenheizung</option></optgroup></select>
-                  <input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³"/>
+                  <select class="form-select mat-sel"><option value="" data-i18n="form_select_material">Material wählen</option><optgroup label="Rohbau Kern" data-i18n-label="optgroup_rohbau"><option>Transportbeton C20/25</option><option>Transportbeton C25/30</option><option>Transportbeton C30/37</option><option>Transportbeton C35/45</option><option>Pumpbeton XC4 druckwasserdicht</option><option>Armierungsstahl 8mm</option><option>Armierungsstahl 10mm</option><option>Armierungsstahl 12mm</option><option>Armierungsstahl 16mm</option><option>Armierungsstahl 20mm</option><option>Armierungsmatte Q188</option><option>Armierungsmatte Q257</option><option>Armierungsmatte Q335</option><option>Betonstahlkoerbe vorgefertigt</option><option>Kies 0-32mm</option><option>Kies 0-16mm</option><option>Splitt 8-16mm</option><option>Splitt 16-32mm</option><option>Sand 0-4mm</option><option>Hochlochziegel 15cm</option><option>Hochlochziegel 20cm</option><option>Hochlochziegel 25cm</option><option>Kalksandstein 15cm</option><option>Porenbetonstein 20cm</option><option>Mauermoertel MG II</option><option>Mauermoertel MG III</option><option>Putzmoertel Innen GP</option><option>Putzmoertel Aussen R</option><option>Estrichmoertel CT-C25</option><option>Klebemoertel C1 Fliesen</option><option>Schalungsplatte 21mm</option><option>Schalungsplatte 27mm</option><option>Systemschalung Wand Miete</option><option>Traeger H20 Holztraeger</option><option>Stahlstuetzen ausziehbar</option><option>Betonfertigteil Treppe</option><option>Betonfertigteil Deckenplatte</option><option>Betonfertigteil Stuetze</option></optgroup><optgroup label="Ausbau" data-i18n-label="optgroup_ausbau"><option>EPS-Daemmplatte 100mm Perimeter</option><option>EPS-Daemmplatte 140mm Fassade</option><option>EPS-Daemmplatte 200mm Flachdach</option><option>Mineralwolle 80mm Trennwand</option><option>Mineralwolle 120mm Steildach</option><option>XPS-Daemmplatte 80mm Bodenplatte</option><option>Gipskartonplatte GKB 12.5mm</option><option>Gipskartonplatte GKBI Feuchtraum</option><option>Gipskartonplatte GKF Brandschutz</option><option>Metallstaenderwerk CW 75mm</option><option>Metallanschlussprofil UA 75mm</option><option>Tondachziegel Standard</option><option>Betonroofziegel</option><option>Dachabdichtungsbahn EPDM 1.5mm</option><option>Fassadenplatte Faserzement</option></optgroup><optgroup label="Haustechnik" data-i18n-label="optgroup_haustechnik"><option>Kunststoffrohr PVC-U DN 110</option><option>Kunststoffrohr PP DN 50</option><option>Kupferrohr 22mm Trinkwasser</option><option>Verbundrohr PE-RT/Al 16mm</option><option>Heizungsverteiler Fussbodenheizung</option></optgroup></select>
+                  <input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/>
                 </div>
               </div>
-              <div class="form-error" id="e-c-material">Bitte mindestens ein Material mit Menge angeben</div>
-              <button type="button" class="add-material-btn" id="add-material-btn" onclick="addMaterialRow()">＋ Weiteres Material hinzufügen</button>
-              <p style="font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.6">Dein Material ist nicht dabei? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.</p>
+              <div class="form-error" data-i18n="form_error_material" id="e-c-material">Bitte mindestens ein Material mit Menge angeben</div>
+              <button type="button" class="add-material-btn" id="add-material-btn" data-i18n-html="form_add_material" onclick="addMaterialRow()">＋ Weiteres Material hinzufügen</button>
+              <p style="font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.6" data-i18n-html="form_material_hint">Dein Material ist nicht dabei? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.</p>
             </div>
             <div class="form-group">
-              <label class="form-label">Materialbedarf hochladen <span style="font-weight:400;color:var(--body)">(optional — Scan, PDF oder Excel deiner Materialliste)</span></label>
+              <label class="form-label" data-i18n-html="form_file_label">Materialbedarf hochladen <span style="font-weight:400;color:var(--body)">(optional — Scan, PDF oder Excel deiner Materialliste)</span></label>
               <div class="file-upload-zone" id="file-upload-zone">
                 <input type="file" id="c-file" accept=".pdf,.xlsx,.xls,.csv,.jpg,.jpeg,.png" onchange="handleFileSelect(this)"/>
                 <div class="file-upload-icon"><svg class="ic-clip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></div>
-                <div class="file-upload-text">Datei hier ablegen oder klicken zum Auswählen</div>
-                <div class="file-upload-hint">PDF, Excel, CSV, JPG, PNG — max. 10 MB</div>
+                <div class="file-upload-text" data-i18n="form_file_drop">Datei hier ablegen oder klicken zum Auswählen</div>
+                <div class="file-upload-hint" data-i18n="form_file_hint">PDF, Excel, CSV, JPG, PNG — max. 10 MB</div>
               </div>
               <div class="file-selected" id="file-selected">
                 <span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span id="file-name"></span>
-                <span class="file-remove" onclick="removeFile()">Datei entfernen</span>
+                <span class="file-remove" data-i18n="form_file_remove" onclick="removeFile()">Datei entfernen</span>
               </div>
             </div>
             <div class="form-grid">
-              <div class="form-group"><label class="form-label">Gewünschter Lieferzeitraum *</label>
+              <div class="form-group"><label class="form-label" data-i18n="form_timing_label">Gewünschter Lieferzeitraum *</label>
                 <select class="form-select" id="c-timing" required>
-                  <option value="">Bitte wählen</option>
-                  <option>So schnell wie möglich</option>
-                  <option>Innerhalb 1 Woche</option>
-                  <option>Innerhalb 2 Wochen</option>
-                  <option>Innerhalb 1 Monat</option>
-                  <option>Flexibel — nach Absprache</option>
+                  <option value="" data-i18n="form_select_please">Bitte wählen</option>
+                  <option data-i18n="form_timing_asap">So schnell wie möglich</option>
+                  <option data-i18n="form_timing_1week">Innerhalb 1 Woche</option>
+                  <option data-i18n="form_timing_2weeks">Innerhalb 2 Wochen</option>
+                  <option data-i18n="form_timing_1month">Innerhalb 1 Monat</option>
+                  <option data-i18n="form_timing_flexible">Flexibel — nach Absprache</option>
                 </select>
-                <div class="form-error" id="e-c-timing">Bitte wählen</div>
+                <div class="form-error" data-i18n="form_error_select" id="e-c-timing">Bitte wählen</div>
               </div>
-              <div class="form-group"><label class="form-label">Lieferadresse / Kanton *</label><input type="text" class="form-input" id="c-canton" placeholder="z.B. Zürich, Baustelle Hauptstr. 5" required/><div class="form-error" id="e-c-canton">Pflichtfeld</div></div>
+              <div class="form-group"><label class="form-label" data-i18n="form_address_label">Lieferadresse / Kanton *</label><input type="text" class="form-input" id="c-canton" placeholder="z.B. Zürich, Baustelle Hauptstr. 5" data-i18n-placeholder="form_placeholder_address" required/><div class="form-error" data-i18n="form_error_required" id="e-c-canton">Pflichtfeld</div></div>
             </div>
-            <div class="form-group"><label class="form-label">Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span></label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und weitere Anforderungen…"></textarea></div>
-            <button type="submit" class="btn btn-gold btn-lg btn-full">Materialbedarf jetzt melden →</button>
-            <div class="form-success" id="success-contact"><span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</div>
+            <div class="form-group"><label class="form-label" data-i18n-html="form_project_label">Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span></label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und weitere Anforderungen…" data-i18n-placeholder="form_placeholder_project"></textarea></div>
+            <button type="submit" class="btn btn-gold btn-lg btn-full" data-i18n="form_submit">Materialbedarf jetzt melden →</button>
+            <div class="form-success" id="success-contact" data-i18n-html="form_success"><span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</div>
           </form>
         </div>
       </div>
@@ -799,39 +820,39 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="nav-logo">Source<span>On</span></div>
-        <p>Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
+        <p data-i18n="footer_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
       </div>
       <div class="footer-col">
-        <h4>Leistungen</h4>
+        <h4 data-i18n="footer_services">Leistungen</h4>
         <ul>
-          <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-          <li><a href="fuerwen.html">Für wen</a></li>
-          <li><a href="lieferant.html">Lieferant werden</a></li>
-          <li><a href="kalkulator.html">Einsparkalkulator</a></li>
-          <li><a href="materialien.html">Materialien</a></li>
+          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
+          <li><a href="fuerwen.html" data-i18n="nav_for_whom">Für wen</a></li>
+          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
+          <li><a href="kalkulator.html" data-i18n="footer_calculator">Einsparkalkulator</a></li>
+          <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Unternehmen</h4>
+        <h4 data-i18n="footer_company">Unternehmen</h4>
         <ul>
-          <li><a href="ueberuns.html">Über uns</a></li>
-          <li><a href="kontakt.html">Kontakt</a></li>
-          <li><a href="lieferant.html">Lieferant werden</a></li>
+          <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
+          <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
+          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Rechtliches</h4>
+        <h4 data-i18n="footer_legal">Rechtliches</h4>
         <ul>
-          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutz</a></li>
-          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer">Impressum</a></li>
-          <li><a href="agb.html" target="_blank" rel="noopener noreferrer">AGB</a></li>
+          <li><a href="datenschutz.html" data-i18n="footer_privacy" target="_blank" rel="noopener noreferrer">Datenschutz</a></li>
+          <li><a href="impressum.html" data-i18n="footer_imprint" target="_blank" rel="noopener noreferrer">Impressum</a></li>
+          <li><a href="agb.html" data-i18n="footer_terms" target="_blank" rel="noopener noreferrer">AGB</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
-      <span class="footer-tagline">Du zahlst erst, wenn wir dir sparen.</span>
+      <span class="footer-copy" data-i18n="footer_copy">&copy; 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
+      <span class="footer-tagline" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</span>
     </div>
   </div>
 </footer>
@@ -910,7 +931,7 @@ function emailOk(id,errId){const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.g
 function selOk(id,errId){const ok=document.getElementById(id).value!=='';document.getElementById(errId).style.display=ok?'none':'block';return ok;}
 
 let matRowCount=1;
-const MAT_OPTIONS='<option value="">Material wählen</option><optgroup label="Rohbau Kern"><option>Transportbeton C20/25</option><option>Transportbeton C25/30</option><option>Transportbeton C30/37</option><option>Transportbeton C35/45</option><option>Pumpbeton XC4 druckwasserdicht</option><option>Armierungsstahl 8mm</option><option>Armierungsstahl 10mm</option><option>Armierungsstahl 12mm</option><option>Armierungsstahl 16mm</option><option>Armierungsstahl 20mm</option><option>Armierungsmatte Q188</option><option>Armierungsmatte Q257</option><option>Armierungsmatte Q335</option><option>Betonstahlkoerbe vorgefertigt</option><option>Kies 0-32mm</option><option>Kies 0-16mm</option><option>Splitt 8-16mm</option><option>Splitt 16-32mm</option><option>Sand 0-4mm</option><option>Hochlochziegel 15cm</option><option>Hochlochziegel 20cm</option><option>Hochlochziegel 25cm</option><option>Kalksandstein 15cm</option><option>Porenbetonstein 20cm</option><option>Mauermoertel MG II</option><option>Mauermoertel MG III</option><option>Putzmoertel Innen GP</option><option>Putzmoertel Aussen R</option><option>Estrichmoertel CT-C25</option><option>Klebemoertel C1 Fliesen</option><option>Schalungsplatte 21mm</option><option>Schalungsplatte 27mm</option><option>Systemschalung Wand Miete</option><option>Traeger H20 Holztraeger</option><option>Stahlstuetzen ausziehbar</option><option>Betonfertigteil Treppe</option><option>Betonfertigteil Deckenplatte</option><option>Betonfertigteil Stuetze</option></optgroup><optgroup label="Ausbau"><option>EPS-Daemmplatte 100mm Perimeter</option><option>EPS-Daemmplatte 140mm Fassade</option><option>EPS-Daemmplatte 200mm Flachdach</option><option>Mineralwolle 80mm Trennwand</option><option>Mineralwolle 120mm Steildach</option><option>XPS-Daemmplatte 80mm Bodenplatte</option><option>Gipskartonplatte GKB 12.5mm</option><option>Gipskartonplatte GKBI Feuchtraum</option><option>Gipskartonplatte GKF Brandschutz</option><option>Metallstaenderwerk CW 75mm</option><option>Metallanschlussprofil UA 75mm</option><option>Tondachziegel Standard</option><option>Betonroofziegel</option><option>Dachabdichtungsbahn EPDM 1.5mm</option><option>Fassadenplatte Faserzement</option></optgroup><optgroup label="Haustechnik"><option>Kunststoffrohr PVC-U DN 110</option><option>Kunststoffrohr PP DN 50</option><option>Kupferrohr 22mm Trinkwasser</option><option>Verbundrohr PE-RT/Al 16mm</option><option>Heizungsverteiler Fussbodenheizung</option></optgroup>';
+const MAT_OPTIONS='<option value="" data-i18n="form_select_material">Material wählen</option><optgroup label="Rohbau Kern" data-i18n-label="optgroup_rohbau"><option>Transportbeton C20/25</option><option>Transportbeton C25/30</option><option>Transportbeton C30/37</option><option>Transportbeton C35/45</option><option>Pumpbeton XC4 druckwasserdicht</option><option>Armierungsstahl 8mm</option><option>Armierungsstahl 10mm</option><option>Armierungsstahl 12mm</option><option>Armierungsstahl 16mm</option><option>Armierungsstahl 20mm</option><option>Armierungsmatte Q188</option><option>Armierungsmatte Q257</option><option>Armierungsmatte Q335</option><option>Betonstahlkoerbe vorgefertigt</option><option>Kies 0-32mm</option><option>Kies 0-16mm</option><option>Splitt 8-16mm</option><option>Splitt 16-32mm</option><option>Sand 0-4mm</option><option>Hochlochziegel 15cm</option><option>Hochlochziegel 20cm</option><option>Hochlochziegel 25cm</option><option>Kalksandstein 15cm</option><option>Porenbetonstein 20cm</option><option>Mauermoertel MG II</option><option>Mauermoertel MG III</option><option>Putzmoertel Innen GP</option><option>Putzmoertel Aussen R</option><option>Estrichmoertel CT-C25</option><option>Klebemoertel C1 Fliesen</option><option>Schalungsplatte 21mm</option><option>Schalungsplatte 27mm</option><option>Systemschalung Wand Miete</option><option>Traeger H20 Holztraeger</option><option>Stahlstuetzen ausziehbar</option><option>Betonfertigteil Treppe</option><option>Betonfertigteil Deckenplatte</option><option>Betonfertigteil Stuetze</option></optgroup><optgroup label="Ausbau" data-i18n-label="optgroup_ausbau"><option>EPS-Daemmplatte 100mm Perimeter</option><option>EPS-Daemmplatte 140mm Fassade</option><option>EPS-Daemmplatte 200mm Flachdach</option><option>Mineralwolle 80mm Trennwand</option><option>Mineralwolle 120mm Steildach</option><option>XPS-Daemmplatte 80mm Bodenplatte</option><option>Gipskartonplatte GKB 12.5mm</option><option>Gipskartonplatte GKBI Feuchtraum</option><option>Gipskartonplatte GKF Brandschutz</option><option>Metallstaenderwerk CW 75mm</option><option>Metallanschlussprofil UA 75mm</option><option>Tondachziegel Standard</option><option>Betonroofziegel</option><option>Dachabdichtungsbahn EPDM 1.5mm</option><option>Fassadenplatte Faserzement</option></optgroup><optgroup label="Haustechnik" data-i18n-label="optgroup_haustechnik"><option>Kunststoffrohr PVC-U DN 110</option><option>Kunststoffrohr PP DN 50</option><option>Kupferrohr 22mm Trinkwasser</option><option>Verbundrohr PE-RT/Al 16mm</option><option>Heizungsverteiler Fussbodenheizung</option></optgroup>';
 function addMaterialRow(){
   if(matRowCount>=10)return;matRowCount++;
   const rows=document.getElementById('material-rows');
@@ -974,19 +995,19 @@ function toggleFaq(btn){
   <div class="chat-head">
     <div class="chat-head-info">
       <div class="chat-avatar">SO</div>
-      <div><div class="chat-head-title">SourceOn Assistent</div><div class="chat-head-sub">Beantwortet alle Fragen zu SourceOn</div></div>
+      <div><div class="chat-head-title" data-i18n="chat_title">SourceOn Assistent</div><div class="chat-head-sub" data-i18n="chat_subtitle">Beantwortet alle Fragen zu SourceOn</div></div>
     </div>
     <button id="chat-close" onclick="toggleChat()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="chat-msgs" id="chat-msgs"></div>
   <div class="chat-footer">
     <div class="chat-chips" id="chat-chips">
-      <button class="chat-chip" onclick="sendChip(this)">Wie funktioniert SourceOn?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Was kostet es?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Materialbedarf melden</button>
+      <button class="chat-chip" data-i18n="chat_chip_how" onclick="sendChip(this)">Wie funktioniert SourceOn?</button>
+      <button class="chat-chip" data-i18n="chat_chip_cost" onclick="sendChip(this)">Was kostet es?</button>
+      <button class="chat-chip" data-i18n="chat_chip_report" onclick="sendChip(this)">Materialbedarf melden</button>
     </div>
     <div class="chat-input-row">
-      <input type="text" id="chat-input" placeholder="Frage stellen…" onkeydown="if(event.key==='Enter')chatSend()"/>
+      <input type="text" id="chat-input" placeholder="Frage stellen…" data-i18n-placeholder="chat_placeholder" onkeydown="if(event.key==='Enter')chatSend()"/>
       <button id="chat-send" onclick="chatSend()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg></button>
     </div>
   </div>
@@ -1006,6 +1027,148 @@ function hideTyping(){const el=document.getElementById('chat-typing');if(el)el.r
 function scrollBottom(){const m=document.getElementById('chat-msgs');m.scrollTop=m.scrollHeight;}
 async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content:txt});if(history.length>20)history=history.slice(-20);if(APIKEY==='ANTHROPIC_API_KEY_HERE'){addBotMsg('Assistent wird bald verfügbar. Kontaktiere uns direkt: info@sourceon.ch');return;}showTyping();try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':APIKEY,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,system:SYSTEM,messages:history})});const d=await r.json();const reply=d.content&&d.content[0]?d.content[0].text:'Entschuldigung. Kontaktiere uns: info@sourceon.ch';hideTyping();history.push({role:'assistant',content:reply});if(history.length>20)history=history.slice(-20);addBotMsg(reply);}catch(e){hideTyping();addBotMsg('Verbindungsfehler. Kontaktiere uns: info@sourceon.ch');}
 }
+})();
+</script>
+
+<script>
+(function(){
+const I18N={
+  de:{
+    nav_home:"Home",nav_process:"Wie es funktioniert",nav_calculator:"Kalkulator",nav_materials:"Materialien",nav_for_whom:"Für wen",nav_supplier:"Lieferant werden",nav_about:"Über uns",nav_contact:"Kontakt",nav_cta:"Materialbedarf melden",
+    kontakt_badge:"Materialbedarf melden",kontakt_title:"Jetzt Materialbedarf melden",kontakt_desc:"Kostenlos und unverbindlich. Wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.",
+    kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zürich, Schweiz",
+    kontakt_how_title:"Wie es funktioniert",kontakt_how_text:"Sende uns einfach deinen Materialbedarf in eigenen Worten — kein spezielles Format nötig. Wir kümmern uns um den Rest.",
+    form_company:"Firmenname *",form_contact_person:"Ansprechperson *",form_email:"E-Mail *",form_phone:"Telefon *",
+    form_material_qty:"Material &amp; Menge *",
+    form_error_required:"Pflichtfeld",form_error_email:"Gültige E-Mail",form_error_material:"Bitte mindestens ein Material mit Menge angeben",form_error_select:"Bitte wählen",
+    form_select_material:"Material wählen",form_select_please:"Bitte wählen",
+    optgroup_rohbau:"Rohbau Kern",optgroup_ausbau:"Ausbau",optgroup_haustechnik:"Haustechnik",
+    form_placeholder_qty:"z.B. 200 m³",
+    form_add_material:"＋ Weiteres Material hinzufügen",
+    form_material_hint:'Dein Material ist nicht dabei? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.',
+    form_file_label:'Materialbedarf hochladen <span style="font-weight:400;color:var(--body)">(optional — Scan, PDF oder Excel deiner Materialliste)</span>',
+    form_file_drop:"Datei hier ablegen oder klicken zum Auswählen",form_file_hint:"PDF, Excel, CSV, JPG, PNG — max. 10 MB",form_file_remove:"Datei entfernen",
+    form_timing_label:"Gewünschter Lieferzeitraum *",
+    form_timing_asap:"So schnell wie möglich",form_timing_1week:"Innerhalb 1 Woche",form_timing_2weeks:"Innerhalb 2 Wochen",form_timing_1month:"Innerhalb 1 Monat",form_timing_flexible:"Flexibel — nach Absprache",
+    form_address_label:"Lieferadresse / Kanton *",form_placeholder_address:"z.B. Zürich, Baustelle Hauptstr. 5",
+    form_project_label:'Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span>',
+    form_placeholder_project:"Kurze Beschreibung des Projekts und weitere Anforderungen…",
+    form_submit:"Materialbedarf jetzt melden →",
+    form_success:"Vielen Dank — wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.",
+    footer_desc:"Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.",
+    footer_services:"Leistungen",footer_company:"Unternehmen",footer_legal:"Rechtliches",
+    footer_calculator:"Einsparkalkulator",footer_privacy:"Datenschutz",footer_imprint:"Impressum",footer_terms:"AGB",
+    footer_copy:"© 2026 SourceOn, Zürich — Alle Rechte vorbehalten",footer_tagline:"Du zahlst erst, wenn wir dir sparen.",
+    chat_title:"SourceOn Assistent",chat_subtitle:"Beantwortet alle Fragen zu SourceOn",
+    chat_chip_how:"Wie funktioniert SourceOn?",chat_chip_cost:"Was kostet es?",chat_chip_report:"Materialbedarf melden",chat_placeholder:"Frage stellen…"
+  },
+  en:{
+    nav_home:"Home",nav_process:"How it works",nav_calculator:"Calculator",nav_materials:"Materials",nav_for_whom:"For whom",nav_supplier:"Become a supplier",nav_about:"About us",nav_contact:"Contact",nav_cta:"Report material needs",
+    kontakt_badge:"Report material needs",kontakt_title:"Report your material needs now",kontakt_desc:"Free and non-binding. We analyse your requirements and get back to you within 48 hours with a concrete estimate of your savings potential.",
+    kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Switzerland",
+    kontakt_how_title:"How it works",kontakt_how_text:"Simply send us your material requirements in your own words — no special format needed. We take care of the rest.",
+    form_company:"Company name *",form_contact_person:"Contact person *",form_email:"Email *",form_phone:"Phone *",
+    form_material_qty:"Material &amp; quantity *",
+    form_error_required:"Required field",form_error_email:"Valid email required",form_error_material:"Please specify at least one material with quantity",form_error_select:"Please select",
+    form_select_material:"Select material",form_select_please:"Please select",
+    optgroup_rohbau:"Structural core",optgroup_ausbau:"Interior finishing",optgroup_haustechnik:"Building services",
+    form_placeholder_qty:"e.g. 200 m³",
+    form_add_material:"＋ Add another material",
+    form_material_hint:'Your material is not listed? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Ask us about custom procurement</a> — we are happy to check if we can bundle it for you.',
+    form_file_label:'Upload material list <span style="font-weight:400;color:var(--body)">(optional — scan, PDF or Excel of your material list)</span>',
+    form_file_drop:"Drop file here or click to select",form_file_hint:"PDF, Excel, CSV, JPG, PNG — max. 10 MB",form_file_remove:"Remove file",
+    form_timing_label:"Desired delivery period *",
+    form_timing_asap:"As soon as possible",form_timing_1week:"Within 1 week",form_timing_2weeks:"Within 2 weeks",form_timing_1month:"Within 1 month",form_timing_flexible:"Flexible — by arrangement",
+    form_address_label:"Delivery address / Canton *",form_placeholder_address:"e.g. Zurich, construction site Hauptstr. 5",
+    form_project_label:'Project description <span style="font-weight:400;color:var(--body)">(optional)</span>',
+    form_placeholder_project:"Brief description of the project and any further requirements…",
+    form_submit:"Report material needs now →",
+    form_success:"Thank you — we will analyse your requirements and get back to you within 48 hours with a concrete estimate of your savings potential.",
+    footer_desc:"Swiss B2B procurement intermediary for the construction industry. You only pay when we save you money.",
+    footer_services:"Services",footer_company:"Company",footer_legal:"Legal",
+    footer_calculator:"Savings calculator",footer_privacy:"Privacy policy",footer_imprint:"Imprint",footer_terms:"Terms & conditions",
+    footer_copy:"© 2026 SourceOn, Zurich — All rights reserved",footer_tagline:"You only pay when we save you money.",
+    chat_title:"SourceOn Assistant",chat_subtitle:"Answers all questions about SourceOn",
+    chat_chip_how:"How does SourceOn work?",chat_chip_cost:"What does it cost?",chat_chip_report:"Report material needs",chat_placeholder:"Ask a question…"
+  },
+  fr:{
+    nav_home:"Accueil",nav_process:"Comment ça marche",nav_calculator:"Calculateur",nav_materials:"Matériaux",nav_for_whom:"Pour qui",nav_supplier:"Devenir fournisseur",nav_about:"À propos",nav_contact:"Contact",nav_cta:"Annoncer vos besoins",
+    kontakt_badge:"Annoncer vos besoins",kontakt_title:"Annoncez vos besoins en matériaux",kontakt_desc:"Gratuit et sans engagement. Nous analysons vos besoins et vous recontactons sous 48 heures avec une estimation concrète de votre potentiel d'économies.",
+    kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Suisse",
+    kontakt_how_title:"Comment ça marche",kontakt_how_text:"Envoyez-nous simplement vos besoins en matériaux dans vos propres mots — aucun format spécial requis. Nous nous occupons du reste.",
+    form_company:"Nom de l'entreprise *",form_contact_person:"Personne de contact *",form_email:"E-mail *",form_phone:"Téléphone *",
+    form_material_qty:"Matériau &amp; quantité *",
+    form_error_required:"Champ obligatoire",form_error_email:"E-mail valide requis",form_error_material:"Veuillez indiquer au moins un matériau avec la quantité",form_error_select:"Veuillez sélectionner",
+    form_select_material:"Choisir un matériau",form_select_please:"Veuillez sélectionner",
+    optgroup_rohbau:"Gros œuvre",optgroup_ausbau:"Second œuvre",optgroup_haustechnik:"Technique du bâtiment",
+    form_placeholder_qty:"p. ex. 200 m³",
+    form_add_material:"＋ Ajouter un autre matériau",
+    form_material_hint:'Votre matériau ne figure pas dans la liste ? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Demandez-nous un approvisionnement sur mesure</a> — nous vérifions volontiers si nous pouvons le regrouper pour vous.',
+    form_file_label:'Télécharger la liste de matériaux <span style="font-weight:400;color:var(--body)">(facultatif — scan, PDF ou Excel de votre liste)</span>',
+    form_file_drop:"Déposez le fichier ici ou cliquez pour sélectionner",form_file_hint:"PDF, Excel, CSV, JPG, PNG — max. 10 Mo",form_file_remove:"Supprimer le fichier",
+    form_timing_label:"Délai de livraison souhaité *",
+    form_timing_asap:"Dès que possible",form_timing_1week:"Sous 1 semaine",form_timing_2weeks:"Sous 2 semaines",form_timing_1month:"Sous 1 mois",form_timing_flexible:"Flexible — à convenir",
+    form_address_label:"Adresse de livraison / Canton *",form_placeholder_address:"p. ex. Zurich, chantier Hauptstr. 5",
+    form_project_label:'Description du projet <span style="font-weight:400;color:var(--body)">(facultatif)</span>',
+    form_placeholder_project:"Brève description du projet et exigences complémentaires…",
+    form_submit:"Annoncer vos besoins maintenant →",
+    form_success:"Merci — nous analysons vos besoins et vous recontactons sous 48 heures avec une estimation concrète de votre potentiel d'économies.",
+    footer_desc:"Intermédiaire B2B suisse en approvisionnement pour le secteur de la construction. Vous ne payez que lorsque nous vous faisons économiser.",
+    footer_services:"Prestations",footer_company:"Entreprise",footer_legal:"Mentions légales",
+    footer_calculator:"Calculateur d'économies",footer_privacy:"Protection des données",footer_imprint:"Mentions légales",footer_terms:"CGV",
+    footer_copy:"© 2026 SourceOn, Zurich — Tous droits réservés",footer_tagline:"Vous ne payez que lorsque nous vous faisons économiser.",
+    chat_title:"Assistant SourceOn",chat_subtitle:"Répond à toutes vos questions sur SourceOn",
+    chat_chip_how:"Comment fonctionne SourceOn ?",chat_chip_cost:"Combien ça coûte ?",chat_chip_report:"Annoncer vos besoins",chat_placeholder:"Poser une question…"
+  },
+  it:{
+    nav_home:"Home",nav_process:"Come funziona",nav_calculator:"Calcolatore",nav_materials:"Materiali",nav_for_whom:"Per chi",nav_supplier:"Diventa fornitore",nav_about:"Chi siamo",nav_contact:"Contatto",nav_cta:"Segnala il fabbisogno",
+    kontakt_badge:"Segnala il fabbisogno",kontakt_title:"Segnala ora il tuo fabbisogno di materiali",kontakt_desc:"Gratuito e senza impegno. Analizziamo il tuo fabbisogno e ti ricontattiamo entro 48 ore con una stima concreta del potenziale di risparmio.",
+    kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurigo, Svizzera",
+    kontakt_how_title:"Come funziona",kontakt_how_text:"Inviaci semplicemente il tuo fabbisogno di materiali con parole tue — nessun formato speciale richiesto. Ci occupiamo noi del resto.",
+    form_company:"Nome azienda *",form_contact_person:"Persona di contatto *",form_email:"E-mail *",form_phone:"Telefono *",
+    form_material_qty:"Materiale &amp; quantità *",
+    form_error_required:"Campo obbligatorio",form_error_email:"E-mail valida richiesta",form_error_material:"Indicare almeno un materiale con quantità",form_error_select:"Selezionare",
+    form_select_material:"Seleziona materiale",form_select_please:"Selezionare",
+    optgroup_rohbau:"Opera grezza",optgroup_ausbau:"Finiture interne",optgroup_haustechnik:"Impiantistica",
+    form_placeholder_qty:"p.es. 200 m³",
+    form_add_material:"＋ Aggiungi un altro materiale",
+    form_material_hint:'Il tuo materiale non è nell\'elenco? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Chiedici un approvvigionamento personalizzato</a> — verifichiamo volentieri se possiamo aggregarlo per te.',
+    form_file_label:'Carica lista materiali <span style="font-weight:400;color:var(--body)">(facoltativo — scansione, PDF o Excel della tua lista)</span>',
+    form_file_drop:"Trascina il file qui o clicca per selezionare",form_file_hint:"PDF, Excel, CSV, JPG, PNG — max. 10 MB",form_file_remove:"Rimuovi file",
+    form_timing_label:"Periodo di consegna desiderato *",
+    form_timing_asap:"Il prima possibile",form_timing_1week:"Entro 1 settimana",form_timing_2weeks:"Entro 2 settimane",form_timing_1month:"Entro 1 mese",form_timing_flexible:"Flessibile — da concordare",
+    form_address_label:"Indirizzo di consegna / Cantone *",form_placeholder_address:"p.es. Zurigo, cantiere Hauptstr. 5",
+    form_project_label:'Descrizione del progetto <span style="font-weight:400;color:var(--body)">(facoltativo)</span>',
+    form_placeholder_project:"Breve descrizione del progetto e ulteriori requisiti…",
+    form_submit:"Segnala il fabbisogno ora →",
+    form_success:"Grazie — analizziamo il tuo fabbisogno e ti ricontattiamo entro 48 ore con una stima concreta del potenziale di risparmio.",
+    footer_desc:"Intermediario B2B svizzero per l'approvvigionamento nel settore edile. Paghi solo quando ti facciamo risparmiare.",
+    footer_services:"Servizi",footer_company:"Azienda",footer_legal:"Note legali",
+    footer_calculator:"Calcolatore di risparmio",footer_privacy:"Privacy",footer_imprint:"Impronta",footer_terms:"CGC",
+    footer_copy:"© 2026 SourceOn, Zurigo — Tutti i diritti riservati",footer_tagline:"Paghi solo quando ti facciamo risparmiare.",
+    chat_title:"Assistente SourceOn",chat_subtitle:"Risponde a tutte le domande su SourceOn",
+    chat_chip_how:"Come funziona SourceOn?",chat_chip_cost:"Quanto costa?",chat_chip_report:"Segnala il fabbisogno",chat_placeholder:"Fai una domanda…"
+  }
+};
+
+window.setLang=function(lang){
+  if(!I18N[lang])return;
+  var t=I18N[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el){if(t[el.getAttribute('data-i18n')]!==undefined)el.textContent=t[el.getAttribute('data-i18n')];});
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){if(t[el.getAttribute('data-i18n-html')]!==undefined)el.innerHTML=t[el.getAttribute('data-i18n-html')];});
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){if(t[el.getAttribute('data-i18n-placeholder')]!==undefined)el.setAttribute('placeholder',t[el.getAttribute('data-i18n-placeholder')]);});
+  document.querySelectorAll('[data-i18n-label]').forEach(function(el){if(t[el.getAttribute('data-i18n-label')]!==undefined)el.setAttribute('label',t[el.getAttribute('data-i18n-label')]);});
+  var cur=document.getElementById('lang-current');if(cur)cur.textContent=lang.toUpperCase();
+  document.querySelectorAll('.lang-opt').forEach(function(btn){btn.classList.remove('active');if(btn.getAttribute('onclick')&&btn.getAttribute('onclick').indexOf("'"+lang+"'")>-1)btn.classList.add('active');});
+  var sw=document.getElementById('lang-switch');if(sw)sw.classList.remove('open');
+  try{localStorage.setItem('sourceon-lang',lang);}catch(e){}
+  document.documentElement.lang=lang;
+};
+
+(function(){
+  var saved;try{saved=localStorage.getItem('sourceon-lang');}catch(e){}
+  if(saved&&I18N[saved])setLang(saved);
+})();
 })();
 </script>
 
