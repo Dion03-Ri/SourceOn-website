@@ -1189,13 +1189,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   var gName=mkLabel('Lieferant','#ffffff',20);
   gName.position.set(0,0.9,0);gName.visible=false;greenBox.add(gName);
 
-  /* Beam sphere→lieferant */
+  /* Beam sphere→lieferant (from sphere edge to greenBox edge) */
+  var beamLen=6.4-0.9;
   var beam=new THREE.Mesh(
-    new THREE.CylinderGeometry(0.07,0.07,7.5,8),
+    new THREE.CylinderGeometry(0.07,0.07,beamLen,8),
     new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0})
   );
   beam.rotation.z=Math.PI/2;
-  beam.position.set(3.75,0,0);
+  beam.position.set(0.9+beamLen/2,0,0);
   beam.visible=false;
   scene.add(beam);
 
@@ -1235,22 +1236,26 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     s.visible=false;scene.add(s);return s;
   });
 
-  /* Return beams lieferant→companies */
+  /* Return beams lieferant→companies (green, matching forward beam style) */
   var returnBeams=[];
   for(var i=0;i<3;i++){
     var rp=restPos[i];
-    var dx=rp.x-7.5,dy=rp.y,dz=rp.z;
+    // Start at lieferant box edge (box is 2.2 wide at x=7.5, so left edge ~6.4)
+    var sx=6.4,sy=0,sz=0;
+    // End at company box edge (box is 1.6 wide, so nearest edge)
+    var ex=rp.x+(rp.x<0?0.8:-0.8),ey=rp.y,ez=rp.z+(rp.z<0?0.8:(rp.z>0?-0.8:0));
+    var dx=ex-sx,dy=ey-sy,dz=ez-sz;
     var bLen=Math.sqrt(dx*dx+dy*dy+dz*dz);
     var rb=new THREE.Mesh(
-      new THREE.CylinderGeometry(0.05,0.05,bLen,8),
+      new THREE.CylinderGeometry(0.07,0.07,bLen,8),
       new THREE.MeshBasicMaterial({color:0x4ade80,transparent:true,opacity:0})
     );
-    rb.position.set((7.5+rp.x)/2,(rp.y)/2,rp.z/2);
-    rb.lookAt(rp.x,rp.y,rp.z);
+    rb.position.set((sx+ex)/2,(sy+ey)/2,(sz+ez)/2);
+    rb.lookAt(ex,ey,ez);
     rb.rotateX(Math.PI/2);
     rb.visible=false;
     scene.add(rb);
-    returnBeams.push(rb);
+    returnBeams.push({mesh:rb,sx:sx,sy:sy,sz:sz,ex:ex,ey:ey,ez:ez});
   }
 
   /* Return flow particles */
@@ -1279,9 +1284,12 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   function lerp(a,b,t){return a+(b-a)*t;}
   function eOut(t){return 1-Math.pow(1-Math.min(1,t),3);}
 
-  var t0=performance.now();
+  var t0=null;
+  var animRunning=false;
   function animate(){
     requestAnimationFrame(animate);
+    if(!animRunning)return;
+    if(!t0)t0=performance.now();
     var now=(performance.now()-t0)/1000;
     var cy=now%12;
 
@@ -1302,7 +1310,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       sphere.visible=false;greenBox.visible=false;beam.visible=false;
       particles.material.opacity=0;explParts.material.opacity=0;
       returnParticles.material.opacity=0;
-      returnBeams.forEach(function(b){b.visible=false;});
+      returnBeams.forEach(function(b){b.mesh.visible=false;});
       savSprites.forEach(function(s){s.visible=false;});
       checkSprites.forEach(function(s){s.visible=false;});
       savPctSprites.forEach(function(s){s.visible=false;});
@@ -1391,8 +1399,8 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       // Return beams appear
       var rbAp=eOut(Math.min(1,t*3));
       for(var i=0;i<3;i++){
-        returnBeams[i].visible=rbAp>.05;
-        returnBeams[i].material.opacity=rbAp*.6;
+        returnBeams[i].mesh.visible=rbAp>.05;
+        returnBeams[i].mesh.material.opacity=rbAp*.6;
       }
 
       // Return particles flow from lieferant (7.5,0,0) to each company
@@ -1400,9 +1408,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         returnParticles.material.opacity=Math.min(1,(t-.15)*4)*.7;
         var rpa=rpGeo.getAttribute('position');
         for(var i=0;i<RPCNT;i++){
-          var si2=i%3,dst=restPos[si2];
+          var si2=i%3,rb=returnBeams[si2];
           var frac=((i/RPCNT)+t*1.5)%1;
-          rpa.setXYZ(i,lerp(7.5,dst.x,frac)+(Math.random()-.5)*.1,lerp(0,dst.y,frac),lerp(0,dst.z,frac)+(Math.random()-.5)*.1);
+          rpa.setXYZ(i,lerp(rb.sx,rb.ex,frac)+(Math.random()-.5)*.1,lerp(rb.sy,rb.ey,frac),lerp(rb.sz,rb.ez,frac)+(Math.random()-.5)*.1);
         }
         rpa.needsUpdate=true;
       } else returnParticles.material.opacity=0;
@@ -1424,14 +1432,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       beam.visible=true;beam.material.opacity=.7;
       particles.material.opacity=0;explParts.material.opacity=0;
       for(var i=0;i<3;i++){
-        returnBeams[i].visible=true;returnBeams[i].material.opacity=.6;
+        returnBeams[i].mesh.visible=true;returnBeams[i].mesh.material.opacity=.6;
       }
       returnParticles.material.opacity=.5;
       var rpa2=rpGeo.getAttribute('position');
       for(var i=0;i<RPCNT;i++){
-        var si2=i%3,dst=restPos[si2];
+        var si2=i%3,rb=returnBeams[si2];
         var frac=((i/RPCNT)+t*1.5)%1;
-        rpa2.setXYZ(i,lerp(7.5,dst.x,frac)+(Math.random()-.5)*.1,lerp(0,dst.y,frac),lerp(0,dst.z,frac)+(Math.random()-.5)*.1);
+        rpa2.setXYZ(i,lerp(rb.sx,rb.ex,frac)+(Math.random()-.5)*.1,lerp(rb.sy,rb.ey,frac),lerp(rb.sz,rb.ez,frac)+(Math.random()-.5)*.1);
       }
       rpa2.needsUpdate=true;
 
@@ -1465,7 +1473,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       particles.material.opacity=0;explParts.material.opacity=0;
       returnParticles.material.opacity=.5*fa;
       for(var i=0;i<3;i++){
-        returnBeams[i].visible=fa>.05;returnBeams[i].material.opacity=.6*fa;
+        returnBeams[i].mesh.visible=fa>.05;returnBeams[i].mesh.material.opacity=.6*fa;
         savPctSprites[i].visible=fa>.1;
         if(savPctSprites[i].material)savPctSprites[i].material.opacity=fa;
         checkSprites[i].visible=fa>.1;
@@ -1478,6 +1486,16 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     renderer.render(scene,camera);
   }
   animate();
+
+  var scrollObs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting&&!animRunning){
+        animRunning=true;
+        t0=performance.now();
+      }
+    });
+  },{threshold:0});
+  scrollObs.observe(wrap);
 
   window.addEventListener('resize',function(){
     var nW=wrap.offsetWidth,nH=window.innerWidth<640?400:600;
