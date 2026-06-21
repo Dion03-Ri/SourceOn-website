@@ -1235,6 +1235,39 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     s.visible=false;scene.add(s);return s;
   });
 
+  /* Return beams lieferant→companies */
+  var returnBeams=[];
+  for(var i=0;i<3;i++){
+    var rp=restPos[i];
+    var dx=rp.x-7.5,dy=rp.y,dz=rp.z;
+    var bLen=Math.sqrt(dx*dx+dy*dy+dz*dz);
+    var rb=new THREE.Mesh(
+      new THREE.CylinderGeometry(0.05,0.05,bLen,8),
+      new THREE.MeshBasicMaterial({color:0x4ade80,transparent:true,opacity:0})
+    );
+    rb.position.set((7.5+rp.x)/2,(rp.y)/2,rp.z/2);
+    rb.lookAt(rp.x,rp.y,rp.z);
+    rb.rotateX(Math.PI/2);
+    rb.visible=false;
+    scene.add(rb);
+    returnBeams.push(rb);
+  }
+
+  /* Return flow particles */
+  var RPCNT=90,rpBuf=new Float32Array(RPCNT*3);
+  var rpGeo=new THREE.BufferGeometry();
+  rpGeo.setAttribute('position',new THREE.BufferAttribute(rpBuf,3));
+  var returnParticles=new THREE.Points(rpGeo,new THREE.PointsMaterial({color:0x4ade80,size:0.12,transparent:true,opacity:0}));
+  scene.add(returnParticles);
+
+  /* Savings % labels on companies */
+  var savPctTexts=['-12% gespart','-12% gespart','-12% gespart'];
+  var savPctSprites=savPctTexts.map(function(t,i){
+    var s=mkLabel(t,'#4ade80',22);
+    s.position.copy(restPos[i]);s.position.y+=2.5;
+    s.visible=false;scene.add(s);return s;
+  });
+
   /* Mouse parallax */
   var mx=0,my=0,camRX=0,camRY=0;
   wrap.addEventListener('mousemove',function(e){
@@ -1250,7 +1283,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   function animate(){
     requestAnimationFrame(animate);
     var now=(performance.now()-t0)/1000;
-    var cy=now%8;
+    var cy=now%12;
 
     stars.rotation.y=now*.025;stars.rotation.x=now*.008;
     sphere.rotation.y=now*.3;
@@ -1268,8 +1301,11 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       boxes.forEach(function(b){b.visible=false;});
       sphere.visible=false;greenBox.visible=false;beam.visible=false;
       particles.material.opacity=0;explParts.material.opacity=0;
+      returnParticles.material.opacity=0;
+      returnBeams.forEach(function(b){b.visible=false;});
       savSprites.forEach(function(s){s.visible=false;});
       checkSprites.forEach(function(s){s.visible=false;});
+      savPctSprites.forEach(function(s){s.visible=false;});
     }
 
     /* Phase 1: 0-2s — boxes fly in */
@@ -1337,10 +1373,86 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       savSprites.forEach(function(s){s.visible=false;});
       checkSprites.forEach(function(s){s.visible=false;});
     }
-    /* Phase 4: 6-8s — savings + fade out */
-    else{
+    /* Phase 4: 6-8s — return flow from lieferant to companies */
+    else if(cy<8){
       var t=(cy-6)/2;
-      var fa=Math.max(0,1-(t-.75)/.25);
+      for(var i=0;i<3;i++){
+        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
+        boxes[i].material.opacity=.85;
+        boxLabels[i].visible=true;boxNames[i].visible=true;
+      }
+      sphere.visible=true;sphere.material.opacity=.9;sphereLbl.visible=true;
+      greenBox.visible=true;greenBox.material.opacity=.85;
+      gLbl.visible=true;gName.visible=true;
+      beam.visible=true;beam.material.opacity=.7;
+      particles.material.opacity=0;explParts.material.opacity=0;
+      savSprites.forEach(function(s){s.visible=false;});
+
+      // Return beams appear
+      var rbAp=eOut(Math.min(1,t*3));
+      for(var i=0;i<3;i++){
+        returnBeams[i].visible=rbAp>.05;
+        returnBeams[i].material.opacity=rbAp*.6;
+      }
+
+      // Return particles flow from lieferant (7.5,0,0) to each company
+      if(t>.15){
+        returnParticles.material.opacity=Math.min(1,(t-.15)*4)*.7;
+        var rpa=rpGeo.getAttribute('position');
+        for(var i=0;i<RPCNT;i++){
+          var si2=i%3,dst=restPos[si2];
+          var frac=((i/RPCNT)+t*1.5)%1;
+          rpa.setXYZ(i,lerp(7.5,dst.x,frac)+(Math.random()-.5)*.1,lerp(0,dst.y,frac),lerp(0,dst.z,frac)+(Math.random()-.5)*.1);
+        }
+        rpa.needsUpdate=true;
+      } else returnParticles.material.opacity=0;
+
+      checkSprites.forEach(function(s){s.visible=false;});
+      savPctSprites.forEach(function(s){s.visible=false;});
+    }
+    /* Phase 5: 8-10s — savings appear on companies */
+    else if(cy<10){
+      var t=(cy-8)/2;
+      for(var i=0;i<3;i++){
+        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
+        boxes[i].material.opacity=.85;
+        boxLabels[i].visible=true;boxNames[i].visible=true;
+      }
+      sphere.visible=true;sphere.material.opacity=.9;sphereLbl.visible=true;
+      greenBox.visible=true;greenBox.material.opacity=.85;
+      gLbl.visible=true;gName.visible=true;
+      beam.visible=true;beam.material.opacity=.7;
+      particles.material.opacity=0;explParts.material.opacity=0;
+      for(var i=0;i<3;i++){
+        returnBeams[i].visible=true;returnBeams[i].material.opacity=.6;
+      }
+      returnParticles.material.opacity=.5;
+      var rpa2=rpGeo.getAttribute('position');
+      for(var i=0;i<RPCNT;i++){
+        var si2=i%3,dst=restPos[si2];
+        var frac=((i/RPCNT)+t*1.5)%1;
+        rpa2.setXYZ(i,lerp(7.5,dst.x,frac)+(Math.random()-.5)*.1,lerp(0,dst.y,frac),lerp(0,dst.z,frac)+(Math.random()-.5)*.1);
+      }
+      rpa2.needsUpdate=true;
+
+      // Savings % + checkmarks appear
+      for(var i=0;i<3;i++){
+        var dl=i*.15,lt=eOut(Math.max(0,(t-dl)*4));
+        savPctSprites[i].visible=lt>.0;
+        savPctSprites[i].position.copy(restPos[i]);savPctSprites[i].position.y=2.2+lt*.6;
+        if(savPctSprites[i].material)savPctSprites[i].material.opacity=lt;
+        checkSprites[i].visible=lt>.0;
+        checkSprites[i].position.copy(restPos[i]);checkSprites[i].position.y=1.6;
+        if(checkSprites[i].material)checkSprites[i].material.opacity=lt;
+        savSprites[i].visible=lt>.0;
+        savSprites[i].position.copy(restPos[i]);savSprites[i].position.y=2.8+lt*.5;
+        if(savSprites[i].material)savSprites[i].material.opacity=lt;
+      }
+    }
+    /* Phase 6: 10-12s — hold + fade out */
+    else{
+      var t=(cy-10)/2;
+      var fa=Math.max(0,1-(t-.5)/.5);
       for(var i=0;i<3;i++){
         boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
         boxes[i].material.opacity=.85*fa;
@@ -1351,16 +1463,15 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
       gLbl.visible=fa>.2;gName.visible=fa>.2;
       beam.visible=fa>.05;beam.material.opacity=.7*fa;
       particles.material.opacity=0;explParts.material.opacity=0;
+      returnParticles.material.opacity=.5*fa;
       for(var i=0;i<3;i++){
-        var dl=i*.12,lt=eOut(Math.max(0,(t-dl)*5));
-        var sf=lt*(1-Math.max(0,(t-.65)/.3));
-        savSprites[i].visible=lt>.0;
-        savSprites[i].position.copy(restPos[i]);savSprites[i].position.y=2+lt*1.8;
-        if(savSprites[i].material)savSprites[i].material.opacity=sf;
-        var cl=eOut(Math.max(0,(t-dl)*.5*5));
-        checkSprites[i].visible=cl>.0;
-        checkSprites[i].position.copy(restPos[i]);checkSprites[i].position.y=1.6;
-        if(checkSprites[i].material)checkSprites[i].material.opacity=cl*fa;
+        returnBeams[i].visible=fa>.05;returnBeams[i].material.opacity=.6*fa;
+        savPctSprites[i].visible=fa>.1;
+        if(savPctSprites[i].material)savPctSprites[i].material.opacity=fa;
+        checkSprites[i].visible=fa>.1;
+        if(checkSprites[i].material)checkSprites[i].material.opacity=fa;
+        savSprites[i].visible=fa>.1;
+        if(savSprites[i].material)savSprites[i].material.opacity=fa;
       }
     }
 
