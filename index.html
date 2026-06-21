@@ -1394,353 +1394,400 @@ if(bdDiagram)bdObs.observe(bdDiagram);
 // FAQ (stub for pages that might have inline FAQ)
 function toggleFaq(btn){}
 
-// ENGINE 3D
+// ENGINE 3D chip visualization
 (function(){
   var stage=document.getElementById('engine-stage');
   var canvas=document.getElementById('engine-canvas');
   if(!stage||!canvas||typeof THREE==='undefined')return;
   var started=false;
+
   function init(){
     if(started)return;started=true;
     var W=stage.offsetWidth,H=stage.offsetHeight;
-    var R=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
-    R.setSize(W,H);R.setPixelRatio(Math.min(window.devicePixelRatio,2));R.setClearColor(0x020408);
+    var R=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});
+    R.setSize(W,H);R.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    R.setClearColor(0x060D1A);
+
     var scene=new THREE.Scene();
-    scene.fog=new THREE.FogExp2(0x020408,0.014);
-    var cam=new THREE.PerspectiveCamera(30,W/H,0.1,300);
-    cam.position.set(7,6,7);cam.lookAt(0,0,0);
+    scene.fog=new THREE.FogExp2(0x060D1A,0.04);
 
-    scene.add(new THREE.AmbientLight(0x080818,1));
-    var dL=new THREE.DirectionalLight(0xffffff,0.12);dL.position.set(5,12,5);scene.add(dL);
-    var gl1=new THREE.PointLight(0xE8A020,2.5,20);gl1.position.set(0,3,0);scene.add(gl1);
-    scene.add(new THREE.PointLight(0xE8A020,0.4,10).translateX(-5).translateY(1).translateZ(3));
-    scene.add(new THREE.PointLight(0xE8A020,0.4,10).translateX(5).translateY(1).translateZ(-3));
+    var camera=new THREE.PerspectiveCamera(50,W/H,0.1,100);
+    camera.position.set(0,4,7);
+    camera.lookAt(0,0,0);
 
-    // Ground
-    var gnd=new THREE.Mesh(new THREE.PlaneGeometry(50,50),new THREE.MeshStandardMaterial({color:0x020408,metalness:0.95,roughness:0.3}));
-    gnd.rotation.x=-Math.PI/2;gnd.position.y=-0.15;scene.add(gnd);
-    var gLn=new THREE.LineBasicMaterial({color:0xE8A020,transparent:true,opacity:0.02});
-    for(var gg=-16;gg<=16;gg+=1.2){
-      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(gg,-0.14,16),new THREE.Vector3(gg,-0.14,-16)]),gLn));
-      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(16,-0.14,gg),new THREE.Vector3(-16,-0.14,gg)]),gLn));
+    // Lighting
+    var ambLight=new THREE.AmbientLight(0x1B3A5C,0.3);
+    scene.add(ambLight);
+    var dirLight=new THREE.DirectionalLight(0xffffff,0.5);
+    dirLight.position.set(5,8,5);
+    scene.add(dirLight);
+    var chipGlow=new THREE.PointLight(0xE8A020,2,10);
+    chipGlow.position.set(0,1.2,0);
+    scene.add(chipGlow);
+    var outGlow=new THREE.PointLight(0x10B981,1,6);
+    outGlow.position.set(3,0.3,0);
+    scene.add(outGlow);
+
+    var chipGroup=new THREE.Group();
+    scene.add(chipGroup);
+
+    // CHIP LAYERS
+    // Base
+    var baseMat=new THREE.MeshStandardMaterial({color:0x0F2238,metalness:0.7,roughness:0.25});
+    var baseGeo=new THREE.BoxGeometry(3.2,0.15,3.2);
+    var baseMesh=new THREE.Mesh(baseGeo,baseMat);
+    baseMesh.position.y=0;
+    chipGroup.add(baseMesh);
+
+    // BGA dots on underside
+    for(var bx=0;bx<8;bx++){
+      for(var bz=0;bz<8;bz++){
+        var dot=new THREE.Mesh(
+          new THREE.SphereGeometry(0.02,6,6),
+          new THREE.MeshBasicMaterial({color:0xE8A020})
+        );
+        dot.position.set(-1.12+bx*0.32, -0.08, -1.12+bz*0.32);
+        chipGroup.add(dot);
+      }
     }
 
-    // ===== CHIP (4 layers, elevated) =====
-    var chip=new THREE.Group();
-    chip.add(new THREE.Mesh(new THREE.BoxGeometry(3.4,0.08,3.4),new THREE.MeshStandardMaterial({color:0x040A14,metalness:0.9,roughness:0.25})));
-    var sub=new THREE.Mesh(new THREE.BoxGeometry(3,0.1,3),new THREE.MeshStandardMaterial({color:0x06101E,metalness:0.88,roughness:0.2}));
-    sub.position.y=0.09;chip.add(sub);
-    var pkgMat=new THREE.MeshStandardMaterial({color:0x0A1828,metalness:0.92,roughness:0.12});
-    var pkg=new THREE.Mesh(new THREE.BoxGeometry(2.5,0.14,2.5),pkgMat);pkg.position.y=0.21;chip.add(pkg);
-    // Top plate — semi-transparent to see network inside
-    var topMat=new THREE.MeshStandardMaterial({color:0x0D1E30,metalness:0.95,roughness:0.08,transparent:true,opacity:0.7});
-    var topPlate=new THREE.Mesh(new THREE.BoxGeometry(2.2,0.04,2.2),topMat);topPlate.position.y=0.3;chip.add(topPlate);
+    // Middle layer (die)
+    var dieMat=new THREE.MeshStandardMaterial({color:0x1B3A5C,metalness:0.8,roughness:0.2});
+    var dieGeo=new THREE.BoxGeometry(2.6,0.12,2.6);
+    var dieMesh=new THREE.Mesh(dieGeo,dieMat);
+    dieMesh.position.y=0.135;
+    chipGroup.add(dieMesh);
 
-    // Gold edge trims
-    var eMat=new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.5,metalness:0.98,roughness:0.05});
-    function addEdge(w,h,d,x,y,z){chip.add(new THREE.Mesh(new THREE.BoxGeometry(w,h,d),eMat).translateX(x).translateY(y).translateZ(z));}
-    addEdge(2.52,0.005,0.005,0,0.28,1.26);addEdge(2.52,0.005,0.005,0,0.28,-1.26);
-    addEdge(0.005,0.005,2.52,1.26,0.28,0);addEdge(0.005,0.005,2.52,-1.26,0.28,0);
-    addEdge(2.22,0.003,0.003,0,0.32,1.11);addEdge(2.22,0.003,0.003,0,0.32,-1.11);
-    addEdge(0.003,0.003,2.22,1.11,0.32,0);addEdge(0.003,0.003,2.22,-1.11,0.32,0);
-    chip.add(new THREE.Mesh(new THREE.BoxGeometry(2.6,0.005,2.6),new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.06})).translateY(0.14));
-
-    // BGA dots on top
-    var dotGeo=new THREE.SphereGeometry(0.022,6,6);
-    var dotMat2=new THREE.MeshStandardMaterial({color:0x777777,metalness:0.9,roughness:0.2});
-    var dotGold=new THREE.MeshStandardMaterial({color:0xC8860A,metalness:0.9,roughness:0.15});
-    for(var bx=-0.85;bx<=0.85;bx+=0.17){for(var bz=-0.85;bz<=0.85;bz+=0.17){
-      if(Math.abs(bx)<0.35&&Math.abs(bz)<0.35)continue;
-      chip.add(new THREE.Mesh(dotGeo,Math.random()>0.75?dotGold:dotMat2).translateX(bx).translateY(0.33).translateZ(bz));
-    }}
-
-    // Chip texture
-    var tc=document.createElement('canvas');tc.width=1024;tc.height=1024;
-    var cx=tc.getContext('2d');
-    cx.fillStyle='#0D1E30';cx.fillRect(0,0,1024,1024);
-    cx.strokeStyle='rgba(232,160,32,0.03)';cx.lineWidth=0.5;
-    for(var gi=0;gi<1024;gi+=10){cx.beginPath();cx.moveTo(gi,0);cx.lineTo(gi,1024);cx.stroke();cx.beginPath();cx.moveTo(0,gi);cx.lineTo(1024,gi);cx.stroke();}
-    cx.textAlign='center';cx.textBaseline='middle';
-    cx.shadowColor='rgba(232,160,32,0.8)';cx.shadowBlur=60;
-    cx.fillStyle='#E8A020';cx.font='300 80px Inter, sans-serif';cx.fillText('SourceOn',512,420);
-    cx.font='600 110px Inter, sans-serif';cx.fillText('AI',512,550);
-    cx.shadowBlur=0;
-    var chipTex=new THREE.CanvasTexture(tc);
-    chip.add(new THREE.Mesh(new THREE.PlaneGeometry(2.0,2.0),new THREE.MeshBasicMaterial({map:chipTex,transparent:true})).rotateX(-Math.PI/2).translateY(0.325));
-
-    // Corner LEDs
-    var leds=[];
-    [[1.05,0.34,1.05],[1.05,0.34,-1.05],[-1.05,0.34,1.05],[-1.05,0.34,-1.05]].forEach(function(p,i){
-      var led=new THREE.Mesh(new THREE.SphereGeometry(0.025,8,8),new THREE.MeshBasicMaterial({color:i<2?0x10B981:0xE8A020,transparent:true}));
-      led.position.set(p[0],p[1],p[2]);led.userData={ph:i*0.8};chip.add(led);leds.push(led);
+    // Top transparent cover
+    var coverMat=new THREE.MeshPhysicalMaterial({
+      color:0x2E75B6,transparent:true,opacity:0.25,roughness:0.1,
+      metalness:0.1
     });
+    var coverGeo=new THREE.BoxGeometry(2.4,0.1,2.4);
+    var coverMesh=new THREE.Mesh(coverGeo,coverMat);
+    coverMesh.position.y=0.3;
+    chipGroup.add(coverMesh);
 
-    // Edge scanner bars
-    var scanBars=[];
-    for(var side=0;side<4;side++){for(var si=0;si<10;si++){
-      var f=((si+0.5)/10)*2.2-1.1;var bx2,bz2,bw,bd;
-      if(side===0){bx2=f;bz2=1.27;bw=0.05;bd=0.008;}
-      else if(side===1){bx2=f;bz2=-1.27;bw=0.05;bd=0.008;}
-      else if(side===2){bx2=1.27;bz2=f;bw=0.008;bd=0.05;}
-      else{bx2=-1.27;bz2=f;bw=0.008;bd=0.05;}
-      var bar=new THREE.Mesh(new THREE.BoxGeometry(bw,0.004,bd),new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.5}));
-      bar.position.set(bx2,0.28,bz2);bar.userData={phase:si*0.4+side*2.5};
-      chip.add(bar);scanBars.push(bar);
-    }}
+    // SourceOn AI label sprite
+    var lblCanvas=document.createElement('canvas');
+    lblCanvas.width=512;lblCanvas.height=128;
+    var lctx=lblCanvas.getContext('2d');
+    lctx.clearRect(0,0,512,128);
+    lctx.shadowBlur=20;lctx.shadowColor='#E8A020';
+    lctx.font='bold 52px Arial, sans-serif';
+    lctx.fillStyle='#E8A020';
+    lctx.textAlign='center';lctx.textBaseline='middle';
+    lctx.fillText('SourceOn AI',256,64);
+    var lblTex=new THREE.CanvasTexture(lblCanvas);
+    var lblMat=new THREE.SpriteMaterial({map:lblTex,transparent:true,opacity:1});
+    var lblSprite=new THREE.Sprite(lblMat);
+    lblSprite.scale.set(2,0.5,1);
+    lblSprite.position.set(0,0.55,0);
+    chipGroup.add(lblSprite);
 
-    // ===== INTERNAL NEURAL NETWORK (visible inside chip) =====
-    var netGroup=new THREE.Group();
-    // Network nodes (grid of small spheres inside chip)
-    var netNodes=[];
-    var netNodeGeo=new THREE.SphereGeometry(0.035,8,8);
-    var netNodeMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.3});
+    // NEURAL NETWORK GRID inside chip
+    var nnNodes=[];
+    var nnNodeMeshes=[];
     var gridSize=5;
-    for(var nx=0;nx<gridSize;nx++){for(var nz=0;nz<gridSize;nz++){
-      var px2=-0.8+nx*0.4,pz2=-0.8+nz*0.4;
-      var node=new THREE.Mesh(netNodeGeo,netNodeMat.clone());
-      node.position.set(px2,0.22,pz2);
-      node.userData={gx:nx,gz:nz};
-      netGroup.add(node);netNodes.push(node);
-    }}
-    // Network connections (lines between adjacent nodes)
-    var netLineMat=new THREE.LineBasicMaterial({color:0xE8A020,transparent:true,opacity:0.08});
-    var netConnections=[];
-    for(var nx2=0;nx2<gridSize;nx2++){for(var nz2=0;nz2<gridSize;nz2++){
-      var px3=-0.8+nx2*0.4,pz3=-0.8+nz2*0.4;
-      // Right
-      if(nx2<gridSize-1){
-        var ln=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(px3,0.22,pz3),new THREE.Vector3(px3+0.4,0.22,pz3)]),netLineMat.clone());
-        netGroup.add(ln);netConnections.push(ln);
+    var spacing=0.4;
+    var gridOffset=-(gridSize-1)*spacing/2;
+    var nnY=0.22;
+    var nodeMat=new THREE.MeshBasicMaterial({color:0xE8A020});
+
+    for(var gx=0;gx<gridSize;gx++){
+      nnNodes[gx]=[];
+      for(var gz=0;gz<gridSize;gz++){
+        var nx=gridOffset+gx*spacing;
+        var nz=gridOffset+gz*spacing;
+        var nMesh=new THREE.Mesh(new THREE.SphereGeometry(0.04,8,8),nodeMat.clone());
+        nMesh.position.set(nx,nnY,nz);
+        chipGroup.add(nMesh);
+        nnNodes[gx][gz]={x:nx,z:nz,mesh:nMesh};
+        nnNodeMeshes.push(nMesh);
       }
-      // Down
-      if(nz2<gridSize-1){
-        var ln2=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(px3,0.22,pz3),new THREE.Vector3(px3,0.22,pz3+0.4)]),netLineMat.clone());
-        netGroup.add(ln2);netConnections.push(ln2);
+    }
+
+    // Grid connections (horizontal + vertical lines)
+    var lineMat=new THREE.LineBasicMaterial({color:0xE8A020,transparent:true,opacity:0.3});
+    for(var gx=0;gx<gridSize;gx++){
+      for(var gz=0;gz<gridSize;gz++){
+        if(gx<gridSize-1){
+          var pts=[new THREE.Vector3(nnNodes[gx][gz].x,nnY,nnNodes[gx][gz].z),
+                   new THREE.Vector3(nnNodes[gx+1][gz].x,nnY,nnNodes[gx+1][gz].z)];
+          var lg=new THREE.BufferGeometry().setFromPoints(pts);
+          chipGroup.add(new THREE.Line(lg,lineMat));
+        }
+        if(gz<gridSize-1){
+          var pts2=[new THREE.Vector3(nnNodes[gx][gz].x,nnY,nnNodes[gx][gz].z),
+                    new THREE.Vector3(nnNodes[gx][gz+1].x,nnY,nnNodes[gx][gz+1].z)];
+          var lg2=new THREE.BufferGeometry().setFromPoints(pts2);
+          chipGroup.add(new THREE.Line(lg2,lineMat));
+        }
       }
-      // Diagonal
-      if(nx2<gridSize-1&&nz2<gridSize-1){
-        var ln3=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(px3,0.22,pz3),new THREE.Vector3(px3+0.4,0.22,pz3+0.4)]),netLineMat.clone());
-        netGroup.add(ln3);netConnections.push(ln3);
-      }
-    }}
-    // Network pulses (fast-moving lights through the network)
-    var netPulses=[];
-    var netPulseMat=new THREE.MeshBasicMaterial({color:0xFFD27A,transparent:true,opacity:0.9});
-    var netPulseGreen=new THREE.MeshBasicMaterial({color:0x10B981,transparent:true,opacity:0.9});
-    for(var np=0;np<18;np++){
-      var isMatch=np%4===0;
-      var pulse=new THREE.Mesh(new THREE.SphereGeometry(isMatch?0.04:0.025,6,6),(isMatch?netPulseGreen:netPulseMat).clone());
-      // Glow
-      var halo=new THREE.Mesh(new THREE.SphereGeometry(isMatch?0.1:0.06,6,6),new THREE.MeshBasicMaterial({color:isMatch?0x10B981:0xE8A020,transparent:true,opacity:0.2}));
-      pulse.add(halo);
-      pulse.position.y=0.22;
-      pulse.userData={
-        speed:3+Math.random()*4,
-        pathIdx:Math.floor(Math.random()*20),
-        progress:Math.random()*10,
-        isMatch:isMatch
-      };
-      netGroup.add(pulse);netPulses.push(pulse);
-    }
-    chip.add(netGroup);
-
-    chip.position.y=0.05;scene.add(chip);
-
-    // ===== EXTERNAL TRACES =====
-    function addTrace(pts,w,col,glowOp){
-      w=w||0.05;col=col||0xE8A020;glowOp=glowOp||0.08;
-      var mat=new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.8});
-      var gm=new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:glowOp});
-      for(var i=0;i<pts.length-1;i++){
-        var ax=pts[i][0],az=pts[i][1],bx=pts[i+1][0],bz=pts[i+1][1];
-        var dx=bx-ax,dz=bz-az,len=Math.sqrt(dx*dx+dz*dz);if(len<0.01)continue;
-        var ang=Math.atan2(dx,dz);
-        scene.add(new THREE.Mesh(new THREE.BoxGeometry(w,0.025,len),mat.clone()).translateX(ax+dx/2).translateY(0.015).translateZ(az+dz/2).rotateY(ang));
-        scene.add(new THREE.Mesh(new THREE.BoxGeometry(w*4,0.008,len),gm.clone()).translateX(ax+dx/2).translateY(0.004).translateZ(az+dz/2).rotateY(ang));
-      }
-      scene.add(new THREE.Mesh(new THREE.SphereGeometry(w*1.2,8,8),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.6})).translateX(pts[0][0]).translateY(0.02).translateZ(pts[0][1]));
     }
 
-    // Inflow from all sides
-    var inF1=[[-1.5,7],[-1.5,5],[-1.5,3.5],[-1,2.5],[-0.5,1.5]];
-    var inF2=[[0.3,8],[0.3,5.5],[0.3,3.5],[0.2,2],[0,1.5]];
-    var inF3=[[1.5,6.5],[1.5,4.5],[1.2,3],[0.7,2],[0.4,1.5]];
-    var inB1=[[-0.8,-7],[-0.8,-5],[-0.8,-3],[-0.5,-2],[-0.3,-1.5]];
-    var inB2=[[1,-6.5],[1,-4.5],[0.7,-3],[0.4,-2],[0.2,-1.5]];
-    var inR1=[[7,0.8],[5,0.8],[3.5,0.6],[2.8,0.4],[2.2,0.2]];
-    var inR2=[[8,-0.5],[5.5,-0.5],[3.5,-0.3],[2.8,-0.2],[2.2,-0.1]];
-    var inL1=[[-7,0.3],[-5,0.3],[-3.5,0.2],[-2.8,0.1],[-2.2,0.05]];
-    var inL2=[[-6.5,-1],[-4.5,-1],[-3,-0.7],[-2.8,-0.4],[-2.2,-0.2]];
-    var inD1=[[-5,5.5],[-3.5,3.5],[-2,2],[-1.2,1.2]];
-    var inD2=[[5.5,-5],[3.5,-3.5],[2,-2],[1.2,-1.2]];
-    var allIn=[inF1,inF2,inF3,inB1,inB2,inR1,inR2,inL1,inL2,inD1,inD2];
-    allIn.forEach(function(t,i){addTrace(t,i%3===0?0.06:0.045);});
-    addTrace([[-3,5.5],[-2,3.5],[-1,2],[-0.6,1.5]],0.02);
-    addTrace([[4,4],[3,3],[1.8,1.8],[1.2,1.2]],0.02);
-
-    // Chip pins (with gap between orange inflow and green outflow on right side)
-    for(var pin=-1;pin<=1;pin+=0.2){
-      addTrace([[-1.3,pin],[-1.75,pin]],0.025);
-      addTrace([[pin,-1.3],[pin,-1.75]],0.025);
-      addTrace([[pin,1.3],[pin,1.75]],0.025);
-    }
-    // Right side: orange pins stop at 1.75, gap, then green starts at 2.2
-    for(var pin2=-1;pin2<=1;pin2+=0.2){
-      addTrace([[1.3,pin2],[1.75,pin2]],0.025);
+    // Neural pulses
+    var pulses=[];
+    var pulseMat=new THREE.MeshBasicMaterial({color:0xFBBF24});
+    for(var p=0;p<10;p++){
+      var pMesh=new THREE.Mesh(new THREE.SphereGeometry(0.025,6,6),pulseMat.clone());
+      pMesh.position.y=nnY;
+      chipGroup.add(pMesh);
+      var sgx=Math.floor(Math.random()*gridSize);
+      var sgz=Math.floor(Math.random()*gridSize);
+      pulses.push({mesh:pMesh,gx:sgx,gz:sgz,tgx:sgx,tgz:sgz,t:0,speed:0.3+Math.random()*0.2});
     }
 
-    // Output trace (green, starts with gap from chip)
-    var outTrace=[[2.2,0],[3,0],[4.5,0],[6.5,0],[9,0],[12,0]];
-    addTrace(outTrace,0.09,0x10B981,0.12);
-    addTrace([[2.2,0.25],[3.5,0.3],[5.5,0.35],[8,0.3]],0.03,0x10B981,0.06);
-    addTrace([[2.2,-0.25],[3.5,-0.3],[5.5,-0.35],[8,-0.3]],0.03,0x10B981,0.06);
-
-    // ===== MATERIAL INFLOW PACKETS =====
-    var materials=['Beton 80m³','Kies 40t','Armierung 12t','Dämmung 200m²','XPS 150m²','Stahl 15t','Ziegel 8k','Zement 25t','Holz 12m³','Sand 30t','Kupfer 2t','Glas 50m²','Mauer 400m²','Beton 120m³','Estrich 80m²','Klinker 5k'];
-    var mIdx=0;var pkts=[];
-    function makePkt(trace,delay,speed){
-      var label=materials[mIdx%materials.length];mIdx++;
-      var c=document.createElement('canvas');c.width=128;c.height=48;var x=c.getContext('2d');
-      x.fillStyle='rgba(232,160,32,0.08)';x.fillRect(2,2,124,44);
-      x.strokeStyle='rgba(232,160,32,0.4)';x.lineWidth=1;x.strokeRect(2,2,124,44);
-      x.fillStyle='#E8A020';x.font='600 13px Inter, sans-serif';x.textAlign='center';x.textBaseline='middle';x.fillText(label,64,24);
-      var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthTest:false}));
-      sp.scale.set(0.65,0.24,1);sp.position.y=0.4;scene.add(sp);
-      var dot=new THREE.Mesh(new THREE.SphereGeometry(0.04,8,8),new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.5}));
-      dot.position.y=0.06;scene.add(dot);
-      var segs=[],tL=0;
-      for(var i=0;i<trace.length-1;i++){var dx=trace[i+1][0]-trace[i][0],dz=trace[i+1][1]-trace[i][1],l=Math.sqrt(dx*dx+dz*dz);segs.push({sx:trace[i][0],sz:trace[i][1],dx:dx,dz:dz,len:l});tL+=l;}
-      pkts.push({sp:sp,dot:dot,segs:segs,totalLen:tL,speed:speed,delay:delay});
+    function nextPulseTarget(pulse){
+      var dirs=[];
+      if(pulse.gx>0)dirs.push({dx:-1,dz:0});
+      if(pulse.gx<gridSize-1)dirs.push({dx:1,dz:0});
+      if(pulse.gz>0)dirs.push({dx:0,dz:-1});
+      if(pulse.gz<gridSize-1)dirs.push({dx:0,dz:1});
+      var d=dirs[Math.floor(Math.random()*dirs.length)];
+      pulse.tgx=pulse.gx+d.dx;
+      pulse.tgz=pulse.gz+d.dz;
+      pulse.t=0;
     }
-    allIn.forEach(function(t,i){makePkt(t,i*1.3,0.7+Math.random()*0.25);makePkt(t,i*1.3+8,0.65+Math.random()*0.25);});
 
-    // ===== BUNDLED OUTPUT PACKETS (3-5 materials) =====
-    var bundleSets=[
-      ['Beton 80m³','Kies 40t','Zement 25t'],
-      ['Stahl 15t','Armierung 12t','Kupfer 2t','Mauer 400m²'],
-      ['Dämmung 200m²','XPS 150m²','Glas 50m²','Estrich 80m²','Holz 12m³'],
-      ['Beton 120m³','Sand 30t','Kies 40t','Zement 25t'],
-      ['Ziegel 8k','Klinker 5k','Mauer 400m²'],
-      ['Stahl 15t','Holz 12m³','Glas 50m²','Dämmung 200m²','Kupfer 2t'],
-      ['Beton 80m³','Armierung 12t','Sand 30t','Estrich 80m²'],
-      ['XPS 150m²','Dämmung 200m²','Glas 50m²']
+    // INPUT TRACES - 6 traces from 3 sides
+    var inputTraces=[];
+    var matLabels=["Bewehrungsstahl 12mm","Transportbeton C25/30","Kies 0-32mm",
+                   "Mauerwerk HLZ 20cm","Armierungsmatte Q257"];
+    // Left side: 3 traces
+    var traceConfigs=[
+      {start:[-5,0.2,-0.8],end:[-1.6,0.2,-0.8],mid:[-3,0.4,-0.6]},
+      {start:[-5,0.2,0],end:[-1.6,0.2,0],mid:[-3.2,0.3,0.3]},
+      {start:[-4.5,0.2,0.8],end:[-1.6,0.2,0.8],mid:[-2.8,0.5,1.0]},
+      // Back side: 2 traces
+      {start:[-0.5,0.2,-5],end:[-0.5,0.2,-1.6],mid:[-0.3,0.4,-3]},
+      {start:[0.6,0.2,-4.5],end:[0.6,0.2,-1.6],mid:[0.8,0.3,-2.8]},
+      // Front side: 1 trace
+      {start:[-0.4,0.2,5],end:[-0.4,0.2,1.6],mid:[-0.2,0.4,3.2]}
     ];
-    var oPkts=[];
-    function makeOPkt(delay,speed,items){
-      var c=document.createElement('canvas');c.width=256;c.height=128;var x=c.getContext('2d');
-      x.fillStyle='rgba(16,185,129,0.06)';x.fillRect(3,3,250,122);
-      x.strokeStyle='rgba(16,185,129,0.5)';x.lineWidth=1.5;x.strokeRect(3,3,250,122);
-      x.fillStyle='#10B981';x.font='700 14px Inter, sans-serif';x.textAlign='center';
-      x.fillText(items.length+' Materialien gebündelt',128,20);
-      x.fillStyle='rgba(255,255,255,0.5)';x.font='300 11px Inter, sans-serif';
-      items.forEach(function(item,idx){x.fillText(item,idx%2===0?75:181,38+Math.floor(idx/2)*14);});
-      x.strokeStyle='#10B981';x.lineWidth=2;x.beginPath();x.moveTo(108,108);x.lineTo(118,118);x.lineTo(148,94);x.stroke();
-      var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthTest:false}));
-      sp.scale.set(1.4,0.7,1);sp.position.y=0.5;scene.add(sp);
-      var dot=new THREE.Mesh(new THREE.SphereGeometry(0.07,8,8),new THREE.MeshBasicMaterial({color:0x10B981,transparent:true,opacity:0.5}));
-      dot.position.y=0.06;scene.add(dot);
-      var segs=[],tL=0;
-      for(var i=0;i<outTrace.length-1;i++){var dx=outTrace[i+1][0]-outTrace[i][0],dz=outTrace[i+1][1]-outTrace[i][1],l=Math.sqrt(dx*dx+dz*dz);segs.push({sx:outTrace[i][0],sz:outTrace[i][1],dx:dx,dz:dz,len:l});tL+=l;}
-      oPkts.push({sp:sp,dot:dot,segs:segs,totalLen:tL,speed:speed,delay:delay});
-    }
-    bundleSets.forEach(function(items,i){makeOPkt(i*3.2+2,0.4,items);});
 
-    // Particles
-    var pCnt=120;var pGeo=new THREE.BufferGeometry();var pPos=new Float32Array(pCnt*3);
-    for(var i=0;i<pCnt;i++){pPos[i*3]=(Math.random()-.5)*30;pPos[i*3+1]=Math.random()*5+.2;pPos[i*3+2]=(Math.random()-.5)*30;}
-    pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
-    scene.add(new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.025,transparent:true,opacity:0.3})));
+    var traceMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.5});
 
-    // ===== ANIMATE =====
-    var clk=new THREE.Clock();var cAng=0.7;
-    // Pre-generate random network paths for pulses
-    var netPaths=[];
-    for(var pp=0;pp<20;pp++){
-      var path=[];var cx2=Math.floor(Math.random()*gridSize),cz2=Math.floor(Math.random()*gridSize);
-      for(var step=0;step<12;step++){
-        path.push({x:-0.8+cx2*0.4,z:-0.8+cz2*0.4});
-        var dirs=[];
-        if(cx2>0)dirs.push([-1,0]);if(cx2<gridSize-1)dirs.push([1,0]);
-        if(cz2>0)dirs.push([0,-1]);if(cz2<gridSize-1)dirs.push([0,1]);
-        if(cx2>0&&cz2>0)dirs.push([-1,-1]);if(cx2<gridSize-1&&cz2<gridSize-1)dirs.push([1,1]);
-        var d=dirs[Math.floor(Math.random()*dirs.length)];
-        cx2+=d[0];cz2+=d[1];
-      }
-      netPaths.push(path);
+    for(var ti=0;ti<traceConfigs.length;ti++){
+      var tc=traceConfigs[ti];
+      var curve=new THREE.CatmullRomCurve3([
+        new THREE.Vector3(tc.start[0],tc.start[1],tc.start[2]),
+        new THREE.Vector3(tc.mid[0],tc.mid[1],tc.mid[2]),
+        new THREE.Vector3(tc.end[0],tc.end[1],tc.end[2])
+      ]);
+      var tubeGeo=new THREE.TubeGeometry(curve,32,0.03,8,false);
+      var tube=new THREE.Mesh(tubeGeo,traceMat);
+      chipGroup.add(tube);
+
+      // Material packet
+      var pktCanvas=document.createElement('canvas');
+      pktCanvas.width=256;pktCanvas.height=64;
+      var pctx=pktCanvas.getContext('2d');
+      pctx.fillStyle='#0F2238';
+      pctx.fillRect(0,0,256,64);
+      pctx.strokeStyle='#E8A020';pctx.lineWidth=2;
+      pctx.strokeRect(1,1,254,62);
+      pctx.font='16px Arial';pctx.fillStyle='#ffffff';
+      pctx.textAlign='center';pctx.textBaseline='middle';
+      pctx.fillText(matLabels[ti%matLabels.length],128,32);
+      var pktTex=new THREE.CanvasTexture(pktCanvas);
+      var pktMat=new THREE.SpriteMaterial({map:pktTex,transparent:true});
+      var pktSprite=new THREE.Sprite(pktMat);
+      pktSprite.scale.set(0.6,0.15,1);
+      chipGroup.add(pktSprite);
+
+      inputTraces.push({curve:curve,packet:pktSprite,progress:ti*0.15,speed:0.5});
     }
 
-    function moveObj(obj,t,cyc){
-      var el=((t-obj.delay)%cyc+cyc)%cyc;var prog=(el*obj.speed%cyc)/cyc;
-      var d=prog*obj.totalLen,acc=0;
-      for(var j=0;j<obj.segs.length;j++){
-        if(acc+obj.segs[j].len>=d||j===obj.segs.length-1){
-          var f=Math.min(1,(d-acc)/obj.segs[j].len);
-          var px=obj.segs[j].sx+obj.segs[j].dx*f,pz=obj.segs[j].sz+obj.segs[j].dz*f;
-          if(obj.sp){obj.sp.position.x=px;obj.sp.position.z=pz;}
-          if(obj.dot){obj.dot.position.x=px;obj.dot.position.z=pz;}
-          break;
-        }acc+=obj.segs[j].len;
-      }
+    // OUTPUT TRACE - single green
+    var outCurve=new THREE.CatmullRomCurve3([
+      new THREE.Vector3(1.8,0.2,0),
+      new THREE.Vector3(3,0.3,0),
+      new THREE.Vector3(5,0.2,0)
+    ]);
+    var outTubeGeo=new THREE.TubeGeometry(outCurve,32,0.06,8,false);
+    var outTubeMat=new THREE.MeshBasicMaterial({color:0x10B981,transparent:true,opacity:0.6});
+    chipGroup.add(new THREE.Mesh(outTubeGeo,outTubeMat));
+
+    // Output bundle packet
+    var bundleLabels=["180m3 Beton C25/30","12t Armierungsstahl","350m2 Isolierung"];
+    var obCanvas=document.createElement('canvas');
+    obCanvas.width=256;obCanvas.height=96;
+    var obctx=obCanvas.getContext('2d');
+    obctx.fillStyle='#0F2238';
+    obctx.fillRect(0,0,256,96);
+    obctx.strokeStyle='#10B981';obctx.lineWidth=2;
+    obctx.strokeRect(1,1,254,94);
+    obctx.font='14px Arial';obctx.fillStyle='#ffffff';
+    obctx.textAlign='center';
+    for(var bl=0;bl<bundleLabels.length;bl++){
+      obctx.fillText(bundleLabels[bl],128,22+bl*26);
     }
+    var obTex=new THREE.CanvasTexture(obCanvas);
+    var obMat=new THREE.SpriteMaterial({map:obTex,transparent:true});
+    var obSprite=new THREE.Sprite(obMat);
+    obSprite.scale.set(0.8,0.3,1);
+    chipGroup.add(obSprite);
+    var outPacket={curve:outCurve,packet:obSprite,progress:0,speed:0.4};
+
+    // SCANNER BARS on chip edges
+    var scanBars=[];
+    var scanPositions=[
+      {x:0,z:-1.3,rx:0},{x:0,z:1.3,rx:0},
+      {x:-1.3,z:0,rx:Math.PI/2},{x:1.3,z:0,rx:Math.PI/2}
+    ];
+    for(var si=0;si<4;si++){
+      var sp=scanPositions[si];
+      var barMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.6});
+      var barGeo=new THREE.PlaneGeometry(2.4,0.03);
+      var barMesh=new THREE.Mesh(barGeo,barMat);
+      barMesh.position.set(sp.x,0.2,sp.z);
+      barMesh.rotation.y=sp.rx;
+      chipGroup.add(barMesh);
+      scanBars.push({mesh:barMesh,offset:si*0.7,baseY:0.15});
+    }
+
+    // FLOATING PARTICLES
+    var particles=[];
+    for(var fi=0;fi<40;fi++){
+      var fpMat=new THREE.MeshBasicMaterial({color:0x94A3B8,transparent:true,opacity:0.3});
+      var fpMesh=new THREE.Mesh(new THREE.SphereGeometry(0.015,4,4),fpMat);
+      var fpx=(Math.random()-0.5)*12;
+      var fpy=Math.random()*3-0.5;
+      var fpz=(Math.random()-0.5)*12;
+      fpMesh.position.set(fpx,fpy,fpz);
+      chipGroup.add(fpMesh);
+      particles.push({mesh:fpMesh,ox:fpx,oy:fpy,oz:fpz,
+        sx:Math.random()*0.5+0.2,sy:Math.random()*0.3+0.1,sz:Math.random()*0.4+0.2,
+        px:Math.random()*10,py:Math.random()*10,pz:Math.random()*10});
+    }
+
+    // Rotating bundle content
+    var bundleSets=[
+      ["180m3 Beton C25/30","12t Armierungsstahl","350m2 Isolierung"],
+      ["45t Kies 0-32mm","8t Bewehrung","200m2 Schalung","15m3 Moertel"],
+      ["90m3 Beton C30/37","25t Stahl B500B","180m2 Daemmung EPS","60m Rohre DN200","400m2 Putz"],
+      ["120m2 Mauerwerk","6t Armierungsmatten","35m3 Beton"],
+      ["500m2 Daemmung XPS","80t Transportbeton","15t Bewehrung","220m2 Abdichtung"]
+    ];
+    var currentBundle=0;
+    var bundleTimer=0;
+
+    var materialSets=[
+      ["Bewehrungsstahl 12mm","Transportbeton C25/30","Kies 0-32mm","Mauerwerk HLZ 20cm","Armierungsmatte Q257","Daemmung EPS 140mm"],
+      ["Beton C30/37","Stahl B500B","Schalung Doka","Rohre DN200","Putz MK2","Kies gewaschen"],
+      ["XPS Daemmplatten","Abdichtungsbahn","Drainagematte","Armierungsgewebe","Transportbeton","Mauersteine"]
+    ];
+    var currentMatSet=0;
+
+    var clock=new THREE.Clock();
 
     function animate(){
-      requestAnimationFrame(animate);var t=clk.getElapsedTime();
-      // Engine glow
-      var vol=0;pkts.forEach(function(p){var el=((t-p.delay)%20+20)%20;var pr=(el*p.speed%20)/20;if(pr>0.3&&pr<0.8)vol+=0.12;});
-      gl1.intensity=1.8+vol+Math.sin(t*1.8)*0.8;
-      eMat.emissiveIntensity=0.3+vol*0.12+Math.sin(t*2.2)*0.15;
-      leds.forEach(function(l){l.material.opacity=0.2+Math.abs(Math.sin(t*1.8+l.userData.ph))*0.8;});
-      scanBars.forEach(function(b){var w=Math.sin(t*3.5+b.userData.phase)*0.5+0.5;b.scale.set(1+w*0.6,1,1+w*0.6);b.material.opacity=0.15+w*0.35;b.material.color.setHex(w>0.65?0x10B981:0xE8A020);});
+      requestAnimationFrame(animate);
+      var dt=clock.getDelta();
+      var t=clock.getElapsedTime();
 
-      // ===== NEURAL NETWORK ANIMATION (fast!) =====
-      // Pulse nodes on activity
-      netNodes.forEach(function(n,i){
-        var act=Math.sin(t*6+i*0.7)*0.5+0.5;
-        n.material.opacity=0.15+act*0.45;
-        n.material.color.setHex(act>0.7?0x10B981:0xE8A020);
-        n.scale.setScalar(0.8+act*0.5);
-      });
-      // Connection brightness
-      netConnections.forEach(function(c2,i){
-        var act=Math.sin(t*8+i*0.3)*0.5+0.5;
-        c2.material.opacity=0.04+act*0.15;
-        c2.material.color.setHex(act>0.75?0x10B981:0xE8A020);
-      });
-      // Fast-moving pulses through network
-      netPulses.forEach(function(p){
-        var path=netPaths[p.userData.pathIdx%netPaths.length];
-        var prog=(t*p.userData.speed+p.userData.progress)%path.length;
-        var idx=Math.floor(prog);var frac=prog-idx;
-        var cur=path[idx%path.length];var nxt=path[(idx+1)%path.length];
-        p.position.x=cur.x+(nxt.x-cur.x)*frac;
-        p.position.z=cur.z+(nxt.z-cur.z)*frac;
-        // Flash brighter on "match"
-        if(p.userData.isMatch){
-          var flash=Math.sin(t*12+p.userData.progress)*0.5+0.5;
-          p.material.opacity=0.5+flash*0.5;
-          p.scale.setScalar(0.8+flash*0.6);
+      // Camera rotation
+      chipGroup.rotation.y+=0.0015;
+
+      // Chip glow pulse
+      chipGlow.intensity=2+0.5*Math.sin(t*Math.PI);
+      lblMat.opacity=0.85+0.15*Math.sin(t*Math.PI/1.25);
+
+      // Neural pulses
+      for(var pi=0;pi<pulses.length;pi++){
+        var pu=pulses[pi];
+        pu.t+=dt/pu.speed;
+        if(pu.t>=1){
+          pu.gx=pu.tgx;pu.gz=pu.tgz;
+          nextPulseTarget(pu);
         }
-      });
+        var fromN=nnNodes[pu.gx][pu.gz];
+        var toN=nnNodes[pu.tgx][pu.tgz];
+        pu.mesh.position.x=fromN.x+(toN.x-fromN.x)*pu.t;
+        pu.mesh.position.z=fromN.z+(toN.z-fromN.z)*pu.t;
+      }
 
-      pkts.forEach(function(p){moveObj(p,t,20);});
-      oPkts.forEach(function(p){moveObj(p,t,26);});
+      // Input trace packets
+      for(var ii=0;ii<inputTraces.length;ii++){
+        var itr=inputTraces[ii];
+        itr.progress+=dt*itr.speed;
+        if(itr.progress>1)itr.progress-=1;
+        var pt=itr.curve.getPointAt(Math.min(itr.progress,1));
+        itr.packet.position.copy(pt);
+        itr.packet.position.y+=0.12;
+        itr.packet.material.opacity=itr.progress>0.9?1-(itr.progress-0.9)*10:1;
+      }
 
-      var pos=pGeo.attributes.position.array;
-      for(var i=0;i<pCnt;i++){pos[i*3+1]+=0.002;if(pos[i*3+1]>6){pos[i*3+1]=.2;pos[i*3]=(Math.random()-.5)*30;pos[i*3+2]=(Math.random()-.5)*30;}}
-      pGeo.attributes.position.needsUpdate=true;
+      // Output packet
+      outPacket.progress+=dt*outPacket.speed;
+      if(outPacket.progress>1){
+        outPacket.progress=0;
+        bundleTimer++;
+        if(bundleTimer%2===0){
+          currentBundle=(currentBundle+1)%bundleSets.length;
+          var bset=bundleSets[currentBundle];
+          obctx.clearRect(0,0,256,96);
+          obctx.fillStyle='#0F2238';obctx.fillRect(0,0,256,96);
+          obctx.strokeStyle='#10B981';obctx.lineWidth=2;obctx.strokeRect(1,1,254,94);
+          obctx.font='13px Arial';obctx.fillStyle='#ffffff';obctx.textAlign='center';
+          var lineH=96/(bset.length+1);
+          for(var bli=0;bli<bset.length;bli++){
+            obctx.fillText(bset[bli],128,lineH*(bli+1));
+          }
+          obTex.needsUpdate=true;
+        }
+        if(bundleTimer%4===0){
+          currentMatSet=(currentMatSet+1)%materialSets.length;
+          var mset=materialSets[currentMatSet];
+          for(var mi=0;mi<inputTraces.length;mi++){
+            var lbl=mset[mi%mset.length];
+            var pc=inputTraces[mi].packet.material.map.image.getContext('2d');
+            pc.clearRect(0,0,256,64);
+            pc.fillStyle='#0F2238';pc.fillRect(0,0,256,64);
+            pc.strokeStyle='#E8A020';pc.lineWidth=2;pc.strokeRect(1,1,254,62);
+            pc.font='15px Arial';pc.fillStyle='#ffffff';pc.textAlign='center';pc.textBaseline='middle';
+            pc.fillText(lbl,128,32);
+            inputTraces[mi].packet.material.map.needsUpdate=true;
+          }
+        }
+      }
+      var opt=outCurve.getPointAt(Math.min(outPacket.progress,1));
+      obSprite.position.copy(opt);
+      obSprite.position.y+=0.15;
+      obSprite.material.opacity=outPacket.progress>0.9?1-(outPacket.progress-0.9)*10:1;
 
-      cAng+=0.0009;cam.position.x=Math.sin(cAng)*9.5;cam.position.z=Math.cos(cAng)*9.5;
-      cam.position.y=5.5+Math.sin(t*0.1)*0.5;cam.lookAt(0,0.2,0);
-      R.render(scene,cam);
+      // Scanner bars
+      for(var sbi=0;sbi<scanBars.length;sbi++){
+        var sb=scanBars[sbi];
+        sb.mesh.position.y=sb.baseY+0.05*Math.sin(t*2.1+sb.offset);
+      }
+
+      // Floating particles
+      for(var fpi=0;fpi<particles.length;fpi++){
+        var fp=particles[fpi];
+        fp.mesh.position.x=fp.ox+Math.sin(t*fp.sx+fp.px)*0.3;
+        fp.mesh.position.y=fp.oy+Math.sin(t*fp.sy+fp.py)*0.2;
+        fp.mesh.position.z=fp.oz+Math.sin(t*fp.sz+fp.pz)*0.3;
+      }
+
+      R.render(scene,camera);
     }
     animate();
-    window.addEventListener('resize',function(){var nw=stage.offsetWidth,nh=stage.offsetHeight;cam.aspect=nw/nh;cam.updateProjectionMatrix();R.setSize(nw,nh);});
+
+    window.addEventListener('resize',function(){
+      var nw=stage.offsetWidth,nh=stage.offsetHeight;
+      camera.aspect=nw/nh;camera.updateProjectionMatrix();
+      R.setSize(nw,nh);
+    });
   }
+
   var io=new IntersectionObserver(function(es){
     es.forEach(function(e){if(e.isIntersecting){init();io.disconnect();}});
   },{threshold:0.1});
   io.observe(stage);
 })();
+
 
 
 
