@@ -551,13 +551,30 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 /* ENGINE VISUAL */
 .engine-stage{position:relative;background:#000;width:100%;height:480px;overflow:hidden;border-radius:16px;border:1px solid rgba(232,160,32,.2)}
 .engine-svg{position:absolute;inset:0;width:100%;height:100%}
-.core-ring{transform-origin:360px 210px;animation:coreRingSpin 12s linear infinite}
-@keyframes coreRingSpin{to{transform:rotate(360deg)}}
-.core-pulse{animation:corePulse 2s ease-in-out infinite}
-@keyframes corePulse{0%,100%{opacity:.25}50%{opacity:.55}}
+.chip-ring{fill:none;stroke:rgba(232,160,32,.12);stroke-width:1}
+.chip-ring-2{stroke:rgba(232,160,32,.06);stroke-dasharray:4 8}
+.chip-ring-1{transform-origin:420px 200px;animation:chipRingSpin 18s linear infinite}
+.chip-ring-2{transform-origin:420px 200px;animation:chipRingSpin 28s linear infinite reverse}
+@keyframes chipRingSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.chip-trace{fill:none;stroke-width:1.5}
+.chip-trace.gold{stroke:rgba(232,160,32,.35)}
+.chip-trace.green{stroke:rgba(16,185,129,.4)}
+.chip-pulse{opacity:0;animation:chipPulseFade 1.8s ease-in-out infinite}
+.chip-pulse.gold{fill:#FFD27A}
+.chip-pulse.green{fill:#34D399}
+@keyframes chipPulseFade{0%,100%{opacity:0}10%,80%{opacity:1}}
+.chip-underglow{animation:chipUnderglowPulse 3s ease-in-out infinite}
+@keyframes chipUnderglowPulse{0%,100%{opacity:.6}50%{opacity:1}}
+.chip-body{fill:#0A1626;stroke:#E8A020;stroke-width:1.5}
+.chip-die{opacity:.5}
+.chip-scan{animation:chipScanSweep 2.4s linear infinite}
+@keyframes chipScanSweep{0%{transform:translateY(0)}100%{transform:translateY(112px)}}
+.chip-core{fill:#E8A020;filter:url(#glowBlur);animation:chipCorePulse 1.6s ease-in-out infinite}
+@keyframes chipCorePulse{0%,100%{transform:scale(1);filter:url(#glowBlur) brightness(1)}50%{transform:scale(1.18);filter:url(#glowBlur) brightness(1.4)}}
+.chip-led{fill:#10B981;animation:chipLedBlink 2.6s ease-in-out infinite}
+@keyframes chipLedBlink{0%,85%,100%{opacity:.15}90%,95%{opacity:1}}
 #compare-check{animation:checkFlash 3s ease-in-out infinite}
 @keyframes checkFlash{0%,80%,100%{opacity:.5}85%,95%{opacity:1}}
-.savings-flash{animation:none}
 #savA{animation:savFlash 7s ease-in-out infinite 5s}
 #savB{animation:savFlash 7.5s ease-in-out infinite 6s}
 #savC{animation:savFlash 7.2s ease-in-out infinite 5.5s}
@@ -736,95 +753,123 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         <a href="kontakt.html" class="btn btn-gold btn-lg">Analyse anfragen</a>
       </div>
       <div class="engine-stage" id="engine-stage">
-        <svg class="engine-svg" viewBox="0 0 720 420" preserveAspectRatio="xMidYMid meet">
+        <svg class="engine-svg" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
           <defs>
-            <radialGradient id="coreGlow2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#E8A020" stop-opacity="0.5"/><stop offset="100%" stop-color="#E8A020" stop-opacity="0"/></radialGradient>
+            <pattern id="dieGrid" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M0 0H14M0 0V14" stroke="rgba(232,160,32,.18)" stroke-width="1"/></pattern>
+            <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFE3A0"/><stop offset="45%" stop-color="#E8A020"/><stop offset="100%" stop-color="#E8A020" stop-opacity="0"/></radialGradient>
+            <linearGradient id="scanGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8A020" stop-opacity="0"/><stop offset="50%" stop-color="#FFE3A0" stop-opacity=".85"/><stop offset="100%" stop-color="#E8A020" stop-opacity="0"/></linearGradient>
+            <filter id="glowBlur" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>
             <filter id="glow2"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <!-- Paths: customers to center -->
-            <path id="pathA" d="M120,120 C220,120 240,210 320,210" fill="none"/>
-            <path id="pathB" d="M120,210 C200,210 240,210 320,210" fill="none"/>
-            <path id="pathC" d="M120,300 C220,300 240,210 320,210" fill="none"/>
-            <!-- Path: center to supplier -->
-            <path id="pathOut" d="M400,210 C480,210 520,210 600,210" fill="none"/>
-            <!-- Return paths: supplier back to customers -->
-            <path id="retA" d="M600,210 C620,80 200,40 120,120" fill="none"/>
-            <path id="retB" d="M600,210 C640,210 200,380 120,210" fill="none"/>
-            <path id="retC" d="M600,210 C620,340 200,380 120,300" fill="none"/>
+            <!-- Flow paths -->
+            <path id="flowA" d="M135,100 C230,100 280,200 350,200" fill="none"/>
+            <path id="flowB" d="M135,200 C230,200 280,200 350,200" fill="none"/>
+            <path id="flowC" d="M135,300 C230,300 280,200 350,200" fill="none"/>
+            <path id="flowOut" d="M490,200 C540,200 580,200 660,200" fill="none"/>
+            <path id="retA" d="M660,200 C700,60 220,20 135,100" fill="none"/>
+            <path id="retB" d="M660,200 C720,300 220,370 135,200" fill="none"/>
+            <path id="retC" d="M660,200 C700,340 220,380 135,300" fill="none"/>
           </defs>
 
-          <!-- Draw paths -->
-          <use href="#pathA" stroke="rgba(232,160,32,.15)" stroke-width="1.5"/>
-          <use href="#pathB" stroke="rgba(232,160,32,.15)" stroke-width="1.5"/>
-          <use href="#pathC" stroke="rgba(232,160,32,.15)" stroke-width="1.5"/>
-          <use href="#pathOut" stroke="rgba(16,185,129,.15)" stroke-width="1.5"/>
-          <use href="#retA" stroke="rgba(251,191,36,.1)" stroke-width="1" stroke-dasharray="4 6"/>
-          <use href="#retB" stroke="rgba(251,191,36,.1)" stroke-width="1" stroke-dasharray="4 6"/>
-          <use href="#retC" stroke="rgba(251,191,36,.1)" stroke-width="1" stroke-dasharray="4 6"/>
+          <!-- Flow path lines -->
+          <use href="#flowA" stroke="rgba(232,160,32,.12)" stroke-width="1"/>
+          <use href="#flowB" stroke="rgba(232,160,32,.12)" stroke-width="1"/>
+          <use href="#flowC" stroke="rgba(232,160,32,.12)" stroke-width="1"/>
+          <use href="#flowOut" stroke="rgba(16,185,129,.12)" stroke-width="1"/>
+          <use href="#retA" stroke="rgba(251,191,36,.08)" stroke-width="1" stroke-dasharray="4 6"/>
+          <use href="#retB" stroke="rgba(251,191,36,.08)" stroke-width="1" stroke-dasharray="4 6"/>
+          <use href="#retC" stroke="rgba(251,191,36,.08)" stroke-width="1" stroke-dasharray="4 6"/>
 
-          <!-- STAGE 1: Customer nodes -->
-          <g class="cust-node">
-            <rect x="40" y="95" width="80" height="50" rx="8" fill="#0F2238" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
-            <text x="80" y="115" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Kunde A</text>
-            <text x="80" y="132" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="Inter,sans-serif">80m³ Beton</text>
-            <text class="savings-flash" id="savA" x="80" y="85" text-anchor="middle" fill="#10B981" font-size="11" font-weight="700" font-family="Inter,sans-serif" opacity="0">-12%</text>
-          </g>
-          <g class="cust-node">
-            <rect x="40" y="185" width="80" height="50" rx="8" fill="#0F2238" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
-            <text x="80" y="205" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Kunde B</text>
-            <text x="80" y="222" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="Inter,sans-serif">60m³ Beton</text>
-            <text class="savings-flash" id="savB" x="80" y="175" text-anchor="middle" fill="#10B981" font-size="11" font-weight="700" font-family="Inter,sans-serif" opacity="0">-9%</text>
-          </g>
-          <g class="cust-node">
-            <rect x="40" y="275" width="80" height="50" rx="8" fill="#0F2238" stroke="rgba(255,255,255,.25)" stroke-width="1"/>
-            <text x="80" y="295" text-anchor="middle" fill="#fff" font-size="10" font-weight="600" font-family="Inter,sans-serif">Kunde C</text>
-            <text x="80" y="312" text-anchor="middle" fill="#94A3B8" font-size="9" font-family="Inter,sans-serif">Dämmung 200m²</text>
-            <text class="savings-flash" id="savC" x="80" y="265" text-anchor="middle" fill="#10B981" font-size="11" font-weight="700" font-family="Inter,sans-serif" opacity="0">-15%</text>
-          </g>
+          <!-- Customer nodes (left) -->
+          <rect x="60" y="75" width="75" height="48" rx="7" fill="#0F2238" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+          <text x="97" y="94" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Kunde A</text>
+          <text x="97" y="112" text-anchor="middle" fill="#94A3B8" font-size="8" font-family="Inter,sans-serif">80m³ Beton</text>
+          <text id="savA" x="97" y="66" text-anchor="middle" fill="#10B981" font-size="11" font-weight="700" font-family="Inter,sans-serif" opacity="0">-12%</text>
 
-          <!-- STAGE 3: Processing glow + rotating ring -->
-          <circle cx="360" cy="210" r="70" fill="url(#coreGlow2)" class="core-pulse"/>
-          <circle cx="360" cy="210" r="64" fill="none" stroke="#E8A020" stroke-width="1" stroke-dasharray="8 6" opacity="0.35" class="core-ring"/>
+          <rect x="60" y="175" width="75" height="48" rx="7" fill="#0F2238" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+          <text x="97" y="194" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Kunde B</text>
+          <text x="97" y="212" text-anchor="middle" fill="#94A3B8" font-size="8" font-family="Inter,sans-serif">60m³ Beton</text>
+          <text id="savB" x="97" y="166" text-anchor="middle" fill="#10B981" font-size="11" font-weight="700" font-family="Inter,sans-serif" opacity="0">-9%</text>
 
-          <!-- Central SourceOn KI node -->
-          <rect x="310" y="170" width="100" height="80" rx="12" fill="#0F2238" stroke="#E8A020" stroke-width="2"/>
-          <text x="360" y="200" text-anchor="middle" fill="#E8A020" font-size="13" font-weight="800" font-family="Inter,sans-serif">SourceOn</text>
-          <text x="360" y="222" text-anchor="middle" fill="#E8A020" font-size="18" font-weight="800" font-family="Inter,sans-serif">KI</text>
-          <rect x="340" y="235" width="40" height="3" rx="1.5" fill="#E8A020" opacity="0.4"/>
+          <rect x="60" y="275" width="75" height="48" rx="7" fill="#0F2238" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
+          <text x="97" y="294" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Kunde C</text>
+          <text x="97" y="312" text-anchor="middle" fill="#94A3B8" font-size="8" font-family="Inter,sans-serif">Dämmung 200m²</text>
+          <text id="savC" x="97" y="266" text-anchor="middle" fill="#10B981" font-size="11" font-weight="700" font-family="Inter,sans-serif" opacity="0">-15%</text>
 
-          <!-- STAGE 4: Comparison badge -->
-          <g id="compare-badge">
-            <rect x="295" y="128" width="130" height="26" rx="6" fill="rgba(15,34,56,.9)" stroke="rgba(232,160,32,.3)" stroke-width="1"/>
-            <text x="325" y="145" fill="#fff" font-size="10" font-weight="500" font-family="Inter,sans-serif">Vergleich: 3 Angebote</text>
-            <text id="compare-check" x="308" y="145" fill="#E8A020" font-size="11" font-weight="700" font-family="Inter,sans-serif" opacity="0.5">✓</text>
-          </g>
+          <!-- ORIGINAL CHIP (centered at 420,200) -->
+          <circle class="chip-ring chip-ring-1" cx="420" cy="200" r="118"/>
+          <circle class="chip-ring chip-ring-2" cx="420" cy="200" r="142"/>
 
-          <!-- STAGE 5: Output/Supplier node -->
-          <rect x="570" y="185" width="90" height="50" rx="10" fill="#0F2238" stroke="#10B981" stroke-width="1.5"/>
-          <text x="615" y="207" text-anchor="middle" fill="#10B981" font-size="10" font-weight="600" font-family="Inter,sans-serif">Bestes</text>
-          <text x="615" y="222" text-anchor="middle" fill="#10B981" font-size="10" font-weight="600" font-family="Inter,sans-serif">Angebot</text>
-          <!-- Label on output path -->
-          <text x="500" y="198" text-anchor="middle" fill="#10B981" font-size="9" font-family="Inter,sans-serif" opacity="0.7">Verhandeltes Angebot</text>
+          <path id="trT1" class="chip-trace gold" d="M375,40 L375,110 L385,110 L385,130"/>
+          <path id="trT2" class="chip-trace gold" d="M420,40 L420,110 L420,130"/>
+          <path id="trT3" class="chip-trace gold" d="M465,40 L465,110 L455,110 L455,130"/>
+          <path id="trB1" class="chip-trace gold" d="M375,360 L375,290 L385,290 L385,270"/>
+          <path id="trB2" class="chip-trace green" d="M420,270 L420,290 L420,360"/>
+          <path id="trB3" class="chip-trace gold" d="M465,360 L465,290 L455,290 L455,270"/>
+          <path id="trL1" class="chip-trace gold" d="M260,155 L330,155 L330,165 L350,165"/>
+          <path id="trL2" class="chip-trace gold" d="M260,200 L330,200 L350,200"/>
+          <path id="trL3" class="chip-trace gold" d="M260,245 L330,245 L330,235 L350,235"/>
+          <path id="trR1" class="chip-trace gold" d="M580,155 L510,155 L510,165 L490,165"/>
+          <path id="trR2" class="chip-trace gold" d="M580,200 L510,200 L490,200"/>
+          <path id="trR3" class="chip-trace gold" d="M580,245 L510,245 L510,235 L490,235"/>
 
-          <!-- Label on return paths -->
-          <text x="360" y="50" text-anchor="middle" fill="#FBBF24" font-size="9" font-family="Inter,sans-serif" opacity="0.6">Bessere Preise</text>
-          <text x="360" y="390" text-anchor="middle" fill="#FBBF24" font-size="9" font-family="Inter,sans-serif" opacity="0.6">Bessere Preise</text>
+          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#trT1"/></animateMotion></circle>
+          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.9s" repeatCount="indefinite"><mpath href="#trT2"/></animateMotion></circle>
+          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.7s" repeatCount="indefinite"><mpath href="#trT3"/></animateMotion></circle>
+          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="2s" repeatCount="indefinite"><mpath href="#trL1"/></animateMotion></circle>
+          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.5s" repeatCount="indefinite"><mpath href="#trL2"/></animateMotion></circle>
+          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#trL3"/></animateMotion></circle>
+          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#trR1"/></animateMotion></circle>
+          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.9s" repeatCount="indefinite"><mpath href="#trR2"/></animateMotion></circle>
+          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.7s" repeatCount="indefinite"><mpath href="#trR3"/></animateMotion></circle>
+          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="2.1s" repeatCount="indefinite"><mpath href="#trB1"/></animateMotion></circle>
+          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#trB3"/></animateMotion></circle>
+          <circle class="chip-pulse green" r="4.2"><animateMotion dur="1.1s" repeatCount="indefinite"><mpath href="#trB2"/></animateMotion></circle>
 
-          <!-- STAGE 2: Gold particles flowing IN (customers to center) -->
-          <circle r="4" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3s" begin="0s" repeatCount="indefinite"><mpath href="#pathA"/></animateMotion></circle>
-          <circle r="3" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3s" begin="1s" repeatCount="indefinite"><mpath href="#pathA"/></animateMotion></circle>
-          <circle r="4" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3.2s" begin="0.5s" repeatCount="indefinite"><mpath href="#pathB"/></animateMotion></circle>
-          <circle r="3" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3.2s" begin="1.8s" repeatCount="indefinite"><mpath href="#pathB"/></animateMotion></circle>
-          <circle r="4" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3.5s" begin="0.3s" repeatCount="indefinite"><mpath href="#pathC"/></animateMotion></circle>
-          <circle r="3" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3.5s" begin="2s" repeatCount="indefinite"><mpath href="#pathC"/></animateMotion></circle>
+          <circle class="chip-underglow" cx="420" cy="200" r="90" fill="url(#coreGlow)"/>
+          <rect class="chip-body" x="350" y="130" width="140" height="140" rx="14"/>
+          <rect class="chip-die" x="364" y="144" width="112" height="112" rx="6" fill="url(#dieGrid)"/>
+          <rect class="chip-scan" x="364" y="144" width="112" height="20" fill="url(#scanGrad)"/>
+          <rect class="chip-core" x="404" y="184" width="32" height="32" rx="6"/>
+          <!-- SourceOn KI label on chip -->
+          <text x="420" y="196" text-anchor="middle" fill="#E8A020" font-size="11" font-weight="800" font-family="Inter,sans-serif" opacity="0.9">SourceOn</text>
+          <text x="420" y="214" text-anchor="middle" fill="#E8A020" font-size="15" font-weight="800" font-family="Inter,sans-serif" opacity="0.9">KI</text>
 
-          <!-- STAGE 5: Green particles flowing OUT (center to supplier) -->
-          <circle r="4" fill="#10B981" filter="url(#glow2)"><animateMotion dur="2.5s" begin="1.5s" repeatCount="indefinite"><mpath href="#pathOut"/></animateMotion></circle>
-          <circle r="3" fill="#10B981" filter="url(#glow2)"><animateMotion dur="2.5s" begin="3.5s" repeatCount="indefinite"><mpath href="#pathOut"/></animateMotion></circle>
+          <circle class="chip-led" cx="350" cy="130" r="3" style="animation-delay:.1s"/>
+          <circle class="chip-led" cx="490" cy="130" r="3" style="animation-delay:.5s"/>
+          <circle class="chip-led" cx="490" cy="270" r="3" style="animation-delay:.9s"/>
+          <circle class="chip-led" cx="350" cy="270" r="3" style="animation-delay:1.3s"/>
 
-          <!-- STAGE 6: Return particles (supplier back to customers) -->
-          <circle r="3" fill="#FBBF24" opacity="0.8"><animateMotion dur="4s" begin="3s" repeatCount="indefinite"><mpath href="#retA"/></animateMotion></circle>
-          <circle r="3" fill="#FBBF24" opacity="0.8"><animateMotion dur="4.5s" begin="4s" repeatCount="indefinite"><mpath href="#retB"/></animateMotion></circle>
-          <circle r="3" fill="#FBBF24" opacity="0.8"><animateMotion dur="4.2s" begin="3.5s" repeatCount="indefinite"><mpath href="#retC"/></animateMotion></circle>
+          <!-- Comparison badge -->
+          <rect x="370" y="105" width="100" height="20" rx="5" fill="rgba(15,34,56,.9)" stroke="rgba(232,160,32,.3)" stroke-width="1"/>
+          <text id="compare-check" x="380" y="118" fill="#E8A020" font-size="10" font-weight="700" font-family="Inter,sans-serif" opacity="0.5">✓</text>
+          <text x="393" y="118" fill="#fff" font-size="8.5" font-weight="500" font-family="Inter,sans-serif">3 Angebote verglichen</text>
+
+          <!-- Supplier node (right) -->
+          <rect x="645" y="175" width="80" height="50" rx="9" fill="#0F2238" stroke="#10B981" stroke-width="1.5"/>
+          <text x="685" y="197" text-anchor="middle" fill="#10B981" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Bestes</text>
+          <text x="685" y="212" text-anchor="middle" fill="#10B981" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Angebot</text>
+
+          <!-- Labels -->
+          <text x="565" y="190" text-anchor="middle" fill="#10B981" font-size="8" font-family="Inter,sans-serif" opacity="0.6">Verhandeltes Angebot</text>
+          <text x="400" y="30" text-anchor="middle" fill="#FBBF24" font-size="8" font-family="Inter,sans-serif" opacity="0.5">Bessere Preise</text>
+          <text x="400" y="390" text-anchor="middle" fill="#FBBF24" font-size="8" font-family="Inter,sans-serif" opacity="0.5">Bessere Preise</text>
+
+          <!-- Gold particles: customers → center -->
+          <circle r="3.5" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3s" begin="0s" repeatCount="indefinite"><mpath href="#flowA"/></animateMotion></circle>
+          <circle r="2.5" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3s" begin="1.2s" repeatCount="indefinite"><mpath href="#flowA"/></animateMotion></circle>
+          <circle r="3.5" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3.2s" begin="0.5s" repeatCount="indefinite"><mpath href="#flowB"/></animateMotion></circle>
+          <circle r="2.5" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3.2s" begin="2s" repeatCount="indefinite"><mpath href="#flowB"/></animateMotion></circle>
+          <circle r="3.5" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3.5s" begin="0.3s" repeatCount="indefinite"><mpath href="#flowC"/></animateMotion></circle>
+          <circle r="2.5" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3.5s" begin="1.8s" repeatCount="indefinite"><mpath href="#flowC"/></animateMotion></circle>
+
+          <!-- Green particles: center → supplier -->
+          <circle r="3.5" fill="#10B981" filter="url(#glow2)"><animateMotion dur="2.5s" begin="1.5s" repeatCount="indefinite"><mpath href="#flowOut"/></animateMotion></circle>
+          <circle r="2.5" fill="#10B981" filter="url(#glow2)"><animateMotion dur="2.5s" begin="3.8s" repeatCount="indefinite"><mpath href="#flowOut"/></animateMotion></circle>
+
+          <!-- Return particles: supplier → customers -->
+          <circle r="2.5" fill="#FBBF24" opacity="0.7"><animateMotion dur="4s" begin="3s" repeatCount="indefinite"><mpath href="#retA"/></animateMotion></circle>
+          <circle r="2.5" fill="#FBBF24" opacity="0.7"><animateMotion dur="4.5s" begin="4s" repeatCount="indefinite"><mpath href="#retB"/></animateMotion></circle>
+          <circle r="2.5" fill="#FBBF24" opacity="0.7"><animateMotion dur="4.2s" begin="3.5s" repeatCount="indefinite"><mpath href="#retC"/></animateMotion></circle>
         </svg>
         <div class="engine-badge" style="bottom:16px;left:16px"><span class="engine-dot"></span>KI aktiv — 340+ Lieferanten</div>
         <div class="engine-badge engine-badge-gold" style="top:16px;right:16px">Echtzeit-Marktanalyse</div>
