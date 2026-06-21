@@ -688,7 +688,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <script>
 (function(){
 var l=localStorage.getItem('sourceon-lang');
-if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>body{visibility:hidden}</style>');setTimeout(function(){var h=document.getElementById('_lh');if(h)h.remove();},150);}
+if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>body{visibility:hidden}</style>');setTimeout(function(){var h=document.getElementById('_lh');if(h)h.remove();},50);}
 })();
 </script>
 </head>
@@ -783,43 +783,43 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     <div class="mat-strip-track" id="mat-strip-track">
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-        <span>Transportbeton &amp; Pumpbeton</span>
+        <span data-i18n="strip_concrete">Transportbeton &amp; Pumpbeton</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg></div>
-        <span>Armierung &amp; Bewehrung</span>
+        <span data-i18n="strip_rebar">Armierung &amp; Bewehrung</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l9-3 9 3v12l-9 3-9-3V6z"/></svg></div>
-        <span>Kies, Splitt &amp; Sand</span>
+        <span data-i18n="strip_gravel">Kies, Splitt &amp; Sand</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
-        <span>Mauerwerk &amp; Mörtel</span>
+        <span data-i18n="strip_masonry">Mauerwerk &amp; Mörtel</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,17 10,11 4,5"/><line x1="12" y1="19" x2="20" y2="19"/></svg></div>
-        <span>Schalung &amp; Stützen</span>
+        <span data-i18n="strip_formwork">Schalung &amp; Stützen</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 21v-5h6v5"/></svg></div>
-        <span>Betonfertigteile</span>
+        <span data-i18n="strip_precast">Betonfertigteile</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
-        <span>Dämmung</span>
+        <span data-i18n="strip_insulation">Dämmung</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="13" x2="16" y2="13"/></svg></div>
-        <span>Gipskarton &amp; Ständerwerk</span>
+        <span data-i18n="strip_drywall">Gipskarton &amp; Ständerwerk</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg></div>
-        <span>Bedachung &amp; Fassade</span>
+        <span data-i18n="strip_roofing">Bedachung &amp; Fassade</span>
       </a>
       <a href="#materials" class="mat-strip-item">
         <div class="mat-strip-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <span>Haustechnik &amp; Rohrleitungen</span>
+        <span data-i18n="strip_plumbing">Haustechnik &amp; Rohrleitungen</span>
       </a>
     </div>
   </div>
@@ -1097,7 +1097,7 @@ const T={
     mat_label:'Material & Norm',
     mat_heading:'Jedes Material.<br>Eine Norm.',
     mat_sub:'Alle Materialien, die SourceOn vermittelt, erfüllen die SourceOn-Prüfkriterien — SN EN und SIA-konform, lückenlos dokumentiert.',
-    mat_select_placeholder:'Material wählen, um SourceOn-ID zu sehen…',
+    mat_select_placeholder:'Material wählen, um SourceOn-ID zu sehen…','strip_concrete':'Transportbeton & Pumpbeton','strip_rebar':'Armierung & Bewehrung','strip_gravel':'Kies, Splitt & Sand','strip_masonry':'Mauerwerk & Moertel','strip_formwork':'Schalung & Stuetzen','strip_precast':'Betonfertigteile','strip_insulation':'Daemmung','strip_drywall':'Gipskarton & Staenderwerk','strip_roofing':'Bedachung & Fassade','strip_plumbing':'Haustechnik & Rohrleitungen',
     mat_no_selection:'Noch kein Material ausgewählt',
     coverage_label:'Abdeckung',
     coverage_heading:'Eine Schnittstelle.<br>Jedes Material.',
@@ -1128,7 +1128,7 @@ const T={
     mat_label:'Material & Standard',
     mat_heading:'Every Material.<br>One Standard.',
     mat_sub:'All materials sourced by SourceOn meet our inspection criteria — SN EN and SIA compliant, fully documented.',
-    mat_select_placeholder:'Choose a material to see SourceOn ID…',
+    mat_select_placeholder:'Choose a material to see SourceOn ID…','strip_concrete':'Ready-mix & pump concrete','strip_rebar':'Reinforcement & rebar','strip_gravel':'Gravel, chippings & sand','strip_masonry':'Masonry & mortar','strip_formwork':'Formwork & props','strip_precast':'Precast concrete','strip_insulation':'Insulation','strip_drywall':'Drywall & metal studs','strip_roofing':'Roofing & facade','strip_plumbing':'Building services & piping','mat_no_selection':'No material selected',
     mat_no_selection:'No material selected yet',
     coverage_label:'Coverage',
     coverage_heading:'One Interface.<br>Every Material.',
@@ -1159,7 +1159,7 @@ const T={
     mat_label:'Matériau & Norme',
     mat_heading:'Chaque matériau.<br>Une norme.',
     mat_sub:'Tous les matériaux fournis par SourceOn répondent à nos critères — conformes SN EN et SIA, entièrement documentés.',
-    mat_select_placeholder:'Choisir un matériau pour voir l\'ID SourceOn…',
+    mat_select_placeholder:'Choisir un matériau pour voir l\','strip_concrete':'Beton & beton pompe','strip_rebar':'Armature & ferraillage','strip_gravel':'Gravier, gravillons & sable','strip_masonry':'Maconnerie & mortier','strip_formwork':'Coffrage & etais','strip_precast':'Prefabriques beton','strip_insulation':'Isolation','strip_drywall':'Plaques & ossature','strip_roofing':'Toiture & facade','strip_plumbing':'Technique & tuyauterie','mat_no_selection':'Aucun materiau selectionne'ID SourceOn…',
     mat_no_selection:'Aucun matériau sélectionné',
     coverage_label:'Couverture',
     coverage_heading:'Une interface.<br>Chaque matériau.',
@@ -1190,7 +1190,7 @@ const T={
     mat_label:'Materiale & Norma',
     mat_heading:'Ogni materiale.<br>Una norma.',
     mat_sub:'Tutti i materiali forniti da SourceOn soddisfano i nostri criteri — conformi SN EN e SIA, completamente documentati.',
-    mat_select_placeholder:'Scegli un materiale per vedere l\'ID SourceOn…',
+    mat_select_placeholder:'Scegli un materiale per vedere l\','strip_concrete':'Calcestruzzo & pompabile','strip_rebar':'Armatura & rinforzo','strip_gravel':'Ghiaia, pietrisco & sabbia','strip_masonry':'Muratura & malta','strip_formwork':'Casseforme & puntelli','strip_precast':'Prefabbricati cls','strip_insulation':'Isolamento','strip_drywall':'Cartongesso & montanti','strip_roofing':'Copertura & facciata','strip_plumbing':'Impiantistica & tubazioni','mat_no_selection':'Nessun materiale selezionato'ID SourceOn…',
     mat_no_selection:'Nessun materiale selezionato',
     coverage_label:'Copertura',
     coverage_heading:'Un\'interfaccia.<br>Ogni materiale.',
@@ -1245,6 +1245,132 @@ document.addEventListener('click',function(e){
 
 // restore saved language
 try{var saved=localStorage.getItem('sourceon-lang');if(saved&&T[saved]){applyLang(saved);}}catch(e){}
+})();
+</script>
+
+<script>
+(function(){
+var MAT_DB_TRANS={
+  en:{
+    'Rohbau Kern':'Structural core','Ausbau':'Interior finishing','Haustechnik':'Building services',
+    'Transportbeton C20/25':'Ready-mix concrete C20/25','Transportbeton C25/30':'Ready-mix concrete C25/30','Transportbeton C30/37':'Ready-mix concrete C30/37','Transportbeton C35/45':'Ready-mix concrete C35/45','Pumpbeton XC4 druckwasserdicht':'Pump concrete XC4 waterproof',
+    'Armierungsstahl \u00d8 8mm':'Rebar 8mm','Armierungsstahl \u00d8 10mm':'Rebar 10mm','Armierungsstahl \u00d8 12mm':'Rebar 12mm','Armierungsstahl \u00d8 16mm':'Rebar 16mm','Armierungsstahl \u00d8 20mm':'Rebar 20mm',
+    'Armierungsmatte Q188':'Reinforcement mesh Q188','Armierungsmatte Q257':'Reinforcement mesh Q257','Armierungsmatte Q335':'Reinforcement mesh Q335',
+    'Betonstahlk\u00f6rbe vorgefertigt':'Prefab rebar cages',
+    'Kies 0\u201332mm':'Gravel 0-32mm','Kies 0\u201316mm':'Gravel 0-16mm','Splitt 8\u201316mm':'Chippings 8-16mm','Splitt 16\u201332mm':'Chippings 16-32mm','Sand 0\u20134mm':'Sand 0-4mm',
+    'Hochlochziegel 15cm':'Perforated brick 15cm','Hochlochziegel 20cm':'Perforated brick 20cm','Hochlochziegel 25cm':'Perforated brick 25cm',
+    'Kalksandstein 15cm':'Sand-lime brick 15cm','Porenbetonstein 20cm':'Aerated concrete block 20cm',
+    'Mauerm\u00f6rtel MG II':'Masonry mortar MG II','Mauerm\u00f6rtel MG III':'Masonry mortar MG III',
+    'Putzm\u00f6rtel Innen GP':'Interior plaster GP','Putzm\u00f6rtel Aussen R':'Exterior render R',
+    'Estrichm\u00f6rtel CT-C25':'Screed mortar CT-C25','Klebem\u00f6rtel C1 Fliesen':'Tile adhesive C1',
+    'Schalungsplatte 21mm':'Formwork board 21mm','Schalungsplatte 27mm':'Formwork board 27mm',
+    'Systemschalung Wand Miet':'Wall formwork (rental)','Tr\u00e4ger H20 Holztr\u00e4ger':'H20 timber beam','Stahlst\u00fctzen ausziehbar':'Telescopic steel props',
+    'Betonfertigteil Treppe':'Precast stairs','Betonfertigteil Deckenplatte Spannbeton':'Precast prestressed slab','Betonfertigteil St\u00fctze':'Precast column',
+    'EPS-D\u00e4mmplatte 100mm Perimeter':'EPS insulation 100mm perimeter','EPS-D\u00e4mmplatte 140mm Fassade WDVS':'EPS insulation 140mm facade ETICS','EPS-D\u00e4mmplatte 200mm Flachdach':'EPS insulation 200mm flat roof',
+    'Mineralwolle 80mm Trennwand':'Mineral wool 80mm partition','Mineralwolle 120mm Steildach':'Mineral wool 120mm pitched roof',
+    'XPS-D\u00e4mmplatte 80mm Bodenplatte':'XPS insulation 80mm base slab',
+    'Gipskartonplatte GKB 12.5mm Standard':'Plasterboard GKB 12.5mm standard','Gipskartonplatte GKBI 12.5mm Feuchtraum':'Plasterboard GKBI moisture-resistant','Gipskartonplatte GKF 12.5mm Brandschutz':'Plasterboard GKF fire-rated',
+    'Metallst\u00e4nderwerk CW 75mm':'Metal stud CW 75mm','Metallanschlussprofil UA 75mm':'Metal channel UA 75mm',
+    'Tondachziegel Standard':'Clay roof tile','Betonroofziegel':'Concrete roof tile',
+    'Dachabdichtungsbahn EPDM 1.5mm':'Roof membrane EPDM 1.5mm','Fassadenplatte Faserzement hinterl\u00fcftet':'Fibre cement facade ventilated',
+    'Kunststoffrohr PVC-U DN 110 Abwasser':'PVC-U pipe DN 110 drainage','Kunststoffrohr PP DN 50 Entw\u00e4sserung':'PP pipe DN 50 drainage',
+    'Kupferrohr 22mm Trinkwasser':'Copper pipe 22mm drinking water','Verbundrohr PE-RT/Al 16mm Heizung':'Composite pipe PE-RT/Al 16mm heating',
+    'Heizungsverteiler Fussbodenheizung':'Underfloor heating manifold',
+    'Noch kein Material ausgew\u00e4hlt':'No material selected'
+  },
+  fr:{
+    'Rohbau Kern':'Gros oeuvre','Ausbau':'Amenagement interieur','Haustechnik':'Technique du batiment',
+    'Transportbeton C20/25':'Beton C20/25','Transportbeton C25/30':'Beton C25/30','Transportbeton C30/37':'Beton C30/37','Transportbeton C35/45':'Beton C35/45','Pumpbeton XC4 druckwasserdicht':'Beton pompe XC4 etanche',
+    'Armierungsstahl \u00d8 8mm':'Acier 8mm','Armierungsstahl \u00d8 10mm':'Acier 10mm','Armierungsstahl \u00d8 12mm':'Acier 12mm','Armierungsstahl \u00d8 16mm':'Acier 16mm','Armierungsstahl \u00d8 20mm':'Acier 20mm',
+    'Armierungsmatte Q188':'Treillis Q188','Armierungsmatte Q257':'Treillis Q257','Armierungsmatte Q335':'Treillis Q335',
+    'Betonstahlk\u00f6rbe vorgefertigt':'Cages prefabriquees',
+    'Kies 0\u201332mm':'Gravier 0-32mm','Kies 0\u201316mm':'Gravier 0-16mm','Splitt 8\u201316mm':'Gravillons 8-16mm','Splitt 16\u201332mm':'Gravillons 16-32mm','Sand 0\u20134mm':'Sable 0-4mm',
+    'Hochlochziegel 15cm':'Brique 15cm','Hochlochziegel 20cm':'Brique 20cm','Hochlochziegel 25cm':'Brique 25cm',
+    'Kalksandstein 15cm':'Silico-calcaire 15cm','Porenbetonstein 20cm':'Beton cellulaire 20cm',
+    'Mauerm\u00f6rtel MG II':'Mortier MG II','Mauerm\u00f6rtel MG III':'Mortier MG III',
+    'Putzm\u00f6rtel Innen GP':'Enduit interieur GP','Putzm\u00f6rtel Aussen R':'Enduit exterieur R',
+    'Estrichm\u00f6rtel CT-C25':'Chape CT-C25','Klebem\u00f6rtel C1 Fliesen':'Colle carrelage C1',
+    'Schalungsplatte 21mm':'Coffrage 21mm','Schalungsplatte 27mm':'Coffrage 27mm',
+    'Systemschalung Wand Miet':'Coffrage mural (location)','Tr\u00e4ger H20 Holztr\u00e4ger':'Poutre H20','Stahlst\u00fctzen ausziehbar':'Etais telescopiques',
+    'Betonfertigteil Treppe':'Escalier prefabrique','Betonfertigteil Deckenplatte Spannbeton':'Dalle precontrainte','Betonfertigteil St\u00fctze':'Colonne prefabriquee',
+    'EPS-D\u00e4mmplatte 100mm Perimeter':'Isolation EPS 100mm','EPS-D\u00e4mmplatte 140mm Fassade WDVS':'Isolation EPS 140mm facade','EPS-D\u00e4mmplatte 200mm Flachdach':'Isolation EPS 200mm toit plat',
+    'Mineralwolle 80mm Trennwand':'Laine minerale 80mm','Mineralwolle 120mm Steildach':'Laine minerale 120mm',
+    'XPS-D\u00e4mmplatte 80mm Bodenplatte':'Isolation XPS 80mm',
+    'Gipskartonplatte GKB 12.5mm Standard':'Plaque platre 12.5mm','Gipskartonplatte GKBI 12.5mm Feuchtraum':'Plaque hydrofuge','Gipskartonplatte GKF 12.5mm Brandschutz':'Plaque coupe-feu',
+    'Metallst\u00e4nderwerk CW 75mm':'Montant CW 75mm','Metallanschlussprofil UA 75mm':'Rail UA 75mm',
+    'Tondachziegel Standard':'Tuile terre cuite','Betonroofziegel':'Tuile beton',
+    'Dachabdichtungsbahn EPDM 1.5mm':'Membrane EPDM 1.5mm','Fassadenplatte Faserzement hinterl\u00fcftet':'Panneau fibrociment ventile',
+    'Kunststoffrohr PVC-U DN 110 Abwasser':'Tuyau PVC-U DN 110','Kunststoffrohr PP DN 50 Entw\u00e4sserung':'Tuyau PP DN 50',
+    'Kupferrohr 22mm Trinkwasser':'Tuyau cuivre 22mm','Verbundrohr PE-RT/Al 16mm Heizung':'Tuyau multicouche 16mm',
+    'Heizungsverteiler Fussbodenheizung':'Collecteur chauffage au sol',
+    'Noch kein Material ausgew\u00e4hlt':'Aucun materiau selectionne'
+  },
+  it:{
+    'Rohbau Kern':'Opera grezza','Ausbau':'Finitura interna','Haustechnik':'Impiantistica',
+    'Transportbeton C20/25':'Calcestruzzo C20/25','Transportbeton C25/30':'Calcestruzzo C25/30','Transportbeton C30/37':'Calcestruzzo C30/37','Transportbeton C35/45':'Calcestruzzo C35/45','Pumpbeton XC4 druckwasserdicht':'Calcestruzzo pompabile XC4',
+    'Armierungsstahl \u00d8 8mm':'Acciaio 8mm','Armierungsstahl \u00d8 10mm':'Acciaio 10mm','Armierungsstahl \u00d8 12mm':'Acciaio 12mm','Armierungsstahl \u00d8 16mm':'Acciaio 16mm','Armierungsstahl \u00d8 20mm':'Acciaio 20mm',
+    'Armierungsmatte Q188':'Rete Q188','Armierungsmatte Q257':'Rete Q257','Armierungsmatte Q335':'Rete Q335',
+    'Betonstahlk\u00f6rbe vorgefertigt':'Gabbie prefabbricate',
+    'Kies 0\u201332mm':'Ghiaia 0-32mm','Kies 0\u201316mm':'Ghiaia 0-16mm','Splitt 8\u201316mm':'Pietrisco 8-16mm','Splitt 16\u201332mm':'Pietrisco 16-32mm','Sand 0\u20134mm':'Sabbia 0-4mm',
+    'Hochlochziegel 15cm':'Mattone forato 15cm','Hochlochziegel 20cm':'Mattone forato 20cm','Hochlochziegel 25cm':'Mattone forato 25cm',
+    'Kalksandstein 15cm':'Silico-calcareo 15cm','Porenbetonstein 20cm':'Blocco cellulare 20cm',
+    'Mauerm\u00f6rtel MG II':'Malta MG II','Mauerm\u00f6rtel MG III':'Malta MG III',
+    'Putzm\u00f6rtel Innen GP':'Intonaco interno GP','Putzm\u00f6rtel Aussen R':'Intonaco esterno R',
+    'Estrichm\u00f6rtel CT-C25':'Massetto CT-C25','Klebem\u00f6rtel C1 Fliesen':'Colla piastrelle C1',
+    'Schalungsplatte 21mm':'Cassero 21mm','Schalungsplatte 27mm':'Cassero 27mm',
+    'Systemschalung Wand Miet':'Casseforme (noleggio)','Tr\u00e4ger H20 Holztr\u00e4ger':'Trave H20','Stahlst\u00fctzen ausziehbar':'Puntelli telescopici',
+    'Betonfertigteil Treppe':'Scala prefabbricata','Betonfertigteil Deckenplatte Spannbeton':'Solaio precompresso','Betonfertigteil St\u00fctze':'Colonna prefabbricata',
+    'EPS-D\u00e4mmplatte 100mm Perimeter':'Isolamento EPS 100mm','EPS-D\u00e4mmplatte 140mm Fassade WDVS':'Isolamento EPS 140mm facciata','EPS-D\u00e4mmplatte 200mm Flachdach':'Isolamento EPS 200mm tetto piano',
+    'Mineralwolle 80mm Trennwand':'Lana minerale 80mm','Mineralwolle 120mm Steildach':'Lana minerale 120mm',
+    'XPS-D\u00e4mmplatte 80mm Bodenplatte':'Isolamento XPS 80mm',
+    'Gipskartonplatte GKB 12.5mm Standard':'Cartongesso 12.5mm','Gipskartonplatte GKBI 12.5mm Feuchtraum':'Cartongesso idrorepellente','Gipskartonplatte GKF 12.5mm Brandschutz':'Cartongesso antincendio',
+    'Metallst\u00e4nderwerk CW 75mm':'Montante CW 75mm','Metallanschlussprofil UA 75mm':'Guida UA 75mm',
+    'Tondachziegel Standard':'Tegola argilla','Betonroofziegel':'Tegola calcestruzzo',
+    'Dachabdichtungsbahn EPDM 1.5mm':'Membrana EPDM 1.5mm','Fassadenplatte Faserzement hinterl\u00fcftet':'Pannello fibrocemento ventilato',
+    'Kunststoffrohr PVC-U DN 110 Abwasser':'Tubo PVC-U DN 110','Kunststoffrohr PP DN 50 Entw\u00e4sserung':'Tubo PP DN 50',
+    'Kupferrohr 22mm Trinkwasser':'Tubo rame 22mm','Verbundrohr PE-RT/Al 16mm Heizung':'Tubo multistrato 16mm',
+    'Heizungsverteiler Fussbodenheizung':'Collettore riscaldamento',
+    'Noch kein Material ausgew\u00e4hlt':'Nessun materiale selezionato'
+  }
+};
+window._matDbTrans=MAT_DB_TRANS;
+
+var origApplyLang=window.applyLang||window.setLang;
+var newSetLang=function(lang){
+  origApplyLang(lang);
+  var mt=MAT_DB_TRANS[lang];
+  if(!mt)return;
+  var sel=document.getElementById('mat-lookup-select');
+  if(sel){
+    sel.querySelectorAll('optgroup').forEach(function(og){
+      if(mt[og.label])og.label=mt[og.label];
+      else{for(var k in MAT_DB_TRANS.en){if(MAT_DB_TRANS.en[k]===og.label||MAT_DB_TRANS.fr[k]===og.label||MAT_DB_TRANS.it[k]===og.label){if(mt[k])og.label=mt[k];break;}}}
+    });
+    sel.querySelectorAll('option').forEach(function(opt){
+      if(!opt.value||opt.dataset.i18n)return;
+      var orig=opt.dataset.origName||opt.textContent;
+      if(!opt.dataset.origName)opt.dataset.origName=orig;
+      if(mt[orig])opt.textContent=mt[orig];
+      else{for(var lng in MAT_DB_TRANS){if(MAT_DB_TRANS[lng][orig]){opt.textContent=mt[orig]||opt.textContent;break;}
+        for(var k in MAT_DB_TRANS[lng]){if(MAT_DB_TRANS[lng][k]===orig&&mt[k]){opt.textContent=mt[k];opt.dataset.origName=k;break;}}
+      }}
+    });
+  }
+  var nameEl=document.getElementById('mat-lookup-name');
+  if(nameEl){
+    var txt=nameEl.textContent;
+    if(mt[txt])nameEl.textContent=mt[txt];
+    else{for(var lng in MAT_DB_TRANS){for(var k in MAT_DB_TRANS[lng]){if(MAT_DB_TRANS[lng][k]===txt&&mt[k]){nameEl.textContent=mt[k];break;}}}}
+  }
+  var catEl=document.getElementById('mat-lookup-cat');
+  if(catEl&&catEl.textContent!=='\u2014'){
+    var cat=catEl.textContent;
+    if(mt[cat])catEl.textContent=mt[cat];
+    else{for(var lng in MAT_DB_TRANS){for(var k in MAT_DB_TRANS[lng]){if(MAT_DB_TRANS[lng][k]===cat&&mt[k]){catEl.textContent=mt[k];break;}}}}
+  }
+};
+window.setLang=newSetLang;
+window.applyLang=newSetLang;
 })();
 </script>
 </body>
