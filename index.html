@@ -549,7 +549,8 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .tech-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
 
 /* ENGINE VISUAL */
-.engine-stage{position:relative;background:#0F2238;width:100%;height:480px;overflow:hidden;border-radius:16px;border:1px solid rgba(232,160,32,.2)}
+.engine-stage{position:relative;background:#060D1A;width:100%;height:480px;overflow:hidden;border-radius:16px;border:1px solid rgba(232,160,32,.2)}
+#engine-canvas{display:block;width:100%;height:100%}
 .engine-badge{position:absolute;z-index:2;background:rgba(15,34,56,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(232,160,32,.3);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px}
 .engine-badge-gold{color:#E8A020}
 .engine-dot{width:8px;height:8px;border-radius:50%;background:#10B981;flex-shrink:0;animation:eDot 2s ease-in-out infinite}
@@ -724,10 +725,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         <a href="kontakt.html" class="btn btn-gold btn-lg">Analyse anfragen</a>
       </div>
       <div class="engine-stage" id="engine-stage">
-        <video autoplay muted loop playsinline poster="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
-          <source src="assets/videos/ki-engine.mp4" type="video/mp4">
-        </video>
-        <div style="position:absolute;inset:0;background:linear-gradient(135deg,rgba(6,13,26,0.55) 0%,rgba(15,34,56,0.4) 50%,rgba(6,13,26,0.65) 100%)"></div>
+        <canvas id="engine-canvas"></canvas>
         <div class="engine-badge" style="bottom:16px;left:16px"><span class="engine-dot"></span>KI aktiv — 340+ Lieferanten</div>
         <div class="engine-badge engine-badge-gold" style="top:16px;right:16px">Echtzeit-Marktanalyse</div>
       </div>
@@ -1350,6 +1348,240 @@ if(bdDiagram)bdObs.observe(bdDiagram);
 
 // FAQ (stub for pages that might have inline FAQ)
 function toggleFaq(btn){}
+
+// ENGINE 3D — AI Chip on Circuit Board
+(function(){
+  var stage=document.getElementById('engine-stage');
+  var canvas=document.getElementById('engine-canvas');
+  if(!stage||!canvas||typeof THREE==='undefined')return;
+  var started=false;
+
+  function init(){
+    if(started)return;started=true;
+    var W=stage.offsetWidth,H=stage.offsetHeight;
+
+    var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
+    renderer.setSize(W,H);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    renderer.setClearColor(0x060D1A);
+    renderer.shadowMap.enabled=true;
+
+    var scene=new THREE.Scene();
+    scene.fog=new THREE.FogExp2(0x060D1A,0.06);
+
+    var camera=new THREE.PerspectiveCamera(40,W/H,0.1,100);
+    camera.position.set(4,3.5,4);
+    camera.lookAt(0,0,0);
+
+    // Lights
+    scene.add(new THREE.AmbientLight(0x1B3A5C,0.4));
+    var dLight=new THREE.DirectionalLight(0xffffff,0.5);
+    dLight.position.set(5,8,5);dLight.castShadow=true;
+    scene.add(dLight);
+    var coreLight=new THREE.PointLight(0x60A5FA,3,6);
+    coreLight.position.set(0,0.6,0);
+    scene.add(coreLight);
+    var goldLight=new THREE.PointLight(0xE8A020,1.5,8);
+    goldLight.position.set(0,1.2,0);
+    scene.add(goldLight);
+
+    // BOARD — large flat plane
+    var boardGeo=new THREE.BoxGeometry(10,0.08,10);
+    var boardMat=new THREE.MeshStandardMaterial({color:0x0A1628,metalness:0.7,roughness:0.4});
+    var board=new THREE.Mesh(boardGeo,boardMat);
+    board.position.y=-0.15;board.receiveShadow=true;
+    scene.add(board);
+
+    // GRID LINES on board (circuit traces pattern)
+    var lineMat=new THREE.LineBasicMaterial({color:0x1B3A5C,transparent:true,opacity:0.3});
+    for(var gi=-5;gi<=5;gi++){
+      var gv=[new THREE.Vector3(gi,0,5),new THREE.Vector3(gi,0,-5)];
+      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(gv),lineMat));
+      var gh=[new THREE.Vector3(5,0,gi),new THREE.Vector3(-5,0,gi)];
+      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(gh),lineMat));
+    }
+
+    // CHIP BASE — multi-layer processor
+    var chipGroup=new THREE.Group();
+
+    // Base plate (substrate)
+    var baseMat=new THREE.MeshStandardMaterial({color:0x111D2E,metalness:0.8,roughness:0.25});
+    var base=new THREE.Mesh(new THREE.BoxGeometry(2.4,0.12,2.4),baseMat);
+    base.castShadow=true;
+    chipGroup.add(base);
+
+    // Middle layer (PCB green-dark)
+    var midMat=new THREE.MeshStandardMaterial({color:0x0F2238,metalness:0.6,roughness:0.3});
+    var mid=new THREE.Mesh(new THREE.BoxGeometry(2.0,0.1,2.0),midMat);
+    mid.position.y=0.11;mid.castShadow=true;
+    chipGroup.add(mid);
+
+    // Top die (the blue glowing chip surface)
+    var dieMat=new THREE.MeshStandardMaterial({color:0x2563EB,emissive:0x1E40AF,emissiveIntensity:0.3,metalness:0.9,roughness:0.15});
+    var die=new THREE.Mesh(new THREE.BoxGeometry(1.5,0.08,1.5),dieMat);
+    die.position.y=0.2;die.castShadow=true;
+    chipGroup.add(die);
+
+    // Gold pins around the chip base (small rectangles on edges)
+    var pinMat=new THREE.MeshStandardMaterial({color:0xE8A020,metalness:0.9,roughness:0.2,emissive:0xE8A020,emissiveIntensity:0.1});
+    var pinGeo=new THREE.BoxGeometry(0.08,0.06,0.15);
+    for(var p=0;p<14;p++){
+      var pin=new THREE.Mesh(pinGeo,pinMat);
+      var offset=(p-6.5)*0.16;
+      // 4 sides
+      var p1=pin.clone();p1.position.set(offset,0.05,1.25);chipGroup.add(p1);
+      var p2=pin.clone();p2.position.set(offset,0.05,-1.25);chipGroup.add(p2);
+      var p3=pin.clone();p3.rotation.y=Math.PI/2;p3.position.set(1.25,0.05,offset);chipGroup.add(p3);
+      var p4=pin.clone();p4.rotation.y=Math.PI/2;p4.position.set(-1.25,0.05,offset);chipGroup.add(p4);
+    }
+
+    chipGroup.position.y=0.1;
+    scene.add(chipGroup);
+
+    // GLOWING TRACES — circuit paths radiating from chip
+    var traceMat=new THREE.MeshBasicMaterial({color:0x60A5FA,transparent:true,opacity:0.7});
+    var traceGlowMat=new THREE.MeshBasicMaterial({color:0x3B82F6,transparent:true,opacity:0.3});
+    var traces=[];
+    var traceData=[
+      // [startX, startZ, endX, endZ] — Manhattan-routed paths from chip edges
+      {pts:[{x:1.3,z:0},{x:3.5,z:0}]},
+      {pts:[{x:1.3,z:0.5},{x:2.5,z:0.5},{x:2.5,z:2},{x:4,z:2}]},
+      {pts:[{x:1.3,z:-0.5},{x:2,z:-0.5},{x:2,z:-1.5},{x:4.5,z:-1.5}]},
+      {pts:[{x:-1.3,z:0},{x:-3.5,z:0}]},
+      {pts:[{x:-1.3,z:0.6},{x:-2.2,z:0.6},{x:-2.2,z:2.5}]},
+      {pts:[{x:-1.3,z:-0.6},{x:-2.8,z:-0.6},{x:-2.8,z:-2},{x:-4,z:-2}]},
+      {pts:[{x:0,z:1.3},{x:0,z:3}]},
+      {pts:[{x:0.5,z:1.3},{x:0.5,z:2},{x:1.8,z:2},{x:1.8,z:3.5}]},
+      {pts:[{x:0,z:-1.3},{x:0,z:-3.5}]},
+      {pts:[{x:-0.5,z:-1.3},{x:-0.5,z:-2.2},{x:-2,z:-2.2},{x:-2,z:-4}]},
+      {pts:[{x:0.8,z:-1.3},{x:0.8,z:-1.8},{x:3,z:-1.8},{x:3,z:-3}]},
+      {pts:[{x:-0.8,z:1.3},{x:-0.8,z:1.8},{x:-3,z:1.8},{x:-3,z:3.5}]},
+    ];
+
+    traceData.forEach(function(td){
+      var points=[];
+      td.pts.forEach(function(p){points.push(new THREE.Vector3(p.x,0.02,p.z));});
+      // Thin bright line
+      var lineGeo=new THREE.BufferGeometry().setFromPoints(points);
+      var line=new THREE.Line(lineGeo,traceMat.clone());
+      scene.add(line);
+      // Wider glow line
+      var glow=new THREE.Line(lineGeo.clone(),traceGlowMat.clone());
+      scene.add(glow);
+      traces.push({line:line,glow:glow,pts:td.pts});
+    });
+
+    // SIGNAL PULSES — small glowing spheres traveling along traces
+    var pulseMat=new THREE.MeshBasicMaterial({color:0x60A5FA});
+    var pulseGlowMat=new THREE.MeshBasicMaterial({color:0x3B82F6,transparent:true,opacity:0.4});
+    var pulses=[];
+    traces.forEach(function(tr,idx){
+      var pulse=new THREE.Mesh(new THREE.SphereGeometry(0.06,8,8),pulseMat.clone());
+      pulse.position.y=0.05;
+      var glowSphere=new THREE.Mesh(new THREE.SphereGeometry(0.15,8,8),pulseGlowMat.clone());
+      pulse.add(glowSphere);
+      scene.add(pulse);
+      pulses.push({mesh:pulse,traceIdx:idx,speed:0.4+Math.random()*0.4,offset:Math.random()*10});
+    });
+
+    // SMALL COMPONENTS on board (capacitors, resistors)
+    var compMat=new THREE.MeshStandardMaterial({color:0x1a2a3a,metalness:0.5,roughness:0.4});
+    var compMat2=new THREE.MeshStandardMaterial({color:0x0d1926,metalness:0.6,roughness:0.3});
+    var compPositions=[
+      {x:3,z:1,sx:0.3,sy:0.15,sz:0.15},{x:3.5,z:-0.5,sx:0.15,sy:0.12,sz:0.25},
+      {x:-3,z:1.5,sx:0.25,sy:0.18,sz:0.15},{x:-2.5,z:-1.5,sx:0.2,sy:0.1,sz:0.3},
+      {x:2,z:3,sx:0.3,sy:0.12,sz:0.15},{x:-1.5,z:-3,sx:0.15,sy:0.15,sz:0.25},
+      {x:4,z:0.5,sx:0.2,sy:0.2,sz:0.2},{x:-3.5,z:-0.5,sx:0.35,sy:0.1,sz:0.15},
+      {x:1,z:-3,sx:0.15,sy:0.12,sz:0.35},{x:-2,z:3,sx:0.25,sy:0.15,sz:0.2},
+      {x:3.8,z:2.5,sx:0.2,sy:0.25,sz:0.2},{x:-4,z:2,sx:0.15,sy:0.12,sz:0.3},
+      {x:2.5,z:-2.5,sx:0.3,sy:0.12,sz:0.15},{x:-3,z:-3,sx:0.2,sy:0.18,sz:0.2},
+    ];
+    compPositions.forEach(function(cp,i){
+      var g=new THREE.BoxGeometry(cp.sx,cp.sy,cp.sz);
+      var c=new THREE.Mesh(g,i%2===0?compMat:compMat2);
+      c.position.set(cp.x,cp.sy/2-0.05,cp.z);c.castShadow=true;
+      scene.add(c);
+    });
+
+    // Small cylindrical capacitors (blue accents like reference)
+    var capMat=new THREE.MeshStandardMaterial({color:0x1E3A5F,metalness:0.5,roughness:0.3,emissive:0x1B3A5C,emissiveIntensity:0.1});
+    var capPositions=[{x:3.2,z:2},{x:-3.8,z:1},{x:-1,z:-3.5},{x:4.2,z:-1},{x:-4,z:-2.5},{x:2,z:3.5}];
+    capPositions.forEach(function(cp){
+      var c=new THREE.Mesh(new THREE.CylinderGeometry(0.1,0.1,0.25,12),capMat);
+      c.position.set(cp.x,0.08,cp.z);c.castShadow=true;
+      scene.add(c);
+    });
+
+    var clock=new THREE.Clock();
+    var camAngle=0.6;
+
+    function animate(){
+      requestAnimationFrame(animate);
+      var t=clock.getElapsedTime();
+
+      // Pulse core glow
+      var gv=0.3+Math.sin(t*2)*0.15;
+      dieMat.emissiveIntensity=gv;
+      coreLight.intensity=2+Math.sin(t*2)*1;
+
+      // Animate signal pulses along traces
+      pulses.forEach(function(p){
+        var tr=traces[p.traceIdx];
+        var pts=tr.pts;
+        // Calculate total length
+        var totalLen=0;var segs=[];
+        for(var i=0;i<pts.length-1;i++){
+          var dx=pts[i+1].x-pts[i].x,dz=pts[i+1].z-pts[i].z;
+          var len=Math.sqrt(dx*dx+dz*dz);
+          segs.push({len:len,sx:pts[i].x,sz:pts[i].z,dx:dx,dz:dz});
+          totalLen+=len;
+        }
+        var prog=((t*p.speed+p.offset)%(totalLen/p.speed))*(p.speed)/totalLen;
+        prog=prog%1;if(prog<0)prog+=1;
+        var dist=prog*totalLen;var acc=0;
+        for(var j=0;j<segs.length;j++){
+          if(acc+segs[j].len>=dist){
+            var frac=(dist-acc)/segs[j].len;
+            p.mesh.position.x=segs[j].sx+segs[j].dx*frac;
+            p.mesh.position.z=segs[j].sz+segs[j].dz*frac;
+            break;
+          }
+          acc+=segs[j].len;
+        }
+        // Pulse brightness
+        p.mesh.material.color.setHSL(0.6,0.8,0.5+Math.sin(t*3+p.offset)*0.2);
+      });
+
+      // Animate trace opacity
+      traces.forEach(function(tr,i){
+        var opc=0.5+Math.sin(t*1.5+i*0.8)*0.3;
+        tr.line.material.opacity=opc;
+        tr.glow.material.opacity=opc*0.4;
+      });
+
+      // Slow camera orbit
+      camAngle+=0.0015;
+      camera.position.x=Math.sin(camAngle)*5.5;
+      camera.position.z=Math.cos(camAngle)*5.5;
+      camera.position.y=3.2+Math.sin(t*0.3)*0.3;
+      camera.lookAt(0,0.2,0);
+
+      renderer.render(scene,camera);
+    }
+    animate();
+
+    window.addEventListener('resize',function(){
+      var nw=stage.offsetWidth,nh=stage.offsetHeight;
+      camera.aspect=nw/nh;camera.updateProjectionMatrix();
+      renderer.setSize(nw,nh);
+    });
+  }
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){init();io.disconnect();}});
+  },{threshold:0.1});
+  io.observe(stage);
+})();
 </script>
 
 <!-- CHAT WIDGET -->
