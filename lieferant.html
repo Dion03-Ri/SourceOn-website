@@ -1051,5 +1051,297 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 })();
 </script>
 
+<script>
+(function(){
+var i18n = {
+  de: {
+    'nav.home': 'Home',
+    'nav.process': 'Wie es funktioniert',
+    'nav.calculator': 'Kalkulator',
+    'nav.materials': 'Materialien',
+    'nav.forwhom': 'Für wen',
+    'nav.supplier': 'Lieferant werden',
+    'nav.about': 'Über uns',
+    'nav.contact': 'Kontakt',
+    'nav.cta': 'Materialbedarf melden',
+    'supplier.label': 'Partnerlieferanten',
+    'supplier.title': 'Werden Sie SourceOn-Partnerlieferant.',
+    'supplier.subtitle': 'Wir suchen zuverlässige Schweizer Lieferanten für unser wachsendes Netzwerk.',
+    'supplier.b1.title': 'Garantiertes Volumen',
+    'supplier.b1.desc': 'Gebündelte Aufträge statt Einzelanfragen',
+    'supplier.b2.title': 'Planungssicherheit',
+    'supplier.b2.desc': 'Regelmässige Bedarfsmeldungen im Voraus',
+    'supplier.b3.title': 'Neue Kundschaft',
+    'supplier.b3.desc': 'Zugang zu Schweizer KMU-Baufirmen',
+    'supplier.b4.title': 'Schnelle Zahlung',
+    'supplier.b4.desc': 'Klare Zahlungsbedingungen, 14 Tage netto',
+    'supplier.b5.title': 'Qualitätsnetzwerk',
+    'supplier.b5.desc': 'Nur geprüfte SIA/ISO-konforme Lieferanten',
+    'supplier.b6.title': 'Wachstumspotenzial',
+    'supplier.b6.desc': 'Marktposition stärken im Schweizer Baumarkt',
+    'supplier.how.title': 'Wie Aufträge vergeben werden.',
+    'supplier.how.text': 'SourceOn bündelt Bedarf von mehreren Baufirmen zu grösseren Materialpaketen. Verifizierte Partnerlieferanten erhalten Zugang zu diesen Ausschreibungen und können ein Angebot einreichen. Die Vergabe erfolgt nicht nur nach Preis, sondern auch nach Lieferfähigkeit und Zuverlässigkeit. Aus Datenschutzgründen werden Lieferadressen erst nach Zuschlag bekannt gegeben — das Ausschreibungspaket enthält Materialart, Menge, Liefergebiet (Zone) und Zeitraum.',
+    'form.company': 'Firmenname *',
+    'form.contact': 'Ansprechperson *',
+    'form.email': 'E-Mail *',
+    'form.phone': 'Telefon *',
+    'form.website': 'Website (optional)',
+    'form.materials': 'Materialien (Mehrfachauswahl)',
+    'form.regions': 'Regionen (Mehrfachauswahl)',
+    'form.required': 'Pflichtfeld',
+    'form.emailError': 'Gültige E-Mail erforderlich',
+    'form.regionNote': 'Hinweis: Ausschreibungen enthalten zu Beginn nur Liefergebiete als Zonen, keine genauen Adressen. Diese werden erst nach Zuschlag freigegeben.',
+    'mat.concrete': 'Beton',
+    'mat.rebar': 'Armierungsstahl',
+    'mat.gravel': 'Kies & Splitt',
+    'mat.masonry': 'Mauerwerk & Ziegel',
+    'mat.insulation': 'Dämmung',
+    'mat.formwork': 'Schalung',
+    'mat.mortar': 'Mörtel',
+    'mat.wood': 'Holz & Holzwerkstoffe',
+    'mat.plumbing': 'Sanitär & HLKS',
+    'mat.electrical': 'Elektro',
+    'mat.paint': 'Farben & Lacke',
+    'mat.flooring': 'Bodenbeläge',
+    'mat.windows': 'Fenster & Türen',
+    'mat.full': 'Vollsortiment',
+    'reg.zurich': 'Zürich',
+    'reg.bern': 'Bern',
+    'reg.basel': 'Basel',
+    'reg.lucerne': 'Luzern',
+    'reg.east': 'Ostschweiz',
+    'reg.central': 'Zentralschweiz',
+    'reg.aargau': 'Aargau',
+    'reg.ticino': 'Tessin',
+    'reg.west': 'Westschweiz',
+    'reg.all': 'Ganze Schweiz'
+  },
+  en: {
+    'nav.home': 'Home',
+    'nav.process': 'How it works',
+    'nav.calculator': 'Calculator',
+    'nav.materials': 'Materials',
+    'nav.forwhom': 'For whom',
+    'nav.supplier': 'Become a supplier',
+    'nav.about': 'About us',
+    'nav.contact': 'Contact',
+    'nav.cta': 'Report material needs',
+    'supplier.label': 'Partner suppliers',
+    'supplier.title': 'Become a SourceOn partner supplier.',
+    'supplier.subtitle': 'We are looking for reliable Swiss suppliers for our growing network.',
+    'supplier.b1.title': 'Guaranteed volume',
+    'supplier.b1.desc': 'Bundled orders instead of individual enquiries',
+    'supplier.b2.title': 'Planning reliability',
+    'supplier.b2.desc': 'Regular demand notifications in advance',
+    'supplier.b3.title': 'New customers',
+    'supplier.b3.desc': 'Access to Swiss SME construction firms',
+    'supplier.b4.title': 'Fast payment',
+    'supplier.b4.desc': 'Clear payment terms, 14 days net',
+    'supplier.b5.title': 'Quality network',
+    'supplier.b5.desc': 'Only verified SIA/ISO-compliant suppliers',
+    'supplier.b6.title': 'Growth potential',
+    'supplier.b6.desc': 'Strengthen market position in the Swiss construction market',
+    'supplier.how.title': 'How orders are awarded.',
+    'supplier.how.text': 'SourceOn bundles demand from multiple construction firms into larger material packages. Verified partner suppliers gain access to these tenders and can submit an offer. Awards are based not only on price, but also on delivery capability and reliability. For data protection reasons, delivery addresses are only disclosed after the contract is awarded — the tender package contains material type, quantity, delivery zone and timeframe.',
+    'form.company': 'Company name *',
+    'form.contact': 'Contact person *',
+    'form.email': 'Email *',
+    'form.phone': 'Phone *',
+    'form.website': 'Website (optional)',
+    'form.materials': 'Materials (multiple selection)',
+    'form.regions': 'Regions (multiple selection)',
+    'form.required': 'Required field',
+    'form.emailError': 'Valid email required',
+    'form.regionNote': 'Note: Tenders initially contain only delivery zones, not exact addresses. These are disclosed only after the contract is awarded.',
+    'mat.concrete': 'Concrete',
+    'mat.rebar': 'Reinforcing steel',
+    'mat.gravel': 'Gravel & chippings',
+    'mat.masonry': 'Masonry & bricks',
+    'mat.insulation': 'Insulation',
+    'mat.formwork': 'Formwork',
+    'mat.mortar': 'Mortar',
+    'mat.wood': 'Wood & wood products',
+    'mat.plumbing': 'Plumbing & HVAC',
+    'mat.electrical': 'Electrical',
+    'mat.paint': 'Paints & coatings',
+    'mat.flooring': 'Flooring',
+    'mat.windows': 'Windows & doors',
+    'mat.full': 'Full range',
+    'reg.zurich': 'Zurich',
+    'reg.bern': 'Bern',
+    'reg.basel': 'Basel',
+    'reg.lucerne': 'Lucerne',
+    'reg.east': 'Eastern Switzerland',
+    'reg.central': 'Central Switzerland',
+    'reg.aargau': 'Aargau',
+    'reg.ticino': 'Ticino',
+    'reg.west': 'Western Switzerland',
+    'reg.all': 'All of Switzerland'
+  },
+  fr: {
+    'nav.home': 'Accueil',
+    'nav.process': 'Comment ca fonctionne',
+    'nav.calculator': 'Calculateur',
+    'nav.materials': 'Materiaux',
+    'nav.forwhom': 'Pour qui',
+    'nav.supplier': 'Devenir fournisseur',
+    'nav.about': 'A propos',
+    'nav.contact': 'Contact',
+    'nav.cta': 'Signaler un besoin',
+    'supplier.label': 'Fournisseurs partenaires',
+    'supplier.title': 'Devenez fournisseur partenaire SourceOn.',
+    'supplier.subtitle': 'Nous recherchons des fournisseurs suisses fiables pour notre reseau en pleine croissance.',
+    'supplier.b1.title': 'Volume garanti',
+    'supplier.b1.desc': 'Commandes groupees au lieu de demandes individuelles',
+    'supplier.b2.title': 'Securite de planification',
+    'supplier.b2.desc': 'Notifications de besoins regulieres et anticipees',
+    'supplier.b3.title': 'Nouvelle clientele',
+    'supplier.b3.desc': 'Acces aux PME suisses du secteur de la construction',
+    'supplier.b4.title': 'Paiement rapide',
+    'supplier.b4.desc': 'Conditions de paiement claires, 14 jours net',
+    'supplier.b5.title': 'Reseau de qualite',
+    'supplier.b5.desc': 'Uniquement des fournisseurs certifies SIA/ISO',
+    'supplier.b6.title': 'Potentiel de croissance',
+    'supplier.b6.desc': 'Renforcer votre position sur le marche suisse de la construction',
+    'supplier.how.title': 'Comment les commandes sont attribuees.',
+    'supplier.how.text': 'SourceOn regroupe les besoins de plusieurs entreprises de construction en lots de materiaux plus importants. Les fournisseurs partenaires verifies ont acces a ces appels d\'offres et peuvent soumettre une offre. L\'attribution ne se fait pas uniquement sur le prix, mais aussi sur la capacite de livraison et la fiabilite. Pour des raisons de protection des donnees, les adresses de livraison ne sont communiquees qu\'apres l\'attribution — le dossier d\'appel d\'offres contient le type de materiau, la quantite, la zone de livraison et le delai.',
+    'form.company': 'Nom de l\'entreprise *',
+    'form.contact': 'Personne de contact *',
+    'form.email': 'E-mail *',
+    'form.phone': 'Telephone *',
+    'form.website': 'Site web (optionnel)',
+    'form.materials': 'Materiaux (selection multiple)',
+    'form.regions': 'Regions (selection multiple)',
+    'form.required': 'Champ obligatoire',
+    'form.emailError': 'E-mail valide requis',
+    'form.regionNote': 'Remarque: les appels d\'offres ne contiennent initialement que des zones de livraison, pas d\'adresses exactes. Celles-ci ne sont communiquees qu\'apres l\'attribution.',
+    'mat.concrete': 'Beton',
+    'mat.rebar': 'Acier d\'armature',
+    'mat.gravel': 'Gravier & gravillons',
+    'mat.masonry': 'Maconnerie & briques',
+    'mat.insulation': 'Isolation',
+    'mat.formwork': 'Coffrage',
+    'mat.mortar': 'Mortier',
+    'mat.wood': 'Bois & derives du bois',
+    'mat.plumbing': 'Sanitaire & CVC',
+    'mat.electrical': 'Electrique',
+    'mat.paint': 'Peintures & vernis',
+    'mat.flooring': 'Revetements de sol',
+    'mat.windows': 'Fenetres & portes',
+    'mat.full': 'Gamme complete',
+    'reg.zurich': 'Zurich',
+    'reg.bern': 'Berne',
+    'reg.basel': 'Bale',
+    'reg.lucerne': 'Lucerne',
+    'reg.east': 'Suisse orientale',
+    'reg.central': 'Suisse centrale',
+    'reg.aargau': 'Argovie',
+    'reg.ticino': 'Tessin',
+    'reg.west': 'Suisse romande',
+    'reg.all': 'Toute la Suisse'
+  },
+  it: {
+    'nav.home': 'Home',
+    'nav.process': 'Come funziona',
+    'nav.calculator': 'Calcolatore',
+    'nav.materials': 'Materiali',
+    'nav.forwhom': 'Per chi',
+    'nav.supplier': 'Diventa fornitore',
+    'nav.about': 'Chi siamo',
+    'nav.contact': 'Contatto',
+    'nav.cta': 'Segnala fabbisogno',
+    'supplier.label': 'Fornitori partner',
+    'supplier.title': 'Diventa fornitore partner di SourceOn.',
+    'supplier.subtitle': 'Cerchiamo fornitori svizzeri affidabili per la nostra rete in crescita.',
+    'supplier.b1.title': 'Volume garantito',
+    'supplier.b1.desc': 'Ordini raggruppati invece di richieste singole',
+    'supplier.b2.title': 'Sicurezza nella pianificazione',
+    'supplier.b2.desc': 'Notifiche regolari di fabbisogno in anticipo',
+    'supplier.b3.title': 'Nuova clientela',
+    'supplier.b3.desc': 'Accesso alle PMI svizzere del settore edile',
+    'supplier.b4.title': 'Pagamento rapido',
+    'supplier.b4.desc': 'Condizioni di pagamento chiare, 14 giorni netti',
+    'supplier.b5.title': 'Rete di qualita',
+    'supplier.b5.desc': 'Solo fornitori certificati SIA/ISO',
+    'supplier.b6.title': 'Potenziale di crescita',
+    'supplier.b6.desc': 'Rafforzare la posizione nel mercato edile svizzero',
+    'supplier.how.title': 'Come vengono assegnati gli ordini.',
+    'supplier.how.text': 'SourceOn raggruppa il fabbisogno di diverse imprese edili in pacchetti di materiali piu grandi. I fornitori partner verificati ottengono accesso a queste gare e possono presentare un\'offerta. L\'assegnazione non si basa solo sul prezzo, ma anche sulla capacita di consegna e sull\'affidabilita. Per motivi di protezione dei dati, gli indirizzi di consegna vengono comunicati solo dopo l\'aggiudicazione — il pacchetto di gara contiene tipo di materiale, quantita, zona di consegna e periodo.',
+    'form.company': 'Nome azienda *',
+    'form.contact': 'Persona di contatto *',
+    'form.email': 'E-mail *',
+    'form.phone': 'Telefono *',
+    'form.website': 'Sito web (opzionale)',
+    'form.materials': 'Materiali (selezione multipla)',
+    'form.regions': 'Regioni (selezione multipla)',
+    'form.required': 'Campo obbligatorio',
+    'form.emailError': 'E-mail valida richiesta',
+    'form.regionNote': 'Nota: le gare contengono inizialmente solo zone di consegna, non indirizzi esatti. Questi vengono comunicati solo dopo l\'aggiudicazione.',
+    'mat.concrete': 'Calcestruzzo',
+    'mat.rebar': 'Acciaio d\'armatura',
+    'mat.gravel': 'Ghiaia & pietrisco',
+    'mat.masonry': 'Muratura & mattoni',
+    'mat.insulation': 'Isolamento',
+    'mat.formwork': 'Casseforme',
+    'mat.mortar': 'Malta',
+    'mat.wood': 'Legno & derivati del legno',
+    'mat.plumbing': 'Sanitari & HVAC',
+    'mat.electrical': 'Elettrico',
+    'mat.paint': 'Vernici & pitture',
+    'mat.flooring': 'Pavimentazioni',
+    'mat.windows': 'Finestre & porte',
+    'mat.full': 'Gamma completa',
+    'reg.zurich': 'Zurigo',
+    'reg.bern': 'Berna',
+    'reg.basel': 'Basilea',
+    'reg.lucerne': 'Lucerna',
+    'reg.east': 'Svizzera orientale',
+    'reg.central': 'Svizzera centrale',
+    'reg.aargau': 'Argovia',
+    'reg.ticino': 'Ticino',
+    'reg.west': 'Svizzera romanda',
+    'reg.all': 'Tutta la Svizzera'
+  }
+};
+
+var langLabels = {de:'DE', en:'EN', fr:'FR', it:'IT'};
+
+window.setLang = function(lang) {
+  if (!i18n[lang]) lang = 'de';
+  var dict = i18n[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (dict[key] !== undefined) el.textContent = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-html');
+    if (dict[key] !== undefined) el.innerHTML = dict[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n-placeholder');
+    if (dict[key] !== undefined) el.placeholder = dict[key];
+  });
+  var cur = document.getElementById('lang-current');
+  if (cur) cur.textContent = langLabels[lang] || lang.toUpperCase();
+  document.querySelectorAll('.lang-opt').forEach(function(btn) {
+    btn.classList.remove('active');
+    if (btn.getAttribute('onclick') && btn.getAttribute('onclick').indexOf("'" + lang + "'") !== -1) {
+      btn.classList.add('active');
+    }
+  });
+  localStorage.setItem('sourceon-lang', lang);
+  var sw = document.getElementById('lang-switch');
+  if (sw) sw.classList.remove('open');
+};
+
+// Init: apply saved language
+(function() {
+  var saved = localStorage.getItem('sourceon-lang');
+  if (saved && saved !== 'de') {
+    setLang(saved);
+  }
+})();
+})();
+</script>
 </body>
 </html>

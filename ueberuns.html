@@ -996,5 +996,202 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 })();
 </script>
 
+<script>
+(function(){
+  var T = {
+    de: {
+      nav_home: 'Home',
+      nav_process: 'Wie es funktioniert',
+      nav_calc: 'Kalkulator',
+      nav_materials: 'Materialien',
+      nav_forwhom: 'Für wen',
+      nav_supplier: 'Lieferant werden',
+      nav_about: 'Über uns',
+      nav_contact: 'Kontakt',
+      nav_cta: 'Materialbedarf melden',
+      about_quote: '"Der Schweizer Baumarkt ist fragmentiert. SourceOn schafft die Bündelungsmacht, die KMU alleine nicht haben."',
+      about_attr: '— SourceOn, Zürich',
+      about_badge1: 'Gegründet in der Schweiz',
+      about_badge2: 'Kein Risiko für Kunden',
+      about_label: 'Über uns',
+      about_h2: 'Bündelungsmacht für alle Baufirmen.',
+      about_desc: 'SourceOn wurde mit einer einfachen Überzeugung gegründet: Zu viele Baufirmen — vom KMU bis zum Grosskonzern — zahlen mehr als nötig für Baumaterial. Nicht weil es keine günstigeren Preise gibt, sondern weil sie alleine zu wenig Volumen haben um sie zu bekommen. Wir ändern das — für alle.',
+      feat1_title: 'Erfolgsbasiertes Modell',
+      feat1_desc: 'Du zahlst nur, wenn dir gespart wird',
+      feat2_title: 'Schweizer Qualitätsstandards',
+      feat2_desc: 'SIA/ISO-konforme Lieferanten, SN EN Normen',
+      feat3_title: 'Schnelle Abwicklung',
+      feat3_desc: 'Erste Angebote innerhalb von 48 Stunden',
+      feat4_title: 'Persönliche Betreuung',
+      feat4_desc: 'Direkter Ansprechpartner für jede Anfrage',
+      faq_label: 'FAQ',
+      faq_h2: 'Häufig gestellte Fragen.',
+      faq_sub: 'Alles was du über SourceOn wissen musst — klar und direkt.',
+      faq_q1: 'Was kostet mich SourceOn wenn ich nichts spare?',
+      faq_a1: 'Gar nichts. SourceOn verlangt ausschliesslich eine Provision von 2.25% auf den Materialwert — und das nur dann, wenn wir dir tatsächlich günstiger einkaufen als dein bisheriger Preis. Sparst du nichts, zahlst du nichts. Kein Abo, keine Fixgebühr, kein Risiko.',
+      faq_q2: 'Wie lange dauert es bis ich ein Angebot bekomme?',
+      faq_a2: 'In der Regel erhältst du innerhalb von 48 Stunden ein konkretes Angebot. Bei Standardmaterialien wie Beton oder Armierungsstahl oft schneller. Bei komplexen oder grossen Bestellungen kann es etwas länger dauern — du wirst immer proaktiv informiert.',
+      faq_q3: 'Muss ich einen Vertrag unterschreiben?',
+      faq_a3: 'Für den ersten Auftrag reicht eine einfache Auftragsbestätigung. Für eine langfristige Zusammenarbeit schliessen wir eine Vermittlungsvereinbarung ab — diese schützt beide Seiten und regelt die Provision transparent.',
+      faq_q4: 'Was passiert wenn die Lieferung fehlerhaft ist?',
+      faq_a4: 'SourceOn ist Vermittler, kein Händler. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Bei Mängeln haftet der Lieferant direkt dir gegenüber gemäss Schweizer OR. Wir unterstützen dich bei der Kommunikation mit dem Lieferanten.'
+    },
+    en: {
+      nav_home: 'Home',
+      nav_process: 'How it works',
+      nav_calc: 'Calculator',
+      nav_materials: 'Materials',
+      nav_forwhom: 'For whom',
+      nav_supplier: 'Become a supplier',
+      nav_about: 'About us',
+      nav_contact: 'Contact',
+      nav_cta: 'Report material needs',
+      about_quote: '"The Swiss construction market is fragmented. SourceOn creates the bundling power that SMEs cannot achieve on their own."',
+      about_attr: '— SourceOn, Zurich',
+      about_badge1: 'Founded in Switzerland',
+      about_badge2: 'No risk for customers',
+      about_label: 'About us',
+      about_h2: 'Bundling power for all construction companies.',
+      about_desc: 'SourceOn was founded with a simple conviction: too many construction companies — from SMEs to large corporations — pay more than necessary for building materials. Not because cheaper prices do not exist, but because they lack the volume to access them on their own. We are changing that — for everyone.',
+      feat1_title: 'Success-based model',
+      feat1_desc: 'You only pay when we save you money',
+      feat2_title: 'Swiss quality standards',
+      feat2_desc: 'SIA/ISO-compliant suppliers, SN EN standards',
+      feat3_title: 'Fast processing',
+      feat3_desc: 'First quotes within 48 hours',
+      feat4_title: 'Personal support',
+      feat4_desc: 'Dedicated contact person for every enquiry',
+      faq_label: 'FAQ',
+      faq_h2: 'Frequently asked questions.',
+      faq_sub: 'Everything you need to know about SourceOn — clear and straightforward.',
+      faq_q1: 'What does SourceOn cost me if I save nothing?',
+      faq_a1: 'Nothing at all. SourceOn charges a commission of 2.25% on the material value only — and only when we actually purchase at a lower price than your current one. If you save nothing, you pay nothing. No subscription, no fixed fee, no risk.',
+      faq_q2: 'How long until I receive a quote?',
+      faq_a2: 'Typically you receive a concrete offer within 48 hours. For standard materials like concrete or reinforcing steel, often faster. For complex or large orders it may take a little longer — you will always be proactively informed.',
+      faq_q3: 'Do I need to sign a contract?',
+      faq_a3: 'For the first order, a simple order confirmation is sufficient. For long-term collaboration, we conclude a brokerage agreement — this protects both sides and regulates the commission transparently.',
+      faq_q4: 'What happens if the delivery is defective?',
+      faq_a4: 'SourceOn is a broker, not a dealer. The purchase contract runs directly between you and the supplier. In case of defects, the supplier is liable to you under Swiss law. We support you in communicating with the supplier.'
+    },
+    fr: {
+      nav_home: 'Accueil',
+      nav_process: 'Comment ça marche',
+      nav_calc: 'Calculateur',
+      nav_materials: 'Matériaux',
+      nav_forwhom: 'Pour qui',
+      nav_supplier: 'Devenir fournisseur',
+      nav_about: 'À propos',
+      nav_contact: 'Contact',
+      nav_cta: 'Annoncer un besoin',
+      about_quote: '"Le marché suisse de la construction est fragmenté. SourceOn crée la puissance de regroupement que les PME ne peuvent pas obtenir seules."',
+      about_attr: '— SourceOn, Zurich',
+      about_badge1: 'Fondé en Suisse',
+      about_badge2: 'Aucun risque pour les clients',
+      about_label: 'À propos',
+      about_h2: 'La puissance du regroupement pour toutes les entreprises de construction.',
+      about_desc: 'SourceOn a été fondé avec une conviction simple : trop d\'entreprises de construction — des PME aux grands groupes — paient plus que nécessaire pour les matériaux. Non pas parce que des prix plus avantageux n\'existent pas, mais parce qu\'elles n\'ont pas le volume suffisant pour y accéder seules. Nous changeons cela — pour tous.',
+      feat1_title: 'Modèle basé sur le succès',
+      feat1_desc: 'Vous ne payez que lorsque nous vous faisons économiser',
+      feat2_title: 'Standards de qualité suisses',
+      feat2_desc: 'Fournisseurs conformes SIA/ISO, normes SN EN',
+      feat3_title: 'Traitement rapide',
+      feat3_desc: 'Premières offres sous 48 heures',
+      feat4_title: 'Accompagnement personnalisé',
+      feat4_desc: 'Un interlocuteur dédié pour chaque demande',
+      faq_label: 'FAQ',
+      faq_h2: 'Questions fréquentes.',
+      faq_sub: 'Tout ce que vous devez savoir sur SourceOn — clair et direct.',
+      faq_q1: 'Que me coûte SourceOn si je n\'économise rien ?',
+      faq_a1: 'Rien du tout. SourceOn ne facture qu\'une commission de 2,25 % sur la valeur du matériel — et uniquement lorsque nous achetons effectivement moins cher que votre prix actuel. Pas d\'économie, pas de frais. Pas d\'abonnement, pas de frais fixes, aucun risque.',
+      faq_q2: 'Combien de temps avant de recevoir une offre ?',
+      faq_a2: 'En règle générale, vous recevez une offre concrète dans les 48 heures. Pour les matériaux standard comme le béton ou l\'acier d\'armature, souvent plus vite. Pour les commandes complexes ou volumineuses, cela peut prendre un peu plus de temps — vous êtes toujours informé de manière proactive.',
+      faq_q3: 'Dois-je signer un contrat ?',
+      faq_a3: 'Pour la première commande, une simple confirmation suffit. Pour une collaboration à long terme, nous concluons un accord de courtage — celui-ci protège les deux parties et règle la commission de manière transparente.',
+      faq_q4: 'Que se passe-t-il si la livraison est défectueuse ?',
+      faq_a4: 'SourceOn est un intermédiaire, pas un revendeur. Le contrat d\'achat est conclu directement entre vous et le fournisseur. En cas de défaut, le fournisseur est responsable envers vous selon le droit suisse. Nous vous assistons dans la communication avec le fournisseur.'
+    },
+    it: {
+      nav_home: 'Home',
+      nav_process: 'Come funziona',
+      nav_calc: 'Calcolatore',
+      nav_materials: 'Materiali',
+      nav_forwhom: 'Per chi',
+      nav_supplier: 'Diventa fornitore',
+      nav_about: 'Chi siamo',
+      nav_contact: 'Contatto',
+      nav_cta: 'Segnala fabbisogno',
+      about_quote: '"Il mercato edile svizzero è frammentato. SourceOn crea il potere di aggregazione che le PMI non possono ottenere da sole."',
+      about_attr: '— SourceOn, Zurigo',
+      about_badge1: 'Fondata in Svizzera',
+      about_badge2: 'Nessun rischio per i clienti',
+      about_label: 'Chi siamo',
+      about_h2: 'Potere di aggregazione per tutte le imprese edili.',
+      about_desc: 'SourceOn è stata fondata con una convinzione semplice: troppe imprese edili — dalle PMI alle grandi aziende — pagano più del necessario per i materiali da costruzione. Non perché non esistano prezzi migliori, ma perché da sole non hanno il volume sufficiente per ottenerli. Noi cambiamo questo — per tutti.',
+      feat1_title: 'Modello basato sul successo',
+      feat1_desc: 'Paghi solo quando ti facciamo risparmiare',
+      feat2_title: 'Standard di qualità svizzeri',
+      feat2_desc: 'Fornitori conformi SIA/ISO, norme SN EN',
+      feat3_title: 'Elaborazione rapida',
+      feat3_desc: 'Prime offerte entro 48 ore',
+      feat4_title: 'Assistenza personale',
+      feat4_desc: 'Un referente dedicato per ogni richiesta',
+      faq_label: 'FAQ',
+      faq_h2: 'Domande frequenti.',
+      faq_sub: 'Tutto quello che devi sapere su SourceOn — chiaro e diretto.',
+      faq_q1: 'Quanto mi costa SourceOn se non risparmio nulla?',
+      faq_a1: 'Niente. SourceOn addebita esclusivamente una commissione del 2,25% sul valore del materiale — e solo quando acquistiamo effettivamente a un prezzo inferiore al tuo attuale. Nessun risparmio, nessun costo. Nessun abbonamento, nessuna quota fissa, nessun rischio.',
+      faq_q2: 'Quanto tempo ci vuole per ricevere un\'offerta?',
+      faq_a2: 'Di norma ricevi un\'offerta concreta entro 48 ore. Per materiali standard come calcestruzzo o acciaio d\'armatura, spesso ancora più veloce. Per ordini complessi o grandi, potrebbe richiedere un po\' più di tempo — sarai sempre informato proattivamente.',
+      faq_q3: 'Devo firmare un contratto?',
+      faq_a3: 'Per il primo ordine è sufficiente una semplice conferma d\'ordine. Per una collaborazione a lungo termine, stipuliamo un accordo di intermediazione — questo tutela entrambe le parti e regola la commissione in modo trasparente.',
+      faq_q4: 'Cosa succede se la consegna è difettosa?',
+      faq_a4: 'SourceOn è un intermediario, non un rivenditore. Il contratto d\'acquisto è stipulato direttamente tra te e il fornitore. In caso di difetti, il fornitore è responsabile nei tuoi confronti secondo il diritto svizzero. Ti supportiamo nella comunicazione con il fornitore.'
+    }
+  };
+
+  var langLabels = { de: 'DE', en: 'EN', fr: 'FR', it: 'IT' };
+
+  window.setLang = function(lang) {
+    var dict = T[lang];
+    if (!dict) return;
+
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) el.textContent = dict[key];
+    });
+
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n-html');
+      if (dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n-placeholder');
+      if (dict[key] !== undefined) el.placeholder = dict[key];
+    });
+
+    var curr = document.getElementById('lang-current');
+    if (curr) curr.textContent = langLabels[lang] || lang.toUpperCase();
+
+    document.querySelectorAll('.lang-opt').forEach(function(btn) {
+      var btnLang = btn.getAttribute('onclick');
+      if (btnLang && btnLang.indexOf("'" + lang + "'") !== -1) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    document.documentElement.lang = lang;
+    localStorage.setItem('sourceon-lang', lang);
+
+    var sw = document.getElementById('lang-switch');
+    if (sw) sw.classList.remove('open');
+  };
+
+  var saved = localStorage.getItem('sourceon-lang');
+  if (saved && saved !== 'de') setLang(saved);
+})();
+</script>
 </body>
 </html>

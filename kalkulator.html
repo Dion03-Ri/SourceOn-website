@@ -960,5 +960,202 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 })();
 </script>
 
+<script>
+(function(){
+  const I18N = {
+    de: {
+      nav_home: 'Home',
+      nav_process: 'Wie es funktioniert',
+      nav_calc: 'Kalkulator',
+      nav_materials: 'Materialien',
+      nav_forwhom: 'Für wen',
+      nav_supplier: 'Lieferant werden',
+      nav_about: 'Über uns',
+      nav_contact: 'Kontakt',
+      nav_cta: 'Materialbedarf melden',
+      calc_label: 'Kalkulator',
+      calc_title: 'Wie viel könntest du sparen?',
+      calc_subtitle: 'Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.',
+      calc_placeholder: 'Betrag eingeben z.B. 75000',
+      calc_manual_note: 'Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.',
+      calc_discount_label: 'Ø Rabatt: ',
+      calc_gross_label: 'Bruttoersparnis (vor Provision)',
+      calc_net_label: 'Netto-Einsparpotenzial (nach Provision)',
+      calc_cta: 'Materialbedarf melden — kostenlos',
+      calc_disclaimer: 'Unverbindliche Schätzung basierend auf Schweizer Marktdaten. Potenzielle Einsparungen variieren je nach Material, Volumen und Lieferant.',
+      calc_footnote: '* Ab CHF 500\'000 Jahresvolumen individuelle Konditionen möglich.',
+      cta_title: 'Bereit für tiefere Einkaufspreise?',
+      cta_sub: 'Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.',
+      footer_desc: 'Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.',
+      footer_services: 'Leistungen',
+      footer_calc: 'Einsparkalkulator',
+      footer_company: 'Unternehmen',
+      footer_legal: 'Rechtliches',
+      footer_privacy: 'Datenschutz',
+      footer_imprint: 'Impressum',
+      footer_terms: 'AGB',
+      footer_copy: '© 2026 SourceOn, Zürich — Alle Rechte vorbehalten',
+      footer_tagline: 'Du zahlst erst, wenn wir dir sparen.'
+    },
+    en: {
+      nav_home: 'Home',
+      nav_process: 'How it works',
+      nav_calc: 'Calculator',
+      nav_materials: 'Materials',
+      nav_forwhom: 'For whom',
+      nav_supplier: 'Become a supplier',
+      nav_about: 'About us',
+      nav_contact: 'Contact',
+      nav_cta: 'Submit material needs',
+      calc_label: 'Calculator',
+      calc_title: 'How much could you save?',
+      calc_subtitle: 'Calculate your personal savings potential — based on your annual volume.',
+      calc_placeholder: 'Enter amount e.g. 75000',
+      calc_manual_note: 'For amounts over CHF 10 million, please enter manually — savings potential is calculated automatically.',
+      calc_discount_label: 'Avg. discount: ',
+      calc_gross_label: 'Gross savings (before commission)',
+      calc_net_label: 'Net savings potential (after commission)',
+      calc_cta: 'Submit material needs — free of charge',
+      calc_disclaimer: 'Non-binding estimate based on Swiss market data. Potential savings vary depending on material, volume and supplier.',
+      calc_footnote: '* Individual terms available from CHF 500,000 annual volume.',
+      cta_title: 'Ready for lower procurement prices?',
+      cta_sub: 'Submit your next material need — free and non-binding. We will assess the savings potential and get back to you within 48 hours.',
+      footer_desc: 'Swiss B2B procurement intermediary for the construction industry. You only pay when we save you money.',
+      footer_services: 'Services',
+      footer_calc: 'Savings calculator',
+      footer_company: 'Company',
+      footer_legal: 'Legal',
+      footer_privacy: 'Privacy policy',
+      footer_imprint: 'Imprint',
+      footer_terms: 'Terms & conditions',
+      footer_copy: '© 2026 SourceOn, Zurich — All rights reserved',
+      footer_tagline: 'You only pay when we save you money.'
+    },
+    fr: {
+      nav_home: 'Accueil',
+      nav_process: 'Comment ça marche',
+      nav_calc: 'Calculateur',
+      nav_materials: 'Matériaux',
+      nav_forwhom: 'Pour qui',
+      nav_supplier: 'Devenir fournisseur',
+      nav_about: 'À propos',
+      nav_contact: 'Contact',
+      nav_cta: 'Déclarer un besoin matériel',
+      calc_label: 'Calculateur',
+      calc_title: 'Combien pourriez-vous économiser ?',
+      calc_subtitle: 'Calculez votre potentiel d\'économies personnelles — basé sur votre volume annuel.',
+      calc_placeholder: 'Entrez un montant p.ex. 75000',
+      calc_manual_note: 'Pour les montants supérieurs à CHF 10 millions, veuillez saisir manuellement — le potentiel d\'économies est calculé automatiquement.',
+      calc_discount_label: 'Remise moy. : ',
+      calc_gross_label: 'Économie brute (avant commission)',
+      calc_net_label: 'Potentiel d\'économie net (après commission)',
+      calc_cta: 'Déclarer un besoin matériel — gratuit',
+      calc_disclaimer: 'Estimation non contraignante basée sur les données du marché suisse. Les économies potentielles varient selon le matériau, le volume et le fournisseur.',
+      calc_footnote: '* Conditions individuelles possibles à partir de CHF 500\'000 de volume annuel.',
+      cta_title: 'Prêt pour des prix d\'achat plus bas ?',
+      cta_sub: 'Déclarez votre prochain besoin matériel — gratuitement et sans engagement. Nous évaluons le potentiel d\'économies et vous recontactons sous 48 heures.',
+      footer_desc: 'Intermédiaire suisse d\'approvisionnement B2B pour le secteur de la construction. Vous ne payez que lorsque nous vous faisons économiser.',
+      footer_services: 'Services',
+      footer_calc: 'Calculateur d\'économies',
+      footer_company: 'Entreprise',
+      footer_legal: 'Mentions légales',
+      footer_privacy: 'Protection des données',
+      footer_imprint: 'Mentions légales',
+      footer_terms: 'CGV',
+      footer_copy: '© 2026 SourceOn, Zurich — Tous droits réservés',
+      footer_tagline: 'Vous ne payez que lorsque nous vous faisons économiser.'
+    },
+    it: {
+      nav_home: 'Home',
+      nav_process: 'Come funziona',
+      nav_calc: 'Calcolatore',
+      nav_materials: 'Materiali',
+      nav_forwhom: 'Per chi',
+      nav_supplier: 'Diventa fornitore',
+      nav_about: 'Chi siamo',
+      nav_contact: 'Contatto',
+      nav_cta: 'Segnala fabbisogno materiale',
+      calc_label: 'Calcolatore',
+      calc_title: 'Quanto potresti risparmiare?',
+      calc_subtitle: 'Calcola il tuo potenziale di risparmio personale — in base al tuo volume annuale.',
+      calc_placeholder: 'Inserisci importo es. 75000',
+      calc_manual_note: 'Per importi superiori a CHF 10 milioni, inserire manualmente — il potenziale di risparmio viene calcolato automaticamente.',
+      calc_discount_label: 'Sconto medio: ',
+      calc_gross_label: 'Risparmio lordo (prima della commissione)',
+      calc_net_label: 'Potenziale di risparmio netto (dopo la commissione)',
+      calc_cta: 'Segnala fabbisogno materiale — gratuito',
+      calc_disclaimer: 'Stima non vincolante basata sui dati del mercato svizzero. I risparmi potenziali variano in base a materiale, volume e fornitore.',
+      calc_footnote: '* Condizioni individuali possibili a partire da CHF 500\'000 di volume annuale.',
+      cta_title: 'Pronti per prezzi d\'acquisto più bassi?',
+      cta_sub: 'Segnala il tuo prossimo fabbisogno materiale — gratuitamente e senza impegno. Valutiamo il potenziale di risparmio e ti ricontattiamo entro 48 ore.',
+      footer_desc: 'Intermediario svizzero di approvvigionamento B2B per il settore edile. Paghi solo quando ti facciamo risparmiare.',
+      footer_services: 'Servizi',
+      footer_calc: 'Calcolatore di risparmio',
+      footer_company: 'Azienda',
+      footer_legal: 'Note legali',
+      footer_privacy: 'Protezione dei dati',
+      footer_imprint: 'Impressum',
+      footer_terms: 'CGC',
+      footer_copy: '© 2026 SourceOn, Zurigo — Tutti i diritti riservati',
+      footer_tagline: 'Paghi solo quando ti facciamo risparmiare.'
+    }
+  };
+
+  const LANG_LABELS = { de: 'DE', en: 'EN', fr: 'FR', it: 'IT' };
+
+  function setLang(lang) {
+    var dict = I18N[lang];
+    if (!dict) return;
+
+    document.querySelectorAll('[data-i18n]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n');
+      if (dict[key] !== undefined) {
+        if (key === 'calc_discount_label') {
+          var rate = document.getElementById('calc-rate');
+          var rateText = rate ? rate.outerHTML : '';
+          el.innerHTML = dict[key] + rateText;
+        } else {
+          el.textContent = dict[key];
+        }
+      }
+    });
+
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n-html');
+      if (dict[key] !== undefined) el.innerHTML = dict[key];
+    });
+
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n-placeholder');
+      if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
+    });
+
+    var langCurrent = document.getElementById('lang-current');
+    if (langCurrent) langCurrent.textContent = LANG_LABELS[lang] || lang.toUpperCase();
+
+    document.querySelectorAll('.lang-opt').forEach(function(btn) {
+      var btnLang = btn.getAttribute('onclick');
+      if (btnLang && btnLang.indexOf("'" + lang + "'") !== -1) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+
+    document.documentElement.setAttribute('lang', lang);
+    localStorage.setItem('sourceon-lang', lang);
+
+    var sw = document.getElementById('lang-switch');
+    if (sw) sw.classList.remove('open');
+  }
+
+  window.setLang = setLang;
+
+  var saved = localStorage.getItem('sourceon-lang');
+  if (saved && saved !== 'de') {
+    setLang(saved);
+  }
+})();
+</script>
 </body>
 </html>
