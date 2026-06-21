@@ -690,14 +690,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="nav-inner">
     <a class="nav-logo" href="#hero">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-      <li><a href="kalkulator.html">Kalkulator</a></li>
-      <li><a href="materialien.html">Materialien</a></li>
-      <li><a href="fuerwen.html">Für wen</a></li>
-      <li><a href="lieferant.html">Lieferant werden</a></li>
-      <li><a href="ueberuns.html">Über uns</a></li>
-      <li><a href="kontakt.html">Kontakt</a></li>
+      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
+      <li><a href="kalkulator.html" data-i18n="nav_calculator">Kalkulator</a></li>
+      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
+      <li><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a></li>
+      <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
+      <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
+      <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-switch" id="lang-switch">
@@ -707,7 +707,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         </button>
         <div class="lang-dd">
           <button class="lang-opt active" onclick="setLang('de')"><span class="lang-flag">🇨🇭</span> Deutsch</button>
-          <button class="lang-opt" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span> English</button>
+          <button class="lang-opt" onclick="setLang('en')"><span class="lang-flag">🇺🇸</span> English</button>
           <button class="lang-opt" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span> Francais</button>
           <button class="lang-opt" onclick="setLang('it')"><span class="lang-flag">🇮🇹</span> Italiano</button>
         </div>
@@ -720,14 +720,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <a href="index.html" onclick="toggleNav()">Home</a>
-  <a href="prozess.html" onclick="toggleNav()">Wie es funktioniert</a>
-  <a href="kalkulator.html" onclick="toggleNav()">Kalkulator</a>
-  <a href="fuerwen.html" onclick="toggleNav()">Für wen</a>
-  <a href="lieferant.html" onclick="toggleNav()">Lieferant werden</a>
-  <a href="ueberuns.html" onclick="toggleNav()">Über uns</a>
-  <a href="kontakt.html" onclick="toggleNav()">Kontakt</a>
-  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
+  <a href="index.html" onclick="toggleNav()" data-i18n="nav_home_m">Home</a>
+  <a href="prozess.html" onclick="toggleNav()" data-i18n="nav_process_m">Wie es funktioniert</a>
+  <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calculator_m">Kalkulator</a>
+  <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom_m">Für wen</a>
+  <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier_m">Lieferant werden</a>
+  <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav_about_m">Über uns</a>
+  <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav_contact_m">Kontakt</a>
+  <button class="btn btn-gold btn-lg" style="margin-top:12px" data-i18n="nav_cta_m" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
 </div>
 
 <!-- BENTO DETAIL MODAL -->
@@ -743,31 +743,31 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <section id="process" class="section process-section">
   <div class="container">
     <div class="reveal" style="max-width:640px">
-      <div class="label">So funktioniert es</div>
-      <h2 class="h2">Vier Schritte.<br>Eine Entscheidung.</h2>
-      <p class="subtitle" style="margin-top:16px">Von der ersten Anfrage bis zur Lieferung — du behältst jederzeit die volle Kontrolle.</p>
+      <div class="label" data-i18n="proc_label">So funktioniert es</div>
+      <h2 class="h2" data-i18n-html="proc_title">Vier Schritte.<br>Eine Entscheidung.</h2>
+      <p class="subtitle" style="margin-top:16px" data-i18n="proc_subtitle">Von der ersten Anfrage bis zur Lieferung — du behältst jederzeit die volle Kontrolle.</p>
     </div>
     <div class="process-grid">
       <div class="process-card reveal reveal-d1">
-        <h3 class="process-title">Bedarf melden</h3>
-        <p class="process-text">Du teilst uns deinen Materialbedarf mit — Materialart, Menge und Lieferzeitraum. Dauert zwei Minuten, keine Verpflichtung.</p>
+        <h3 class="process-title" data-i18n="proc_step1_title">Bedarf melden</h3>
+        <p class="process-text" data-i18n="proc_step1_text">Du teilst uns deinen Materialbedarf mit — Materialart, Menge und Lieferzeitraum. Dauert zwei Minuten, keine Verpflichtung.</p>
       </div>
       <div class="process-card reveal reveal-d2">
-        <h3 class="process-title">Angebot erhalten</h3>
-        <p class="process-text">SourceOn bündelt deinen Bedarf mit anderen Baufirmen und verhandelt Mengenrabatte beim Lieferanten. Innerhalb von 48 Stunden erhältst du ein konkretes Angebot.</p>
+        <h3 class="process-title" data-i18n="proc_step2_title">Angebot erhalten</h3>
+        <p class="process-text" data-i18n="proc_step2_text">SourceOn bündelt deinen Bedarf mit anderen Baufirmen und verhandelt Mengenrabatte beim Lieferanten. Innerhalb von 48 Stunden erhältst du ein konkretes Angebot.</p>
       </div>
       <div class="process-card reveal reveal-d3">
-        <h3 class="process-title">Du entscheidest</h3>
-        <p class="process-text">Du vergleichst frei. Nur wenn unser Angebot günstiger ist als dein bisheriger Preis und du es bestätigst, geht der Auftrag weiter. Kein Risiko.</p>
+        <h3 class="process-title" data-i18n="proc_step3_title">Du entscheidest</h3>
+        <p class="process-text" data-i18n="proc_step3_text">Du vergleichst frei. Nur wenn unser Angebot günstiger ist als dein bisheriger Preis und du es bestätigst, geht der Auftrag weiter. Kein Risiko.</p>
       </div>
       <div class="process-card process-card-accent reveal reveal-d4">
-        <h3 class="process-title">Du sparst — garantiert</h3>
-        <p class="process-text">Direktlieferung auf deine Baustelle. Du zahlst nur, wenn dir tatsächlich Geld gespart wird. Kein Ergebnis — keine Kosten.</p>
+        <h3 class="process-title" data-i18n="proc_step4_title">Du sparst — garantiert</h3>
+        <p class="process-text" data-i18n="proc_step4_text">Direktlieferung auf deine Baustelle. Du zahlst nur, wenn dir tatsächlich Geld gespart wird. Kein Ergebnis — keine Kosten.</p>
       </div>
     </div>
     <div class="process-foot reveal">
       <div class="process-foot-dots"><span></span><span></span><span></span><span></span></div>
-      <p>Ø 5–10 Werktage von der Analyse bis zur unterschriebenen Entscheidung.</p>
+      <p data-i18n="proc_foot">Ø 5–10 Werktage von der Analyse bis zur unterschriebenen Entscheidung.</p>
     </div>
   </div>
 </section>
@@ -777,39 +777,39 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <section id="why" class="section why-section">
   <div class="container">
     <div class="text-center reveal">
-      <div class="label">Warum SourceOn</div>
-      <h2 class="h2" style="color:#fff">Sechs Gründe — die niemand sonst bietet.</h2>
+      <div class="label" data-i18n="why_label">Warum SourceOn</div>
+      <h2 class="h2" style="color:#fff" data-i18n="why_title">Sechs Gründe — die niemand sonst bietet.</h2>
     </div>
     <div class="why-grid">
       <div class="why-card reveal reveal-d1">
         <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="3"/><circle cx="18" cy="6" r="3"/><circle cx="18" cy="18" r="3"/><path d="M8.6 10.5 15.4 7M8.6 13.5 15.4 17"/></svg></div>
-        <h3 class="why-card-title">Nachfragebündelung</h3>
-        <p class="why-card-desc">Drei Baufirmen bestellen je 60m³ Beton — SourceOn bündelt zu 180m³. Der Lieferant gibt 12% Rabatt. Ohne Bündelung: kein Rabatt.</p>
+        <h3 class="why-card-title" data-i18n="why1_title">Nachfragebündelung</h3>
+        <p class="why-card-desc" data-i18n="why1_text">Drei Baufirmen bestellen je 60m³ Beton — SourceOn bündelt zu 180m³. Der Lieferant gibt 12% Rabatt. Ohne Bündelung: kein Rabatt.</p>
       </div>
       <div class="why-card reveal reveal-d2">
         <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
-        <h3 class="why-card-title">Zahlung nur bei Ersparnis</h3>
-        <p class="why-card-desc">Wir verdienen 2.25% Provision — aber nur auf die erzielte Ersparnis. Kein Ergebnis, keine Kosten. Dein Risiko: null.</p>
+        <h3 class="why-card-title" data-i18n="why2_title">Zahlung nur bei Ersparnis</h3>
+        <p class="why-card-desc" data-i18n="why2_text">Wir verdienen 2.25% Provision — aber nur auf die erzielte Ersparnis. Kein Ergebnis, keine Kosten. Dein Risiko: null.</p>
       </div>
       <div class="why-card reveal reveal-d3">
         <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 2v10l7 4"/></svg></div>
-        <h3 class="why-card-title">KI + Schweizer Expertise</h3>
-        <p class="why-card-desc">Unser System vergleicht Angebote in Sekunden. Unsere Verhandler kennen den Schweizer Markt und holen das Maximum raus.</p>
+        <h3 class="why-card-title" data-i18n="why3_title">KI + Schweizer Expertise</h3>
+        <p class="why-card-desc" data-i18n="why3_text">Unser System vergleicht Angebote in Sekunden. Unsere Verhandler kennen den Schweizer Markt und holen das Maximum raus.</p>
       </div>
       <div class="why-card reveal reveal-d1">
         <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"/></svg></div>
-        <h3 class="why-card-title">Null Aufwand für dich</h3>
-        <p class="why-card-desc">Du meldest deinen Bedarf in 2 Minuten. Wir übernehmen Lieferantensuche, Angebotsvergleich, Verhandlung und Koordination.</p>
+        <h3 class="why-card-title" data-i18n="why4_title">Null Aufwand für dich</h3>
+        <p class="why-card-desc" data-i18n="why4_text">Du meldest deinen Bedarf in 2 Minuten. Wir übernehmen Lieferantensuche, Angebotsvergleich, Verhandlung und Koordination.</p>
       </div>
       <div class="why-card reveal reveal-d2">
         <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
-        <h3 class="why-card-title">Direkt zum Lieferanten</h3>
-        <p class="why-card-desc">SourceOn kauft nie selbst Material. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Wir sind Vermittler — kein Zwischenhändler.</p>
+        <h3 class="why-card-title" data-i18n="why5_title">Direkt zum Lieferanten</h3>
+        <p class="why-card-desc" data-i18n="why5_text">SourceOn kauft nie selbst Material. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Wir sind Vermittler — kein Zwischenhändler.</p>
       </div>
       <div class="why-card reveal reveal-d3">
         <div class="why-card-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></svg></div>
-        <h3 class="why-card-title">Deine Daten geschützt</h3>
-        <p class="why-card-desc">Du siehst alle Angebote — Lieferanten sehen während der Ausschreibung nur das Liefergebiet, nie deine genaue Adresse oder Identität. Erst nach Zuschlag werden die Lieferdetails freigegeben.</p>
+        <h3 class="why-card-title" data-i18n="why6_title">Deine Daten geschützt</h3>
+        <p class="why-card-desc" data-i18n="why6_text">Du siehst alle Angebote — Lieferanten sehen während der Ausschreibung nur das Liefergebiet, nie deine genaue Adresse oder Identität. Erst nach Zuschlag werden die Lieferdetails freigegeben.</p>
       </div>
     </div>
   </div>
@@ -820,44 +820,44 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <section id="comparison" class="section">
   <div class="container">
     <div class="text-center reveal" style="margin-bottom:0">
-      <div class="label label-dark">Allein vs. gebündelt</div>
-      <h2 class="h2" style="color:#fff">Gleiches Material.<br>Andere Preisklasse.</h2>
+      <div class="label label-dark" data-i18n="cmp_label">Allein vs. gebündelt</div>
+      <h2 class="h2" style="color:#fff" data-i18n-html="cmp_title">Gleiches Material.<br>Andere Preisklasse.</h2>
     </div>
     <div class="spec-table reveal">
       <div class="spec-row spec-head">
         <div class="spec-label"></div>
-        <div class="spec-col">Einzelbeschaffung</div>
-        <div class="spec-col spec-col-active">Mit SourceOn</div>
+        <div class="spec-col" data-i18n="cmp_head_solo">Einzelbeschaffung</div>
+        <div class="spec-col spec-col-active" data-i18n="cmp_head_sourceon">Mit SourceOn</div>
       </div>
       <div class="spec-row">
-        <div class="spec-label">Materialpreis</div>
-        <div class="spec-col spec-x">Listenpreis</div>
-        <div class="spec-col spec-col-active spec-ok spec-strong">Bündelrabatt</div>
+        <div class="spec-label" data-i18n="cmp_r1_label">Materialpreis</div>
+        <div class="spec-col spec-x" data-i18n="cmp_r1_solo">Listenpreis</div>
+        <div class="spec-col spec-col-active spec-ok spec-strong" data-i18n="cmp_r1_so">Bündelrabatt</div>
       </div>
       <div class="spec-row">
-        <div class="spec-label">Verhandlungsmacht</div>
-        <div class="spec-col spec-x">Einzelvolumen</div>
-        <div class="spec-col spec-col-active spec-ok">Gebündelt</div>
+        <div class="spec-label" data-i18n="cmp_r2_label">Verhandlungsmacht</div>
+        <div class="spec-col spec-x" data-i18n="cmp_r2_solo">Einzelvolumen</div>
+        <div class="spec-col spec-col-active spec-ok" data-i18n="cmp_r2_so">Gebündelt</div>
       </div>
       <div class="spec-row">
-        <div class="spec-label">Preistransparenz</div>
-        <div class="spec-col spec-x">Begrenzt</div>
-        <div class="spec-col spec-col-active spec-ok">Vollständig</div>
+        <div class="spec-label" data-i18n="cmp_r3_label">Preistransparenz</div>
+        <div class="spec-col spec-x" data-i18n="cmp_r3_solo">Begrenzt</div>
+        <div class="spec-col spec-col-active spec-ok" data-i18n="cmp_r3_so">Vollständig</div>
       </div>
       <div class="spec-row">
-        <div class="spec-label">Lieferantenprüfung</div>
-        <div class="spec-col spec-x">Eigenrecherche</div>
-        <div class="spec-col spec-col-active spec-ok">SIA/ISO-geprüft</div>
+        <div class="spec-label" data-i18n="cmp_r4_label">Lieferantenprüfung</div>
+        <div class="spec-col spec-x" data-i18n="cmp_r4_solo">Eigenrecherche</div>
+        <div class="spec-col spec-col-active spec-ok" data-i18n="cmp_r4_so">SIA/ISO-geprüft</div>
       </div>
       <div class="spec-row">
-        <div class="spec-label">Datenschutz</div>
-        <div class="spec-col spec-x">Lieferant kennt deine Identität sofort — keine Verhandlungsmacht</div>
-        <div class="spec-col spec-col-active spec-ok">Deine Identität bleibt geschützt bis der Preis fix vereinbart ist</div>
+        <div class="spec-label" data-i18n="cmp_r5_label">Datenschutz</div>
+        <div class="spec-col spec-x" data-i18n="cmp_r5_solo">Lieferant kennt deine Identität sofort — keine Verhandlungsmacht</div>
+        <div class="spec-col spec-col-active spec-ok" data-i18n="cmp_r5_so">Deine Identität bleibt geschützt bis der Preis fix vereinbart ist</div>
       </div>
       <div class="spec-row">
-        <div class="spec-label">Risiko</div>
-        <div class="spec-col spec-x">Fixkosten</div>
-        <div class="spec-col spec-col-active spec-ok">2,25% nur auf Ersparnis</div>
+        <div class="spec-label" data-i18n="cmp_r6_label">Risiko</div>
+        <div class="spec-col spec-x" data-i18n="cmp_r6_solo">Fixkosten</div>
+        <div class="spec-col spec-col-active spec-ok" data-i18n="cmp_r6_so">2,25% nur auf Ersparnis</div>
       </div>
     </div>
   </div>
@@ -870,39 +870,39 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="nav-logo">Source<span>On</span></div>
-        <p>Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
+        <p data-i18n="footer_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
       </div>
       <div class="footer-col">
-        <h4>Leistungen</h4>
+        <h4 data-i18n="footer_h_services">Leistungen</h4>
         <ul>
-          <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-          <li><a href="fuerwen.html">Für wen</a></li>
-          <li><a href="lieferant.html">Lieferant werden</a></li>
-          <li><a href="kalkulator.html">Einsparkalkulator</a></li>
-          <li><a href="materialien.html">Materialien</a></li>
+          <li><a href="index.html" data-i18n="footer_home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="footer_process">Wie es funktioniert</a></li>
+          <li><a href="fuerwen.html" data-i18n="footer_forwhom">Für wen</a></li>
+          <li><a href="lieferant.html" data-i18n="footer_supplier">Lieferant werden</a></li>
+          <li><a href="kalkulator.html" data-i18n="footer_calculator">Einsparkalkulator</a></li>
+          <li><a href="materialien.html" data-i18n="footer_materials">Materialien</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Unternehmen</h4>
+        <h4 data-i18n="footer_h_company">Unternehmen</h4>
         <ul>
-          <li><a href="ueberuns.html">Über uns</a></li>
-          <li><a href="kontakt.html">Kontakt</a></li>
-          <li><a href="lieferant.html">Lieferant werden</a></li>
+          <li><a href="ueberuns.html" data-i18n="footer_about">Über uns</a></li>
+          <li><a href="kontakt.html" data-i18n="footer_contact">Kontakt</a></li>
+          <li><a href="lieferant.html" data-i18n="footer_supplier2">Lieferant werden</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Rechtliches</h4>
+        <h4 data-i18n="footer_h_legal">Rechtliches</h4>
         <ul>
-          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutz</a></li>
-          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer">Impressum</a></li>
-          <li><a href="agb.html" target="_blank" rel="noopener noreferrer">AGB</a></li>
+          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_privacy">Datenschutz</a></li>
+          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_imprint">Impressum</a></li>
+          <li><a href="agb.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_terms">AGB</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
-      <span class="footer-tagline">Du zahlst erst, wenn wir dir sparen.</span>
+      <span class="footer-copy" data-i18n="footer_copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
+      <span class="footer-tagline" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</span>
     </div>
   </div>
 </footer>
@@ -1000,19 +1000,19 @@ function toggleFaq(btn){
   <div class="chat-head">
     <div class="chat-head-info">
       <div class="chat-avatar">SO</div>
-      <div><div class="chat-head-title">SourceOn Assistent</div><div class="chat-head-sub">Beantwortet alle Fragen zu SourceOn</div></div>
+      <div><div class="chat-head-title" data-i18n="chat_title">SourceOn Assistent</div><div class="chat-head-sub" data-i18n="chat_sub">Beantwortet alle Fragen zu SourceOn</div></div>
     </div>
     <button id="chat-close" onclick="toggleChat()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="chat-msgs" id="chat-msgs"></div>
   <div class="chat-footer">
     <div class="chat-chips" id="chat-chips">
-      <button class="chat-chip" onclick="sendChip(this)">Wie funktioniert SourceOn?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Was kostet es?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Materialbedarf melden</button>
+      <button class="chat-chip" data-i18n="chat_chip1" onclick="sendChip(this)">Wie funktioniert SourceOn?</button>
+      <button class="chat-chip" data-i18n="chat_chip2" onclick="sendChip(this)">Was kostet es?</button>
+      <button class="chat-chip" data-i18n="chat_chip3" onclick="sendChip(this)">Materialbedarf melden</button>
     </div>
     <div class="chat-input-row">
-      <input type="text" id="chat-input" placeholder="Frage stellen…" onkeydown="if(event.key==='Enter')chatSend()"/>
+      <input type="text" id="chat-input" placeholder="Frage stellen…" data-i18n-placeholder="chat_placeholder" onkeydown="if(event.key==='Enter')chatSend()"/>
       <button id="chat-send" onclick="chatSend()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg></button>
     </div>
   </div>
@@ -1035,5 +1035,165 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 })();
 </script>
 
+<script>
+(function(){
+const T={
+de:{
+nav_home:"Home",nav_process:"Wie es funktioniert",nav_calculator:"Kalkulator",nav_materials:"Materialien",nav_forwhom:"Für wen",nav_supplier:"Lieferant werden",nav_about:"Über uns",nav_contact:"Kontakt",nav_cta:"Materialbedarf melden",
+nav_home_m:"Home",nav_process_m:"Wie es funktioniert",nav_calculator_m:"Kalkulator",nav_forwhom_m:"Für wen",nav_supplier_m:"Lieferant werden",nav_about_m:"Über uns",nav_contact_m:"Kontakt",nav_cta_m:"Materialbedarf melden",
+proc_label:"So funktioniert es",proc_title:"Vier Schritte.<br>Eine Entscheidung.",proc_subtitle:"Von der ersten Anfrage bis zur Lieferung — du behältst jederzeit die volle Kontrolle.",
+proc_step1_title:"Bedarf melden",proc_step1_text:"Du teilst uns deinen Materialbedarf mit — Materialart, Menge und Lieferzeitraum. Dauert zwei Minuten, keine Verpflichtung.",
+proc_step2_title:"Angebot erhalten",proc_step2_text:"SourceOn bündelt deinen Bedarf mit anderen Baufirmen und verhandelt Mengenrabatte beim Lieferanten. Innerhalb von 48 Stunden erhältst du ein konkretes Angebot.",
+proc_step3_title:"Du entscheidest",proc_step3_text:"Du vergleichst frei. Nur wenn unser Angebot günstiger ist als dein bisheriger Preis und du es bestätigst, geht der Auftrag weiter. Kein Risiko.",
+proc_step4_title:"Du sparst — garantiert",proc_step4_text:"Direktlieferung auf deine Baustelle. Du zahlst nur, wenn dir tatsächlich Geld gespart wird. Kein Ergebnis — keine Kosten.",
+proc_foot:"Ø 5–10 Werktage von der Analyse bis zur unterschriebenen Entscheidung.",
+why_label:"Warum SourceOn",why_title:"Sechs Gründe — die niemand sonst bietet.",
+why1_title:"Nachfragebündelung",why1_text:"Drei Baufirmen bestellen je 60m³ Beton — SourceOn bündelt zu 180m³. Der Lieferant gibt 12% Rabatt. Ohne Bündelung: kein Rabatt.",
+why2_title:"Zahlung nur bei Ersparnis",why2_text:"Wir verdienen 2.25% Provision — aber nur auf die erzielte Ersparnis. Kein Ergebnis, keine Kosten. Dein Risiko: null.",
+why3_title:"KI + Schweizer Expertise",why3_text:"Unser System vergleicht Angebote in Sekunden. Unsere Verhandler kennen den Schweizer Markt und holen das Maximum raus.",
+why4_title:"Null Aufwand für dich",why4_text:"Du meldest deinen Bedarf in 2 Minuten. Wir übernehmen Lieferantensuche, Angebotsvergleich, Verhandlung und Koordination.",
+why5_title:"Direkt zum Lieferanten",why5_text:"SourceOn kauft nie selbst Material. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Wir sind Vermittler — kein Zwischenhändler.",
+why6_title:"Deine Daten geschützt",why6_text:"Du siehst alle Angebote — Lieferanten sehen während der Ausschreibung nur das Liefergebiet, nie deine genaue Adresse oder Identität. Erst nach Zuschlag werden die Lieferdetails freigegeben.",
+cmp_label:"Allein vs. gebündelt",cmp_title:"Gleiches Material.<br>Andere Preisklasse.",
+cmp_head_solo:"Einzelbeschaffung",cmp_head_sourceon:"Mit SourceOn",
+cmp_r1_label:"Materialpreis",cmp_r1_solo:"Listenpreis",cmp_r1_so:"Bündelrabatt",
+cmp_r2_label:"Verhandlungsmacht",cmp_r2_solo:"Einzelvolumen",cmp_r2_so:"Gebündelt",
+cmp_r3_label:"Preistransparenz",cmp_r3_solo:"Begrenzt",cmp_r3_so:"Vollständig",
+cmp_r4_label:"Lieferantenprüfung",cmp_r4_solo:"Eigenrecherche",cmp_r4_so:"SIA/ISO-geprüft",
+cmp_r5_label:"Datenschutz",cmp_r5_solo:"Lieferant kennt deine Identität sofort — keine Verhandlungsmacht",cmp_r5_so:"Deine Identität bleibt geschützt bis der Preis fix vereinbart ist",
+cmp_r6_label:"Risiko",cmp_r6_solo:"Fixkosten",cmp_r6_so:"2,25% nur auf Ersparnis",
+footer_desc:"Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.",
+footer_h_services:"Leistungen",footer_home:"Home",footer_process:"Wie es funktioniert",footer_forwhom:"Für wen",footer_supplier:"Lieferant werden",footer_calculator:"Einsparkalkulator",footer_materials:"Materialien",
+footer_h_company:"Unternehmen",footer_about:"Über uns",footer_contact:"Kontakt",footer_supplier2:"Lieferant werden",
+footer_h_legal:"Rechtliches",footer_privacy:"Datenschutz",footer_imprint:"Impressum",footer_terms:"AGB",
+footer_copy:"© 2026 SourceOn, Zürich — Alle Rechte vorbehalten",footer_tagline:"Du zahlst erst, wenn wir dir sparen.",
+chat_title:"SourceOn Assistent",chat_sub:"Beantwortet alle Fragen zu SourceOn",
+chat_chip1:"Wie funktioniert SourceOn?",chat_chip2:"Was kostet es?",chat_chip3:"Materialbedarf melden",chat_placeholder:"Frage stellen…"
+},
+en:{
+nav_home:"Home",nav_process:"How it works",nav_calculator:"Calculator",nav_materials:"Materials",nav_forwhom:"For whom",nav_supplier:"Become a supplier",nav_about:"About us",nav_contact:"Contact",nav_cta:"Report material need",
+nav_home_m:"Home",nav_process_m:"How it works",nav_calculator_m:"Calculator",nav_forwhom_m:"For whom",nav_supplier_m:"Become a supplier",nav_about_m:"About us",nav_contact_m:"Contact",nav_cta_m:"Report material need",
+proc_label:"How it works",proc_title:"Four steps.<br>One decision.",proc_subtitle:"From the first enquiry to delivery — you stay in full control at all times.",
+proc_step1_title:"Report your need",proc_step1_text:"Tell us what material you need — type, quantity and delivery timeframe. Takes two minutes, no obligation.",
+proc_step2_title:"Receive an offer",proc_step2_text:"SourceOn bundles your demand with other construction firms and negotiates volume discounts with suppliers. You receive a concrete offer within 48 hours.",
+proc_step3_title:"You decide",proc_step3_text:"You compare freely. Only if our offer is cheaper than your current price and you confirm it, does the order proceed. No risk.",
+proc_step4_title:"You save — guaranteed",proc_step4_text:"Direct delivery to your construction site. You only pay when you actually save money. No result — no cost.",
+proc_foot:"Avg. 5–10 working days from analysis to signed decision.",
+why_label:"Why SourceOn",why_title:"Six reasons — that nobody else offers.",
+why1_title:"Demand bundling",why1_text:"Three construction firms each order 60m³ of concrete — SourceOn bundles to 180m³. The supplier gives a 12% discount. Without bundling: no discount.",
+why2_title:"Pay only on savings",why2_text:"We earn a 2.25% commission — but only on the achieved savings. No result, no cost. Your risk: zero.",
+why3_title:"AI + Swiss expertise",why3_text:"Our system compares offers in seconds. Our negotiators know the Swiss market and extract the maximum.",
+why4_title:"Zero effort for you",why4_text:"You report your need in 2 minutes. We handle supplier search, offer comparison, negotiation and coordination.",
+why5_title:"Direct to supplier",why5_text:"SourceOn never buys material itself. The purchase contract runs directly between you and the supplier. We are intermediaries — not middlemen.",
+why6_title:"Your data protected",why6_text:"You see all offers — suppliers only see the delivery area during the tender, never your exact address or identity. Delivery details are only released after the award.",
+cmp_label:"Alone vs. bundled",cmp_title:"Same material.<br>Different price class.",
+cmp_head_solo:"Individual procurement",cmp_head_sourceon:"With SourceOn",
+cmp_r1_label:"Material price",cmp_r1_solo:"List price",cmp_r1_so:"Bundle discount",
+cmp_r2_label:"Negotiating power",cmp_r2_solo:"Single volume",cmp_r2_so:"Bundled",
+cmp_r3_label:"Price transparency",cmp_r3_solo:"Limited",cmp_r3_so:"Complete",
+cmp_r4_label:"Supplier verification",cmp_r4_solo:"Own research",cmp_r4_so:"SIA/ISO-verified",
+cmp_r5_label:"Data protection",cmp_r5_solo:"Supplier knows your identity immediately — no negotiating power",cmp_r5_so:"Your identity stays protected until the price is fixed",
+cmp_r6_label:"Risk",cmp_r6_solo:"Fixed costs",cmp_r6_so:"2.25% only on savings",
+footer_desc:"Swiss B2B procurement intermediary for the construction industry. You only pay when we save you money.",
+footer_h_services:"Services",footer_home:"Home",footer_process:"How it works",footer_forwhom:"For whom",footer_supplier:"Become a supplier",footer_calculator:"Savings calculator",footer_materials:"Materials",
+footer_h_company:"Company",footer_about:"About us",footer_contact:"Contact",footer_supplier2:"Become a supplier",
+footer_h_legal:"Legal",footer_privacy:"Privacy policy",footer_imprint:"Imprint",footer_terms:"Terms",
+footer_copy:"© 2026 SourceOn, Zurich — All rights reserved",footer_tagline:"You only pay when we save you money.",
+chat_title:"SourceOn Assistant",chat_sub:"Answers all questions about SourceOn",
+chat_chip1:"How does SourceOn work?",chat_chip2:"What does it cost?",chat_chip3:"Report material need",chat_placeholder:"Ask a question…"
+},
+fr:{
+nav_home:"Accueil",nav_process:"Comment ça marche",nav_calculator:"Calculateur",nav_materials:"Matériaux",nav_forwhom:"Pour qui",nav_supplier:"Devenir fournisseur",nav_about:"À propos",nav_contact:"Contact",nav_cta:"Annoncer un besoin",
+nav_home_m:"Accueil",nav_process_m:"Comment ça marche",nav_calculator_m:"Calculateur",nav_forwhom_m:"Pour qui",nav_supplier_m:"Devenir fournisseur",nav_about_m:"À propos",nav_contact_m:"Contact",nav_cta_m:"Annoncer un besoin",
+proc_label:"Comment ça marche",proc_title:"Quatre étapes.<br>Une décision.",proc_subtitle:"De la première demande à la livraison — vous gardez le contrôle total à tout moment.",
+proc_step1_title:"Annoncer le besoin",proc_step1_text:"Communiquez-nous votre besoin en matériaux — type, quantité et délai de livraison. Cela prend deux minutes, sans engagement.",
+proc_step2_title:"Recevoir une offre",proc_step2_text:"SourceOn regroupe votre demande avec d'autres entreprises de construction et négocie des rabais de volume auprès du fournisseur. Vous recevez une offre concrète sous 48 heures.",
+proc_step3_title:"Vous décidez",proc_step3_text:"Vous comparez librement. Ce n'est que si notre offre est plus avantageuse que votre prix actuel et que vous la confirmez que la commande est lancée. Aucun risque.",
+proc_step4_title:"Vous économisez — garanti",proc_step4_text:"Livraison directe sur votre chantier. Vous ne payez que si vous économisez réellement. Pas de résultat — pas de frais.",
+proc_foot:"En moyenne 5 à 10 jours ouvrables de l'analyse à la décision signée.",
+why_label:"Pourquoi SourceOn",why_title:"Six raisons — que personne d'autre ne propose.",
+why1_title:"Regroupement de la demande",why1_text:"Trois entreprises de construction commandent chacune 60m³ de béton — SourceOn regroupe à 180m³. Le fournisseur accorde 12% de rabais. Sans regroupement : pas de rabais.",
+why2_title:"Paiement uniquement sur économies",why2_text:"Nous percevons une commission de 2.25% — mais uniquement sur les économies réalisées. Pas de résultat, pas de frais. Votre risque : zéro.",
+why3_title:"IA + expertise suisse",why3_text:"Notre système compare les offres en quelques secondes. Nos négociateurs connaissent le marché suisse et en tirent le maximum.",
+why4_title:"Zéro effort pour vous",why4_text:"Vous annoncez votre besoin en 2 minutes. Nous prenons en charge la recherche de fournisseurs, la comparaison des offres, la négociation et la coordination.",
+why5_title:"Directement au fournisseur",why5_text:"SourceOn n'achète jamais de matériaux. Le contrat d'achat est conclu directement entre vous et le fournisseur. Nous sommes intermédiaires — pas revendeurs.",
+why6_title:"Vos données protégées",why6_text:"Vous voyez toutes les offres — les fournisseurs ne voient que la zone de livraison pendant l'appel d'offres, jamais votre adresse exacte ni votre identité. Les détails de livraison ne sont communiqués qu'après l'attribution.",
+cmp_label:"Seul vs. regroupé",cmp_title:"Même matériau.<br>Autre classe de prix.",
+cmp_head_solo:"Achat individuel",cmp_head_sourceon:"Avec SourceOn",
+cmp_r1_label:"Prix du matériau",cmp_r1_solo:"Prix catalogue",cmp_r1_so:"Rabais de volume",
+cmp_r2_label:"Pouvoir de négociation",cmp_r2_solo:"Volume individuel",cmp_r2_so:"Regroupé",
+cmp_r3_label:"Transparence des prix",cmp_r3_solo:"Limitée",cmp_r3_so:"Complète",
+cmp_r4_label:"Vérification fournisseur",cmp_r4_solo:"Recherche propre",cmp_r4_so:"Vérifié SIA/ISO",
+cmp_r5_label:"Protection des données",cmp_r5_solo:"Le fournisseur connaît votre identité immédiatement — aucun pouvoir de négociation",cmp_r5_so:"Votre identité reste protégée jusqu'à ce que le prix soit fixé",
+cmp_r6_label:"Risque",cmp_r6_solo:"Coûts fixes",cmp_r6_so:"2,25% uniquement sur les économies",
+footer_desc:"Intermédiaire suisse B2B en approvisionnement pour le secteur de la construction. Vous ne payez que lorsque nous vous faisons économiser.",
+footer_h_services:"Services",footer_home:"Accueil",footer_process:"Comment ça marche",footer_forwhom:"Pour qui",footer_supplier:"Devenir fournisseur",footer_calculator:"Calculateur d'économies",footer_materials:"Matériaux",
+footer_h_company:"Entreprise",footer_about:"À propos",footer_contact:"Contact",footer_supplier2:"Devenir fournisseur",
+footer_h_legal:"Mentions légales",footer_privacy:"Protection des données",footer_imprint:"Mentions légales",footer_terms:"CGV",
+footer_copy:"© 2026 SourceOn, Zurich — Tous droits réservés",footer_tagline:"Vous ne payez que lorsque nous vous faisons économiser.",
+chat_title:"Assistant SourceOn",chat_sub:"Répond à toutes vos questions sur SourceOn",
+chat_chip1:"Comment fonctionne SourceOn ?",chat_chip2:"Combien ça coûte ?",chat_chip3:"Annoncer un besoin",chat_placeholder:"Poser une question…"
+},
+it:{
+nav_home:"Home",nav_process:"Come funziona",nav_calculator:"Calcolatore",nav_materials:"Materiali",nav_forwhom:"Per chi",nav_supplier:"Diventa fornitore",nav_about:"Chi siamo",nav_contact:"Contatto",nav_cta:"Segnala fabbisogno",
+nav_home_m:"Home",nav_process_m:"Come funziona",nav_calculator_m:"Calcolatore",nav_forwhom_m:"Per chi",nav_supplier_m:"Diventa fornitore",nav_about_m:"Chi siamo",nav_contact_m:"Contatto",nav_cta_m:"Segnala fabbisogno",
+proc_label:"Come funziona",proc_title:"Quattro passaggi.<br>Una decisione.",proc_subtitle:"Dalla prima richiesta alla consegna — mantieni sempre il pieno controllo.",
+proc_step1_title:"Segnala il fabbisogno",proc_step1_text:"Comunicaci il tuo fabbisogno di materiale — tipo, quantità e periodo di consegna. Ci vogliono due minuti, senza impegno.",
+proc_step2_title:"Ricevi un'offerta",proc_step2_text:"SourceOn raggruppa la tua domanda con altre imprese edili e negozia sconti quantità con il fornitore. Ricevi un'offerta concreta entro 48 ore.",
+proc_step3_title:"Tu decidi",proc_step3_text:"Confronti liberamente. Solo se la nostra offerta è più conveniente del tuo prezzo attuale e la confermi, l'ordine prosegue. Nessun rischio.",
+proc_step4_title:"Risparmi — garantito",proc_step4_text:"Consegna diretta al tuo cantiere. Paghi solo se risparmi davvero. Nessun risultato — nessun costo.",
+proc_foot:"In media 5–10 giorni lavorativi dall'analisi alla decisione firmata.",
+why_label:"Perché SourceOn",why_title:"Sei motivi — che nessun altro offre.",
+why1_title:"Raggruppamento della domanda",why1_text:"Tre imprese edili ordinano ciascuna 60m³ di calcestruzzo — SourceOn raggruppa a 180m³. Il fornitore concede il 12% di sconto. Senza raggruppamento: nessuno sconto.",
+why2_title:"Pagamento solo sul risparmio",why2_text:"Guadagniamo una commissione del 2.25% — ma solo sul risparmio ottenuto. Nessun risultato, nessun costo. Il tuo rischio: zero.",
+why3_title:"IA + competenza svizzera",why3_text:"Il nostro sistema confronta le offerte in pochi secondi. I nostri negoziatori conoscono il mercato svizzero e ne ottengono il massimo.",
+why4_title:"Zero impegno per te",why4_text:"Segnali il tuo fabbisogno in 2 minuti. Ci occupiamo noi della ricerca fornitori, del confronto offerte, della negoziazione e del coordinamento.",
+why5_title:"Direttamente al fornitore",why5_text:"SourceOn non acquista mai materiale. Il contratto d'acquisto è stipulato direttamente tra te e il fornitore. Siamo intermediari — non rivenditori.",
+why6_title:"I tuoi dati protetti",why6_text:"Vedi tutte le offerte — i fornitori vedono solo la zona di consegna durante la gara, mai il tuo indirizzo esatto o la tua identità. I dettagli di consegna vengono comunicati solo dopo l'aggiudicazione.",
+cmp_label:"Da solo vs. raggruppato",cmp_title:"Stesso materiale.<br>Altra fascia di prezzo.",
+cmp_head_solo:"Acquisto singolo",cmp_head_sourceon:"Con SourceOn",
+cmp_r1_label:"Prezzo materiale",cmp_r1_solo:"Prezzo di listino",cmp_r1_so:"Sconto volume",
+cmp_r2_label:"Potere negoziale",cmp_r2_solo:"Volume singolo",cmp_r2_so:"Raggruppato",
+cmp_r3_label:"Trasparenza dei prezzi",cmp_r3_solo:"Limitata",cmp_r3_so:"Completa",
+cmp_r4_label:"Verifica fornitore",cmp_r4_solo:"Ricerca propria",cmp_r4_so:"Verificato SIA/ISO",
+cmp_r5_label:"Protezione dati",cmp_r5_solo:"Il fornitore conosce subito la tua identità — nessun potere negoziale",cmp_r5_so:"La tua identità resta protetta finché il prezzo non è fissato",
+cmp_r6_label:"Rischio",cmp_r6_solo:"Costi fissi",cmp_r6_so:"2,25% solo sul risparmio",
+footer_desc:"Intermediario svizzero B2B per l'approvvigionamento nel settore edile. Paghi solo quando ti facciamo risparmiare.",
+footer_h_services:"Servizi",footer_home:"Home",footer_process:"Come funziona",footer_forwhom:"Per chi",footer_supplier:"Diventa fornitore",footer_calculator:"Calcolatore di risparmio",footer_materials:"Materiali",
+footer_h_company:"Azienda",footer_about:"Chi siamo",footer_contact:"Contatto",footer_supplier2:"Diventa fornitore",
+footer_h_legal:"Note legali",footer_privacy:"Protezione dati",footer_imprint:"Impressum",footer_terms:"CGC",
+footer_copy:"© 2026 SourceOn, Zurigo — Tutti i diritti riservati",footer_tagline:"Paghi solo quando ti facciamo risparmiare.",
+chat_title:"Assistente SourceOn",chat_sub:"Risponde a tutte le domande su SourceOn",
+chat_chip1:"Come funziona SourceOn?",chat_chip2:"Quanto costa?",chat_chip3:"Segnala fabbisogno",chat_placeholder:"Fai una domanda…"
+}
+};
+window.setLang=function(lang){
+  if(!T[lang])lang='de';
+  var d=T[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(d[k]!==undefined)el.textContent=d[k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+    var k=el.getAttribute('data-i18n-html');
+    if(d[k]!==undefined)el.innerHTML=d[k];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+    var k=el.getAttribute('data-i18n-placeholder');
+    if(d[k]!==undefined)el.placeholder=d[k];
+  });
+  var cur=document.getElementById('lang-current');
+  if(cur)cur.textContent=lang.toUpperCase();
+  document.querySelectorAll('.lang-opt').forEach(function(btn){
+    btn.classList.toggle('active',btn.getAttribute('onclick').indexOf("'"+lang+"'")!==-1);
+  });
+  localStorage.setItem('sourceon-lang',lang);
+  var sw=document.getElementById('lang-switch');
+  if(sw)sw.classList.remove('open');
+};
+var saved=localStorage.getItem('sourceon-lang')||'de';
+setLang(saved);
+})();
+</script>
 </body>
 </html>
