@@ -549,42 +549,28 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .tech-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
 
 /* ENGINE VISUAL */
-.engine-stage{position:relative;background:#000;width:100%;height:480px;overflow:hidden;border-radius:16px;border:1px solid rgba(232,160,32,.2)}
-.engine-svg{position:absolute;inset:0;width:100%;height:100%}
-.chip-ring{fill:none;stroke:rgba(232,160,32,.12);stroke-width:1}
-.chip-ring-2{stroke:rgba(232,160,32,.06);stroke-dasharray:4 8}
-.chip-ring-1{transform-origin:420px 200px;animation:chipRingSpin 18s linear infinite}
-.chip-ring-2{transform-origin:420px 200px;animation:chipRingSpin 28s linear infinite reverse}
-@keyframes chipRingSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.chip-trace{fill:none;stroke-width:1.5}
-.chip-trace.gold{stroke:rgba(232,160,32,.35)}
-.chip-trace.green{stroke:rgba(16,185,129,.4)}
-.chip-pulse{opacity:0;animation:chipPulseFade 1.8s ease-in-out infinite}
-.chip-pulse.gold{fill:#FFD27A}
-.chip-pulse.green{fill:#34D399}
-@keyframes chipPulseFade{0%,100%{opacity:0}10%,80%{opacity:1}}
-.chip-underglow{animation:chipUnderglowPulse 3s ease-in-out infinite}
-@keyframes chipUnderglowPulse{0%,100%{opacity:.6}50%{opacity:1}}
-.chip-body{fill:#0A1626;stroke:#E8A020;stroke-width:1.5}
-.chip-die{opacity:.5}
-.chip-scan{animation:chipScanSweep 2.4s linear infinite}
-@keyframes chipScanSweep{0%{transform:translateY(0)}100%{transform:translateY(112px)}}
-.chip-core{fill:#E8A020;filter:url(#glowBlur);animation:chipCorePulse 1.6s ease-in-out infinite}
-@keyframes chipCorePulse{0%,100%{transform:scale(1);filter:url(#glowBlur) brightness(1)}50%{transform:scale(1.18);filter:url(#glowBlur) brightness(1.4)}}
-.chip-led{fill:#10B981;animation:chipLedBlink 2.6s ease-in-out infinite}
-@keyframes chipLedBlink{0%,85%,100%{opacity:.15}90%,95%{opacity:1}}
-#compare-check{animation:checkFlash 3s ease-in-out infinite}
-@keyframes checkFlash{0%,80%,100%{opacity:.5}85%,95%{opacity:1}}
-#savA{animation:savFlash 7s ease-in-out infinite 5s}
-#savB{animation:savFlash 7.5s ease-in-out infinite 6s}
-#savC{animation:savFlash 7.2s ease-in-out infinite 5.5s}
-@keyframes savFlash{0%,85%,100%{opacity:0}90%,95%{opacity:1}}
+.engine-stage{position:relative;background:#060D1A;width:100%;height:480px;overflow:hidden;border-radius:16px;border:1px solid rgba(232,160,32,.2)}
+#engine-canvas{display:block;width:100%;height:100%}
+.engine-overlay{position:absolute;inset:0;pointer-events:none;z-index:1}
+.engine-node{position:absolute;background:rgba(10,21,37,.85);border:1px solid rgba(232,160,32,.3);border-radius:8px;padding:8px 12px;pointer-events:none;backdrop-filter:blur(6px)}
+.engine-node-title{font-size:10px;font-weight:700;color:#E8A020;margin-bottom:2px;font-family:Inter,sans-serif}
+.engine-node-sub{font-size:8.5px;color:rgba(255,255,255,.5);font-family:Inter,sans-serif}
+.engine-node.green{border-color:rgba(16,185,129,.4)}
+.engine-node.green .engine-node-title{color:#10B981}
+.engine-node-saving{position:absolute;font-size:12px;font-weight:700;color:#10B981;font-family:Inter,sans-serif;opacity:0;animation:savPop 6s ease-in-out infinite}
+.engine-node-saving:nth-child(2){animation-delay:2s}
+.engine-node-saving:nth-child(3){animation-delay:4s}
+@keyframes savPop{0%,75%,100%{opacity:0;transform:translateY(0)}80%{opacity:1;transform:translateY(-6px)}95%{opacity:1;transform:translateY(-6px)}}
+.engine-flow-label{position:absolute;font-size:9px;color:rgba(232,160,32,.5);font-family:Inter,sans-serif;font-weight:600;letter-spacing:.03em}
+.engine-flow-label.green{color:rgba(16,185,129,.5)}
+.engine-compare{position:absolute;background:rgba(15,34,56,.9);border:1px solid rgba(232,160,32,.35);border-radius:6px;padding:5px 10px;font-size:9px;font-weight:600;color:#fff;font-family:Inter,sans-serif;display:flex;align-items:center;gap:5px}
+.engine-compare span{color:#E8A020}
 .engine-badge{position:absolute;z-index:2;background:rgba(15,34,56,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(232,160,32,.3);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px}
 .engine-badge-gold{color:#E8A020}
 .engine-dot{width:8px;height:8px;border-radius:50%;background:#10B981;flex-shrink:0;animation:eDot 2s ease-in-out infinite}
 @keyframes eDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:.6}}
 @media(max-width:900px){.tech-layout{grid-template-columns:1fr;gap:40px}}
-@media(max-width:768px){.engine-stage{height:320px}.engine-badge{font-size:11px;padding:6px 10px}}
+@media(max-width:768px){.engine-stage{height:320px}.engine-badge{font-size:11px;padding:6px 10px}.engine-node{padding:5px 8px}.engine-node-title{font-size:8px}.engine-node-sub{font-size:7px}.engine-overlay{display:none}}
 
 /* BUNDLING DIAGRAM SECTION */
 #bundling{background:var(--bg);padding:100px 0}
@@ -753,124 +739,38 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         <a href="kontakt.html" class="btn btn-gold btn-lg">Analyse anfragen</a>
       </div>
       <div class="engine-stage" id="engine-stage">
-        <svg class="engine-svg" viewBox="0 0 800 400" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <pattern id="dieGrid" width="14" height="14" patternUnits="userSpaceOnUse"><path d="M0 0H14M0 0V14" stroke="rgba(232,160,32,.18)" stroke-width="1"/></pattern>
-            <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#FFE3A0"/><stop offset="45%" stop-color="#E8A020"/><stop offset="100%" stop-color="#E8A020" stop-opacity="0"/></radialGradient>
-            <linearGradient id="scanGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#E8A020" stop-opacity="0"/><stop offset="50%" stop-color="#FFE3A0" stop-opacity=".85"/><stop offset="100%" stop-color="#E8A020" stop-opacity="0"/></linearGradient>
-            <filter id="glowBlur" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="6"/></filter>
-            <filter id="glow2"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <!-- Flow paths -->
-            <path id="flowA" d="M135,100 C230,100 280,200 350,200" fill="none"/>
-            <path id="flowB" d="M135,200 C230,200 280,200 350,200" fill="none"/>
-            <path id="flowC" d="M135,300 C230,300 280,200 350,200" fill="none"/>
-            <path id="flowOut" d="M490,200 C540,200 580,200 660,200" fill="none"/>
-            <path id="retA" d="M660,200 C700,60 220,20 135,100" fill="none"/>
-            <path id="retB" d="M660,200 C720,300 220,370 135,200" fill="none"/>
-            <path id="retC" d="M660,200 C700,340 220,380 135,300" fill="none"/>
-          </defs>
-
-          <!-- Flow path lines -->
-          <use href="#flowA" stroke="rgba(232,160,32,.12)" stroke-width="1"/>
-          <use href="#flowB" stroke="rgba(232,160,32,.12)" stroke-width="1"/>
-          <use href="#flowC" stroke="rgba(232,160,32,.12)" stroke-width="1"/>
-          <use href="#flowOut" stroke="rgba(16,185,129,.12)" stroke-width="1"/>
-          <use href="#retA" stroke="rgba(251,191,36,.08)" stroke-width="1" stroke-dasharray="4 6"/>
-          <use href="#retB" stroke="rgba(251,191,36,.08)" stroke-width="1" stroke-dasharray="4 6"/>
-          <use href="#retC" stroke="rgba(251,191,36,.08)" stroke-width="1" stroke-dasharray="4 6"/>
-
-          <!-- Customer nodes (left) -->
-          <rect x="60" y="75" width="75" height="48" rx="7" fill="#0F2238" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
-          <text x="97" y="94" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Kunde A</text>
-          <text x="97" y="112" text-anchor="middle" fill="#94A3B8" font-size="8" font-family="Inter,sans-serif">80m³ Beton</text>
-          <text id="savA" x="97" y="66" text-anchor="middle" fill="#10B981" font-size="11" font-weight="700" font-family="Inter,sans-serif" opacity="0">-12%</text>
-
-          <rect x="60" y="175" width="75" height="48" rx="7" fill="#0F2238" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
-          <text x="97" y="194" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Kunde B</text>
-          <text x="97" y="212" text-anchor="middle" fill="#94A3B8" font-size="8" font-family="Inter,sans-serif">60m³ Beton</text>
-          <text id="savB" x="97" y="166" text-anchor="middle" fill="#10B981" font-size="11" font-weight="700" font-family="Inter,sans-serif" opacity="0">-9%</text>
-
-          <rect x="60" y="275" width="75" height="48" rx="7" fill="#0F2238" stroke="rgba(255,255,255,.2)" stroke-width="1"/>
-          <text x="97" y="294" text-anchor="middle" fill="#fff" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Kunde C</text>
-          <text x="97" y="312" text-anchor="middle" fill="#94A3B8" font-size="8" font-family="Inter,sans-serif">Dämmung 200m²</text>
-          <text id="savC" x="97" y="266" text-anchor="middle" fill="#10B981" font-size="11" font-weight="700" font-family="Inter,sans-serif" opacity="0">-15%</text>
-
-          <!-- ORIGINAL CHIP (centered at 420,200) -->
-          <circle class="chip-ring chip-ring-1" cx="420" cy="200" r="118"/>
-          <circle class="chip-ring chip-ring-2" cx="420" cy="200" r="142"/>
-
-          <path id="trT1" class="chip-trace gold" d="M375,40 L375,110 L385,110 L385,130"/>
-          <path id="trT2" class="chip-trace gold" d="M420,40 L420,110 L420,130"/>
-          <path id="trT3" class="chip-trace gold" d="M465,40 L465,110 L455,110 L455,130"/>
-          <path id="trB1" class="chip-trace gold" d="M375,360 L375,290 L385,290 L385,270"/>
-          <path id="trB2" class="chip-trace green" d="M420,270 L420,290 L420,360"/>
-          <path id="trB3" class="chip-trace gold" d="M465,360 L465,290 L455,290 L455,270"/>
-          <path id="trL1" class="chip-trace gold" d="M260,155 L330,155 L330,165 L350,165"/>
-          <path id="trL2" class="chip-trace gold" d="M260,200 L330,200 L350,200"/>
-          <path id="trL3" class="chip-trace gold" d="M260,245 L330,245 L330,235 L350,235"/>
-          <path id="trR1" class="chip-trace gold" d="M580,155 L510,155 L510,165 L490,165"/>
-          <path id="trR2" class="chip-trace gold" d="M580,200 L510,200 L490,200"/>
-          <path id="trR3" class="chip-trace gold" d="M580,245 L510,245 L510,235 L490,235"/>
-
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#trT1"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.9s" repeatCount="indefinite"><mpath href="#trT2"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.7s" repeatCount="indefinite"><mpath href="#trT3"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="2s" repeatCount="indefinite"><mpath href="#trL1"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.5s" repeatCount="indefinite"><mpath href="#trL2"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.8s" repeatCount="indefinite"><mpath href="#trL3"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#trR1"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.9s" repeatCount="indefinite"><mpath href="#trR2"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.7s" repeatCount="indefinite"><mpath href="#trR3"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="2.1s" repeatCount="indefinite"><mpath href="#trB1"/></animateMotion></circle>
-          <circle class="chip-pulse gold" r="3.4"><animateMotion dur="1.6s" repeatCount="indefinite"><mpath href="#trB3"/></animateMotion></circle>
-          <circle class="chip-pulse green" r="4.2"><animateMotion dur="1.1s" repeatCount="indefinite"><mpath href="#trB2"/></animateMotion></circle>
-
-          <circle class="chip-underglow" cx="420" cy="200" r="90" fill="url(#coreGlow)"/>
-          <rect class="chip-body" x="350" y="130" width="140" height="140" rx="14"/>
-          <rect class="chip-die" x="364" y="144" width="112" height="112" rx="6" fill="url(#dieGrid)"/>
-          <rect class="chip-scan" x="364" y="144" width="112" height="20" fill="url(#scanGrad)"/>
-          <rect class="chip-core" x="404" y="184" width="32" height="32" rx="6"/>
-          <!-- SourceOn KI label on chip -->
-          <text x="420" y="196" text-anchor="middle" fill="#E8A020" font-size="11" font-weight="800" font-family="Inter,sans-serif" opacity="0.9">SourceOn</text>
-          <text x="420" y="214" text-anchor="middle" fill="#E8A020" font-size="15" font-weight="800" font-family="Inter,sans-serif" opacity="0.9">KI</text>
-
-          <circle class="chip-led" cx="350" cy="130" r="3" style="animation-delay:.1s"/>
-          <circle class="chip-led" cx="490" cy="130" r="3" style="animation-delay:.5s"/>
-          <circle class="chip-led" cx="490" cy="270" r="3" style="animation-delay:.9s"/>
-          <circle class="chip-led" cx="350" cy="270" r="3" style="animation-delay:1.3s"/>
-
+        <canvas id="engine-canvas"></canvas>
+        <!-- Process flow overlay -->
+        <div class="engine-overlay">
+          <!-- Customer nodes (left side) -->
+          <div class="engine-node" style="left:3%;top:10%">
+            <div class="engine-node-title">Kunde A</div>
+            <div class="engine-node-sub">80m³ Beton</div>
+          </div>
+          <div class="engine-node-saving" style="left:3%;top:4%">-12%</div>
+          <div class="engine-node" style="left:3%;top:40%">
+            <div class="engine-node-title">Kunde B</div>
+            <div class="engine-node-sub">60m³ Beton</div>
+          </div>
+          <div class="engine-node-saving" style="left:3%;top:34%">-9%</div>
+          <div class="engine-node" style="left:3%;top:70%">
+            <div class="engine-node-title">Kunde C</div>
+            <div class="engine-node-sub">Dämmung 200m²</div>
+          </div>
+          <div class="engine-node-saving" style="left:3%;top:64%">-15%</div>
+          <!-- Flow labels -->
+          <div class="engine-flow-label" style="left:22%;top:48%">Bedarf →</div>
+          <div class="engine-flow-label green" style="right:18%;top:48%">→ Angebot</div>
           <!-- Comparison badge -->
-          <rect x="370" y="105" width="100" height="20" rx="5" fill="rgba(15,34,56,.9)" stroke="rgba(232,160,32,.3)" stroke-width="1"/>
-          <text id="compare-check" x="380" y="118" fill="#E8A020" font-size="10" font-weight="700" font-family="Inter,sans-serif" opacity="0.5">✓</text>
-          <text x="393" y="118" fill="#fff" font-size="8.5" font-weight="500" font-family="Inter,sans-serif">3 Angebote verglichen</text>
-
-          <!-- Supplier node (right) -->
-          <rect x="645" y="175" width="80" height="50" rx="9" fill="#0F2238" stroke="#10B981" stroke-width="1.5"/>
-          <text x="685" y="197" text-anchor="middle" fill="#10B981" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Bestes</text>
-          <text x="685" y="212" text-anchor="middle" fill="#10B981" font-size="9.5" font-weight="600" font-family="Inter,sans-serif">Angebot</text>
-
-          <!-- Labels -->
-          <text x="565" y="190" text-anchor="middle" fill="#10B981" font-size="8" font-family="Inter,sans-serif" opacity="0.6">Verhandeltes Angebot</text>
-          <text x="400" y="30" text-anchor="middle" fill="#FBBF24" font-size="8" font-family="Inter,sans-serif" opacity="0.5">Bessere Preise</text>
-          <text x="400" y="390" text-anchor="middle" fill="#FBBF24" font-size="8" font-family="Inter,sans-serif" opacity="0.5">Bessere Preise</text>
-
-          <!-- Gold particles: customers → center -->
-          <circle r="3.5" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3s" begin="0s" repeatCount="indefinite"><mpath href="#flowA"/></animateMotion></circle>
-          <circle r="2.5" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3s" begin="1.2s" repeatCount="indefinite"><mpath href="#flowA"/></animateMotion></circle>
-          <circle r="3.5" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3.2s" begin="0.5s" repeatCount="indefinite"><mpath href="#flowB"/></animateMotion></circle>
-          <circle r="2.5" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3.2s" begin="2s" repeatCount="indefinite"><mpath href="#flowB"/></animateMotion></circle>
-          <circle r="3.5" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3.5s" begin="0.3s" repeatCount="indefinite"><mpath href="#flowC"/></animateMotion></circle>
-          <circle r="2.5" fill="#E8A020" filter="url(#glow2)"><animateMotion dur="3.5s" begin="1.8s" repeatCount="indefinite"><mpath href="#flowC"/></animateMotion></circle>
-
-          <!-- Green particles: center → supplier -->
-          <circle r="3.5" fill="#10B981" filter="url(#glow2)"><animateMotion dur="2.5s" begin="1.5s" repeatCount="indefinite"><mpath href="#flowOut"/></animateMotion></circle>
-          <circle r="2.5" fill="#10B981" filter="url(#glow2)"><animateMotion dur="2.5s" begin="3.8s" repeatCount="indefinite"><mpath href="#flowOut"/></animateMotion></circle>
-
-          <!-- Return particles: supplier → customers -->
-          <circle r="2.5" fill="#FBBF24" opacity="0.7"><animateMotion dur="4s" begin="3s" repeatCount="indefinite"><mpath href="#retA"/></animateMotion></circle>
-          <circle r="2.5" fill="#FBBF24" opacity="0.7"><animateMotion dur="4.5s" begin="4s" repeatCount="indefinite"><mpath href="#retB"/></animateMotion></circle>
-          <circle r="2.5" fill="#FBBF24" opacity="0.7"><animateMotion dur="4.2s" begin="3.5s" repeatCount="indefinite"><mpath href="#retC"/></animateMotion></circle>
-        </svg>
+          <div class="engine-compare" style="top:6%;left:50%;transform:translateX(-50%)"><span>✓</span> 3 Angebote verglichen</div>
+          <!-- Supplier node (right side) -->
+          <div class="engine-node green" style="right:3%;top:38%">
+            <div class="engine-node-title">Bestes Angebot</div>
+            <div class="engine-node-sub">Verhandelt & abgeschlossen</div>
+          </div>
+          <!-- Return flow label -->
+          <div class="engine-flow-label" style="right:6%;top:60%;color:rgba(251,191,36,.45)">↩ Bessere Preise</div>
+        </div>
         <div class="engine-badge" style="bottom:16px;left:16px"><span class="engine-dot"></span>KI aktiv — 340+ Lieferanten</div>
         <div class="engine-badge engine-badge-gold" style="top:16px;right:16px">Echtzeit-Marktanalyse</div>
       </div>
@@ -1493,6 +1393,193 @@ if(bdDiagram)bdObs.observe(bdDiagram);
 
 // FAQ (stub for pages that might have inline FAQ)
 function toggleFaq(btn){}
+
+// ENGINE 3D — SourceOn AI Chip
+(function(){
+  var stage=document.getElementById('engine-stage');
+  var canvas=document.getElementById('engine-canvas');
+  if(!stage||!canvas||typeof THREE==='undefined')return;
+  var started=false;
+
+  function init(){
+    if(started)return;started=true;
+    var W=stage.offsetWidth,H=stage.offsetHeight;
+    var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
+    renderer.setSize(W,H);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+    renderer.setClearColor(0x000000);
+
+    var scene=new THREE.Scene();
+    var camera=new THREE.PerspectiveCamera(35,W/H,0.1,100);
+    camera.position.set(5,4.5,5);
+    camera.lookAt(0,0,0);
+
+    scene.add(new THREE.AmbientLight(0x111111,1));
+    var dL=new THREE.DirectionalLight(0xffffff,0.3);
+    dL.position.set(4,8,4);scene.add(dL);
+    var glow1=new THREE.PointLight(0xE8A020,2.5,12);
+    glow1.position.set(0,1.5,0);scene.add(glow1);
+    var glow2=new THREE.PointLight(0xE8A020,1,8);
+    glow2.position.set(-3,0.5,2);scene.add(glow2);
+
+    var ground=new THREE.Mesh(new THREE.PlaneGeometry(20,20),new THREE.MeshStandardMaterial({color:0x050A12,metalness:0.8,roughness:0.5}));
+    ground.rotation.x=-Math.PI/2;ground.position.y=-0.2;scene.add(ground);
+
+    var chip=new THREE.Group();
+    var baseMat=new THREE.MeshStandardMaterial({color:0x0A1525,metalness:0.7,roughness:0.3});
+    var base=new THREE.Mesh(new THREE.BoxGeometry(2.8,0.15,2.8),baseMat);
+    chip.add(base);
+    var topMat=new THREE.MeshStandardMaterial({color:0x0F1E35,metalness:0.85,roughness:0.2});
+    var topSurf=new THREE.Mesh(new THREE.BoxGeometry(2.2,0.06,2.2),topMat);
+    topSurf.position.y=0.1;chip.add(topSurf);
+    var edgeMat=new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.5,metalness:0.9,roughness:0.15});
+    var edge=new THREE.Mesh(new THREE.BoxGeometry(2.25,0.02,2.25),edgeMat);
+    edge.position.y=0.14;chip.add(edge);
+    var inner=new THREE.Mesh(new THREE.BoxGeometry(2.1,0.025,2.1),topMat.clone());
+    inner.position.y=0.15;chip.add(inner);
+
+    var txtCanvas=document.createElement('canvas');
+    txtCanvas.width=512;txtCanvas.height=512;
+    var ctx=txtCanvas.getContext('2d');
+    ctx.fillStyle='#0F1E35';ctx.fillRect(0,0,512,512);
+    ctx.strokeStyle='rgba(232,160,32,0.1)';ctx.lineWidth=1;
+    for(var gi=0;gi<512;gi+=24){ctx.beginPath();ctx.moveTo(gi,0);ctx.lineTo(gi,512);ctx.stroke();ctx.beginPath();ctx.moveTo(0,gi);ctx.lineTo(512,gi);ctx.stroke();}
+    ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillStyle='#E8A020';
+    ctx.font='bold 72px Inter, Arial, sans-serif';ctx.fillText('SourceOn',256,220);
+    ctx.font='bold 88px Inter, Arial, sans-serif';ctx.fillText('AI',256,320);
+    var chipTexture=new THREE.CanvasTexture(txtCanvas);
+    var textPlane=new THREE.Mesh(new THREE.PlaneGeometry(2.1,2.1),new THREE.MeshBasicMaterial({map:chipTexture,transparent:true}));
+    textPlane.rotation.x=-Math.PI/2;textPlane.position.y=0.165;chip.add(textPlane);
+
+    var gridMat=new THREE.LineBasicMaterial({color:0xE8A020,transparent:true,opacity:0.12});
+    for(var g=-1;g<=1;g+=0.2){
+      chip.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(g,.16,1.05),new THREE.Vector3(g,.16,-1.05)]),gridMat));
+      chip.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(1.05,.16,g),new THREE.Vector3(-1.05,.16,g)]),gridMat));
+    }
+    chip.position.y=0.08;scene.add(chip);
+
+    var tMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.85});
+    var tGlowMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.15});
+    function addTrace(points,width){
+      width=width||0.06;
+      for(var i=0;i<points.length-1;i++){
+        var ax=points[i][0],az=points[i][1],bx=points[i+1][0],bz=points[i+1][1];
+        var dx=bx-ax,dz=bz-az,len=Math.sqrt(dx*dx+dz*dz);
+        if(len<0.01)continue;
+        var ang=Math.atan2(dx,dz);
+        var m=new THREE.Mesh(new THREE.BoxGeometry(width,0.02,len),tMat.clone());
+        m.position.set(ax+dx/2,0.01,az+dz/2);m.rotation.y=ang;scene.add(m);
+        var gl=new THREE.Mesh(new THREE.BoxGeometry(width*4,0.01,len),tGlowMat.clone());
+        gl.position.set(ax+dx/2,0.005,az+dz/2);gl.rotation.y=ang;scene.add(gl);
+      }
+    }
+    var traceLines=[
+      [[1.42,0],[4,0]],[[1.42,.4],[2.5,.4],[2.5,1.8],[5,1.8]],
+      [[1.42,-.4],[2.2,-.4],[2.2,-1.5],[4.5,-1.5]],[[1.42,.8],[1.8,.8],[1.8,2.5],[3.5,2.5]],
+      [[1.42,-.8],[2.8,-.8],[2.8,-2.8]],
+      [[-1.42,0],[-4.5,0]],[[-1.42,.5],[-2.5,.5],[-2.5,2],[-4,2]],
+      [[-1.42,-.5],[-2,-.5],[-2,-2],[-5,-2]],[[-1.42,-1],[-3,-1],[-3,-3.5]],
+      [[0,1.42],[0,4]],[[.5,1.42],[.5,2.5],[2,2.5],[2,4.5]],
+      [[-.6,1.42],[-.6,3],[-2.5,3],[-2.5,5]],
+      [[0,-1.42],[0,-4]],[[.7,-1.42],[.7,-2.2],[3,-2.2],[3,-4]],
+      [[-.4,-1.42],[-.4,-2.8],[-3,-2.8],[-3,-4.5]],
+      [[1.42,1],[3,2.5]],[[-1.42,-1],[-3,-2.5]]
+    ];
+    traceLines.forEach(function(pts){addTrace(pts);});
+    [[[1.42,.2],[3.5,.2]],[[1.42,-.2],[3.2,-.2]],
+     [[-1.42,.2],[-3.5,.2]],[[-1.42,-.2],[-3.2,-.2]],
+     [[.2,1.42],[.2,3.5]],[[-.2,1.42],[-.2,3]],
+     [[.2,-1.42],[.2,-3.5]],[[-.2,-1.42],[-.2,-3]]
+    ].forEach(function(pts){addTrace(pts,0.03);});
+
+    var pMat=new THREE.MeshBasicMaterial({color:0xFFD27A});
+    var pgMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.3});
+    var pulses=[];
+    traceLines.forEach(function(pts,idx){
+      if(idx%2!==0)return;
+      var p=new THREE.Mesh(new THREE.SphereGeometry(0.05,8,8),pMat.clone());
+      var pg=new THREE.Mesh(new THREE.SphereGeometry(0.18,8,8),pgMat.clone());
+      p.add(pg);p.position.y=0.04;scene.add(p);
+      var segs=[],totalLen=0;
+      for(var i=0;i<pts.length-1;i++){
+        var dx=pts[i+1][0]-pts[i][0],dz=pts[i+1][1]-pts[i][1];
+        var l=Math.sqrt(dx*dx+dz*dz);
+        segs.push({sx:pts[i][0],sz:pts[i][1],dx:dx,dz:dz,len:l});totalLen+=l;
+      }
+      pulses.push({mesh:p,segs:segs,totalLen:totalLen,speed:0.6+Math.random()*0.5,offset:Math.random()*20});
+    });
+
+    var partCount=60;
+    var partGeo=new THREE.BufferGeometry();
+    var partPos=new Float32Array(partCount*3);
+    for(var i=0;i<partCount;i++){partPos[i*3]=(Math.random()-.5)*14;partPos[i*3+1]=Math.random()*4+.5;partPos[i*3+2]=(Math.random()-.5)*14;}
+    partGeo.setAttribute('position',new THREE.BufferAttribute(partPos,3));
+    var particles=new THREE.Points(partGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.04,transparent:true,opacity:0.6}));
+    scene.add(particles);
+
+    var cMat=new THREE.MeshStandardMaterial({color:0x0A1525,metalness:0.7,roughness:0.4});
+    var cGold=new THREE.MeshStandardMaterial({color:0x8B6914,metalness:0.8,roughness:0.3});
+    [{x:3.5,z:.5,w:.5,h:.08,d:.25},{x:3.8,z:-1,w:.3,h:.06,d:.4},
+     {x:-3,z:1,w:.4,h:.1,d:.2},{x:-3.5,z:-1.5,w:.3,h:.06,d:.35},
+     {x:2,z:3,w:.35,h:.07,d:.2},{x:-2,z:-3,w:.25,h:.08,d:.4},
+     {x:4,z:2,w:.2,h:.12,d:.2},{x:-4,z:-2.5,w:.3,h:.06,d:.15}
+    ].forEach(function(c,i){
+      var m=new THREE.Mesh(new THREE.BoxGeometry(c.w,c.h,c.d),i%3===0?cGold:cMat);
+      m.position.set(c.x,c.h/2-.15,c.z);scene.add(m);
+    });
+    [{x:2.5,z:0},{x:-2.5,z:0},{x:0,z:2.5},{x:0,z:-2.5},
+     {x:2.5,z:1.8},{x:-2.5,z:2},{x:3,z:-2.2},{x:-2,z:-2}
+    ].forEach(function(dp){
+      var d=new THREE.Mesh(new THREE.BoxGeometry(.12,.04,.12),
+        new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.3,metalness:0.9,roughness:0.2}));
+      d.position.set(dp.x,.01,dp.z);scene.add(d);
+    });
+
+    var clock=new THREE.Clock();
+    var camAngle=0.7;
+    function animate(){
+      requestAnimationFrame(animate);
+      var t=clock.getElapsedTime();
+      glow1.intensity=2+Math.sin(t*1.5)*0.8;
+      edge.material.emissiveIntensity=0.4+Math.sin(t*2)*0.2;
+      pulses.forEach(function(p){
+        var prog=((t*p.speed+p.offset)%10)/10;
+        var dist=prog*p.totalLen,acc=0;
+        for(var j=0;j<p.segs.length;j++){
+          if(acc+p.segs[j].len>=dist||j===p.segs.length-1){
+            var frac=Math.min(1,(dist-acc)/p.segs[j].len);
+            p.mesh.position.x=p.segs[j].sx+p.segs[j].dx*frac;
+            p.mesh.position.z=p.segs[j].sz+p.segs[j].dz*frac;
+            break;
+          }
+          acc+=p.segs[j].len;
+        }
+      });
+      var pos=particles.geometry.attributes.position.array;
+      for(var i=0;i<partCount;i++){
+        pos[i*3+1]+=0.003;
+        if(pos[i*3+1]>5){pos[i*3+1]=.5;pos[i*3]=(Math.random()-.5)*14;pos[i*3+2]=(Math.random()-.5)*14;}
+      }
+      particles.geometry.attributes.position.needsUpdate=true;
+      camAngle+=0.0012;
+      camera.position.x=Math.sin(camAngle)*6.5;
+      camera.position.z=Math.cos(camAngle)*6.5;
+      camera.position.y=4+Math.sin(t*0.2)*0.3;
+      camera.lookAt(0,0,0);
+      renderer.render(scene,camera);
+    }
+    animate();
+    window.addEventListener('resize',function(){
+      var nw=stage.offsetWidth,nh=stage.offsetHeight;
+      camera.aspect=nw/nh;camera.updateProjectionMatrix();renderer.setSize(nw,nh);
+    });
+  }
+
+  var io=new IntersectionObserver(function(es){
+    es.forEach(function(e){if(e.isIntersecting){init();io.disconnect();}});
+  },{threshold:0.1});
+  io.observe(stage);
+})();
 
 
 </script>
