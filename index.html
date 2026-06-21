@@ -1402,16 +1402,30 @@ function toggleFaq(btn){}
     var inner=new THREE.Mesh(new THREE.BoxGeometry(2.1,0.025,2.1),topMat.clone());
     inner.position.y=0.15;chip.add(inner);
 
-    // "SO" on chip
-    var txtMat=new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.8,metalness:0.9,roughness:0.1});
-    var txtH=0.03;
-    // S
-    [[-.3,.2],[-.3,0],[-.3,-.2]].forEach(function(p){chip.add(new THREE.Mesh(new THREE.BoxGeometry(.4,txtH,.08),txtMat).translateX(p[0]).translateY(.17).translateZ(p[1]));});
-    chip.add(new THREE.Mesh(new THREE.BoxGeometry(.08,txtH,.16),txtMat).translateX(-.14).translateY(.17).translateZ(.12));
-    chip.add(new THREE.Mesh(new THREE.BoxGeometry(.08,txtH,.16),txtMat).translateX(-.46).translateY(.17).translateZ(-.08));
-    // O
-    [[.3,.2],[.3,-.2]].forEach(function(p){chip.add(new THREE.Mesh(new THREE.BoxGeometry(.4,txtH,.08),txtMat).translateX(p[0]).translateY(.17).translateZ(p[1]));});
-    [[.14,0],[.46,0]].forEach(function(p){chip.add(new THREE.Mesh(new THREE.BoxGeometry(.08,txtH,.48),txtMat).translateX(p[0]).translateY(.17).translateZ(p[1]));});
+    // "SourceOn AI" text on chip via canvas texture
+    var txtCanvas=document.createElement('canvas');
+    txtCanvas.width=512;txtCanvas.height=512;
+    var ctx=txtCanvas.getContext('2d');
+    ctx.fillStyle='#0F1E35';
+    ctx.fillRect(0,0,512,512);
+    // Grid lines
+    ctx.strokeStyle='rgba(232,160,32,0.1)';ctx.lineWidth=1;
+    for(var gi=0;gi<512;gi+=24){ctx.beginPath();ctx.moveTo(gi,0);ctx.lineTo(gi,512);ctx.stroke();ctx.beginPath();ctx.moveTo(0,gi);ctx.lineTo(512,gi);ctx.stroke();}
+    // Text
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    ctx.fillStyle='#E8A020';
+    ctx.font='bold 72px Inter, Arial, sans-serif';
+    ctx.fillText('SourceOn',256,220);
+    ctx.font='bold 88px Inter, Arial, sans-serif';
+    ctx.fillText('AI',256,320);
+    var chipTexture=new THREE.CanvasTexture(txtCanvas);
+    var textPlane=new THREE.Mesh(
+      new THREE.PlaneGeometry(2.1,2.1),
+      new THREE.MeshBasicMaterial({map:chipTexture,transparent:true})
+    );
+    textPlane.rotation.x=-Math.PI/2;
+    textPlane.position.y=0.165;
+    chip.add(textPlane);
 
     // Grid on chip
     var gridMat=new THREE.LineBasicMaterial({color:0xE8A020,transparent:true,opacity:0.12});
