@@ -1394,7 +1394,7 @@ if(bdDiagram)bdObs.observe(bdDiagram);
 // FAQ (stub for pages that might have inline FAQ)
 function toggleFaq(btn){}
 
-// ENGINE 3D — SourceOn AI Chip with Full Process Flow
+// ENGINE 3D — SourceOn AI Chip
 (function(){
   var stage=document.getElementById('engine-stage');
   var canvas=document.getElementById('engine-canvas');
@@ -1404,252 +1404,315 @@ function toggleFaq(btn){}
   function init(){
     if(started)return;started=true;
     var W=stage.offsetWidth,H=stage.offsetHeight;
-    var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
-    renderer.setSize(W,H);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-    renderer.setClearColor(0x000000);
-    renderer.shadowMap.enabled=true;
+    var r=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:false});
+    r.setSize(W,H);r.setPixelRatio(Math.min(window.devicePixelRatio,2));r.setClearColor(0x020408);
 
     var scene=new THREE.Scene();
-    scene.fog=new THREE.FogExp2(0x000000,0.022);
-    var camera=new THREE.PerspectiveCamera(32,W/H,0.1,200);
-    camera.position.set(6,5.5,6);camera.lookAt(0,0,0);
+    scene.fog=new THREE.FogExp2(0x020408,0.018);
+    var cam=new THREE.PerspectiveCamera(30,W/H,0.1,250);
+    cam.position.set(7,6,7);cam.lookAt(0,0,0);
 
-    // Lights
-    scene.add(new THREE.AmbientLight(0x0a0a1a,0.8));
-    var dL=new THREE.DirectionalLight(0xffffff,0.25);dL.position.set(5,10,5);scene.add(dL);
-    var glow1=new THREE.PointLight(0xE8A020,3,15);glow1.position.set(0,2,0);scene.add(glow1);
-    var glow2=new THREE.PointLight(0xE8A020,1.2,10);glow2.position.set(-5,1,0);scene.add(glow2);
-    var glow3=new THREE.PointLight(0x10B981,1.5,12);glow3.position.set(6,1,0);scene.add(glow3);
+    // Subtle lighting
+    scene.add(new THREE.AmbientLight(0x080818,1));
+    var dL=new THREE.DirectionalLight(0xffffff,0.15);dL.position.set(5,12,5);scene.add(dL);
+    var gl1=new THREE.PointLight(0xE8A020,2,18);gl1.position.set(0,3,0);scene.add(gl1);
+    var gl2=new THREE.PointLight(0xE8A020,0.6,12);gl2.position.set(-6,1.5,0);scene.add(gl2);
+    var gl3=new THREE.PointLight(0x10B981,0.8,14);gl3.position.set(7,1.5,0);scene.add(gl3);
 
-    // GROUND
-    var ground=new THREE.Mesh(new THREE.PlaneGeometry(30,30),new THREE.MeshStandardMaterial({color:0x030810,metalness:0.9,roughness:0.4}));
-    ground.rotation.x=-Math.PI/2;ground.position.y=-0.25;scene.add(ground);
-    // Ground grid
-    var ggMat=new THREE.LineBasicMaterial({color:0xE8A020,transparent:true,opacity:0.04});
-    for(var gg=-12;gg<=12;gg+=0.8){
-      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(gg,-0.24,12),new THREE.Vector3(gg,-0.24,-12)]),ggMat));
-      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(12,-0.24,gg),new THREE.Vector3(-12,-0.24,gg)]),ggMat));
+    // Ground
+    var gnd=new THREE.Mesh(new THREE.PlaneGeometry(40,40),new THREE.MeshStandardMaterial({color:0x020408,metalness:0.95,roughness:0.3}));
+    gnd.rotation.x=-Math.PI/2;gnd.position.y=-0.15;scene.add(gnd);
+    var gLn=new THREE.LineBasicMaterial({color:0xE8A020,transparent:true,opacity:0.025});
+    for(var gg=-14;gg<=14;gg+=1){
+      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(gg,-0.14,14),new THREE.Vector3(gg,-0.14,-14)]),gLn));
+      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(14,-0.14,gg),new THREE.Vector3(-14,-0.14,gg)]),gLn));
     }
 
-    // ========== MAIN CHIP ==========
+    // ===== CHIP =====
     var chip=new THREE.Group();
-    chip.add(new THREE.Mesh(new THREE.BoxGeometry(3.2,0.18,3.2),new THREE.MeshStandardMaterial({color:0x080F1C,metalness:0.8,roughness:0.25})));
-    var topMat=new THREE.MeshStandardMaterial({color:0x0D1A2E,metalness:0.9,roughness:0.15});
-    var top2=new THREE.Mesh(new THREE.BoxGeometry(2.6,0.07,2.6),topMat);top2.position.y=0.12;chip.add(top2);
-    var edgeMat=new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.6,metalness:0.95,roughness:0.1});
-    var edge=new THREE.Mesh(new THREE.BoxGeometry(2.65,0.025,2.65),edgeMat);edge.position.y=0.155;chip.add(edge);
-    var innerDie=new THREE.Mesh(new THREE.BoxGeometry(2.4,0.03,2.4),new THREE.MeshStandardMaterial({color:0x0F1E35,metalness:0.85,roughness:0.2}));
-    innerDie.position.y=0.17;chip.add(innerDie);
+    // Ultra-thin base
+    chip.add(new THREE.Mesh(new THREE.BoxGeometry(2.8,0.06,2.8),new THREE.MeshStandardMaterial({color:0x060D18,metalness:0.9,roughness:0.2})));
+    // Die surface
+    var dieMat=new THREE.MeshStandardMaterial({color:0x0B1624,metalness:0.92,roughness:0.12});
+    var die=new THREE.Mesh(new THREE.BoxGeometry(2.3,0.025,2.3),dieMat);die.position.y=0.042;chip.add(die);
+    // Gold hairline edge
+    var edgeMat=new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.5,metalness:0.98,roughness:0.05});
+    var edgeN=new THREE.Mesh(new THREE.BoxGeometry(2.32,0.008,0.008),edgeMat);edgeN.position.set(0,0.056,1.16);chip.add(edgeN);
+    var edgeS=edgeN.clone();edgeS.position.z=-1.16;chip.add(edgeS);
+    var edgeE=new THREE.Mesh(new THREE.BoxGeometry(0.008,0.008,2.32),edgeMat);edgeE.position.set(1.16,0.056,0);chip.add(edgeE);
+    var edgeW=edgeE.clone();edgeW.position.x=-1.16;chip.add(edgeW);
 
-    // Chip texture with SourceOn AI text
+    // Chip texture — refined
     var tc=document.createElement('canvas');tc.width=1024;tc.height=1024;
     var cx=tc.getContext('2d');
-    cx.fillStyle='#0D1A2E';cx.fillRect(0,0,1024,1024);
-    cx.strokeStyle='rgba(232,160,32,0.07)';cx.lineWidth=1;
-    for(var gi=0;gi<1024;gi+=16){cx.beginPath();cx.moveTo(gi,0);cx.lineTo(gi,1024);cx.stroke();cx.beginPath();cx.moveTo(0,gi);cx.lineTo(1024,gi);cx.stroke();}
-    cx.strokeStyle='rgba(232,160,32,0.12)';cx.lineWidth=2;
-    for(var ci=0;ci<8;ci++){var cy2=120+ci*110;cx.beginPath();cx.moveTo(40,cy2);cx.lineTo(200,cy2);cx.lineTo(200,cy2+30);cx.lineTo(300,cy2+30);cx.stroke();cx.beginPath();cx.moveTo(1024-40,cy2+15);cx.lineTo(1024-200,cy2+15);cx.lineTo(1024-200,cy2+50);cx.lineTo(1024-320,cy2+50);cx.stroke();}
-    cx.textAlign='center';cx.textBaseline='middle';cx.shadowColor='#E8A020';cx.shadowBlur=30;cx.fillStyle='#E8A020';
-    cx.font='bold 110px Inter, Arial, sans-serif';cx.fillText('SourceOn',512,420);
-    cx.font='bold 140px Inter, Arial, sans-serif';cx.fillText('AI',512,580);
-    cx.shadowBlur=0;cx.fillStyle='rgba(232,160,32,0.4)';cx.font='24px monospace';
-    cx.fillText('PROCUREMENT ENGINE v3.2',512,720);
-    cx.fillText('ACTIVE  |  340+ SUPPLIERS',512,760);
-    var chipTex=new THREE.CanvasTexture(tc);
-    var textPlane=new THREE.Mesh(new THREE.PlaneGeometry(2.4,2.4),new THREE.MeshBasicMaterial({map:chipTex,transparent:true}));
-    textPlane.rotation.x=-Math.PI/2;textPlane.position.y=0.185;chip.add(textPlane);
+    cx.fillStyle='#0B1624';cx.fillRect(0,0,1024,1024);
+    // Ultra-fine grid
+    cx.strokeStyle='rgba(232,160,32,0.04)';cx.lineWidth=0.5;
+    for(var gi=0;gi<1024;gi+=12){cx.beginPath();cx.moveTo(gi,0);cx.lineTo(gi,1024);cx.stroke();cx.beginPath();cx.moveTo(0,gi);cx.lineTo(1024,gi);cx.stroke();}
+    // Circuit deco — fine hairlines
+    cx.strokeStyle='rgba(232,160,32,0.08)';cx.lineWidth=1;
+    for(var ci=0;ci<12;ci++){var yy=60+ci*80;cx.beginPath();cx.moveTo(20,yy);cx.lineTo(120+Math.random()*80,yy);cx.lineTo(120+Math.random()*80,yy+20+Math.random()*20);cx.lineTo(250+Math.random()*60,yy+20+Math.random()*20);cx.stroke();cx.beginPath();cx.moveTo(1004,yy+10);cx.lineTo(900-Math.random()*80,yy+10);cx.lineTo(900-Math.random()*80,yy+35);cx.lineTo(750-Math.random()*60,yy+35);cx.stroke();}
+    // Main text — elegant
+    cx.textAlign='center';cx.textBaseline='middle';
+    cx.shadowColor='rgba(232,160,32,0.6)';cx.shadowBlur=40;
+    cx.fillStyle='#E8A020';cx.font='300 88px Inter, -apple-system, sans-serif';cx.fillText('SourceOn',512,400);
+    cx.font='600 120px Inter, -apple-system, sans-serif';cx.fillText('AI',512,540);
+    cx.shadowBlur=0;
+    cx.fillStyle='rgba(232,160,32,0.25)';cx.font='300 18px Inter, monospace';
+    cx.fillText('PROCUREMENT ENGINE',512,680);
+    cx.font='300 15px Inter, monospace';
+    cx.fillText('340+ Lieferanten  ·  Echtzeit-Analyse  ·  Aktiv',512,710);
+    var chipTex=new THREE.CanvasTexture(tc);chipTex.anisotropy=r.capabilities.getMaxAnisotropy();
+    var tp=new THREE.Mesh(new THREE.PlaneGeometry(2.3,2.3),new THREE.MeshBasicMaterial({map:chipTex,transparent:true}));
+    tp.rotation.x=-Math.PI/2;tp.position.y=0.058;chip.add(tp);
 
-    // Chip grid lines
-    var gridMat=new THREE.LineBasicMaterial({color:0xE8A020,transparent:true,opacity:0.1});
-    for(var g=-1.1;g<=1.1;g+=0.18){
-      chip.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(g,.19,1.2),new THREE.Vector3(g,.19,-1.2)]),gridMat));
-      chip.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(1.2,.19,g),new THREE.Vector3(-1.2,.19,g)]),gridMat));
-    }
-
-    // Corner LEDs
-    var ledGeo=new THREE.SphereGeometry(0.06,8,8);
+    // Corner micro-LEDs
+    var ledG=new THREE.SphereGeometry(0.025,8,8);
     var leds=[];
-    [[1.25,0.2,1.25],[1.25,0.2,-1.25],[-1.25,0.2,1.25],[-1.25,0.2,-1.25]].forEach(function(p,i){
+    [[1.1,0.065,1.1],[1.1,0.065,-1.1],[-1.1,0.065,1.1],[-1.1,0.065,-1.1]].forEach(function(p,i){
       var lm=new THREE.MeshBasicMaterial({color:0x10B981,transparent:true});
-      var led=new THREE.Mesh(ledGeo,lm);led.position.set(p[0],p[1],p[2]);led.userData={phase:i*0.7};chip.add(led);leds.push(led);
+      var led=new THREE.Mesh(ledG,lm);led.position.set(p[0],p[1],p[2]);led.userData={ph:i*0.8};chip.add(led);leds.push(led);
     });
-    chip.position.y=0.08;scene.add(chip);
+    chip.position.y=0.05;scene.add(chip);
 
-    // ========== SCANNER BARS (Equalizer) ==========
+    // ===== HORIZONTAL SCANNER BARS (radiate outward from center, lying flat) =====
     var scanBars=[];
-    var barMat0=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.8});
-    for(var b=0;b<20;b++){
-      var bar=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.5,0.06),barMat0.clone());
-      var angle=(b/20)*Math.PI*2;
-      bar.position.set(Math.cos(angle)*1.08,0.3,Math.sin(angle)*1.08);
-      bar.userData={baseY:0.3,phase:b*0.32,idx:b};
+    for(var sb=0;sb<24;sb++){
+      var angle=(sb/24)*Math.PI*2;
+      var barLen=0.6;
+      var bar=new THREE.Mesh(new THREE.BoxGeometry(barLen,0.006,0.02),new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.6}));
+      var dist=1.25;
+      bar.position.set(Math.cos(angle)*(dist+barLen/2),0.065,Math.sin(angle)*(dist+barLen/2));
+      bar.rotation.y=-angle;
+      bar.userData={angle:angle,baseDist:dist,phase:sb*0.26,idx:sb};
       chip.add(bar);scanBars.push(bar);
     }
+    // Rotating scan ring
+    var ringGeo=new THREE.RingGeometry(1.15,1.17,64);
+    var ringMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.15,side:THREE.DoubleSide});
+    var scanRing=new THREE.Mesh(ringGeo,ringMat);scanRing.rotation.x=-Math.PI/2;scanRing.position.y=0.07;chip.add(scanRing);
 
-    // Scan line (rotating)
-    var scanLine=new THREE.Mesh(new THREE.BoxGeometry(2.4,0.012,0.03),new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.4}));
-    scanLine.position.y=0.2;chip.add(scanLine);
+    // ===== CHECKMARK =====
+    var chkMat=new THREE.MeshBasicMaterial({color:0x10B981,transparent:true,opacity:0});
+    var chk1=new THREE.Mesh(new THREE.BoxGeometry(0.04,0.04,0.35),chkMat);chk1.position.set(-0.08,0.8,0);chk1.rotation.x=0.4;
+    var chk2=new THREE.Mesh(new THREE.BoxGeometry(0.04,0.04,0.65),chkMat.clone());chk2.position.set(0.16,0.9,0);chk2.rotation.x=-0.55;
+    chip.add(chk1);chip.add(chk2);
+    var chkRing=new THREE.Mesh(new THREE.RingGeometry(0.38,0.4,32),new THREE.MeshBasicMaterial({color:0x10B981,transparent:true,opacity:0,side:THREE.DoubleSide}));
+    chkRing.rotation.x=-Math.PI/2;chkRing.position.y=1;chip.add(chkRing);
 
-    // ========== CHECKMARK (3D, appears periodically) ==========
-    var checkMat=new THREE.MeshBasicMaterial({color:0x10B981,transparent:true,opacity:0});
-    var check1=new THREE.Mesh(new THREE.BoxGeometry(0.08,0.08,0.5),checkMat);
-    check1.position.set(-0.12,1,0);check1.rotation.x=Math.PI*0.15;
-    var check2=new THREE.Mesh(new THREE.BoxGeometry(0.08,0.08,0.9),checkMat.clone());
-    check2.position.set(0.22,1.1,0);check2.rotation.x=-Math.PI*0.22;
-    chip.add(check1);chip.add(check2);
-    // Check glow ring
-    var checkRing=new THREE.Mesh(new THREE.RingGeometry(0.5,0.55,32),new THREE.MeshBasicMaterial({color:0x10B981,transparent:true,opacity:0,side:THREE.DoubleSide}));
-    checkRing.rotation.x=-Math.PI/2;checkRing.position.y=1.2;chip.add(checkRing);
-
-    // ========== TRACES ==========
-    var tMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.85});
-    var tGlow=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.12});
-    var tGreen=new THREE.MeshBasicMaterial({color:0x10B981,transparent:true,opacity:0.85});
-    var tGreenGlow=new THREE.MeshBasicMaterial({color:0x10B981,transparent:true,opacity:0.12});
-    var retLineMat=new THREE.MeshBasicMaterial({color:0xFBBF24,transparent:true,opacity:0.45});
-    var retLineGlow=new THREE.MeshBasicMaterial({color:0xFBBF24,transparent:true,opacity:0.06});
-
-    function addTrace(pts,w,mat,gmat){
-      w=w||0.07;mat=mat||tMat;gmat=gmat||tGlow;
+    // ===== TRACES =====
+    function addTrace(pts,w,col,glowOp){
+      w=w||0.025;col=col||0xE8A020;glowOp=glowOp||0.06;
+      var mat=new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.7});
+      var gm=new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:glowOp});
       for(var i=0;i<pts.length-1;i++){
         var ax=pts[i][0],az=pts[i][1],bx=pts[i+1][0],bz=pts[i+1][1];
-        var dx=bx-ax,dz=bz-az,len=Math.sqrt(dx*dx+dz*dz);
-        if(len<0.01)continue;
+        var dx=bx-ax,dz=bz-az,len=Math.sqrt(dx*dx+dz*dz);if(len<0.01)continue;
         var ang=Math.atan2(dx,dz);
-        var m=new THREE.Mesh(new THREE.BoxGeometry(w,0.025,len),mat.clone());
-        m.position.set(ax+dx/2,0.01,az+dz/2);m.rotation.y=ang;scene.add(m);
-        var gl=new THREE.Mesh(new THREE.BoxGeometry(w*5,0.012,len),gmat.clone());
-        gl.position.set(ax+dx/2,0.005,az+dz/2);gl.rotation.y=ang;scene.add(gl);
+        var m=new THREE.Mesh(new THREE.BoxGeometry(w,0.01,len),mat.clone());m.position.set(ax+dx/2,0.005,az+dz/2);m.rotation.y=ang;scene.add(m);
+        var g=new THREE.Mesh(new THREE.BoxGeometry(w*6,0.005,len),gm.clone());g.position.set(ax+dx/2,0.003,az+dz/2);g.rotation.y=ang;scene.add(g);
       }
     }
 
-    // Inflow (gold, from 3 customers)
-    var inTraces=[
-      [[-8,2.5],[-6,2.5],[-4.5,2],[-3,1.2],[-1.65,.5]],
-      [[-9,0],[-7,0],[-5,0],[-3,0],[-1.65,0]],
-      [[-8,-2.5],[-6,-2.5],[-4.5,-2],[-3,-1.2],[-1.65,-.5]]
+    // Inflow traces
+    var inT=[
+      [[-9,2.8],[-7,2.8],[-5.5,2.2],[-4,1.5],[-2.5,.8],[-1.2,.3]],
+      [[-10,0],[-8,0],[-6,0],[-4,0],[-2.5,0],[-1.2,0]],
+      [[-9,-2.8],[-7,-2.8],[-5.5,-2.2],[-4,-1.5],[-2.5,-.8],[-1.2,-.3]]
     ];
-    inTraces.forEach(function(t){addTrace(t);});
-    addTrace([[-7,1.5],[-5.5,1.5],[-4.5,1.2]],0.03);
-    addTrace([[-7,-.8],[-5,-.8],[-3.5,-.5]],0.03);
-    addTrace([[-7,-1.8],[-5.5,-1.8],[-4,-1.5]],0.03);
+    inT.forEach(function(t){addTrace(t,0.03);});
+    addTrace([[-8,1.5],[-6,1.5],[-4.5,1]],0.012);
+    addTrace([[-8,-1.5],[-6,-1.5],[-4.5,-1]],0.012);
+    addTrace([[-8,.8],[-6,.6],[-4,.3]],0.012);
+    addTrace([[-8,-.8],[-6,-.6],[-4,-.3]],0.012);
 
-    // Outflow (green, bundled to supplier)
-    var outTraces=[
-      [[1.65,0],[3,0],[5,0],[7,0],[9,0]],
-      [[1.65,.4],[3,.6],[5,1],[7,1.2]],
-      [[1.65,-.4],[3,-.6],[5,-1],[7,-1.2]]
+    // Outflow traces
+    var outT=[
+      [[1.2,0],[2.5,0],[4.5,0],[7,0],[10,0]],
+      [[1.2,.3],[2.5,.5],[4.5,.9],[7,1.2],[9.5,1.5]],
+      [[1.2,-.3],[2.5,-.5],[4.5,-.9],[7,-1.2],[9.5,-1.5]]
     ];
-    outTraces.forEach(function(t){addTrace(t,0.08,tGreen,tGreenGlow);});
-    addTrace([[1.65,.2],[4,.3],[6,.5]],0.03,tGreen,tGreenGlow);
-    addTrace([[1.65,-.2],[4,-.3],[6,-.5]],0.03,tGreen,tGreenGlow);
+    outT.forEach(function(t){addTrace(t,0.035,0x10B981,0.08);});
+    addTrace([[1.2,.15],[4,.25],[7,.5]],0.012,0x10B981,0.04);
+    addTrace([[1.2,-.15],[4,-.25],[7,-.5]],0.012,0x10B981,0.04);
 
-    // Return traces (arcs back to customers)
-    var retTrace1=[[9,0],[8,3],[5,5],[2,5.5],[0,5.5],[-3,5],[-6,3.5],[-8,2.5]];
-    var retTrace2=[[9,0],[8,-3],[5,-5],[2,-5.5],[0,-5.5],[-3,-5],[-6,-3.5],[-8,-2.5]];
-    addTrace(retTrace1,0.04,retLineMat,retLineGlow);
-    addTrace(retTrace2,0.04,retLineMat,retLineGlow);
+    // Return arcs
+    var retT1=[[10,0],[9,3.5],[6,5.5],[3,6.5],[0,6.5],[-3,6],[-6,4.5],[-9,2.8]];
+    var retT2=[[10,0],[9,-3.5],[6,-5.5],[3,-6.5],[0,-6.5],[-3,-6],[-6,-4.5],[-9,-2.8]];
+    addTrace(retT1,0.018,0xFBBF24,0.04);
+    addTrace(retT2,0.018,0xFBBF24,0.04);
 
-    // Chip pin connectors
-    for(var pin=-1.2;pin<=1.2;pin+=0.3){
-      addTrace([[-1.65,pin],[-2.2,pin]],0.04);
-      addTrace([[1.65,pin],[2.2,pin]],0.04,tGreen,tGreenGlow);
-      addTrace([[pin,-1.65],[pin,-2.2]],0.03);
-      addTrace([[pin,1.65],[pin,2.2]],0.03);
+    // Chip pins — ultra thin
+    for(var pin=-1;pin<=1;pin+=0.25){
+      addTrace([[-1.2,pin],[-1.6,pin]],0.015);
+      addTrace([[1.2,pin],[1.6,pin]],0.015,0x10B981,0.04);
     }
 
-    // ========== KUNDEN NODES (3D) ==========
-    var nodeMat=new THREE.MeshStandardMaterial({color:0x0A1525,metalness:0.6,roughness:0.35});
-    function makeNode(x,z,col){
-      var g=new THREE.Group();
-      g.add(new THREE.Mesh(new THREE.BoxGeometry(1.4,0.16,0.7),nodeMat));
-      var rim=new THREE.Mesh(new THREE.BoxGeometry(1.42,0.025,0.72),new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:0.4,metalness:0.95,roughness:0.1}));
-      rim.position.y=0.09;g.add(rim);
-      var led=new THREE.Mesh(new THREE.SphereGeometry(0.04,6,6),new THREE.MeshBasicMaterial({color:col}));
-      led.position.set(-0.6,0.12,0);g.add(led);
-      g.position.set(x,-0.05,z);scene.add(g);return g;
+    // ===== CUSTOMER NODES (sleek, thin) =====
+    function makeLabel(text,subtext,w2,h2){
+      var c=document.createElement('canvas');c.width=256;c.height=128;
+      var x=c.getContext('2d');
+      x.fillStyle='rgba(8,15,28,0.9)';
+      x.beginPath();x.roundRect(4,4,248,120,12);x.fill();
+      x.strokeStyle='rgba(232,160,32,0.3)';x.lineWidth=1;
+      x.beginPath();x.roundRect(4,4,248,120,12);x.stroke();
+      x.fillStyle='#E8A020';x.font='600 22px Inter, sans-serif';x.textAlign='center';
+      x.fillText(text,128,50);
+      x.fillStyle='rgba(255,255,255,0.4)';x.font='300 16px Inter, sans-serif';
+      x.fillText(subtext,128,80);
+      // Micro LED dot
+      x.fillStyle='#E8A020';x.beginPath();x.arc(30,30,4,0,Math.PI*2);x.fill();
+      var tex=new THREE.CanvasTexture(c);tex.anisotropy=r.capabilities.getMaxAnisotropy();
+      var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false}));
+      sp.scale.set(w2||1.8,h2||0.9,1);
+      return sp;
     }
-    makeNode(-8,2.5,0xE8A020);
-    makeNode(-9,0,0xE8A020);
-    makeNode(-8,-2.5,0xE8A020);
 
-    // Lieferant node (green, right)
-    var liefGroup=new THREE.Group();
-    liefGroup.add(new THREE.Mesh(new THREE.BoxGeometry(1.6,0.2,0.9),new THREE.MeshStandardMaterial({color:0x0A1525,metalness:0.6,roughness:0.35})));
-    var liefRimMat=new THREE.MeshStandardMaterial({color:0x10B981,emissive:0x10B981,emissiveIntensity:0.5,metalness:0.95,roughness:0.1});
-    var liefRim2=new THREE.Mesh(new THREE.BoxGeometry(1.62,0.03,0.92),liefRimMat);liefRim2.position.y=0.11;liefGroup.add(liefRim2);
-    liefGroup.add(new THREE.Mesh(new THREE.SphereGeometry(0.05,6,6),new THREE.MeshBasicMaterial({color:0x10B981})).translateX(-0.7).translateY(0.14));
-    liefGroup.position.set(9,-0.05,0);scene.add(liefGroup);
+    var kA=makeLabel('Kunde A','80m\u00B3 Beton');kA.position.set(-9,0.6,2.8);scene.add(kA);
+    var kB=makeLabel('Kunde B','60m\u00B3 Beton');kB.position.set(-10,0.6,0);scene.add(kB);
+    var kC=makeLabel('Kunde C','D\u00E4mmung 200m\u00B2');kC.position.set(-9,0.6,-2.8);scene.add(kC);
 
-    // ========== MATERIAL PACKETS (flying in from customers) ==========
-    var packets=[];
-    function makePacket(trace,delay,speed){
-      var pG=new THREE.Group();
-      var col=[0xE8A020,0xD4940C,0xF0B830,0xC8880A][packets.length%4];
-      pG.add(new THREE.Mesh(new THREE.BoxGeometry(0.4,0.2,0.28),new THREE.MeshStandardMaterial({color:col,emissive:0xE8A020,emissiveIntensity:0.25,metalness:0.7,roughness:0.3})));
-      pG.add(new THREE.Mesh(new THREE.SphereGeometry(0.32,8,8),new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.12})));
-      pG.position.y=0.15;scene.add(pG);
-      var segs=[],tLen=0;
-      for(var i=0;i<trace.length-1;i++){var dx=trace[i+1][0]-trace[i][0],dz=trace[i+1][1]-trace[i][1],l=Math.sqrt(dx*dx+dz*dz);segs.push({sx:trace[i][0],sz:trace[i][1],dx:dx,dz:dz,len:l});tLen+=l;}
-      packets.push({mesh:pG,segs:segs,totalLen:tLen,speed:speed,delay:delay});
+    // Thin gold base plate under each customer
+    [[-9,2.8],[-10,0],[-9,-2.8]].forEach(function(p){
+      var plate=new THREE.Mesh(new THREE.BoxGeometry(1.4,0.02,0.5),new THREE.MeshStandardMaterial({color:0x0A1525,metalness:0.8,roughness:0.3}));
+      plate.position.set(p[0],0,p[1]);scene.add(plate);
+      var rim=new THREE.Mesh(new THREE.BoxGeometry(1.42,0.004,0.52),new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.3,metalness:0.98,roughness:0.05}));
+      rim.position.set(p[0],0.012,p[1]);scene.add(rim);
+    });
+
+    // ===== SUPPLIER NODE (green, elegant) =====
+    function makeGreenLabel(text,subtext){
+      var c=document.createElement('canvas');c.width=256;c.height=128;
+      var x=c.getContext('2d');
+      x.fillStyle='rgba(8,15,28,0.9)';x.beginPath();x.roundRect(4,4,248,120,12);x.fill();
+      x.strokeStyle='rgba(16,185,129,0.4)';x.lineWidth=1.5;
+      x.beginPath();x.roundRect(4,4,248,120,12);x.stroke();
+      x.fillStyle='#10B981';x.font='600 20px Inter, sans-serif';x.textAlign='center';
+      x.fillText(text,128,48);
+      x.fillStyle='rgba(255,255,255,0.4)';x.font='300 14px Inter, sans-serif';
+      x.fillText(subtext,128,76);
+      // Check icon
+      x.strokeStyle='#10B981';x.lineWidth=3;x.beginPath();x.moveTo(110,96);x.lineTo(122,108);x.lineTo(146,88);x.stroke();
+      var tex=new THREE.CanvasTexture(c);tex.anisotropy=r.capabilities.getMaxAnisotropy();
+      var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false}));
+      sp.scale.set(2,1,1);return sp;
     }
-    makePacket(inTraces[0],0,0.6);makePacket(inTraces[0],4.5,0.55);
-    makePacket(inTraces[1],1.5,0.65);makePacket(inTraces[1],6,0.6);
-    makePacket(inTraces[2],3,0.58);makePacket(inTraces[2],7.5,0.62);
+    var supLabel=makeGreenLabel('Bestes Angebot','Verhandelt & abgeschlossen');
+    supLabel.position.set(10,0.7,0);scene.add(supLabel);
+    var supPlate=new THREE.Mesh(new THREE.BoxGeometry(1.6,0.02,0.6),new THREE.MeshStandardMaterial({color:0x0A1525,metalness:0.8,roughness:0.3}));
+    supPlate.position.set(10,0,0);scene.add(supPlate);
+    var supRim=new THREE.Mesh(new THREE.BoxGeometry(1.62,0.004,0.62),new THREE.MeshStandardMaterial({color:0x10B981,emissive:0x10B981,emissiveIntensity:0.4,metalness:0.98,roughness:0.05}));
+    supRim.position.set(10,0.012,0);scene.add(supRim);
 
-    // ========== BUNDLED OUTPUT PACKETS (green, flying out right) ==========
-    var outPackets=[];
-    function makeOutPkt(trace,delay,speed){
-      var pG=new THREE.Group();
-      pG.add(new THREE.Mesh(new THREE.BoxGeometry(0.55,0.25,0.38),new THREE.MeshStandardMaterial({color:0x10B981,emissive:0x10B981,emissiveIntensity:0.3,metalness:0.7,roughness:0.3})));
-      pG.add(new THREE.Mesh(new THREE.SphereGeometry(0.4,8,8),new THREE.MeshBasicMaterial({color:0x10B981,transparent:true,opacity:0.1})));
-      // White bar on top = "verified"
-      pG.add(new THREE.Mesh(new THREE.BoxGeometry(0.22,0.04,0.04),new THREE.MeshBasicMaterial({color:0xffffff})).translateY(0.15));
-      pG.position.y=0.18;scene.add(pG);
-      var segs=[],tLen=0;
-      for(var i=0;i<trace.length-1;i++){var dx=trace[i+1][0]-trace[i][0],dz=trace[i+1][1]-trace[i][1],l=Math.sqrt(dx*dx+dz*dz);segs.push({sx:trace[i][0],sz:trace[i][1],dx:dx,dz:dz,len:l});tLen+=l;}
-      outPackets.push({mesh:pG,segs:segs,totalLen:tLen,speed:speed,delay:delay});
+    // ===== MATERIAL PACKETS (sleek thin cards with labels) =====
+    var pkts=[];
+    function makePkt(trace,delay,speed,label){
+      var c=document.createElement('canvas');c.width=128;c.height=64;
+      var x=c.getContext('2d');
+      x.fillStyle='rgba(232,160,32,0.15)';x.beginPath();x.roundRect(2,2,124,60,8);x.fill();
+      x.strokeStyle='rgba(232,160,32,0.5)';x.lineWidth=1;x.beginPath();x.roundRect(2,2,124,60,8);x.stroke();
+      x.fillStyle='#E8A020';x.font='600 14px Inter, sans-serif';x.textAlign='center';x.fillText(label,64,38);
+      var tex=new THREE.CanvasTexture(c);
+      var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false,opacity:0.9}));
+      sp.scale.set(0.8,0.4,1);sp.position.y=0.3;scene.add(sp);
+      var segs=[],tL=0;
+      for(var i=0;i<trace.length-1;i++){var dx=trace[i+1][0]-trace[i][0],dz=trace[i+1][1]-trace[i][1],l=Math.sqrt(dx*dx+dz*dz);segs.push({sx:trace[i][0],sz:trace[i][1],dx:dx,dz:dz,len:l});tL+=l;}
+      // Trail glow
+      var dot=new THREE.Mesh(new THREE.SphereGeometry(0.06,8,8),new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.5}));
+      dot.position.y=0.08;scene.add(dot);
+      pkts.push({sp:sp,dot:dot,segs:segs,totalLen:tL,speed:speed,delay:delay});
     }
-    makeOutPkt(outTraces[0],2,0.45);makeOutPkt(outTraces[1],5.5,0.4);makeOutPkt(outTraces[2],9,0.42);
+    makePkt(inT[0],0,0.55,'80m\u00B3 Beton');
+    makePkt(inT[0],5,0.5,'Armierung');
+    makePkt(inT[1],1.5,0.6,'60m\u00B3 Beton');
+    makePkt(inT[1],6.5,0.55,'Kies 40t');
+    makePkt(inT[2],3,0.52,'D\u00E4mmung');
+    makePkt(inT[2],8,0.58,'XPS 200m\u00B2');
 
-    // ========== RETURN PARTICLES (cream/yellow, back to customers) ==========
-    var retParts=[];
-    function makeRetPart(trace,delay,speed){
-      var p=new THREE.Mesh(new THREE.SphereGeometry(0.09,8,8),new THREE.MeshBasicMaterial({color:0xFBBF24}));
-      p.add(new THREE.Mesh(new THREE.SphereGeometry(0.22,6,6),new THREE.MeshBasicMaterial({color:0xFBBF24,transparent:true,opacity:0.2})));
-      p.position.y=0.12;scene.add(p);
-      var segs=[],tLen=0;
-      for(var i=0;i<trace.length-1;i++){var dx=trace[i+1][0]-trace[i][0],dz=trace[i+1][1]-trace[i][1],l=Math.sqrt(dx*dx+dz*dz);segs.push({sx:trace[i][0],sz:trace[i][1],dx:dx,dz:dz,len:l});tLen+=l;}
-      retParts.push({mesh:p,segs:segs,totalLen:tLen,speed:speed,delay:delay});
+    // ===== BUNDLED OUTPUT PACKETS (green, with volume info) =====
+    var oPkts=[];
+    function makeOPkt(trace,delay,speed,label){
+      var c=document.createElement('canvas');c.width=160;c.height=80;
+      var x=c.getContext('2d');
+      x.fillStyle='rgba(16,185,129,0.12)';x.beginPath();x.roundRect(2,2,156,76,10);x.fill();
+      x.strokeStyle='rgba(16,185,129,0.5)';x.lineWidth=1.5;x.beginPath();x.roundRect(2,2,156,76,10);x.stroke();
+      x.fillStyle='#10B981';x.font='600 15px Inter, sans-serif';x.textAlign='center';x.fillText(label,80,34);
+      x.fillStyle='rgba(255,255,255,0.35)';x.font='300 12px Inter, sans-serif';x.fillText('Geb\u00FCndelt & verhandelt',80,56);
+      // Check
+      x.strokeStyle='#10B981';x.lineWidth=2;x.beginPath();x.moveTo(58,64);x.lineTo(68,72);x.lineTo(86,56);x.stroke();
+      var tex=new THREE.CanvasTexture(c);
+      var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false,opacity:0.9}));
+      sp.scale.set(1.1,0.55,1);sp.position.y=0.35;scene.add(sp);
+      var segs=[],tL=0;
+      for(var i=0;i<trace.length-1;i++){var dx=trace[i+1][0]-trace[i][0],dz=trace[i+1][1]-trace[i][1],l=Math.sqrt(dx*dx+dz*dz);segs.push({sx:trace[i][0],sz:trace[i][1],dx:dx,dz:dz,len:l});tL+=l;}
+      var dot=new THREE.Mesh(new THREE.SphereGeometry(0.07,8,8),new THREE.MeshBasicMaterial({color:0x10B981,transparent:true,opacity:0.5}));
+      dot.position.y=0.08;scene.add(dot);
+      oPkts.push({sp:sp,dot:dot,segs:segs,totalLen:tL,speed:speed,delay:delay});
     }
-    makeRetPart(retTrace1,4,0.3);makeRetPart(retTrace1,10,0.28);
-    makeRetPart(retTrace2,6,0.32);makeRetPart(retTrace2,12,0.27);
+    makeOPkt(outT[0],2,0.4,'140m\u00B3 Beton');
+    makeOPkt(outT[1],6,0.35,'D\u00E4mmung + XPS');
+    makeOPkt(outT[2],10,0.38,'Kies + Armierung');
 
-    // ========== FLOATING PARTICLES ==========
-    var partCount=80;var partGeo=new THREE.BufferGeometry();var partPos=new Float32Array(partCount*3);
-    for(var i=0;i<partCount;i++){partPos[i*3]=(Math.random()-.5)*22;partPos[i*3+1]=Math.random()*5+.3;partPos[i*3+2]=(Math.random()-.5)*22;}
-    partGeo.setAttribute('position',new THREE.BufferAttribute(partPos,3));
-    scene.add(new THREE.Points(partGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.05,transparent:true,opacity:0.5})));
+    // ===== RETURN PARTICLES =====
+    var retP=[];
+    function makeRet(trace,delay,speed){
+      var dot=new THREE.Mesh(new THREE.SphereGeometry(0.04,8,8),new THREE.MeshBasicMaterial({color:0xFBBF24}));
+      var halo=new THREE.Mesh(new THREE.SphereGeometry(0.12,6,6),new THREE.MeshBasicMaterial({color:0xFBBF24,transparent:true,opacity:0.15}));
+      dot.add(halo);dot.position.y=0.08;scene.add(dot);
+      var segs=[],tL=0;
+      for(var i=0;i<trace.length-1;i++){var dx=trace[i+1][0]-trace[i][0],dz=trace[i+1][1]-trace[i][1],l=Math.sqrt(dx*dx+dz*dz);segs.push({sx:trace[i][0],sz:trace[i][1],dx:dx,dz:dz,len:l});tL+=l;}
+      retP.push({mesh:dot,segs:segs,totalLen:tL,speed:speed,delay:delay});
+    }
+    makeRet(retT1,4,0.28);makeRet(retT1,11,0.25);
+    makeRet(retT2,6,0.3);makeRet(retT2,13,0.26);
+
+    // Savings labels (appear near customers on return)
+    function makeSavLabel(text){
+      var c=document.createElement('canvas');c.width=96;c.height=48;
+      var x=c.getContext('2d');
+      x.fillStyle='#10B981';x.font='700 28px Inter, sans-serif';x.textAlign='center';x.textBaseline='middle';
+      x.fillText(text,48,24);
+      var tex=new THREE.CanvasTexture(c);
+      var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false,opacity:0}));
+      sp.scale.set(0.7,0.35,1);return sp;
+    }
+    var sav1=makeSavLabel('-12%');sav1.position.set(-9,1.2,2.8);scene.add(sav1);
+    var sav2=makeSavLabel('-9%');sav2.position.set(-10,1.2,0);scene.add(sav2);
+    var sav3=makeSavLabel('-15%');sav3.position.set(-9,1.2,-2.8);scene.add(sav3);
+    var savs=[sav1,sav2,sav3];
+
+    // Floating particles
+    var pCnt=100;var pGeo=new THREE.BufferGeometry();var pPos=new Float32Array(pCnt*3);
+    for(var i=0;i<pCnt;i++){pPos[i*3]=(Math.random()-.5)*28;pPos[i*3+1]=Math.random()*6+.2;pPos[i*3+2]=(Math.random()-.5)*28;}
+    pGeo.setAttribute('position',new THREE.BufferAttribute(pPos,3));
+    var parts=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.03,transparent:true,opacity:0.35}));
+    scene.add(parts);
 
     // Junction dots
-    var jMat=new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.4,metalness:0.95,roughness:0.15});
-    var jGreen=new THREE.MeshStandardMaterial({color:0x10B981,emissive:0x10B981,emissiveIntensity:0.4,metalness:0.95,roughness:0.15});
-    [[-6,2.5],[-7,0],[-6,-2.5],[-4.5,2],[-5,0],[-4.5,-2],[-3,1.2],[-3,0],[-3,-1.2]].forEach(function(p){scene.add(new THREE.Mesh(new THREE.BoxGeometry(0.14,0.05,0.14),jMat).translateX(p[0]).translateY(0.02).translateZ(p[1]));});
-    [[3,0],[5,0],[7,0],[3,.6],[5,1],[7,1.2],[3,-.6],[5,-1],[7,-1.2]].forEach(function(p){scene.add(new THREE.Mesh(new THREE.BoxGeometry(0.14,0.05,0.14),jGreen).translateX(p[0]).translateY(0.02).translateZ(p[1]));});
+    var jM=new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.3,metalness:0.98,roughness:0.1});
+    var jG=jM.clone();jG.color.setHex(0x10B981);jG.emissive.setHex(0x10B981);
+    [[-7,2.8],[-8,0],[-7,-2.8],[-5.5,2.2],[-6,0],[-5.5,-2.2],[-4,1.5],[-4,0],[-4,-1.5]].forEach(function(p){
+      scene.add(new THREE.Mesh(new THREE.BoxGeometry(0.08,0.02,0.08),jM).translateX(p[0]).translateY(0.01).translateZ(p[1]));
+    });
+    [[2.5,0],[4.5,0],[7,0],[2.5,.5],[4.5,.9],[7,1.2],[2.5,-.5],[4.5,-.9],[7,-1.2]].forEach(function(p){
+      scene.add(new THREE.Mesh(new THREE.BoxGeometry(0.08,0.02,0.08),jG).translateX(p[0]).translateY(0.01).translateZ(p[1]));
+    });
 
-    // ========== ANIMATE ==========
-    var clock=new THREE.Clock();var camAngle=0.7;
+    // ===== ANIMATE =====
+    var clk=new THREE.Clock();var cAng=0.7;
 
-    function movePulse(obj,t,cycleLen){
-      var elapsed=((t-obj.delay)%cycleLen+cycleLen)%cycleLen;
-      var prog=(elapsed*obj.speed%cycleLen)/cycleLen;
-      var dist=prog*obj.totalLen,acc=0;
+    function moveObj(obj,t,cyc){
+      var el=((t-obj.delay)%cyc+cyc)%cyc;
+      var prog=(el*obj.speed%cyc)/cyc;
+      var d=prog*obj.totalLen,acc=0;
       for(var j=0;j<obj.segs.length;j++){
-        if(acc+obj.segs[j].len>=dist||j===obj.segs.length-1){
-          var frac=Math.min(1,(dist-acc)/obj.segs[j].len);
-          obj.mesh.position.x=obj.segs[j].sx+obj.segs[j].dx*frac;
-          obj.mesh.position.z=obj.segs[j].sz+obj.segs[j].dz*frac;
+        if(acc+obj.segs[j].len>=d||j===obj.segs.length-1){
+          var f=Math.min(1,(d-acc)/obj.segs[j].len);
+          var px=obj.segs[j].sx+obj.segs[j].dx*f;
+          var pz=obj.segs[j].sz+obj.segs[j].dz*f;
+          if(obj.sp){obj.sp.position.x=px;obj.sp.position.z=pz;}
+          if(obj.dot){obj.dot.position.x=px;obj.dot.position.z=pz;}
+          if(obj.mesh){obj.mesh.position.x=px;obj.mesh.position.z=pz;}
           break;
         }
         acc+=obj.segs[j].len;
@@ -1658,59 +1721,63 @@ function toggleFaq(btn){}
 
     function animate(){
       requestAnimationFrame(animate);
-      var t=clock.getElapsedTime();
+      var t=clk.getElapsedTime();
 
-      // Lights
-      glow1.intensity=2.5+Math.sin(t*1.5)*1;
-      glow3.intensity=1.2+Math.sin(t*1.2+1)*0.5;
-      edge.material.emissiveIntensity=0.5+Math.sin(t*2)*0.25;
-      liefRimMat.emissiveIntensity=0.4+Math.sin(t*1.8)*0.2;
+      gl1.intensity=1.8+Math.sin(t*1.2)*0.6;
+      gl3.intensity=0.6+Math.sin(t+1)*0.3;
+      edgeMat.emissiveIntensity=0.4+Math.sin(t*1.8)*0.15;
+      supRim.material.emissiveIntensity=0.3+Math.sin(t*1.5)*0.15;
 
-      // LEDs
-      leds.forEach(function(led){led.material.opacity=0.3+Math.abs(Math.sin(t*2+led.userData.phase))*0.7;});
+      leds.forEach(function(l){l.material.opacity=0.2+Math.abs(Math.sin(t*1.8+l.userData.ph))*0.8;});
 
-      // Scanner bars (equalizer)
-      scanBars.forEach(function(bar){
-        var wave=Math.sin(t*3+bar.userData.phase)*0.5+0.5;
-        var burst=Math.sin(t*7+bar.userData.idx*0.5)*0.3+0.7;
-        var h=0.1+wave*burst*0.8;
-        bar.scale.y=h/0.5;bar.position.y=bar.userData.baseY+h*0.3;
-        bar.material.opacity=0.4+wave*0.6;
-        bar.material.color.setHex(Math.sin(t*0.8+bar.userData.phase)>0.3?0x10B981:0xE8A020);
+      // Horizontal scanner bars
+      scanBars.forEach(function(b){
+        var wave=Math.sin(t*2.5+b.userData.phase)*0.5+0.5;
+        var pulse=Math.sin(t*5+b.userData.idx*0.4)*0.3+0.7;
+        var len=0.15+wave*pulse*0.7;
+        b.scale.x=len/0.6;
+        var d=b.userData.baseDist+len*0.35;
+        b.position.x=Math.cos(b.userData.angle)*(d+len*0.3);
+        b.position.z=Math.sin(b.userData.angle)*(d+len*0.3);
+        b.material.opacity=0.25+wave*0.5;
+        b.material.color.setHex(Math.sin(t*0.6+b.userData.phase)>0.2?0x10B981:0xE8A020);
       });
 
-      // Scan line
-      scanLine.rotation.y=t*1.5;scanLine.material.opacity=0.2+Math.sin(t*4)*0.2;
+      // Scan ring pulse
+      scanRing.material.opacity=0.08+Math.sin(t*3)*0.06;
+      scanRing.scale.set(1+Math.sin(t*2)*0.03,1+Math.sin(t*2)*0.03,1);
 
-      // Checkmark (appears every ~8s)
-      var cc=t%8;
-      if(cc>5&&cc<7){
-        var cp=Math.min(1,(cc-5)/0.5);
-        check1.material.opacity=cp;check2.material.opacity=cp;checkRing.material.opacity=cp*0.5;
-      } else {
-        check1.material.opacity*=0.95;check2.material.opacity*=0.95;checkRing.material.opacity*=0.95;
-      }
+      // Checkmark (every ~10s)
+      var cc=t%10;
+      if(cc>6.5&&cc<8.5){var cp=Math.min(1,(cc-6.5)/0.4);chk1.material.opacity=cp;chk2.material.opacity=cp;chkRing.material.opacity=cp*0.4;}
+      else{chk1.material.opacity*=0.96;chk2.material.opacity*=0.96;chkRing.material.opacity*=0.96;}
 
-      // Packets
-      packets.forEach(function(p){movePulse(p,t,12);});
-      outPackets.forEach(function(p){movePulse(p,t,14);p.mesh.rotation.y=t*0.5;});
-      retParts.forEach(function(p){movePulse(p,t,16);});
+      // Savings flash (synced with checkmark)
+      savs.forEach(function(s,i){
+        var sc=t%10;
+        if(sc>7+i*0.3&&sc<8.5){s.material.opacity=Math.min(1,(sc-7-i*0.3)/0.3);}
+        else{s.material.opacity*=0.94;}
+      });
 
-      // Floating particles
-      var pos=partGeo.attributes.position.array;
-      for(var i=0;i<partCount;i++){pos[i*3+1]+=0.004;if(pos[i*3+1]>6){pos[i*3+1]=.3;pos[i*3]=(Math.random()-.5)*22;pos[i*3+2]=(Math.random()-.5)*22;}}
-      partGeo.attributes.position.needsUpdate=true;
+      // Move packets
+      pkts.forEach(function(p){moveObj(p,t,13);});
+      oPkts.forEach(function(p){moveObj(p,t,15);});
+      retP.forEach(function(p){moveObj(p,t,18);});
 
-      // Camera orbit
-      camAngle+=0.001;
-      camera.position.x=Math.sin(camAngle)*8;
-      camera.position.z=Math.cos(camAngle)*8;
-      camera.position.y=5+Math.sin(t*0.15)*0.8;
-      camera.lookAt(0,0.3,0);
-      renderer.render(scene,camera);
+      // Particles
+      var pos=pGeo.attributes.position.array;
+      for(var i=0;i<pCnt;i++){pos[i*3+1]+=0.003;if(pos[i*3+1]>7){pos[i*3+1]=.2;pos[i*3]=(Math.random()-.5)*28;pos[i*3+2]=(Math.random()-.5)*28;}}
+      pGeo.attributes.position.needsUpdate=true;
+
+      cAng+=0.0008;
+      cam.position.x=Math.sin(cAng)*9;
+      cam.position.z=Math.cos(cAng)*9;
+      cam.position.y=5.5+Math.sin(t*0.12)*0.6;
+      cam.lookAt(0,0.2,0);
+      r.render(scene,cam);
     }
     animate();
-    window.addEventListener('resize',function(){var nw=stage.offsetWidth,nh=stage.offsetHeight;camera.aspect=nw/nh;camera.updateProjectionMatrix();renderer.setSize(nw,nh);});
+    window.addEventListener('resize',function(){var nw=stage.offsetWidth,nh=stage.offsetHeight;cam.aspect=nw/nh;cam.updateProjectionMatrix();r.setSize(nw,nh);});
   }
 
   var io=new IntersectionObserver(function(es){
@@ -1718,7 +1785,7 @@ function toggleFaq(btn){}
   },{threshold:0.1});
   io.observe(stage);
 })();
-
+\n
 
 
 </script>
