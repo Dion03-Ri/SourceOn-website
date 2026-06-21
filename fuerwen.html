@@ -10,7 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html:not([data-lang-ready]) body{opacity:0}html[data-lang-ready] body{opacity:1;transition:opacity .05s}
 
 :root{
   --dark:#08111E;--dark2:#060D1A;--dark3:#0D1E30;
@@ -686,6 +685,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .lang-opt.active{color:var(--gold);font-weight:600}
 .lang-flag{font-size:1.1rem;line-height:1}
 </style>
+<script>
+(function(){var l=localStorage.getItem('sourceon-lang');if(l&&l!=='de')document.documentElement.lang=l;})();
+</script>
 </head>
 <body>
 <!-- NAV -->
@@ -1008,7 +1010,7 @@ function setLang(lang){
 }
 (function(){
   var saved=localStorage.getItem('sourceon-lang');
-  if(saved&&saved!=='de'){setLang(saved);}else{document.documentElement.setAttribute('data-lang-ready','');}
+  if(saved&&saved!=='de'){setLang(saved);}
   document.addEventListener('click',function(e){
     var sw=document.getElementById('lang-switch');
     if(sw&&!sw.contains(e.target)) sw.classList.remove('open');
