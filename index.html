@@ -1349,7 +1349,7 @@ if(bdDiagram)bdObs.observe(bdDiagram);
 // FAQ (stub for pages that might have inline FAQ)
 function toggleFaq(btn){}
 
-// ENGINE 3D — AI Chip on Circuit Board
+// ENGINE 3D — SourceOn AI Chip
 (function(){
   var stage=document.getElementById('engine-stage');
   var canvas=document.getElementById('engine-canvas');
@@ -1359,221 +1359,196 @@ function toggleFaq(btn){}
   function init(){
     if(started)return;started=true;
     var W=stage.offsetWidth,H=stage.offsetHeight;
-
     var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
     renderer.setSize(W,H);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
-    renderer.setClearColor(0x060D1A);
-    renderer.shadowMap.enabled=true;
+    renderer.setClearColor(0x000000);
 
     var scene=new THREE.Scene();
-    scene.fog=new THREE.FogExp2(0x060D1A,0.06);
-
-    var camera=new THREE.PerspectiveCamera(40,W/H,0.1,100);
-    camera.position.set(4,3.5,4);
+    var camera=new THREE.PerspectiveCamera(35,W/H,0.1,100);
+    camera.position.set(5,4.5,5);
     camera.lookAt(0,0,0);
 
     // Lights
-    scene.add(new THREE.AmbientLight(0x1B3A5C,0.4));
-    var dLight=new THREE.DirectionalLight(0xffffff,0.5);
-    dLight.position.set(5,8,5);dLight.castShadow=true;
-    scene.add(dLight);
-    var coreLight=new THREE.PointLight(0x60A5FA,3,6);
-    coreLight.position.set(0,0.6,0);
-    scene.add(coreLight);
-    var goldLight=new THREE.PointLight(0xE8A020,1.5,8);
-    goldLight.position.set(0,1.2,0);
-    scene.add(goldLight);
+    scene.add(new THREE.AmbientLight(0x111111,1));
+    var dL=new THREE.DirectionalLight(0xffffff,0.3);
+    dL.position.set(4,8,4);scene.add(dL);
+    var glow1=new THREE.PointLight(0xE8A020,2.5,12);
+    glow1.position.set(0,1.5,0);scene.add(glow1);
+    var glow2=new THREE.PointLight(0xE8A020,1,8);
+    glow2.position.set(-3,0.5,2);scene.add(glow2);
 
-    // BOARD — large flat plane
-    var boardGeo=new THREE.BoxGeometry(10,0.08,10);
-    var boardMat=new THREE.MeshStandardMaterial({color:0x0A1628,metalness:0.7,roughness:0.4});
-    var board=new THREE.Mesh(boardGeo,boardMat);
-    board.position.y=-0.15;board.receiveShadow=true;
-    scene.add(board);
+    // GROUND
+    var ground=new THREE.Mesh(
+      new THREE.PlaneGeometry(20,20),
+      new THREE.MeshStandardMaterial({color:0x050A12,metalness:0.8,roughness:0.5})
+    );
+    ground.rotation.x=-Math.PI/2;ground.position.y=-0.2;
+    scene.add(ground);
 
-    // GRID LINES on board (circuit traces pattern)
-    var lineMat=new THREE.LineBasicMaterial({color:0x1B3A5C,transparent:true,opacity:0.3});
-    for(var gi=-5;gi<=5;gi++){
-      var gv=[new THREE.Vector3(gi,0,5),new THREE.Vector3(gi,0,-5)];
-      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(gv),lineMat));
-      var gh=[new THREE.Vector3(5,0,gi),new THREE.Vector3(-5,0,gi)];
-      scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(gh),lineMat));
+    // CHIP
+    var chip=new THREE.Group();
+    var baseMat=new THREE.MeshStandardMaterial({color:0x0A1525,metalness:0.7,roughness:0.3});
+    var base=new THREE.Mesh(new THREE.BoxGeometry(2.8,0.15,2.8),baseMat);
+    chip.add(base);
+
+    var topMat=new THREE.MeshStandardMaterial({color:0x0F1E35,metalness:0.85,roughness:0.2});
+    var topSurf=new THREE.Mesh(new THREE.BoxGeometry(2.2,0.06,2.2),topMat);
+    topSurf.position.y=0.1;chip.add(topSurf);
+
+    var edgeMat=new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.5,metalness:0.9,roughness:0.15});
+    var edge=new THREE.Mesh(new THREE.BoxGeometry(2.25,0.02,2.25),edgeMat);
+    edge.position.y=0.14;chip.add(edge);
+    var inner=new THREE.Mesh(new THREE.BoxGeometry(2.1,0.025,2.1),topMat.clone());
+    inner.position.y=0.15;chip.add(inner);
+
+    // "SO" on chip
+    var txtMat=new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.8,metalness:0.9,roughness:0.1});
+    var txtH=0.03;
+    // S
+    [[-.3,.2],[-.3,0],[-.3,-.2]].forEach(function(p){chip.add(new THREE.Mesh(new THREE.BoxGeometry(.4,txtH,.08),txtMat).translateX(p[0]).translateY(.17).translateZ(p[1]));});
+    chip.add(new THREE.Mesh(new THREE.BoxGeometry(.08,txtH,.16),txtMat).translateX(-.14).translateY(.17).translateZ(.12));
+    chip.add(new THREE.Mesh(new THREE.BoxGeometry(.08,txtH,.16),txtMat).translateX(-.46).translateY(.17).translateZ(-.08));
+    // O
+    [[.3,.2],[.3,-.2]].forEach(function(p){chip.add(new THREE.Mesh(new THREE.BoxGeometry(.4,txtH,.08),txtMat).translateX(p[0]).translateY(.17).translateZ(p[1]));});
+    [[.14,0],[.46,0]].forEach(function(p){chip.add(new THREE.Mesh(new THREE.BoxGeometry(.08,txtH,.48),txtMat).translateX(p[0]).translateY(.17).translateZ(p[1]));});
+
+    // Grid on chip
+    var gridMat=new THREE.LineBasicMaterial({color:0xE8A020,transparent:true,opacity:0.12});
+    for(var g=-1;g<=1;g+=0.2){
+      chip.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(g,.16,1.05),new THREE.Vector3(g,.16,-1.05)]),gridMat));
+      chip.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(1.05,.16,g),new THREE.Vector3(-1.05,.16,g)]),gridMat));
     }
+    chip.position.y=0.08;
+    scene.add(chip);
 
-    // CHIP BASE — multi-layer processor
-    var chipGroup=new THREE.Group();
-
-    // Base plate (substrate)
-    var baseMat=new THREE.MeshStandardMaterial({color:0x111D2E,metalness:0.8,roughness:0.25});
-    var base=new THREE.Mesh(new THREE.BoxGeometry(2.4,0.12,2.4),baseMat);
-    base.castShadow=true;
-    chipGroup.add(base);
-
-    // Middle layer (PCB green-dark)
-    var midMat=new THREE.MeshStandardMaterial({color:0x0F2238,metalness:0.6,roughness:0.3});
-    var mid=new THREE.Mesh(new THREE.BoxGeometry(2.0,0.1,2.0),midMat);
-    mid.position.y=0.11;mid.castShadow=true;
-    chipGroup.add(mid);
-
-    // Top die (the blue glowing chip surface)
-    var dieMat=new THREE.MeshStandardMaterial({color:0x2563EB,emissive:0x1E40AF,emissiveIntensity:0.3,metalness:0.9,roughness:0.15});
-    var die=new THREE.Mesh(new THREE.BoxGeometry(1.5,0.08,1.5),dieMat);
-    die.position.y=0.2;die.castShadow=true;
-    chipGroup.add(die);
-
-    // Gold pins around the chip base (small rectangles on edges)
-    var pinMat=new THREE.MeshStandardMaterial({color:0xE8A020,metalness:0.9,roughness:0.2,emissive:0xE8A020,emissiveIntensity:0.1});
-    var pinGeo=new THREE.BoxGeometry(0.08,0.06,0.15);
-    for(var p=0;p<14;p++){
-      var pin=new THREE.Mesh(pinGeo,pinMat);
-      var offset=(p-6.5)*0.16;
-      // 4 sides
-      var p1=pin.clone();p1.position.set(offset,0.05,1.25);chipGroup.add(p1);
-      var p2=pin.clone();p2.position.set(offset,0.05,-1.25);chipGroup.add(p2);
-      var p3=pin.clone();p3.rotation.y=Math.PI/2;p3.position.set(1.25,0.05,offset);chipGroup.add(p3);
-      var p4=pin.clone();p4.rotation.y=Math.PI/2;p4.position.set(-1.25,0.05,offset);chipGroup.add(p4);
+    // TRACES
+    var tMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.85});
+    var tGlowMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.15});
+    function addTrace(points,width){
+      width=width||0.06;
+      for(var i=0;i<points.length-1;i++){
+        var ax=points[i][0],az=points[i][1],bx=points[i+1][0],bz=points[i+1][1];
+        var dx=bx-ax,dz=bz-az,len=Math.sqrt(dx*dx+dz*dz);
+        if(len<0.01)continue;
+        var ang=Math.atan2(dx,dz);
+        var m=new THREE.Mesh(new THREE.BoxGeometry(width,0.02,len),tMat.clone());
+        m.position.set(ax+dx/2,0.01,az+dz/2);m.rotation.y=ang;scene.add(m);
+        var gl=new THREE.Mesh(new THREE.BoxGeometry(width*4,0.01,len),tGlowMat.clone());
+        gl.position.set(ax+dx/2,0.005,az+dz/2);gl.rotation.y=ang;scene.add(gl);
+      }
     }
-
-    chipGroup.position.y=0.1;
-    scene.add(chipGroup);
-
-    // GLOWING TRACES — circuit paths radiating from chip
-    var traceMat=new THREE.MeshBasicMaterial({color:0x60A5FA,transparent:true,opacity:0.7});
-    var traceGlowMat=new THREE.MeshBasicMaterial({color:0x3B82F6,transparent:true,opacity:0.3});
-    var traces=[];
-    var traceData=[
-      // [startX, startZ, endX, endZ] — Manhattan-routed paths from chip edges
-      {pts:[{x:1.3,z:0},{x:3.5,z:0}]},
-      {pts:[{x:1.3,z:0.5},{x:2.5,z:0.5},{x:2.5,z:2},{x:4,z:2}]},
-      {pts:[{x:1.3,z:-0.5},{x:2,z:-0.5},{x:2,z:-1.5},{x:4.5,z:-1.5}]},
-      {pts:[{x:-1.3,z:0},{x:-3.5,z:0}]},
-      {pts:[{x:-1.3,z:0.6},{x:-2.2,z:0.6},{x:-2.2,z:2.5}]},
-      {pts:[{x:-1.3,z:-0.6},{x:-2.8,z:-0.6},{x:-2.8,z:-2},{x:-4,z:-2}]},
-      {pts:[{x:0,z:1.3},{x:0,z:3}]},
-      {pts:[{x:0.5,z:1.3},{x:0.5,z:2},{x:1.8,z:2},{x:1.8,z:3.5}]},
-      {pts:[{x:0,z:-1.3},{x:0,z:-3.5}]},
-      {pts:[{x:-0.5,z:-1.3},{x:-0.5,z:-2.2},{x:-2,z:-2.2},{x:-2,z:-4}]},
-      {pts:[{x:0.8,z:-1.3},{x:0.8,z:-1.8},{x:3,z:-1.8},{x:3,z:-3}]},
-      {pts:[{x:-0.8,z:1.3},{x:-0.8,z:1.8},{x:-3,z:1.8},{x:-3,z:3.5}]},
+    var traceLines=[
+      [[1.42,0],[4,0]],[[1.42,.4],[2.5,.4],[2.5,1.8],[5,1.8]],
+      [[1.42,-.4],[2.2,-.4],[2.2,-1.5],[4.5,-1.5]],[[1.42,.8],[1.8,.8],[1.8,2.5],[3.5,2.5]],
+      [[1.42,-.8],[2.8,-.8],[2.8,-2.8]],
+      [[-1.42,0],[-4.5,0]],[[-1.42,.5],[-2.5,.5],[-2.5,2],[-4,2]],
+      [[-1.42,-.5],[-2,-.5],[-2,-2],[-5,-2]],[[-1.42,-1],[-3,-1],[-3,-3.5]],
+      [[0,1.42],[0,4]],[[.5,1.42],[.5,2.5],[2,2.5],[2,4.5]],
+      [[-.6,1.42],[-.6,3],[-2.5,3],[-2.5,5]],
+      [[0,-1.42],[0,-4]],[[.7,-1.42],[.7,-2.2],[3,-2.2],[3,-4]],
+      [[-.4,-1.42],[-.4,-2.8],[-3,-2.8],[-3,-4.5]],
+      [[1.42,1],[3,2.5]],[[-1.42,-1],[-3,-2.5]]
     ];
+    traceLines.forEach(function(pts){addTrace(pts);});
+    [[[1.42,.2],[3.5,.2]],[[1.42,-.2],[3.2,-.2]],
+     [[-1.42,.2],[-3.5,.2]],[[-1.42,-.2],[-3.2,-.2]],
+     [[.2,1.42],[.2,3.5]],[[-.2,1.42],[-.2,3]],
+     [[.2,-1.42],[.2,-3.5]],[[-.2,-1.42],[-.2,-3]]
+    ].forEach(function(pts){addTrace(pts,0.03);});
 
-    traceData.forEach(function(td){
-      var points=[];
-      td.pts.forEach(function(p){points.push(new THREE.Vector3(p.x,0.02,p.z));});
-      // Thin bright line
-      var lineGeo=new THREE.BufferGeometry().setFromPoints(points);
-      var line=new THREE.Line(lineGeo,traceMat.clone());
-      scene.add(line);
-      // Wider glow line
-      var glow=new THREE.Line(lineGeo.clone(),traceGlowMat.clone());
-      scene.add(glow);
-      traces.push({line:line,glow:glow,pts:td.pts});
-    });
-
-    // SIGNAL PULSES — small glowing spheres traveling along traces
-    var pulseMat=new THREE.MeshBasicMaterial({color:0x60A5FA});
-    var pulseGlowMat=new THREE.MeshBasicMaterial({color:0x3B82F6,transparent:true,opacity:0.4});
+    // PULSES
+    var pMat=new THREE.MeshBasicMaterial({color:0xFFD27A});
+    var pgMat=new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0.3});
     var pulses=[];
-    traces.forEach(function(tr,idx){
-      var pulse=new THREE.Mesh(new THREE.SphereGeometry(0.06,8,8),pulseMat.clone());
-      pulse.position.y=0.05;
-      var glowSphere=new THREE.Mesh(new THREE.SphereGeometry(0.15,8,8),pulseGlowMat.clone());
-      pulse.add(glowSphere);
-      scene.add(pulse);
-      pulses.push({mesh:pulse,traceIdx:idx,speed:0.4+Math.random()*0.4,offset:Math.random()*10});
+    traceLines.forEach(function(pts,idx){
+      if(idx%2!==0)return;
+      var p=new THREE.Mesh(new THREE.SphereGeometry(0.05,8,8),pMat.clone());
+      var pg=new THREE.Mesh(new THREE.SphereGeometry(0.18,8,8),pgMat.clone());
+      p.add(pg);p.position.y=0.04;scene.add(p);
+      var segs=[],totalLen=0;
+      for(var i=0;i<pts.length-1;i++){
+        var dx=pts[i+1][0]-pts[i][0],dz=pts[i+1][1]-pts[i][1];
+        var l=Math.sqrt(dx*dx+dz*dz);
+        segs.push({sx:pts[i][0],sz:pts[i][1],dx:dx,dz:dz,len:l});totalLen+=l;
+      }
+      pulses.push({mesh:p,segs:segs,totalLen:totalLen,speed:0.6+Math.random()*0.5,offset:Math.random()*20});
     });
 
-    // SMALL COMPONENTS on board (capacitors, resistors)
-    var compMat=new THREE.MeshStandardMaterial({color:0x1a2a3a,metalness:0.5,roughness:0.4});
-    var compMat2=new THREE.MeshStandardMaterial({color:0x0d1926,metalness:0.6,roughness:0.3});
-    var compPositions=[
-      {x:3,z:1,sx:0.3,sy:0.15,sz:0.15},{x:3.5,z:-0.5,sx:0.15,sy:0.12,sz:0.25},
-      {x:-3,z:1.5,sx:0.25,sy:0.18,sz:0.15},{x:-2.5,z:-1.5,sx:0.2,sy:0.1,sz:0.3},
-      {x:2,z:3,sx:0.3,sy:0.12,sz:0.15},{x:-1.5,z:-3,sx:0.15,sy:0.15,sz:0.25},
-      {x:4,z:0.5,sx:0.2,sy:0.2,sz:0.2},{x:-3.5,z:-0.5,sx:0.35,sy:0.1,sz:0.15},
-      {x:1,z:-3,sx:0.15,sy:0.12,sz:0.35},{x:-2,z:3,sx:0.25,sy:0.15,sz:0.2},
-      {x:3.8,z:2.5,sx:0.2,sy:0.25,sz:0.2},{x:-4,z:2,sx:0.15,sy:0.12,sz:0.3},
-      {x:2.5,z:-2.5,sx:0.3,sy:0.12,sz:0.15},{x:-3,z:-3,sx:0.2,sy:0.18,sz:0.2},
-    ];
-    compPositions.forEach(function(cp,i){
-      var g=new THREE.BoxGeometry(cp.sx,cp.sy,cp.sz);
-      var c=new THREE.Mesh(g,i%2===0?compMat:compMat2);
-      c.position.set(cp.x,cp.sy/2-0.05,cp.z);c.castShadow=true;
-      scene.add(c);
+    // PARTICLES
+    var partCount=60;
+    var partGeo=new THREE.BufferGeometry();
+    var partPos=new Float32Array(partCount*3);
+    for(var i=0;i<partCount;i++){
+      partPos[i*3]=(Math.random()-.5)*14;partPos[i*3+1]=Math.random()*4+.5;partPos[i*3+2]=(Math.random()-.5)*14;
+    }
+    partGeo.setAttribute('position',new THREE.BufferAttribute(partPos,3));
+    var particles=new THREE.Points(partGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.04,transparent:true,opacity:0.6}));
+    scene.add(particles);
+
+    // COMPONENTS
+    var cMat=new THREE.MeshStandardMaterial({color:0x0A1525,metalness:0.7,roughness:0.4});
+    var cGold=new THREE.MeshStandardMaterial({color:0x8B6914,metalness:0.8,roughness:0.3});
+    [{x:3.5,z:.5,w:.5,h:.08,d:.25},{x:3.8,z:-1,w:.3,h:.06,d:.4},
+     {x:-3,z:1,w:.4,h:.1,d:.2},{x:-3.5,z:-1.5,w:.3,h:.06,d:.35},
+     {x:2,z:3,w:.35,h:.07,d:.2},{x:-2,z:-3,w:.25,h:.08,d:.4},
+     {x:4,z:2,w:.2,h:.12,d:.2},{x:-4,z:-2.5,w:.3,h:.06,d:.15}
+    ].forEach(function(c,i){
+      var m=new THREE.Mesh(new THREE.BoxGeometry(c.w,c.h,c.d),i%3===0?cGold:cMat);
+      m.position.set(c.x,c.h/2-.15,c.z);scene.add(m);
     });
 
-    // Small cylindrical capacitors (blue accents like reference)
-    var capMat=new THREE.MeshStandardMaterial({color:0x1E3A5F,metalness:0.5,roughness:0.3,emissive:0x1B3A5C,emissiveIntensity:0.1});
-    var capPositions=[{x:3.2,z:2},{x:-3.8,z:1},{x:-1,z:-3.5},{x:4.2,z:-1},{x:-4,z:-2.5},{x:2,z:3.5}];
-    capPositions.forEach(function(cp){
-      var c=new THREE.Mesh(new THREE.CylinderGeometry(0.1,0.1,0.25,12),capMat);
-      c.position.set(cp.x,0.08,cp.z);c.castShadow=true;
-      scene.add(c);
+    // Gold junction dots
+    [{x:2.5,z:0},{x:-2.5,z:0},{x:0,z:2.5},{x:0,z:-2.5},
+     {x:2.5,z:1.8},{x:-2.5,z:2},{x:3,z:-2.2},{x:-2,z:-2}
+    ].forEach(function(dp){
+      var d=new THREE.Mesh(new THREE.BoxGeometry(.12,.04,.12),
+        new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.3,metalness:0.9,roughness:0.2}));
+      d.position.set(dp.x,.01,dp.z);scene.add(d);
     });
 
     var clock=new THREE.Clock();
-    var camAngle=0.6;
+    var camAngle=0.7;
 
     function animate(){
       requestAnimationFrame(animate);
       var t=clock.getElapsedTime();
+      glow1.intensity=2+Math.sin(t*1.5)*0.8;
+      edge.material.emissiveIntensity=0.4+Math.sin(t*2)*0.2;
 
-      // Pulse core glow
-      var gv=0.3+Math.sin(t*2)*0.15;
-      dieMat.emissiveIntensity=gv;
-      coreLight.intensity=2+Math.sin(t*2)*1;
-
-      // Animate signal pulses along traces
       pulses.forEach(function(p){
-        var tr=traces[p.traceIdx];
-        var pts=tr.pts;
-        // Calculate total length
-        var totalLen=0;var segs=[];
-        for(var i=0;i<pts.length-1;i++){
-          var dx=pts[i+1].x-pts[i].x,dz=pts[i+1].z-pts[i].z;
-          var len=Math.sqrt(dx*dx+dz*dz);
-          segs.push({len:len,sx:pts[i].x,sz:pts[i].z,dx:dx,dz:dz});
-          totalLen+=len;
-        }
-        var prog=((t*p.speed+p.offset)%(totalLen/p.speed))*(p.speed)/totalLen;
-        prog=prog%1;if(prog<0)prog+=1;
-        var dist=prog*totalLen;var acc=0;
-        for(var j=0;j<segs.length;j++){
-          if(acc+segs[j].len>=dist){
-            var frac=(dist-acc)/segs[j].len;
-            p.mesh.position.x=segs[j].sx+segs[j].dx*frac;
-            p.mesh.position.z=segs[j].sz+segs[j].dz*frac;
+        var prog=((t*p.speed+p.offset)%10)/10;
+        var dist=prog*p.totalLen,acc=0;
+        for(var j=0;j<p.segs.length;j++){
+          if(acc+p.segs[j].len>=dist||j===p.segs.length-1){
+            var frac=Math.min(1,(dist-acc)/p.segs[j].len);
+            p.mesh.position.x=p.segs[j].sx+p.segs[j].dx*frac;
+            p.mesh.position.z=p.segs[j].sz+p.segs[j].dz*frac;
             break;
           }
-          acc+=segs[j].len;
+          acc+=p.segs[j].len;
         }
-        // Pulse brightness
-        p.mesh.material.color.setHSL(0.6,0.8,0.5+Math.sin(t*3+p.offset)*0.2);
       });
 
-      // Animate trace opacity
-      traces.forEach(function(tr,i){
-        var opc=0.5+Math.sin(t*1.5+i*0.8)*0.3;
-        tr.line.material.opacity=opc;
-        tr.glow.material.opacity=opc*0.4;
-      });
+      var pos=particles.geometry.attributes.position.array;
+      for(var i=0;i<partCount;i++){
+        pos[i*3+1]+=0.003;
+        if(pos[i*3+1]>5){pos[i*3+1]=.5;pos[i*3]=(Math.random()-.5)*14;pos[i*3+2]=(Math.random()-.5)*14;}
+      }
+      particles.geometry.attributes.position.needsUpdate=true;
 
-      // Slow camera orbit
-      camAngle+=0.0015;
-      camera.position.x=Math.sin(camAngle)*5.5;
-      camera.position.z=Math.cos(camAngle)*5.5;
-      camera.position.y=3.2+Math.sin(t*0.3)*0.3;
-      camera.lookAt(0,0.2,0);
-
+      camAngle+=0.0012;
+      camera.position.x=Math.sin(camAngle)*6.5;
+      camera.position.z=Math.cos(camAngle)*6.5;
+      camera.position.y=4+Math.sin(t*0.2)*0.3;
+      camera.lookAt(0,0,0);
       renderer.render(scene,camera);
     }
     animate();
 
     window.addEventListener('resize',function(){
       var nw=stage.offsetWidth,nh=stage.offsetHeight;
-      camera.aspect=nw/nh;camera.updateProjectionMatrix();
-      renderer.setSize(nw,nh);
+      camera.aspect=nw/nh;camera.updateProjectionMatrix();renderer.setSize(nw,nh);
     });
   }
 
