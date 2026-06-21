@@ -650,6 +650,19 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .nav-card-grid a:hover{border-color:rgba(232,160,32,.3)!important;background:rgba(255,255,255,.06)!important;transform:translateY(-4px)}
 @media(max-width:900px){.nav-card-grid{grid-template-columns:1fr 1fr!important}}
 @media(max-width:640px){.nav-card-grid{grid-template-columns:1fr!important}}
+
+/* LANGUAGE SWITCHER */
+.lang-switch{position:relative;margin-right:8px}
+.lang-btn{display:flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.75);background:none;border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:6px 14px;cursor:pointer;transition:all .2s}
+.lang-btn:hover{color:#fff;border-color:rgba(255,255,255,.3)}
+.lang-btn svg{width:14px;height:14px;transition:transform .2s}
+.lang-switch.open .lang-btn svg{transform:rotate(180deg)}
+.lang-dd{display:none;position:absolute;top:calc(100% + 8px);right:0;background:rgba(10,20,35,.97);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:6px;min-width:150px;z-index:999;box-shadow:0 12px 40px rgba(0,0,0,.4)}
+.lang-switch.open .lang-dd{display:block}
+.lang-opt{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;border:none;background:none;color:rgba(255,255,255,.7);font-size:.84rem;font-weight:500;cursor:pointer;border-radius:8px;transition:all .15s;font-family:inherit;text-align:left}
+.lang-opt:hover{background:rgba(255,255,255,.08);color:#fff}
+.lang-opt.active{color:var(--gold);font-weight:600}
+.lang-flag{font-size:1.1rem;line-height:1}
 </style>
 </head>
 <body>
@@ -658,17 +671,29 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="nav-inner">
     <a class="nav-logo" href="#hero">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="prozess.html">Wie es funktioniert</a></li>
-      <li><a href="kalkulator.html">Kalkulator</a></li>
-      <li><a href="materialien.html">Materialien</a></li>
-      <li><a href="fuerwen.html">Für wen</a></li>
-      <li><a href="lieferant.html">Lieferant werden</a></li>
-      <li><a href="ueberuns.html">Über uns</a></li>
-      <li><a href="kontakt.html">Kontakt</a></li>
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav.process">Wie es funktioniert</a></li>
+      <li><a href="kalkulator.html" data-i18n="nav.calc">Kalkulator</a></li>
+      <li><a href="materialien.html" data-i18n="nav.materials">Materialien</a></li>
+      <li><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a></li>
+      <li><a href="lieferant.html" data-i18n="nav.supplier">Lieferant werden</a></li>
+      <li><a href="ueberuns.html" data-i18n="nav.about">Über uns</a></li>
+      <li><a href="kontakt.html" data-i18n="nav.contact">Kontakt</a></li>
     </ul>
     <div class="nav-right">
-      <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
+      <div class="lang-switch" id="lang-switch">
+        <button class="lang-btn" onclick="document.getElementById('lang-switch').classList.toggle('open')">
+          <span id="lang-current">DE</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="lang-dd">
+          <button class="lang-opt active" onclick="setLang('de')"><span class="lang-flag">🇨🇭</span> Deutsch</button>
+          <button class="lang-opt" onclick="setLang('en')"><span class="lang-flag">🇬🇧</span> English</button>
+          <button class="lang-opt" onclick="setLang('fr')"><span class="lang-flag">🇫🇷</span> Francais</button>
+          <button class="lang-opt" onclick="setLang('it')"><span class="lang-flag">🇮🇹</span> Italiano</button>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'" data-i18n="nav.cta">Materialbedarf melden</button>
       <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
   </div>
@@ -676,14 +701,14 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <a href="index.html" onclick="toggleNav()">Home</a>
-  <a href="prozess.html" onclick="toggleNav()">Wie es funktioniert</a>
-  <a href="kalkulator.html" onclick="toggleNav()">Kalkulator</a>
-  <a href="fuerwen.html" onclick="toggleNav()">Für wen</a>
-  <a href="lieferant.html" onclick="toggleNav()">Lieferant werden</a>
-  <a href="ueberuns.html" onclick="toggleNav()">Über uns</a>
-  <a href="kontakt.html" onclick="toggleNav()">Kontakt</a>
-  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
+  <a href="index.html" onclick="toggleNav()" data-i18n="nav.home">Home</a>
+  <a href="prozess.html" onclick="toggleNav()" data-i18n="nav.process">Wie es funktioniert</a>
+  <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav.calc">Kalkulator</a>
+  <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav.forwhom">Für wen</a>
+  <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav.supplier">Lieferant werden</a>
+  <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav.about">Über uns</a>
+  <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav.contact">Kontakt</a>
+  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'" data-i18n="nav.cta">Materialbedarf melden</button>
 </div>
 
 <!-- BENTO DETAIL MODAL -->
@@ -701,11 +726,11 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="hero-mesh"></div>
   <div class="hero-dots"></div>
   <div class="hero-content">
-    <h1 class="hero-h1" id="hero-h1">Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span></h1>
-    <p class="hero-sub">Schweizer Baufirmen sparen bis zu 30% beim Materialeinkauf — ohne Risiko, ohne Vorauskosten.</p>
+    <h1 class="hero-h1" id="hero-h1" data-i18n-html="hero.title">Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span></h1>
+    <p class="hero-sub" data-i18n="hero.sub">Schweizer Baufirmen sparen bis zu 30% beim Materialeinkauf — ohne Risiko, ohne Vorauskosten.</p>
     <div class="hero-btns">
-      <button class="btn btn-gold btn-lg" onclick="smoothScrollToEl(document.getElementById('contact'))">Materialbedarf melden</button>
-      <a href="#process" class="btn btn-outline-w btn-lg">Wie es funktioniert →</a>
+      <button class="btn btn-gold btn-lg" onclick="smoothScrollToEl(document.getElementById('contact'))" data-i18n="nav.cta">Materialbedarf melden</button>
+      <a href="#process" class="btn btn-outline-w btn-lg" data-i18n="hero.howit">Wie es funktioniert →</a>
     </div>
   </div>
   <div class="hero-chevron" onclick="smoothScrollToEl(document.getElementById('story'))">↓</div>
@@ -715,7 +740,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <!-- WORD REVEAL -->
 <section id="story" class="story-section">
   <div class="container">
-    <p class="story-sentence" id="story-sentence">Alleine einkaufen heisst durchschnittliche Konditionen. SourceOn bündelt den Bedarf mehrerer Baufirmen zu einem gemeinsamen Auftrag — und gibt den Mengenrabatt an jede einzelne Firma weiter.</p>
+    <p class="story-sentence" id="story-sentence" data-i18n="story.text">Alleine einkaufen heisst durchschnittliche Konditionen. SourceOn bündelt den Bedarf mehrerer Baufirmen zu einem gemeinsamen Auftrag — und gibt den Mengenrabatt an jede einzelne Firma weiter.</p>
   </div>
 </section>
 
@@ -724,7 +749,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <section id="bignum" class="bignum-section">
   <div class="container">
     <div class="bignum-figure">40 – 70%</div>
-    <p class="bignum-caption">So viel der Gesamtkosten einer Baufirma sind reine Materialkosten.<br><a href="kalkulator.html" class="bignum-cta">Berechne, wie viel du mit SourceOn sparen kannst →</a></p>
+    <p class="bignum-caption" data-i18n-html="bignum.caption">So viel der Gesamtkosten einer Baufirma sind reine Materialkosten.<br><a href="kalkulator.html" class="bignum-cta" data-i18n="bignum.cta">Berechne, wie viel du mit SourceOn sparen kannst →</a></p>
   </div>
 </section>
 
@@ -734,11 +759,11 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
   <div class="container">
     <div class="tech-layout">
       <div>
-        <div class="label">Technologie</div>
-        <h2 class="h2" style="margin-top:0;margin-bottom:16px;color:#fff">Die Maschine hinter<br>jedem Angebot.</h2>
-        <p class="subtitle" style="color:rgba(255,255,255,.6);margin-bottom:20px">Unsere Engine analysiert Marktpreise in Echtzeit und erkennt Optimierungspotenziale in Ihren Einkaufsdaten — bevor Sie überhaupt anfragen.</p>
-        <p style="font-size:15px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:28px">Über 340 Lieferantendatenpunkte werden täglich aktualisiert. Ihre Anfragen werden mit historischen Preisen abgeglichen, um die bestmöglichen Konditionen zu identifizieren.</p>
-        <a href="kontakt.html" class="btn btn-gold btn-lg">Analyse anfragen</a>
+        <div class="label" data-i18n="tech.label">Technologie</div>
+        <h2 class="h2" style="margin-top:0;margin-bottom:16px;color:#fff" data-i18n-html="tech.title">Die Maschine hinter<br>jedem Angebot.</h2>
+        <p class="subtitle" style="color:rgba(255,255,255,.6);margin-bottom:20px" data-i18n="tech.sub">Unsere Engine analysiert Marktpreise in Echtzeit und erkennt Optimierungspotenziale in Ihren Einkaufsdaten — bevor Sie überhaupt anfragen.</p>
+        <p style="font-size:15px;color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:28px" data-i18n="tech.detail">Über 340 Lieferantendatenpunkte werden täglich aktualisiert. Ihre Anfragen werden mit historischen Preisen abgeglichen, um die bestmöglichen Konditionen zu identifizieren.</p>
+        <a href="kontakt.html" class="btn btn-gold btn-lg" data-i18n="tech.cta">Analyse anfragen</a>
       </div>
       <div class="engine-visual" id="engine-stage">
         <svg viewBox="0 0 520 440" fill="none" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block">
@@ -917,9 +942,9 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 <section id="bundling" style="background:radial-gradient(ellipse 90% 70% at 50% 0%,#15314f 0%,#0F2238 55%);position:relative;overflow:hidden;padding:140px 0">
   <div style="text-align:center;padding:0 0 56px;position:relative;z-index:2" class="reveal">
-    <div class="label label-dark">BÜNDELUNG VISUALISIERT</div>
-    <h2 class="h2" style="color:#fff;margin-top:0;margin-bottom:16px">Beschaffung auf dem nächsten Level.</h2>
-    <p class="subtitle subtitle-dark" style="margin:0 auto">Sieh wie SourceOn Materialbedarf bündelt und Mengenrabatte erzielt.</p>
+    <div class="label label-dark" data-i18n="bundling.label">BÜNDELUNG VISUALISIERT</div>
+    <h2 class="h2" style="color:#fff;margin-top:0;margin-bottom:16px" data-i18n="bundling.title">Beschaffung auf dem nächsten Level.</h2>
+    <p class="subtitle subtitle-dark" style="margin:0 auto" data-i18n="bundling.sub">Sieh wie SourceOn Materialbedarf bündelt und Mengenrabatte erzielt.</p>
   </div>
   <div style="max-width:1100px;margin:0 auto;padding:0 24px">
     <div id="webgl-wrap" style="width:100%;height:600px;position:relative;border-radius:var(--r-lg);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45),0 0 0 1px rgba(232,160,32,.15)">
@@ -927,7 +952,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     </div>
   </div>
   <div style="text-align:center;padding:32px 0 0;position:relative;z-index:2">
-    <p style="font-size:.85rem;color:#94A3B8;font-style:italic;padding:0 20px">SourceOn verbindet Baufirmen mit Lieferanten.</p>
+    <p style="font-size:.85rem;color:#94A3B8;font-style:italic;padding:0 20px" data-i18n="bundling.note">SourceOn verbindet Baufirmen mit Lieferanten.</p>
   </div>
 </section>
 
@@ -936,33 +961,33 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <section class="section" style="background:var(--dark);padding:100px 0">
   <div class="container">
     <div class="text-center reveal" style="margin-bottom:48px">
-      <div class="label label-dark">Entdecken</div>
-      <h2 class="h2" style="color:#fff">Alles über SourceOn.</h2>
+      <div class="label label-dark" data-i18n="explore.label">Entdecken</div>
+      <h2 class="h2" style="color:#fff" data-i18n="explore.title">Alles über SourceOn.</h2>
     </div>
     <div class="nav-card-grid reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
       <a href="prozess.html" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px 28px;text-decoration:none;transition:border-color .3s,background .3s,transform .3s">
         <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px">Wie es funktioniert</h3>
-        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px">Vier Schritte vom Bedarf bis zur Lieferung — und warum es sich lohnt.</p>
-        <span style="font-size:.82rem;color:var(--gold);font-weight:600">Mehr erfahren →</span>
+        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px" data-i18n="explore.process.title">Wie es funktioniert</h3>
+        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px" data-i18n="explore.process.desc">Vier Schritte vom Bedarf bis zur Lieferung — und warum es sich lohnt.</p>
+        <span style="font-size:.82rem;color:var(--gold);font-weight:600" data-i18n="explore.more">Mehr erfahren →</span>
       </a>
       <a href="materialien.html" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px 28px;text-decoration:none;transition:border-color .3s,background .3s,transform .3s">
         <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l9-3 9 3v12l-9 3-9-3V6z"/></svg></div>
-        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px">Materialien &amp; Lieferanten</h3>
-        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px">50+ Baustoffe, geprüfte Partnerlieferanten in der ganzen Schweiz.</p>
+        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px" data-i18n="explore.materials.title">Materialien &amp; Lieferanten</h3>
+        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px" data-i18n="explore.materials.desc">50+ Baustoffe, geprüfte Partnerlieferanten in der ganzen Schweiz.</p>
         <span style="font-size:.82rem;color:var(--gold);font-weight:600">Mehr erfahren →</span>
       </a>
       <a href="fuerwen.html" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px 28px;text-decoration:none;transition:border-color .3s,background .3s,transform .3s">
         <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px">Für wen</h3>
-        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px">Bauunternehmen, Handwerker, Investoren und Architekten.</p>
+        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px" data-i18n="explore.forwhom.title">Für wen</h3>
+        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px" data-i18n="explore.forwhom.desc">Bauunternehmen, Handwerker, Investoren und Architekten.</p>
         <span style="font-size:.82rem;color:var(--gold);font-weight:600">Mehr erfahren →</span>
       </a>
       <a href="lieferant.html" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px 28px;text-decoration:none;transition:border-color .3s,background .3s,transform .3s">
         <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px">Lieferant werden</h3>
-        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px">Verifizierter SourceOn-Partner werden und Zugang zu gebündelten Aufträgen erhalten.</p>
-        <span style="font-size:.82rem;color:var(--gold);font-weight:600">Jetzt bewerben →</span>
+        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px" data-i18n="explore.supplier.title">Lieferant werden</h3>
+        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px" data-i18n="explore.supplier.desc">Verifizierter SourceOn-Partner werden und Zugang zu gebündelten Aufträgen erhalten.</p>
+        <span style="font-size:.82rem;color:var(--gold);font-weight:600" data-i18n="explore.apply">Jetzt bewerben →</span>
       </a>
     </div>
   </div>
@@ -973,61 +998,61 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <section id="suppliers">
   <div class="container">
     <div class="mq-header">
-      <div class="label label-green"><svg class="ic-check-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Alle Lieferanten persönlich geprüft — SIA/ISO-konform</div>
-      <h2 class="h2" style="color:#fff">Unsere Partnerlieferanten</h2>
+      <div class="label label-green"><svg class="ic-check-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="suppliers.badge">Alle Lieferanten persönlich geprüft</span> — SIA/ISO-konform</div>
+      <h2 class="h2" style="color:#fff" data-i18n="suppliers.title">Unsere Partnerlieferanten</h2>
     </div>
   </div>
   <div class="marquee-outer">
     <div class="marquee-row1"><div class="marquee-track" id="mq1"></div></div>
   </div>
   <div class="container">
-    <p class="mq-note">Weitere Partnerlieferanten in Aufbau. Logos werden nach Vertragsabschluss ergänzt.</p>
+    <p class="mq-note" data-i18n="suppliers.note">Weitere Partnerlieferanten in Aufbau. Logos werden nach Vertragsabschluss ergänzt.</p>
   </div>
 </section>
 
 <!-- ZAHLEN & FAKTEN -->
 <section id="zahlen">
   <div class="container">
-    <div class="text-center"><div class="label label-dark">ZAHLEN &amp; FAKTEN</div>
-      <h2 class="h2" style="color:#fff">Der Schweizer Baumarkt — in Zahlen.</h2>
+    <div class="text-center"><div class="label label-dark" data-i18n="zahlen.label">ZAHLEN &amp; FAKTEN</div>
+      <h2 class="h2" style="color:#fff" data-i18n="zahlen.title">Der Schweizer Baumarkt — in Zahlen.</h2>
     </div>
     <div class="zahlen-grid">
       <div class="zahlen-card">
         <div class="zahlen-num">CHF 8–10 Mrd.</div>
-        <div class="zahlen-label">Jährliches Einkaufsvolumen Baumarkt CH</div>
+        <div class="zahlen-label" data-i18n="zahlen.vol">Jährliches Einkaufsvolumen Baumarkt CH</div>
       </div>
       <div class="zahlen-card">
         <div class="zahlen-num" data-count="98" data-suffix="%">0%</div>
-        <div class="zahlen-label">der CH-Baufirmen sind KMU</div>
+        <div class="zahlen-label" data-i18n="zahlen.kmu">der CH-Baufirmen sind KMU</div>
       </div>
       <div class="zahlen-card">
         <div class="zahlen-num">40 – 70%</div>
-        <div class="zahlen-label">der Baukosten entfallen auf Material</div>
+        <div class="zahlen-label" data-i18n="zahlen.costs">der Baukosten entfallen auf Material</div>
       </div>
       <div class="zahlen-card">
         <div class="zahlen-num">Bis 30%+</div>
-        <div class="zahlen-label">Potenzielle Einsparung je nach Volumen und Material</div>
+        <div class="zahlen-label" data-i18n="zahlen.savings">Potenzielle Einsparung je nach Volumen und Material</div>
       </div>
       <div class="zahlen-card">
         <div class="zahlen-num">48h</div>
-        <div class="zahlen-label">bis zum ersten konkreten Angebot</div>
+        <div class="zahlen-label" data-i18n="zahlen.offer">bis zum ersten konkreten Angebot</div>
       </div>
       <div class="zahlen-card">
         <div class="zahlen-num">3+</div>
-        <div class="zahlen-label">Offerten — Mindestanzahl Angebote pro Beschaffungsauftrag</div>
+        <div class="zahlen-label" data-i18n="zahlen.quotes">Offerten — Mindestanzahl Angebote pro Beschaffungsauftrag</div>
       </div>
     </div>
-    <p class="zahlen-statement">Jede Bestellung die du alleine aufgibst kostet dich mehr als nötig.</p>
+    <p class="zahlen-statement" data-i18n="zahlen.statement">Jede Bestellung die du alleine aufgibst kostet dich mehr als nötig.</p>
   </div>
 </section>
 
 <!-- CTA BANNER -->
 <section id="cta-banner">
   <div class="container" style="position:relative;z-index:1">
-    <h2 class="cta-title">Bereit für tiefere Einkaufspreise?</h2>
-    <p class="cta-sub">Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
+    <h2 class="cta-title" data-i18n="cta.title">Bereit für tiefere Einkaufspreise?</h2>
+    <p class="cta-sub" data-i18n="cta.sub">Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.</p>
     <div class="cta-btns">
-      <button class="btn btn-gold btn-lg" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
+      <button class="btn btn-gold btn-lg" onclick="window.location.href='kontakt.html'" data-i18n="nav.cta">Materialbedarf melden</button>
       <a href="mailto:info@SourceOn.ch" class="btn btn-outline-w btn-lg">info@SourceOn.ch</a>
     </div>
   </div>
@@ -1040,21 +1065,21 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     <div class="footer-grid">
       <div class="footer-brand">
         <div class="nav-logo">Source<span>On</span></div>
-        <p>Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
+        <p data-i18n="footer.desc">Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
       </div>
       <div class="footer-col">
-        <h4>Leistungen</h4>
+        <h4 data-i18n="footer.services">Leistungen</h4>
         <ul>
           <li><a href="index.html">Home</a></li>
       <li><a href="prozess.html">Wie es funktioniert</a></li>
           <li><a href="fuerwen.html">Für wen</a></li>
           <li><a href="lieferant.html">Lieferant werden</a></li>
-          <li><a href="kalkulator.html">Einsparkalkulator</a></li>
+          <li><a href="kalkulator.html" data-i18n="footer.calc">Einsparkalkulator</a></li>
           <li><a href="materialien.html">Materialien</a></li>
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Unternehmen</h4>
+        <h4 data-i18n="footer.company">Unternehmen</h4>
         <ul>
           <li><a href="ueberuns.html">Über uns</a></li>
           <li><a href="kontakt.html">Kontakt</a></li>
@@ -1062,7 +1087,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
         </ul>
       </div>
       <div class="footer-col">
-        <h4>Rechtliches</h4>
+        <h4 data-i18n="footer.legal">Rechtliches</h4>
         <ul>
           <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutz</a></li>
           <li><a href="impressum.html" target="_blank" rel="noopener noreferrer">Impressum</a></li>
@@ -1072,7 +1097,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
     </div>
     <div class="footer-bottom">
       <span class="footer-copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
-      <span class="footer-tagline">Du zahlst erst, wenn wir dir sparen.</span>
+      <span class="footer-tagline" data-i18n="footer.tagline">Du zahlst erst, wenn wir dir sparen.</span>
     </div>
   </div>
 </footer>
@@ -1709,5 +1734,211 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 })();
 </script>
 
+<script>
+var I18N={
+  de:{
+    'nav.home':'Home','nav.process':'Wie es funktioniert','nav.calc':'Kalkulator','nav.materials':'Materialien',
+    'nav.forwhom':'Für wen','nav.supplier':'Lieferant werden','nav.about':'Über uns','nav.contact':'Kontakt',
+    'nav.cta':'Materialbedarf melden',
+    'hero.title':'Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span>',
+    'hero.sub':'Schweizer Baufirmen sparen bis zu 30% beim Materialeinkauf — ohne Risiko, ohne Vorauskosten.',
+    'hero.howit':'Wie es funktioniert →',
+    'story.text':'Alleine einkaufen heisst durchschnittliche Konditionen. SourceOn bündelt den Bedarf mehrerer Baufirmen zu einem gemeinsamen Auftrag — und gibt den Mengenrabatt an jede einzelne Firma weiter.',
+    'bignum.caption':'So viel der Gesamtkosten einer Baufirma sind reine Materialkosten.<br><a href="kalkulator.html" class="bignum-cta" data-i18n="bignum.cta">Berechne, wie viel du mit SourceOn sparen kannst →</a>',
+    'bignum.cta':'Berechne, wie viel du mit SourceOn sparen kannst →',
+    'tech.label':'Technologie','tech.title':'Die Maschine hinter<br>jedem Angebot.',
+    'tech.sub':'Unsere Engine analysiert Marktpreise in Echtzeit und erkennt Optimierungspotenziale in Ihren Einkaufsdaten — bevor Sie überhaupt anfragen.',
+    'tech.detail':'Über 340 Lieferantendatenpunkte werden täglich aktualisiert. Ihre Anfragen werden mit historischen Preisen abgeglichen, um die bestmöglichen Konditionen zu identifizieren.',
+    'tech.cta':'Analyse anfragen',
+    'bundling.label':'BÜNDELUNG VISUALISIERT','bundling.title':'Beschaffung auf dem nächsten Level.',
+    'bundling.sub':'Sieh wie SourceOn Materialbedarf bündelt und Mengenrabatte erzielt.',
+    'bundling.note':'SourceOn verbindet Baufirmen mit Lieferanten.',
+    'explore.label':'Entdecken','explore.title':'Alles über SourceOn.',
+    'explore.process.title':'Wie es funktioniert',
+    'explore.process.desc':'Vier Schritte vom Bedarf bis zur Lieferung — und warum es sich lohnt.',
+    'explore.materials.title':'Materialien & Lieferanten',
+    'explore.materials.desc':'50+ Baustoffe, geprüfte Partnerlieferanten in der ganzen Schweiz.',
+    'explore.forwhom.title':'Für wen',
+    'explore.forwhom.desc':'Bauunternehmen, Handwerker, Investoren und Architekten.',
+    'explore.supplier.title':'Lieferant werden',
+    'explore.supplier.desc':'Verifizierter SourceOn-Partner werden und Zugang zu gebündelten Aufträgen erhalten.',
+    'explore.more':'Mehr erfahren →','explore.apply':'Jetzt bewerben →',
+    'suppliers.badge':'Alle Lieferanten persönlich geprüft — SIA/ISO-konform',
+    'suppliers.title':'Unsere Partnerlieferanten',
+    'suppliers.note':'Weitere Partnerlieferanten in Aufbau. Logos werden nach Vertragsabschluss ergänzt.',
+    'zahlen.label':'ZAHLEN & FAKTEN','zahlen.title':'Der Schweizer Baumarkt — in Zahlen.',
+    'zahlen.vol':'Jährliches Einkaufsvolumen Baumarkt CH','zahlen.kmu':'der CH-Baufirmen sind KMU',
+    'zahlen.costs':'der Baukosten entfallen auf Material',
+    'zahlen.savings':'Potenzielle Einsparung je nach Volumen und Material',
+    'zahlen.offer':'bis zum ersten konkreten Angebot',
+    'zahlen.quotes':'Offerten — Mindestanzahl Angebote pro Beschaffungsauftrag',
+    'zahlen.statement':'Jede Bestellung die du alleine aufgibst kostet dich mehr als nötig.',
+    'cta.title':'Bereit für tiefere Einkaufspreise?',
+    'cta.sub':'Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.',
+    'footer.desc':'Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.',
+    'footer.services':'Leistungen','footer.company':'Unternehmen','footer.legal':'Rechtliches',
+    'footer.calc':'Einsparkalkulator','footer.tagline':'Du zahlst erst, wenn wir dir sparen.'
+  },
+  en:{
+    'nav.home':'Home','nav.process':'How it works','nav.calc':'Calculator','nav.materials':'Materials',
+    'nav.forwhom':'Who it\'s for','nav.supplier':'Become a supplier','nav.about':'About us','nav.contact':'Contact',
+    'nav.cta':'Report material demand',
+    'hero.title':'You only pay<br><span class="gold">when we save you money.</span>',
+    'hero.sub':'Swiss construction firms save up to 30% on material procurement — no risk, no upfront costs.',
+    'hero.howit':'How it works →',
+    'story.text':'Buying alone means average conditions. SourceOn bundles the demand of multiple construction firms into a single order — and passes the volume discount on to each individual company.',
+    'bignum.caption':'This much of a construction firm\'s total costs are pure material costs.<br><a href="kalkulator.html" class="bignum-cta" data-i18n="bignum.cta">Calculate how much you can save with SourceOn →</a>',
+    'bignum.cta':'Calculate how much you can save with SourceOn →',
+    'tech.label':'Technology','tech.title':'The engine behind<br>every quote.',
+    'tech.sub':'Our engine analyses market prices in real time and identifies optimisation potential in your purchasing data — before you even enquire.',
+    'tech.detail':'Over 340 supplier data points are updated daily. Your enquiries are compared with historical prices to identify the best possible conditions.',
+    'tech.cta':'Request analysis',
+    'bundling.label':'BUNDLING VISUALISED','bundling.title':'Procurement on the next level.',
+    'bundling.sub':'See how SourceOn bundles material demand and achieves volume discounts.',
+    'bundling.note':'SourceOn connects construction firms with suppliers.',
+    'explore.label':'Explore','explore.title':'Everything about SourceOn.',
+    'explore.process.title':'How it works',
+    'explore.process.desc':'Four steps from demand to delivery — and why it pays off.',
+    'explore.materials.title':'Materials & Suppliers',
+    'explore.materials.desc':'50+ building materials, verified partner suppliers across Switzerland.',
+    'explore.forwhom.title':'Who it\'s for',
+    'explore.forwhom.desc':'Construction companies, tradespeople, investors and architects.',
+    'explore.supplier.title':'Become a supplier',
+    'explore.supplier.desc':'Become a verified SourceOn partner and gain access to bundled orders.',
+    'explore.more':'Learn more →','explore.apply':'Apply now →',
+    'suppliers.badge':'All suppliers personally verified — SIA/ISO compliant',
+    'suppliers.title':'Our partner suppliers',
+    'suppliers.note':'More partner suppliers in development. Logos will be added upon contract completion.',
+    'zahlen.label':'FACTS & FIGURES','zahlen.title':'The Swiss construction market — in numbers.',
+    'zahlen.vol':'Annual procurement volume in the Swiss construction market','zahlen.kmu':'of Swiss construction firms are SMEs',
+    'zahlen.costs':'of construction costs are material costs',
+    'zahlen.savings':'Potential savings depending on volume and material',
+    'zahlen.offer':'until the first concrete offer',
+    'zahlen.quotes':'Quotes — minimum number of offers per procurement order',
+    'zahlen.statement':'Every order you place alone costs you more than necessary.',
+    'cta.title':'Ready for lower purchasing prices?',
+    'cta.sub':'Report your next material demand — free and without obligation. We\'ll check the savings potential and get back to you within 48 hours.',
+    'footer.desc':'Swiss B2B procurement broker for the construction industry. You only pay when we save you money.',
+    'footer.services':'Services','footer.company':'Company','footer.legal':'Legal',
+    'footer.calc':'Savings calculator','footer.tagline':'You only pay when we save you money.'
+  },
+  fr:{
+    'nav.home':'Accueil','nav.process':'Comment ça marche','nav.calc':'Calculateur','nav.materials':'Matériaux',
+    'nav.forwhom':'Pour qui','nav.supplier':'Devenir fournisseur','nav.about':'À propos','nav.contact':'Contact',
+    'nav.cta':'Annoncer un besoin',
+    'hero.title':'Tu ne paies<br><span class="gold">que si on te fait économiser.</span>',
+    'hero.sub':'Les entreprises de construction suisses économisent jusqu\'à 30% sur l\'achat de matériaux — sans risque, sans frais initiaux.',
+    'hero.howit':'Comment ça marche →',
+    'story.text':'Acheter seul signifie des conditions moyennes. SourceOn regroupe les besoins de plusieurs entreprises de construction en une seule commande — et redistribue la remise de volume à chaque entreprise.',
+    'bignum.caption':'C\'est la part des coûts totaux d\'une entreprise de construction qui sont de purs coûts de matériaux.<br><a href="kalkulator.html" class="bignum-cta" data-i18n="bignum.cta">Calcule combien tu peux économiser avec SourceOn →</a>',
+    'bignum.cta':'Calcule combien tu peux économiser avec SourceOn →',
+    'tech.label':'Technologie','tech.title':'Le moteur derrière<br>chaque offre.',
+    'tech.sub':'Notre moteur analyse les prix du marché en temps réel et identifie les potentiels d\'optimisation dans vos données d\'achat — avant même que vous ne demandiez.',
+    'tech.detail':'Plus de 340 points de données fournisseurs sont mis à jour quotidiennement. Vos demandes sont comparées aux prix historiques pour identifier les meilleures conditions possibles.',
+    'tech.cta':'Demander une analyse',
+    'bundling.label':'REGROUPEMENT VISUALISÉ','bundling.title':'L\'approvisionnement au niveau supérieur.',
+    'bundling.sub':'Découvre comment SourceOn regroupe les besoins en matériaux et obtient des remises de volume.',
+    'bundling.note':'SourceOn connecte les entreprises de construction avec les fournisseurs.',
+    'explore.label':'Découvrir','explore.title':'Tout sur SourceOn.',
+    'explore.process.title':'Comment ça marche',
+    'explore.process.desc':'Quatre étapes du besoin à la livraison — et pourquoi ça vaut le coup.',
+    'explore.materials.title':'Matériaux & Fournisseurs',
+    'explore.materials.desc':'50+ matériaux de construction, fournisseurs partenaires vérifiés dans toute la Suisse.',
+    'explore.forwhom.title':'Pour qui',
+    'explore.forwhom.desc':'Entreprises de construction, artisans, investisseurs et architectes.',
+    'explore.supplier.title':'Devenir fournisseur',
+    'explore.supplier.desc':'Devenir un partenaire SourceOn vérifié et accéder aux commandes groupées.',
+    'explore.more':'En savoir plus →','explore.apply':'Postuler maintenant →',
+    'suppliers.badge':'Tous les fournisseurs vérifiés personnellement — conformes SIA/ISO',
+    'suppliers.title':'Nos fournisseurs partenaires',
+    'suppliers.note':'D\'autres fournisseurs partenaires en cours de développement. Les logos seront ajoutés après la signature du contrat.',
+    'zahlen.label':'CHIFFRES & FAITS','zahlen.title':'Le marché suisse de la construction — en chiffres.',
+    'zahlen.vol':'Volume d\'achat annuel du marché de la construction CH','zahlen.kmu':'des entreprises de construction CH sont des PME',
+    'zahlen.costs':'des coûts de construction sont des coûts de matériaux',
+    'zahlen.savings':'Économie potentielle selon le volume et le matériau',
+    'zahlen.offer':'jusqu\'à la première offre concrète',
+    'zahlen.quotes':'Offres — nombre minimum d\'offres par commande',
+    'zahlen.statement':'Chaque commande que tu passes seul te coûte plus que nécessaire.',
+    'cta.title':'Prêt pour des prix d\'achat plus bas?',
+    'cta.sub':'Annonce ton prochain besoin en matériaux — gratuit et sans engagement. Nous vérifions le potentiel d\'économie et te répondons dans les 48 heures.',
+    'footer.desc':'Courtier B2B suisse en approvisionnement pour le secteur de la construction. Tu ne paies que si on te fait économiser.',
+    'footer.services':'Services','footer.company':'Entreprise','footer.legal':'Mentions légales',
+    'footer.calc':'Calculateur d\'économies','footer.tagline':'Tu ne paies que si on te fait économiser.'
+  },
+  it:{
+    'nav.home':'Home','nav.process':'Come funziona','nav.calc':'Calcolatore','nav.materials':'Materiali',
+    'nav.forwhom':'Per chi','nav.supplier':'Diventa fornitore','nav.about':'Chi siamo','nav.contact':'Contatto',
+    'nav.cta':'Segnala fabbisogno materiale',
+    'hero.title':'Paghi solo<br><span class="gold">quando ti facciamo risparmiare.</span>',
+    'hero.sub':'Le imprese edili svizzere risparmiano fino al 30% sull\'acquisto di materiali — senza rischi, senza costi anticipati.',
+    'hero.howit':'Come funziona →',
+    'story.text':'Acquistare da soli significa condizioni nella media. SourceOn raggruppa il fabbisogno di più imprese edili in un unico ordine — e trasferisce lo sconto volume a ogni singola azienda.',
+    'bignum.caption':'Questa è la quota dei costi totali di un\'impresa edile che sono puri costi di materiale.<br><a href="kalkulator.html" class="bignum-cta" data-i18n="bignum.cta">Calcola quanto puoi risparmiare con SourceOn →</a>',
+    'bignum.cta':'Calcola quanto puoi risparmiare con SourceOn →',
+    'tech.label':'Tecnologia','tech.title':'Il motore dietro<br>ogni offerta.',
+    'tech.sub':'Il nostro motore analizza i prezzi di mercato in tempo reale e identifica potenziali di ottimizzazione nei tuoi dati di acquisto — prima ancora che tu chieda.',
+    'tech.detail':'Oltre 340 punti dati fornitori vengono aggiornati quotidianamente. Le tue richieste vengono confrontate con i prezzi storici per identificare le migliori condizioni possibili.',
+    'tech.cta':'Richiedi analisi',
+    'bundling.label':'RAGGRUPPAMENTO VISUALIZZATO','bundling.title':'Approvvigionamento al livello successivo.',
+    'bundling.sub':'Scopri come SourceOn raggruppa il fabbisogno di materiali e ottiene sconti volume.',
+    'bundling.note':'SourceOn connette le imprese edili con i fornitori.',
+    'explore.label':'Scopri','explore.title':'Tutto su SourceOn.',
+    'explore.process.title':'Come funziona',
+    'explore.process.desc':'Quattro passi dal fabbisogno alla consegna — e perché conviene.',
+    'explore.materials.title':'Materiali & Fornitori',
+    'explore.materials.desc':'50+ materiali da costruzione, fornitori partner verificati in tutta la Svizzera.',
+    'explore.forwhom.title':'Per chi',
+    'explore.forwhom.desc':'Imprese edili, artigiani, investitori e architetti.',
+    'explore.supplier.title':'Diventa fornitore',
+    'explore.supplier.desc':'Diventa partner verificato SourceOn e accedi agli ordini raggruppati.',
+    'explore.more':'Scopri di più →','explore.apply':'Candidati ora →',
+    'suppliers.badge':'Tutti i fornitori verificati personalmente — conformi SIA/ISO',
+    'suppliers.title':'I nostri fornitori partner',
+    'suppliers.note':'Altri fornitori partner in fase di sviluppo. I loghi saranno aggiunti dopo la firma del contratto.',
+    'zahlen.label':'CIFRE & FATTI','zahlen.title':'Il mercato edile svizzero — in cifre.',
+    'zahlen.vol':'Volume di acquisto annuale del mercato edile CH','zahlen.kmu':'delle imprese edili CH sono PMI',
+    'zahlen.costs':'dei costi di costruzione sono costi di materiale',
+    'zahlen.savings':'Risparmio potenziale a seconda del volume e del materiale',
+    'zahlen.offer':'fino alla prima offerta concreta',
+    'zahlen.quotes':'Offerte — numero minimo di offerte per ordine di approvvigionamento',
+    'zahlen.statement':'Ogni ordine che fai da solo ti costa più del necessario.',
+    'cta.title':'Pronto per prezzi d\'acquisto più bassi?',
+    'cta.sub':'Segnala il tuo prossimo fabbisogno di materiale — gratuito e senza impegno. Verifichiamo il potenziale di risparmio e ti rispondiamo entro 48 ore.',
+    'footer.desc':'Broker B2B svizzero per l\'approvvigionamento nel settore edile. Paghi solo quando ti facciamo risparmiare.',
+    'footer.services':'Servizi','footer.company':'Azienda','footer.legal':'Note legali',
+    'footer.calc':'Calcolatore di risparmio','footer.tagline':'Paghi solo quando ti facciamo risparmiare.'
+  }
+};
+
+var LANG_NAMES={de:'DE',en:'EN',fr:'FR',it:'IT'};
+
+function setLang(lang){
+  if(!I18N[lang])return;
+  var dict=I18N[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key=el.getAttribute('data-i18n');
+    if(dict[key]!=null) el.textContent=dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+    var key=el.getAttribute('data-i18n-html');
+    if(dict[key]!=null) el.innerHTML=dict[key];
+  });
+  document.getElementById('lang-current').textContent=LANG_NAMES[lang];
+  document.querySelectorAll('.lang-opt').forEach(function(b){b.classList.remove('active');});
+  document.querySelector('.lang-opt[onclick*="\''+lang+'\'"]').classList.add('active');
+  document.getElementById('lang-switch').classList.remove('open');
+  localStorage.setItem('sourceon-lang',lang);
+  document.documentElement.lang=lang;
+}
+
+(function(){
+  var saved=localStorage.getItem('sourceon-lang');
+  if(saved&&saved!=='de') setLang(saved);
+  document.addEventListener('click',function(e){
+    var sw=document.getElementById('lang-switch');
+    if(sw&&!sw.contains(e.target)) sw.classList.remove('open');
+  });
+})();
+</script>
 </body>
 </html>
