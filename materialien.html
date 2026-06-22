@@ -748,15 +748,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 </div>
 
 
-<div id="bento-modal" class="bento-modal">
-  <div class="bento-modal-card">
-    <button class="bento-modal-close" onclick="closeBentoModal()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    <h3 id="bento-modal-title"></h3>
-    <p id="bento-modal-text"></p>
-  </div>
-</div>
-
-
 <!-- MATERIALS & NORMS -->
 <section id="mat-norms" class="section mat-norms-section">
   <div class="container">
@@ -1375,6 +1366,7 @@ var newSetLang=function(lang){
 };
 window.setLang=newSetLang;
 window.applyLang=newSetLang;
+try{var sl=localStorage.getItem('sourceon-lang');if(sl&&sl!=='de')newSetLang(sl);}catch(e){}
 })();
 </script>
 </body>
