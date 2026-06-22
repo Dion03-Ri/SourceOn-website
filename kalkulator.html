@@ -39,7 +39,7 @@ a{color:inherit;text-decoration:none}
 .section{padding:140px 0}
 @media(max-width:900px){.container{padding:0 28px}.section{padding:90px 0}}
 @media(max-width:640px){.container{padding:0 20px}.section{padding:64px 0}}
-@media(max-width:768px){#bundle-tiers [style*="grid-template-columns:repeat(3"]{grid-template-columns:1fr!important}}
+/* bundle-tiers responsive handled in section style tag */
 
 /* LABELS */
 .label{display:inline-flex;align-items:center;gap:7px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:100px;padding:5px 14px;margin-bottom:20px}
@@ -781,28 +781,49 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
 
 <!-- BUNDLE TIER EXPLANATION -->
-<section id="bundle-tiers" style="background:var(--bg);padding:100px 0">
-  <div class="container">
-    <div class="text-center reveal" style="margin-bottom:56px">
+<section id="bundle-tiers" style="background:var(--bg);padding:100px 0;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 100%,rgba(232,160,32,.04) 0%,transparent 70%);pointer-events:none"></div>
+  <div class="container" style="position:relative;z-index:1">
+    <div class="text-center reveal" style="margin-bottom:64px">
       <div class="label" data-i18n="tier_label">Bündel-Ersparnis</div>
       <h2 class="h2" data-i18n="tier_title" style="font-size:clamp(28px,4vw,44px)">Wie die Ersparnis innerhalb eines Bündels verteilt wird.</h2>
-      <p class="subtitle" style="margin-top:14px" data-i18n="tier_text">SourceOn verhandelt für jedes Bündel einen garantierten Mindestrabatt beim Lieferanten — basierend auf dem Gesamtvolumen aller beteiligten Baufirmen. Innerhalb des Bündels gilt: je grösser dein eigener Anteil, desto höher deine individuelle Ersparnis. Kleinere Beiträge erhalten die Basis-Ersparnis, grössere Beiträge profitieren zusätzlich vom kombinierten Bündelvolumen.</p>
+      <p class="subtitle" style="margin-top:16px" data-i18n="tier_text">SourceOn verhandelt für jedes Bündel einen garantierten Mindestrabatt beim Lieferanten — basierend auf dem Gesamtvolumen aller beteiligten Baufirmen. Innerhalb des Bündels gilt: je grösser dein eigener Anteil, desto höher deine individuelle Ersparnis. Kleinere Beiträge erhalten die Basis-Ersparnis, grössere Beiträge profitieren zusätzlich vom kombinierten Bündelvolumen.</p>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto" class="reveal">
-      <div style="background:var(--dark);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:32px 24px;text-align:center">
-        <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px" data-i18n="tier1_label">Anteil bis CHF 100’000</div>
-        <div style="font-size:1.3rem;font-weight:800;color:#fff" data-i18n="tier1_val">Basis-Ersparnis</div>
+    <div class="bundle-grid reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:960px;margin:0 auto">
+      <!-- Tier 1 -->
+      <div class="bundle-card" style="background:linear-gradient(165deg,rgba(8,17,30,.95),rgba(15,28,48,.9));border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:40px 28px 36px;text-align:center;position:relative;transition:transform .3s ease,box-shadow .3s ease">
+        <div style="width:56px;height:56px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.5)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:8px" data-i18n="tier1_label">Anteil bis CHF 100’000</div>
+        <div style="font-size:1.35rem;font-weight:800;color:#fff;margin-bottom:20px" data-i18n="tier1_val">Basis-Ersparnis</div>
+        <div style="height:4px;border-radius:2px;background:rgba(255,255,255,.06);overflow:hidden"><div style="width:33%;height:100%;border-radius:2px;background:linear-gradient(90deg,rgba(255,255,255,.2),rgba(255,255,255,.35))"></div></div>
       </div>
-      <div style="background:var(--dark);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:32px 24px;text-align:center">
-        <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:12px" data-i18n="tier2_label">Anteil CHF 100’000–250’000</div>
-        <div style="font-size:1.3rem;font-weight:800;color:#fff" data-i18n="tier2_val">Erhöhte Ersparnis</div>
+      <!-- Tier 2 -->
+      <div class="bundle-card" style="background:linear-gradient(165deg,rgba(10,22,40,.95),rgba(18,35,58,.9));border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:40px 28px 36px;text-align:center;position:relative;transition:transform .3s ease,box-shadow .3s ease">
+        <div style="width:56px;height:56px;border-radius:14px;background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.15);display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="rgba(232,160,32,.6)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:rgba(232,160,32,.7);margin-bottom:8px" data-i18n="tier2_label">Anteil CHF 100’000–250’000</div>
+        <div style="font-size:1.35rem;font-weight:800;color:#fff;margin-bottom:20px" data-i18n="tier2_val">Erhöhte Ersparnis</div>
+        <div style="height:4px;border-radius:2px;background:rgba(255,255,255,.06);overflow:hidden"><div style="width:66%;height:100%;border-radius:2px;background:linear-gradient(90deg,rgba(232,160,32,.25),rgba(232,160,32,.5))"></div></div>
       </div>
-      <div style="background:var(--dark);border:1.5px solid var(--gold-b);border-radius:var(--r);padding:32px 24px;text-align:center;box-shadow:0 0 32px rgba(232,160,32,.12)">
-        <div style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:12px" data-i18n="tier3_label">Über CHF 250’000</div>
-        <div style="font-size:1.3rem;font-weight:800;color:var(--gold)" data-i18n="tier3_val">Maximale Ersparnis im Bündel</div>
+      <!-- Tier 3 (Featured) -->
+      <div class="bundle-card" style="background:linear-gradient(165deg,rgba(20,30,48,.95),rgba(30,42,62,.9));border:1.5px solid rgba(232,160,32,.35);border-radius:16px;padding:40px 28px 36px;text-align:center;position:relative;box-shadow:0 0 40px rgba(232,160,32,.08),0 8px 32px rgba(0,0,0,.3);transition:transform .3s ease,box-shadow .3s ease">
+        <div style="position:absolute;top:-1px;left:50%;transform:translateX(-50%);background:var(--gold);color:#1a1a1a;font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:4px 16px;border-radius:0 0 8px 8px" data-i18n="tier3_best">Top-Tier</div>
+        <div style="width:56px;height:56px;border-radius:14px;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin:0 auto 24px">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div style="font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:8px" data-i18n="tier3_label">Über CHF 250’000</div>
+        <div style="font-size:1.35rem;font-weight:800;color:var(--gold);margin-bottom:20px" data-i18n="tier3_val">Maximale Ersparnis im Bündel</div>
+        <div style="height:4px;border-radius:2px;background:rgba(232,160,32,.1);overflow:hidden"><div style="width:100%;height:100%;border-radius:2px;background:linear-gradient(90deg,rgba(232,160,32,.5),var(--gold))"></div></div>
       </div>
     </div>
   </div>
+  <style>
+    .bundle-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.4)!important}
+    @media(max-width:768px){.bundle-grid{grid-template-columns:1fr!important;max-width:400px!important}}
+  </style>
 </section>
 <!-- CTA BANNER -->
 <section id="cta-banner">
@@ -1030,6 +1051,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier2_val: 'Erhöhte Ersparnis',
       tier3_label: '\u00dcber CHF 250\u2019000',
       tier3_val: 'Maximale Ersparnis im Bündel',
+      tier3_best: 'Top-Tier',
       cta_title: 'Bereit für tiefere Einkaufspreise?',
       cta_sub: 'Melde deinen nächsten Materialbedarf — kostenlos und unverbindlich. Wir prüfen das Einsparpotenzial und melden uns innerhalb von 48 Stunden.',
       footer_desc: 'Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.',
@@ -1074,6 +1096,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier2_val: 'Enhanced savings',
       tier3_label: 'Over CHF 250,000',
       tier3_val: 'Maximum bundle savings',
+      tier3_best: 'Top Tier',
       cta_title: 'Ready for lower procurement prices?',
       cta_sub: 'Submit your next material need — free and non-binding. We will assess the savings potential and get back to you within 48 hours.',
       footer_desc: 'Swiss B2B procurement intermediary for the construction industry. You only pay when we save you money.',
@@ -1118,6 +1141,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier2_val: '\u00c9conomie accrue',
       tier3_label: 'Plus de CHF 250\'000',
       tier3_val: '\u00c9conomie maximale dans le regroupement',
+      tier3_best: 'Top Niveau',
       cta_title: 'Prêt pour des prix d\'achat plus bas ?',
       cta_sub: 'Déclarez votre prochain besoin matériel — gratuitement et sans engagement. Nous évaluons le potentiel d\'économies et vous recontactons sous 48 heures.',
       footer_desc: 'Intermédiaire suisse d\'approvisionnement B2B pour le secteur de la construction. Vous ne payez que lorsque nous vous faisons économiser.',
@@ -1162,6 +1186,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier2_val: 'Risparmio aumentato',
       tier3_label: 'Oltre CHF 250\'000',
       tier3_val: 'Risparmio massimo nel raggruppamento',
+      tier3_best: 'Top Livello',
       cta_title: 'Pronti per prezzi d\'acquisto più bassi?',
       cta_sub: 'Segnala il tuo prossimo fabbisogno materiale — gratuitamente e senza impegno. Valutiamo il potenziale di risparmio e ti ricontattiamo entro 48 ore.',
       footer_desc: 'Intermediario svizzero di approvvigionamento B2B per il settore edile. Paghi solo quando ti facciamo risparmiare.',
