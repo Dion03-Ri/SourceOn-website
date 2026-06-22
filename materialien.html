@@ -994,7 +994,6 @@ const MAT_CODE={'Rohbau Kern':'RB','Ausbau':'AB','Haustechnik':'HT'};
   MATERIAL_DB.forEach(group=>{
     const og=document.createElement('optgroup');
     og.label=group.cat;
-    og.dataset.origLabel=group.cat;
     group.items.forEach((name,i)=>{
       const id='SO-'+MAT_CODE[group.cat]+'-'+String(i+1).padStart(2,'0');
       const opt=document.createElement('option');
@@ -1005,15 +1004,7 @@ const MAT_CODE={'Rohbau Kern':'RB','Ausbau':'AB','Haustechnik':'HT'};
   });
   sel.addEventListener('change',()=>{
     const opt=sel.options[sel.selectedIndex];
-    if(!opt.value){document.getElementById('mat-lookup-id').textContent='SO–000';document.getElementById('mat-lookup-name').textContent=document.getElementById('mat-lookup-name').dataset.empty||'Noch kein Material ausgewählt';document.getElementById('mat-lookup-cat').textContent='—';return;}
-    var lang=window._currentMatLang||localStorage.getItem('sourceon-lang')||'de';
-    var mt=window._matDbTrans&&window._matDbTrans[lang];
-    var displayName=mt&&mt[opt.dataset.name]?mt[opt.dataset.name]:opt.dataset.name;
-    var displayCat=mt&&mt[opt.dataset.cat]?mt[opt.dataset.cat]:opt.dataset.cat;
-    document.getElementById('mat-lookup-id').textContent=opt.value;
-    document.getElementById('mat-lookup-name').textContent=displayName;
-    document.getElementById('mat-lookup-cat').textContent=displayCat;
-  });
+    if(!opt.value){document.getElementById('mat-lookup-id').textContent='SO–000';document.getElementById('mat-lookup-name').textContent='Noch kein Material ausgewählt';document.getElementById('mat-lookup-cat').textContent='—';return;}
     document.getElementById('mat-lookup-id').textContent=opt.value;
     document.getElementById('mat-lookup-name').textContent=opt.dataset.name;
     document.getElementById('mat-lookup-cat').textContent=opt.dataset.cat;
@@ -1344,50 +1335,38 @@ var MAT_DB_TRANS={
 };
 window._matDbTrans=MAT_DB_TRANS;
 
-var _noSelText={de:'Noch kein Material ausgew\u00e4hlt',en:'No material selected',fr:'Aucun materiau selectionne',it:'Nessun materiale selezionato'};
-
 var origApplyLang=window.applyLang||window.setLang;
 var newSetLang=function(lang){
   origApplyLang(lang);
-  window._currentMatLang=lang;
-  var mt=MAT_DB_TRANS[lang]||null;
+  var mt=MAT_DB_TRANS[lang];
+  if(!mt)return;
   var sel=document.getElementById('mat-lookup-select');
   if(sel){
     sel.querySelectorAll('optgroup').forEach(function(og){
-      var origCat=og.dataset.origLabel;
-      if(!origCat)return;
-      og.label=mt&&mt[origCat]?mt[origCat]:origCat;
+      if(mt[og.label])og.label=mt[og.label];
+      else{for(var k in MAT_DB_TRANS.en){if(MAT_DB_TRANS.en[k]===og.label||MAT_DB_TRANS.fr[k]===og.label||MAT_DB_TRANS.it[k]===og.label){if(mt[k])og.label=mt[k];break;}}}
     });
     sel.querySelectorAll('option').forEach(function(opt){
-      if(!opt.value)return;
-      var origName=opt.dataset.name;
-      if(!origName)return;
-      opt.textContent=mt&&mt[origName]?mt[origName]:origName;
+      if(!opt.value||opt.dataset.i18n)return;
+      var orig=opt.dataset.origName||opt.textContent;
+      if(!opt.dataset.origName)opt.dataset.origName=orig;
+      if(mt[orig])opt.textContent=mt[orig];
+      else{for(var lng in MAT_DB_TRANS){if(MAT_DB_TRANS[lng][orig]){opt.textContent=mt[orig]||opt.textContent;break;}
+        for(var k in MAT_DB_TRANS[lng]){if(MAT_DB_TRANS[lng][k]===orig&&mt[k]){opt.textContent=mt[k];opt.dataset.origName=k;break;}}
+      }}
     });
   }
   var nameEl=document.getElementById('mat-lookup-name');
   if(nameEl){
-    nameEl.dataset.empty=_noSelText[lang]||_noSelText.de;
-    var selEl=document.getElementById('mat-lookup-select');
-    if(selEl&&!selEl.value){
-      nameEl.textContent=_noSelText[lang]||_noSelText.de;
-    } else if(selEl&&selEl.value){
-      var curOpt=selEl.options[selEl.selectedIndex];
-      if(curOpt&&curOpt.dataset.name){
-        nameEl.textContent=mt&&mt[curOpt.dataset.name]?mt[curOpt.dataset.name]:curOpt.dataset.name;
-      }
-    }
+    var txt=nameEl.textContent;
+    if(mt[txt])nameEl.textContent=mt[txt];
+    else{for(var lng in MAT_DB_TRANS){for(var k in MAT_DB_TRANS[lng]){if(MAT_DB_TRANS[lng][k]===txt&&mt[k]){nameEl.textContent=mt[k];break;}}}}
   }
   var catEl=document.getElementById('mat-lookup-cat');
   if(catEl&&catEl.textContent!=='\u2014'){
-    var selEl2=document.getElementById('mat-lookup-select');
-    if(selEl2&&selEl2.value){
-      var curOpt2=selEl2.options[selEl2.selectedIndex];
-      if(curOpt2&&curOpt2.dataset.cat){
-        var origCat2=curOpt2.dataset.cat;
-        catEl.textContent=mt&&mt[origCat2]?mt[origCat2]:origCat2;
-      }
-    }
+    var cat=catEl.textContent;
+    if(mt[cat])catEl.textContent=mt[cat];
+    else{for(var lng in MAT_DB_TRANS){for(var k in MAT_DB_TRANS[lng]){if(MAT_DB_TRANS[lng][k]===cat&&mt[k]){catEl.textContent=mt[k];break;}}}}
   }
 };
 window.setLang=newSetLang;
