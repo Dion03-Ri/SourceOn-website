@@ -688,7 +688,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 <script>
 (function(){
 var l=localStorage.getItem('sourceon-lang');
-if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>body{visibility:hidden}</style>');setTimeout(function(){var h=document.getElementById('_lh');if(h)h.remove();},50);}
+if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>body{opacity:0}body.lang-ready{opacity:1;transition:opacity .15s ease}</style>');setTimeout(function(){document.body.classList.add('lang-ready');var h=document.getElementById('_lh');if(h)h.remove();},400);}
 })();
 </script>
 </head>
@@ -1152,7 +1152,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 
     document.documentElement.setAttribute('lang', lang);
     localStorage.setItem('sourceon-lang', lang);
-  var _lh=document.getElementById('_lh');if(_lh)_lh.remove();
+  document.body.classList.add('lang-ready');var _lh=document.getElementById('_lh');if(_lh){setTimeout(function(){_lh.remove();},200);}
 
     var sw = document.getElementById('lang-switch');
     if (sw) sw.classList.remove('open');
