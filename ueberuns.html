@@ -826,6 +826,10 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text">Kann ich SourceOn auch als Grossunternehmen nutzen?</span><span class="faq-toggle">+</span></button>
         <div class="faq-a"><div class="faq-a-inner">Absolut. Obwohl unsere Kernzielgruppe KMU-Baufirmen sind, profitieren auch Generalunternehmer und Grosskonzerne von unserem Netzwerk und unserer Verhandlungsmacht. Ab CHF 500'000 Jahresvolumen bieten wir individuelle Konditionen an.</div></div>
       </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text" data-i18n="faq_q_bundle">Bekommen alle Firmen im selben Bündel die gleiche Ersparnis?</span><span class="faq-toggle">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq_a_bundle">Nein. SourceOn verhandelt für das gesamte Bündel einen garantierten Mindestrabatt beim Lieferanten. Innerhalb des Bündels wird die Ersparnis nach Volumenanteil gestaffelt — wer mehr Material über SourceOn bezieht, profitiert von einer höheren individuellen Ersparnis. So bleibt das System fair und gleichzeitig wachstumsfördernd: je mehr du bündelst, desto mehr sparst du.</div></div>
+      </div>
     </div>
     </div>
   </div>
@@ -1041,7 +1045,9 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_q3: 'Muss ich einen Vertrag unterschreiben?',
       faq_a3: 'Für den ersten Auftrag reicht eine einfache Auftragsbestätigung. Für eine langfristige Zusammenarbeit schliessen wir eine Vermittlungsvereinbarung ab — diese schützt beide Seiten und regelt die Provision transparent.',
       faq_q4: 'Was passiert wenn die Lieferung fehlerhaft ist?',
-      faq_a4: 'SourceOn ist Vermittler, kein Händler. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Bei Mängeln haftet der Lieferant direkt dir gegenüber gemäss Schweizer OR. Wir unterstützen dich bei der Kommunikation mit dem Lieferanten.'
+      faq_a4: 'SourceOn ist Vermittler, kein Händler. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Bei Mängeln haftet der Lieferant direkt dir gegenüber gemäss Schweizer OR. Wir unterstützen dich bei der Kommunikation mit dem Lieferanten.',
+      faq_q_bundle: 'Bekommen alle Firmen im selben Bündel die gleiche Ersparnis?',
+      faq_a_bundle: 'Nein. SourceOn verhandelt für das gesamte Bündel einen garantierten Mindestrabatt beim Lieferanten. Innerhalb des Bündels wird die Ersparnis nach Volumenanteil gestaffelt \u2014 wer mehr Material über SourceOn bezieht, profitiert von einer höheren individuellen Ersparnis. So bleibt das System fair und gleichzeitig wachstumsfördernd: je mehr du bündelst, desto mehr sparst du.'
     },
     en: {
       nav_home: 'Home',
@@ -1078,7 +1084,9 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_q3: 'Do I need to sign a contract?',
       faq_a3: 'For the first order, a simple order confirmation is sufficient. For long-term collaboration, we conclude a brokerage agreement — this protects both sides and regulates the commission transparently.',
       faq_q4: 'What happens if the delivery is defective?',
-      faq_a4: 'SourceOn is a broker, not a dealer. The purchase contract runs directly between you and the supplier. In case of defects, the supplier is liable to you under Swiss law. We support you in communicating with the supplier.'
+      faq_a4: 'SourceOn is a broker, not a dealer. The purchase contract runs directly between you and the supplier. In case of defects, the supplier is liable to you under Swiss law. We support you in communicating with the supplier.',
+      faq_q_bundle: 'Do all firms in the same bundle get the same savings?',
+      faq_a_bundle: 'No. SourceOn negotiates a guaranteed minimum discount with the supplier for the entire bundle. Within the bundle, savings are tiered by volume share \u2014 those who source more material through SourceOn benefit from higher individual savings. This keeps the system fair while rewarding growth: the more you bundle, the more you save.'
     },
     fr: {
       nav_home: 'Accueil',
@@ -1115,7 +1123,9 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_q3: 'Dois-je signer un contrat ?',
       faq_a3: 'Pour la première commande, une simple confirmation suffit. Pour une collaboration à long terme, nous concluons un accord de courtage — celui-ci protège les deux parties et règle la commission de manière transparente.',
       faq_q4: 'Que se passe-t-il si la livraison est défectueuse ?',
-      faq_a4: 'SourceOn est un intermédiaire, pas un revendeur. Le contrat d\'achat est conclu directement entre vous et le fournisseur. En cas de défaut, le fournisseur est responsable envers vous selon le droit suisse. Nous vous assistons dans la communication avec le fournisseur.'
+      faq_a4: 'SourceOn est un intermédiaire, pas un revendeur. Le contrat d\'achat est conclu directement entre vous et le fournisseur. En cas de défaut, le fournisseur est responsable envers vous selon le droit suisse. Nous vous assistons dans la communication avec le fournisseur.',
+      faq_q_bundle: 'Toutes les entreprises d\'un même regroupement bénéficient-elles des mêmes économies ?',
+      faq_a_bundle: 'Non. SourceOn négocie un rabais minimum garanti auprès du fournisseur pour l\'ensemble du regroupement. Au sein du regroupement, les économies sont échelonnées selon la part de volume \u2014 ceux qui approvisionnent plus de matériaux via SourceOn bénéficient d\'économies individuelles plus élevées.'
     },
     it: {
       nav_home: 'Home',
@@ -1152,7 +1162,9 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_q3: 'Devo firmare un contratto?',
       faq_a3: 'Per il primo ordine è sufficiente una semplice conferma d\'ordine. Per una collaborazione a lungo termine, stipuliamo un accordo di intermediazione — questo tutela entrambe le parti e regola la commissione in modo trasparente.',
       faq_q4: 'Cosa succede se la consegna è difettosa?',
-      faq_a4: 'SourceOn è un intermediario, non un rivenditore. Il contratto d\'acquisto è stipulato direttamente tra te e il fornitore. In caso di difetti, il fornitore è responsabile nei tuoi confronti secondo il diritto svizzero. Ti supportiamo nella comunicazione con il fornitore.'
+      faq_a4: 'SourceOn è un intermediario, non un rivenditore. Il contratto d\'acquisto è stipulato direttamente tra te e il fornitore. In caso di difetti, il fornitore è responsabile nei tuoi confronti secondo il diritto svizzero. Ti supportiamo nella comunicazione con il fornitore.',
+      faq_q_bundle: 'Tutte le aziende nello stesso raggruppamento ottengono lo stesso risparmio?',
+      faq_a_bundle: 'No. SourceOn negozia uno sconto minimo garantito con il fornitore per l\'intero raggruppamento. All\'interno del raggruppamento, il risparmio è graduato in base alla quota di volume \u2014 chi acquista più materiale tramite SourceOn beneficia di un risparmio individuale maggiore.'
     }
   };
 

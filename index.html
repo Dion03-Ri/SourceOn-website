@@ -1657,6 +1657,7 @@ const co=new IntersectionObserver(entries=>{
 document.querySelectorAll('[data-count]').forEach(el=>{
   if(!el.closest('.hero-stats'))co.observe(el);
 });
+setTimeout(function(){document.querySelectorAll('[data-count]').forEach(function(el){if(el.textContent.indexOf('0')===0&&el.dataset.count!=='0'){countEl(el);}});},3000);
 
 
 // MARQUEE
