@@ -993,7 +993,7 @@ const MAT_CODE={'Rohbau Kern':'RB','Ausbau':'AB','Haustechnik':'HT'};
   if(!sel)return;
   MATERIAL_DB.forEach(group=>{
     const og=document.createElement('optgroup');
-    og.label=group.cat;
+    og.label=group.cat;og.dataset.cat=group.cat;
     group.items.forEach((name,i)=>{
       const id='SO-'+MAT_CODE[group.cat]+'-'+String(i+1).padStart(2,'0');
       const opt=document.createElement('option');
@@ -1004,10 +1004,16 @@ const MAT_CODE={'Rohbau Kern':'RB','Ausbau':'AB','Haustechnik':'HT'};
   });
   sel.addEventListener('change',()=>{
     const opt=sel.options[sel.selectedIndex];
-    if(!opt.value){document.getElementById('mat-lookup-id').textContent='SO–000';document.getElementById('mat-lookup-name').textContent='Noch kein Material ausgewählt';document.getElementById('mat-lookup-cat').textContent='—';return;}
+    if(!opt.value){document.getElementById('mat-lookup-id').textContent='SO–000';var nk='Noch kein Material ausgewählt';var cl2=localStorage.getItem('sourceon-lang')||'de';if(cl2!=='de'&&window._matDbTrans&&window._matDbTrans[cl2]&&window._matDbTrans[cl2][nk])nk=window._matDbTrans[cl2][nk];document.getElementById('mat-lookup-name').textContent=nk;document.getElementById('mat-lookup-cat').textContent='—';return;}
     document.getElementById('mat-lookup-id').textContent=opt.value;
-    document.getElementById('mat-lookup-name').textContent=opt.dataset.name;
-    document.getElementById('mat-lookup-cat').textContent=opt.dataset.cat;
+    var nEl=document.getElementById('mat-lookup-name');nEl.textContent=opt.dataset.name;nEl.dataset.deName=opt.dataset.name;
+    var cEl=document.getElementById('mat-lookup-cat');cEl.textContent=opt.dataset.cat;cEl.dataset.deCat=opt.dataset.cat;
+    var cl=localStorage.getItem('sourceon-lang')||'de';
+    if(cl!=='de'&&window._matDbTrans&&window._matDbTrans[cl]){
+      var mt=window._matDbTrans[cl];
+      if(mt[opt.dataset.name])nEl.textContent=mt[opt.dataset.name];
+      if(mt[opt.dataset.cat])cEl.textContent=mt[opt.dataset.cat];
+    }
   });
 })();
 (function(){const track=document.getElementById('mat-strip-track');if(track)track.innerHTML+=track.innerHTML;})();
@@ -1159,7 +1165,8 @@ const T={
     mat_label:'Matériau & Norme',
     mat_heading:'Chaque matériau.<br>Une norme.',
     mat_sub:'Tous les matériaux fournis par SourceOn répondent à nos critères — conformes SN EN et SIA, entièrement documentés.',
-    mat_select_placeholder:'Choisir un matériau pour voir l\','strip_concrete':'Beton & beton pompe','strip_rebar':'Armature & ferraillage','strip_gravel':'Gravier, gravillons & sable','strip_masonry':'Maconnerie & mortier','strip_formwork':'Coffrage & etais','strip_precast':'Prefabriques beton','strip_insulation':'Isolation','strip_drywall':'Plaques & ossature','strip_roofing':'Toiture & facade','strip_plumbing':'Technique & tuyauterie','mat_no_selection':'Aucun materiau selectionne'ID SourceOn…',
+    mat_select_placeholder:'Choisir un matériau pour voir l\'ID SourceOn…',
+    strip_concrete:'Béton & béton pompé',strip_rebar:'Armature & ferraillage',strip_gravel:'Gravier, gravillons & sable',strip_masonry:'Maçonnerie & mortier',strip_formwork:'Coffrage & étais',strip_precast:'Préfabriqués béton',strip_insulation:'Isolation',strip_drywall:'Plaques & ossature',strip_roofing:'Toiture & façade',strip_plumbing:'Technique & tuyauterie',
     mat_no_selection:'Aucun matériau sélectionné',
     coverage_label:'Couverture',
     coverage_heading:'Une interface.<br>Chaque matériau.',
@@ -1190,7 +1197,8 @@ const T={
     mat_label:'Materiale & Norma',
     mat_heading:'Ogni materiale.<br>Una norma.',
     mat_sub:'Tutti i materiali forniti da SourceOn soddisfano i nostri criteri — conformi SN EN e SIA, completamente documentati.',
-    mat_select_placeholder:'Scegli un materiale per vedere l\','strip_concrete':'Calcestruzzo & pompabile','strip_rebar':'Armatura & rinforzo','strip_gravel':'Ghiaia, pietrisco & sabbia','strip_masonry':'Muratura & malta','strip_formwork':'Casseforme & puntelli','strip_precast':'Prefabbricati cls','strip_insulation':'Isolamento','strip_drywall':'Cartongesso & montanti','strip_roofing':'Copertura & facciata','strip_plumbing':'Impiantistica & tubazioni','mat_no_selection':'Nessun materiale selezionato'ID SourceOn…',
+    mat_select_placeholder:'Scegli un materiale per vedere l\'ID SourceOn…',
+    strip_concrete:'Calcestruzzo & pompabile',strip_rebar:'Armatura & rinforzo',strip_gravel:'Ghiaia, pietrisco & sabbia',strip_masonry:'Muratura & malta',strip_formwork:'Casseforme & puntelli',strip_precast:'Prefabbricati cls',strip_insulation:'Isolamento',strip_drywall:'Cartongesso & montanti',strip_roofing:'Copertura & facciata',strip_plumbing:'Impiantistica & tubazioni',
     mat_no_selection:'Nessun materiale selezionato',
     coverage_label:'Copertura',
     coverage_heading:'Un\'interfaccia.<br>Ogni materiale.',
@@ -1343,30 +1351,26 @@ var newSetLang=function(lang){
   var sel=document.getElementById('mat-lookup-select');
   if(sel){
     sel.querySelectorAll('optgroup').forEach(function(og){
-      if(mt[og.label])og.label=mt[og.label];
-      else{for(var k in MAT_DB_TRANS.en){if(MAT_DB_TRANS.en[k]===og.label||MAT_DB_TRANS.fr[k]===og.label||MAT_DB_TRANS.it[k]===og.label){if(mt[k])og.label=mt[k];break;}}}
+      var de=og.dataset.cat||og.label;
+      if(!og.dataset.cat)og.dataset.cat=de;
+      if(mt[de])og.label=mt[de]; else og.label=de;
     });
     sel.querySelectorAll('option').forEach(function(opt){
-      if(!opt.value||opt.dataset.i18n)return;
-      var orig=opt.dataset.origName||opt.textContent;
-      if(!opt.dataset.origName)opt.dataset.origName=orig;
-      if(mt[orig])opt.textContent=mt[orig];
-      else{for(var lng in MAT_DB_TRANS){if(MAT_DB_TRANS[lng][orig]){opt.textContent=mt[orig]||opt.textContent;break;}
-        for(var k in MAT_DB_TRANS[lng]){if(MAT_DB_TRANS[lng][k]===orig&&mt[k]){opt.textContent=mt[k];opt.dataset.origName=k;break;}}
-      }}
+      if(!opt.value)return;
+      var de=opt.dataset.name;
+      if(de&&mt[de])opt.textContent=mt[de];
+      else if(de)opt.textContent=de;
     });
   }
   var nameEl=document.getElementById('mat-lookup-name');
-  if(nameEl){
-    var txt=nameEl.textContent;
-    if(mt[txt])nameEl.textContent=mt[txt];
-    else{for(var lng in MAT_DB_TRANS){for(var k in MAT_DB_TRANS[lng]){if(MAT_DB_TRANS[lng][k]===txt&&mt[k]){nameEl.textContent=mt[k];break;}}}}
+  if(nameEl&&nameEl.dataset.deName){
+    var de=nameEl.dataset.deName;
+    nameEl.textContent=mt[de]||de;
   }
   var catEl=document.getElementById('mat-lookup-cat');
-  if(catEl&&catEl.textContent!=='\u2014'){
-    var cat=catEl.textContent;
-    if(mt[cat])catEl.textContent=mt[cat];
-    else{for(var lng in MAT_DB_TRANS){for(var k in MAT_DB_TRANS[lng]){if(MAT_DB_TRANS[lng][k]===cat&&mt[k]){catEl.textContent=mt[k];break;}}}}
+  if(catEl&&catEl.dataset.deCat){
+    var de=catEl.dataset.deCat;
+    catEl.textContent=mt[de]||de;
   }
 };
 window.setLang=newSetLang;
