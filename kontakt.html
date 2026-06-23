@@ -865,6 +865,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 // SMOOTH ANCHOR SCROLL
 function easeOutExpo(t){return t===1?1:1-Math.pow(2,-10*t);}
@@ -968,12 +969,128 @@ function removeFile(){document.getElementById('c-file').value='';document.getEle
   zone.addEventListener('dragleave',()=>zone.classList.remove('drag-over'));
   zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('drag-over');const file=e.dataTransfer.files[0];if(file){document.getElementById('c-file').files=e.dataTransfer.files;handleFileSelect(document.getElementById('c-file'));}});
 })();
-function submitContact(e){
+var _supabase=window.supabase.createClient(
+  'https://mttzsqtuaisdjisjxrey.supabase.co',
+  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U'
+);
+var _matCatalog=null;
+(async function(){
+  var res=await _supabase.from('material_catalog').select('*');
+  if(res.data)_matCatalog=res.data;
+})();
+
+function _findSourceonId(materialName){
+  if(!_matCatalog||!materialName)return null;
+  var exact=_matCatalog.find(function(m){return m.bezeichnung===materialName;});
+  if(exact)return{id:exact.sourceon_id,einheit:exact.einheit};
+  var lower=materialName.toLowerCase();
+  var partial=_matCatalog.find(function(m){return m.bezeichnung&&m.bezeichnung.toLowerCase()===lower;});
+  if(partial)return{id:partial.sourceon_id,einheit:partial.einheit};
+  var words=lower.split(/\s+/);
+  var best=null;var bestScore=0;
+  _matCatalog.forEach(function(m){
+    if(!m.bezeichnung)return;
+    var ml=m.bezeichnung.toLowerCase();
+    var score=words.filter(function(w){return ml.indexOf(w)!==-1;}).length;
+    if(score>bestScore){bestScore=score;best=m;}
+  });
+  if(best&&bestScore>0)return{id:best.sourceon_id,einheit:best.einheit};
+  return null;
+}
+
+function _parseTiming(sel){
+  var v=sel.selectedIndex;
+  var today=new Date();
+  var fmt=function(d){return d.toISOString().split('T')[0];};
+  var von=fmt(today);
+  if(v===1){var d=new Date(today);d.setDate(d.getDate()+3);return{von:von,bis:fmt(d)};}
+  if(v===2){var d=new Date(today);d.setDate(d.getDate()+7);return{von:von,bis:fmt(d)};}
+  if(v===3){var d=new Date(today);d.setDate(d.getDate()+14);return{von:von,bis:fmt(d)};}
+  if(v===4){var d=new Date(today);d.setDate(d.getDate()+30);return{von:von,bis:fmt(d)};}
+  return{von:null,bis:null};
+}
+
+function _extractZone(addr){
+  var plz=addr.match(/\b(\d{4})\b/);
+  if(plz)return plz[1].substring(0,2);
+  var cantons=['ZH','BE','LU','UR','SZ','OW','NW','GL','ZG','FR','SO','BS','BL','SH','AR','AI','SG','GR','AG','TG','TI','VD','VS','NE','GE','JU'];
+  var upper=addr.toUpperCase();
+  for(var i=0;i<cantons.length;i++){if(upper.indexOf(cantons[i])!==-1)return cantons[i];}
+  return addr.trim().substring(0,20);
+}
+
+function _extractKanton(addr){
+  var map={'zürich':'ZH','zurich':'ZH','bern':'BE','luzern':'LU','uri':'UR','schwyz':'SZ','obwalden':'OW','nidwalden':'NW','glarus':'GL','zug':'ZG','freiburg':'FR','fribourg':'FR','solothurn':'SO','basel':'BS','schaffhausen':'SH','appenzell':'AR','st. gallen':'SG','st.gallen':'SG','graubünden':'GR','aargau':'AG','thurgau':'TG','tessin':'TI','ticino':'TI','waadt':'VD','vaud':'VD','wallis':'VS','valais':'VS','neuenburg':'NE','neuchâtel':'NE','genf':'GE','genève':'GE','jura':'JU'};
+  var lower=addr.toLowerCase();
+  for(var k in map){if(lower.indexOf(k)!==-1)return map[k];}
+  var cantons=['ZH','BE','LU','UR','SZ','OW','NW','GL','ZG','FR','SO','BS','BL','SH','AR','AI','SG','GR','AG','TG','TI','VD','VS','NE','GE','JU'];
+  var upper=addr.toUpperCase();
+  for(var i=0;i<cantons.length;i++){if(upper.indexOf(cantons[i])!==-1)return cantons[i];}
+  return addr.trim();
+}
+
+async function submitContact(e){
   e.preventDefault();
-  const matOk=validateMaterials();
-  if([req('c-company','e-c-company'),req('c-name','e-c-name'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone'),matOk,selOk('c-timing','e-c-timing'),req('c-canton','e-c-canton')].every(Boolean)){
+  var matOk=validateMaterials();
+  if(![req('c-company','e-c-company'),req('c-name','e-c-name'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone'),matOk,selOk('c-timing','e-c-timing'),req('c-canton','e-c-canton')].every(Boolean))return;
+
+  var submitBtn=document.querySelector('#form-contact button[type="submit"]');
+  submitBtn.disabled=true;submitBtn.style.opacity='0.6';
+
+  try{
+    var addrVal=document.getElementById('c-canton').value.trim();
+    var custRes=await _supabase.from('customers').insert({
+      firmenname:document.getElementById('c-company').value.trim(),
+      ansprechperson:document.getElementById('c-name').value.trim(),
+      email:document.getElementById('c-email').value.trim(),
+      telefon:document.getElementById('c-phone').value.trim(),
+      lieferadresse:addrVal,
+      kanton:_extractKanton(addrVal)
+    }).select('id').single();
+
+    if(custRes.error)throw custRes.error;
+    var customerId=custRes.data.id;
+
+    var timing=_parseTiming(document.getElementById('c-timing'));
+    var zone=_extractZone(addrVal);
+    var rows=document.querySelectorAll('#material-rows .material-row');
+    var inserts=[];
+    rows.forEach(function(r){
+      var mat=r.querySelector('.mat-sel').value;
+      var qty=r.querySelector('.mat-qty').value.trim();
+      if(!mat||!qty)return;
+      var match=_findSourceonId(mat);
+      inserts.push({
+        customer_id:customerId,
+        sourceon_id:match?match.id:null,
+        menge:qty,
+        einheit:match?match.einheit:null,
+        liefer_zeitraum_von:timing.von,
+        liefer_zeitraum_bis:timing.bis,
+        liefer_zone:zone,
+        status:'offen'
+      });
+    });
+
+    if(inserts.length>0){
+      var matRes=await _supabase.from('material_requests').insert(inserts);
+      if(matRes.error)throw matRes.error;
+    }
+
+    // File upload note: file-based material list parsing not yet implemented in this phase
     document.getElementById('form-contact').style.display='none';
     document.getElementById('success-contact').classList.add('show');
+  }catch(err){
+    console.error('Supabase insert error:',err);
+    submitBtn.disabled=false;submitBtn.style.opacity='1';
+    var errDiv=document.getElementById('submit-error');
+    if(!errDiv){
+      errDiv=document.createElement('div');errDiv.id='submit-error';
+      errDiv.style.cssText='background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:14px 18px;margin-top:14px;font-size:.85rem;color:#991b1b;line-height:1.6';
+      submitBtn.parentNode.insertBefore(errDiv,submitBtn.nextSibling);
+    }
+    errDiv.textContent='Es gab ein Problem bei der Übermittlung. Bitte versuche es erneut oder kontaktiere uns direkt unter info@sourceon.ch.';
+    errDiv.style.display='block';
   }
 }
 
