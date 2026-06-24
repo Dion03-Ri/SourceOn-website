@@ -1039,14 +1039,20 @@ async function submitContact(e){
 
   try{
     var addrVal=document.getElementById('c-canton').value.trim();
-    var custRes=await _supabase.from('customers').insert({
+    var custPayload={
       firmenname:document.getElementById('c-company').value.trim(),
       ansprechperson:document.getElementById('c-name').value.trim(),
       email:document.getElementById('c-email').value.trim(),
       telefon:document.getElementById('c-phone').value.trim(),
       lieferadresse:addrVal,
       kanton:_extractKanton(addrVal)
-    }).select('id').single();
+    };
+    var _dbUrl=_supabase.supabaseUrl||(_supabase.rest?_supabase.rest.url:'unknown');
+    var _dbKey=_supabase.supabaseKey||(_supabase.rest&&_supabase.rest.headers?_supabase.rest.headers.apikey:'unknown');
+    console.log('[SourceOn Debug] Supabase URL:',_dbUrl);
+    console.log('[SourceOn Debug] Supabase key (first 20):',typeof _dbKey==='string'?_dbKey.substring(0,20):'MISSING');
+    console.log('[SourceOn Debug] Customer payload:',JSON.stringify(custPayload));
+    var custRes=await _supabase.from('customers').insert(custPayload).select('id').single();
 
     if(custRes.error)throw custRes.error;
     var customerId=custRes.data.id;
@@ -1073,6 +1079,7 @@ async function submitContact(e){
     });
 
     if(inserts.length>0){
+      console.log('[SourceOn Debug] material_requests payload:',JSON.stringify(inserts));
       var matRes=await _supabase.from('material_requests').insert(inserts);
       if(matRes.error)throw matRes.error;
     }
