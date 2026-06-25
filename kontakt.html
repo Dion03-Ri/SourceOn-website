@@ -975,13 +975,24 @@ var _supabase=window.supabase.createClient(
 );
 var _matCatalog=null;
 (async function(){
-  var res=await _supabase.from('material_catalog').select('sourceon_id,bezeichnung,kategorie,einheit');
-  if(res.data){
-    _matCatalog=res.data;
-    console.log('[SourceOn Debug] material_catalog loaded:',res.data.length,'rows');
-    console.log('[SourceOn Debug] catalog sample:',JSON.stringify(res.data.slice(0,3)));
-  }else{
-    console.error('[SourceOn Debug] material_catalog fetch failed:',res.error);
+  try{
+    console.log('[SourceOn Debug] Fetching material_catalog...');
+    var res=await _supabase.from('material_catalog').select('sourceon_id,bezeichnung,kategorie,einheit');
+    console.log('[SourceOn Debug] Catalog fetch result:',{data:res.data,error:res.error,status:res.status,statusText:res.statusText,count:res.data?res.data.length:'null'});
+    if(res.error){
+      console.error('[SourceOn Debug] material_catalog fetch ERROR:',res.error.message,res.error.code,res.error.hint,res.error.details);
+    }
+    if(res.data&&res.data.length>0){
+      _matCatalog=res.data;
+      console.log('[SourceOn Debug] material_catalog loaded:',res.data.length,'rows');
+      console.log('[SourceOn Debug] catalog sample:',JSON.stringify(res.data.slice(0,3)));
+    }else{
+      console.warn('[SourceOn Debug] material_catalog returned 0 rows. data=',res.data,'error=',res.error);
+      var test=await _supabase.from('material_catalog').select('*').limit(1);
+      console.log('[SourceOn Debug] Fallback test (select * limit 1):',{data:test.data,error:test.error,status:test.status});
+    }
+  }catch(e){
+    console.error('[SourceOn Debug] material_catalog fetch EXCEPTION:',e);
   }
 })();
 
