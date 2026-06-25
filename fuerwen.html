@@ -1083,16 +1083,41 @@ function clerkSignOut(){
 
 (async function initClerkUI(){
   function waitForClerk(){
-    return new Promise(function(resolve){
-      if(window.Clerk&&window.Clerk.loaded){resolve();return;}
+    return new Promise(function(resolve,reject){
+      console.log('[Clerk] Waiting for Clerk script...');
+      var elapsed=0;
       var iv=setInterval(function(){
-        if(window.Clerk&&window.Clerk.loaded){clearInterval(iv);resolve();}
-      },100);
-      setTimeout(function(){clearInterval(iv);resolve();},8000);
+        elapsed+=200;
+        if(window.Clerk){
+          clearInterval(iv);
+          console.log('[Clerk] window.Clerk found, calling Clerk.load()...');
+          if(typeof window.Clerk.load==='function'){
+            window.Clerk.load().then(function(){
+              console.log('[Clerk] Clerk.load() resolved successfully');
+              resolve(true);
+            }).catch(function(e){
+              console.error('[Clerk] Clerk.load() failed:',e);
+              resolve(false);
+            });
+          }else{
+            console.log('[Clerk] Clerk.load not a function, checking .loaded property');
+            if(window.Clerk.loaded){resolve(true);}
+            else{
+              var iv2=setInterval(function(){
+                if(window.Clerk.loaded){clearInterval(iv2);console.log('[Clerk] Clerk.loaded became true');resolve(true);}
+              },200);
+              setTimeout(function(){clearInterval(iv2);console.warn('[Clerk] Timed out waiting for Clerk.loaded');resolve(false);},8000);
+            }
+          }
+          return;
+        }
+        if(elapsed>=10000){clearInterval(iv);console.warn('[Clerk] Timed out waiting for window.Clerk');resolve(false);}
+      },200);
     });
   }
-  await waitForClerk();
-  if(!window.Clerk||!window.Clerk.loaded)return;
+  var clerkReady=await waitForClerk();
+  console.log('[Clerk] Checking auth state now. Ready:',clerkReady);
+  if(!clerkReady||!window.Clerk)return;
 
   function updateAcctUI(){
     var user=window.Clerk.user;
