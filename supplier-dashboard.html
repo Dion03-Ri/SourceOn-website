@@ -13,85 +13,140 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_dG9sZXJhbnQtc2tpbmstNjIuY2xlcmsuYWNjb3VudHMuZGV2JA"
+  src="https://tolerant-skink-62.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+  type="text/javascript"
+></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',-apple-system,sans-serif;background:#0A1626;color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased}
-a{color:#E8A020;text-decoration:none}
+:root{
+  --dark:#08111E;--dark2:#0A1626;--dark3:#0F2238;
+  --gold:#E8A020;--gold-h:#f0b840;--gold-dim:rgba(232,160,32,.12);--gold-b:rgba(232,160,32,.3);
+  --muted:#94A3B8;--body:#64748B;
+  --green:#10B981;--red:#EF4444;--amber:#F59E0B;
+  --r:16px;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--dark2);color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:var(--gold);text-decoration:none}
+::selection{background:var(--gold);color:#1a1a1a}
 
 /* TOP NAV */
-.topnav{background:#0F2238;border-bottom:1px solid rgba(255,255,255,.06);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.topnav-logo{font-size:20px;font-weight:800;letter-spacing:-.3px}
-.topnav-logo em{font-style:normal;color:#E8A020}
+.topnav{background:var(--dark3);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topnav-logo{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#fff;cursor:pointer;text-decoration:none}
+.topnav-logo span{color:var(--gold)}
 .topnav-right{display:flex;align-items:center;gap:16px}
-.topnav-company{font-size:13px;color:#94A3B8}
-.btn-logout{padding:8px 16px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:transparent;color:#94A3B8;font-size:13px;font-family:inherit;cursor:pointer;transition:border-color .2s,color .2s}
-.btn-logout:hover{border-color:#E8A020;color:#E8A020}
+.topnav-company{font-size:.82rem;color:var(--muted);font-weight:500}
+.btn-logout{padding:8px 18px;border-radius:100px;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:var(--muted);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s}
+.btn-logout:hover{border-color:var(--gold);color:var(--gold)}
+.btn-back{padding:8px 18px;border-radius:100px;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:var(--muted);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-back:hover{border-color:rgba(255,255,255,.3);color:#fff}
+
+/* AUTH GATE */
+.auth-gate{display:flex;align-items:center;justify-content:center;min-height:80vh;padding:24px}
+.auth-gate-card{background:var(--dark3);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:48px;text-align:center;max-width:460px;width:100%}
+.auth-gate-card h2{font-size:1.4rem;font-weight:700;margin-bottom:12px}
+.auth-gate-card p{font-size:.9rem;color:var(--muted);line-height:1.7}
+.auth-gate-card .status-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:24px}
+.status-icon.pending{background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.2)}
+.status-icon.rejected{background:rgba(239,68,68,.1);border:1px solid rgba(239,68,68,.2)}
 
 /* MAIN */
-.dash-main{max-width:1100px;margin:0 auto;padding:32px 24px 64px}
-.dash-title{font-size:26px;font-weight:700;margin-bottom:8px}
-.dash-subtitle{font-size:14px;color:#94A3B8;margin-bottom:32px}
+.dash-main{max-width:1100px;margin:0 auto;padding:40px 24px 80px;display:none}
+.dash-title{font-size:clamp(22px,3vw,28px);font-weight:800;margin-bottom:6px;letter-spacing:-.02em}
+.dash-subtitle{font-size:.85rem;color:var(--muted);margin-bottom:36px;line-height:1.6}
 
 /* BUNDLE CARDS */
 .bundle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
-.bundle-card{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:24px;transition:border-color .2s}
-.bundle-card:hover{border-color:rgba(232,160,32,.25)}
-.bundle-material{font-size:18px;font-weight:700;margin-bottom:12px}
-.bundle-meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px}
-.bundle-meta-item{font-size:13px;color:#94A3B8}
-.bundle-meta-item strong{display:block;color:#fff;font-size:14px;font-weight:600}
-.bundle-deadline{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.15);font-size:12px;color:#E8A020;font-weight:600;margin-bottom:16px}
-.bundle-deadline.urgent{background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.2);color:#FCA5A5}
-.bundle-special{font-size:13px;color:#64748B;margin-bottom:16px;font-style:italic}
+.bundle-card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:28px;transition:border-color .25s var(--ease)}
+.bundle-card:hover{border-color:rgba(232,160,32,.2)}
+.bundle-material{font-size:1.1rem;font-weight:700;margin-bottom:4px}
+.bundle-volume{font-size:1.8rem;font-weight:800;color:#fff;margin-bottom:16px;letter-spacing:-.02em}
+.bundle-volume span{color:var(--gold)}
+.bundle-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+.bundle-meta-item{font-size:.78rem;color:var(--muted)}
+.bundle-meta-item strong{display:block;color:#fff;font-size:.88rem;font-weight:600;margin-bottom:1px}
+.bundle-mindest{font-size:.8rem;color:var(--muted);margin-bottom:14px;padding:10px 14px;background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.05);line-height:1.6}
+.bundle-mindest strong{color:var(--gold)}
 
-.btn-bid{display:block;width:100%;padding:12px;border:none;border-radius:10px;background:linear-gradient(135deg,#E8A020,#f0b840);color:#0F172A;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;transition:transform .15s,box-shadow .15s}
-.btn-bid:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,160,32,.3)}
+.bundle-deadline{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:.76rem;font-weight:600;margin-bottom:14px}
+.deadline-green{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);color:#34D399}
+.deadline-amber{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);color:#FBBF24}
+.deadline-red{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#FCA5A5}
+
+.bundle-pressure{font-size:.78rem;color:var(--body);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.bundle-pressure svg{width:14px;height:14px;color:var(--muted);flex-shrink:0}
+
+.btn-bid{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-h));color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.btn-bid:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,160,32,.25)}
 .btn-bid:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 
-.bid-done{display:flex;align-items:center;justify-content:center;gap:8px;padding:12px;border-radius:10px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);color:#34D399;font-size:14px;font-weight:600}
+.bid-done{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:10px;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);color:#34D399;font-size:.85rem;font-weight:600}
+.bid-done-details{margin-top:10px;padding:12px 14px;background:rgba(255,255,255,.025);border-radius:10px;font-size:.8rem;color:var(--muted);line-height:1.7}
+.bid-done-details strong{color:#fff}
+.bid-actions{display:flex;gap:8px;margin-top:10px}
+.bid-actions button{flex:1;padding:8px;border-radius:8px;font-family:inherit;font-size:.78rem;font-weight:600;cursor:pointer;transition:all .15s}
+.btn-update-bid{background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.2);color:var(--gold)}
+.btn-update-bid:hover{background:rgba(232,160,32,.15)}
+.btn-withdraw-bid{background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.12);color:#FCA5A5}
+.btn-withdraw-bid:hover{background:rgba(239,68,68,.1)}
 
-/* BID FORM (expandable inside card) */
-.bid-form{display:none;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.06)}
+/* BID FORM */
+.bid-form{display:none;margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.06)}
 .bid-form.open{display:block}
-.bid-form .form-label{display:block;font-size:12px;font-weight:600;color:#94A3B8;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
-.bid-form .form-input,.bid-form .form-textarea{width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;font-size:14px;font-family:inherit;transition:border-color .2s}
-.bid-form .form-input:focus,.bid-form .form-textarea:focus{outline:none;border-color:#E8A020}
+.bid-form .form-label{display:block;font-size:.72rem;font-weight:600;color:var(--muted);margin-bottom:5px;text-transform:uppercase;letter-spacing:.06em}
+.bid-form .form-input,.bid-form .form-textarea{width:100%;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;font-size:.88rem;font-family:inherit;transition:border-color .2s}
+.bid-form .form-input:focus,.bid-form .form-textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
 .bid-form .form-textarea{resize:vertical;min-height:60px}
 .bid-form .form-group{margin-bottom:14px}
-.bid-form .calc-display{font-size:13px;color:#94A3B8;margin-top:4px}
-.bid-form .calc-display strong{color:#E8A020}
-.bid-form .btn-submit-bid{display:block;width:100%;padding:12px;border:none;border-radius:10px;background:linear-gradient(135deg,#E8A020,#f0b840);color:#0F172A;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;margin-top:12px;transition:transform .15s}
+.bid-form .rabatt-display{font-size:.82rem;color:var(--muted);margin-top:6px;padding:8px 12px;background:rgba(255,255,255,.025);border-radius:8px}
+.bid-form .rabatt-display strong{color:var(--gold)}
+.bid-form .btn-submit-bid{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-h));color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:14px;transition:transform .15s}
 .bid-form .btn-submit-bid:hover{transform:translateY(-1px)}
 .bid-form .btn-submit-bid:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.bid-form .btn-cancel{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.1);color:#94A3B8;font-size:13px;font-family:inherit;cursor:pointer;margin-top:8px}
+.bid-form .btn-cancel{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px;transition:all .15s}
+.bid-form .btn-cancel:hover{border-color:rgba(255,255,255,.2);color:#fff}
 
-.bid-confirm{margin-top:12px;padding:12px;border-radius:10px;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);font-size:13px;color:#34D399;line-height:1.5;display:none}
+.bid-confirm{margin-top:14px;padding:14px;border-radius:10px;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);font-size:.82rem;color:#34D399;line-height:1.6;display:none}
 .bid-confirm.show{display:block}
+.bid-error{margin-top:10px;padding:10px 14px;border-radius:8px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.12);font-size:.8rem;color:#FCA5A5;display:none}
+.bid-error.show{display:block}
 
 /* BID HISTORY */
-.history-section{margin-top:48px;padding-top:32px;border-top:1px solid rgba(255,255,255,.06)}
-.history-title{font-size:18px;font-weight:700;margin-bottom:16px}
-.history-empty{font-size:14px;color:#64748B}
+.history-section{margin-top:56px;padding-top:36px;border-top:1px solid rgba(255,255,255,.06)}
+.history-title{font-size:1.15rem;font-weight:700;margin-bottom:20px}
+.history-empty{font-size:.85rem;color:var(--body)}
 .history-table{width:100%;border-collapse:collapse}
-.history-table th{text-align:left;font-size:12px;font-weight:600;color:#94A3B8;text-transform:uppercase;letter-spacing:.5px;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
-.history-table td{font-size:14px;padding:12px;border-bottom:1px solid rgba(255,255,255,.04);color:#CBD5E1}
-.status-badge{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:600}
-.status-submitted{background:rgba(232,160,32,.1);color:#E8A020}
-.status-won{background:rgba(16,185,129,.1);color:#34D399}
-.status-lost{background:rgba(239,68,68,.1);color:#FCA5A5}
+.history-table th{text-align:left;font-size:.7rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.history-table td{font-size:.84rem;padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:#CBD5E1}
+.status-badge{display:inline-block;padding:4px 12px;border-radius:100px;font-size:.72rem;font-weight:600;letter-spacing:.02em}
+.status-eingereicht{background:rgba(232,160,32,.1);color:var(--gold)}
+.status-gewonnen{background:rgba(16,185,129,.1);color:#34D399}
+.status-verloren{background:rgba(239,68,68,.08);color:#FCA5A5}
 
 /* EMPTY STATE */
-.empty-state{text-align:center;padding:64px 24px;color:#64748B}
-.empty-state p{font-size:15px}
+.empty-state{text-align:center;padding:72px 24px;color:var(--body)}
+.empty-state-icon{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--muted)}
+.empty-state p{font-size:.9rem;line-height:1.7;max-width:420px;margin:0 auto}
 
 /* LOADING */
-.loading{text-align:center;padding:48px;color:#64748B;font-size:14px}
+.loading{text-align:center;padding:48px;color:var(--body);font-size:.85rem}
+.loading-dots::after{content:'';animation:dots 1.5s steps(4) infinite}
+@keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
 
+/* SKELETON */
+.skeleton{background:linear-gradient(90deg,rgba(255,255,255,.03) 25%,rgba(255,255,255,.06) 50%,rgba(255,255,255,.03) 75%);background-size:200% 100%;animation:shimmer 1.5s ease-in-out infinite;border-radius:8px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+@media(max-width:900px){.topnav{padding:0 20px}}
 @media(max-width:640px){
   .bundle-grid{grid-template-columns:1fr}
   .bundle-meta{grid-template-columns:1fr}
   .topnav-company{display:none}
-  .history-table{font-size:12px}
+  .history-table{font-size:.78rem}
   .history-table th,.history-table td{padding:8px 6px}
 }
 </style>
@@ -99,28 +154,39 @@ a{color:#E8A020;text-decoration:none}
 <body>
 
 <nav class="topnav">
-  <div class="topnav-logo">Source<em>On</em></div>
+  <a href="index.html" class="topnav-logo">Source<span>On</span></a>
   <div class="topnav-right">
+    <a href="index.html" class="btn-back">← Zur Hauptseite</a>
     <span class="topnav-company" id="nav-company"></span>
-    <button class="btn-logout" onclick="handleLogout()">Abmelden</button>
+    <button class="btn-logout" id="btn-logout" onclick="handleLogout()">Abmelden</button>
   </div>
 </nav>
 
-<main class="dash-main">
+<!-- Auth gate: shown while checking auth, or for pending/rejected -->
+<div class="auth-gate" id="auth-gate">
+  <div class="auth-gate-card" id="auth-gate-card">
+    <div class="loading"><span class="loading-dots">Authentifizierung wird geprüft</span></div>
+  </div>
+</div>
+
+<main class="dash-main" id="dash-main">
   <h1 class="dash-title">Offene Ausschreibungen</h1>
   <p class="dash-subtitle">Gib ein verdecktes Angebot ab — andere Lieferanten sehen deine Preise nicht.</p>
 
-  <div id="bundles-loading" class="loading">Ausschreibungen werden geladen…</div>
-  <div id="bundles-empty" class="empty-state" style="display:none"><p>Aktuell keine offenen Ausschreibungen. Schau bald wieder vorbei.</p></div>
+  <div id="bundles-loading" class="loading"><span class="loading-dots">Ausschreibungen werden geladen</span></div>
+  <div id="bundles-empty" class="empty-state" style="display:none">
+    <div class="empty-state-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+    <p>Aktuell keine offenen Ausschreibungen für dich. Wir benachrichtigen dich per E-Mail, sobald eine passende Ausschreibung verfügbar ist.</p>
+  </div>
   <div class="bundle-grid" id="bundles-grid"></div>
 
   <div class="history-section">
     <h2 class="history-title">Deine bisherigen Angebote</h2>
-    <div id="history-loading" class="loading">Wird geladen…</div>
+    <div id="history-loading" class="loading"><span class="loading-dots">Wird geladen</span></div>
     <div id="history-empty" class="history-empty" style="display:none">Du hast noch keine Angebote eingereicht.</div>
     <div style="overflow-x:auto">
       <table class="history-table" id="history-table" style="display:none">
-        <thead><tr><th>Material</th><th>Zone</th><th>Preis/Einheit</th><th>Total</th><th>Eingereicht</th><th>Status</th></tr></thead>
+        <thead><tr><th>Material</th><th>Volumen</th><th>Dein Rabatt</th><th>Status</th><th>Datum</th></tr></thead>
         <tbody id="history-body"></tbody>
       </table>
     </div>
@@ -129,32 +195,87 @@ a{color:#E8A020;text-decoration:none}
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
-var SUPABASE_URL='https://kiyoklfuqjzrlrbtxecq.supabase.co';
-var SUPABASE_KEY='sb_publishable_tLgWMkxbLWUvmluogsBl1w_-8zYPa_8';
-var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-var currentUser=null;
+var SUPABASE_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
+var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
+var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{
+  accessToken:async function(){
+    if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}
+    return null;
+  }
+});
+var currentUserId=null;
 var myBids={};
+var bundleCountdowns=[];
 
+// Wait for Clerk, then check auth + supplier status
 (async function init(){
-  var sessionResult=await sb.auth.getSession();
-  if(!sessionResult.data.session){
-    window.location.href='supplier-login.html';
-    return;
-  }
-  currentUser=sessionResult.data.session.user;
+  // Wait for Clerk
+  await new Promise(function(resolve){
+    var elapsed=0;
+    var iv=setInterval(function(){
+      elapsed+=200;
+      if(window.Clerk){
+        clearInterval(iv);
+        if(typeof window.Clerk.load==='function'){
+          window.Clerk.load().then(function(){resolve();}).catch(function(){resolve();});
+        }else{resolve();}
+        return;
+      }
+      if(elapsed>=10000){clearInterval(iv);resolve();}
+    },200);
+  });
 
-  var profileResult=await sb.from('suppliers').select('status,company_name').eq('id',currentUser.id).single();
-  if(profileResult.error||profileResult.data.status!=='verified'){
-    window.location.href='supplier-login.html';
+  if(!window.Clerk||!window.Clerk.user){
+    showGate('login');
     return;
   }
-  document.getElementById('nav-company').textContent=profileResult.data.company_name;
+
+  currentUserId=window.Clerk.user.id;
+
+  // Check supplier status
+  var profileRes=await sb.from('suppliers').select('status,company_name').eq('id',currentUserId).maybeSingle();
+
+  if(profileRes.error||!profileRes.data){
+    showGate('not_supplier');
+    return;
+  }
+
+  var status=profileRes.data.status;
+  if(status==='pending'){showGate('pending');return;}
+  if(status==='rejected'){showGate('rejected');return;}
+  if(status!=='verified'){showGate('not_supplier');return;}
+
+  // Verified — show dashboard
+  document.getElementById('nav-company').textContent=profileRes.data.company_name;
+  document.getElementById('auth-gate').style.display='none';
+  document.getElementById('dash-main').style.display='block';
 
   await Promise.all([loadBundles(),loadHistory()]);
 })();
 
+function showGate(type){
+  var card=document.getElementById('auth-gate-card');
+  if(type==='login'){
+    card.innerHTML='<div class="status-icon pending" style="background:rgba(232,160,32,.1)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8A020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h2>Anmeldung erforderlich</h2><p>Bitte melde dich an, um auf das Lieferanten-Portal zuzugreifen.</p><br><button class="btn-bid" onclick="clerkSignIn()" style="max-width:260px;margin:0 auto">Anmelden</button><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';
+  }else if(type==='pending'){
+    card.innerHTML='<div class="status-icon pending"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8A020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h2>Profil wird geprüft</h2><p>Dein Profil wird noch geprüft. Wir melden uns innerhalb von 48 Stunden.</p><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';
+  }else if(type==='rejected'){
+    card.innerHTML='<div class="status-icon rejected"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FCA5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div><h2>Bewerbung nicht angenommen</h2><p>Deine Bewerbung wurde leider nicht angenommen. Kontaktiere uns für Details: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a></p><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';
+  }else{
+    card.innerHTML='<div class="status-icon pending"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><h2>Kein Lieferanten-Profil</h2><p>Für dieses Konto wurde kein Lieferanten-Profil gefunden. <a href="lieferant.html">Jetzt als Lieferant bewerben</a></p><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';
+  }
+}
+
+function clerkSignIn(){
+  if(!window.Clerk)return;
+  window.Clerk.openSignIn({
+    appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}},
+    fallbackRedirectUrl:window.location.href
+  });
+}
+
 async function loadBundles(){
-  var result=await sb.from('bundles').select('*').eq('status','open').order('bid_deadline',{ascending:true});
+  var result=await sb.from('bundles').select('*').eq('status','ausgeschrieben').order('bid_deadline',{ascending:true});
   document.getElementById('bundles-loading').style.display='none';
 
   if(result.error||!result.data||result.data.length===0){
@@ -162,121 +283,242 @@ async function loadBundles(){
     return;
   }
 
-  var bidsResult=await sb.from('bids').select('bundle_id').eq('supplier_id',currentUser.id);
+  // Load my existing bids
+  var bidsResult=await sb.from('bids').select('bundle_id,preis_pro_einheit,rabatt_prozent,lieferfaehigkeit_notes,status,created_at').eq('supplier_id',currentUserId);
   if(bidsResult.data){
-    bidsResult.data.forEach(function(b){myBids[b.bundle_id]=true;});
+    bidsResult.data.forEach(function(b){myBids[b.bundle_id]=b;});
+  }
+
+  // Load bid counts per bundle (count other suppliers' bids)
+  var bidCounts={};
+  var allBidsRes=await sb.from('bids').select('bundle_id');
+  if(allBidsRes.data){
+    allBidsRes.data.forEach(function(b){
+      bidCounts[b.bundle_id]=(bidCounts[b.bundle_id]||0)+1;
+    });
   }
 
   var grid=document.getElementById('bundles-grid');
   result.data.forEach(function(bundle){
-    grid.appendChild(createBundleCard(bundle));
+    var otherBidCount=Math.max(0,(bidCounts[bundle.id]||0)-(myBids[bundle.id]?1:0));
+    grid.appendChild(createBundleCard(bundle,otherBidCount));
+  });
+
+  // Start countdown timers
+  updateCountdowns();
+  setInterval(updateCountdowns,60000);
+}
+
+function formatCountdown(deadline){
+  var now=new Date();
+  var diff=deadline-now;
+  if(diff<=0)return{text:'Abgelaufen',cls:'deadline-red'};
+  var days=Math.floor(diff/(1000*60*60*24));
+  var hours=Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+  var mins=Math.floor((diff%(1000*60*60))/(1000*60));
+  var text='';
+  if(days>0)text+='Noch '+days+' Tag'+(days>1?'e':'')+' ';
+  if(days>0||hours>0)text+=hours+' Std ';
+  text+=mins+' Min';
+  var cls='deadline-green';
+  if(diff<1000*60*60*6)cls='deadline-red';
+  else if(diff<1000*60*60*24)cls='deadline-amber';
+  return{text:text,cls:cls};
+}
+
+function updateCountdowns(){
+  bundleCountdowns.forEach(function(item){
+    var cd=formatCountdown(item.deadline);
+    item.el.textContent=cd.text;
+    item.el.className='bundle-deadline '+cd.cls;
   });
 }
 
-function createBundleCard(b){
+function createBundleCard(b,otherBidCount){
   var card=document.createElement('div');
   card.className='bundle-card';
   card.id='card-'+b.id;
 
-  var now=new Date();
   var deadline=new Date(b.bid_deadline);
-  var hoursLeft=Math.max(0,Math.round((deadline-now)/(1000*60*60)));
-  var deadlineClass=hoursLeft<24?'bundle-deadline urgent':'bundle-deadline';
-  var deadlineText=hoursLeft>48?Math.round(hoursLeft/24)+' Tage verbleibend':hoursLeft+' Stunden verbleibend';
-  if(hoursLeft<=0)deadlineText='Abgelaufen';
+  var cd=formatCountdown(deadline);
+  var expired=deadline<=new Date();
+  var myBid=myBids[b.id];
 
-  var hasBid=myBids[b.id];
+  var materialName=b.material_type||'Material';
+  var volume=(b.total_quantity||'—')+' '+(b.unit||'');
+  var zielRabatt=b.ziel_mindestrabatt||b.min_discount||null;
 
-  var html='<div class="bundle-material">'+esc(b.material_type)+'</div>';
-  html+='<div class="'+deadlineClass+'">'+deadlineText+'</div>';
+  var html='<div class="bundle-material">'+esc(materialName)+'</div>';
+  html+='<div class="bundle-volume"><span>'+esc(volume)+'</span></div>';
+  html+='<div class="bundle-deadline '+cd.cls+'" id="cd-'+b.id+'">'+esc(cd.text)+'</div>';
+
+  bundleCountdowns.push({el:null,deadline:deadline,id:b.id});
+
   html+='<div class="bundle-meta">';
-  html+='<div class="bundle-meta-item"><strong>'+esc(b.total_quantity)+' '+esc(b.unit)+'</strong>Gesamtmenge</div>';
-  html+='<div class="bundle-meta-item"><strong>'+esc(b.delivery_zone)+'</strong>Liefergebiet (Zone)</div>';
-  html+='<div class="bundle-meta-item"><strong>'+esc(b.delivery_timeframe)+'</strong>Lieferzeitraum</div>';
-  html+='<div class="bundle-meta-item"><strong>'+b.number_of_sites+' Baustelle'+(b.number_of_sites>1?'n':'')+'</strong>Anzahl Standorte</div>';
+  if(b.delivery_zone)html+='<div class="bundle-meta-item"><strong>'+esc(b.delivery_zone)+'</strong>Liefergebiet</div>';
+  if(b.delivery_timeframe)html+='<div class="bundle-meta-item"><strong>'+esc(b.delivery_timeframe)+'</strong>Lieferzeitraum</div>';
+  if(b.number_of_sites)html+='<div class="bundle-meta-item"><strong>'+b.number_of_sites+' Baustelle'+(b.number_of_sites>1?'n':'')+'</strong>Standorte</div>';
+  if(b.bundle_type)html+='<div class="bundle-meta-item"><strong>'+esc(b.bundle_type)+'</strong>Bündeltyp</div>';
   html+='</div>';
-  if(b.special_requirements)html+='<div class="bundle-special">'+esc(b.special_requirements)+'</div>';
 
-  if(hasBid){
-    html+='<div class="bid-done">Angebot eingereicht ✓</div>';
-  } else if(hoursLeft<=0){
-    html+='<div class="bid-done" style="color:#94A3B8;background:rgba(255,255,255,.03);border-color:rgba(255,255,255,.08)">Frist abgelaufen</div>';
-  } else {
-    html+='<button class="btn-bid" onclick="openBidForm(\''+b.id+'\',\''+esc(b.unit)+'\')">Angebot abgeben</button>';
-    html+='<div class="bid-form" id="bidform-'+b.id+'">';
-    html+='<div class="form-group"><label class="form-label">Preis pro '+esc(b.unit)+' (CHF)</label>';
-    html+='<input type="number" step="0.01" min="0" class="form-input" id="price-'+b.id+'" oninput="calcTotal(\''+b.id+'\',\''+esc(b.total_quantity)+'\')"/>';
-    html+='<div class="calc-display" id="calc-'+b.id+'"></div></div>';
-    html+='<div class="form-group"><label class="form-label">Lieferfähigkeit / Bemerkungen</label>';
-    html+='<textarea class="form-textarea" id="notes-'+b.id+'" placeholder="z.B. Lieferung innerhalb 3 Tagen möglich, eigene Flotte"></textarea></div>';
-    html+='<button class="btn-submit-bid" id="subbtn-'+b.id+'" onclick="submitBid(\''+b.id+'\',\''+esc(b.total_quantity)+'\')">Angebot einreichen</button>';
-    html+='<button class="btn-cancel" onclick="closeBidForm(\''+b.id+'\')">Abbrechen</button>';
-    html+='</div>';
-    html+='<div class="bid-confirm" id="confirm-'+b.id+'">Dein Angebot wurde eingereicht. Du wirst informiert sobald die Vergabe entschieden ist.</div>';
+  if(zielRabatt){
+    html+='<div class="bundle-mindest">Mindestanforderung: <strong>'+zielRabatt+'% Rabatt</strong> — nur das beste Angebot erhält den Zuschlag</div>';
   }
 
+  if(otherBidCount>0){
+    html+='<div class="bundle-pressure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'+otherBidCount+' weitere'+(otherBidCount>1?' Lieferanten haben':' Lieferant hat')+' bereits ein Angebot eingereicht</div>';
+  }
+
+  if(b.special_requirements){
+    html+='<div style="font-size:.78rem;color:var(--body);margin-bottom:14px;font-style:italic">'+esc(b.special_requirements)+'</div>';
+  }
+
+  if(myBid){
+    html+='<div class="bid-done">Angebot eingereicht ✓</div>';
+    html+='<div class="bid-done-details">';
+    if(myBid.rabatt_prozent)html+='Dein Rabatt: <strong>'+Number(myBid.rabatt_prozent).toFixed(1)+'%</strong><br>';
+    if(myBid.preis_pro_einheit)html+='Preis pro Einheit: <strong>CHF '+Number(myBid.preis_pro_einheit).toFixed(2)+'</strong><br>';
+    html+='Eingereicht: '+new Date(myBid.created_at).toLocaleDateString('de-CH');
+    html+='</div>';
+    if(!expired){
+      html+='<div class="bid-actions">';
+      html+='<button class="btn-update-bid" onclick="openUpdateForm(\''+b.id+'\',\''+esc(b.unit||'')+'\')">Angebot anpassen</button>';
+      html+='<button class="btn-withdraw-bid" onclick="withdrawBid(\''+b.id+'\')">Zurückziehen</button>';
+      html+='</div>';
+    }
+  }else if(expired){
+    html+='<div class="bid-done" style="color:var(--muted);background:rgba(255,255,255,.025);border-color:rgba(255,255,255,.06)">Frist abgelaufen</div>';
+  }else{
+    html+='<button class="btn-bid" onclick="openBidForm(\''+b.id+'\',\''+esc(b.unit||'')+'\')">Angebot abgeben</button>';
+  }
+
+  // Bid form (used for both new and update)
+  html+='<div class="bid-form" id="bidform-'+b.id+'">';
+  html+='<div class="form-group"><label class="form-label">Rabatt-Prozentsatz (%)</label>';
+  html+='<input type="number" step="0.1" min="0" max="100" class="form-input" id="rabatt-'+b.id+'" placeholder="z.B. 15"/></div>';
+  html+='<div class="form-group"><label class="form-label">Preis pro '+esc(b.unit||'Einheit')+' (CHF)</label>';
+  html+='<input type="number" step="0.01" min="0" class="form-input" id="price-'+b.id+'"/></div>';
+  html+='<div class="form-group"><label class="form-label">Lieferfähigkeit / Bemerkungen</label>';
+  html+='<textarea class="form-textarea" id="notes-'+b.id+'" placeholder="z.B. Lieferung innerhalb 3 Tagen möglich, eigene Flotte"></textarea></div>';
+  html+='<button class="btn-submit-bid" id="subbtn-'+b.id+'" onclick="submitBid(\''+b.id+'\')">Angebot einreichen</button>';
+  html+='<button class="btn-cancel" onclick="closeBidForm(\''+b.id+'\')">Abbrechen</button>';
+  html+='</div>';
+  html+='<div class="bid-confirm" id="confirm-'+b.id+'">Dein Angebot wurde eingereicht. Du wirst informiert, sobald die Vergabe entschieden ist.</div>';
+  html+='<div class="bid-error" id="biderr-'+b.id+'"></div>';
+
   card.innerHTML=html;
+
+  // Wire up countdown element reference
+  var cdEl=card.querySelector('#cd-'+b.id);
+  if(cdEl){bundleCountdowns[bundleCountdowns.length-1].el=cdEl;}
+
   return card;
 }
 
-function openBidForm(id,unit){
+function openBidForm(id){
   document.getElementById('bidform-'+id).classList.add('open');
 }
 function closeBidForm(id){
   document.getElementById('bidform-'+id).classList.remove('open');
 }
-
-function calcTotal(id,qtyStr){
-  var price=parseFloat(document.getElementById('price-'+id).value)||0;
-  var qty=parseFloat(qtyStr.replace(/[^\d.]/g,''))||0;
-  var total=price*qty;
-  document.getElementById('calc-'+id).innerHTML=total>0?'Gesamtpreis: <strong>CHF '+total.toLocaleString('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2})+'</strong>':'';
+function openUpdateForm(id,unit){
+  var form=document.getElementById('bidform-'+id);
+  form.classList.add('open');
+  var bid=myBids[id];
+  if(bid){
+    if(bid.rabatt_prozent)document.getElementById('rabatt-'+id).value=bid.rabatt_prozent;
+    if(bid.preis_pro_einheit)document.getElementById('price-'+id).value=bid.preis_pro_einheit;
+    if(bid.lieferfaehigkeit_notes)document.getElementById('notes-'+id).value=bid.lieferfaehigkeit_notes;
+  }
+  var btn=document.getElementById('subbtn-'+id);
+  btn.textContent='Angebot aktualisieren';
+  btn.onclick=function(){updateBid(id);};
 }
 
-async function submitBid(bundleId,qtyStr){
-  var priceEl=document.getElementById('price-'+bundleId);
-  var price=parseFloat(priceEl.value);
-  if(!price||price<=0){priceEl.style.borderColor='#EF4444';return;}
-  priceEl.style.borderColor='';
+function showBidError(id,msg){
+  var el=document.getElementById('biderr-'+id);
+  el.textContent=msg;el.classList.add('show');
+  setTimeout(function(){el.classList.remove('show');},5000);
+}
 
-  var qty=parseFloat(qtyStr.replace(/[^\d.]/g,''))||0;
-  var total=price*qty;
+async function submitBid(bundleId){
+  var rabatt=parseFloat(document.getElementById('rabatt-'+bundleId).value);
+  var price=parseFloat(document.getElementById('price-'+bundleId).value);
   var notes=document.getElementById('notes-'+bundleId).value.trim();
 
-  var btn=document.getElementById('subbtn-'+bundleId);
-  btn.disabled=true;
-  btn.textContent='Wird eingereicht…';
+  if(!rabatt&&!price){showBidError(bundleId,'Bitte gib mindestens einen Rabatt-Prozentsatz oder einen Preis pro Einheit an.');return;}
 
-  var result=await sb.from('bids').insert({
+  var btn=document.getElementById('subbtn-'+bundleId);
+  btn.disabled=true;btn.textContent='Wird eingereicht…';
+
+  var payload={
     bundle_id:bundleId,
-    supplier_id:currentUser.id,
-    price_per_unit:price,
-    total_price:total,
-    delivery_capability_notes:notes||null
-  });
+    supplier_id:currentUserId,
+    status:'eingereicht'
+  };
+  if(rabatt)payload.rabatt_prozent=rabatt;
+  if(price)payload.preis_pro_einheit=price;
+  if(notes)payload.lieferfaehigkeit_notes=notes;
+
+  var result=await sb.from('bids').insert(payload);
 
   if(result.error){
     if(result.error.code==='23505'){
-      alert('Du hast bereits ein Angebot für diese Ausschreibung eingereicht.');
-    } else {
-      alert('Fehler: '+result.error.message);
+      showBidError(bundleId,'Du hast bereits ein Angebot für diese Ausschreibung eingereicht. Nutze "Angebot anpassen" stattdessen.');
+    }else{
+      showBidError(bundleId,'Fehler: '+result.error.message);
     }
-    btn.disabled=false;
-    btn.textContent='Angebot einreichen';
+    btn.disabled=false;btn.textContent='Angebot einreichen';
     return;
   }
 
-  document.getElementById('bidform-'+bundleId).classList.remove('open');
-  document.getElementById('bidform-'+bundleId).style.display='none';
+  closeBidForm(bundleId);
   var cardBtns=document.getElementById('card-'+bundleId).querySelectorAll('.btn-bid');
   cardBtns.forEach(function(b){b.style.display='none';});
   document.getElementById('confirm-'+bundleId).classList.add('show');
-  myBids[bundleId]=true;
+  myBids[bundleId]={rabatt_prozent:rabatt,preis_pro_einheit:price,lieferfaehigkeit_notes:notes,created_at:new Date().toISOString(),status:'eingereicht'};
   loadHistory();
 }
 
+async function updateBid(bundleId){
+  var rabatt=parseFloat(document.getElementById('rabatt-'+bundleId).value);
+  var price=parseFloat(document.getElementById('price-'+bundleId).value);
+  var notes=document.getElementById('notes-'+bundleId).value.trim();
+
+  if(!rabatt&&!price){showBidError(bundleId,'Bitte gib mindestens einen Rabatt oder Preis an.');return;}
+
+  var btn=document.getElementById('subbtn-'+bundleId);
+  btn.disabled=true;btn.textContent='Wird aktualisiert…';
+
+  var payload={};
+  if(rabatt)payload.rabatt_prozent=rabatt;
+  if(price)payload.preis_pro_einheit=price;
+  payload.lieferfaehigkeit_notes=notes||null;
+
+  var result=await sb.from('bids').update(payload).eq('bundle_id',bundleId).eq('supplier_id',currentUserId);
+
+  if(result.error){
+    showBidError(bundleId,'Aktualisierung fehlgeschlagen: '+result.error.message);
+    btn.disabled=false;btn.textContent='Angebot aktualisieren';
+    return;
+  }
+
+  closeBidForm(bundleId);
+  myBids[bundleId]=Object.assign(myBids[bundleId]||{},payload,{created_at:new Date().toISOString()});
+  // Refresh the card
+  window.location.reload();
+}
+
+async function withdrawBid(bundleId){
+  if(!confirm('Möchtest du dein Angebot wirklich zurückziehen?'))return;
+  var result=await sb.from('bids').delete().eq('bundle_id',bundleId).eq('supplier_id',currentUserId);
+  if(result.error){alert('Fehler: '+result.error.message);return;}
+  delete myBids[bundleId];
+  window.location.reload();
+}
+
 async function loadHistory(){
-  var result=await sb.from('bids').select('*,bundles(material_type,delivery_zone,unit)').eq('supplier_id',currentUser.id).order('submitted_at',{ascending:false});
+  var result=await sb.from('bids').select('*,bundles(material_type,total_quantity,unit)').eq('supplier_id',currentUserId).order('created_at',{ascending:false});
   document.getElementById('history-loading').style.display='none';
 
   if(result.error||!result.data||result.data.length===0){
@@ -290,29 +532,32 @@ async function loadHistory(){
   var body=document.getElementById('history-body');
   body.innerHTML='';
 
+  var statusLabels={eingereicht:'Eingereicht',gewonnen:'Zuschlag',verloren:'Nicht berücksichtigt',submitted:'Eingereicht',won:'Zuschlag',lost:'Nicht berücksichtigt'};
+  var statusClasses={eingereicht:'eingereicht',gewonnen:'gewonnen',verloren:'verloren',submitted:'eingereicht',won:'gewonnen',lost:'verloren'};
+
   result.data.forEach(function(bid){
     var bundle=bid.bundles||{};
     var tr=document.createElement('tr');
-    var statusLabel={submitted:'Eingereicht',won:'Zuschlag',lost:'Nicht berücksichtigt'};
+    var sl=statusLabels[bid.status]||bid.status;
+    var sc=statusClasses[bid.status]||'eingereicht';
     tr.innerHTML='<td>'+esc(bundle.material_type||'—')+'</td>'
-      +'<td>'+esc(bundle.delivery_zone||'—')+'</td>'
-      +'<td>CHF '+Number(bid.price_per_unit).toFixed(2)+'/'+(esc(bundle.unit||'Einheit'))+'</td>'
-      +'<td>CHF '+Number(bid.total_price).toLocaleString('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2})+'</td>'
-      +'<td>'+new Date(bid.submitted_at).toLocaleDateString('de-CH')+'</td>'
-      +'<td><span class="status-badge status-'+bid.status+'">'+(statusLabel[bid.status]||bid.status)+'</span></td>';
+      +'<td>'+(bundle.total_quantity?esc(bundle.total_quantity+' '+(bundle.unit||'')):'—')+'</td>'
+      +'<td>'+(bid.rabatt_prozent?bid.rabatt_prozent+'%':(bid.preis_pro_einheit?'CHF '+Number(bid.preis_pro_einheit).toFixed(2):'—'))+'</td>'
+      +'<td><span class="status-badge status-'+sc+'">'+sl+'</span></td>'
+      +'<td>'+new Date(bid.created_at).toLocaleDateString('de-CH')+'</td>';
     body.appendChild(tr);
   });
 }
 
 async function handleLogout(){
-  await sb.auth.signOut();
-  window.location.href='supplier-login.html';
+  if(window.Clerk){await window.Clerk.signOut();}
+  window.location.href='index.html';
 }
 
 function esc(s){
   if(!s)return '';
   var d=document.createElement('div');
-  d.textContent=s;
+  d.textContent=String(s);
   return d.innerHTML;
 }
 </script>
