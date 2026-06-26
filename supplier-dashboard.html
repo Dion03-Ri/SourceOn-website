@@ -59,6 +59,30 @@ a{color:var(--gold);text-decoration:none}
 .dash-title{font-size:clamp(22px,3vw,28px);font-weight:800;margin-bottom:6px;letter-spacing:-.02em}
 .dash-subtitle{font-size:.85rem;color:var(--muted);margin-bottom:36px;line-height:1.6}
 
+/* TAB BAR */
+.dash-tabs{display:flex;gap:4px;margin-bottom:32px;border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:0}
+.dash-tab{padding:12px 24px;font-family:inherit;font-size:.88rem;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;transition:color .2s,border-color .2s;position:relative;bottom:-1px}
+.dash-tab:hover{color:#fff}
+.dash-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* OVERVIEW STATS */
+.ov-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px}
+.ov-stat{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:28px 24px;transition:border-color .2s}
+.ov-stat:hover{border-color:rgba(232,160,32,.15)}
+.ov-stat-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.ov-stat-value{font-size:1.8rem;font-weight:800;letter-spacing:-.02em}
+.ov-stat-value.gold{color:var(--gold)}
+.ov-stat-value.green{color:#34D399}
+.ov-stat-sub{font-size:.76rem;color:var(--body);margin-top:4px}
+
+/* OVERVIEW TABLE */
+.ov-table{width:100%;border-collapse:collapse}
+.ov-table th{text-align:left;font-size:.68rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.ov-table td{font-size:.84rem;padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:#CBD5E1}
+.ov-table .col-bestellwert{color:var(--gold);font-weight:600}
+
 /* BUNDLE CARDS */
 .bundle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:24px}
 .bundle-card{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);overflow:hidden;transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
@@ -154,6 +178,7 @@ a{color:var(--gold);text-decoration:none}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 
 @media(max-width:900px){.topnav{padding:0 20px}}
+@media(max-width:768px){.ov-stats{grid-template-columns:1fr}}
 @media(max-width:640px){
   .bundle-grid{grid-template-columns:1fr}
   .bundle-meta{grid-template-columns:1fr}
@@ -162,6 +187,9 @@ a{color:var(--gold);text-decoration:none}
   .topnav-company{display:none}
   .history-table{font-size:.78rem}
   .history-table th,.history-table td{padding:8px 6px}
+  .ov-table{font-size:.78rem}
+  .ov-table th,.ov-table td{padding:8px 6px}
+  .dash-tab{padding:10px 16px;font-size:.82rem}
 }
 
 /* CLERK TRUST VERIFICATION MODAL */
@@ -199,25 +227,73 @@ a{color:var(--gold);text-decoration:none}
 </div>
 
 <main class="dash-main" id="dash-main">
-  <h1 class="dash-title">Offene Ausschreibungen</h1>
-  <p class="dash-subtitle">Gib ein verdecktes Angebot ab — andere Lieferanten sehen deine Preise nicht.</p>
+  <h1 class="dash-title" id="dash-main-title">Lieferanten-Portal</h1>
+  <p class="dash-subtitle">Verwalte deine Ausschreibungen und behalte den Überblick über deine Aktivitäten.</p>
 
-  <div id="bundles-loading" class="loading"><span class="loading-dots">Ausschreibungen werden geladen</span></div>
-  <div id="bundles-empty" class="empty-state" style="display:none">
-    <div class="empty-state-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
-    <p>Aktuell keine offenen Ausschreibungen für dich. Wir benachrichtigen dich per E-Mail, sobald eine passende Ausschreibung verfügbar ist.</p>
+  <div class="dash-tabs">
+    <button class="dash-tab active" id="tab-btn-ausschreibungen" onclick="switchTab('ausschreibungen')">Ausschreibungen</button>
+    <button class="dash-tab" id="tab-btn-uebersicht" onclick="switchTab('uebersicht')">Meine Übersicht</button>
   </div>
-  <div class="bundle-grid" id="bundles-grid"></div>
 
-  <div class="history-section">
-    <h2 class="history-title">Deine bisherigen Angebote</h2>
-    <div id="history-loading" class="loading"><span class="loading-dots">Wird geladen</span></div>
-    <div id="history-empty" class="history-empty" style="display:none">Du hast noch keine Angebote eingereicht.</div>
-    <div style="overflow-x:auto">
-      <table class="history-table" id="history-table" style="display:none">
-        <thead><tr><th>Material</th><th>Volumen</th><th>Dein Rabatt</th><th>Status</th><th>Datum</th></tr></thead>
-        <tbody id="history-body"></tbody>
-      </table>
+  <!-- TAB 1: Ausschreibungen -->
+  <div class="tab-panel active" id="tab-ausschreibungen">
+    <div id="bundles-loading" class="loading"><span class="loading-dots">Ausschreibungen werden geladen</span></div>
+    <div id="bundles-empty" class="empty-state" style="display:none">
+      <div class="empty-state-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+      <p>Aktuell keine offenen Ausschreibungen für dich. Wir benachrichtigen dich per E-Mail, sobald eine passende Ausschreibung verfügbar ist.</p>
+    </div>
+    <div class="bundle-grid" id="bundles-grid"></div>
+
+    <div class="history-section">
+      <h2 class="history-title">Deine bisherigen Angebote</h2>
+      <div id="history-loading" class="loading"><span class="loading-dots">Wird geladen</span></div>
+      <div id="history-empty" class="history-empty" style="display:none">Du hast noch keine Angebote eingereicht.</div>
+      <div style="overflow-x:auto">
+        <table class="history-table" id="history-table" style="display:none">
+          <thead><tr><th>Material</th><th>Volumen</th><th>Dein Rabatt</th><th>Status</th><th>Datum</th></tr></thead>
+          <tbody id="history-body"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: Meine Übersicht -->
+  <div class="tab-panel" id="tab-uebersicht">
+    <div id="ov-loading" class="loading"><span class="loading-dots">Übersicht wird geladen</span></div>
+
+    <div id="ov-content" style="display:none">
+      <div class="ov-stats">
+        <div class="ov-stat">
+          <div class="ov-stat-label">Aktive Angebote</div>
+          <div class="ov-stat-value gold" id="ov-active">0</div>
+          <div class="ov-stat-sub" id="ov-active-sub">Eingereichte Angebote</div>
+        </div>
+        <div class="ov-stat">
+          <div class="ov-stat-label">Gewonnene Aufträge</div>
+          <div class="ov-stat-value green" id="ov-won">0</div>
+          <div class="ov-stat-sub" id="ov-won-sub">Zuschläge erhalten</div>
+        </div>
+        <div class="ov-stat">
+          <div class="ov-stat-label">Gesamtumsatz</div>
+          <div class="ov-stat-value" id="ov-revenue" style="color:#fff">CHF 0</div>
+          <div class="ov-stat-sub" id="ov-revenue-sub">Aus gewonnenen Aufträgen</div>
+        </div>
+      </div>
+
+      <h2 class="history-title">Deine Angebotshistorie</h2>
+      <div id="ov-table-wrap" style="overflow-x:auto">
+        <table class="ov-table" id="ov-table" style="display:none">
+          <thead><tr><th>Datum</th><th>Material</th><th>Volumen</th><th>Dein Rabatt</th><th>Status</th><th>Bestellwert</th></tr></thead>
+          <tbody id="ov-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="ov-empty" class="empty-state" style="display:none">
+      <div class="empty-state-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+      <p>Du hast noch keine Angebote abgegeben. Sieh dir die offenen Ausschreibungen an, um loszulegen.</p>
+      <br>
+      <button class="btn-bid" onclick="switchTab('ausschreibungen')" style="max-width:300px;margin:0 auto">Zu den Ausschreibungen</button>
     </div>
   </div>
 </main>
@@ -296,6 +372,10 @@ var bundleCountdowns=[];
   document.getElementById('dash-main').style.display='block';
 
   await Promise.all([loadBundles(),loadHistory()]);
+
+  // Open tab from URL hash
+  var hash=window.location.hash.replace('#','');
+  if(hash==='uebersicht')switchTab('uebersicht');
 })();
 
 function showGate(type){
@@ -617,6 +697,91 @@ async function loadHistory(){
       +'<td><span class="status-badge status-'+sc+'">'+sl+'</span></td>'
       +'<td>'+new Date(bid.created_at).toLocaleDateString('de-CH')+'</td>';
     body.appendChild(tr);
+  });
+}
+
+// TAB SWITCHING
+var _overviewLoaded=false;
+
+function switchTab(tab){
+  document.querySelectorAll('.dash-tab').forEach(function(b){b.classList.remove('active');});
+  document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+  document.getElementById('tab-btn-'+tab).classList.add('active');
+  document.getElementById('tab-'+tab).classList.add('active');
+  if(tab==='uebersicht'&&!_overviewLoaded){
+    _overviewLoaded=true;
+    loadOverview();
+  }
+  history.replaceState(null,'',window.location.pathname+'#'+tab);
+}
+
+async function loadOverview(){
+  var loadingEl=document.getElementById('ov-loading');
+  var contentEl=document.getElementById('ov-content');
+  var emptyEl=document.getElementById('ov-empty');
+
+  var result=await sb.from('bids').select('*,bundles(material_type,total_quantity,unit,gesamtvolumen,sourceon_id)').eq('supplier_id',currentUserId).order('created_at',{ascending:false});
+
+  loadingEl.style.display='none';
+
+  if(result.error||!result.data||result.data.length===0){
+    emptyEl.style.display='block';
+    contentEl.style.display='none';
+    return;
+  }
+
+  var bids=result.data;
+  var active=0,won=0,revenue=0;
+  bids.forEach(function(b){
+    if(b.status==='eingereicht'||b.status==='submitted')active++;
+    if(b.status==='gewonnen'||b.status==='won'){
+      won++;
+      var bundle=b.bundles||{};
+      var vol=bundle.gesamtvolumen||bundle.total_quantity||0;
+      if(b.preis_pro_einheit&&vol){
+        revenue+=Number(b.preis_pro_einheit)*Number(vol);
+      }
+    }
+  });
+
+  document.getElementById('ov-active').textContent=active;
+  document.getElementById('ov-active-sub').textContent=active===1?'Eingereichte Angebote':'Eingereichte Angebote';
+  document.getElementById('ov-won').textContent=won;
+  document.getElementById('ov-revenue').textContent='CHF '+revenue.toLocaleString('de-CH',{minimumFractionDigits:0,maximumFractionDigits:0});
+
+  emptyEl.style.display='none';
+  contentEl.style.display='block';
+  document.getElementById('ov-table').style.display='table';
+
+  var statusLabels={eingereicht:'Eingereicht',gewonnen:'Zuschlag',verloren:'Nicht berücksichtigt',submitted:'Eingereicht',won:'Zuschlag',lost:'Nicht berücksichtigt'};
+  var statusClasses={eingereicht:'eingereicht',gewonnen:'gewonnen',verloren:'verloren',submitted:'eingereicht',won:'gewonnen',lost:'verloren'};
+
+  var tbody=document.getElementById('ov-table-body');
+  tbody.innerHTML='';
+
+  bids.forEach(function(bid){
+    var bundle=bid.bundles||{};
+    var tr=document.createElement('tr');
+    var sl=statusLabels[bid.status]||bid.status;
+    var sc=statusClasses[bid.status]||'eingereicht';
+    var matName=bundle.material_type||'—';
+    if(bundle.sourceon_id&&_matCatalogMap[bundle.sourceon_id]){
+      matName=_matCatalogMap[bundle.sourceon_id].bezeichnung;
+    }
+    var vol=bundle.total_quantity?(bundle.total_quantity+' '+(bundle.unit||'')):'—';
+    var rabatt=bid.rabatt_prozent?bid.rabatt_prozent+'%':(bid.preis_pro_einheit?'CHF '+Number(bid.preis_pro_einheit).toFixed(2):'—');
+    var bestellwert='—';
+    if((bid.status==='gewonnen'||bid.status==='won')&&bid.preis_pro_einheit&&(bundle.gesamtvolumen||bundle.total_quantity)){
+      var bv=Number(bid.preis_pro_einheit)*Number(bundle.gesamtvolumen||bundle.total_quantity);
+      bestellwert='CHF '+bv.toLocaleString('de-CH',{minimumFractionDigits:0,maximumFractionDigits:0});
+    }
+    tr.innerHTML='<td>'+new Date(bid.created_at).toLocaleDateString('de-CH')+'</td>'
+      +'<td>'+esc(matName)+'</td>'
+      +'<td>'+esc(vol)+'</td>'
+      +'<td>'+rabatt+'</td>'
+      +'<td><span class="status-badge status-'+sc+'">'+sl+'</span></td>'
+      +'<td class="col-bestellwert">'+bestellwert+'</td>';
+    tbody.appendChild(tr);
   });
 }
 
