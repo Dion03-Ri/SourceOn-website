@@ -274,7 +274,15 @@ function clerkSignIn(){
   });
 }
 
+var _matCatalogMap={};
+
 async function loadBundles(){
+  // Fetch material catalog for name lookups
+  var catRes=await sb.from('material_catalog').select('sourceon_id,bezeichnung,einheit');
+  if(catRes.data){
+    catRes.data.forEach(function(m){_matCatalogMap[m.sourceon_id]=m;});
+  }
+
   var result=await sb.from('bundles').select('*').eq('status','ausgeschrieben').order('bid_deadline',{ascending:true});
   document.getElementById('bundles-loading').style.display='none';
 
@@ -344,9 +352,17 @@ function createBundleCard(b,otherBidCount){
   var expired=deadline<=new Date();
   var myBid=myBids[b.id];
 
-  var materialName=b.material_type||'Material';
+  var materialName='Material';
+  if(b.bundle_type==='multi_material'&&!b.sourceon_id){
+    materialName='Mehrere Materialien';
+  }else if(b.sourceon_id&&_matCatalogMap[b.sourceon_id]){
+    materialName=_matCatalogMap[b.sourceon_id].bezeichnung;
+  }else if(b.material_type){
+    materialName=b.material_type;
+  }
   var volume=(b.total_quantity||'—')+' '+(b.unit||'');
-  var zielRabatt=b.ziel_mindestrabatt||b.min_discount||null;
+  var zielRabattRaw=b.ziel_mindestrabatt||b.min_discount||null;
+  var zielRabatt=zielRabattRaw?(zielRabattRaw<1?Math.round(zielRabattRaw*1000)/10:zielRabattRaw):null;
 
   var html='<div class="bundle-material">'+esc(materialName)+'</div>';
   html+='<div class="bundle-volume"><span>'+esc(volume)+'</span></div>';
@@ -358,7 +374,7 @@ function createBundleCard(b,otherBidCount){
   if(b.delivery_zone)html+='<div class="bundle-meta-item"><strong>'+esc(b.delivery_zone)+'</strong>Liefergebiet</div>';
   if(b.delivery_timeframe)html+='<div class="bundle-meta-item"><strong>'+esc(b.delivery_timeframe)+'</strong>Lieferzeitraum</div>';
   if(b.number_of_sites)html+='<div class="bundle-meta-item"><strong>'+b.number_of_sites+' Baustelle'+(b.number_of_sites>1?'n':'')+'</strong>Standorte</div>';
-  if(b.bundle_type)html+='<div class="bundle-meta-item"><strong>'+esc(b.bundle_type)+'</strong>Bündeltyp</div>';
+  if(b.bundle_type){var btLabel={'single_material':'Einzelmaterial-Bündel','multi_material':'Mehrere Materialien gebündelt'};html+='<div class="bundle-meta-item"><strong>'+esc(btLabel[b.bundle_type]||b.bundle_type)+'</strong>Bündeltyp</div>';}
   html+='</div>';
 
   if(zielRabatt){
