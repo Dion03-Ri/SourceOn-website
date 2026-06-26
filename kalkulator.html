@@ -83,6 +83,8 @@ a{color:inherit;text-decoration:none}
 #acct-dd.open{display:block}
 #acct-dd a,#acct-dd button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;font-family:inherit;font-size:.84rem;font-weight:500;color:rgba(255,255,255,.8);background:none;border:none;border-radius:8px;cursor:pointer;text-decoration:none;text-align:left;transition:background .15s,color .15s}
 #acct-dd a:hover,#acct-dd button:hover{background:rgba(255,255,255,.08);color:#fff}
+#acct-dashboard-link{color:#E8A020;font-weight:600;background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.12)}
+#acct-dashboard-link:hover{background:rgba(232,160,32,.14);color:#f0b840}
 #acct-dd .acct-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 0}
 #acct-dd .acct-user{padding:12px 14px;font-size:.78rem;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:4px}
 #acct-dd .acct-user strong{display:block;color:#fff;font-size:.86rem;font-weight:600;margin-bottom:2px}
@@ -784,7 +786,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           </div>
           <div id="acct-signed-in" style="display:none">
             <div class="acct-user"><strong id="acct-name"></strong><span id="acct-email"></span><div id="acct-status-wrap"></div></div>
-            <a href="supplier-dashboard.html" id="acct-dashboard-link" style="display:none" data-i18n="acct_dashboard">Zum Lieferanten-Dashboard</a>
+            <a href="supplier-dashboard.html" id="acct-dashboard-link" style="display:none" data-i18n="acct_dashboard"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Zum Lieferanten-Dashboard</a>
             <button onclick="clerkSignOut()" data-i18n="acct_signout">Abmelden</button>
           </div>
         </div>
@@ -1334,7 +1336,32 @@ document.addEventListener('click',function(e){var w=document.getElementById('acc
 
 function clerkSignIn(){
   if(!window.Clerk)return;
-  clerkOpenSignInSafe();
+  clerkOpenSignInSafe(null,function(){
+    _checkAndRedirectSupplier().then(function(redirected){
+      if(!redirected)window.location.reload();
+    });
+  });
+}
+
+async function _checkAndRedirectSupplier(){
+  try{
+    if(!window.Clerk||!window.Clerk.user)return false;
+    var clerkId=window.Clerk.user.id;
+    var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
+    var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
+    var token=await window.Clerk.session.getToken();
+    var headers={'apikey':sbKey,'Content-Type':'application/json'};
+    headers['Authorization']='Bearer '+(token||sbKey);
+    var resp=await fetch(sbUrl+'/rest/v1/suppliers?id=eq.'+encodeURIComponent(clerkId)+'&select=status',{headers:headers});
+    if(!resp.ok)return false;
+    var rows=await resp.json();
+    if(rows&&rows.length>0&&rows[0].status==='verified'){
+      console.log('[Clerk] Verified supplier detected after login, redirecting to dashboard');
+      window.location.href='supplier-dashboard.html';
+      return true;
+    }
+  }catch(e){console.error('[Clerk] post-login supplier check error:',e);}
+  return false;
 }
 function clerkSignOut(){
   if(!window.Clerk)return;
@@ -1413,6 +1440,7 @@ function clerkSignOut(){
       var rows=await resp.json();
       if(!rows||rows.length===0){statusWrap.innerHTML='';if(dashLink)dashLink.style.display='none';return;}
       var s=rows[0].status;
+      console.log('Checking supplier status for navigation:',s);
       if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">Wird geprüft</span>';if(dashLink)dashLink.style.display='none';}
       else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';if(dashLink)dashLink.style.display='flex';}
       else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';if(dashLink)dashLink.style.display='none';}
