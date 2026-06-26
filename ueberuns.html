@@ -86,6 +86,8 @@ a{color:inherit;text-decoration:none}
 #acct-dashboard-link:hover{background:rgba(232,160,32,.14);color:#f0b840}
 #acct-customer-link{color:#34D399;font-weight:600;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.12)}
 #acct-customer-link:hover{background:rgba(16,185,129,.14);color:#4ade80}
+.acct-customer-reg{font-size:.78rem;color:#94A3B8!important;font-weight:400!important;background:transparent!important;border:none!important;padding:4px 14px 8px!important}
+.acct-customer-reg:hover{color:#34D399!important}
 .acct-group-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#64748B;padding:8px 14px 4px;pointer-events:none}
 #acct-dd .acct-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 0}
 #acct-dd .acct-user{padding:12px 14px;font-size:.78rem;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:4px}
@@ -757,20 +759,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 .clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:#94A3B8;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}
 .clerk-trust-modal .btn-cancel-trust:hover{border-color:rgba(255,255,255,.2);color:#fff}
 
-/* SUPPLIER FAB */
-#supplier-fab{position:fixed;bottom:28px;right:28px;z-index:900;display:none;align-items:center;gap:0;cursor:pointer;text-decoration:none;filter:drop-shadow(0 4px 20px rgba(0,0,0,.4));transition:transform .2s cubic-bezier(.4,0,.2,1),filter .2s}
-#supplier-fab:hover{transform:translateY(-3px) scale(1.03);filter:drop-shadow(0 8px 32px rgba(232,160,32,.3))}
-#supplier-fab:active{transform:scale(.97)}
-.fab-pill{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#E8A020,#d4911c);padding:14px 22px 14px 18px;border-radius:60px;color:#0F172A;font-family:'Inter',-apple-system,sans-serif;font-size:.84rem;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
-.fab-icon{width:38px;height:38px;background:rgba(15,23,42,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.fab-icon svg{width:20px;height:20px}
-.fab-badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:#EF4444;color:#fff;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 5px;border:2px solid #0A1626;display:none}
-@media(max-width:640px){
-  #supplier-fab{bottom:20px;right:16px}
-  .fab-pill{padding:12px 18px 12px 14px;font-size:.78rem}
-  .fab-icon{width:32px;height:32px}
-  .fab-icon svg{width:17px;height:17px}
-}
 </style>');setTimeout(function(){document.body.classList.add('lang-ready');var h=document.getElementById('_lh');if(h)h.remove();},400);}
 })();
 </script>
@@ -815,6 +803,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           <div id="acct-signed-out">
             <div class="acct-group-label">Kunden</div>
             <a href="#" onclick="clerkSignIn();return false" data-i18n="acct_customer_login">Kunden-Login</a>
+            <a href="kontakt.html" data-i18n="acct_customer_register" class="acct-customer-reg">Als Kunde registrieren</a>
             <div class="acct-divider"></div>
             <div class="acct-group-label">Lieferanten</div>
             <a href="#" onclick="clerkSignIn();return false" data-i18n="acct_login">Lieferanten-Login</a>
@@ -1467,7 +1456,7 @@ function clerkSignOut(){
 
 <script>
 // Account dropdown i18n
-var ACCT_I18N={en:{acct_login:'Supplier Login',acct_register:'Register as Supplier',acct_dashboard:'Go to Supplier Dashboard',acct_signout:'Sign Out'},fr:{acct_login:'Connexion fournisseur',acct_register:"S'inscrire comme fournisseur",acct_dashboard:'Tableau de bord fournisseur',acct_signout:'Se d\u00e9connecter'},it:{acct_login:'Login fornitore',acct_register:'Registrati come fornitore',acct_dashboard:'Dashboard fornitore',acct_signout:'Disconnetti'}};
+var ACCT_I18N={en:{acct_login:'Supplier Login',acct_register:'Register as Supplier',acct_dashboard:'Go to Supplier Dashboard',acct_customer_login:'Customer Login',acct_customer_register:'Register as Customer',acct_customer_dash:'Go to Customer Dashboard',acct_signout:'Sign Out'},fr:{acct_login:'Connexion fournisseur',acct_register:"S'inscrire comme fournisseur",acct_dashboard:'Tableau de bord fournisseur',acct_customer_login:'Connexion client',acct_customer_register:"S'inscrire comme client",acct_customer_dash:'Tableau de bord client',acct_signout:'Se d\u00e9connecter'},it:{acct_login:'Login fornitore',acct_register:'Registrati come fornitore',acct_dashboard:'Dashboard fornitore',acct_customer_login:'Login cliente',acct_customer_register:'Registrati come cliente',acct_customer_dash:'Dashboard cliente',acct_signout:'Disconnetti'}};
 (function(){
   var origSetLang=window.setLang;
   if(!origSetLang)return;
