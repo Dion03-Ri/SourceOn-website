@@ -60,25 +60,37 @@ a{color:var(--gold);text-decoration:none}
 .dash-subtitle{font-size:.85rem;color:var(--muted);margin-bottom:36px;line-height:1.6}
 
 /* BUNDLE CARDS */
-.bundle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:20px}
-.bundle-card{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:28px;transition:border-color .25s var(--ease)}
-.bundle-card:hover{border-color:rgba(232,160,32,.2)}
-.bundle-material{font-size:1.1rem;font-weight:700;margin-bottom:4px}
-.bundle-volume{font-size:1.8rem;font-weight:800;color:#fff;margin-bottom:16px;letter-spacing:-.02em}
-.bundle-volume span{color:var(--gold)}
-.bundle-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
-.bundle-meta-item{font-size:.78rem;color:var(--muted)}
-.bundle-meta-item strong{display:block;color:#fff;font-size:.88rem;font-weight:600;margin-bottom:1px}
-.bundle-mindest{font-size:.8rem;color:var(--muted);margin-bottom:14px;padding:10px 14px;background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.05);line-height:1.6}
-.bundle-mindest strong{color:var(--gold)}
+.bundle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:24px}
+.bundle-card{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);overflow:hidden;transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.bundle-card:hover{border-color:rgba(232,160,32,.18);box-shadow:0 8px 32px rgba(0,0,0,.3)}
 
-.bundle-deadline{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:.76rem;font-weight:600;margin-bottom:14px}
+/* TOP ZONE */
+.card-top{padding:28px 28px 20px;border-bottom:1px solid rgba(255,255,255,.05)}
+.bundle-material{font-size:1.15rem;font-weight:700;line-height:1.3;margin-bottom:14px}
+.bundle-volume-row{display:flex;align-items:baseline;gap:10px}
+.bundle-volume-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.bundle-volume-value{font-size:1.6rem;font-weight:800;color:var(--gold);letter-spacing:-.02em}
+
+/* MIDDLE ZONE */
+.card-mid{padding:20px 28px;border-bottom:1px solid rgba(255,255,255,.05)}
+.bundle-meta{display:grid;grid-template-columns:1fr 1fr;gap:16px 20px}
+.bundle-meta-item{}
+.bundle-meta-label{display:block;font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:3px}
+.bundle-meta-value{display:block;font-size:.88rem;font-weight:600;color:#fff}
+
+/* BOTTOM ZONE */
+.card-bottom{padding:20px 28px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.bundle-deadline{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;font-size:.76rem;font-weight:600}
 .deadline-green{background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.15);color:#34D399}
 .deadline-amber{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.15);color:#FBBF24}
 .deadline-red{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#FCA5A5}
-
-.bundle-pressure{font-size:.78rem;color:var(--body);margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.bundle-mindest{font-size:.78rem;color:var(--muted);padding:6px 14px;background:rgba(255,255,255,.03);border-radius:8px;border:1px solid rgba(255,255,255,.05);line-height:1.5}
+.bundle-mindest strong{color:var(--gold)}
+.bundle-pressure{font-size:.76rem;color:var(--body);display:flex;align-items:center;gap:6px}
 .bundle-pressure svg{width:14px;height:14px;color:var(--muted);flex-shrink:0}
+
+/* ACTION ZONE */
+.card-action{padding:20px 28px 24px}
 
 .btn-bid{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-h));color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;transition:transform .15s,box-shadow .15s}
 .btn-bid:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,160,32,.25)}
@@ -145,6 +157,8 @@ a{color:var(--gold);text-decoration:none}
 @media(max-width:640px){
   .bundle-grid{grid-template-columns:1fr}
   .bundle-meta{grid-template-columns:1fr}
+  .card-top,.card-mid,.card-bottom,.card-action{padding-left:20px;padding-right:20px}
+  .card-bottom{flex-direction:column;align-items:flex-start}
   .topnav-company{display:none}
   .history-table{font-size:.78rem}
   .history-table th,.history-table td{padding:8px 6px}
@@ -364,31 +378,41 @@ function createBundleCard(b,otherBidCount){
   var zielRabattRaw=b.ziel_mindestrabatt||b.min_discount||null;
   var zielRabatt=zielRabattRaw?(zielRabattRaw<1?Math.round(zielRabattRaw*1000)/10:zielRabattRaw):null;
 
-  var html='<div class="bundle-material">'+esc(materialName)+'</div>';
-  html+='<div class="bundle-volume"><span>'+esc(volume)+'</span></div>';
-  html+='<div class="bundle-deadline '+cd.cls+'" id="cd-'+b.id+'">'+esc(cd.text)+'</div>';
-
   bundleCountdowns.push({el:null,deadline:deadline,id:b.id});
 
-  html+='<div class="bundle-meta">';
-  if(b.delivery_zone)html+='<div class="bundle-meta-item"><strong>'+esc(b.delivery_zone)+'</strong>Liefergebiet</div>';
-  if(b.delivery_timeframe)html+='<div class="bundle-meta-item"><strong>'+esc(b.delivery_timeframe)+'</strong>Lieferzeitraum</div>';
-  if(b.number_of_sites)html+='<div class="bundle-meta-item"><strong>'+b.number_of_sites+' Baustelle'+(b.number_of_sites>1?'n':'')+'</strong>Standorte</div>';
-  if(b.bundle_type){var btLabel={'single_material':'Einzelmaterial-Bündel','multi_material':'Mehrere Materialien gebündelt'};html+='<div class="bundle-meta-item"><strong>'+esc(btLabel[b.bundle_type]||b.bundle_type)+'</strong>Bündeltyp</div>';}
+  var volumeVal=b.gesamtvolumen||b.total_quantity||null;
+  var volumeUnit=b.unit||'';
+  var volumeStr=volumeVal?Number(volumeVal).toLocaleString('de-CH')+' '+volumeUnit:'—';
+
+  var btLabel={'single_material':'Einzelmaterial-Bündel','multi_material':'Mehrere Materialien gebündelt'};
+
+  // TOP ZONE
+  var html='<div class="card-top">';
+  html+='<div class="bundle-material">'+esc(materialName)+'</div>';
+  html+='<div class="bundle-volume-row"><span class="bundle-volume-label">Gesamtvolumen</span><span class="bundle-volume-value">'+esc(volumeStr)+'</span></div>';
   html+='</div>';
 
-  if(zielRabatt){
-    html+='<div class="bundle-mindest">Mindestanforderung: <strong>'+zielRabatt+'% Rabatt</strong> — nur das beste Angebot erhält den Zuschlag</div>';
-  }
+  // MIDDLE ZONE
+  html+='<div class="card-mid"><div class="bundle-meta">';
+  if(b.delivery_zone)html+='<div class="bundle-meta-item"><span class="bundle-meta-label">Liefergebiet</span><span class="bundle-meta-value">'+esc(b.delivery_zone)+'</span></div>';
+  if(b.delivery_timeframe)html+='<div class="bundle-meta-item"><span class="bundle-meta-label">Lieferzeitraum</span><span class="bundle-meta-value">'+esc(b.delivery_timeframe)+'</span></div>';
+  if(b.number_of_sites)html+='<div class="bundle-meta-item"><span class="bundle-meta-label">Standorte</span><span class="bundle-meta-value">'+b.number_of_sites+' Baustelle'+(b.number_of_sites>1?'n':'')+'</span></div>';
+  if(b.bundle_type)html+='<div class="bundle-meta-item"><span class="bundle-meta-label">Bündeltyp</span><span class="bundle-meta-value">'+esc(btLabel[b.bundle_type]||b.bundle_type)+'</span></div>';
+  html+='</div>';
+  if(b.special_requirements)html+='<div style="font-size:.78rem;color:var(--body);margin-top:14px;font-style:italic">'+esc(b.special_requirements)+'</div>';
+  html+='</div>';
 
+  // BOTTOM ZONE
+  html+='<div class="card-bottom">';
+  html+='<div class="bundle-deadline '+cd.cls+'" id="cd-'+b.id+'">'+esc(cd.text)+'</div>';
+  if(zielRabatt)html+='<div class="bundle-mindest">Mind. <strong>'+zielRabatt+'%</strong> Rabatt</div>';
   if(otherBidCount>0){
-    html+='<div class="bundle-pressure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'+otherBidCount+' weitere'+(otherBidCount>1?' Lieferanten haben':' Lieferant hat')+' bereits ein Angebot eingereicht</div>';
+    html+='<div class="bundle-pressure"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>'+otherBidCount+' Angebot'+(otherBidCount>1?'e':'')+'</div>';
   }
+  html+='</div>';
 
-  if(b.special_requirements){
-    html+='<div style="font-size:.78rem;color:var(--body);margin-bottom:14px;font-style:italic">'+esc(b.special_requirements)+'</div>';
-  }
-
+  // ACTION ZONE
+  html+='<div class="card-action">';
   if(myBid){
     html+='<div class="bid-done">Angebot eingereicht ✓</div>';
     html+='<div class="bid-done-details">';
@@ -408,7 +432,6 @@ function createBundleCard(b,otherBidCount){
     html+='<button class="btn-bid" onclick="openBidForm(\''+b.id+'\',\''+esc(b.unit||'')+'\')">Angebot abgeben</button>';
   }
 
-  // Bid form (used for both new and update)
   html+='<div class="bid-form" id="bidform-'+b.id+'">';
   html+='<div class="form-group"><label class="form-label">Rabatt-Prozentsatz (%)</label>';
   html+='<input type="number" step="0.1" min="0" max="100" class="form-input" id="rabatt-'+b.id+'" placeholder="z.B. 15"/></div>';
@@ -421,6 +444,7 @@ function createBundleCard(b,otherBidCount){
   html+='</div>';
   html+='<div class="bid-confirm" id="confirm-'+b.id+'">Dein Angebot wurde eingereicht. Du wirst informiert, sobald die Vergabe entschieden ist.</div>';
   html+='<div class="bid-error" id="biderr-'+b.id+'"></div>';
+  html+='</div>';
 
   card.innerHTML=html;
 
