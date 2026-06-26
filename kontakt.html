@@ -1013,7 +1013,7 @@ function removeFile(){document.getElementById('c-file').value='';document.getEle
 var _supabase=window.supabase.createClient(
   'https://mttzsqtuaisdjisjxrey.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U',
-  {global:{headers:{}},accessToken:async function(){if(window.Clerk&&window.Clerk.session){try{return await window.Clerk.session.getToken({template:'supabase'});}catch(e){return await window.Clerk.session.getToken();}}return null;}}
+  {global:{headers:{}},accessToken:async function(){if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}return null;}}
 );
 var _matCatalog=null;
 (async function(){
@@ -1507,7 +1507,7 @@ function clerkSignOut(){
       var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
       var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
       var token=null;
-      if(window.Clerk&&window.Clerk.session){try{token=await window.Clerk.session.getToken({template:'supabase'});}catch(e){token=await window.Clerk.session.getToken();}}
+      if(window.Clerk&&window.Clerk.session){token=await window.Clerk.session.getToken();}
       var headers={'apikey':sbKey,'Content-Type':'application/json'};
       if(token)headers['Authorization']='Bearer '+token;
       else headers['Authorization']='Bearer '+sbKey;

@@ -1011,7 +1011,7 @@ function selOk(id,errId){const ok=document.getElementById(id).value!=='';documen
 var _sbClient=window.supabase?window.supabase.createClient(
   'https://mttzsqtuaisdjisjxrey.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U',
-  {accessToken:async function(){if(window.Clerk&&window.Clerk.session){try{return await window.Clerk.session.getToken({template:'supabase'});}catch(e){return await window.Clerk.session.getToken();}}return null;}}
+  {accessToken:async function(){if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}return null;}}
 ):null;
 
 async function submitSupplier(e){
@@ -1050,6 +1050,11 @@ async function submitSupplier(e){
     var clerkId=window.Clerk.user.id;
 
     if(!_sbClient){errEl.textContent='Verbindung zur Datenbank fehlgeschlagen. Bitte lade die Seite neu.';errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
+
+    var _dbgToken=null;
+    if(window.Clerk&&window.Clerk.session){_dbgToken=await window.Clerk.session.getToken();}
+    console.log('[Clerk] Token for supplier insert (first 30):',_dbgToken?_dbgToken.substring(0,30)+'...':'NO TOKEN');
+    console.log('[Clerk] Clerk user ID:',clerkId);
 
     var insRes=await _sbClient.from('suppliers').insert({
       id:clerkId,
@@ -1513,7 +1518,7 @@ function clerkSignOut(){
       var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
       var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
       var token=null;
-      if(window.Clerk&&window.Clerk.session){try{token=await window.Clerk.session.getToken({template:'supabase'});}catch(e){token=await window.Clerk.session.getToken();}}
+      if(window.Clerk&&window.Clerk.session){token=await window.Clerk.session.getToken();}
       var headers={'apikey':sbKey,'Content-Type':'application/json'};
       if(token)headers['Authorization']='Bearer '+token;
       else headers['Authorization']='Bearer '+sbKey;
