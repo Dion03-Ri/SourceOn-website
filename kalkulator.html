@@ -1445,47 +1445,58 @@ var ACCT_I18N={en:{acct_login:'Supplier Login',acct_register:'Register as Suppli
 // CLERK needs_client_trust HANDLER
 var _clerkSignInResource=null;
 var _clerkTrustCallback=null;
+var _clerkTrustActive=false;
+var _clerkTrustStrategy='email_code';
 
 function clerkOpenSignInSafe(opts,onSuccess){
   if(!window.Clerk)return;
   _clerkTrustCallback=onSuccess||function(){window.location.reload();};
+  _clerkTrustActive=false;
   window.Clerk.openSignIn(Object.assign({},opts||{},{
     appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}
   }));
   window.Clerk.addListener(function _trustListener(ev){
+    if(_clerkTrustActive)return;
     if(!window.Clerk.client||!window.Clerk.client.signIn)return;
     var si=window.Clerk.client.signIn;
     if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){
+      _clerkTrustActive=true;
       _clerkSignInResource=si;
       window.Clerk.closeSignIn();
-      _clerkPrepareSecondFactor();
+      _clerkSendVerificationCode();
     }
   });
 }
 
-async function _clerkPrepareSecondFactor(){
+async function _clerkSendVerificationCode(){
+  console.log('[Clerk] Sending verification code (prepareSecondFactor)');
+  _clerkTrustStrategy='email_code';
   try{
     var si=_clerkSignInResource;
     if(!si)return;
     await si.prepareSecondFactor({strategy:'email_code'});
-    document.getElementById('clerk-trust-overlay').classList.add('open');
-    document.getElementById('clerk-trust-code').value='';
-    document.getElementById('clerk-trust-error').textContent='';
-    document.getElementById('clerk-trust-code').focus();
+    document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';
+    _clerkShowTrustModal();
   }catch(e){
-    console.error('[Clerk] prepareSecondFactor failed:',e);
+    console.error('[Clerk] prepareSecondFactor email_code failed:',e);
     try{
       await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});
+      _clerkTrustStrategy='phone_code';
       document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';
-      document.getElementById('clerk-trust-overlay').classList.add('open');
-      document.getElementById('clerk-trust-code').value='';
-      document.getElementById('clerk-trust-error').textContent='';
-      document.getElementById('clerk-trust-code').focus();
+      _clerkShowTrustModal();
     }catch(e2){
       console.error('[Clerk] prepareSecondFactor phone_code also failed:',e2);
+      _clerkTrustActive=false;
       alert('Verifizierung konnte nicht gestartet werden: '+(e2.errors?e2.errors[0].longMessage:e2.message));
     }
   }
+}
+
+function _clerkShowTrustModal(){
+  document.getElementById('clerk-trust-overlay').classList.add('open');
+  document.getElementById('clerk-trust-code').value='';
+  document.getElementById('clerk-trust-error').textContent='';
+  document.getElementById('clerk-trust-code').focus();
 }
 
 async function clerkTrustVerify(){
@@ -1494,35 +1505,37 @@ async function clerkTrustVerify(){
   var btn=document.getElementById('clerk-trust-submit');
   btn.disabled=true;btn.textContent='Wird geprüft…';
   document.getElementById('clerk-trust-error').textContent='';
+  console.log('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
   try{
-    var result=await _clerkSignInResource.attemptSecondFactor({strategy:'email_code',code:code});
+    var result=await _clerkSignInResource.attemptSecondFactor({strategy:_clerkTrustStrategy,code:code});
     if(result.status==='complete'){
+      console.log('[Clerk] Second factor complete, activating session');
       await window.Clerk.setActive({session:result.createdSessionId});
       document.getElementById('clerk-trust-overlay').classList.remove('open');
+      _clerkTrustActive=false;
       if(_clerkTrustCallback)_clerkTrustCallback();
+      return;
     }else{
       document.getElementById('clerk-trust-error').textContent='Unerwarteter Status: '+result.status;
     }
   }catch(e){
     var msg=e.errors?e.errors[0].longMessage:(e.message||'Ungültiger Code');
-    document.getElementById('clerk-trust-error').textContent=msg;
-    try{
-      var result2=await _clerkSignInResource.attemptSecondFactor({strategy:'phone_code',code:code});
-      if(result2.status==='complete'){
-        await window.Clerk.setActive({session:result2.createdSessionId});
-        document.getElementById('clerk-trust-overlay').classList.remove('open');
-        if(_clerkTrustCallback)_clerkTrustCallback();
-        return;
-      }
-    }catch(e2){}
+    console.error('[Clerk] attemptSecondFactor failed:',msg);
     document.getElementById('clerk-trust-error').textContent=msg;
   }
   btn.disabled=false;btn.textContent='Bestätigen';
 }
 
+async function clerkTrustResend(){
+  document.getElementById('clerk-trust-error').textContent='';
+  console.log('[Clerk] User requested resend — sending new code');
+  await _clerkSendVerificationCode();
+}
+
 function clerkTrustCancel(){
   document.getElementById('clerk-trust-overlay').classList.remove('open');
   _clerkSignInResource=null;
+  _clerkTrustActive=false;
 }
 document.addEventListener('keydown',function(e){
   if(e.key==='Enter'&&document.getElementById('clerk-trust-overlay').classList.contains('open')){
@@ -1539,6 +1552,7 @@ document.addEventListener('keydown',function(e){
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
     <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
+    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
     <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
   </div>
 </div>
