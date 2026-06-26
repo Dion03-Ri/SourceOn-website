@@ -1014,6 +1014,77 @@ var _sbClient=window.supabase?window.supabase.createClient(
   {accessToken:async function(){if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}return null;}}
 ):null;
 
+var PENDING_KEY='sourceon_pending_supplier';
+
+function _collectFormData(){
+  function getChecked(container){if(!container)return[];return Array.from(container.querySelectorAll('input[type=checkbox]:checked')).map(function(c){return c.parentElement.querySelector('span').textContent;});}
+  var formEl=document.getElementById('form-supplier');
+  if(!formEl)return null;
+  var matChecks=formEl.querySelectorAll('.form-checks')[0];
+  var regChecks=formEl.querySelectorAll('.form-checks')[1];
+  var certChecks=formEl.querySelector('.form-checks-3');
+  return{
+    company_name:document.getElementById('sa-company').value.trim(),
+    contact_person:document.getElementById('sa-name').value.trim(),
+    email:document.getElementById('sa-email').value.trim(),
+    phone:document.getElementById('sa-phone').value.trim(),
+    website:document.getElementById('sa-web')?document.getElementById('sa-web').value.trim():'',
+    materials:getChecked(matChecks),
+    regions:getChecked(regChecks),
+    annual_capacity:document.getElementById('sa-cap')?document.getElementById('sa-cap').value:'',
+    certifications:getChecked(certChecks),
+    notes:document.getElementById('sa-notes')?document.getElementById('sa-notes').value.trim():''
+  };
+}
+
+function _restoreFormData(data){
+  if(!data)return;
+  if(data.company_name&&document.getElementById('sa-company'))document.getElementById('sa-company').value=data.company_name;
+  if(data.contact_person&&document.getElementById('sa-name'))document.getElementById('sa-name').value=data.contact_person;
+  if(data.email&&document.getElementById('sa-email'))document.getElementById('sa-email').value=data.email;
+  if(data.phone&&document.getElementById('sa-phone'))document.getElementById('sa-phone').value=data.phone;
+  if(data.website&&document.getElementById('sa-web'))document.getElementById('sa-web').value=data.website;
+  if(data.annual_capacity&&document.getElementById('sa-cap'))document.getElementById('sa-cap').value=data.annual_capacity;
+  if(data.notes&&document.getElementById('sa-notes'))document.getElementById('sa-notes').value=data.notes;
+}
+
+async function _insertSupplier(data,clerkId){
+  console.log('[Supplier] Inserting supplier data for Clerk ID:',clerkId);
+  var token=null;
+  if(window.Clerk&&window.Clerk.session){token=await window.Clerk.session.getToken();}
+  console.log('[Supplier] Token (first 30):',token?token.substring(0,30)+'...':'NO TOKEN');
+
+  if(!_sbClient){throw new Error('Supabase client not available');}
+
+  var insRes=await _sbClient.from('suppliers').insert({
+    id:clerkId,
+    company_name:data.company_name,
+    contact_person:data.contact_person,
+    email:data.email,
+    phone:data.phone,
+    website:data.website||'',
+    materials:data.materials||[],
+    regions:data.regions||[],
+    annual_capacity:data.annual_capacity||'',
+    certifications:data.certifications||[],
+    notes:data.notes||'',
+    status:'pending'
+  });
+  if(insRes.error)throw insRes.error;
+  return insRes;
+}
+
+function _showSuccess(){
+  var formEl=document.getElementById('form-supplier');
+  if(formEl)formEl.style.display='none';
+  var successEl=document.getElementById('success-supplier');
+  if(successEl){
+    successEl.innerHTML='<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.';
+    successEl.classList.add('show');
+  }
+  sessionStorage.removeItem(PENDING_KEY);
+}
+
 async function submitSupplier(e){
   e.preventDefault();
   var errEl=document.getElementById('error-supplier');
@@ -1021,66 +1092,118 @@ async function submitSupplier(e){
   if(![req('sa-company','e-sa-company'),req('sa-name','e-sa-name'),emailOk('sa-email','e-sa-email'),req('sa-phone','e-sa-phone'),selOk('sa-cap','e-sa-cap')].every(Boolean))return;
   var btn=document.querySelector('#form-supplier button[type=submit]');
   btn.disabled=true;btn.textContent='Wird gesendet…';
-  var email=document.getElementById('sa-email').value.trim();
-  function getChecked(container){return Array.from(container.querySelectorAll('input[type=checkbox]:checked')).map(function(c){return c.parentElement.querySelector('span').textContent;});}
-  var formEl=document.getElementById('form-supplier');
-  var matChecks=formEl.querySelectorAll('.form-checks')[0];
-  var regChecks=formEl.querySelectorAll('.form-checks')[1];
-  var certChecks=formEl.querySelector('.form-checks-3');
+
+  var formData=_collectFormData();
+  console.log('[Supplier] Form data collected:',JSON.stringify(formData));
 
   if(!window.Clerk){errEl.textContent='Die Anmeldung konnte nicht geladen werden. Bitte lade die Seite neu oder kontaktiere uns unter info@sourceon.ch.';errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
-  try{if(typeof window.Clerk.load==='function'){await window.Clerk.load();console.log('[Clerk] Clerk.load() completed in submitSupplier');}}catch(e){console.error('[Clerk] load error in submitSupplier:',e);}
+  try{if(typeof window.Clerk.load==='function'){await window.Clerk.load();}}catch(e){console.error('[Clerk] load error:',e);}
 
-  try{
-    if(!window.Clerk.user){
-      await new Promise(function(resolve,reject){
-        window.Clerk.openSignUp({
-          appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}},
-          initialValues:{emailAddress:email}
-        });
-        var checkIv=setInterval(function(){
-          if(window.Clerk.user){clearInterval(checkIv);resolve();}
-        },500);
-        setTimeout(function(){clearInterval(checkIv);if(!window.Clerk.user)reject(new Error('Registrierung abgebrochen'));},300000);
+  if(window.Clerk.user){
+    try{
+      await _insertSupplier(formData,window.Clerk.user.id);
+      _showSuccess();
+    }catch(err){
+      console.error('[Supplier] insert error:',err);
+      errEl.textContent='Profil konnte nicht gespeichert werden: '+(err.message||err);errEl.style.display='block';
+      btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';
+    }
+    return;
+  }
+
+  sessionStorage.setItem(PENDING_KEY,JSON.stringify(formData));
+  console.log('[Supplier] Form data saved to sessionStorage, opening Clerk sign-up');
+
+  window.Clerk.openSignUp({
+    appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}},
+    initialValues:{emailAddress:formData.email},
+    fallbackRedirectUrl:window.location.href,
+    afterSignUpUrl:window.location.href
+  });
+
+  window.Clerk.addListener(async function onAuthChange(ev){
+    if(!window.Clerk.user)return;
+    var pending=sessionStorage.getItem(PENDING_KEY);
+    if(!pending)return;
+    console.log('[Supplier] Clerk user detected after sign-up (same page), completing insert...');
+    try{
+      var data=JSON.parse(pending);
+      await _insertSupplier(data,window.Clerk.user.id);
+      _showSuccess();
+    }catch(err){
+      console.error('[Supplier] post-signup insert error:',err);
+      errEl.textContent='Profil konnte nicht gespeichert werden: '+(err.message||err);errEl.style.display='block';
+    }
+    btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';
+  });
+}
+
+// On page load: check for pending supplier data after OAuth redirect
+(async function _checkPendingSupplier(){
+  var hasPending=!!sessionStorage.getItem(PENDING_KEY);
+  console.log('[Supplier] Page loaded. Pending supplier data in storage:',hasPending);
+
+  if(!hasPending)return;
+
+  var pendingData=JSON.parse(sessionStorage.getItem(PENDING_KEY));
+  _restoreFormData(pendingData);
+  console.log('[Supplier] Restored form data from sessionStorage');
+
+  function waitForClerk(){
+    return new Promise(function(resolve){
+      if(window.Clerk){
+        if(typeof window.Clerk.load==='function'){window.Clerk.load().then(function(){resolve(true);}).catch(function(){resolve(false);});}
+        else{resolve(!!window.Clerk.user);}
+        return;
+      }
+      var elapsed=0;
+      var iv=setInterval(function(){
+        elapsed+=200;
+        if(window.Clerk){
+          clearInterval(iv);
+          if(typeof window.Clerk.load==='function'){window.Clerk.load().then(function(){resolve(true);}).catch(function(){resolve(false);});}
+          else{resolve(!!window.Clerk.user);}
+          return;
+        }
+        if(elapsed>=10000){clearInterval(iv);resolve(false);}
+      },200);
+    });
+  }
+
+  var ready=await waitForClerk();
+  console.log('[Supplier] Clerk ready:',ready,'User:',window.Clerk?!!window.Clerk.user:false);
+
+  if(!ready||!window.Clerk||!window.Clerk.user){
+    console.log('[Supplier] User not signed in after redirect, waiting for Clerk auth...');
+    if(window.Clerk){
+      window.Clerk.addListener(async function onRedirectAuth(){
+        if(!window.Clerk.user)return;
+        var p=sessionStorage.getItem(PENDING_KEY);
+        if(!p)return;
+        console.log('[Supplier] User authenticated after redirect, completing insert...');
+        try{
+          await _insertSupplier(JSON.parse(p),window.Clerk.user.id);
+          _showSuccess();
+        }catch(err){
+          console.error('[Supplier] post-redirect insert error:',err);
+          var errEl=document.getElementById('error-supplier');
+          if(errEl){errEl.textContent='Profil konnte nicht gespeichert werden: '+(err.message||err);errEl.style.display='block';}
+        }
       });
     }
-
-    if(!window.Clerk.user){errEl.textContent='Bitte erstelle zuerst ein Konto, um dich als Lieferant zu bewerben.';errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
-
-    var clerkId=window.Clerk.user.id;
-
-    if(!_sbClient){errEl.textContent='Verbindung zur Datenbank fehlgeschlagen. Bitte lade die Seite neu.';errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
-
-    var _dbgToken=null;
-    if(window.Clerk&&window.Clerk.session){_dbgToken=await window.Clerk.session.getToken();}
-    console.log('[Clerk] Token for supplier insert (first 30):',_dbgToken?_dbgToken.substring(0,30)+'...':'NO TOKEN');
-    console.log('[Clerk] Clerk user ID:',clerkId);
-
-    var insRes=await _sbClient.from('suppliers').insert({
-      id:clerkId,
-      company_name:document.getElementById('sa-company').value.trim(),
-      contact_person:document.getElementById('sa-name').value.trim(),
-      email:email,
-      phone:document.getElementById('sa-phone').value.trim(),
-      website:document.getElementById('sa-web')?document.getElementById('sa-web').value.trim():'',
-      materials:getChecked(matChecks),
-      regions:getChecked(regChecks),
-      annual_capacity:document.getElementById('sa-cap').value,
-      certifications:certChecks?getChecked(certChecks):[],
-      notes:document.getElementById('sa-notes')?document.getElementById('sa-notes').value.trim():'',
-      status:'pending'
-    });
-    if(insRes.error){errEl.textContent='Profil konnte nicht gespeichert werden: '+insRes.error.message;errEl.style.display='block';btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';return;}
-    formEl.style.display='none';
-    var successEl=document.getElementById('success-supplier');
-    successEl.innerHTML='<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.';
-    successEl.classList.add('show');
-  }catch(err){
-    console.error('[Clerk/Supabase] supplier submit error:',err);
-    errEl.textContent=err.message||'Es gab ein Problem. Bitte versuche es erneut.';errEl.style.display='block';
-    btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';
+    return;
   }
-}
+
+  console.log('[Supplier] User already signed in after redirect, completing insert now...');
+  try{
+    await _insertSupplier(pendingData,window.Clerk.user.id);
+    _showSuccess();
+  }catch(err){
+    console.error('[Supplier] post-redirect insert error:',err);
+    var errEl=document.getElementById('error-supplier');
+    if(errEl){errEl.textContent='Profil konnte nicht gespeichert werden: '+(err.message||err);errEl.style.display='block';}
+  }
+})();
 
 
 // FAQ ACCORDION
