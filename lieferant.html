@@ -744,7 +744,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   async
   crossorigin="anonymous"
   data-clerk-publishable-key="pk_test_dG9sZXJhbnQtc2tpbmstNjIuY2xlcmsuYWNjb3VudHMuZGV2JA"
-  src="https://tolerant-skink-62.clerk.accounts.dev/npm/@clerk/clerk-js@5/dist/clerk.browser.js"
+  src="https://tolerant-skink-62.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
   type="text/javascript"
 ></script>
 </head>
@@ -1599,32 +1599,10 @@ document.addEventListener('click',function(e){var w=document.getElementById('acc
 
 function clerkSignIn(){
   if(!window.Clerk)return;
-  clerkOpenSignInSafe(null,function(){
-    _checkAndRedirectSupplier().then(function(redirected){
-      if(!redirected)window.location.reload();
-    });
+  sessionStorage.setItem('sourceon_login_intent','1');
+  window.Clerk.openSignIn({
+    appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}
   });
-}
-
-async function _checkAndRedirectSupplier(){
-  try{
-    if(!window.Clerk||!window.Clerk.user)return false;
-    var clerkId=window.Clerk.user.id;
-    var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
-    var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
-    var token=await window.Clerk.session.getToken();
-    var headers={'apikey':sbKey,'Content-Type':'application/json'};
-    headers['Authorization']='Bearer '+(token||sbKey);
-    var resp=await fetch(sbUrl+'/rest/v1/suppliers?id=eq.'+encodeURIComponent(clerkId)+'&select=status',{headers:headers});
-    if(!resp.ok)return false;
-    var rows=await resp.json();
-    if(rows&&rows.length>0&&rows[0].status==='verified'){
-      console.log('[Clerk] Verified supplier detected after login, redirecting to dashboard');
-      window.location.href='supplier-dashboard.html';
-      return true;
-    }
-  }catch(e){console.error('[Clerk] post-login supplier check error:',e);}
-  return false;
 }
 function clerkSignOut(){
   if(!window.Clerk)return;
@@ -1705,10 +1683,25 @@ function clerkSignOut(){
       var s=rows[0].status;
       console.log('Checking supplier status for navigation:',s);
       if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">Wird geprüft</span>';if(dashLink)dashLink.style.display='none';}
-      else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';if(dashLink)dashLink.style.display='flex';}
+      else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';if(dashLink)dashLink.style.display='flex';
+        if(sessionStorage.getItem('sourceon_login_intent')){sessionStorage.removeItem('sourceon_login_intent');console.log('[Clerk] Verified supplier detected after login, redirecting to dashboard');window.location.href='supplier-dashboard.html';return;}}
       else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';if(dashLink)dashLink.style.display='none';}
     }catch(e){console.error('[Clerk] supplier status check error:',e);}
   }
+
+  // Global trust listener — registered ONCE, catches needs_client_trust from any sign-in
+  window.Clerk.addListener(function _globalTrustWatch(){
+    if(_clerkTrustActive)return;
+    if(!window.Clerk.client||!window.Clerk.client.signIn)return;
+    var si=window.Clerk.client.signIn;
+    if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){
+      console.log('[Clerk] Detected needs_client_trust / needs_second_factor, opening verification modal');
+      _clerkTrustActive=true;
+      _clerkSignInResource=si;
+      try{window.Clerk.closeSignIn();}catch(e){}
+      _clerkSendVerificationCode();
+    }
+  });
 
   updateAcctUI();
   window.Clerk.addListener(updateAcctUI);
@@ -1733,31 +1726,10 @@ var ACCT_I18N={en:{acct_login:'Supplier Login',acct_register:'Register as Suppli
 })();
 
 
-// CLERK needs_client_trust HANDLER
+// CLERK needs_client_trust HANDLER (global, registered once)
 var _clerkSignInResource=null;
-var _clerkTrustCallback=null;
 var _clerkTrustActive=false;
 var _clerkTrustStrategy='email_code';
-
-function clerkOpenSignInSafe(opts,onSuccess){
-  if(!window.Clerk)return;
-  _clerkTrustCallback=onSuccess||function(){window.location.reload();};
-  _clerkTrustActive=false;
-  window.Clerk.openSignIn(Object.assign({},opts||{},{
-    appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}
-  }));
-  window.Clerk.addListener(function _trustListener(ev){
-    if(_clerkTrustActive)return;
-    if(!window.Clerk.client||!window.Clerk.client.signIn)return;
-    var si=window.Clerk.client.signIn;
-    if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){
-      _clerkTrustActive=true;
-      _clerkSignInResource=si;
-      window.Clerk.closeSignIn();
-      _clerkSendVerificationCode();
-    }
-  });
-}
 
 async function _clerkSendVerificationCode(){
   console.log('[Clerk] Sending verification code (prepareSecondFactor)');
@@ -1804,7 +1776,6 @@ async function clerkTrustVerify(){
       await window.Clerk.setActive({session:result.createdSessionId});
       document.getElementById('clerk-trust-overlay').classList.remove('open');
       _clerkTrustActive=false;
-      if(_clerkTrustCallback)_clerkTrustCallback();
       return;
     }else{
       document.getElementById('clerk-trust-error').textContent='Unerwarteter Status: '+result.status;
