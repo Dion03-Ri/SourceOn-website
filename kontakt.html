@@ -84,6 +84,9 @@ a{color:inherit;text-decoration:none}
 #acct-dd a:hover,#acct-dd button:hover{background:rgba(255,255,255,.08);color:#fff}
 #acct-dashboard-link{color:#E8A020;font-weight:600;background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.12)}
 #acct-dashboard-link:hover{background:rgba(232,160,32,.14);color:#f0b840}
+#acct-customer-link{color:#34D399;font-weight:600;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.12)}
+#acct-customer-link:hover{background:rgba(16,185,129,.14);color:#4ade80}
+.acct-group-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#64748B;padding:8px 14px 4px;pointer-events:none}
 #acct-dd .acct-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 0}
 #acct-dd .acct-user{padding:12px 14px;font-size:.78rem;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:4px}
 #acct-dd .acct-user strong{display:block;color:#fff;font-size:.86rem;font-weight:600;margin-bottom:2px}
@@ -810,11 +813,16 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         </button>
         <div id="acct-dd">
           <div id="acct-signed-out">
+            <div class="acct-group-label">Kunden</div>
+            <a href="#" onclick="clerkSignIn();return false" data-i18n="acct_customer_login">Kunden-Login</a>
+            <div class="acct-divider"></div>
+            <div class="acct-group-label">Lieferanten</div>
             <a href="#" onclick="clerkSignIn();return false" data-i18n="acct_login">Lieferanten-Login</a>
             <a href="lieferant.html" data-i18n="acct_register">Als Lieferant registrieren</a>
           </div>
           <div id="acct-signed-in" style="display:none">
             <div class="acct-user"><strong id="acct-name"></strong><span id="acct-email"></span><div id="acct-status-wrap"></div></div>
+            <a href="kundendashboard.html" id="acct-customer-link" style="display:none" data-i18n="acct_customer_dash"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Zum Kunden-Dashboard</a>
             <a href="supplier-dashboard.html" id="acct-dashboard-link" style="display:none" data-i18n="acct_dashboard"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Zum Lieferanten-Dashboard</a>
             <button onclick="clerkSignOut()" data-i18n="acct_signout">Abmelden</button>
           </div>
@@ -914,6 +922,12 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <div class="form-group"><label class="form-label" data-i18n="form_address_label">Lieferadresse / Kanton *</label><input type="text" class="form-input" id="c-canton" placeholder="z.B. Zürich, Baustelle Hauptstr. 5" data-i18n-placeholder="form_placeholder_address" required/><div class="form-error" data-i18n="form_error_required" id="e-c-canton">Pflichtfeld</div></div>
             </div>
             <div class="form-group"><label class="form-label" data-i18n-html="form_project_label">Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span></label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und weitere Anforderungen…" data-i18n-placeholder="form_placeholder_project"></textarea></div>
+            <div class="form-group" style="margin-top:18px;margin-bottom:18px">
+              <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:.84rem;color:rgba(255,255,255,.8);line-height:1.5">
+                <input type="checkbox" id="c-create-account" style="margin-top:3px;width:18px;height:18px;accent-color:#E8A020;flex-shrink:0;cursor:pointer"/>
+                <span>Konto erstellen, um deine Anfragen jederzeit einzusehen und den Status zu verfolgen</span>
+              </label>
+            </div>
             <button type="submit" class="btn btn-gold btn-lg btn-full" data-i18n="form_submit">Materialbedarf jetzt melden →</button>
             <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;font-style:italic" data-i18n="form_bundle_hint">Hinweis: Wird dein Bedarf mit anderen Baufirmen gebündelt, richtet sich deine individuelle Ersparnis nach deinem Volumenanteil am Gesamtbündel.</p>
             <div class="form-success" id="success-contact" data-i18n-html="form_success"><span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</div>
@@ -1244,6 +1258,32 @@ async function submitContact(e){
     // File upload note: file-based material list parsing not yet implemented in this phase
     document.getElementById('form-contact').style.display='none';
     document.getElementById('success-contact').classList.add('show');
+
+    // Account creation flow
+    var wantsAccount=document.getElementById('c-create-account')&&document.getElementById('c-create-account').checked;
+    var userEmail=custPayload.email;
+    if(wantsAccount&&window.Clerk){
+      if(window.Clerk.user){
+        console.log('[SourceOn] User already signed in, linking customer record');
+        _linkCustomerAccount(customerId,window.Clerk.user.id);
+      }else{
+        sessionStorage.setItem('sourceon_pending_customer_id',customerId);
+        window.Clerk.openSignUp({
+          appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}},
+          initialValues:{emailAddress:userEmail},
+          fallbackRedirectUrl:window.location.href,
+          afterSignUpUrl:window.location.href
+        });
+        window.Clerk.addListener(function _custAcctListener(){
+          if(!window.Clerk.user)return;
+          var pendingCustId=sessionStorage.getItem('sourceon_pending_customer_id');
+          if(!pendingCustId)return;
+          sessionStorage.removeItem('sourceon_pending_customer_id');
+          console.log('[SourceOn] Clerk account created, linking customer ID:',pendingCustId);
+          _linkCustomerAccount(pendingCustId,window.Clerk.user.id);
+        });
+      }
+    }
   }catch(err){
     console.error('Supabase insert error:',err);
     submitBtn.disabled=false;submitBtn.style.opacity='1';
@@ -1257,6 +1297,39 @@ async function submitContact(e){
     errDiv.style.display='block';
   }
 }
+
+
+async function _linkCustomerAccount(customerId,clerkUserId){
+  try{
+    var res=await _supabase.from('customers').update({user_id:clerkUserId}).eq('id',customerId);
+    if(res.error){console.error('[SourceOn] Failed to link customer account:',res.error);}
+    else{console.log('[SourceOn] Customer account linked successfully');
+      var successEl=document.getElementById('success-contact');
+      if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Konto erstellt!</strong> Du kannst deine Anfragen jetzt im <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> verfolgen.';
+    }
+  }catch(e){console.error('[SourceOn] Link customer error:',e);}
+}
+
+// Check for pending customer account link after OAuth redirect
+(function _checkPendingCustomer(){
+  var pendingCustId=sessionStorage.getItem('sourceon_pending_customer_id');
+  if(!pendingCustId)return;
+  function _waitAndLink(){
+    if(!window.Clerk)return setTimeout(_waitAndLink,300);
+    if(typeof window.Clerk.load==='function'){
+      window.Clerk.load().then(function(){
+        if(window.Clerk.user){
+          sessionStorage.removeItem('sourceon_pending_customer_id');
+          _linkCustomerAccount(pendingCustId,window.Clerk.user.id);
+        }
+      });
+    }else if(window.Clerk.user){
+      sessionStorage.removeItem('sourceon_pending_customer_id');
+      _linkCustomerAccount(pendingCustId,window.Clerk.user.id);
+    }
+  }
+  _waitAndLink();
+})();
 
 
 // FAQ ACCORDION
@@ -1555,6 +1628,7 @@ function clerkSignOut(){
       if(nameEl)nameEl.textContent=user.fullName||user.firstName||'';
       if(emailEl)emailEl.textContent=user.primaryEmailAddress?user.primaryEmailAddress.emailAddress:'';
       checkSupplierStatus(user.id);
+      checkCustomerStatus(user.id);
     }else{
       soDiv.style.display='block';siDiv.style.display='none';
     }
@@ -1584,6 +1658,29 @@ function clerkSignOut(){
         if(sessionStorage.getItem('sourceon_login_intent')){sessionStorage.removeItem('sourceon_login_intent');console.log('[Clerk] Verified supplier detected after login, redirecting to dashboard');window.location.href='supplier-dashboard.html';return;}}
       else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';if(dashLink)dashLink.style.display='none';var fab=document.getElementById('supplier-fab');if(fab)fab.style.display='none';}
     }catch(e){console.error('[Clerk] supplier status check error:',e);}
+  }
+
+  async function checkCustomerStatus(clerkId){
+    var custLink=document.getElementById('acct-customer-link');
+    if(!custLink)return;
+    try{
+      var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
+      var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
+      var token=null;
+      if(window.Clerk&&window.Clerk.session){token=await window.Clerk.session.getToken();}
+      var headers={'apikey':sbKey,'Content-Type':'application/json'};
+      if(token)headers['Authorization']='Bearer '+token;
+      else headers['Authorization']='Bearer '+sbKey;
+      var resp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(clerkId)+'&select=id&limit=1',{headers:headers});
+      if(!resp.ok)return;
+      var rows=await resp.json();
+      console.log('Checking customer status for navigation:',rows.length>0?'linked':'not linked');
+      if(rows&&rows.length>0){
+        custLink.style.display='flex';
+      }else{
+        custLink.style.display='none';
+      }
+    }catch(e){console.error('[Clerk] customer status check error:',e);}
   }
 
   // Global trust listener — registered ONCE, catches needs_client_trust from any sign-in

@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Kunden-Dashboard — SourceOn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_dG9sZXJhbnQtc2tpbmstNjIuY2xlcmsuYWNjb3VudHMuZGV2JA"
+  src="https://tolerant-skink-62.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+  type="text/javascript"
+></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --dark:#08111E;--dark2:#0A1626;--dark3:#0F2238;
+  --gold:#E8A020;--gold-h:#f0b840;--gold-dim:rgba(232,160,32,.12);--gold-b:rgba(232,160,32,.3);
+  --muted:#94A3B8;--body:#64748B;
+  --green:#10B981;--red:#EF4444;--amber:#F59E0B;
+  --r:16px;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--dark2);color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:var(--gold);text-decoration:none}
+::selection{background:var(--gold);color:#1a1a1a}
+
+/* TOP NAV */
+.topnav{background:var(--dark3);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topnav-logo{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#fff;cursor:pointer;text-decoration:none}
+.topnav-logo span{color:var(--gold)}
+.topnav-right{display:flex;align-items:center;gap:16px}
+.topnav-company{font-size:.82rem;color:var(--muted);font-weight:500}
+.btn-logout{padding:8px 18px;border-radius:100px;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:var(--muted);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s}
+.btn-logout:hover{border-color:var(--gold);color:var(--gold)}
+.btn-back{padding:8px 18px;border-radius:100px;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:var(--muted);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-back:hover{border-color:rgba(255,255,255,.3);color:#fff}
+
+/* AUTH GATE */
+.auth-gate{display:flex;align-items:center;justify-content:center;min-height:80vh;padding:24px}
+.auth-gate-card{background:var(--dark3);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:48px;text-align:center;max-width:460px;width:100%}
+.auth-gate-card h2{font-size:1.4rem;font-weight:700;margin-bottom:12px}
+.auth-gate-card p{font-size:.9rem;color:var(--muted);line-height:1.7}
+.auth-gate-card .status-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:24px}
+.status-icon.pending{background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.2)}
+
+/* MAIN */
+.dash-main{max-width:1100px;margin:0 auto;padding:40px 24px 80px;display:none}
+.dash-title{font-size:clamp(22px,3vw,28px);font-weight:800;margin-bottom:6px;letter-spacing:-.02em}
+.dash-subtitle{font-size:.85rem;color:var(--muted);margin-bottom:36px;line-height:1.6}
+
+/* OVERVIEW STATS */
+.ov-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px}
+.ov-stat{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:28px 24px;transition:border-color .2s}
+.ov-stat:hover{border-color:rgba(232,160,32,.15)}
+.ov-stat-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.ov-stat-value{font-size:1.8rem;font-weight:800;letter-spacing:-.02em}
+.ov-stat-value.gold{color:var(--gold)}
+.ov-stat-value.green{color:#34D399}
+.ov-stat-sub{font-size:.76rem;color:var(--body);margin-top:4px}
+
+/* TABLE */
+.req-table{width:100%;border-collapse:collapse}
+.req-table th{text-align:left;font-size:.68rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
+.req-table td{font-size:.84rem;padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:#CBD5E1}
+.status-badge{display:inline-block;padding:4px 12px;border-radius:100px;font-size:.72rem;font-weight:600;letter-spacing:.02em}
+.status-offen{background:rgba(232,160,32,.1);color:var(--gold)}
+.status-gebuendelt{background:rgba(245,158,11,.1);color:#FBBF24}
+.status-vergeben{background:rgba(59,130,246,.1);color:#60A5FA}
+.status-abgeschlossen{background:rgba(16,185,129,.1);color:#34D399}
+.status-abgesagt{background:rgba(239,68,68,.08);color:#FCA5A5}
+
+/* EMPTY STATE */
+.empty-state{text-align:center;padding:72px 24px;color:var(--body)}
+.empty-state-icon{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--muted)}
+.empty-state p{font-size:.9rem;line-height:1.7;max-width:420px;margin:0 auto}
+
+.btn-cta{display:inline-block;padding:13px 32px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-h));color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;transition:transform .15s,box-shadow .15s;text-decoration:none;margin-top:20px}
+.btn-cta:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,160,32,.25);color:#0F172A}
+
+/* LOADING */
+.loading{text-align:center;padding:48px;color:var(--body);font-size:.85rem}
+.loading-dots::after{content:'';animation:dots 1.5s steps(4) infinite}
+@keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
+
+.section-title{font-size:1.15rem;font-weight:700;margin-bottom:20px}
+
+@media(max-width:900px){.topnav{padding:0 20px}}
+@media(max-width:768px){.ov-stats{grid-template-columns:1fr}}
+@media(max-width:640px){
+  .topnav-company{display:none}
+  .req-table{font-size:.78rem}
+  .req-table th,.req-table td{padding:8px 6px}
+}
+
+/* CLERK TRUST VERIFICATION MODAL */
+.clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
+.clerk-trust-overlay.open{opacity:1;pointer-events:auto}
+.clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;font-family:'Inter',-apple-system,sans-serif;color:#fff}
+.clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
+.clerk-trust-modal p{font-size:.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px}
+.clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none;transition:border-color .2s}
+.clerk-trust-modal input:focus{border-color:#E8A020;box-shadow:0 0 0 3px rgba(232,160,32,.12)}
+.clerk-trust-modal .btn-verify{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,#E8A020,#f0b840);color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:14px;transition:transform .15s}
+.clerk-trust-modal .btn-verify:hover{transform:translateY(-1px)}
+.clerk-trust-modal .btn-verify:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.clerk-trust-modal .trust-error{font-size:.8rem;color:#FCA5A5;margin-top:10px;min-height:1.2em}
+.clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:#94A3B8;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}
+.clerk-trust-modal .btn-cancel-trust:hover{border-color:rgba(255,255,255,.2);color:#fff}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="topnav-logo">Source<span>On</span></a>
+  <div class="topnav-right">
+    <a href="index.html" class="btn-back">← Zur Hauptseite</a>
+    <span class="topnav-company" id="nav-company"></span>
+    <button class="btn-logout" onclick="handleLogout()">Abmelden</button>
+  </div>
+</nav>
+
+<!-- Auth gate -->
+<div class="auth-gate" id="auth-gate">
+  <div class="auth-gate-card" id="auth-gate-card">
+    <div class="loading"><span class="loading-dots">Authentifizierung wird geprüft</span></div>
+  </div>
+</div>
+
+<main class="dash-main" id="dash-main">
+  <h1 class="dash-title">Kunden-Dashboard</h1>
+  <p class="dash-subtitle">Behalte den Überblick über deine Materialanfragen und Bestellungen.</p>
+
+  <div class="ov-stats">
+    <div class="ov-stat">
+      <div class="ov-stat-label">Aktive Anfragen</div>
+      <div class="ov-stat-value gold" id="stat-active">0</div>
+      <div class="ov-stat-sub" id="stat-active-sub">Offene und gebündelte Anfragen</div>
+    </div>
+    <div class="ov-stat">
+      <div class="ov-stat-label">Abgeschlossene Bestellungen</div>
+      <div class="ov-stat-value green" id="stat-done">0</div>
+      <div class="ov-stat-sub" id="stat-done-sub">Erfolgreich abgeschlossen</div>
+    </div>
+    <div class="ov-stat">
+      <div class="ov-stat-label">Gesamte Ersparnis</div>
+      <div class="ov-stat-value" id="stat-savings" style="color:#fff">--</div>
+      <div class="ov-stat-sub" id="stat-savings-sub">Noch keine Ersparnis verfügbar</div>
+    </div>
+  </div>
+
+  <h2 class="section-title">Deine Materialanfragen</h2>
+  <div id="table-loading" class="loading"><span class="loading-dots">Anfragen werden geladen</span></div>
+  <div id="table-empty" class="empty-state" style="display:none">
+    <div class="empty-state-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
+    <p>Du hast noch keine Materialanfragen gestellt. Melde jetzt deinen Bedarf.</p>
+    <a href="kontakt.html" class="btn-cta">Bedarf melden</a>
+  </div>
+  <div style="overflow-x:auto">
+    <table class="req-table" id="req-table" style="display:none">
+      <thead><tr><th>Datum</th><th>Material</th><th>Menge</th><th>Lieferzeitraum</th><th>Status</th></tr></thead>
+      <tbody id="req-body"></tbody>
+    </table>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+var SUPABASE_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
+var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
+var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{
+  accessToken:async function(){
+    if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}
+    return null;
+  }
+});
+var currentUserId=null;
+var _matCatalogMap={};
+
+(async function init(){
+  // Wait for Clerk
+  await new Promise(function(resolve){
+    var elapsed=0;
+    var iv=setInterval(function(){
+      elapsed+=200;
+      if(window.Clerk){
+        clearInterval(iv);
+        if(typeof window.Clerk.load==='function'){
+          window.Clerk.load().then(function(){resolve();}).catch(function(){resolve();});
+        }else{resolve();}
+        return;
+      }
+      if(elapsed>=10000){clearInterval(iv);resolve();}
+    },200);
+  });
+
+  // Global trust listener
+  if(window.Clerk){
+    window.Clerk.addListener(function _globalTrustWatch(){
+      if(_clerkTrustActive)return;
+      if(!window.Clerk.client||!window.Clerk.client.signIn)return;
+      var si=window.Clerk.client.signIn;
+      if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){
+        _clerkTrustActive=true;
+        _clerkSignInResource=si;
+        try{window.Clerk.closeSignIn();}catch(e){}
+        _clerkSendVerificationCode();
+      }
+    });
+  }
+
+  if(!window.Clerk||!window.Clerk.user){
+    showGate('login');
+    return;
+  }
+
+  currentUserId=window.Clerk.user.id;
+
+  // Check customer record
+  var custRes=await sb.from('customers').select('id,firmenname').eq('user_id',currentUserId);
+
+  if(custRes.error||!custRes.data||custRes.data.length===0){
+    showGate('no_customer');
+    return;
+  }
+
+  var customers=custRes.data;
+  var customerIds=customers.map(function(c){return c.id;});
+
+  // Show company name in nav
+  document.getElementById('nav-company').textContent=customers[0].firmenname||'';
+  document.getElementById('auth-gate').style.display='none';
+  document.getElementById('dash-main').style.display='block';
+
+  // Load material catalog
+  var catRes=await sb.from('material_catalog').select('sourceon_id,bezeichnung,einheit');
+  if(catRes.data){
+    catRes.data.forEach(function(m){_matCatalogMap[m.sourceon_id]=m;});
+  }
+
+  // Load material requests
+  var reqRes=await sb.from('material_requests').select('*').in('customer_id',customerIds).order('created_at',{ascending:false});
+
+  document.getElementById('table-loading').style.display='none';
+
+  if(reqRes.error||!reqRes.data||reqRes.data.length===0){
+    document.getElementById('table-empty').style.display='block';
+    return;
+  }
+
+  var requests=reqRes.data;
+
+  // Compute stats
+  var activeCount=0;
+  var doneCount=0;
+  var requestIds=[];
+  requests.forEach(function(r){
+    requestIds.push(r.id);
+    if(r.status==='offen'||r.status==='gebuendelt')activeCount++;
+    if(r.status==='abgeschlossen')doneCount++;
+  });
+
+  document.getElementById('stat-active').textContent=activeCount;
+  document.getElementById('stat-active-sub').textContent=activeCount===1?'Offene oder gebündelte Anfrage':'Offene und gebündelte Anfragen';
+  document.getElementById('stat-done').textContent=doneCount;
+  document.getElementById('stat-done-sub').textContent=doneCount===1?'Erfolgreich abgeschlossen':'Erfolgreich abgeschlossen';
+
+  // Try to fetch savings from commissions
+  try{
+    var commRes=await sb.from('commissions').select('kunden_ersparnis_netto,material_request_id').in('material_request_id',requestIds);
+    if(!commRes.error&&commRes.data&&commRes.data.length>0){
+      var totalSavings=0;
+      commRes.data.forEach(function(c){
+        if(c.kunden_ersparnis_netto)totalSavings+=Number(c.kunden_ersparnis_netto);
+      });
+      if(totalSavings>0){
+        document.getElementById('stat-savings').textContent='CHF '+totalSavings.toLocaleString('de-CH',{minimumFractionDigits:0,maximumFractionDigits:0});
+        document.getElementById('stat-savings').style.color='#34D399';
+        document.getElementById('stat-savings-sub').textContent='Netto-Ersparnis durch Bündelung';
+      }
+    }
+  }catch(e){
+    // Keep fallback text
+  }
+
+  // Render table
+  document.getElementById('req-table').style.display='table';
+  var tbody=document.getElementById('req-body');
+
+  var statusLabels={offen:'Offen',gebuendelt:'Gebündelt',vergeben:'Vergeben',abgeschlossen:'Abgeschlossen',abgesagt:'Abgesagt'};
+  var statusClasses={offen:'offen',gebuendelt:'gebuendelt',vergeben:'vergeben',abgeschlossen:'abgeschlossen',abgesagt:'abgesagt'};
+
+  requests.forEach(function(r){
+    var tr=document.createElement('tr');
+
+    // Datum
+    var datum=r.created_at?new Date(r.created_at).toLocaleDateString('de-CH'):'--';
+
+    // Material
+    var matName='--';
+    if(r.sourceon_id&&_matCatalogMap[r.sourceon_id]){
+      matName=_matCatalogMap[r.sourceon_id].bezeichnung;
+    }
+
+    // Menge
+    var menge='--';
+    if(r.menge){
+      menge=r.menge+(r.einheit?' '+r.einheit:'');
+    }
+
+    // Lieferzeitraum
+    var zeitraum='--';
+    if(r.liefer_zeitraum_von&&r.liefer_zeitraum_bis){
+      zeitraum=new Date(r.liefer_zeitraum_von).toLocaleDateString('de-CH')+' – '+new Date(r.liefer_zeitraum_bis).toLocaleDateString('de-CH');
+    }else if(r.liefer_zeitraum_von){
+      zeitraum='Ab '+new Date(r.liefer_zeitraum_von).toLocaleDateString('de-CH');
+    }else if(r.liefer_zeitraum_bis){
+      zeitraum='Bis '+new Date(r.liefer_zeitraum_bis).toLocaleDateString('de-CH');
+    }
+
+    // Status
+    var sl=statusLabels[r.status]||r.status||'--';
+    var sc=statusClasses[r.status]||'offen';
+
+    tr.innerHTML='<td>'+esc(datum)+'</td>'
+      +'<td>'+esc(matName)+'</td>'
+      +'<td>'+esc(menge)+'</td>'
+      +'<td>'+esc(zeitraum)+'</td>'
+      +'<td><span class="status-badge status-'+sc+'">'+esc(sl)+'</span></td>';
+    tbody.appendChild(tr);
+  });
+})();
+
+function showGate(type){
+  var card=document.getElementById('auth-gate-card');
+  if(type==='login'){
+    card.innerHTML='<div class="status-icon pending" style="background:rgba(232,160,32,.1)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8A020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h2>Anmeldung erforderlich</h2><p>Bitte melde dich an, um auf das Kunden-Dashboard zuzugreifen.</p><br><button class="btn-cta" onclick="clerkSignIn()" style="margin:0 auto">Anmelden</button><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';
+  }else{
+    card.innerHTML='<div class="status-icon pending"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><h2>Kein Kundenprofil gefunden</h2><p>Hast du bereits eine Materialanfrage gestellt? Verknüpfe dein Konto über das Kontaktformular.</p><br><a href="kontakt.html" class="btn-cta" style="margin:0 auto">Zum Kontaktformular</a><br><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';
+  }
+}
+
+function clerkSignIn(){
+  if(!window.Clerk)return;
+  window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});
+}
+
+async function handleLogout(){
+  if(window.Clerk){await window.Clerk.signOut();}
+  window.location.href='index.html';
+}
+
+function esc(s){
+  if(!s)return '';
+  var d=document.createElement('div');
+  d.textContent=String(s);
+  return d.innerHTML;
+}
+
+// CLERK needs_client_trust HANDLER
+var _clerkSignInResource=null;
+var _clerkTrustActive=false;
+var _clerkTrustStrategy='email_code';
+
+async function _clerkSendVerificationCode(){
+  _clerkTrustStrategy='email_code';
+  try{
+    var si=_clerkSignInResource;
+    if(!si)return;
+    await si.prepareSecondFactor({strategy:'email_code'});
+    document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';
+    _clerkShowTrustModal();
+  }catch(e){
+    try{
+      await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});
+      _clerkTrustStrategy='phone_code';
+      document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';
+      _clerkShowTrustModal();
+    }catch(e2){
+      _clerkTrustActive=false;
+      alert('Verifizierung konnte nicht gestartet werden: '+(e2.errors?e2.errors[0].longMessage:e2.message));
+    }
+  }
+}
+
+function _clerkShowTrustModal(){
+  document.getElementById('clerk-trust-overlay').classList.add('open');
+  document.getElementById('clerk-trust-code').value='';
+  document.getElementById('clerk-trust-error').textContent='';
+  document.getElementById('clerk-trust-code').focus();
+}
+
+async function clerkTrustVerify(){
+  var code=document.getElementById('clerk-trust-code').value.trim();
+  if(!code||!_clerkSignInResource){return;}
+  var btn=document.getElementById('clerk-trust-submit');
+  btn.disabled=true;btn.textContent='Wird geprüft...';
+  document.getElementById('clerk-trust-error').textContent='';
+  try{
+    var result=await _clerkSignInResource.attemptSecondFactor({strategy:_clerkTrustStrategy,code:code});
+    if(result.status==='complete'){
+      await window.Clerk.setActive({session:result.createdSessionId});
+      document.getElementById('clerk-trust-overlay').classList.remove('open');
+      _clerkTrustActive=false;
+      window.location.reload();
+      return;
+    }else{
+      document.getElementById('clerk-trust-error').textContent='Unerwarteter Status: '+result.status;
+    }
+  }catch(e){
+    var msg=e.errors?e.errors[0].longMessage:(e.message||'Ungültiger Code');
+    document.getElementById('clerk-trust-error').textContent=msg;
+  }
+  btn.disabled=false;btn.textContent='Bestätigen';
+}
+
+async function clerkTrustResend(){
+  document.getElementById('clerk-trust-error').textContent='';
+  await _clerkSendVerificationCode();
+}
+
+function clerkTrustCancel(){
+  document.getElementById('clerk-trust-overlay').classList.remove('open');
+  _clerkSignInResource=null;
+  _clerkTrustActive=false;
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&document.getElementById('clerk-trust-overlay').classList.contains('open')){
+    clerkTrustVerify();
+  }
+});
+</script>
+
+<div class="clerk-trust-overlay" id="clerk-trust-overlay">
+  <div class="clerk-trust-modal">
+    <h3>Verifizierung erforderlich</h3>
+    <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
+    <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
+    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
+    <div class="trust-error" id="clerk-trust-error"></div>
+    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
+    <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
+  </div>
+</div>
+</body>
+</html>

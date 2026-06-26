@@ -85,6 +85,9 @@ a{color:inherit;text-decoration:none}
 #acct-dd a:hover,#acct-dd button:hover{background:rgba(255,255,255,.08);color:#fff}
 #acct-dashboard-link{color:#E8A020;font-weight:600;background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.12)}
 #acct-dashboard-link:hover{background:rgba(232,160,32,.14);color:#f0b840}
+#acct-customer-link{color:#34D399;font-weight:600;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.12)}
+#acct-customer-link:hover{background:rgba(16,185,129,.14);color:#4ade80}
+.acct-group-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#64748B;padding:8px 14px 4px;pointer-events:none}
 #acct-dd .acct-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 0}
 #acct-dd .acct-user{padding:12px 14px;font-size:.78rem;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:4px}
 #acct-dd .acct-user strong{display:block;color:#fff;font-size:.86rem;font-weight:600;margin-bottom:2px}
@@ -811,11 +814,16 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         </button>
         <div id="acct-dd">
           <div id="acct-signed-out">
+            <div class="acct-group-label">Kunden</div>
+            <a href="#" onclick="clerkSignIn();return false" data-i18n="acct_customer_login">Kunden-Login</a>
+            <div class="acct-divider"></div>
+            <div class="acct-group-label">Lieferanten</div>
             <a href="#" onclick="clerkSignIn();return false" data-i18n="acct_login">Lieferanten-Login</a>
             <a href="lieferant.html" data-i18n="acct_register">Als Lieferant registrieren</a>
           </div>
           <div id="acct-signed-in" style="display:none">
             <div class="acct-user"><strong id="acct-name"></strong><span id="acct-email"></span><div id="acct-status-wrap"></div></div>
+            <a href="kundendashboard.html" id="acct-customer-link" style="display:none" data-i18n="acct_customer_dash"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Zum Kunden-Dashboard</a>
             <a href="supplier-dashboard.html" id="acct-dashboard-link" style="display:none" data-i18n="acct_dashboard"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Zum Lieferanten-Dashboard</a>
             <button onclick="clerkSignOut()" data-i18n="acct_signout">Abmelden</button>
           </div>
@@ -1441,6 +1449,7 @@ function clerkSignOut(){
       if(nameEl)nameEl.textContent=user.fullName||user.firstName||'';
       if(emailEl)emailEl.textContent=user.primaryEmailAddress?user.primaryEmailAddress.emailAddress:'';
       checkSupplierStatus(user.id);
+      checkCustomerStatus(user.id);
     }else{
       soDiv.style.display='block';siDiv.style.display='none';
     }
@@ -1470,6 +1479,29 @@ function clerkSignOut(){
         if(sessionStorage.getItem('sourceon_login_intent')){sessionStorage.removeItem('sourceon_login_intent');console.log('[Clerk] Verified supplier detected after login, redirecting to dashboard');window.location.href='supplier-dashboard.html';return;}}
       else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';if(dashLink)dashLink.style.display='none';var fab=document.getElementById('supplier-fab');if(fab)fab.style.display='none';}
     }catch(e){console.error('[Clerk] supplier status check error:',e);}
+  }
+
+  async function checkCustomerStatus(clerkId){
+    var custLink=document.getElementById('acct-customer-link');
+    if(!custLink)return;
+    try{
+      var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
+      var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
+      var token=null;
+      if(window.Clerk&&window.Clerk.session){token=await window.Clerk.session.getToken();}
+      var headers={'apikey':sbKey,'Content-Type':'application/json'};
+      if(token)headers['Authorization']='Bearer '+token;
+      else headers['Authorization']='Bearer '+sbKey;
+      var resp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(clerkId)+'&select=id&limit=1',{headers:headers});
+      if(!resp.ok)return;
+      var rows=await resp.json();
+      console.log('Checking customer status for navigation:',rows.length>0?'linked':'not linked');
+      if(rows&&rows.length>0){
+        custLink.style.display='flex';
+      }else{
+        custLink.style.display='none';
+      }
+    }catch(e){console.error('[Clerk] customer status check error:',e);}
   }
 
   // Global trust listener — registered ONCE, catches needs_client_trust from any sign-in
