@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Admin Overview — SourceOn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --dark:#08111E;--dark2:#0A1626;--dark3:#0F2238;
+  --gold:#E8A020;--gold-h:#f0b840;--gold-dim:rgba(232,160,32,.12);
+  --muted:#94A3B8;--body:#64748B;
+  --green:#10B981;--red:#EF4444;--amber:#F59E0B;--blue:#3B82F6;
+  --r:16px;
+  --ease:cubic-bezier(0.4,0,0.2,1);
+}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--dark2);color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:var(--gold);text-decoration:none}
+::selection{background:var(--gold);color:#1a1a1a}
+
+.topnav{background:var(--dark3);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topnav-logo{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#fff;cursor:pointer;text-decoration:none}
+.topnav-logo span{color:var(--gold)}
+.topnav-right{display:flex;align-items:center;gap:12px}
+.btn-refresh{padding:8px 20px;border-radius:100px;border:1.5px solid var(--gold);background:transparent;color:var(--gold);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-refresh:hover{background:var(--gold);color:var(--dark)}
+.btn-back{padding:8px 18px;border-radius:100px;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:var(--muted);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-back:hover{border-color:rgba(255,255,255,.3);color:#fff}
+
+/* AUTH GATE */
+.auth-gate{display:flex;align-items:center;justify-content:center;min-height:80vh;padding:24px}
+.auth-card{background:var(--dark3);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:48px;text-align:center;max-width:400px;width:100%}
+.auth-card h2{font-size:1.3rem;font-weight:700;margin-bottom:8px}
+.auth-card p{font-size:.85rem;color:var(--muted);margin-bottom:24px}
+.auth-input{width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s}
+.auth-input:focus{border-color:var(--gold)}
+.auth-input::placeholder{color:var(--muted)}
+.auth-btn{width:100%;margin-top:16px;padding:12px;border-radius:10px;border:none;background:var(--gold);color:var(--dark);font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s}
+.auth-btn:hover{background:var(--gold-h)}
+.auth-error{color:var(--red);font-size:.82rem;margin-top:12px;display:none}
+
+/* MAIN */
+.dash-main{max-width:1300px;margin:0 auto;padding:40px 24px 80px;display:none}
+.dash-title{font-size:clamp(22px,3vw,28px);font-weight:800;margin-bottom:6px;letter-spacing:-.02em}
+.dash-subtitle{font-size:.85rem;color:var(--muted);margin-bottom:36px}
+
+/* STATS GRID */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
+.stat-card{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:24px 20px;transition:border-color .2s}
+.stat-card:hover{border-color:rgba(232,160,32,.15)}
+.stat-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
+.stat-value{font-size:1.7rem;font-weight:800;letter-spacing:-.02em}
+.stat-value.gold{color:var(--gold)}
+.stat-value.green{color:var(--green)}
+.stat-value.amber{color:var(--amber)}
+.stat-value.blue{color:var(--blue)}
+
+/* SECTION */
+.section{margin-bottom:48px}
+.section-title{font-size:1.15rem;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:10px}
+.section-title .badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:100px;background:var(--gold-dim);color:var(--gold)}
+.section-sub{font-size:.8rem;color:var(--muted);margin-bottom:20px}
+
+/* TABLE */
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(255,255,255,.07)}
+table{width:100%;border-collapse:collapse;font-size:.8rem}
+thead{background:rgba(255,255,255,.04)}
+th{padding:12px 14px;text-align:left;font-weight:600;color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;border-bottom:1px solid rgba(255,255,255,.07)}
+td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top}
+tbody tr:nth-child(even){background:rgba(255,255,255,.02)}
+tbody tr:hover{background:rgba(232,160,32,.04)}
+.cell-trunc{max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* BADGES */
+.badge-status{display:inline-block;padding:3px 10px;border-radius:100px;font-size:.7rem;font-weight:600;white-space:nowrap}
+.badge-status.verified,.badge-status.ausgeschrieben{background:rgba(16,185,129,.12);color:#34D399}
+.badge-status.pending{background:rgba(245,158,11,.12);color:#FBBF24}
+.badge-status.rejected,.badge-status.abgelehnt{background:rgba(239,68,68,.12);color:#F87171}
+.badge-status.vergeben{background:rgba(59,130,246,.12);color:#60A5FA}
+.badge-status.abgeschlossen{background:rgba(139,92,246,.12);color:#A78BFA}
+
+/* ACTION BUTTONS */
+.btn-sm{padding:5px 14px;border-radius:100px;font-size:.72rem;font-weight:600;font-family:inherit;cursor:pointer;border:none;transition:all .2s}
+.btn-verify{background:rgba(16,185,129,.15);color:#34D399}
+.btn-verify:hover{background:rgba(16,185,129,.3)}
+.btn-reject{background:rgba(239,68,68,.12);color:#F87171}
+.btn-reject:hover{background:rgba(239,68,68,.25)}
+
+/* SEARCH */
+.search-input{padding:10px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;font-size:.85rem;font-family:inherit;width:320px;max-width:100%;outline:none;transition:border-color .2s;margin-bottom:16px}
+.search-input:focus{border-color:var(--gold)}
+.search-input::placeholder{color:var(--muted)}
+
+.empty-msg{padding:40px;text-align:center;color:var(--muted);font-size:.85rem}
+.loading{text-align:center;padding:60px;color:var(--muted);font-size:.9rem}
+
+@media(max-width:900px){
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .topnav{padding:0 16px}
+  .dash-main{padding:24px 12px 60px}
+}
+@media(max-width:500px){
+  .stats-grid{grid-template-columns:1fr}
+  .search-input{width:100%}
+}
+</style>
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="index.html" class="topnav-logo">Source<span>On</span> <span style="font-size:.6em;font-weight:400;color:var(--muted);margin-left:8px">Admin</span></a>
+  <div class="topnav-right">
+    <button class="btn-refresh" onclick="loadAllData()" id="btn-refresh">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+      Aktualisieren
+    </button>
+    <a href="index.html" class="btn-back">Zur Website</a>
+  </div>
+</nav>
+
+<!-- AUTH GATE -->
+<div class="auth-gate" id="auth-gate">
+  <div class="auth-card">
+    <h2>Admin-Zugang</h2>
+    <p>Bitte Passwort eingeben, um auf das Admin-Dashboard zuzugreifen.</p>
+    <input type="password" class="auth-input" id="admin-pw" placeholder="Passwort" onkeydown="if(event.key==='Enter')checkAdminPw()"/>
+    <button class="auth-btn" onclick="checkAdminPw()">Anmelden</button>
+    <div class="auth-error" id="auth-error">Falsches Passwort. Zugang verweigert.</div>
+  </div>
+</div>
+
+<!-- MAIN DASHBOARD (hidden until auth) -->
+<div class="dash-main" id="dash-main">
+  <h1 class="dash-title">Admin Overview</h1>
+  <p class="dash-subtitle">Gesamtüberblick über alle Bündel, Lieferanten, Kunden und Materialanfragen.</p>
+
+  <!-- SECTION 1: Stats -->
+  <div class="stats-grid" id="stats-grid">
+    <div class="stat-card"><div class="stat-label">Aktive Bündel</div><div class="stat-value gold" id="st-active-bundles">–</div></div>
+    <div class="stat-card"><div class="stat-label">Vergebene Bündel</div><div class="stat-value blue" id="st-awarded-bundles">–</div></div>
+    <div class="stat-card"><div class="stat-label">Gesamtvolumen aktiv</div><div class="stat-value gold" id="st-total-volume">–</div></div>
+    <div class="stat-card"><div class="stat-label">Registrierte Lieferanten</div><div class="stat-value" id="st-total-suppliers">–</div></div>
+    <div class="stat-card"><div class="stat-label">Verifizierte Lieferanten</div><div class="stat-value green" id="st-verified-suppliers">–</div></div>
+    <div class="stat-card"><div class="stat-label">Wartende Bewerbungen</div><div class="stat-value amber" id="st-pending-suppliers">–</div></div>
+    <div class="stat-card"><div class="stat-label">Registrierte Kunden</div><div class="stat-value" id="st-total-customers">–</div></div>
+    <div class="stat-card"><div class="stat-label">Offene Materialanfragen</div><div class="stat-value amber" id="st-open-requests">–</div></div>
+  </div>
+
+  <!-- SECTION 2: Pending suppliers -->
+  <div class="section" id="sec-pending">
+    <div class="section-title">Wartende Lieferanten-Bewerbungen <span class="badge" id="pending-count">0</span></div>
+    <p class="section-sub">Lieferanten, die auf Verifizierung warten. Hier kannst du sie direkt verifizieren oder ablehnen.</p>
+    <div class="tbl-wrap"><div id="pending-table" class="loading">Daten werden geladen...</div></div>
+  </div>
+
+  <!-- SECTION 3: All bundles -->
+  <div class="section">
+    <div class="section-title">Alle Bündel</div>
+    <p class="section-sub">Alle erstellten Bündel, sortiert nach Erstelldatum (neueste zuerst).</p>
+    <div class="tbl-wrap"><div id="bundles-table" class="loading">Daten werden geladen...</div></div>
+  </div>
+
+  <!-- SECTION 4: All suppliers -->
+  <div class="section">
+    <div class="section-title">Alle Lieferanten</div>
+    <p class="section-sub">Vollständige Liste aller registrierten Lieferanten.</p>
+    <input type="text" class="search-input" id="supplier-search" placeholder="Nach Firmenname suchen..." oninput="filterSuppliers()"/>
+    <div class="tbl-wrap"><div id="suppliers-table" class="loading">Daten werden geladen...</div></div>
+  </div>
+
+  <!-- SECTION 5: All customers -->
+  <div class="section">
+    <div class="section-title">Alle Kunden</div>
+    <p class="section-sub">Vollständige Liste aller registrierten Kunden mit Anzahl Materialanfragen.</p>
+    <div class="tbl-wrap"><div id="customers-table" class="loading">Daten werden geladen...</div></div>
+  </div>
+</div>
+
+<script>
+// REPLACE THIS with a proper admin authentication system before real business use
+var ADMIN_PASSWORD='SourceOn2026Admin';
+
+var SB_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
+var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
+var HEADERS={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
+
+var _allSuppliers=[];
+
+function checkAdminPw(){
+  var pw=document.getElementById('admin-pw').value;
+  if(pw===ADMIN_PASSWORD){
+    document.getElementById('auth-gate').style.display='none';
+    document.getElementById('dash-main').style.display='block';
+    loadAllData();
+  }else{
+    document.getElementById('auth-error').style.display='block';
+    document.getElementById('admin-pw').value='';
+  }
+}
+
+async function sbFetch(path){
+  var resp=await fetch(SB_URL+'/rest/v1/'+path,{headers:HEADERS});
+  if(!resp.ok)return[];
+  return resp.json();
+}
+
+async function sbPatch(table,id,data){
+  var resp=await fetch(SB_URL+'/rest/v1/'+table+'?id=eq.'+encodeURIComponent(id),{
+    method:'PATCH',headers:Object.assign({},HEADERS,{'Prefer':'return=representation'}),body:JSON.stringify(data)
+  });
+  return resp.ok;
+}
+
+function fmtDate(d){
+  if(!d)return'–';
+  var dt=new Date(d);
+  return dt.toLocaleDateString('de-CH',{day:'2-digit',month:'2-digit',year:'numeric'});
+}
+
+function statusBadge(s){
+  if(!s)return'–';
+  var labels={verified:'Verifiziert',pending:'Ausstehend',rejected:'Abgelehnt',ausgeschrieben:'Ausgeschrieben',vergeben:'Vergeben',abgeschlossen:'Abgeschlossen',offen:'Offen',gebuendelt:'Gebündelt'};
+  return '<span class="badge-status '+s+'">'+(labels[s]||s)+'</span>';
+}
+
+function esc(s){
+  if(!s)return'';
+  var d=document.createElement('div');d.textContent=s;return d.innerHTML;
+}
+
+async function loadAllData(){
+  document.getElementById('btn-refresh').disabled=true;
+  try{
+    await Promise.all([loadStats(),loadPending(),loadBundles(),loadSuppliers(),loadCustomers()]);
+  }catch(e){console.error('loadAllData error:',e);}
+  document.getElementById('btn-refresh').disabled=false;
+}
+
+async function loadStats(){
+  var [bundles,suppliers,customers,requests]=await Promise.all([
+    sbFetch('bundles?select=status,gesamtvolumen,gewonnener_supplier_id'),
+    sbFetch('suppliers?select=status'),
+    sbFetch('customers?select=id'),
+    sbFetch('material_requests?select=status')
+  ]);
+  var activeBundles=bundles.filter(function(b){return b.status==='ausgeschrieben';});
+  var awardedBundles=bundles.filter(function(b){return b.status==='vergeben'||b.gewonnener_supplier_id;});
+  var totalVol=activeBundles.reduce(function(s,b){return s+(Number(b.gesamtvolumen)||0);},0);
+  var verifiedSup=suppliers.filter(function(s){return s.status==='verified';});
+  var pendingSup=suppliers.filter(function(s){return s.status==='pending';});
+  var openReq=requests.filter(function(r){return r.status==='offen';});
+
+  document.getElementById('st-active-bundles').textContent=activeBundles.length;
+  document.getElementById('st-awarded-bundles').textContent=awardedBundles.length;
+  document.getElementById('st-total-volume').textContent=totalVol.toLocaleString('de-CH');
+  document.getElementById('st-total-suppliers').textContent=suppliers.length;
+  document.getElementById('st-verified-suppliers').textContent=verifiedSup.length;
+  document.getElementById('st-pending-suppliers').textContent=pendingSup.length;
+  document.getElementById('st-total-customers').textContent=customers.length;
+  document.getElementById('st-open-requests').textContent=openReq.length;
+}
+
+async function loadPending(){
+  var rows=await sbFetch('suppliers?status=eq.pending&select=*&order=created_at.desc');
+  document.getElementById('pending-count').textContent=rows.length;
+  if(!rows.length){
+    document.getElementById('pending-table').innerHTML='<div class="empty-msg">Keine ausstehenden Bewerbungen.</div>';
+    return;
+  }
+  var html='<table><thead><tr><th>Firma</th><th>Kontakt</th><th>E-Mail</th><th>Telefon</th><th>Website</th><th>Materialien</th><th>Regionen</th><th>Kapazität</th><th>Zertifikate</th><th>Notizen</th><th>Erstellt</th><th>Aktionen</th></tr></thead><tbody>';
+  rows.forEach(function(r){
+    var mats=Array.isArray(r.materials)?r.materials.join(', '):(r.materials||'–');
+    var regs=Array.isArray(r.regions)?r.regions.join(', '):(r.regions||'–');
+    var certs=Array.isArray(r.certifications)?r.certifications.join(', '):(r.certifications||'–');
+    html+='<tr id="pending-row-'+r.id+'">'
+      +'<td><strong>'+esc(r.company_name)+'</strong></td>'
+      +'<td>'+esc(r.contact_person)+'</td>'
+      +'<td>'+esc(r.email)+'</td>'
+      +'<td>'+esc(r.phone)+'</td>'
+      +'<td>'+(r.website?'<a href="'+esc(r.website)+'" target="_blank">Link</a>':'–')+'</td>'
+      +'<td class="cell-trunc" title="'+esc(mats)+'">'+esc(mats)+'</td>'
+      +'<td class="cell-trunc" title="'+esc(regs)+'">'+esc(regs)+'</td>'
+      +'<td>'+esc(r.annual_capacity||'–')+'</td>'
+      +'<td class="cell-trunc" title="'+esc(certs)+'">'+esc(certs)+'</td>'
+      +'<td class="cell-trunc" title="'+esc(r.notes)+'">'+esc(r.notes||'–')+'</td>'
+      +'<td style="white-space:nowrap">'+fmtDate(r.created_at)+'</td>'
+      +'<td style="white-space:nowrap">'
+        +'<button class="btn-sm btn-verify" onclick="verifySupplier(\''+r.id+'\')">Verifizieren</button> '
+        +'<button class="btn-sm btn-reject" onclick="rejectSupplier(\''+r.id+'\')">Ablehnen</button>'
+      +'</td></tr>';
+  });
+  html+='</tbody></table>';
+  document.getElementById('pending-table').innerHTML=html;
+}
+
+async function verifySupplier(id){
+  if(!confirm('Diesen Lieferanten wirklich verifizieren?'))return;
+  var ok=await sbPatch('suppliers',id,{status:'verified'});
+  if(ok){
+    await Promise.all([loadPending(),loadStats(),loadSuppliers()]);
+  }else{alert('Fehler beim Verifizieren.');}
+}
+
+async function rejectSupplier(id){
+  if(!confirm('Diesen Lieferanten wirklich ablehnen?'))return;
+  var ok=await sbPatch('suppliers',id,{status:'rejected'});
+  if(ok){
+    await Promise.all([loadPending(),loadStats(),loadSuppliers()]);
+  }else{alert('Fehler beim Ablehnen.');}
+}
+
+async function loadBundles(){
+  var [bundles,bids,suppliers]=await Promise.all([
+    sbFetch('bundles?select=*&order=created_at.desc'),
+    sbFetch('bids?select=bundle_id'),
+    sbFetch('suppliers?select=id,company_name')
+  ]);
+  var bidCounts={};
+  bids.forEach(function(b){bidCounts[b.bundle_id]=(bidCounts[b.bundle_id]||0)+1;});
+  var supMap={};
+  suppliers.forEach(function(s){supMap[s.id]=s.company_name;});
+
+  if(!bundles.length){
+    document.getElementById('bundles-table').innerHTML='<div class="empty-msg">Keine Bündel vorhanden.</div>';
+    return;
+  }
+  var html='<table><thead><tr><th>Material</th><th>Lieferzone</th><th>Volumen</th><th>Ziel-Rabatt</th><th>Status</th><th>Deadline</th><th>Gebote</th><th>Gewinner</th><th>Finaler Rabatt</th><th>Erstellt</th></tr></thead><tbody>';
+  bundles.forEach(function(b){
+    var mat=b.bundle_type==='multi_material'?'Mehrere Materialien':(b.sourceon_id||'–');
+    var vol=(b.gesamtvolumen?Number(b.gesamtvolumen).toLocaleString('de-CH'):'-')+' '+(b.einheit||'');
+    var rabatt=b.ziel_mindestrabatt?(b.ziel_mindestrabatt*100).toFixed(0)+'%':'–';
+    var finalR=b.finaler_rabatt?(b.finaler_rabatt*100).toFixed(0)+'%':'–';
+    var winner=b.gewonnener_supplier_id?(supMap[b.gewonnener_supplier_id]||b.gewonnener_supplier_id):'–';
+    var bc=bidCounts[b.id]||0;
+    html+='<tr>'
+      +'<td>'+esc(mat)+'</td>'
+      +'<td>'+esc(b.liefer_zone||'–')+'</td>'
+      +'<td style="white-space:nowrap">'+vol+'</td>'
+      +'<td>'+rabatt+'</td>'
+      +'<td>'+statusBadge(b.status)+'</td>'
+      +'<td style="white-space:nowrap">'+fmtDate(b.bid_deadline)+'</td>'
+      +'<td>'+bc+'</td>'
+      +'<td>'+esc(winner)+'</td>'
+      +'<td>'+finalR+'</td>'
+      +'<td style="white-space:nowrap">'+fmtDate(b.created_at)+'</td></tr>';
+  });
+  html+='</tbody></table>';
+  document.getElementById('bundles-table').innerHTML=html;
+}
+
+async function loadSuppliers(){
+  _allSuppliers=await sbFetch('suppliers?select=*&order=created_at.desc');
+  renderSuppliers(_allSuppliers);
+}
+
+function renderSuppliers(rows){
+  if(!rows.length){
+    document.getElementById('suppliers-table').innerHTML='<div class="empty-msg">Keine Lieferanten vorhanden.</div>';
+    return;
+  }
+  var html='<table><thead><tr><th>Firma</th><th>Status</th><th>E-Mail</th><th>Telefon</th><th>Materialien</th><th>Regionen</th><th>Erstellt</th></tr></thead><tbody>';
+  rows.forEach(function(r){
+    var mats=Array.isArray(r.materials)?r.materials.join(', '):(r.materials||'–');
+    var regs=Array.isArray(r.regions)?r.regions.join(', '):(r.regions||'–');
+    html+='<tr>'
+      +'<td><strong>'+esc(r.company_name)+'</strong></td>'
+      +'<td>'+statusBadge(r.status)+'</td>'
+      +'<td>'+esc(r.email)+'</td>'
+      +'<td>'+esc(r.phone)+'</td>'
+      +'<td class="cell-trunc" title="'+esc(mats)+'">'+esc(mats)+'</td>'
+      +'<td class="cell-trunc" title="'+esc(regs)+'">'+esc(regs)+'</td>'
+      +'<td style="white-space:nowrap">'+fmtDate(r.created_at)+'</td></tr>';
+  });
+  html+='</tbody></table>';
+  document.getElementById('suppliers-table').innerHTML=html;
+}
+
+function filterSuppliers(){
+  var q=(document.getElementById('supplier-search').value||'').toLowerCase();
+  if(!q){renderSuppliers(_allSuppliers);return;}
+  renderSuppliers(_allSuppliers.filter(function(r){return(r.company_name||'').toLowerCase().indexOf(q)!==-1;}));
+}
+
+async function loadCustomers(){
+  var [customers,requests]=await Promise.all([
+    sbFetch('customers?select=*&order=created_at.desc'),
+    sbFetch('material_requests?select=customer_id')
+  ]);
+  var reqCounts={};
+  requests.forEach(function(r){if(r.customer_id)reqCounts[r.customer_id]=(reqCounts[r.customer_id]||0)+1;});
+
+  if(!customers.length){
+    document.getElementById('customers-table').innerHTML='<div class="empty-msg">Keine Kunden vorhanden.</div>';
+    return;
+  }
+  var html='<table><thead><tr><th>Firma</th><th>Ansprechperson</th><th>E-Mail</th><th>Telefon</th><th>Erstellt</th><th>Materialanfragen</th></tr></thead><tbody>';
+  customers.forEach(function(c){
+    var cnt=reqCounts[c.id]||0;
+    html+='<tr>'
+      +'<td><strong>'+esc(c.firmenname||'–')+'</strong></td>'
+      +'<td>'+esc(c.ansprechperson||'–')+'</td>'
+      +'<td>'+esc(c.email||'–')+'</td>'
+      +'<td>'+esc(c.telefon||'–')+'</td>'
+      +'<td style="white-space:nowrap">'+fmtDate(c.created_at)+'</td>'
+      +'<td>'+cnt+'</td></tr>';
+  });
+  html+='</tbody></table>';
+  document.getElementById('customers-table').innerHTML=html;
+}
+</script>
+</body>
+</html>
