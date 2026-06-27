@@ -1124,6 +1124,8 @@ function clerkCustomerSignUp(){
   window.Clerk.openSignUp({
     appearance:{variables:{colorPrimary:'#34D399',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}
   });
+}}
+  });
 }
 
 (async function initClerkUI(){
@@ -1165,9 +1167,48 @@ function clerkCustomerSignUp(){
   if(!clerkReady||!window.Clerk)return;
 
 
+  async function checkProfiles(clerkId){
+    var dashLink=document.getElementById('acct-dashboard-link');
+    var custLink=document.getElementById('acct-customer-link');
+    var statusWrap=document.getElementById('acct-status-wrap');
+    if(dashLink)dashLink.style.display='none';
+    if(custLink)custLink.style.display='none';
+    try{
+      var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
+      var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
+      var token=null;
+      if(window.Clerk&&window.Clerk.session){token=await window.Clerk.session.getToken();}
+      var headers={'apikey':sbKey,'Content-Type':'application/json'};
+      if(token)headers['Authorization']='Bearer '+token;
+      else headers['Authorization']='Bearer '+sbKey;
+      var supplierResp=await fetch(sbUrl+'/rest/v1/suppliers?id=eq.'+encodeURIComponent(clerkId)+'&select=status',{headers:headers});
+      var supplierRows=supplierResp.ok?await supplierResp.json():[];
+      var customerResp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(clerkId)+'&select=id&limit=1',{headers:headers});
+      var customerRows=customerResp.ok?await customerResp.json():[];
+      console.log('[SourceOn] Profile check — Supplier rows found:',supplierRows.length,'Customer rows found:',customerRows.length);
+      var isVerifiedSupplier=supplierRows&&supplierRows.length>0&&supplierRows[0].status==='verified';
+      var isLinkedCustomer=customerRows&&customerRows.length>0;
+      console.log('[SourceOn] Final decision — Show supplier link:',isVerifiedSupplier,'Show customer link:',isLinkedCustomer);
+      if(dashLink)dashLink.style.display=isVerifiedSupplier?'flex':'none';
+      if(custLink)custLink.style.display=isLinkedCustomer?'flex':'none';
+      if(statusWrap){
+        if(supplierRows&&supplierRows.length>0){
+          var s=supplierRows[0].status;
+          if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">Wird geprüft</span>';}
+          else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';}
+          else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';}
+          else{statusWrap.innerHTML='';}
+        }else{statusWrap.innerHTML='';}
+      }
+    }catch(e){
+      console.error('[SourceOn] Profile check error:',e);
+      if(dashLink)dashLink.style.display='none';
+      if(custLink)custLink.style.display='none';
+    }
+  }
+
   function updateAcctUI(){
     var user=window.Clerk.user;
-    console.log('[SourceOn] updateAcctUI called. window.Clerk.user:', user, 'Clerk.session:', window.Clerk.session);
     var soDiv=document.getElementById('acct-signed-out');
     var siDiv=document.getElementById('acct-signed-in');
     if(!soDiv||!siDiv)return;
@@ -1177,68 +1218,10 @@ function clerkCustomerSignUp(){
       var emailEl=document.getElementById('acct-email');
       if(nameEl)nameEl.textContent=user.fullName||user.firstName||'';
       if(emailEl)emailEl.textContent=user.primaryEmailAddress?user.primaryEmailAddress.emailAddress:'';
-      var _supplierResult=null,_customerResult=null;
-      checkSupplierStatus(user.id).then(function(){
-        _supplierResult=document.getElementById('acct-dashboard-link')&&document.getElementById('acct-dashboard-link').style.display==='flex';
-        if(_customerResult!==null)console.log('Account type check — Supplier verified: '+_supplierResult+', Customer linked: '+_customerResult);
-      });
-      checkCustomerStatus(user.id).then(function(){
-        _customerResult=document.getElementById('acct-customer-link')&&document.getElementById('acct-customer-link').style.display==='flex';
-        if(_supplierResult!==null)console.log('Account type check — Supplier verified: '+_supplierResult+', Customer linked: '+_customerResult);
-      });
+      checkProfiles(user.id);
     }else{
       soDiv.style.display='block';siDiv.style.display='none';
     }
-  }
-
-  async function checkSupplierStatus(clerkId){
-    var statusWrap=document.getElementById('acct-status-wrap');
-    var dashLink=document.getElementById('acct-dashboard-link');
-    if(!statusWrap)return;
-    if(dashLink)dashLink.style.display='none';
-    try{
-      var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
-      var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
-      var token=null;
-      if(window.Clerk&&window.Clerk.session){token=await window.Clerk.session.getToken();}
-      var headers={'apikey':sbKey,'Content-Type':'application/json'};
-      if(token)headers['Authorization']='Bearer '+token;
-      else headers['Authorization']='Bearer '+sbKey;
-      var queryUrl=sbUrl+'/rest/v1/suppliers?id=eq.'+encodeURIComponent(clerkId)+'&select=status,company_name';
-      console.log('[SourceOn] Supplier query URL:',queryUrl,'Token present:',!!token);
-      var resp=await fetch(queryUrl,{headers:headers});
-      console.log('[SourceOn] Supplier query response status:',resp.status,resp.statusText);
-      if(!resp.ok){console.error('[SourceOn] Supplier query failed:',resp.status);if(dashLink)dashLink.style.display='none';return;}
-      var rows=await resp.json();
-      console.log('[SourceOn] Supplier lookup result:',JSON.stringify(rows));
-      if(!rows||rows.length===0){console.log('[SourceOn] Show supplier dashboard link: false (no supplier row found)');statusWrap.innerHTML='';if(dashLink)dashLink.style.display='none';return;}
-      var s=rows[0].status;
-      console.log('[SourceOn] Supplier status:',s);
-      if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">Wird geprüft</span>';if(dashLink){dashLink.style.display='none';var pendingMsg=document.getElementById('acct-pending-msg');if(!pendingMsg){pendingMsg=document.createElement('div');pendingMsg.id='acct-pending-msg';pendingMsg.style.cssText='padding:8px 14px;font-size:.78rem;color:#94A3B8;font-family:inherit';pendingMsg.textContent='Dein Profil wird noch geprüft';dashLink.parentNode.insertBefore(pendingMsg,dashLink);}pendingMsg.style.display='block';}}
-      else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';if(dashLink)dashLink.style.display='flex';console.log('[SourceOn] Show supplier dashboard link: true (status=verified)');var pm=document.getElementById('acct-pending-msg');if(pm)pm.style.display='none';
-}
-      else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';if(dashLink)dashLink.style.display='none';}
-    }catch(e){console.error('[Clerk] supplier status check error:',e);if(dashLink)dashLink.style.display='none';}
-  }
-
-  async function checkCustomerStatus(clerkId){
-    var custLink=document.getElementById('acct-customer-link');
-    try{
-      var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
-      var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
-      var token=null;
-      if(window.Clerk&&window.Clerk.session){token=await window.Clerk.session.getToken();}
-      var headers={'apikey':sbKey,'Content-Type':'application/json'};
-      if(token)headers['Authorization']='Bearer '+token;
-      else headers['Authorization']='Bearer '+sbKey;
-      var resp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(clerkId)+'&select=id&limit=1',{headers:headers});
-      if(!resp.ok){return;}
-      var rows=await resp.json();
-      console.log('[SourceOn] Customer check raw result:',JSON.stringify(rows));
-      var isCustomer=rows&&rows.length>0;
-      console.log('[SourceOn] Show customer dashboard link:',isCustomer);
-      if(custLink){custLink.style.display=(rows&&rows.length>0)?'flex':'none';}
-    }catch(e){console.error('[Clerk] customer status check error:',e);}
   }
 
   // Global trust listener — registered ONCE, catches needs_client_trust from any sign-in
