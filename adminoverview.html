@@ -183,9 +183,13 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
 // REPLACE THIS with a proper admin authentication system before real business use
 var ADMIN_PASSWORD='SourceOn2026Admin';
 
+// WARNING: This page uses the Supabase service_role key for full data access.
+// This page must never be linked from public navigation and should eventually
+// be protected by proper server-side authentication before real business use —
+// the current password prompt is a temporary placeholder, not real security.
 var SB_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
-var SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
-var HEADERS={'apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY,'Content-Type':'application/json'};
+var SB_SERVICE_KEY='PASTE_YOUR_SERVICE_ROLE_KEY_HERE';
+var HEADERS={'apikey':SB_SERVICE_KEY,'Authorization':'Bearer '+SB_SERVICE_KEY,'Content-Type':'application/json'};
 
 var _allSuppliers=[];
 
