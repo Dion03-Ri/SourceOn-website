@@ -1542,6 +1542,7 @@ function clerkCustomerSignUp(){
     var statusWrap=document.getElementById('acct-status-wrap');
     var dashLink=document.getElementById('acct-dashboard-link');
     if(!statusWrap)return;
+    if(dashLink)dashLink.style.display='none';
     try{
       var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
       var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
@@ -1554,17 +1555,17 @@ function clerkCustomerSignUp(){
       console.log('[SourceOn] Supplier query URL:',queryUrl,'Token present:',!!token);
       var resp=await fetch(queryUrl,{headers:headers});
       console.log('[SourceOn] Supplier query response status:',resp.status,resp.statusText);
-      if(!resp.ok){console.error('[SourceOn] Supplier query failed:',resp.status);return;}
+      if(!resp.ok){console.error('[SourceOn] Supplier query failed:',resp.status);if(dashLink)dashLink.style.display='none';return;}
       var rows=await resp.json();
       console.log('[SourceOn] Supplier lookup result:',JSON.stringify(rows));
-      if(!rows||rows.length===0){statusWrap.innerHTML='';if(dashLink)dashLink.style.display='none';return;}
+      if(!rows||rows.length===0){console.log('[SourceOn] Show supplier dashboard link: false (no supplier row found)');statusWrap.innerHTML='';if(dashLink)dashLink.style.display='none';return;}
       var s=rows[0].status;
       console.log('[SourceOn] Supplier status:',s);
       if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">Wird geprüft</span>';if(dashLink){dashLink.style.display='none';var pendingMsg=document.getElementById('acct-pending-msg');if(!pendingMsg){pendingMsg=document.createElement('div');pendingMsg.id='acct-pending-msg';pendingMsg.style.cssText='padding:8px 14px;font-size:.78rem;color:#94A3B8;font-family:inherit';pendingMsg.textContent='Dein Profil wird noch geprüft';dashLink.parentNode.insertBefore(pendingMsg,dashLink);}pendingMsg.style.display='block';}}
-      else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';if(dashLink)dashLink.style.display='flex';var pm=document.getElementById('acct-pending-msg');if(pm)pm.style.display='none';
+      else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';if(dashLink)dashLink.style.display='flex';console.log('[SourceOn] Show supplier dashboard link: true (status=verified)');var pm=document.getElementById('acct-pending-msg');if(pm)pm.style.display='none';
 }
       else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';if(dashLink)dashLink.style.display='none';}
-    }catch(e){console.error('[Clerk] supplier status check error:',e);}
+    }catch(e){console.error('[Clerk] supplier status check error:',e);if(dashLink)dashLink.style.display='none';}
   }
 
   async function checkCustomerStatus(clerkId){
@@ -1580,7 +1581,9 @@ function clerkCustomerSignUp(){
       var resp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(clerkId)+'&select=id&limit=1',{headers:headers});
       if(!resp.ok){return;}
       var rows=await resp.json();
-      console.log('Checking customer status for navigation:',rows.length>0?'linked':'not linked');
+      console.log('[SourceOn] Customer check raw result:',JSON.stringify(rows));
+      var isCustomer=rows&&rows.length>0;
+      console.log('[SourceOn] Show customer dashboard link:',isCustomer);
       if(custLink){custLink.style.display=(rows&&rows.length>0)?'flex':'none';}
     }catch(e){console.error('[Clerk] customer status check error:',e);}
   }
