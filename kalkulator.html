@@ -1356,9 +1356,31 @@ function clerkSignOut(){
 function clerkCustomerSignUp(){
   if(!window.Clerk)return;
   sessionStorage.setItem('sourceon_customer_signup','1');
-  window.Clerk.openSignUp({
+  if(window.Clerk.user){
+    _createCustomerIfNeeded().then(function(){updateAcctUI();});
+    return;
+  }
+  window.Clerk.openSignIn({
     appearance:{variables:{colorPrimary:'#34D399',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}
   });
+}
+async function _createCustomerIfNeeded(){
+  try{
+    var u=window.Clerk.user;if(!u)return;
+    var email=u.primaryEmailAddress?u.primaryEmailAddress.emailAddress:'';
+    var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
+    var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
+    var token=null;
+    if(window.Clerk.session){token=await window.Clerk.session.getToken();}
+    var auth=token?'Bearer '+token:'Bearer '+sbKey;
+    var checkResp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(u.id)+'&select=id&limit=1',{headers:{'apikey':sbKey,'Content-Type':'application/json','Authorization':auth}});
+    var existing=checkResp.ok?await checkResp.json():[];
+    if(existing&&existing.length>0){console.log('[SourceOn] Customer profile already exists');return;}
+    var payload={user_id:u.id,email:email,firmenname:'',ansprechperson:u.fullName||u.firstName||'',telefon:'',lieferadresse:'',kanton:''};
+    var resp=await fetch(sbUrl+'/rest/v1/customers',{method:'POST',headers:{'apikey':sbKey,'Content-Type':'application/json','Authorization':auth,'Prefer':'return=representation'},body:JSON.stringify(payload)});
+    if(resp.ok){console.log('[SourceOn] Customer profile created');}
+    else{console.error('[SourceOn] Failed to create customer:',await resp.text());}
+  }catch(e){console.error('[SourceOn] _createCustomerIfNeeded error:',e);}
 }
 
 (async function initClerkUI(){
@@ -1474,48 +1496,15 @@ function clerkCustomerSignUp(){
   // Handle customer signup: create customer row if needed (no redirect)
   if(sessionStorage.getItem('sourceon_customer_signup')&&window.Clerk.user){
     sessionStorage.removeItem('sourceon_customer_signup');
-    (async function(){
-      try{
-        var u=window.Clerk.user;
-        var email=u.primaryEmailAddress?u.primaryEmailAddress.emailAddress:'';
-        var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
-        var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
-        var token=null;
-        if(window.Clerk.session){token=await window.Clerk.session.getToken();}
-        var headers={'apikey':sbKey,'Content-Type':'application/json','Prefer':'return=representation'};
-        if(token)headers['Authorization']='Bearer '+token;
-        else headers['Authorization']='Bearer '+sbKey;
-        var checkResp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(u.id)+'&select=id&limit=1',{headers:{'apikey':sbKey,'Content-Type':'application/json','Authorization':headers['Authorization']}});
-        var existing=checkResp.ok?await checkResp.json():[];
-        if(existing&&existing.length>0){
-          console.log('[SourceOn] Customer profile already exists for this Clerk user');
-        }else{
-          var custPayload={user_id:u.id,email:email,firmenname:'',ansprechperson:u.fullName||u.firstName||'',telefon:'',lieferadresse:'',kanton:''};
-          var resp=await fetch(sbUrl+'/rest/v1/customers',{method:'POST',headers:headers,body:JSON.stringify(custPayload)});
-          if(resp.ok){console.log('[SourceOn] Customer profile created for existing Clerk user');}
-          else{console.error('[SourceOn] Failed to create customer profile:',await resp.text());}
-        }
-      }catch(e){console.error('[SourceOn] Customer signup handler error:',e);}
-      updateAcctUI();
-    })();
+    _createCustomerIfNeeded().then(function(){updateAcctUI();});
   }
   // Listen for customer signup completion during this session (e.g. after OAuth redirect)
   window.Clerk.addListener(function _customerSignupWatch(){
     if(!sessionStorage.getItem('sourceon_customer_signup'))return;
     if(!window.Clerk.user)return;
     sessionStorage.removeItem('sourceon_customer_signup');
-    var u=window.Clerk.user;
-    var email=u.primaryEmailAddress?u.primaryEmailAddress.emailAddress:'';
-    var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
-    var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
-    (async function(){
-      try{
-        var token=null;
-        if(window.Clerk.session){token=await window.Clerk.session.getToken();}
-        var headers={'apikey':sbKey,'Content-Type':'application/json','Prefer':'return=representation'};
-        if(token)headers['Authorization']='Bearer '+token;
-        else headers['Authorization']='Bearer '+sbKey;
-        var checkResp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(u.id)+'&select=id&limit=1',{headers:{'apikey':sbKey,'Content-Type':'application/json','Authorization':headers['Authorization']}});
+    _createCustomerIfNeeded().then(function(){updateAcctUI();});
+  });
         var existing=checkResp.ok?await checkResp.json():[];
         if(!existing||existing.length===0){
           var custPayload={user_id:u.id,email:email,firmenname:'',ansprechperson:u.fullName||u.firstName||'',telefon:'',lieferadresse:'',kanton:''};
