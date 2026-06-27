@@ -724,20 +724,6 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:#94A3B8;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}
 .clerk-trust-modal .btn-cancel-trust:hover{border-color:rgba(255,255,255,.2);color:#fff}
 
-/* DASHBOARD FAB */
-#dashboard-fab{position:fixed;bottom:28px;right:28px;z-index:900;display:none;align-items:center;gap:0;cursor:pointer;text-decoration:none;filter:drop-shadow(0 4px 20px rgba(0,0,0,.4));transition:transform .2s cubic-bezier(.4,0,.2,1),filter .2s}
-#dashboard-fab:hover{transform:translateY(-3px) scale(1.03);filter:drop-shadow(0 8px 32px rgba(232,160,32,.3))}
-#dashboard-fab:active{transform:scale(.97)}
-.fab-pill{display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,#E8A020,#d4911c);padding:14px 22px 14px 18px;border-radius:60px;color:#0F172A;font-family:'Inter',-apple-system,sans-serif;font-size:.84rem;font-weight:700;letter-spacing:-.01em;white-space:nowrap}
-.fab-icon{width:38px;height:38px;background:rgba(15,23,42,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.fab-icon svg{width:20px;height:20px}
-.fab-badge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:#EF4444;color:#fff;font-size:.68rem;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 5px;border:2px solid #0A1626;display:none}
-@media(max-width:640px){
-  #dashboard-fab{bottom:20px;right:16px}
-  .fab-pill{padding:12px 18px 12px 14px;font-size:.78rem}
-  .fab-icon{width:32px;height:32px}
-  .fab-icon svg{width:17px;height:17px}
-}
 </style>
 <script>
 (function(){
@@ -1665,30 +1651,6 @@ function clerkCustomerSignUp(){
   console.log('[Clerk] Checking auth state now. Ready:',clerkReady);
   if(!clerkReady||!window.Clerk)return;
 
-  var _fabSupplierVerified=false;
-  var _fabCustomerLinked=false;
-  var _fabChecksComplete=0;
-
-  function _updateDashboardFab(){
-    var fab=document.getElementById('dashboard-fab');
-    var fabLabel=document.getElementById('fab-label');
-    if(!fab)return;
-    var shouldShow=_fabSupplierVerified||_fabCustomerLinked;
-    console.log('Floating dashboard button check — Clerk signed in: true, Supplier status: '+(_fabSupplierVerified?'verified':'none')+', Customer linked: '+_fabCustomerLinked+', Button should show: '+shouldShow);
-    if(shouldShow){
-      fab.style.display='flex';
-      if(_fabSupplierVerified){
-        fab.href='supplierdashboard.html';
-        if(fabLabel)fabLabel.textContent='Meine Ausschreibungen';
-      }else{
-        fab.href='kundendashboard.html';
-        if(fabLabel)fabLabel.textContent='Mein Dashboard';
-      }
-      fab.onclick=function(){window.location.href=fab.href;return false;};
-    }else{
-      fab.style.display='none';
-    }
-  }
 
   function updateAcctUI(){
     var user=window.Clerk.user;
@@ -1702,14 +1664,10 @@ function clerkCustomerSignUp(){
       var emailEl=document.getElementById('acct-email');
       if(nameEl)nameEl.textContent=user.fullName||user.firstName||'';
       if(emailEl)emailEl.textContent=user.primaryEmailAddress?user.primaryEmailAddress.emailAddress:'';
-      _fabSupplierVerified=false;_fabCustomerLinked=false;_fabChecksComplete=0;
       checkSupplierStatus(user.id);
       checkCustomerStatus(user.id);
     }else{
       soDiv.style.display='block';siDiv.style.display='none';
-      _fabSupplierVerified=false;_fabCustomerLinked=false;
-      var fab=document.getElementById('dashboard-fab');if(fab)fab.style.display='none';
-      console.log('Floating dashboard button check — Clerk signed in: false, Supplier status: none, Customer linked: false, Button should show: false');
     }
   }
 
@@ -1729,18 +1687,17 @@ function clerkCustomerSignUp(){
       console.log('[SourceOn] Supplier query URL:',queryUrl,'Token present:',!!token);
       var resp=await fetch(queryUrl,{headers:headers});
       console.log('[SourceOn] Supplier query response status:',resp.status,resp.statusText);
-      if(!resp.ok){console.error('[SourceOn] Supplier query failed:',resp.status);_fabChecksComplete++;if(_fabChecksComplete>=2)_updateDashboardFab();return;}
+      if(!resp.ok){console.error('[SourceOn] Supplier query failed:',resp.status);return;}
       var rows=await resp.json();
       console.log('[SourceOn] Supplier lookup result:',JSON.stringify(rows));
-      if(!rows||rows.length===0){statusWrap.innerHTML='';if(dashLink)dashLink.style.display='none';_fabSupplierVerified=false;_fabChecksComplete++;if(_fabChecksComplete>=2)_updateDashboardFab();return;}
+      if(!rows||rows.length===0){statusWrap.innerHTML='';if(dashLink)dashLink.style.display='none';return;}
       var s=rows[0].status;
       console.log('[SourceOn] Supplier status:',s);
-      if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">Wird geprüft</span>';if(dashLink){dashLink.style.display='none';var pendingMsg=document.getElementById('acct-pending-msg');if(!pendingMsg){pendingMsg=document.createElement('div');pendingMsg.id='acct-pending-msg';pendingMsg.style.cssText='padding:8px 14px;font-size:.78rem;color:#94A3B8;font-family:inherit';pendingMsg.textContent='Dein Profil wird noch geprüft';dashLink.parentNode.insertBefore(pendingMsg,dashLink);}pendingMsg.style.display='block';}_fabSupplierVerified=false;}
-      else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';if(dashLink)dashLink.style.display='flex';var pm=document.getElementById('acct-pending-msg');if(pm)pm.style.display='none';_fabSupplierVerified=true;
+      if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">Wird geprüft</span>';if(dashLink){dashLink.style.display='none';var pendingMsg=document.getElementById('acct-pending-msg');if(!pendingMsg){pendingMsg=document.createElement('div');pendingMsg.id='acct-pending-msg';pendingMsg.style.cssText='padding:8px 14px;font-size:.78rem;color:#94A3B8;font-family:inherit';pendingMsg.textContent='Dein Profil wird noch geprüft';dashLink.parentNode.insertBefore(pendingMsg,dashLink);}pendingMsg.style.display='block';}}
+      else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';if(dashLink)dashLink.style.display='flex';var pm=document.getElementById('acct-pending-msg');if(pm)pm.style.display='none';
 }
-      else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';if(dashLink)dashLink.style.display='none';_fabSupplierVerified=false;}
-      _fabChecksComplete++;if(_fabChecksComplete>=2)_updateDashboardFab();
-    }catch(e){console.error('[Clerk] supplier status check error:',e);_fabChecksComplete++;if(_fabChecksComplete>=2)_updateDashboardFab();}
+      else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';if(dashLink)dashLink.style.display='none';}
+    }catch(e){console.error('[Clerk] supplier status check error:',e);}
   }
 
   async function checkCustomerStatus(clerkId){
@@ -1754,13 +1711,11 @@ function clerkCustomerSignUp(){
       if(token)headers['Authorization']='Bearer '+token;
       else headers['Authorization']='Bearer '+sbKey;
       var resp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(clerkId)+'&select=id&limit=1',{headers:headers});
-      if(!resp.ok){_fabChecksComplete++;if(_fabChecksComplete>=2)_updateDashboardFab();return;}
+      if(!resp.ok){return;}
       var rows=await resp.json();
       console.log('Checking customer status for navigation:',rows.length>0?'linked':'not linked');
-      _fabCustomerLinked=rows&&rows.length>0;
-      if(custLink){custLink.style.display=_fabCustomerLinked?'flex':'none';}
-      _fabChecksComplete++;if(_fabChecksComplete>=2)_updateDashboardFab();
-    }catch(e){console.error('[Clerk] customer status check error:',e);_fabChecksComplete++;if(_fabChecksComplete>=2)_updateDashboardFab();}
+      if(custLink){custLink.style.display=(rows&&rows.length>0)?'flex':'none';}
+    }catch(e){console.error('[Clerk] customer status check error:',e);}
   }
 
   // Global trust listener — registered ONCE, catches needs_client_trust from any sign-in
@@ -1952,11 +1907,5 @@ document.addEventListener('keydown',function(e){
   </div>
 </div>
 
-<a href="#" id="dashboard-fab" onclick="return false">
-  <div class="fab-pill">
-    <div class="fab-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
-    <span id="fab-label">Dashboard</span>
-  </div>
-</a>
 </body>
 </html>
