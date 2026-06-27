@@ -1487,7 +1487,7 @@ function clerkCustomerSignUp(){
     }
   });
 
-  // Handle customer signup completion: create customer row + redirect
+  // Handle customer signup: create customer row if needed (no redirect)
   if(sessionStorage.getItem('sourceon_customer_signup')&&window.Clerk.user){
     sessionStorage.removeItem('sourceon_customer_signup');
     (async function(){
@@ -1504,22 +1504,18 @@ function clerkCustomerSignUp(){
         var checkResp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(u.id)+'&select=id&limit=1',{headers:{'apikey':sbKey,'Content-Type':'application/json','Authorization':headers['Authorization']}});
         var existing=checkResp.ok?await checkResp.json():[];
         if(existing&&existing.length>0){
-          console.log('[SourceOn] Customer already exists, redirecting to dashboard');
-          window.location.href='kundendashboard.html';return;
-        }
-        var custPayload={user_id:u.id,email:email,firmenname:'',ansprechperson:u.fullName||u.firstName||'',telefon:'',lieferadresse:'',kanton:''};
-        var resp=await fetch(sbUrl+'/rest/v1/customers',{method:'POST',headers:headers,body:JSON.stringify(custPayload)});
-        if(resp.ok){
-          console.log('[SourceOn] Customer profile created after signup, redirecting');
-          window.location.href='kundendashboard.html';
+          console.log('[SourceOn] Customer profile already exists for this Clerk user');
         }else{
-          console.error('[SourceOn] Failed to create customer profile:',await resp.text());
+          var custPayload={user_id:u.id,email:email,firmenname:'',ansprechperson:u.fullName||u.firstName||'',telefon:'',lieferadresse:'',kanton:''};
+          var resp=await fetch(sbUrl+'/rest/v1/customers',{method:'POST',headers:headers,body:JSON.stringify(custPayload)});
+          if(resp.ok){console.log('[SourceOn] Customer profile created for existing Clerk user');}
+          else{console.error('[SourceOn] Failed to create customer profile:',await resp.text());}
         }
       }catch(e){console.error('[SourceOn] Customer signup handler error:',e);}
+      updateAcctUI();
     })();
-    return;
   }
-  // Also listen for signup completion if user signs up during this session
+  // Listen for customer signup completion during this session (e.g. after OAuth redirect)
   window.Clerk.addListener(function _customerSignupWatch(){
     if(!sessionStorage.getItem('sourceon_customer_signup'))return;
     if(!window.Clerk.user)return;
@@ -1537,12 +1533,14 @@ function clerkCustomerSignUp(){
         else headers['Authorization']='Bearer '+sbKey;
         var checkResp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(u.id)+'&select=id&limit=1',{headers:{'apikey':sbKey,'Content-Type':'application/json','Authorization':headers['Authorization']}});
         var existing=checkResp.ok?await checkResp.json():[];
-        if(existing&&existing.length>0){window.location.href='kundendashboard.html';return;}
-        var custPayload={user_id:u.id,email:email,firmenname:'',ansprechperson:u.fullName||u.firstName||'',telefon:'',lieferadresse:'',kanton:''};
-        var resp=await fetch(sbUrl+'/rest/v1/customers',{method:'POST',headers:headers,body:JSON.stringify(custPayload)});
-        if(resp.ok){window.location.href='kundendashboard.html';}
-        else{console.error('[SourceOn] Failed to create customer:',await resp.text());}
+        if(!existing||existing.length===0){
+          var custPayload={user_id:u.id,email:email,firmenname:'',ansprechperson:u.fullName||u.firstName||'',telefon:'',lieferadresse:'',kanton:''};
+          var resp=await fetch(sbUrl+'/rest/v1/customers',{method:'POST',headers:headers,body:JSON.stringify(custPayload)});
+          if(resp.ok){console.log('[SourceOn] Customer profile created');}
+          else{console.error('[SourceOn] Failed to create customer:',await resp.text());}
+        }else{console.log('[SourceOn] Customer profile already exists');}
       }catch(e){console.error('[SourceOn] Customer signup listener error:',e);}
+      updateAcctUI();
     })();
   });
 
