@@ -2247,8 +2247,15 @@ function clerkCustomerSignUp(){
       var emailEl=document.getElementById('acct-email');
       if(nameEl)nameEl.textContent=user.fullName||user.firstName||'';
       if(emailEl)emailEl.textContent=user.primaryEmailAddress?user.primaryEmailAddress.emailAddress:'';
-      checkSupplierStatus(user.id);
-      checkCustomerStatus(user.id);
+      var _supplierResult=null,_customerResult=null;
+      checkSupplierStatus(user.id).then(function(){
+        _supplierResult=document.getElementById('acct-dashboard-link')&&document.getElementById('acct-dashboard-link').style.display==='flex';
+        if(_customerResult!==null)console.log('Account type check — Supplier verified: '+_supplierResult+', Customer linked: '+_customerResult);
+      });
+      checkCustomerStatus(user.id).then(function(){
+        _customerResult=document.getElementById('acct-customer-link')&&document.getElementById('acct-customer-link').style.display==='flex';
+        if(_supplierResult!==null)console.log('Account type check — Supplier verified: '+_supplierResult+', Customer linked: '+_customerResult);
+      });
     }else{
       soDiv.style.display='block';siDiv.style.display='none';
     }
