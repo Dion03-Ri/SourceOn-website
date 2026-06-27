@@ -1285,6 +1285,9 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 </script>
 <script>
 // CLERK AUTH
+console.log('[SourceOn] PAGE LOAD — cookies:', document.cookie);
+console.log('[SourceOn] PAGE LOAD — localStorage keys:', Object.keys(localStorage));
+console.log('[SourceOn] PAGE LOAD — sessionStorage keys:', Object.keys(sessionStorage));
 function toggleAcctDD(){var dd=document.getElementById('acct-dd');if(dd)dd.classList.toggle('open');}
 document.addEventListener('click',function(e){var w=document.getElementById('acct-wrap');if(w&&!w.contains(e.target)){var dd=document.getElementById('acct-dd');if(dd)dd.classList.remove('open');}});
 
@@ -1296,7 +1299,14 @@ function clerkSignIn(){
 }
 function clerkSignOut(){
   if(!window.Clerk)return;
-  window.Clerk.signOut().then(function(){window.location.reload();});
+  console.log('[SourceOn] BEFORE signOut — cookies:', document.cookie);
+  console.log('[SourceOn] BEFORE signOut — localStorage keys:', Object.keys(localStorage));
+  console.log('[SourceOn] BEFORE signOut — sessionStorage keys:', Object.keys(sessionStorage));
+  window.Clerk.signOut().then(function(){
+    console.log('[SourceOn] AFTER signOut — cookies:', document.cookie);
+    console.log('[SourceOn] AFTER signOut — localStorage keys:', Object.keys(localStorage));
+    window.location.reload();
+  });
 }
 
 function clerkCustomerSignUp(){
