@@ -796,7 +796,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           <div id="acct-signed-in" style="display:none">
             <div class="acct-user"><strong id="acct-name"></strong><span id="acct-email"></span><div id="acct-status-wrap"></div></div>
             <a href="kundendashboard.html" id="acct-customer-link" target="_blank" style="display:none" data-i18n="acct_customer_dash"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Zum Kunden-Dashboard</a>
-            <a href="supplier-dashboard.html" id="acct-dashboard-link" target="_blank" style="display:none" data-i18n="acct_dashboard"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Zum Lieferanten-Dashboard</a>
+            <a href="supplierdashboard.html" id="acct-dashboard-link" target="_blank" style="display:none" data-i18n="acct_dashboard"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Zum Lieferanten-Dashboard</a>
             <button onclick="clerkSignOut()" data-i18n="acct_signout">Abmelden</button>
           </div>
         </div>
@@ -1113,7 +1113,6 @@ document.addEventListener('click',function(e){var w=document.getElementById('acc
 
 function clerkSignIn(){
   if(!window.Clerk)return;
-  sessionStorage.setItem('sourceon_login_intent','1');
   window.Clerk.openSignIn({
     appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}
   });
@@ -1182,7 +1181,7 @@ function clerkCustomerSignUp(){
     if(shouldShow){
       fab.style.display='flex';
       if(_fabSupplierVerified){
-        fab.href='supplier-dashboard.html';
+        fab.href='supplierdashboard.html';
         if(fabLabel)fabLabel.textContent='Meine Ausschreibungen';
       }else{
         fab.href='kundendashboard.html';
@@ -1241,7 +1240,7 @@ function clerkCustomerSignUp(){
       console.log('[SourceOn] Supplier status:',s);
       if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">Wird geprüft</span>';if(dashLink){dashLink.style.display='none';var pendingMsg=document.getElementById('acct-pending-msg');if(!pendingMsg){pendingMsg=document.createElement('div');pendingMsg.id='acct-pending-msg';pendingMsg.style.cssText='padding:8px 14px;font-size:.78rem;color:#94A3B8;font-family:inherit';pendingMsg.textContent='Dein Profil wird noch geprüft';dashLink.parentNode.insertBefore(pendingMsg,dashLink);}pendingMsg.style.display='block';}_fabSupplierVerified=false;}
       else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';if(dashLink)dashLink.style.display='flex';var pm=document.getElementById('acct-pending-msg');if(pm)pm.style.display='none';_fabSupplierVerified=true;
-        if(sessionStorage.getItem('sourceon_login_intent')){sessionStorage.removeItem('sourceon_login_intent');console.log('[Clerk] Verified supplier detected after login, redirecting to dashboard');window.location.href='supplier-dashboard.html';return;}}
+}
       else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';if(dashLink)dashLink.style.display='none';_fabSupplierVerified=false;}
       _fabChecksComplete++;if(_fabChecksComplete>=2)_updateDashboardFab();
     }catch(e){console.error('[Clerk] supplier status check error:',e);_fabChecksComplete++;if(_fabChecksComplete>=2)_updateDashboardFab();}
