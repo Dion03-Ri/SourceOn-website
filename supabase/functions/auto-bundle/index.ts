@@ -1,20 +1,5 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-// Placeholder unit prices in CHF until real supplier pricing data exists.
-// These are rough market estimates for Switzerland and should be replaced
-// with actual average prices from supplier bids once enough data is collected.
-const UNIT_PRICE_CHF: Record<string, number> = {
-  "m³": 150,
-  "t": 950,
-  "Stk": 2,
-  "m": 12,
-  "Sack 25kg": 1.5,
-  "kg": 0.95,
-  "lfm": 12,
-  "m²": 45,
-  "Palette": 80,
-};
-
 const DISCOUNT_TIERS = [
   { min: 6_000_000, rate: 0.28 },
   { min: 3_000_000, rate: 0.24 },
@@ -88,14 +73,14 @@ Deno.serve(async (req: Request) => {
       return Response.json({ message: "No open unbundled requests found", bundlesCreated: 0 });
     }
 
-    // Fetch material catalog for einheit lookup
+    // Fetch material catalog for einheit + richtpreis_chf lookup
     const { data: catalog } = await sb
       .from("material_catalog")
-      .select("sourceon_id, einheit");
-    const catalogMap: Record<string, string> = {};
+      .select("sourceon_id, einheit, richtpreis_chf");
+    const catalogMap: Record<string, { einheit: string; richtpreis: number | null }> = {};
     if (catalog) {
       for (const c of catalog) {
-        catalogMap[c.sourceon_id] = c.einheit;
+        catalogMap[c.sourceon_id] = { einheit: c.einheit, richtpreis: c.richtpreis_chf };
       }
     }
 
@@ -137,7 +122,7 @@ Deno.serve(async (req: Request) => {
           liefer_zeitraum_von: req.liefer_zeitraum_von,
           liefer_zeitraum_bis: req.liefer_zeitraum_bis,
           totalMenge: Number(req.menge),
-          einheit: req.einheit || catalogMap[req.sourceon_id] || "Stk",
+          einheit: req.einheit || catalogMap[req.sourceon_id]?.einheit || "Stk",
           requests: [req],
         });
       }
@@ -156,8 +141,19 @@ Deno.serve(async (req: Request) => {
     const skipped: Array<{ sourceon_id: string; liefer_zone: string; estimatedCHF: number; reason: string }> = [];
 
     for (const g of groups) {
-      const unitPrice = UNIT_PRICE_CHF[g.einheit] ?? 1;
-      const estimatedCHF = g.totalMenge * unitPrice;
+      const catEntry = catalogMap[g.sourceon_id];
+      const richtpreis = catEntry?.richtpreis ?? null;
+      if (richtpreis === null) {
+        console.warn(`[auto-bundle] No richtpreis_chf for sourceon_id "${g.sourceon_id}" — skipping group`);
+        skipped.push({
+          sourceon_id: g.sourceon_id,
+          liefer_zone: g.liefer_zone,
+          estimatedCHF: 0,
+          reason: `No richtpreis_chf in material_catalog for ${g.sourceon_id}`,
+        });
+        continue;
+      }
+      const estimatedCHF = g.totalMenge * richtpreis;
       const discount = getTargetDiscount(estimatedCHF);
 
       if (discount === null) {
