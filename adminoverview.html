@@ -121,6 +121,15 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
 .search-input:focus{border-color:var(--gold)}
 .search-input::placeholder{color:var(--muted)}
 
+/* AI SCORE */
+.ai-score{display:inline-block;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:700;white-space:nowrap}
+.ai-score.high{background:rgba(16,185,129,.15);color:#34D399}
+.ai-score.mid{background:rgba(232,160,32,.15);color:#E8A020}
+.ai-score.low{background:rgba(239,68,68,.15);color:#F87171}
+.ai-score.none{background:rgba(148,163,184,.1);color:#94A3B8}
+.ai-flag{display:inline-block;padding:2px 8px;border-radius:100px;font-size:.65rem;font-weight:500;background:rgba(148,163,184,.1);color:#94A3B8;margin:1px 2px}
+.ai-assessment{font-size:.72rem;color:var(--muted);line-height:1.4;max-width:280px}
+
 .empty-msg{padding:40px;text-align:center;color:var(--muted);font-size:.85rem}
 .loading{text-align:center;padding:60px;color:var(--muted);font-size:.9rem}
 
@@ -365,13 +374,18 @@ async function loadPending(){
     document.getElementById('pending-table').innerHTML='<div class="empty-msg">Keine ausstehenden Bewerbungen.</div>';
     return;
   }
-  var html='<table><thead><tr><th>Firma</th><th>Kontakt</th><th>E-Mail</th><th>Telefon</th><th>Website</th><th>Materialien</th><th>Regionen</th><th>Kapazität</th><th>Zertifikate</th><th>Notizen</th><th>Erstellt</th><th>Aktionen</th></tr></thead><tbody>';
+  var html='<table><thead><tr><th>Firma</th><th>AI Score</th><th>AI Bewertung</th><th>Kontakt</th><th>E-Mail</th><th>Telefon</th><th>Website</th><th>Materialien</th><th>Regionen</th><th>Kapazität</th><th>Erstellt</th><th>Aktionen</th></tr></thead><tbody>';
   rows.forEach(function(r){
     var mats=Array.isArray(r.materials)?r.materials.join(', '):(r.materials||'–');
     var regs=Array.isArray(r.regions)?r.regions.join(', '):(r.regions||'–');
-    var certs=Array.isArray(r.certifications)?r.certifications.join(', '):(r.certifications||'–');
+    var scoreClass=r.ai_score==null?'none':r.ai_score>=80?'high':r.ai_score>=50?'mid':'low';
+    var scoreText=r.ai_score!=null?r.ai_score+'/100':'–';
+    var flagsHtml='';
+    if(Array.isArray(r.ai_flags)&&r.ai_flags.length>0){flagsHtml=r.ai_flags.map(function(f){return'<span class="ai-flag">'+esc(f)+'</span>';}).join('');}
     html+='<tr id="pending-row-'+r.id+'">'
       +'<td><strong>'+esc(r.company_name)+'</strong></td>'
+      +'<td><span class="ai-score '+scoreClass+'">'+scoreText+'</span></td>'
+      +'<td><div class="ai-assessment">'+esc(r.ai_assessment||'Noch nicht geprüft')+'</div>'+(flagsHtml?'<div style="margin-top:4px">'+flagsHtml+'</div>':'')+'</td>'
       +'<td>'+esc(r.contact_person)+'</td>'
       +'<td>'+esc(r.email)+'</td>'
       +'<td>'+esc(r.phone)+'</td>'
@@ -379,8 +393,6 @@ async function loadPending(){
       +'<td class="cell-trunc" title="'+esc(mats)+'">'+esc(mats)+'</td>'
       +'<td class="cell-trunc" title="'+esc(regs)+'">'+esc(regs)+'</td>'
       +'<td>'+esc(r.annual_capacity||'–')+'</td>'
-      +'<td class="cell-trunc" title="'+esc(certs)+'">'+esc(certs)+'</td>'
-      +'<td class="cell-trunc" title="'+esc(r.notes)+'">'+esc(r.notes||'–')+'</td>'
       +'<td style="white-space:nowrap">'+fmtDate(r.created_at)+'</td>'
       +'<td style="white-space:nowrap">'
         +'<button class="btn-sm btn-verify" onclick="verifySupplier(\''+r.id+'\')">Verifizieren</button> '
