@@ -1203,6 +1203,7 @@ async function submitContact(e){
     console.log('[SourceOn Debug] Supabase key (first 20):',typeof _dbKey==='string'?_dbKey.substring(0,20):'MISSING');
     console.log('[SourceOn Debug] Customer payload:',JSON.stringify(custPayload));
     var custRes=await _supabase.from('customers').insert(custPayload).select('id').single();
+    console.log('[SourceOn Debug] Customer insert result:',JSON.stringify({data:custRes.data,error:custRes.error}));
 
     if(custRes.error)throw custRes.error;
     var customerId=custRes.data.id;
@@ -1238,6 +1239,7 @@ async function submitContact(e){
     if(inserts.length>0){
       console.log('[SourceOn Debug] material_requests payload:',JSON.stringify(inserts));
       var matRes=await _supabase.from('material_requests').insert(inserts);
+      console.log('[SourceOn Debug] Material requests insert result:',JSON.stringify({data:matRes.data,error:matRes.error}));
       if(matRes.error)throw matRes.error;
     }
 
