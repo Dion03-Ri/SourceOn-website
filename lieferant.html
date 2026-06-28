@@ -1112,7 +1112,7 @@ async function _insertSupplier(data,clerkId){
 
   if(!_sbClient){throw new Error('Supabase client not available');}
 
-  var insRes=await _sbClient.from('suppliers').insert({
+  var payload={
     id:clerkId,
     company_name:data.company_name,
     contact_person:data.contact_person,
@@ -1125,7 +1125,9 @@ async function _insertSupplier(data,clerkId){
     certifications:data.certifications||[],
     notes:data.notes||'',
     status:'pending'
-  });
+  };
+  console.log('[Supplier] INSERT payload:',JSON.stringify(payload));
+  var insRes=await _sbClient.from('suppliers').insert(payload);
   if(insRes.error)throw insRes.error;
   return insRes;
 }
