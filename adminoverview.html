@@ -156,6 +156,7 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
     <input type="password" class="auth-input" id="admin-pw" placeholder="Passwort" onkeydown="if(event.key==='Enter')checkAdminPw()"/>
     <button class="auth-btn" onclick="checkAdminPw()">Anmelden</button>
     <div class="auth-error" id="auth-error">Falsches Passwort. Zugang verweigert.</div>
+    <div class="auth-error" id="auth-lockout" style="display:none">Zu viele Fehlversuche. Bitte 5 Minuten warten.</div>
   </div>
 </div>
 
@@ -207,27 +208,90 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
 </div>
 
 <script>
-// REPLACE THIS with a proper admin authentication system before real business use
-var ADMIN_PASSWORD='SourceOn2026Admin';
+/*
+ * IMPORTANT: This is a basic client-side protection layer suitable only for
+ * very early-stage internal use. Before this business has real revenue or
+ * sensitive data at scale, this MUST be replaced with proper server-side
+ * authentication (e.g. a dedicated admin login via Clerk with a specific
+ * admin role/permission check, validated server-side via a Supabase Edge
+ * Function, rather than exposing the service_role key in client-side code
+ * at all).
+ */
 
-// WARNING: This page uses the Supabase service_role key for full data access.
-// This page must never be linked from public navigation and should eventually
-// be protected by proper server-side authentication before real business use —
-// the current password prompt is a temporary placeholder, not real security.
+// SHA-256 hash of the admin password (not plaintext).
+// To change the password, generate a new hash:
+//   echo -n "YourNewPassword" | sha256sum
+// Then replace the hash below.
+var ADMIN_PW_HASH='c80b8f38425c1c31260217fa56357852b4d38a2ff8a8e0eb76b53248f5375077';
+var ADMIN_SESSION_KEY='admin_session_granted_at';
+var ADMIN_LOCKOUT_KEY='admin_lockout_until';
+var ADMIN_ATTEMPTS_KEY='admin_fail_count';
+var SESSION_DURATION_MS=2*60*60*1000; // 2 hours
+var LOCKOUT_DURATION_MS=5*60*1000; // 5 minutes
+var MAX_ATTEMPTS=5;
+
 var SB_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
 var SB_SERVICE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MjI0NDcyNiwiZXhwIjoyMDk3ODIwNzI2fQ.n3xkLAcIURQ_zLyPYWwDWXHk3-rxJeMJBnq0oGooHYs';
 var HEADERS={'apikey':SB_SERVICE_KEY,'Authorization':'Bearer '+SB_SERVICE_KEY,'Content-Type':'application/json'};
 
 var _allSuppliers=[];
 
-function checkAdminPw(){
+async function sha256(str){
+  var buf=new TextEncoder().encode(str);
+  var hash=await crypto.subtle.digest('SHA-256',buf);
+  return Array.from(new Uint8Array(hash)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+}
+
+function isSessionValid(){
+  var ts=localStorage.getItem(ADMIN_SESSION_KEY);
+  if(!ts)return false;
+  return(Date.now()-Number(ts))<SESSION_DURATION_MS;
+}
+
+function isLockedOut(){
+  var until=localStorage.getItem(ADMIN_LOCKOUT_KEY);
+  if(!until)return false;
+  if(Date.now()<Number(until))return true;
+  localStorage.removeItem(ADMIN_LOCKOUT_KEY);
+  localStorage.removeItem(ADMIN_ATTEMPTS_KEY);
+  return false;
+}
+
+// Auto-grant if session still valid
+if(isSessionValid()){
+  document.addEventListener('DOMContentLoaded',function(){
+    document.getElementById('auth-gate').style.display='none';
+    document.getElementById('dash-main').style.display='block';
+    loadAllData();
+  });
+}
+
+async function checkAdminPw(){
+  if(isLockedOut()){
+    document.getElementById('auth-error').style.display='none';
+    document.getElementById('auth-lockout').style.display='block';
+    return;
+  }
   var pw=document.getElementById('admin-pw').value;
-  if(pw===ADMIN_PASSWORD){
+  var hash=await sha256(pw);
+  if(hash===ADMIN_PW_HASH){
+    localStorage.setItem(ADMIN_SESSION_KEY,String(Date.now()));
+    localStorage.removeItem(ADMIN_ATTEMPTS_KEY);
+    localStorage.removeItem(ADMIN_LOCKOUT_KEY);
     document.getElementById('auth-gate').style.display='none';
     document.getElementById('dash-main').style.display='block';
     loadAllData();
   }else{
-    document.getElementById('auth-error').style.display='block';
+    var fails=Number(localStorage.getItem(ADMIN_ATTEMPTS_KEY)||'0')+1;
+    localStorage.setItem(ADMIN_ATTEMPTS_KEY,String(fails));
+    if(fails>=MAX_ATTEMPTS){
+      localStorage.setItem(ADMIN_LOCKOUT_KEY,String(Date.now()+LOCKOUT_DURATION_MS));
+      document.getElementById('auth-error').style.display='none';
+      document.getElementById('auth-lockout').style.display='block';
+    }else{
+      document.getElementById('auth-error').style.display='block';
+      document.getElementById('auth-error').textContent='Falsches Passwort. Zugang verweigert. ('+fails+'/'+MAX_ATTEMPTS+' Versuche)';
+    }
     document.getElementById('admin-pw').value='';
   }
 }
