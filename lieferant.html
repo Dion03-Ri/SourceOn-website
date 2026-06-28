@@ -1127,8 +1127,11 @@ async function _insertSupplier(data,clerkId){
     status:'pending'
   };
   console.log('[Supplier] INSERT payload:',JSON.stringify(payload));
-  var insRes=await _sbClient.from('suppliers').insert(payload);
-  if(insRes.error)throw insRes.error;
+  var insRes=await _sbClient.from('suppliers').upsert(payload,{onConflict:'id',ignoreDuplicates:false});
+  if(insRes.error){
+    console.error('[Supplier] Supabase error details:', JSON.stringify(insRes.error));
+    throw insRes.error;
+  }
   return insRes;
 }
 
@@ -1162,7 +1165,7 @@ async function submitSupplier(e){
       await _insertSupplier(formData,window.Clerk.user.id);
       _showSuccess();
     }catch(err){
-      console.error('[Supplier] insert error:',err);
+      console.error('[Supplier] insert error:',JSON.stringify(err));
       errEl.textContent='Profil konnte nicht gespeichert werden: '+(err.message||err);errEl.style.display='block';
       btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';
     }
