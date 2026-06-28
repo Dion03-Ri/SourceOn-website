@@ -1297,17 +1297,6 @@ async function _createCustomerIfNeeded(){
     sessionStorage.removeItem('sourceon_customer_signup');
     _createCustomerIfNeeded().then(function(){updateAcctUI();});
   });
-        var existing=checkResp.ok?await checkResp.json():[];
-        if(!existing||existing.length===0){
-          var custPayload={user_id:u.id,email:email,firmenname:'',ansprechperson:u.fullName||u.firstName||'',telefon:'',lieferadresse:'',kanton:''};
-          var resp=await fetch(sbUrl+'/rest/v1/customers',{method:'POST',headers:headers,body:JSON.stringify(custPayload)});
-          if(resp.ok){console.log('[SourceOn] Customer profile created');}
-          else{console.error('[SourceOn] Failed to create customer:',await resp.text());}
-        }else{console.log('[SourceOn] Customer profile already exists');}
-      }catch(e){console.error('[SourceOn] Customer signup listener error:',e);}
-      updateAcctUI();
-    })();
-  });
 
   updateAcctUI();
   window.Clerk.addListener(updateAcctUI);
