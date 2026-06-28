@@ -11,7 +11,7 @@
  * Password can be changed below (PREVIEW_PASSWORD variable).
  */
 (function(){
-  var PREVIEW_PASSWORD='sourceon-preview-2026';
+  var PREVIEW_PASSWORD='2026-View-SourceOn@Previewsite003!!';
   if(localStorage.getItem('sourceon_preview_access')==='granted')return;
   document.documentElement.style.visibility='hidden';
   window.addEventListener('DOMContentLoaded',function(){
