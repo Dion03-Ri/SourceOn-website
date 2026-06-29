@@ -145,6 +145,16 @@ a{color:var(--gold);text-decoration:none}
 .profil-value{font-size:.84rem;color:#CBD5E1;text-align:right;word-break:break-word}
 .profil-notes{font-size:.84rem;color:#CBD5E1;line-height:1.7}
 .profil-tag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:600;background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.15);color:var(--gold);margin:2px 4px 2px 0}
+.profil-field{margin-bottom:14px}
+.profil-field .profil-label{display:block;font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:5px}
+.profil-input{width:100%;padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;font-size:.88rem;font-family:inherit;transition:border-color .2s}
+.profil-input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
+.profil-textarea{resize:vertical;min-height:80px}
+.profil-checks{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.profil-check{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);font-size:.8rem;color:#CBD5E1;cursor:pointer;transition:all .15s}
+.profil-check:hover{border-color:rgba(232,160,32,.2)}
+.profil-check input[type="checkbox"]{accent-color:var(--gold);width:14px;height:14px;cursor:pointer}
+.profil-check span{pointer-events:none}
 
 /* BUNDLE CARDS */
 .bundle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:24px}
@@ -412,34 +422,82 @@ a{color:var(--gold);text-decoration:none}
       <div class="profil-grid">
         <div class="profil-section">
           <h3>Kontaktdaten</h3>
-          <div class="profil-row"><span class="profil-label">Firma</span><span class="profil-value" id="pf-company">—</span></div>
-          <div class="profil-row"><span class="profil-label">Kontaktperson</span><span class="profil-value" id="pf-contact">—</span></div>
-          <div class="profil-row"><span class="profil-label">E-Mail</span><span class="profil-value" id="pf-email">—</span></div>
-          <div class="profil-row"><span class="profil-label">Telefon</span><span class="profil-value" id="pf-phone">—</span></div>
-          <div class="profil-row"><span class="profil-label">Website</span><span class="profil-value" id="pf-website">—</span></div>
+          <div class="profil-field"><label class="profil-label">Firma</label><input class="profil-input" id="pf-company" type="text"/></div>
+          <div class="profil-field"><label class="profil-label">Kontaktperson</label><input class="profil-input" id="pf-contact" type="text"/></div>
+          <div class="profil-field"><label class="profil-label">E-Mail</label><input class="profil-input" id="pf-email" type="email"/></div>
+          <div class="profil-field"><label class="profil-label">Telefon</label><input class="profil-input" id="pf-phone" type="tel"/></div>
+          <div class="profil-field"><label class="profil-label">Website</label><input class="profil-input" id="pf-website" type="url" placeholder="https://"/></div>
         </div>
         <div class="profil-section">
           <h3>Leistungsprofil</h3>
-          <div class="profil-row"><span class="profil-label">Materialien</span><span class="profil-value" id="pf-materials">—</span></div>
-          <div class="profil-row"><span class="profil-label">Regionen</span><span class="profil-value" id="pf-regions">—</span></div>
-          <div class="profil-row"><span class="profil-label">Jahreskapazität</span><span class="profil-value" id="pf-capacity">—</span></div>
-          <div class="profil-row"><span class="profil-label">Zertifizierungen</span><span class="profil-value" id="pf-certs">—</span></div>
+          <div class="profil-field"><label class="profil-label">Jahreskapazität</label>
+            <select class="profil-input" id="pf-capacity">
+              <option value="">Bitte wählen</option>
+              <option>Unter CHF 500'000</option>
+              <option>CHF 500'000 – 2'000'000</option>
+              <option>CHF 2'000'000 – 10'000'000</option>
+              <option>CHF 10'000'000 – 50'000'000</option>
+              <option>Über CHF 50'000'000</option>
+            </select>
+          </div>
+          <div class="profil-field"><label class="profil-label">Materialien</label>
+            <div class="profil-checks" id="pf-materials-checks">
+              <label class="profil-check"><input type="checkbox" value="Beton"/><span>Beton</span></label>
+              <label class="profil-check"><input type="checkbox" value="Mörtel"/><span>Mörtel</span></label>
+              <label class="profil-check"><input type="checkbox" value="Bewehrungsstahl"/><span>Bewehrungsstahl</span></label>
+              <label class="profil-check"><input type="checkbox" value="Armierungsmatten"/><span>Armierungsmatten</span></label>
+              <label class="profil-check"><input type="checkbox" value="Kies"/><span>Kies</span></label>
+              <label class="profil-check"><input type="checkbox" value="Dämmung"/><span>Dämmung</span></label>
+              <label class="profil-check"><input type="checkbox" value="Mauerwerk"/><span>Mauerwerk</span></label>
+              <label class="profil-check"><input type="checkbox" value="Holz"/><span>Holz</span></label>
+              <label class="profil-check"><input type="checkbox" value="Elektro"/><span>Elektro</span></label>
+              <label class="profil-check"><input type="checkbox" value="Sanitär"/><span>Sanitär</span></label>
+              <label class="profil-check"><input type="checkbox" value="Vollsortiment"/><span>Vollsortiment</span></label>
+            </div>
+          </div>
+          <div class="profil-field"><label class="profil-label">Regionen</label>
+            <div class="profil-checks" id="pf-regions-checks">
+              <label class="profil-check"><input type="checkbox" value="Zürich"/><span>Zürich</span></label>
+              <label class="profil-check"><input type="checkbox" value="Bern"/><span>Bern</span></label>
+              <label class="profil-check"><input type="checkbox" value="Basel"/><span>Basel</span></label>
+              <label class="profil-check"><input type="checkbox" value="Luzern"/><span>Luzern</span></label>
+              <label class="profil-check"><input type="checkbox" value="Ostschweiz"/><span>Ostschweiz</span></label>
+              <label class="profil-check"><input type="checkbox" value="Zentralschweiz"/><span>Zentralschweiz</span></label>
+              <label class="profil-check"><input type="checkbox" value="Aargau"/><span>Aargau</span></label>
+              <label class="profil-check"><input type="checkbox" value="Tessin"/><span>Tessin</span></label>
+              <label class="profil-check"><input type="checkbox" value="Westschweiz"/><span>Westschweiz</span></label>
+              <label class="profil-check"><input type="checkbox" value="Ganze Schweiz"/><span>Ganze Schweiz</span></label>
+            </div>
+          </div>
+          <div class="profil-field"><label class="profil-label">Zertifizierungen</label>
+            <div class="profil-checks" id="pf-certs-checks">
+              <label class="profil-check"><input type="checkbox" value="ISO 9001"/><span>ISO 9001</span></label>
+              <label class="profil-check"><input type="checkbox" value="ISO 14001"/><span>ISO 14001</span></label>
+              <label class="profil-check"><input type="checkbox" value="SIA-konform"/><span>SIA-konform</span></label>
+              <label class="profil-check"><input type="checkbox" value="SN EN"/><span>SN EN</span></label>
+              <label class="profil-check"><input type="checkbox" value="SUVA-zertifiziert"/><span>SUVA-zertifiziert</span></label>
+              <label class="profil-check"><input type="checkbox" value="Minergie"/><span>Minergie</span></label>
+            </div>
+          </div>
         </div>
       </div>
 
       <div class="profil-section" style="margin-top:24px">
+        <h3>Bemerkungen</h3>
+        <textarea class="profil-input profil-textarea" id="pf-notes" placeholder="Weitere Informationen zu deinem Angebot…"></textarea>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:16px;margin-top:24px">
+        <button class="btn-bid" id="btn-save-profil" onclick="saveProfile()" style="max-width:240px">Änderungen speichern</button>
+        <span id="profil-save-msg" style="font-size:.84rem;display:none"></span>
+      </div>
+
+      <div class="profil-section" style="margin-top:32px;opacity:.7">
         <h3>Vereinbarung</h3>
         <div class="profil-row"><span class="profil-label">Status</span><span class="profil-value" id="pf-agreement">—</span></div>
         <div class="profil-row"><span class="profil-label">Akzeptiert am</span><span class="profil-value" id="pf-agreement-date">—</span></div>
         <div class="profil-row"><span class="profil-label">Version</span><span class="profil-value" id="pf-agreement-version">—</span></div>
       </div>
-
-      <div class="profil-section" style="margin-top:24px">
-        <h3>Bemerkungen</h3>
-        <div class="profil-notes" id="pf-notes">—</div>
-      </div>
-
-      <p style="font-size:.78rem;color:var(--body);margin-top:32px;line-height:1.6">Profiländerungen bitte per E-Mail an <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> melden.</p>
     </div>
   </div>
 </main>
@@ -880,28 +938,71 @@ function loadProfile(){
   document.getElementById('profil-name').textContent=p.company_name||'—';
   document.getElementById('profil-email').textContent=p.email||'—';
 
-  document.getElementById('pf-company').textContent=p.company_name||'—';
-  document.getElementById('pf-contact').textContent=p.contact_person||'—';
-  document.getElementById('pf-email').textContent=p.email||'—';
-  document.getElementById('pf-phone').textContent=p.phone||'—';
-  document.getElementById('pf-website').innerHTML=p.website?'<a href="'+(p.website.startsWith('http')?'':'https://')+esc(p.website)+'" target="_blank">'+esc(p.website)+'</a>':'—';
+  document.getElementById('pf-company').value=p.company_name||'';
+  document.getElementById('pf-contact').value=p.contact_person||'';
+  document.getElementById('pf-email').value=p.email||'';
+  document.getElementById('pf-phone').value=p.phone||'';
+  document.getElementById('pf-website').value=p.website||'';
+  document.getElementById('pf-capacity').value=p.annual_capacity||'';
+  document.getElementById('pf-notes').value=p.notes||'';
 
-  var mats=Array.isArray(p.materials)&&p.materials.length>0?p.materials.map(function(m){return'<span class="profil-tag">'+esc(m)+'</span>';}).join(''):'—';
-  document.getElementById('pf-materials').innerHTML=mats;
-
-  var regs=Array.isArray(p.regions)&&p.regions.length>0?p.regions.map(function(r){return'<span class="profil-tag">'+esc(r)+'</span>';}).join(''):'—';
-  document.getElementById('pf-regions').innerHTML=regs;
-
-  document.getElementById('pf-capacity').textContent=p.annual_capacity||'—';
-
-  var certs=Array.isArray(p.certifications)&&p.certifications.length>0?p.certifications.map(function(c){return'<span class="profil-tag">'+esc(c)+'</span>';}).join(''):'—';
-  document.getElementById('pf-certs').innerHTML=certs;
+  function checkBoxes(containerId,arr){
+    var checks=document.getElementById(containerId).querySelectorAll('input[type="checkbox"]');
+    var vals=Array.isArray(arr)?arr:[];
+    checks.forEach(function(cb){cb.checked=vals.indexOf(cb.value)!==-1;});
+  }
+  checkBoxes('pf-materials-checks',p.materials);
+  checkBoxes('pf-regions-checks',p.regions);
+  checkBoxes('pf-certs-checks',p.certifications);
 
   document.getElementById('pf-agreement').innerHTML=p.agreement_accepted?'<span style="color:#34D399">✓ Akzeptiert</span>':'<span style="color:var(--muted)">Nicht akzeptiert</span>';
   document.getElementById('pf-agreement-date').textContent=p.agreement_accepted_at?new Date(p.agreement_accepted_at).toLocaleDateString('de-CH'):'—';
   document.getElementById('pf-agreement-version').textContent=p.agreement_version||'—';
+}
 
-  document.getElementById('pf-notes').textContent=p.notes||'Keine Bemerkungen hinterlegt.';
+function getCheckedValues(containerId){
+  var vals=[];
+  document.getElementById(containerId).querySelectorAll('input[type="checkbox"]:checked').forEach(function(cb){vals.push(cb.value);});
+  return vals;
+}
+
+async function saveProfile(){
+  var btn=document.getElementById('btn-save-profil');
+  var msg=document.getElementById('profil-save-msg');
+  btn.disabled=true;btn.textContent='Wird gespeichert…';
+  msg.style.display='none';
+
+  var payload={
+    company_name:document.getElementById('pf-company').value.trim(),
+    contact_person:document.getElementById('pf-contact').value.trim(),
+    email:document.getElementById('pf-email').value.trim(),
+    phone:document.getElementById('pf-phone').value.trim(),
+    website:document.getElementById('pf-website').value.trim(),
+    annual_capacity:document.getElementById('pf-capacity').value,
+    materials:getCheckedValues('pf-materials-checks'),
+    regions:getCheckedValues('pf-regions-checks'),
+    certifications:getCheckedValues('pf-certs-checks'),
+    notes:document.getElementById('pf-notes').value.trim()
+  };
+
+  var result=await sb.from('suppliers').update(payload).eq('id',currentUserId);
+
+  btn.disabled=false;btn.textContent='Änderungen speichern';
+  if(result.error){
+    msg.textContent='Fehler: '+result.error.message;
+    msg.style.color='#FCA5A5';
+    msg.style.display='inline';
+  }else{
+    Object.assign(_supplierProfile,payload);
+    document.getElementById('profil-name').textContent=payload.company_name||'—';
+    document.getElementById('profil-email').textContent=payload.email||'—';
+    document.getElementById('profil-avatar').textContent=(payload.company_name||'S').charAt(0).toUpperCase();
+    document.getElementById('nav-company').textContent=payload.company_name;
+    msg.textContent='Gespeichert ✓';
+    msg.style.color='#34D399';
+    msg.style.display='inline';
+    setTimeout(function(){msg.style.display='none';},3000);
+  }
 }
 
 async function loadOverview(){
