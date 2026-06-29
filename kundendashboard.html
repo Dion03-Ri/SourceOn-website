@@ -276,14 +276,25 @@ var _matCatalogMap={};
     catRes.data.forEach(function(m){_matCatalogMap[m.sourceon_id]=m;});
   }
 
-  // Load material requests (join bundle data)
-  var reqRes=await sb.from('material_requests').select('*,bundles(id,gesamtvolumen,einheit,ziel_mindestrabatt,status,is_fallback_bundle)').in('customer_id',customerIds).order('created_at',{ascending:false});
+  // Load material requests
+  var reqRes=await sb.from('material_requests').select('*').in('customer_id',customerIds).order('created_at',{ascending:false});
 
   document.getElementById('table-loading').style.display='none';
 
   if(reqRes.error||!reqRes.data||reqRes.data.length===0){
     document.getElementById('table-empty').style.display='block';
     return;
+  }
+
+  // Fetch bundle details separately for requests that have a bundle_id
+  var _bundleMap={};
+  var _bundleIds=[];
+  reqRes.data.forEach(function(r){if(r.bundle_id)_bundleIds.push(r.bundle_id);});
+  if(_bundleIds.length>0){
+    try{
+      var bRes=await sb.from('bundles').select('id,gesamtvolumen,einheit,ziel_mindestrabatt,status').in('id',_bundleIds);
+      if(bRes.data){bRes.data.forEach(function(b){_bundleMap[b.id]=b;});}
+    }catch(e){}
   }
 
   var requests=reqRes.data;
@@ -371,7 +382,7 @@ var _matCatalogMap={};
     if(r.status==='offen'&&!r.bundle_id){
       detail='<div class="req-status-detail"><div class="status-msg"><span class="pulse-dot"></span><span>Sammelt Bündelungspartner — wir suchen weitere Baufirmen mit ähnlichem Bedarf, um dir den bestmöglichen Mengenrabatt zu sichern.</span></div></div>';
     }else if((r.status==='gebuendelt'||r.status==='offen')&&r.bundle_id){
-      var bundle=r.bundles||{};
+      var bundle=_bundleMap[r.bundle_id]||{};
       var bids=bidCounts[r.bundle_id]||0;
       var volStr=bundle.gesamtvolumen?Number(bundle.gesamtvolumen).toLocaleString('de-CH')+' '+(bundle.einheit||''):'';
       var discStr=bundle.ziel_mindestrabatt?Math.round(bundle.ziel_mindestrabatt*100)+'%':'';
