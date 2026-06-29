@@ -231,6 +231,19 @@ a{color:var(--gold);text-decoration:none}
 .bid-form .btn-cancel{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:var(--muted);font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px;transition:all .15s}
 .bid-form .btn-cancel:hover{border-color:rgba(255,255,255,.2);color:#fff}
 
+/* BID FORM SECTIONS */
+.bid-summary-box{padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;font-size:.8rem;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.bid-summary-box strong{color:#CBD5E1}
+.bid-summary-box .mindest{color:var(--gold);font-weight:600}
+.bid-calc{margin-top:8px;padding:10px 14px;background:rgba(232,160,32,.05);border:1px solid rgba(232,160,32,.12);border-radius:8px;font-size:.82rem;color:var(--muted);line-height:1.5;transition:opacity .2s}
+.bid-calc .calc-value{color:var(--gold);font-weight:700;font-size:.92rem}
+.bid-warn{margin-top:8px;padding:10px 14px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);border-radius:8px;font-size:.78rem;color:#FBBF24;line-height:1.5;display:none}
+.bid-check{display:flex;align-items:flex-start;gap:10px;padding:12px 0;font-size:.82rem;color:#CBD5E1;line-height:1.6}
+.bid-check input[type="checkbox"]{accent-color:var(--gold);width:16px;height:16px;margin-top:2px;cursor:pointer;flex-shrink:0}
+.bid-check a{color:var(--gold);text-decoration:underline}
+.bid-check-error{font-size:.76rem;color:#FCA5A5;margin:-4px 0 8px 26px;display:none}
+.bid-final-summary{padding:14px 16px;background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.18);border-radius:10px;font-size:.84rem;color:#CBD5E1;line-height:1.6;margin-bottom:14px}
+.bid-final-summary .final-value{color:var(--gold);font-weight:800;font-size:1rem}
 .bid-confirm{margin-top:14px;padding:14px;border-radius:10px;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);font-size:.82rem;color:#34D399;line-height:1.6;display:none}
 .bid-confirm.show{display:block}
 .bid-error{margin-top:10px;padding:10px 14px;border-radius:8px;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.12);font-size:.8rem;color:#FCA5A5;display:none}
@@ -552,6 +565,7 @@ var myBids={};
 var bundleCountdowns=[];
 var _supplierProfile=null;
 var _allBundles=[];
+var _bundleDataMap={};
 
 // Wait for Clerk, then check auth + supplier status
 (async function init(){
@@ -645,7 +659,7 @@ var _matCatalogMap={};
 
 async function loadBundles(){
   // Fetch material catalog for name lookups
-  var catRes=await sb.from('material_catalog').select('sourceon_id,bezeichnung,einheit');
+  var catRes=await sb.from('material_catalog').select('sourceon_id,bezeichnung,einheit,richtpreis_chf');
   if(catRes.data){
     catRes.data.forEach(function(m){_matCatalogMap[m.sourceon_id]=m;});
   }
@@ -714,6 +728,7 @@ function updateCountdowns(){
 }
 
 function createBundleCard(b,otherBidCount){
+  _bundleDataMap[b.id]=b;
   var card=document.createElement('div');
   card.className='bundle-card';
   card.id='card-'+b.id;
@@ -774,28 +789,63 @@ function createBundleCard(b,otherBidCount){
     html+='<div class="bid-done">Angebot eingereicht ✓</div>';
     html+='<div class="bid-done-details">';
     if(myBid.rabatt_prozent)html+='Dein Rabatt: <strong>'+Number(myBid.rabatt_prozent).toFixed(1)+'%</strong><br>';
-    if(myBid.preis_pro_einheit)html+='Preis pro Einheit: <strong>CHF '+Number(myBid.preis_pro_einheit).toFixed(2)+'</strong><br>';
     html+='Eingereicht: '+new Date(myBid.created_at).toLocaleDateString('de-CH');
     html+='</div>';
     if(!expired){
       html+='<div class="bid-actions">';
-      html+='<button class="btn-update-bid" onclick="openUpdateForm(\''+b.id+'\',\''+esc(b.unit||'')+'\')">Angebot anpassen</button>';
+      html+='<button class="btn-update-bid" onclick="openUpdateForm(\''+b.id+'\')">Angebot anpassen</button>';
       html+='<button class="btn-withdraw-bid" onclick="withdrawBid(\''+b.id+'\')">Zurückziehen</button>';
       html+='</div>';
     }
   }else if(expired){
     html+='<div class="bid-done" style="color:var(--muted);background:rgba(255,255,255,.025);border-color:rgba(255,255,255,.06)">Frist abgelaufen</div>';
   }else{
-    html+='<button class="btn-bid" onclick="openBidForm(\''+b.id+'\',\''+esc(b.unit||'')+'\')">Angebot abgeben</button>';
+    html+='<button class="btn-bid" onclick="openBidForm(\''+b.id+'\')">Angebot abgeben</button>';
   }
 
+  // Bid form data
+  var bfMat=materialName;
+  var bfVol=volumeVal||0;
+  var bfUnit=volumeUnit;
+  var bfZone=b.delivery_zone||b.liefer_zone||'';
+  var bfVon=b.liefer_zeitraum_von?new Date(b.liefer_zeitraum_von).toLocaleDateString('de-CH'):'';
+  var bfBis=b.liefer_zeitraum_bis?new Date(b.liefer_zeitraum_bis).toLocaleDateString('de-CH'):'';
+  var bfZiel=zielRabatt||0;
+  var bfRichtpreis=(b.sourceon_id&&_matCatalogMap[b.sourceon_id])?(_matCatalogMap[b.sourceon_id].richtpreis_chf||0):0;
+
   html+='<div class="bid-form" id="bidform-'+b.id+'">';
-  html+='<div class="form-group"><label class="form-label">Rabatt-Prozentsatz (%)</label>';
-  html+='<input type="number" step="0.1" min="0" max="100" class="form-input" id="rabatt-'+b.id+'" placeholder="z.B. 15"/></div>';
-  html+='<div class="form-group"><label class="form-label">Preis pro '+esc(b.unit||'Einheit')+' (CHF)</label>';
-  html+='<input type="number" step="0.01" min="0" class="form-input" id="price-'+b.id+'"/></div>';
+
+  // Section 1: Bundle summary
+  html+='<div class="bid-summary-box">';
+  html+='Du bietest auf: <strong>'+esc(bfMat)+'</strong>, <strong>'+Number(bfVol).toLocaleString('de-CH')+' '+esc(bfUnit)+'</strong>';
+  if(bfZone)html+=', Liefergebiet: <strong>'+esc(bfZone)+'</strong>';
+  if(bfVon&&bfBis)html+='<br>Lieferzeitraum: <strong>'+esc(bfVon)+' – '+esc(bfBis)+'</strong>';
+  if(bfZiel)html+=' · Geforderter Mindestrabatt: <span class="mindest">'+bfZiel+'%</span>';
+  html+='</div>';
+
+  // Section 2: Rabatt input + live calc
+  html+='<div class="form-group"><label class="form-label">Dein Rabatt-Angebot (%)</label>';
+  html+='<input type="number" step="0.1" min="0" max="100" class="form-input" id="rabatt-'+b.id+'" placeholder="z.B. 15" oninput="calcBidPreview(\''+b.id+'\')"/>';
+  if(bfZiel)html+='<div style="font-size:.76rem;color:var(--muted);margin-top:4px">Mindestens '+bfZiel+'% gefordert.</div>';
+  html+='<div class="bid-calc" id="bidcalc-'+b.id+'" style="opacity:0">Entspricht ca. <span class="calc-value" id="bidcalcval-'+b.id+'">—</span> Gesamtwert bei '+Number(bfVol).toLocaleString('de-CH')+' '+esc(bfUnit)+'</div>';
+  html+='<div class="bid-warn" id="bidwarn-'+b.id+'">⚠ Dein Angebot liegt unter der Mindestanforderung von '+bfZiel+'% — dieses Angebot wird wahrscheinlich nicht berücksichtigt.</div>';
+  html+='</div>';
+
+  // Section 3: Delivery confirmation
+  html+='<label class="bid-check"><input type="checkbox" id="biddeliv-'+b.id+'"/><span>Ich bestätige, dass ich die vollständige ausgeschriebene Menge ('+Number(bfVol).toLocaleString('de-CH')+' '+esc(bfUnit)+') innerhalb des angegebenen Lieferzeitraums liefern kann.</span></label>';
+  html+='<div class="bid-check-error" id="biddelerr-'+b.id+'">Bitte bestätige deine Lieferfähigkeit.</div>';
+
+  // Section 4: Bemerkungen
   html+='<div class="form-group"><label class="form-label">Lieferfähigkeit / Bemerkungen</label>';
-  html+='<textarea class="form-textarea" id="notes-'+b.id+'" placeholder="z.B. Lieferung innerhalb 3 Tagen möglich, eigene Flotte"></textarea></div>';
+  html+='<textarea class="form-textarea" id="notes-'+b.id+'" placeholder="Optional: z.B. Hinweise zu Logistik, Mindestbestellmengen, oder Besonderheiten bei der Lieferung."></textarea></div>';
+
+  // Section 5: Legal confirmation
+  html+='<label class="bid-check"><input type="checkbox" id="bidlegal-'+b.id+'"/><span>Dieses Angebot ist verbindlich gemäss der <a href="lieferantenvereinbarung.html" target="_blank">SourceOn-Lieferantenvereinbarung</a>. Bei Zuschlag verpflichte ich mich zur Lieferung gemäss den genannten Konditionen.</span></label>';
+  html+='<div class="bid-check-error" id="bidlegerr-'+b.id+'">Bitte bestätige die verbindliche Angebotsabgabe.</div>';
+
+  // Section 6: Final summary
+  html+='<div class="bid-final-summary" id="bidfinal-'+b.id+'" style="display:none"><span id="bidfinaltext-'+b.id+'"></span></div>';
+
   html+='<button class="btn-submit-bid" id="subbtn-'+b.id+'" onclick="submitBid(\''+b.id+'\')">Angebot einreichen</button>';
   html+='<button class="btn-cancel" onclick="closeBidForm(\''+b.id+'\')">Abbrechen</button>';
   html+='</div>';
@@ -818,18 +868,67 @@ function openBidForm(id){
 function closeBidForm(id){
   document.getElementById('bidform-'+id).classList.remove('open');
 }
-function openUpdateForm(id,unit){
+function openUpdateForm(id){
   var form=document.getElementById('bidform-'+id);
   form.classList.add('open');
   var bid=myBids[id];
   if(bid){
     if(bid.rabatt_prozent)document.getElementById('rabatt-'+id).value=bid.rabatt_prozent;
-    if(bid.preis_pro_einheit)document.getElementById('price-'+id).value=bid.preis_pro_einheit;
     if(bid.lieferfaehigkeit_notes)document.getElementById('notes-'+id).value=bid.lieferfaehigkeit_notes;
+    document.getElementById('biddeliv-'+id).checked=!!bid.delivery_confirmed;
+    document.getElementById('bidlegal-'+id).checked=!!bid.legal_confirmed;
+    calcBidPreview(id);
   }
   var btn=document.getElementById('subbtn-'+id);
   btn.textContent='Angebot aktualisieren';
   btn.onclick=function(){updateBid(id);};
+}
+
+function calcBidPreview(bundleId){
+  var rabattInput=document.getElementById('rabatt-'+bundleId);
+  var rabatt=parseFloat(rabattInput.value);
+  var b=_bundleDataMap[bundleId];
+  if(!b)return;
+
+  var richtpreis=(b.sourceon_id&&_matCatalogMap[b.sourceon_id])?(_matCatalogMap[b.sourceon_id].richtpreis_chf||0):0;
+  var vol=Number(b.gesamtvolumen||b.total_quantity||0);
+  var zielRaw=b.ziel_mindestrabatt||b.min_discount||0;
+  var ziel=zielRaw<1?Math.round(zielRaw*1000)/10:zielRaw;
+  var einheit=b.einheit||b.unit||'';
+  var matName='Material';
+  if(b.sourceon_id&&_matCatalogMap[b.sourceon_id])matName=_matCatalogMap[b.sourceon_id].bezeichnung;
+  else if(b.material_type)matName=b.material_type;
+
+  var calcEl=document.getElementById('bidcalc-'+bundleId);
+  var calcValEl=document.getElementById('bidcalcval-'+bundleId);
+  var warnEl=document.getElementById('bidwarn-'+bundleId);
+  var finalEl=document.getElementById('bidfinal-'+bundleId);
+  var finalTextEl=document.getElementById('bidfinaltext-'+bundleId);
+
+  if(!rabatt||isNaN(rabatt)||rabatt<=0){
+    calcEl.style.opacity='0';
+    warnEl.style.display='none';
+    finalEl.style.display='none';
+    return;
+  }
+
+  if(richtpreis>0&&vol>0){
+    var totalValue=vol*richtpreis*(1-rabatt/100);
+    calcValEl.textContent='CHF '+Math.round(totalValue).toLocaleString('de-CH');
+    calcEl.style.opacity='1';
+    finalEl.style.display='block';
+    finalTextEl.innerHTML=rabatt+'% Rabatt auf '+Number(vol).toLocaleString('de-CH')+' '+esc(einheit)+' '+esc(matName)+'<br>Geschätzter Gesamtwert: <span class="final-value">CHF '+Math.round(totalValue).toLocaleString('de-CH')+'</span>';
+  }else{
+    calcEl.style.opacity='0';
+    finalEl.style.display='block';
+    finalTextEl.innerHTML=rabatt+'% Rabatt auf '+Number(vol).toLocaleString('de-CH')+' '+esc(einheit)+' '+esc(matName);
+  }
+
+  if(ziel>0&&rabatt<ziel){
+    warnEl.style.display='block';
+  }else{
+    warnEl.style.display='none';
+  }
 }
 
 function showBidError(id,msg){
@@ -838,12 +937,20 @@ function showBidError(id,msg){
   setTimeout(function(){el.classList.remove('show');},5000);
 }
 
+function validateBidChecks(bundleId){
+  var deliv=document.getElementById('biddeliv-'+bundleId).checked;
+  var legal=document.getElementById('bidlegal-'+bundleId).checked;
+  document.getElementById('biddelerr-'+bundleId).style.display=deliv?'none':'block';
+  document.getElementById('bidlegerr-'+bundleId).style.display=legal?'none':'block';
+  return deliv&&legal;
+}
+
 async function submitBid(bundleId){
   var rabatt=parseFloat(document.getElementById('rabatt-'+bundleId).value);
-  var price=parseFloat(document.getElementById('price-'+bundleId).value);
   var notes=document.getElementById('notes-'+bundleId).value.trim();
 
-  if(!rabatt&&!price){showBidError(bundleId,'Bitte gib mindestens einen Rabatt-Prozentsatz oder einen Preis pro Einheit an.');return;}
+  if(!rabatt||isNaN(rabatt)||rabatt<=0){showBidError(bundleId,'Bitte gib einen Rabatt-Prozentsatz an.');return;}
+  if(!validateBidChecks(bundleId))return;
 
   var btn=document.getElementById('subbtn-'+bundleId);
   btn.disabled=true;btn.textContent='Wird eingereicht…';
@@ -851,10 +958,12 @@ async function submitBid(bundleId){
   var payload={
     bundle_id:bundleId,
     supplier_id:currentUserId,
-    status:'eingereicht'
+    status:'eingereicht',
+    rabatt_prozent:rabatt,
+    delivery_confirmed:true,
+    legal_confirmed:true,
+    legal_confirmed_at:new Date().toISOString()
   };
-  if(rabatt)payload.rabatt_prozent=rabatt;
-  if(price)payload.preis_pro_einheit=price;
   if(notes)payload.lieferfaehigkeit_notes=notes;
 
   var result=await sb.from('bids').insert(payload);
@@ -873,24 +982,27 @@ async function submitBid(bundleId){
   var cardBtns=document.getElementById('card-'+bundleId).querySelectorAll('.btn-bid');
   cardBtns.forEach(function(b){b.style.display='none';});
   document.getElementById('confirm-'+bundleId).classList.add('show');
-  myBids[bundleId]={rabatt_prozent:rabatt,preis_pro_einheit:price,lieferfaehigkeit_notes:notes,created_at:new Date().toISOString(),status:'eingereicht'};
+  myBids[bundleId]={rabatt_prozent:rabatt,lieferfaehigkeit_notes:notes,delivery_confirmed:true,legal_confirmed:true,created_at:new Date().toISOString(),status:'eingereicht'};
   loadHistory();
 }
 
 async function updateBid(bundleId){
   var rabatt=parseFloat(document.getElementById('rabatt-'+bundleId).value);
-  var price=parseFloat(document.getElementById('price-'+bundleId).value);
   var notes=document.getElementById('notes-'+bundleId).value.trim();
 
-  if(!rabatt&&!price){showBidError(bundleId,'Bitte gib mindestens einen Rabatt oder Preis an.');return;}
+  if(!rabatt||isNaN(rabatt)||rabatt<=0){showBidError(bundleId,'Bitte gib einen Rabatt-Prozentsatz an.');return;}
+  if(!validateBidChecks(bundleId))return;
 
   var btn=document.getElementById('subbtn-'+bundleId);
   btn.disabled=true;btn.textContent='Wird aktualisiert…';
 
-  var payload={};
-  if(rabatt)payload.rabatt_prozent=rabatt;
-  if(price)payload.preis_pro_einheit=price;
-  payload.lieferfaehigkeit_notes=notes||null;
+  var payload={
+    rabatt_prozent:rabatt,
+    lieferfaehigkeit_notes:notes||null,
+    delivery_confirmed:true,
+    legal_confirmed:true,
+    legal_confirmed_at:new Date().toISOString()
+  };
 
   var result=await sb.from('bids').update(payload).eq('bundle_id',bundleId).eq('supplier_id',currentUserId);
 
@@ -902,7 +1014,6 @@ async function updateBid(bundleId){
 
   closeBidForm(bundleId);
   myBids[bundleId]=Object.assign(myBids[bundleId]||{},payload,{created_at:new Date().toISOString()});
-  // Refresh the card
   window.location.reload();
 }
 
