@@ -1210,6 +1210,7 @@ async function submitContact(e){
       lieferadresse:addrVal,
       kanton:_extractKanton(addrVal)
     };
+    if(window.Clerk&&window.Clerk.user){custPayload.user_id=window.Clerk.user.id;}
     var _dbUrl=_supabase.supabaseUrl||(_supabase.rest?_supabase.rest.url:'unknown');
     var _dbKey=_supabase.supabaseKey||(_supabase.rest&&_supabase.rest.headers?_supabase.rest.headers.apikey:'unknown');
     console.log('[SourceOn Debug] Supabase URL:',_dbUrl);
