@@ -235,8 +235,16 @@ a{color:var(--gold);text-decoration:none}
 .bid-summary-box{padding:14px 16px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:10px;font-size:.8rem;color:var(--muted);line-height:1.7;margin-bottom:16px}
 .bid-summary-box strong{color:#CBD5E1}
 .bid-summary-box .mindest{color:var(--gold);font-weight:600}
-.bid-calc{margin-top:8px;padding:10px 14px;background:rgba(232,160,32,.05);border:1px solid rgba(232,160,32,.12);border-radius:8px;font-size:.82rem;color:var(--muted);line-height:1.5;transition:opacity .2s}
-.bid-calc .calc-value{color:var(--gold);font-weight:700;font-size:.92rem}
+.bid-breakdown{margin-bottom:16px;padding:18px 20px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.07);border-radius:12px}
+.bid-breakdown-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:14px}
+.bid-breakdown-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:.84rem}
+.bid-breakdown-label{color:var(--muted)}
+.bid-breakdown-val{color:#CBD5E1;font-weight:600}
+.bid-breakdown-discount{color:#FCA5A5}
+.bid-breakdown-divider{border-top:1px solid rgba(255,255,255,.08);margin:8px 0}
+.bid-breakdown-total-row .bid-breakdown-label{color:#fff;font-weight:700;font-size:.9rem}
+.bid-breakdown-total{color:var(--gold);font-weight:800;font-size:1.15rem}
+.bid-breakdown-note{font-size:.72rem;color:var(--body);margin-top:12px;line-height:1.6}
 .bid-warn{margin-top:8px;padding:10px 14px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.15);border-radius:8px;font-size:.78rem;color:#FBBF24;line-height:1.5;display:none}
 .bid-check{display:flex;align-items:flex-start;gap:10px;padding:12px 0;font-size:.82rem;color:#CBD5E1;line-height:1.6}
 .bid-check input[type="checkbox"]{accent-color:var(--gold);width:16px;height:16px;margin-top:2px;cursor:pointer;flex-shrink:0}
@@ -746,14 +754,14 @@ function createBundleCard(b,otherBidCount){
   }else if(b.material_type){
     materialName=b.material_type;
   }
-  var volume=(b.total_quantity||'—')+' '+(b.unit||'');
+  var volume=(b.total_quantity||'—')+' '+(b.einheit||b.unit||'');
   var zielRabattRaw=b.ziel_mindestrabatt||b.min_discount||null;
   var zielRabatt=zielRabattRaw?(zielRabattRaw<1?Math.round(zielRabattRaw*1000)/10:zielRabattRaw):null;
 
   bundleCountdowns.push({el:null,deadline:deadline,id:b.id});
 
   var volumeVal=b.gesamtvolumen||b.total_quantity||null;
-  var volumeUnit=b.unit||'';
+  var volumeUnit=b.einheit||b.unit||'';
   var volumeStr=volumeVal?Number(volumeVal).toLocaleString('de-CH')+' '+volumeUnit:'—';
 
   var btLabel={'single_material':'Einzelmaterial-Bündel','multi_material':'Mehrere Materialien gebündelt'};
@@ -823,12 +831,19 @@ function createBundleCard(b,otherBidCount){
   if(bfZiel)html+=' · Geforderter Mindestrabatt: <span class="mindest">'+bfZiel+'%</span>';
   html+='</div>';
 
-  // Section 2: Rabatt input + live calc
+  // Section 2: Rabatt input + pricing breakdown
   html+='<div class="form-group"><label class="form-label">Dein Rabatt-Angebot (%)</label>';
   html+='<input type="number" step="0.1" min="0" max="100" class="form-input" id="rabatt-'+b.id+'" placeholder="z.B. 15" oninput="calcBidPreview(\''+b.id+'\')"/>';
   if(bfZiel)html+='<div style="font-size:.76rem;color:var(--muted);margin-top:4px">Mindestens '+bfZiel+'% gefordert.</div>';
-  html+='<div class="bid-calc" id="bidcalc-'+b.id+'" style="opacity:0">Entspricht ca. <span class="calc-value" id="bidcalcval-'+b.id+'">—</span> Gesamtwert bei '+Number(bfVol).toLocaleString('de-CH')+' '+esc(bfUnit)+'</div>';
   html+='<div class="bid-warn" id="bidwarn-'+b.id+'">⚠ Dein Angebot liegt unter der Mindestanforderung von '+bfZiel+'% — dieses Angebot wird wahrscheinlich nicht berücksichtigt.</div>';
+  html+='</div>';
+  html+='<div class="bid-breakdown" id="bidbreakdown-'+b.id+'" style="display:none">';
+  html+='<div class="bid-breakdown-title">Preisübersicht deines Angebots</div>';
+  html+='<div class="bid-breakdown-row"><span class="bid-breakdown-label">Reguläre Marktkonditionen (Richtwert)</span><span class="bid-breakdown-val" id="bidbase-'+b.id+'">—</span></div>';
+  html+='<div class="bid-breakdown-row"><span class="bid-breakdown-label">Dein Rabatt</span><span class="bid-breakdown-val bid-breakdown-discount" id="biddiscount-'+b.id+'">—</span></div>';
+  html+='<div class="bid-breakdown-divider"></div>';
+  html+='<div class="bid-breakdown-row bid-breakdown-total-row"><span class="bid-breakdown-label">Dein Gesamtangebot</span><span class="bid-breakdown-total" id="bidtotal-'+b.id+'">—</span></div>';
+  html+='<div class="bid-breakdown-note">Hinweis: Basiert auf SourceOn-Richtpreisen. Der tatsächliche Marktpreis kann variieren — massgebend ist dein verbindliches Gesamtangebot.</div>';
   html+='</div>';
 
   // Section 3: Delivery confirmation
@@ -885,49 +900,51 @@ function openUpdateForm(id){
 }
 
 function calcBidPreview(bundleId){
-  var rabattInput=document.getElementById('rabatt-'+bundleId);
-  var rabatt=parseFloat(rabattInput.value);
+  var rabatt=parseFloat(document.getElementById('rabatt-'+bundleId).value);
   var b=_bundleDataMap[bundleId];
   if(!b)return;
 
-  var richtpreis=(b.sourceon_id&&_matCatalogMap[b.sourceon_id])?(_matCatalogMap[b.sourceon_id].richtpreis_chf||0):0;
+  var catEntry=b.sourceon_id?_matCatalogMap[b.sourceon_id]:null;
+  var richtpreis=catEntry?Number(catEntry.richtpreis_chf||0):0;
   var vol=Number(b.gesamtvolumen||b.total_quantity||0);
+  var einheit=b.einheit||b.unit||'';
   var zielRaw=b.ziel_mindestrabatt||b.min_discount||0;
   var ziel=zielRaw<1?Math.round(zielRaw*1000)/10:zielRaw;
-  var einheit=b.einheit||b.unit||'';
-  var matName='Material';
-  if(b.sourceon_id&&_matCatalogMap[b.sourceon_id])matName=_matCatalogMap[b.sourceon_id].bezeichnung;
-  else if(b.material_type)matName=b.material_type;
+  var matName=catEntry?catEntry.bezeichnung:(b.material_type||'Material');
 
-  var calcEl=document.getElementById('bidcalc-'+bundleId);
-  var calcValEl=document.getElementById('bidcalcval-'+bundleId);
+  var breakdownEl=document.getElementById('bidbreakdown-'+bundleId);
   var warnEl=document.getElementById('bidwarn-'+bundleId);
   var finalEl=document.getElementById('bidfinal-'+bundleId);
   var finalTextEl=document.getElementById('bidfinaltext-'+bundleId);
 
+  console.log('[SourceOn Debug] calcBidPreview:',bundleId,'einheit:',b.einheit,'unit:',b.unit,'richtpreis:',richtpreis,'vol:',vol,'sourceon_id:',b.sourceon_id,'catEntry:',catEntry);
+
   if(!rabatt||isNaN(rabatt)||rabatt<=0){
-    calcEl.style.opacity='0';
+    breakdownEl.style.display='none';
     warnEl.style.display='none';
     finalEl.style.display='none';
     return;
   }
 
+  // Warning
+  warnEl.style.display=(ziel>0&&rabatt<ziel)?'block':'none';
+
   if(richtpreis>0&&vol>0){
-    var totalValue=vol*richtpreis*(1-rabatt/100);
-    calcValEl.textContent='CHF '+Math.round(totalValue).toLocaleString('de-CH');
-    calcEl.style.opacity='1';
+    var baseline=vol*richtpreis;
+    var discountAmount=baseline*(rabatt/100);
+    var totalAfter=baseline-discountAmount;
+
+    document.getElementById('bidbase-'+bundleId).textContent=Number(vol).toLocaleString('de-CH')+' '+einheit+' × CHF '+Number(richtpreis).toLocaleString('de-CH')+' = CHF '+Math.round(baseline).toLocaleString('de-CH');
+    document.getElementById('biddiscount-'+bundleId).textContent='-'+rabatt+'% = -CHF '+Math.round(discountAmount).toLocaleString('de-CH');
+    document.getElementById('bidtotal-'+bundleId).textContent='CHF '+Math.round(totalAfter).toLocaleString('de-CH');
+    breakdownEl.style.display='block';
+
     finalEl.style.display='block';
-    finalTextEl.innerHTML=rabatt+'% Rabatt auf '+Number(vol).toLocaleString('de-CH')+' '+esc(einheit)+' '+esc(matName)+'<br>Geschätzter Gesamtwert: <span class="final-value">CHF '+Math.round(totalValue).toLocaleString('de-CH')+'</span>';
+    finalTextEl.innerHTML=rabatt+'% Rabatt auf '+Number(vol).toLocaleString('de-CH')+' '+esc(einheit)+' '+esc(matName)+'<br>Geschätzter Gesamtwert: <span class="final-value">CHF '+Math.round(totalAfter).toLocaleString('de-CH')+'</span>';
   }else{
-    calcEl.style.opacity='0';
+    breakdownEl.style.display='none';
     finalEl.style.display='block';
     finalTextEl.innerHTML=rabatt+'% Rabatt auf '+Number(vol).toLocaleString('de-CH')+' '+esc(einheit)+' '+esc(matName);
-  }
-
-  if(ziel>0&&rabatt<ziel){
-    warnEl.style.display='block';
-  }else{
-    warnEl.style.display='none';
   }
 }
 
