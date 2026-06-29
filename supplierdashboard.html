@@ -96,19 +96,39 @@ a{color:var(--gold);text-decoration:none}
 
 /* OVERVIEW STATS */
 .ov-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px}
-.ov-stat{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:28px 24px;transition:border-color .2s}
-.ov-stat:hover{border-color:rgba(232,160,32,.15)}
+.ov-stat{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-left:3px solid var(--gold);border-radius:var(--r);padding:28px 24px;transition:border-color .2s,transform .2s;animation:fadeIn .5s ease both}
+.ov-stat:nth-child(2){animation-delay:.08s}
+.ov-stat:nth-child(3){animation-delay:.16s}
+.ov-stat:hover{border-color:rgba(232,160,32,.2);transform:translateY(-2px)}
 .ov-stat-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
-.ov-stat-value{font-size:1.8rem;font-weight:800;letter-spacing:-.02em}
+.ov-stat-value{font-size:2.2rem;font-weight:800;letter-spacing:-.03em}
 .ov-stat-value.gold{color:var(--gold)}
 .ov-stat-value.green{color:#34D399}
 .ov-stat-sub{font-size:.76rem;color:var(--body);margin-top:4px}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* CHART SECTIONS */
+.ov-charts{display:grid;grid-template-columns:1.5fr 1fr;gap:16px;margin-bottom:40px}
+.ov-chart-box{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:24px;animation:fadeIn .5s .2s ease both}
+.ov-chart-box h3{font-size:.82rem;font-weight:700;color:#fff;margin-bottom:16px}
+.ov-chart-empty{text-align:center;padding:40px 16px;color:var(--body);font-size:.84rem;line-height:1.7}
+
+/* INSIGHTS ROW */
+.ov-insights{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px}
+.ov-insight{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:20px;animation:fadeIn .5s .3s ease both}
+.ov-insight-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
+.ov-insight-value{font-size:1.2rem;font-weight:800;color:#fff;letter-spacing:-.02em}
+.ov-insight-value.gold{color:var(--gold)}
 
 /* OVERVIEW TABLE */
 .ov-table{width:100%;border-collapse:collapse}
 .ov-table th{text-align:left;font-size:.68rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
 .ov-table td{font-size:.84rem;padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:#CBD5E1}
+.ov-table tr:hover td{background:rgba(255,255,255,.02)}
 .ov-table .col-bestellwert{color:var(--gold);font-weight:600}
+.ov-table .status-badge{display:inline-block;padding:4px 12px;border-radius:100px;font-size:.72rem;font-weight:600}
+
+@media(max-width:768px){.ov-charts{grid-template-columns:1fr}.ov-insights{grid-template-columns:1fr}}
 
 /* BUNDLE CARDS */
 .bundle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:24px}
@@ -307,6 +327,40 @@ a{color:var(--gold);text-decoration:none}
         </div>
       </div>
 
+      <div class="ov-charts">
+        <div class="ov-chart-box">
+          <h3>Bestellwert pro Monat</h3>
+          <div id="chart-revenue-empty" class="ov-chart-empty" style="display:none">Noch keine Daten — gib dein erstes Angebot ab.</div>
+          <canvas id="chart-revenue" height="220"></canvas>
+        </div>
+        <div class="ov-chart-box">
+          <h3>Angebotsstatus</h3>
+          <div id="chart-status-empty" class="ov-chart-empty" style="display:none">Noch keine Angebote abgegeben.</div>
+          <canvas id="chart-status" height="220"></canvas>
+        </div>
+      </div>
+
+      <div class="ov-chart-box" style="margin-bottom:40px">
+        <h3>Materialien — Angebotsaktivität</h3>
+        <div id="chart-materials-empty" class="ov-chart-empty" style="display:none">Noch keine Daten verfügbar.</div>
+        <canvas id="chart-materials" height="160"></canvas>
+      </div>
+
+      <div class="ov-insights">
+        <div class="ov-insight">
+          <div class="ov-insight-label">Ø Rabatt</div>
+          <div class="ov-insight-value gold" id="ov-avg-rabatt">—</div>
+        </div>
+        <div class="ov-insight">
+          <div class="ov-insight-label">Erfolgsquote</div>
+          <div class="ov-insight-value gold" id="ov-winrate">—</div>
+        </div>
+        <div class="ov-insight">
+          <div class="ov-insight-label">Aktivster Monat</div>
+          <div class="ov-insight-value" id="ov-best-month">—</div>
+        </div>
+      </div>
+
       <h2 class="history-title">Deine Angebotshistorie</h2>
       <div id="ov-table-wrap" style="overflow-x:auto">
         <table class="ov-table" id="ov-table" style="display:none">
@@ -325,6 +379,7 @@ a{color:var(--gold);text-decoration:none}
   </div>
 </main>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 var SUPABASE_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
@@ -758,30 +813,107 @@ async function loadOverview(){
   }
 
   var bids=result.data;
-  var active=0,won=0,revenue=0;
+  var active=0,won=0,lost=0,revenue=0,totalRabatt=0,rabattCount=0;
+  var monthRevenue={},monthBids={},matCount={};
+
   bids.forEach(function(b){
-    if(b.status==='eingereicht'||b.status==='submitted')active++;
-    if(b.status==='gewonnen'||b.status==='won'){
+    var bundle=b.bundles||{};
+    var isWon=b.status==='gewonnen'||b.status==='won';
+    var isActive=b.status==='eingereicht'||b.status==='submitted';
+    var isLost=b.status==='verloren'||b.status==='lost';
+    if(isActive)active++;
+    if(isLost)lost++;
+    if(isWon){
       won++;
-      var bundle=b.bundles||{};
       var vol=bundle.gesamtvolumen||bundle.total_quantity||0;
-      if(b.preis_pro_einheit&&vol){
-        revenue+=Number(b.preis_pro_einheit)*Number(vol);
-      }
+      if(b.preis_pro_einheit&&vol)revenue+=Number(b.preis_pro_einheit)*Number(vol);
     }
+    if(b.rabatt_prozent){totalRabatt+=Number(b.rabatt_prozent);rabattCount++;}
+
+    var d=new Date(b.created_at);
+    var mk=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
+    monthBids[mk]=(monthBids[mk]||0)+1;
+    if(isWon&&b.preis_pro_einheit&&(bundle.gesamtvolumen||bundle.total_quantity)){
+      monthRevenue[mk]=(monthRevenue[mk]||0)+Number(b.preis_pro_einheit)*Number(bundle.gesamtvolumen||bundle.total_quantity);
+    }
+
+    var matKey=bundle.sourceon_id||bundle.material_type||'unbekannt';
+    var matLabel=matKey;
+    if(bundle.sourceon_id&&_matCatalogMap[bundle.sourceon_id])matLabel=_matCatalogMap[bundle.sourceon_id].bezeichnung;
+    else if(bundle.material_type)matLabel=bundle.material_type;
+    if(!matCount[matLabel])matCount[matLabel]=0;
+    matCount[matLabel]++;
   });
 
   document.getElementById('ov-active').textContent=active;
-  document.getElementById('ov-active-sub').textContent=active===1?'Eingereichte Angebote':'Eingereichte Angebote';
   document.getElementById('ov-won').textContent=won;
   document.getElementById('ov-revenue').textContent='CHF '+revenue.toLocaleString('de-CH',{minimumFractionDigits:0,maximumFractionDigits:0});
+
+  var avgR=rabattCount>0?(totalRabatt/rabattCount).toFixed(1)+'%':'—';
+  var winrate=bids.length>0?Math.round(won/bids.length*100)+'%':'—';
+  document.getElementById('ov-avg-rabatt').textContent=avgR;
+  document.getElementById('ov-winrate').textContent=winrate;
+
+  var bestMonth='—';
+  var bestCount=0;
+  var mNames=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+  Object.keys(monthBids).forEach(function(k){if(monthBids[k]>bestCount){bestCount=monthBids[k];var p=k.split('-');bestMonth=mNames[parseInt(p[1])-1]+' '+p[0];}});
+  document.getElementById('ov-best-month').textContent=bestMonth;
 
   emptyEl.style.display='none';
   contentEl.style.display='block';
   document.getElementById('ov-table').style.display='table';
 
+  // Chart defaults
+  Chart.defaults.color='#94A3B8';
+  Chart.defaults.borderColor='rgba(255,255,255,.06)';
+  Chart.defaults.font.family='Inter';
+
+  // Revenue chart
+  var revKeys=Object.keys(monthRevenue).sort();
+  if(revKeys.length>0){
+    var revLabels=revKeys.map(function(k){var p=k.split('-');return mNames[parseInt(p[1])-1]+' '+p[0].slice(2);});
+    var revData=revKeys.map(function(k){return monthRevenue[k];});
+    new Chart(document.getElementById('chart-revenue'),{
+      type:'line',
+      data:{labels:revLabels,datasets:[{data:revData,borderColor:'#E8A020',backgroundColor:'rgba(232,160,32,.08)',fill:true,tension:.4,pointBackgroundColor:'#E8A020',pointRadius:4,pointHoverRadius:6,borderWidth:2}]},
+      options:{responsive:true,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{callback:function(v){return'CHF '+v.toLocaleString('de-CH');}},grid:{color:'rgba(255,255,255,.04)'}},x:{grid:{display:false}}}}
+    });
+  }else{
+    document.getElementById('chart-revenue').style.display='none';
+    document.getElementById('chart-revenue-empty').style.display='block';
+  }
+
+  // Status donut
+  if(won+active+lost>0){
+    new Chart(document.getElementById('chart-status'),{
+      type:'doughnut',
+      data:{labels:['Gewonnen','Ausstehend','Nicht berücksichtigt'],datasets:[{data:[won,active,lost],backgroundColor:['#10B981','#E8A020','rgba(255,255,255,.1)'],borderWidth:0,hoverOffset:4}]},
+      options:{responsive:true,cutout:'65%',plugins:{legend:{position:'bottom',labels:{padding:16,usePointStyle:true,pointStyle:'circle',font:{size:12}}}}}
+    });
+  }else{
+    document.getElementById('chart-status').style.display='none';
+    document.getElementById('chart-status-empty').style.display='block';
+  }
+
+  // Materials bar chart
+  var matLabels=Object.keys(matCount).sort(function(a,b){return matCount[b]-matCount[a];}).slice(0,8);
+  if(matLabels.length>0){
+    var matData=matLabels.map(function(k){return matCount[k];});
+    var shortLabels=matLabels.map(function(l){return l.length>30?l.substring(0,28)+'…':l;});
+    new Chart(document.getElementById('chart-materials'),{
+      type:'bar',
+      data:{labels:shortLabels,datasets:[{data:matData,backgroundColor:'rgba(232,160,32,.2)',borderColor:'#E8A020',borderWidth:1,borderRadius:6,barPercentage:.6}]},
+      options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,ticks:{stepSize:1,precision:0},grid:{color:'rgba(255,255,255,.04)'}},y:{grid:{display:false}}}}
+    });
+  }else{
+    document.getElementById('chart-materials').style.display='none';
+    document.getElementById('chart-materials-empty').style.display='block';
+  }
+
+  // Bid history table
   var statusLabels={eingereicht:'Eingereicht',gewonnen:'Zuschlag',verloren:'Nicht berücksichtigt',submitted:'Eingereicht',won:'Zuschlag',lost:'Nicht berücksichtigt'};
-  var statusClasses={eingereicht:'eingereicht',gewonnen:'gewonnen',verloren:'verloren',submitted:'eingereicht',won:'gewonnen',lost:'verloren'};
+  var statusClasses={eingereicht:'status-eingereicht',gewonnen:'status-gewonnen',verloren:'status-verloren',submitted:'status-eingereicht',won:'status-gewonnen',lost:'status-verloren'};
 
   var tbody=document.getElementById('ov-table-body');
   tbody.innerHTML='';
@@ -790,7 +922,7 @@ async function loadOverview(){
     var bundle=bid.bundles||{};
     var tr=document.createElement('tr');
     var sl=statusLabels[bid.status]||bid.status;
-    var sc=statusClasses[bid.status]||'eingereicht';
+    var sc=statusClasses[bid.status]||'status-eingereicht';
     var matName=bundle.material_type||'—';
     if(bundle.sourceon_id&&_matCatalogMap[bundle.sourceon_id]){
       matName=_matCatalogMap[bundle.sourceon_id].bezeichnung;
@@ -806,7 +938,7 @@ async function loadOverview(){
       +'<td>'+esc(matName)+'</td>'
       +'<td>'+esc(vol)+'</td>'
       +'<td>'+rabatt+'</td>'
-      +'<td><span class="status-badge status-'+sc+'">'+sl+'</span></td>'
+      +'<td><span class="status-badge '+sc+'">'+sl+'</span></td>'
       +'<td class="col-bestellwert">'+bestellwert+'</td>';
     tbody.appendChild(tr);
   });
