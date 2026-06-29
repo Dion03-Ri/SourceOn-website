@@ -107,6 +107,7 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
 .badge-status.pending{background:rgba(245,158,11,.12);color:#FBBF24}
 .badge-status.rejected,.badge-status.abgelehnt{background:rgba(239,68,68,.12);color:#F87171}
 .badge-status.vergeben{background:rgba(59,130,246,.12);color:#60A5FA}
+.badge-status.abgelaufen{background:rgba(239,68,68,.12);color:#F87171}
 .badge-status.abgeschlossen{background:rgba(139,92,246,.12);color:#A78BFA}
 
 /* ACTION BUTTONS */
@@ -115,6 +116,17 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
 .btn-verify:hover{background:rgba(16,185,129,.3)}
 .btn-reject{background:rgba(239,68,68,.12);color:#F87171}
 .btn-reject:hover{background:rgba(239,68,68,.25)}
+.btn-relist{background:rgba(232,160,32,.15);color:#E8A020}
+.btn-relist:hover{background:rgba(232,160,32,.3)}
+.btn-remove{background:rgba(239,68,68,.12);color:#F87171}
+.btn-remove:hover{background:rgba(239,68,68,.25)}
+
+.relist-form{display:none;margin-top:8px;padding:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px}
+.relist-form label{display:block;font-size:.72rem;color:var(--muted);margin-bottom:4px;font-weight:600}
+.relist-form input{width:100%;padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;font-size:.8rem;font-family:inherit;outline:none;margin-bottom:8px}
+.relist-form input:focus{border-color:var(--gold)}
+.relist-actions{display:flex;gap:8px;margin-top:4px}
+.relist-actions .btn-sm{padding:5px 12px}
 
 /* SEARCH */
 .search-input{padding:10px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;font-size:.85rem;font-family:inherit;width:320px;max-width:100%;outline:none;transition:border-color .2s;margin-bottom:16px}
@@ -183,6 +195,7 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
     <div class="stat-card"><div class="stat-label">Verifizierte Lieferanten</div><div class="stat-value green" id="st-verified-suppliers">–</div></div>
     <div class="stat-card"><div class="stat-label">Wartende Bewerbungen</div><div class="stat-value amber" id="st-pending-suppliers">–</div></div>
     <div class="stat-card"><div class="stat-label">Registrierte Kunden</div><div class="stat-value" id="st-total-customers">–</div></div>
+    <div class="stat-card"><div class="stat-label">Abgelaufene Bündel</div><div class="stat-value" style="color:#F87171" id="st-expired-bundles">–</div></div>
     <div class="stat-card"><div class="stat-label">Offene Materialanfragen</div><div class="stat-value amber" id="st-open-requests">–</div></div>
   </div>
 
@@ -198,6 +211,13 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
     <div class="section-title">Alle Bündel</div>
     <p class="section-sub">Alle erstellten Bündel, sortiert nach Erstelldatum (neueste zuerst).</p>
     <div class="tbl-wrap"><div id="bundles-table" class="loading">Daten werden geladen...</div></div>
+  </div>
+
+  <!-- SECTION 3b: Expired bundles -->
+  <div class="section" id="sec-expired">
+    <div class="section-title">Abgelaufene Bündel <span class="badge" id="expired-count" style="background:rgba(239,68,68,.12);color:#F87171">0</span></div>
+    <p class="section-sub">Bündel deren Frist abgelaufen ist ohne qualifizierende Gebote. Erneut ausschreiben oder entfernen.</p>
+    <div class="tbl-wrap"><div id="expired-table" class="loading">Daten werden geladen...</div></div>
   </div>
 
   <!-- SECTION 4: All suppliers -->
@@ -326,7 +346,7 @@ function fmtDate(d){
 
 function statusBadge(s){
   if(!s)return'–';
-  var labels={verified:'Verifiziert',pending:'Ausstehend',rejected:'Abgelehnt',ausgeschrieben:'Ausgeschrieben',vergeben:'Vergeben',abgeschlossen:'Abgeschlossen',offen:'Offen',gebuendelt:'Gebündelt'};
+  var labels={verified:'Verifiziert',pending:'Ausstehend',rejected:'Abgelehnt',ausgeschrieben:'Ausgeschrieben',vergeben:'Vergeben',abgelaufen:'Abgelaufen',abgeschlossen:'Abgeschlossen',offen:'Offen',gebuendelt:'Gebündelt'};
   return '<span class="badge-status '+s+'">'+(labels[s]||s)+'</span>';
 }
 
@@ -338,7 +358,7 @@ function esc(s){
 async function loadAllData(){
   document.getElementById('btn-refresh').disabled=true;
   try{
-    await Promise.all([loadStats(),loadPending(),loadBundles(),loadSuppliers(),loadCustomers()]);
+    await Promise.all([loadStats(),loadPending(),loadBundles(),loadExpiredBundles(),loadSuppliers(),loadCustomers()]);
   }catch(e){console.error('loadAllData error:',e);}
   document.getElementById('btn-refresh').disabled=false;
 }
@@ -355,6 +375,7 @@ async function loadStats(){
   var totalVol=activeBundles.reduce(function(s,b){return s+(Number(b.gesamtvolumen)||0);},0);
   var verifiedSup=suppliers.filter(function(s){return s.status==='verified';});
   var pendingSup=suppliers.filter(function(s){return s.status==='pending';});
+  var expiredBundles=bundles.filter(function(b){return b.status==='abgelaufen';});
   var openReq=requests.filter(function(r){return r.status==='offen';});
 
   document.getElementById('st-active-bundles').textContent=activeBundles.length;
@@ -364,6 +385,7 @@ async function loadStats(){
   document.getElementById('st-verified-suppliers').textContent=verifiedSup.length;
   document.getElementById('st-pending-suppliers').textContent=pendingSup.length;
   document.getElementById('st-total-customers').textContent=customers.length;
+  document.getElementById('st-expired-bundles').textContent=expiredBundles.length;
   document.getElementById('st-open-requests').textContent=openReq.length;
 }
 
@@ -457,6 +479,104 @@ async function loadBundles(){
   });
   html+='</tbody></table>';
   document.getElementById('bundles-table').innerHTML=html;
+}
+
+async function loadExpiredBundles(){
+  var [bundles,bids]=await Promise.all([
+    sbFetch('bundles?status=eq.abgelaufen&select=*&order=created_at.desc'),
+    sbFetch('bids?select=id,bundle_id,rabatt_prozent,supplier_id')
+  ]);
+  document.getElementById('expired-count').textContent=bundles.length;
+  if(!bundles.length){
+    document.getElementById('expired-table').innerHTML='<div class="empty-msg">Keine abgelaufenen Bündel.</div>';
+    return;
+  }
+  var bidsByBundle={};
+  bids.forEach(function(b){
+    if(!bidsByBundle[b.bundle_id])bidsByBundle[b.bundle_id]=[];
+    bidsByBundle[b.bundle_id].push(b);
+  });
+
+  var html='<table><thead><tr><th>Material</th><th>Lieferzone</th><th>Volumen</th><th>Ziel-Rabatt</th><th>Deadline</th><th>Gebote</th><th>Rabatte</th><th>Aktionen</th></tr></thead><tbody>';
+  bundles.forEach(function(b){
+    var mat=b.bundle_type==='multi_material'?'Mehrere Materialien':(b.sourceon_id||'–');
+    var vol=(b.gesamtvolumen?Number(b.gesamtvolumen).toLocaleString('de-CH'):'-')+' '+(b.einheit||'');
+    var rabatt=b.ziel_mindestrabatt?((b.ziel_mindestrabatt<1?b.ziel_mindestrabatt*100:b.ziel_mindestrabatt).toFixed(0)+'%'):'–';
+    var bb=bidsByBundle[b.id]||[];
+    var rabattList=bb.length?bb.map(function(bi){return Number(bi.rabatt_prozent||0).toFixed(1)+'%';}).join(', '):'–';
+    html+='<tr>'
+      +'<td>'+esc(mat)+'</td>'
+      +'<td>'+esc(b.liefer_zone||'–')+'</td>'
+      +'<td style="white-space:nowrap">'+vol+'</td>'
+      +'<td>'+rabatt+'</td>'
+      +'<td style="white-space:nowrap">'+fmtDate(b.bid_deadline)+'</td>'
+      +'<td>'+bb.length+'</td>'
+      +'<td class="cell-trunc" title="'+esc(rabattList)+'">'+esc(rabattList)+'</td>'
+      +'<td style="min-width:180px">'
+        +'<button class="btn-sm btn-relist" onclick="toggleRelistForm(\''+b.id+'\')">Erneut ausschreiben</button> '
+        +'<button class="btn-sm btn-remove" onclick="removeBundle(\''+b.id+'\')">Entfernen</button>'
+        +'<div class="relist-form" id="relist-'+b.id+'">'
+          +'<label>Neue Deadline</label>'
+          +'<input type="date" id="relist-date-'+b.id+'"/>'
+          +'<label>Neuer Ziel-Rabatt (optional, z.B. 7)</label>'
+          +'<input type="number" id="relist-rabatt-'+b.id+'" placeholder="'+rabatt+'" min="0" max="100" step="1"/>'
+          +'<div class="relist-actions">'
+            +'<button class="btn-sm btn-verify" onclick="relistBundle(\''+b.id+'\')">Bestätigen</button>'
+            +'<button class="btn-sm btn-reject" onclick="toggleRelistForm(\''+b.id+'\')">Abbrechen</button>'
+          +'</div>'
+        +'</div>'
+      +'</td></tr>';
+  });
+  html+='</tbody></table>';
+  document.getElementById('expired-table').innerHTML=html;
+}
+
+function toggleRelistForm(id){
+  var el=document.getElementById('relist-'+id);
+  el.style.display=el.style.display==='block'?'none':'block';
+}
+
+async function relistBundle(id){
+  var newDate=document.getElementById('relist-date-'+id).value;
+  if(!newDate){alert('Bitte eine neue Deadline angeben.');return;}
+  var deadline=new Date(newDate);
+  if(deadline<=new Date()){alert('Deadline muss in der Zukunft liegen.');return;}
+  if(!confirm('Bündel erneut ausschreiben? Alle bisherigen Gebote werden gelöscht.'))return;
+
+  var newRabattInput=document.getElementById('relist-rabatt-'+id).value;
+  var updateData={status:'ausgeschrieben',bid_deadline:deadline.toISOString(),gewonnener_supplier_id:null,finaler_rabatt:null};
+  if(newRabattInput){
+    var r=Number(newRabattInput);
+    updateData.ziel_mindestrabatt=r>1?r/100:r;
+  }
+
+  var ok=await sbPatch('bundles',id,updateData);
+  if(!ok){alert('Fehler beim Aktualisieren des Bündels.');return;}
+
+  var oldBids=await sbFetch('bids?bundle_id=eq.'+encodeURIComponent(id)+'&select=id');
+  for(var i=0;i<oldBids.length;i++){
+    await fetch(SB_URL+'/rest/v1/bids?id=eq.'+encodeURIComponent(oldBids[i].id),{method:'DELETE',headers:HEADERS});
+  }
+
+  await Promise.all([loadExpiredBundles(),loadBundles(),loadStats()]);
+}
+
+async function removeBundle(id){
+  if(!confirm('Bündel und alle zugehörigen Gebote endgültig entfernen? Materialanfragen werden auf "offen" zurückgesetzt.'))return;
+
+  var reqs=await sbFetch('material_requests?bundle_id=eq.'+encodeURIComponent(id)+'&select=id');
+  for(var i=0;i<reqs.length;i++){
+    await sbPatch('material_requests',reqs[i].id,{status:'offen',bundle_id:null});
+  }
+
+  var oldBids=await sbFetch('bids?bundle_id=eq.'+encodeURIComponent(id)+'&select=id');
+  for(var i=0;i<oldBids.length;i++){
+    await fetch(SB_URL+'/rest/v1/bids?id=eq.'+encodeURIComponent(oldBids[i].id),{method:'DELETE',headers:HEADERS});
+  }
+
+  await fetch(SB_URL+'/rest/v1/bundles?id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:HEADERS});
+
+  await Promise.all([loadExpiredBundles(),loadBundles(),loadStats()]);
 }
 
 async function loadSuppliers(){
