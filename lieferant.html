@@ -508,12 +508,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .form-check:hover{border-color:var(--gold-b);background:var(--gold-dim)}
 .form-check input{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0}
 .form-error{font-size:.76rem;color:#ef4444;margin-top:4px;display:none}
-.form-success{display:none;margin-top:24px;text-align:center;padding:32px 24px;border-radius:14px;background:rgba(22,163,74,.06);border:1px solid rgba(22,163,74,.18);animation:fadeUp .4s ease}
-.form-success.show{display:block}
-.form-success .s-icon{color:#4ade80;font-size:2rem;margin-bottom:12px}
-.form-success .s-title{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:6px}
-.form-success .s-text{font-size:.85rem;color:#94A3B8;line-height:1.7}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.form-success{background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.25);border-radius:var(--r);padding:16px 20px;font-size:.87rem;color:#16a34a;font-weight:600;display:none;align-items:center;gap:10px;margin-top:16px;line-height:1.6}
+.form-success.show{display:flex}
 
 /* FOOTER */
 footer{background:var(--dark);padding:96px 0 0;position:relative}
@@ -1153,11 +1149,7 @@ function _showSuccess(){
   var formEl=document.getElementById('form-supplier');
   if(formEl)formEl.style.display='none';
   var successEl=document.getElementById('success-supplier');
-  var firmName=document.getElementById('sa-company')?document.getElementById('sa-company').value.trim():'';
   if(successEl){
-    successEl.innerHTML='<div class="s-icon">✓</div>'
-      +'<div class="s-title">Bewerbung übermittelt'+(firmName?' — '+firmName:'')+'</div>'
-      +'<div class="s-text">Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.<br>Nach Verifizierung erhältst du Zugang zum Lieferanten-Portal per E-Mail.</div>';
     successEl.classList.add('show');
     successEl.scrollIntoView({behavior:'smooth',block:'center'});
   }

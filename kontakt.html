@@ -508,12 +508,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .form-check:hover{border-color:var(--gold-b);background:var(--gold-dim)}
 .form-check input{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0}
 .form-error{font-size:.76rem;color:#ef4444;margin-top:4px;display:none}
-.form-success{display:none;margin-top:24px;text-align:center;padding:32px 24px;border-radius:14px;background:rgba(22,163,74,.06);border:1px solid rgba(22,163,74,.18);animation:fadeUp .4s ease}
-.form-success.show{display:block}
-.form-success .s-icon{color:#4ade80;font-size:2rem;margin-bottom:12px}
-.form-success .s-title{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:6px}
-.form-success .s-text{font-size:.85rem;color:#94A3B8;line-height:1.7}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.form-success{background:rgba(22,163,74,.08);border:1px solid rgba(22,163,74,.25);border-radius:var(--r);padding:16px 20px;font-size:.87rem;color:#16a34a;font-weight:600;display:none;align-items:center;gap:10px;margin-top:16px;line-height:1.6}
+.form-success.show{display:flex}
 
 /* FOOTER */
 footer{background:var(--dark);padding:96px 0 0;position:relative}
@@ -912,12 +908,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <div class="form-group"><label class="form-label" data-i18n="form_address_label">Lieferadresse / Kanton *</label><input type="text" class="form-input" id="c-canton" placeholder="z.B. Zürich, Baustelle Hauptstr. 5" data-i18n-placeholder="form_placeholder_address" required/><div class="form-error" data-i18n="form_error_required" id="e-c-canton">Pflichtfeld</div></div>
             </div>
             <div class="form-group"><label class="form-label" data-i18n-html="form_project_label">Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span></label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und weitere Anforderungen…" data-i18n-placeholder="form_placeholder_project"></textarea></div>
-            <div class="form-group" style="margin-top:18px;margin-bottom:18px">
-              <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:.84rem;color:rgba(255,255,255,.8);line-height:1.5">
-                <input type="checkbox" id="c-create-account" style="margin-top:3px;width:18px;height:18px;accent-color:#E8A020;flex-shrink:0;cursor:pointer"/>
-                <span>Konto erstellen, um deine Anfragen jederzeit einzusehen und den Status zu verfolgen</span>
-              </label>
-            </div>
             <button type="submit" class="btn btn-gold btn-lg btn-full" data-i18n="form_submit">Materialbedarf jetzt melden →</button>
             <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;font-style:italic" data-i18n="form_bundle_hint">Hinweis: Wird dein Bedarf mit anderen Baufirmen gebündelt, richtet sich deine individuelle Ersparnis nach deinem Volumenanteil am Gesamtbündel.</p>
           </form>
@@ -1250,10 +1240,6 @@ async function submitContact(e){
     // File upload note: file-based material list parsing not yet implemented in this phase
     document.getElementById('form-contact').style.display='none';
     var successEl=document.getElementById('success-contact');
-    var firmName=custPayload.firmenname||'';
-    successEl.innerHTML='<div class="s-icon">✓</div>'
-      +'<div class="s-title">Materialbedarf übermittelt'+(firmName?' — '+firmName:'')+'</div>'
-      +'<div class="s-text">Wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden<br>mit einer konkreten Einschätzung des Einsparpotenzials.</div>';
     successEl.classList.add('show');
     successEl.scrollIntoView({behavior:'smooth',block:'center'});
 
