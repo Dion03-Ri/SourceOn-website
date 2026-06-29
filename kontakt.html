@@ -685,6 +685,10 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .material-rows{display:flex;flex-direction:column;gap:10px;margin-bottom:8px}
 .material-row{display:grid;grid-template-columns:1fr 1fr auto;gap:10px;align-items:start}
 .material-row.first-row{grid-template-columns:1fr 1fr}
+.mat-qty-wrap{position:relative;display:flex;align-items:center}
+.mat-qty-wrap .mat-qty{padding-right:52px}
+.mat-unit{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:.78rem;font-weight:600;color:var(--gold);pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .2s}
+.mat-unit.visible{opacity:1}
 .mat-remove-btn{width:36px;height:42px;display:flex;align-items:center;justify-content:center;background:none;border:1.5px solid var(--border);border-radius:8px;color:var(--muted);font-size:16px;cursor:pointer;transition:all .15s;flex-shrink:0;margin-top:0;align-self:end;padding:0}
 .mat-remove-btn:hover{border-color:#ef4444;color:#ef4444;background:#fef2f2}
 .add-material-btn{display:inline-flex;align-items:center;gap:6px;font-size:.83rem;font-weight:600;color:var(--gold);background:none;border:none;cursor:pointer;padding:4px 0;transition:opacity .15s}
@@ -873,7 +877,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <div class="material-rows" id="material-rows">
                 <div class="material-row first-row">
                   <select class="form-select mat-sel"><option value="" data-i18n="form_select_material">Material wählen</option><optgroup label="Rohbau Kern" data-i18n-label="optgroup_rohbau"><option value="Transportbeton C20/25">Transportbeton C20/25</option><option value="Transportbeton C25/30">Transportbeton C25/30</option><option value="Transportbeton C30/37">Transportbeton C30/37</option><option value="Transportbeton C35/45">Transportbeton C35/45</option><option value="Pumpbeton XC4 druckwasserdicht">Pumpbeton XC4 druckwasserdicht</option><option value="Armierungsstahl 8mm">Armierungsstahl 8mm</option><option value="Armierungsstahl 10mm">Armierungsstahl 10mm</option><option value="Armierungsstahl 12mm">Armierungsstahl 12mm</option><option value="Armierungsstahl 16mm">Armierungsstahl 16mm</option><option value="Armierungsstahl 20mm">Armierungsstahl 20mm</option><option value="Armierungsmatte Q188">Armierungsmatte Q188</option><option value="Armierungsmatte Q257">Armierungsmatte Q257</option><option value="Armierungsmatte Q335">Armierungsmatte Q335</option><option value="Betonstahlkoerbe vorgefertigt">Betonstahlkoerbe vorgefertigt</option><option value="Kies 0-32mm">Kies 0-32mm</option><option value="Kies 0-16mm">Kies 0-16mm</option><option value="Splitt 8-16mm">Splitt 8-16mm</option><option value="Splitt 16-32mm">Splitt 16-32mm</option><option value="Sand 0-4mm">Sand 0-4mm</option><option value="Hochlochziegel 15cm">Hochlochziegel 15cm</option><option value="Hochlochziegel 20cm">Hochlochziegel 20cm</option><option value="Hochlochziegel 25cm">Hochlochziegel 25cm</option><option value="Kalksandstein 15cm">Kalksandstein 15cm</option><option value="Porenbetonstein 20cm">Porenbetonstein 20cm</option><option value="Mauermoertel MG II">Mauermoertel MG II</option><option value="Mauermoertel MG III">Mauermoertel MG III</option><option value="Putzmoertel Innen GP">Putzmoertel Innen GP</option><option value="Putzmoertel Aussen R">Putzmoertel Aussen R</option><option value="Estrichmoertel CT-C25">Estrichmoertel CT-C25</option><option value="Klebemoertel C1 Fliesen">Klebemoertel C1 Fliesen</option><option value="Schalungsplatte 21mm">Schalungsplatte 21mm</option><option value="Schalungsplatte 27mm">Schalungsplatte 27mm</option><option value="Systemschalung Wand Miete">Systemschalung Wand Miete</option><option value="Traeger H20 Holztraeger">Traeger H20 Holztraeger</option><option value="Stahlstuetzen ausziehbar">Stahlstuetzen ausziehbar</option><option value="Betonfertigteil Treppe">Betonfertigteil Treppe</option><option value="Betonfertigteil Deckenplatte">Betonfertigteil Deckenplatte</option><option value="Betonfertigteil Stuetze">Betonfertigteil Stuetze</option></optgroup><optgroup label="Ausbau" data-i18n-label="optgroup_ausbau"><option value="EPS-Daemmplatte 100mm Perimeter">EPS-Daemmplatte 100mm Perimeter</option><option value="EPS-Daemmplatte 140mm Fassade">EPS-Daemmplatte 140mm Fassade</option><option value="EPS-Daemmplatte 200mm Flachdach">EPS-Daemmplatte 200mm Flachdach</option><option value="Mineralwolle 80mm Trennwand">Mineralwolle 80mm Trennwand</option><option value="Mineralwolle 120mm Steildach">Mineralwolle 120mm Steildach</option><option value="XPS-Daemmplatte 80mm Bodenplatte">XPS-Daemmplatte 80mm Bodenplatte</option><option value="Gipskartonplatte GKB 12.5mm">Gipskartonplatte GKB 12.5mm</option><option value="Gipskartonplatte GKBI Feuchtraum">Gipskartonplatte GKBI Feuchtraum</option><option value="Gipskartonplatte GKF Brandschutz">Gipskartonplatte GKF Brandschutz</option><option value="Metallstaenderwerk CW 75mm">Metallstaenderwerk CW 75mm</option><option value="Metallanschlussprofil UA 75mm">Metallanschlussprofil UA 75mm</option><option value="Tondachziegel Standard">Tondachziegel Standard</option><option value="Betonroofziegel">Betonroofziegel</option><option value="Dachabdichtungsbahn EPDM 1.5mm">Dachabdichtungsbahn EPDM 1.5mm</option><option value="Fassadenplatte Faserzement">Fassadenplatte Faserzement</option></optgroup><optgroup label="Haustechnik" data-i18n-label="optgroup_haustechnik"><option value="Kunststoffrohr PVC-U DN 110">Kunststoffrohr PVC-U DN 110</option><option value="Kunststoffrohr PP DN 50">Kunststoffrohr PP DN 50</option><option value="Kupferrohr 22mm Trinkwasser">Kupferrohr 22mm Trinkwasser</option><option value="Verbundrohr PE-RT/Al 16mm">Verbundrohr PE-RT/Al 16mm</option><option value="Heizungsverteiler Fussbodenheizung">Heizungsverteiler Fussbodenheizung</option></optgroup></select>
-                  <input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/>
+                  <div class="mat-qty-wrap"><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><span class="mat-unit"></span></div>
                 </div>
               </div>
               <div class="form-error" data-i18n="form_error_material" id="e-c-material">Bitte mindestens ein Material mit Menge angeben</div>
@@ -1042,12 +1046,27 @@ function addMaterialRow(){
   if(matRowCount>=10)return;matRowCount++;
   const rows=document.getElementById('material-rows');
   const div=document.createElement('div');div.className='material-row';
-  div.innerHTML='<select class="form-select mat-sel">'+MAT_OPTIONS+'</select><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><button type="button" class="mat-remove-btn" onclick="removeMaterialRow(this)" title="Entfernen"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
+  div.innerHTML='<select class="form-select mat-sel">'+MAT_OPTIONS+'</select><div class="mat-qty-wrap"><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><span class="mat-unit"></span></div><button type="button" class="mat-remove-btn" onclick="removeMaterialRow(this)" title="Entfernen"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
   rows.appendChild(div);
+  div.querySelector('.mat-sel').addEventListener('change',function(){updateMatUnit(this);});
   var cl=window._currentLang||localStorage.getItem('sourceon-lang')||'de';if(typeof translateMaterials==='function')translateMaterials(cl);var t=typeof I18N!=='undefined'&&I18N[cl]?I18N[cl]:null;if(t){div.querySelectorAll('[data-i18n]').forEach(function(el){if(t[el.dataset.i18n])el.textContent=t[el.dataset.i18n];});div.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){if(t[el.dataset.i18nPlaceholder])el.placeholder=t[el.dataset.i18nPlaceholder];});}
   if(matRowCount>=10)document.getElementById('add-material-btn').style.display='none';
 }
 function removeMaterialRow(btn){btn.closest('.material-row').remove();matRowCount--;document.getElementById('add-material-btn').style.display='';}
+function updateMatUnit(sel){
+  var row=sel.closest('.material-row');
+  var unitEl=row.querySelector('.mat-unit');
+  if(!unitEl)return;
+  var val=sel.value;
+  if(!val||!_matCatalog){unitEl.textContent='';unitEl.classList.remove('visible');return;}
+  var match=_findSourceonId(val);
+  if(match&&match.einheit){unitEl.textContent=match.einheit;unitEl.classList.add('visible');}
+  else{unitEl.textContent='';unitEl.classList.remove('visible');}
+}
+document.addEventListener('DOMContentLoaded',function(){
+  var firstSel=document.querySelector('#material-rows .material-row .mat-sel');
+  if(firstSel)firstSel.addEventListener('change',function(){updateMatUnit(this);});
+});
 function validateMaterials(){
   const rows=document.querySelectorAll('#material-rows .material-row');
   const ok=Array.from(rows).some(r=>r.querySelector('.mat-sel').value&&r.querySelector('.mat-qty').value.trim());
