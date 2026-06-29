@@ -1216,11 +1216,23 @@ async function submitContact(e){
     console.log('[SourceOn Debug] Supabase URL:',_dbUrl);
     console.log('[SourceOn Debug] Supabase key (first 20):',typeof _dbKey==='string'?_dbKey.substring(0,20):'MISSING');
     console.log('[SourceOn Debug] Customer payload:',JSON.stringify(custPayload));
-    var custRes=await _supabase.from('customers').insert(custPayload).select('id').single();
-    console.log('[SourceOn Debug] Customer insert result:',JSON.stringify({data:custRes.data,error:custRes.error}));
 
-    if(custRes.error)throw custRes.error;
-    var customerId=custRes.data.id;
+    // Reuse existing customer if user is logged in
+    var customerId=null;
+    if(custPayload.user_id){
+      var existingCust=await _supabase.from('customers').select('id').eq('user_id',custPayload.user_id).limit(1).maybeSingle();
+      if(existingCust.data){
+        customerId=existingCust.data.id;
+        await _supabase.from('customers').update(custPayload).eq('id',customerId);
+        console.log('[SourceOn Debug] Reused existing customer:',customerId);
+      }
+    }
+    if(!customerId){
+      var custRes=await _supabase.from('customers').insert(custPayload).select('id').single();
+      console.log('[SourceOn Debug] Customer insert result:',JSON.stringify({data:custRes.data,error:custRes.error}));
+      if(custRes.error)throw custRes.error;
+      customerId=custRes.data.id;
+    }
 
     var timing=_parseTiming(document.getElementById('c-timing'));
     var zone=_extractZone(addrVal);
