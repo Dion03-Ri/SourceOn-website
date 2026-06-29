@@ -100,6 +100,14 @@ a{color:var(--gold);text-decoration:none}
 .status-abgeschlossen{background:rgba(16,185,129,.1);color:#34D399}
 .status-abgesagt{background:rgba(239,68,68,.08);color:#FCA5A5}
 
+/* STATUS DETAIL ROW */
+.req-status-detail{margin-top:8px;padding:12px 16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);border-radius:10px;font-size:.8rem;color:var(--muted);line-height:1.7}
+.req-status-detail .status-msg{display:flex;align-items:flex-start;gap:10px}
+.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:5px;animation:pulse-glow 2s ease-in-out infinite}
+@keyframes pulse-glow{0%,100%{opacity:.4;box-shadow:0 0 0 0 rgba(232,160,32,.3)}50%{opacity:1;box-shadow:0 0 0 6px rgba(232,160,32,0)}}
+.bundle-detail{margin-top:8px;padding:10px 14px;background:rgba(232,160,32,.04);border:1px solid rgba(232,160,32,.1);border-radius:8px;font-size:.78rem;color:#CBD5E1}
+.bundle-detail strong{color:var(--gold)}
+
 /* EMPTY STATE */
 .empty-state{text-align:center;padding:72px 24px;color:var(--body)}
 .empty-state-icon{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--muted)}
@@ -268,8 +276,8 @@ var _matCatalogMap={};
     catRes.data.forEach(function(m){_matCatalogMap[m.sourceon_id]=m;});
   }
 
-  // Load material requests
-  var reqRes=await sb.from('material_requests').select('*').in('customer_id',customerIds).order('created_at',{ascending:false});
+  // Load material requests (join bundle data)
+  var reqRes=await sb.from('material_requests').select('*,bundles(id,gesamtvolumen,einheit,ziel_mindestrabatt,status,is_fallback_bundle)').in('customer_id',customerIds).order('created_at',{ascending:false});
 
   document.getElementById('table-loading').style.display='none';
 
@@ -313,32 +321,39 @@ var _matCatalogMap={};
     // Keep fallback text
   }
 
+  // Fetch bid counts for all bundles referenced by these requests
+  var bundleIds=[];
+  requests.forEach(function(r){if(r.bundle_id)bundleIds.push(r.bundle_id);});
+  var bidCounts={};
+  if(bundleIds.length>0){
+    try{
+      var bidRes=await sb.from('bids').select('bundle_id').in('bundle_id',bundleIds);
+      if(bidRes.data){bidRes.data.forEach(function(b){bidCounts[b.bundle_id]=(bidCounts[b.bundle_id]||0)+1;});}
+    }catch(e){}
+  }
+
   // Render table
   document.getElementById('req-table').style.display='table';
   var tbody=document.getElementById('req-body');
 
-  var statusLabels={offen:'Offen',gebuendelt:'Gebündelt',vergeben:'Vergeben',abgeschlossen:'Abgeschlossen',abgesagt:'Abgesagt'};
+  var statusLabels={offen:'Sammelt Partner',gebuendelt:'Gebündelt',vergeben:'Vergeben',abgeschlossen:'Abgeschlossen',abgesagt:'Abgesagt'};
   var statusClasses={offen:'offen',gebuendelt:'gebuendelt',vergeben:'vergeben',abgeschlossen:'abgeschlossen',abgesagt:'abgesagt'};
 
   requests.forEach(function(r){
     var tr=document.createElement('tr');
 
-    // Datum
     var datum=r.created_at?new Date(r.created_at).toLocaleDateString('de-CH'):'--';
 
-    // Material
     var matName='--';
     if(r.sourceon_id&&_matCatalogMap[r.sourceon_id]){
       matName=_matCatalogMap[r.sourceon_id].bezeichnung;
     }
 
-    // Menge
     var menge='--';
     if(r.menge){
       menge=r.menge+(r.einheit?' '+r.einheit:'');
     }
 
-    // Lieferzeitraum
     var zeitraum='--';
     if(r.liefer_zeitraum_von&&r.liefer_zeitraum_bis){
       zeitraum=new Date(r.liefer_zeitraum_von).toLocaleDateString('de-CH')+' – '+new Date(r.liefer_zeitraum_bis).toLocaleDateString('de-CH');
@@ -348,15 +363,36 @@ var _matCatalogMap={};
       zeitraum='Bis '+new Date(r.liefer_zeitraum_bis).toLocaleDateString('de-CH');
     }
 
-    // Status
     var sl=statusLabels[r.status]||r.status||'--';
     var sc=statusClasses[r.status]||'offen';
+
+    // Build status detail
+    var detail='';
+    if(r.status==='offen'&&!r.bundle_id){
+      detail='<div class="req-status-detail"><div class="status-msg"><span class="pulse-dot"></span><span>Sammelt Bündelungspartner — wir suchen weitere Baufirmen mit ähnlichem Bedarf, um dir den bestmöglichen Mengenrabatt zu sichern.</span></div></div>';
+    }else if((r.status==='gebuendelt'||r.status==='offen')&&r.bundle_id){
+      var bundle=r.bundles||{};
+      var bids=bidCounts[r.bundle_id]||0;
+      var volStr=bundle.gesamtvolumen?Number(bundle.gesamtvolumen).toLocaleString('de-CH')+' '+(bundle.einheit||''):'';
+      var discStr=bundle.ziel_mindestrabatt?Math.round(bundle.ziel_mindestrabatt*100)+'%':'';
+      detail='<div class="req-status-detail"><div class="status-msg"><span style="color:#FBBF24;font-size:1rem;flex-shrink:0">⚡</span><span>Teil eines aktiven Bündels — '+bids+' von Anbieter'+(bids!==1?'n':'')+' eingegangen</span></div>';
+      if(volStr||discStr){
+        detail+='<div class="bundle-detail">';
+        if(volStr)detail+='Gesamtvolumen: <strong>'+esc(volStr)+'</strong>';
+        if(volStr&&discStr)detail+=' · ';
+        if(discStr)detail+='Ziel-Rabatt: <strong>'+discStr+'</strong>';
+        detail+='</div>';
+      }
+      detail+='</div>';
+    }else if(r.status==='vergeben'){
+      detail='<div class="req-status-detail"><div class="status-msg"><span style="color:#34D399;font-size:1rem;flex-shrink:0">✓</span><span>Lieferant ausgewählt — Lieferung in Vorbereitung</span></div></div>';
+    }
 
     tr.innerHTML='<td>'+esc(datum)+'</td>'
       +'<td>'+esc(matName)+'</td>'
       +'<td>'+esc(menge)+'</td>'
       +'<td>'+esc(zeitraum)+'</td>'
-      +'<td><span class="status-badge status-'+sc+'">'+esc(sl)+'</span></td>';
+      +'<td><span class="status-badge status-'+sc+'">'+esc(sl)+'</span>'+detail+'</td>';
     tbody.appendChild(tr);
   });
 })();

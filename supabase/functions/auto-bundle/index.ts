@@ -40,6 +40,7 @@ interface MaterialRequest {
   liefer_zone: string;
   liefer_zeitraum_von: string;
   liefer_zeitraum_bis: string;
+  fallback_deadline: string | null;
 }
 
 interface RequestGroup {
@@ -61,7 +62,7 @@ Deno.serve(async (req: Request) => {
     // 1. Fetch open, unbundled material requests
     const { data: openRequests, error: fetchErr } = await sb
       .from("material_requests")
-      .select("id, sourceon_id, menge, einheit, liefer_zone, liefer_zeitraum_von, liefer_zeitraum_bis")
+      .select("id, sourceon_id, menge, einheit, liefer_zone, liefer_zeitraum_von, liefer_zeitraum_bis, fallback_deadline")
       .eq("status", "offen")
       .is("bundle_id", null);
 
@@ -157,6 +158,59 @@ Deno.serve(async (req: Request) => {
       const discount = getTargetDiscount(estimatedCHF);
 
       if (discount === null) {
+        // Check if any requests in this group have passed their fallback deadline
+        const now = new Date().toISOString();
+        const expiredRequests = g.requests.filter(
+          (r) => r.fallback_deadline && r.fallback_deadline <= now
+        );
+
+        if (expiredRequests.length > 0) {
+          // Fallback: create bundle at lowest tier (7%) even below threshold
+          const bidDeadline = new Date();
+          bidDeadline.setDate(bidDeadline.getDate() + 7);
+
+          const { data: fbBundle, error: fbInsertErr } = await sb
+            .from("bundles")
+            .insert({
+              sourceon_id: g.sourceon_id,
+              liefer_zone: g.liefer_zone,
+              liefer_zeitraum_von: g.liefer_zeitraum_von,
+              liefer_zeitraum_bis: g.liefer_zeitraum_bis,
+              gesamtvolumen: g.totalMenge,
+              einheit: g.einheit,
+              ziel_mindestrabatt: 0.07,
+              status: "ausgeschrieben",
+              bid_deadline: bidDeadline.toISOString(),
+              bundle_type: "single_material",
+              is_fallback_bundle: true,
+            })
+            .select("id")
+            .single();
+
+          if (!fbInsertErr && fbBundle) {
+            const reqIds = g.requests.map((r) => r.id);
+            await sb
+              .from("material_requests")
+              .update({ bundle_id: fbBundle.id, status: "gebuendelt" })
+              .in("id", reqIds);
+
+            console.log(
+              `[auto-bundle] FALLBACK bundle for ${g.sourceon_id}/${g.liefer_zone} ` +
+              `(~${Math.round(estimatedCHF)} CHF, ${expiredRequests.length} expired) → 7% tier`
+            );
+            summary.push({
+              sourceon_id: g.sourceon_id,
+              liefer_zone: g.liefer_zone,
+              totalMenge: g.totalMenge,
+              einheit: g.einheit,
+              estimatedCHF: Math.round(estimatedCHF),
+              targetDiscount: 0.07,
+              requestCount: reqIds.length,
+            });
+            continue;
+          }
+        }
+
         skipped.push({
           sourceon_id: g.sourceon_id,
           liefer_zone: g.liefer_zone,
