@@ -374,7 +374,7 @@ async function loadPending(){
     document.getElementById('pending-table').innerHTML='<div class="empty-msg">Keine ausstehenden Bewerbungen.</div>';
     return;
   }
-  var html='<table><thead><tr><th>Firma</th><th>AI Score</th><th>AI Bewertung</th><th>Kontakt</th><th>E-Mail</th><th>Telefon</th><th>Website</th><th>Materialien</th><th>Regionen</th><th>Kapazität</th><th>Erstellt</th><th>Aktionen</th></tr></thead><tbody>';
+  var html='<table><thead><tr><th>Firma</th><th>AI Score</th><th>AI Bewertung</th><th>Kontakt</th><th>E-Mail</th><th>Telefon</th><th>Website</th><th>Materialien</th><th>Regionen</th><th>Kapazität</th><th>Erstellt</th><th>Vereinbarung</th><th>Aktionen</th></tr></thead><tbody>';
   rows.forEach(function(r){
     var mats=Array.isArray(r.materials)?r.materials.join(', '):(r.materials||'–');
     var regs=Array.isArray(r.regions)?r.regions.join(', '):(r.regions||'–');
@@ -394,6 +394,7 @@ async function loadPending(){
       +'<td class="cell-trunc" title="'+esc(regs)+'">'+esc(regs)+'</td>'
       +'<td>'+esc(r.annual_capacity||'–')+'</td>'
       +'<td style="white-space:nowrap">'+fmtDate(r.created_at)+'</td>'
+      +'<td>'+(r.agreement_accepted?'<span style="color:#4ade80;font-size:.8rem;font-weight:600">✓ Vereinbarung akzeptiert'+(r.agreement_accepted_at?'<br><span style="font-weight:400;color:#94A3B8;font-size:.72rem">'+fmtDate(r.agreement_accepted_at)+(r.agreement_version?' · '+esc(r.agreement_version):'')+'</span>':'')+'</span>':'<span style="color:#f87171;font-size:.8rem">✗ Nicht akzeptiert</span>')+'</td>'
       +'<td style="white-space:nowrap">'
         +'<button class="btn-sm btn-verify" onclick="verifySupplier(\''+r.id+'\')">Verifizieren</button> '
         +'<button class="btn-sm btn-reject" onclick="rejectSupplier(\''+r.id+'\')">Ablehnen</button>'
