@@ -508,8 +508,19 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .form-check:hover{border-color:var(--gold-b);background:var(--gold-dim)}
 .form-check input{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0}
 .form-error{font-size:.76rem;color:#ef4444;margin-top:4px;display:none}
-.form-success{background:rgba(22,163,74,.12);border:1.5px solid rgba(22,163,74,.35);border-radius:var(--r);padding:24px 28px;font-size:.95rem;color:#4ade80;font-weight:600;display:none;align-items:center;gap:12px;margin-top:24px;line-height:1.6}
-.form-success.show{display:flex}
+.form-success{display:none;margin-top:24px}
+.form-success.show{display:block}
+.success-card{text-align:center;padding:48px 32px 40px;border-radius:20px;background:linear-gradient(145deg,rgba(22,163,74,.06),rgba(22,163,74,.02));border:1px solid rgba(22,163,74,.15);backdrop-filter:blur(12px);animation:successIn .6s cubic-bezier(.16,1,.3,1)}
+.success-icon{width:64px;height:64px;margin:0 auto 24px;border-radius:50%;background:linear-gradient(135deg,#22c55e,#16a34a);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 32px rgba(22,163,74,.3)}
+.success-icon svg{width:32px;height:32px;stroke:#fff;stroke-width:2.5;fill:none;stroke-dasharray:30;stroke-dashoffset:30;animation:checkDraw .5s .3s ease forwards}
+.success-title{font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:-.02em}
+.success-subtitle{font-size:.9rem;color:#94A3B8;line-height:1.7;max-width:420px;margin:0 auto 28px}
+.success-steps{display:flex;justify-content:center;gap:32px;margin-bottom:0}
+.success-step{text-align:center}
+.success-step-num{width:32px;height:32px;border-radius:10px;background:rgba(232,160,32,.1);color:#E8A020;font-size:.78rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 8px}
+.success-step-text{font-size:.76rem;color:#64748B;line-height:1.4}
+@keyframes successIn{from{opacity:0;transform:scale(.95) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes checkDraw{to{stroke-dashoffset:0}}
 
 /* FOOTER */
 footer{background:var(--dark);padding:96px 0 0;position:relative}
@@ -1151,7 +1162,16 @@ function _showSuccess(){
   var successEl=document.getElementById('success-supplier');
   var firmName=document.getElementById('sa-company')?document.getElementById('sa-company').value.trim():'';
   if(successEl){
-    successEl.innerHTML='<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank'+(firmName?', '+firmName:'')+' — deine Bewerbung als Partnerlieferant wurde erfolgreich übermittelt! Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden. Nach erfolgreicher Verifizierung erhältst du Zugang zum Lieferanten-Portal per E-Mail.';
+    successEl.innerHTML='<div class="success-card">'
+      +'<div class="success-icon"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'
+      +'<div class="success-title">Bewerbung erfolgreich übermittelt'+(firmName?' — '+firmName:'')+'</div>'
+      +'<div class="success-subtitle">Vielen Dank für dein Interesse als Partnerlieferant bei SourceOn. Wir prüfen dein Profil sorgfältig und melden uns innerhalb von 48 Stunden bei dir.</div>'
+      +'<div class="success-steps">'
+        +'<div class="success-step"><div class="success-step-num">1</div><div class="success-step-text">Bewerbung<br>eingegangen</div></div>'
+        +'<div class="success-step"><div class="success-step-num">2</div><div class="success-step-text">Profil wird<br>geprüft</div></div>'
+        +'<div class="success-step"><div class="success-step-num">3</div><div class="success-step-text">Zugang zum<br>Portal per E-Mail</div></div>'
+      +'</div>'
+    +'</div>';
     successEl.classList.add('show');
     successEl.scrollIntoView({behavior:'smooth',block:'center'});
   }
