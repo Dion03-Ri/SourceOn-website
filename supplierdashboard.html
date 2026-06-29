@@ -128,7 +128,23 @@ a{color:var(--gold);text-decoration:none}
 .ov-table .col-bestellwert{color:var(--gold);font-weight:600}
 .ov-table .status-badge{display:inline-block;padding:4px 12px;border-radius:100px;font-size:.72rem;font-weight:600}
 
-@media(max-width:768px){.ov-charts{grid-template-columns:1fr}.ov-insights{grid-template-columns:1fr}}
+@media(max-width:768px){.ov-charts{grid-template-columns:1fr}.ov-insights{grid-template-columns:1fr}.profil-grid{grid-template-columns:1fr}.profil-header{flex-wrap:wrap}}
+
+/* PROFIL TAB */
+.profil-header{display:flex;align-items:center;gap:20px;padding:28px;background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);margin-bottom:24px}
+.profil-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-h));color:#0F172A;font-size:1.3rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.profil-name{font-size:1.15rem;font-weight:700;color:#fff}
+.profil-email{font-size:.82rem;color:var(--muted);margin-top:2px}
+.profil-badge{margin-left:auto;padding:5px 14px;border-radius:100px;font-size:.72rem;font-weight:600;background:rgba(16,185,129,.1);color:#34D399;border:1px solid rgba(16,185,129,.2)}
+.profil-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.profil-section{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:24px}
+.profil-section h3{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:16px}
+.profil-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.profil-row:last-child{border-bottom:none}
+.profil-label{font-size:.8rem;color:var(--muted);flex-shrink:0;min-width:110px}
+.profil-value{font-size:.84rem;color:#CBD5E1;text-align:right;word-break:break-word}
+.profil-notes{font-size:.84rem;color:#CBD5E1;line-height:1.7}
+.profil-tag{display:inline-block;padding:3px 10px;border-radius:6px;font-size:.72rem;font-weight:600;background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.15);color:var(--gold);margin:2px 4px 2px 0}
 
 /* BUNDLE CARDS */
 .bundle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:24px}
@@ -280,6 +296,7 @@ a{color:var(--gold);text-decoration:none}
   <div class="dash-tabs">
     <button class="dash-tab active" id="tab-btn-ausschreibungen" onclick="switchTab('ausschreibungen')">Ausschreibungen</button>
     <button class="dash-tab" id="tab-btn-uebersicht" onclick="switchTab('uebersicht')">Meine Übersicht</button>
+    <button class="dash-tab" id="tab-btn-profil" onclick="switchTab('profil')">Mein Profil</button>
   </div>
 
   <!-- TAB 1: Ausschreibungen -->
@@ -377,6 +394,54 @@ a{color:var(--gold);text-decoration:none}
       <button class="btn-bid" onclick="switchTab('ausschreibungen')" style="max-width:300px;margin:0 auto">Zu den Ausschreibungen</button>
     </div>
   </div>
+
+  <!-- TAB 3: Mein Profil -->
+  <div class="tab-panel" id="tab-profil">
+    <div id="profil-loading" class="loading"><span class="loading-dots">Profil wird geladen</span></div>
+    <div id="profil-content" style="display:none">
+
+      <div class="profil-header">
+        <div class="profil-avatar" id="profil-avatar">S</div>
+        <div>
+          <div class="profil-name" id="profil-name">—</div>
+          <div class="profil-email" id="profil-email">—</div>
+        </div>
+        <span class="profil-badge" id="profil-badge">Verifiziert</span>
+      </div>
+
+      <div class="profil-grid">
+        <div class="profil-section">
+          <h3>Kontaktdaten</h3>
+          <div class="profil-row"><span class="profil-label">Firma</span><span class="profil-value" id="pf-company">—</span></div>
+          <div class="profil-row"><span class="profil-label">Kontaktperson</span><span class="profil-value" id="pf-contact">—</span></div>
+          <div class="profil-row"><span class="profil-label">E-Mail</span><span class="profil-value" id="pf-email">—</span></div>
+          <div class="profil-row"><span class="profil-label">Telefon</span><span class="profil-value" id="pf-phone">—</span></div>
+          <div class="profil-row"><span class="profil-label">Website</span><span class="profil-value" id="pf-website">—</span></div>
+        </div>
+        <div class="profil-section">
+          <h3>Leistungsprofil</h3>
+          <div class="profil-row"><span class="profil-label">Materialien</span><span class="profil-value" id="pf-materials">—</span></div>
+          <div class="profil-row"><span class="profil-label">Regionen</span><span class="profil-value" id="pf-regions">—</span></div>
+          <div class="profil-row"><span class="profil-label">Jahreskapazität</span><span class="profil-value" id="pf-capacity">—</span></div>
+          <div class="profil-row"><span class="profil-label">Zertifizierungen</span><span class="profil-value" id="pf-certs">—</span></div>
+        </div>
+      </div>
+
+      <div class="profil-section" style="margin-top:24px">
+        <h3>Vereinbarung</h3>
+        <div class="profil-row"><span class="profil-label">Status</span><span class="profil-value" id="pf-agreement">—</span></div>
+        <div class="profil-row"><span class="profil-label">Akzeptiert am</span><span class="profil-value" id="pf-agreement-date">—</span></div>
+        <div class="profil-row"><span class="profil-label">Version</span><span class="profil-value" id="pf-agreement-version">—</span></div>
+      </div>
+
+      <div class="profil-section" style="margin-top:24px">
+        <h3>Bemerkungen</h3>
+        <div class="profil-notes" id="pf-notes">—</div>
+      </div>
+
+      <p style="font-size:.78rem;color:var(--body);margin-top:32px;line-height:1.6">Profiländerungen bitte per E-Mail an <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> melden.</p>
+    </div>
+  </div>
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
@@ -393,6 +458,7 @@ var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{
 var currentUserId=null;
 var myBids={};
 var bundleCountdowns=[];
+var _supplierProfile=null;
 
 // Wait for Clerk, then check auth + supplier status
 (async function init(){
@@ -436,7 +502,7 @@ var bundleCountdowns=[];
   currentUserId=window.Clerk.user.id;
 
   // Check supplier status
-  var profileRes=await sb.from('suppliers').select('status,company_name').eq('id',currentUserId).maybeSingle();
+  var profileRes=await sb.from('suppliers').select('*').eq('id',currentUserId).maybeSingle();
 
   if(profileRes.error||!profileRes.data){
     showGate('not_supplier');
@@ -449,6 +515,7 @@ var bundleCountdowns=[];
   if(status!=='verified'){showGate('not_supplier');return;}
 
   // Verified — show dashboard
+  _supplierProfile=profileRes.data;
   document.getElementById('nav-company').textContent=profileRes.data.company_name;
   document.getElementById('auth-gate').style.display='none';
   document.getElementById('dash-main').style.display='block';
@@ -457,7 +524,7 @@ var bundleCountdowns=[];
 
   // Open tab from URL hash
   var hash=window.location.hash.replace('#','');
-  if(hash==='uebersicht')switchTab('uebersicht');
+  if(hash==='uebersicht'||hash==='profil')switchTab(hash);
 })();
 
 function showGate(type){
@@ -784,6 +851,7 @@ async function loadHistory(){
 
 // TAB SWITCHING
 var _overviewLoaded=false;
+var _profilLoaded=false;
 
 function switchTab(tab){
   document.querySelectorAll('.dash-tab').forEach(function(b){b.classList.remove('active');});
@@ -794,7 +862,46 @@ function switchTab(tab){
     _overviewLoaded=true;
     loadOverview();
   }
+  if(tab==='profil'&&!_profilLoaded){
+    _profilLoaded=true;
+    loadProfile();
+  }
   history.replaceState(null,'',window.location.pathname+'#'+tab);
+}
+
+function loadProfile(){
+  document.getElementById('profil-loading').style.display='none';
+  document.getElementById('profil-content').style.display='block';
+  var p=_supplierProfile;
+  if(!p)return;
+
+  var initial=(p.company_name||'S').charAt(0).toUpperCase();
+  document.getElementById('profil-avatar').textContent=initial;
+  document.getElementById('profil-name').textContent=p.company_name||'—';
+  document.getElementById('profil-email').textContent=p.email||'—';
+
+  document.getElementById('pf-company').textContent=p.company_name||'—';
+  document.getElementById('pf-contact').textContent=p.contact_person||'—';
+  document.getElementById('pf-email').textContent=p.email||'—';
+  document.getElementById('pf-phone').textContent=p.phone||'—';
+  document.getElementById('pf-website').innerHTML=p.website?'<a href="'+(p.website.startsWith('http')?'':'https://')+esc(p.website)+'" target="_blank">'+esc(p.website)+'</a>':'—';
+
+  var mats=Array.isArray(p.materials)&&p.materials.length>0?p.materials.map(function(m){return'<span class="profil-tag">'+esc(m)+'</span>';}).join(''):'—';
+  document.getElementById('pf-materials').innerHTML=mats;
+
+  var regs=Array.isArray(p.regions)&&p.regions.length>0?p.regions.map(function(r){return'<span class="profil-tag">'+esc(r)+'</span>';}).join(''):'—';
+  document.getElementById('pf-regions').innerHTML=regs;
+
+  document.getElementById('pf-capacity').textContent=p.annual_capacity||'—';
+
+  var certs=Array.isArray(p.certifications)&&p.certifications.length>0?p.certifications.map(function(c){return'<span class="profil-tag">'+esc(c)+'</span>';}).join(''):'—';
+  document.getElementById('pf-certs').innerHTML=certs;
+
+  document.getElementById('pf-agreement').innerHTML=p.agreement_accepted?'<span style="color:#34D399">✓ Akzeptiert</span>':'<span style="color:var(--muted)">Nicht akzeptiert</span>';
+  document.getElementById('pf-agreement-date').textContent=p.agreement_accepted_at?new Date(p.agreement_accepted_at).toLocaleDateString('de-CH'):'—';
+  document.getElementById('pf-agreement-version').textContent=p.agreement_version||'—';
+
+  document.getElementById('pf-notes').textContent=p.notes||'Keine Bemerkungen hinterlegt.';
 }
 
 async function loadOverview(){
