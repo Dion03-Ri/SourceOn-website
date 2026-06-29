@@ -156,6 +156,18 @@ a{color:var(--gold);text-decoration:none}
 .profil-check input[type="checkbox"]{accent-color:var(--gold);width:14px;height:14px;cursor:pointer}
 .profil-check span{pointer-events:none}
 
+/* FILTER BAR */
+.filter-bar{display:flex;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:24px;padding:20px;background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r)}
+.filter-group{display:flex;flex-direction:column;gap:4px;min-width:160px}
+.filter-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted)}
+.filter-select{padding:9px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;font-size:.84rem;font-family:inherit;cursor:pointer;transition:border-color .2s;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394A3B8' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px}
+.filter-select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
+.filter-select option{background:var(--dark3);color:#fff}
+.filter-reset{font-size:.8rem;color:var(--gold);font-weight:600;align-self:flex-end;padding-bottom:10px;white-space:nowrap}
+.filter-reset:hover{text-decoration:underline}
+.filter-count{font-size:.78rem;color:var(--muted);align-self:flex-end;padding-bottom:10px;margin-left:auto}
+@media(max-width:640px){.filter-group{min-width:100%;flex:1}}
+
 /* BUNDLE CARDS */
 .bundle-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:24px}
 .bundle-card{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);overflow:hidden;transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
@@ -311,6 +323,28 @@ a{color:var(--gold);text-decoration:none}
 
   <!-- TAB 1: Ausschreibungen -->
   <div class="tab-panel active" id="tab-ausschreibungen">
+    <div class="filter-bar" id="filter-bar" style="display:none">
+      <div class="filter-group">
+        <label class="filter-label">Material</label>
+        <select class="filter-select" id="filter-material" onchange="applyFilters()"><option value="">Alle</option></select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Region</label>
+        <select class="filter-select" id="filter-region" onchange="applyFilters()"><option value="">Alle</option></select>
+      </div>
+      <div class="filter-group">
+        <label class="filter-label">Volumen</label>
+        <select class="filter-select" id="filter-volume" onchange="applyFilters()">
+          <option value="">Alle</option>
+          <option value="0-100">Unter 100</option>
+          <option value="100-500">100 – 500</option>
+          <option value="500-2000">500 – 2'000</option>
+          <option value="2000+">Über 2'000</option>
+        </select>
+      </div>
+      <a href="#" class="filter-reset" id="filter-reset" onclick="resetFilters();return false" style="display:none">Filter zurücksetzen</a>
+      <span class="filter-count" id="filter-count"></span>
+    </div>
     <div id="bundles-loading" class="loading"><span class="loading-dots">Ausschreibungen werden geladen</span></div>
     <div id="bundles-empty" class="empty-state" style="display:none">
       <div class="empty-state-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
@@ -517,6 +551,7 @@ var currentUserId=null;
 var myBids={};
 var bundleCountdowns=[];
 var _supplierProfile=null;
+var _allBundles=[];
 
 // Wait for Clerk, then check auth + supplier status
 (async function init(){
@@ -638,11 +673,15 @@ async function loadBundles(){
     });
   }
 
+  _allBundles=result.data;
   var grid=document.getElementById('bundles-grid');
   result.data.forEach(function(bundle){
     var otherBidCount=Math.max(0,(bidCounts[bundle.id]||0)-(myBids[bundle.id]?1:0));
     grid.appendChild(createBundleCard(bundle,otherBidCount));
   });
+
+  populateFilters(result.data);
+  document.getElementById('filter-bar').style.display='flex';
 
   // Start countdown timers
   updateCountdowns();
@@ -873,6 +912,61 @@ async function withdrawBid(bundleId){
   if(result.error){alert('Fehler: '+result.error.message);return;}
   delete myBids[bundleId];
   window.location.reload();
+}
+
+function populateFilters(bundles){
+  var materials=new Set();
+  var regions=new Set();
+  bundles.forEach(function(b){
+    var matName='';
+    if(b.sourceon_id&&_matCatalogMap[b.sourceon_id])matName=_matCatalogMap[b.sourceon_id].bezeichnung;
+    else if(b.material_type)matName=b.material_type;
+    if(matName)materials.add(matName);
+    if(b.delivery_zone)regions.add(b.delivery_zone);
+  });
+  var matSel=document.getElementById('filter-material');
+  Array.from(materials).sort().forEach(function(m){var o=document.createElement('option');o.value=m;o.textContent=m;matSel.appendChild(o);});
+  var regSel=document.getElementById('filter-region');
+  Array.from(regions).sort().forEach(function(r){var o=document.createElement('option');o.value=r;o.textContent=r;regSel.appendChild(o);});
+}
+
+function getBundleMaterialName(b){
+  if(b.sourceon_id&&_matCatalogMap[b.sourceon_id])return _matCatalogMap[b.sourceon_id].bezeichnung;
+  return b.material_type||'';
+}
+
+function applyFilters(){
+  var mat=document.getElementById('filter-material').value;
+  var reg=document.getElementById('filter-region').value;
+  var vol=document.getElementById('filter-volume').value;
+  var anyActive=mat||reg||vol;
+  document.getElementById('filter-reset').style.display=anyActive?'inline':'none';
+
+  var shown=0;
+  _allBundles.forEach(function(b){
+    var card=document.getElementById('card-'+b.id);
+    if(!card)return;
+    var show=true;
+    if(mat&&getBundleMaterialName(b)!==mat)show=false;
+    if(reg&&(b.delivery_zone||'')!==reg)show=false;
+    if(vol){
+      var qty=Number(b.gesamtvolumen||b.total_quantity||0);
+      var parts=vol.split('-');
+      if(vol.indexOf('+')!==-1){if(qty<parseFloat(parts[0]))show=false;}
+      else{if(qty<parseFloat(parts[0])||qty>parseFloat(parts[1]))show=false;}
+    }
+    card.style.display=show?'':'none';
+    if(show)shown++;
+  });
+  var countEl=document.getElementById('filter-count');
+  countEl.textContent=anyActive?(shown+' von '+_allBundles.length+' Ausschreibungen'):'';
+}
+
+function resetFilters(){
+  document.getElementById('filter-material').value='';
+  document.getElementById('filter-region').value='';
+  document.getElementById('filter-volume').value='';
+  applyFilters();
 }
 
 async function loadHistory(){
