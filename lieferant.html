@@ -508,7 +508,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .form-check:hover{border-color:var(--gold-b);background:var(--gold-dim)}
 .form-check input{accent-color:var(--gold);width:14px;height:14px;flex-shrink:0}
 .form-error{font-size:.76rem;color:#ef4444;margin-top:4px;display:none}
-.form-success{background:var(--green-bg);border:1px solid var(--green-b);border-radius:var(--r);padding:16px 20px;font-size:.87rem;color:var(--green);font-weight:600;display:none;align-items:center;gap:10px;margin-top:16px}
+.form-success{background:rgba(22,163,74,.12);border:1.5px solid rgba(22,163,74,.35);border-radius:var(--r);padding:24px 28px;font-size:.95rem;color:#4ade80;font-weight:600;display:none;align-items:center;gap:12px;margin-top:24px;line-height:1.6}
 .form-success.show{display:flex}
 
 /* FOOTER */
@@ -941,9 +941,9 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             <div class="form-error" id="e-sa-agreement" style="display:none;margin-top:6px">Bitte akzeptiere die Lieferantenvereinbarung, um fortzufahren.</div>
           </div>
           <button type="submit" class="btn btn-gold btn-lg btn-full">Jetzt als Partnerlieferant bewerben</button>
-          <div class="form-success" id="success-supplier"><span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden. Nach erfolgreicher Verifizierung erhältst du Zugang zum Lieferanten-Portal per E-Mail.</div>
           <div class="form-error" id="error-supplier" style="display:none;margin-top:12px;padding:12px;border-radius:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#EF4444;font-size:14px"></div>
         </form>
+          <div class="form-success" id="success-supplier"><span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.</div>
         </div>
       </div>
     </div>
@@ -1149,9 +1149,11 @@ function _showSuccess(){
   var formEl=document.getElementById('form-supplier');
   if(formEl)formEl.style.display='none';
   var successEl=document.getElementById('success-supplier');
+  var firmName=document.getElementById('sa-company')?document.getElementById('sa-company').value.trim():'';
   if(successEl){
-    successEl.innerHTML='<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.';
+    successEl.innerHTML='<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank'+(firmName?', '+firmName:'')+' — deine Bewerbung als Partnerlieferant wurde erfolgreich übermittelt! Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden. Nach erfolgreicher Verifizierung erhältst du Zugang zum Lieferanten-Portal per E-Mail.';
     successEl.classList.add('show');
+    successEl.scrollIntoView({behavior:'smooth',block:'center'});
   }
   sessionStorage.removeItem(PENDING_KEY);
 }
