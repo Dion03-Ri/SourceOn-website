@@ -1320,20 +1320,12 @@ async function submitContact(e){
         // Store in sessionStorage as backup for redirect/reload case
         sessionStorage.setItem('sourceon_pending_customer_id',customerId);
         console.log('[SourceOn] Stored pending customer ID in sessionStorage:',customerId);
-        // Open sign-up as modal only (no redirect URLs — they destroy the listener)
+        // Open sign-up — afterSignUpUrl sends user back here after email verification
+        // Linking happens via _checkPendingCustomer on page reload
         window.Clerk.openSignUp({
           appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}},
-          initialValues:{emailAddress:userEmail}
-        });
-        // Listen for Clerk user state change (fires when sign-up modal completes)
-        var _clerkUnsubscribe=window.Clerk.addListener(function(emission){
-          var clerkUser=emission&&emission.user?emission.user:window.Clerk.user;
-          if(!clerkUser)return;
-          var pendingCustId=sessionStorage.getItem('sourceon_pending_customer_id');
-          if(!pendingCustId)return;
-          sessionStorage.removeItem('sourceon_pending_customer_id');
-          if(typeof _clerkUnsubscribe==='function')_clerkUnsubscribe();
-          _linkCustomerAccount(pendingCustId,clerkUser.id);
+          initialValues:{emailAddress:userEmail},
+          afterSignUpUrl:window.location.href
         });
       }
     }
