@@ -1318,7 +1318,7 @@ async function submitContact(e){
         _linkCustomerAccount(customerId,window.Clerk.user.id);
       }else{
         // Store in sessionStorage as backup for redirect/reload case
-        sessionStorage.setItem('sourceon_pending_customer_id',customerId);
+        sessionStorage.setItem('pending_customer_link',customerId);
         console.log('[SourceOn] Stored pending customer ID in sessionStorage:',customerId);
         // Open sign-up — afterSignUpUrl sends user back here after email verification
         // Linking happens via _checkPendingCustomer on page reload
@@ -1368,43 +1368,7 @@ async function _linkCustomerAccount(customerId,clerkUserId){
   }catch(e){console.error('[SourceOn] Customer link failed:',e);}
 }
 
-// Fallback: if page reloaded after Clerk sign-up, link the pending customer
-(function _checkPendingCustomer(){
-  var pendingCustId=sessionStorage.getItem('sourceon_pending_customer_id');
-  if(!pendingCustId)return;
-  // Log immediately so we can verify this is the correct (new) customer ID
-  console.log('[SourceOn] Retrieved pending customer ID from sessionStorage:',pendingCustId);
-  var _attempts=0;
-  function _tryLink(){
-    _attempts++;
-    if(_attempts>40){console.warn('[SourceOn] Gave up waiting for Clerk user after page reload');return;}
-    if(!window.Clerk)return setTimeout(_tryLink,300);
-    var doCheck=function(){
-      if(window.Clerk.user){
-        // Remove from sessionStorage BEFORE linking to prevent double-execution
-        sessionStorage.removeItem('sourceon_pending_customer_id');
-        console.log('[SourceOn] Clerk user found on reload, linking customer:',pendingCustId,'to user:',window.Clerk.user.id);
-        _linkCustomerAccount(pendingCustId,window.Clerk.user.id);
-      }else{
-        // User not yet signed in — wait via listener (sign-up still in progress)
-        console.log('[SourceOn] Clerk loaded but no user yet, waiting via listener');
-        var _unsub=window.Clerk.addListener(function(emission){
-          var u=emission&&emission.user?emission.user:window.Clerk.user;
-          if(!u)return;
-          var pid=sessionStorage.getItem('sourceon_pending_customer_id');
-          if(!pid)return;
-          sessionStorage.removeItem('sourceon_pending_customer_id');
-          if(typeof _unsub==='function')_unsub();
-          console.log('[SourceOn] User signed in via listener, linking customer:',pid,'to user:',u.id);
-          _linkCustomerAccount(pid,u.id);
-        });
-      }
-    };
-    if(typeof window.Clerk.load==='function'){window.Clerk.load().then(doCheck);}
-    else{doCheck();}
-  }
-  _tryLink();
-})();
+// Pending customer linking is now handled inside initClerkUI after Clerk.load() resolves.
 
 
 // FAQ ACCORDION
@@ -1676,7 +1640,7 @@ function clerkCustomerSignUp(){
 async function _createCustomerIfNeeded(){
   try{
     // Skip if a form-submitted customer is about to be linked — avoid creating a competing blank row
-    if(sessionStorage.getItem('sourceon_pending_customer_id')){
+    if(sessionStorage.getItem('pending_customer_link')){
       console.log('[SourceOn] _createCustomerIfNeeded skipped — pending customer link exists');
       return;
     }
@@ -1806,6 +1770,31 @@ async function _createCustomerIfNeeded(){
       _clerkSendVerificationCode();
     }
   });
+
+  // Link pending customer row to Clerk user (runs on every page load after Clerk resolves)
+  var _pendingCustId=sessionStorage.getItem('pending_customer_link');
+  if(_pendingCustId&&window.Clerk.user){
+    console.log('[SourceOn] Found pending customer link in sessionStorage:',_pendingCustId);
+    (async function(){
+      try{
+        var chk=await _supabase.from('customers').select('id,user_id').eq('id',_pendingCustId).single();
+        if(chk.data&&!chk.data.user_id){
+          var upd=await _supabase.from('customers').update({user_id:window.Clerk.user.id}).eq('id',_pendingCustId).is('user_id',null);
+          if(!upd.error){
+            console.log('[SourceOn] Customer linked successfully on page load:',_pendingCustId,'->',window.Clerk.user.id);
+            sessionStorage.removeItem('pending_customer_link');
+            var successEl=document.getElementById('success-contact');
+            if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Konto erstellt!</strong> Du kannst deine Anfragen jetzt im <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> verfolgen.';
+          }else{
+            console.log('[SourceOn] Customer link failed:',upd.error);
+          }
+        }else if(chk.data&&chk.data.user_id){
+          console.log('[SourceOn] Customer already linked, clearing sessionStorage');
+          sessionStorage.removeItem('pending_customer_link');
+        }
+      }catch(e){console.error('[SourceOn] Customer link error:',e);}
+    })();
+  }
 
   // Handle customer signup: create customer row if needed (no redirect)
   if(sessionStorage.getItem('sourceon_customer_signup')&&window.Clerk.user){
