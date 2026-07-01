@@ -495,6 +495,16 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .contact-detail svg{width:18px;height:18px;color:var(--gold);flex-shrink:0}
 @media(max-width:900px){.contact-layout{grid-template-columns:1fr;gap:48px}}
 
+/* ACCOUNT OPT-IN */
+.acct-opt-section{margin-bottom:18px;border-top:1px solid var(--gold-b);padding-top:18px;margin-top:4px}
+.acct-opt-label{display:block;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.acct-opt-card{background:#F8FAFC;border:1.5px solid var(--border);border-radius:10px;padding:14px 16px}
+.acct-opt-check{display:flex;align-items:flex-start;gap:10px;cursor:pointer}
+.acct-opt-check input[type=checkbox]{accent-color:var(--gold);width:15px;height:15px;flex-shrink:0;margin-top:2px;cursor:pointer}
+.acct-opt-check-text{font-size:.84rem;color:var(--text);line-height:1.5;font-weight:500}
+.acct-opt-hint{font-size:.77rem;color:var(--muted);line-height:1.55;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:none}
+.acct-opt-hint.visible{display:block}
+
 /* FORMS */
 .form-group{margin-bottom:18px}
 .form-label{display:block;font-size:.82rem;font-weight:600;color:var(--text);margin-bottom:6px}
@@ -912,6 +922,16 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <div class="form-group"><label class="form-label" data-i18n="form_address_label">Lieferadresse / Kanton *</label><input type="text" class="form-input" id="c-canton" placeholder="z.B. Zürich, Baustelle Hauptstr. 5" data-i18n-placeholder="form_placeholder_address" required/><div class="form-error" data-i18n="form_error_required" id="e-c-canton">Pflichtfeld</div></div>
             </div>
             <div class="form-group"><label class="form-label" data-i18n-html="form_project_label">Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span></label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und weitere Anforderungen…" data-i18n-placeholder="form_placeholder_project"></textarea></div>
+            <div id="acct-opt-section" class="acct-opt-section" style="display:none">
+              <span class="acct-opt-label">Anfragen jederzeit verfolgen</span>
+              <div class="acct-opt-card">
+                <label class="acct-opt-check">
+                  <input type="checkbox" id="c-create-account" onchange="document.getElementById('acct-opt-hint').classList.toggle('visible',this.checked)"/>
+                  <span class="acct-opt-check-text">Konto erstellen, um meine Anfragen und Ersparnisse jederzeit einzusehen</span>
+                </label>
+                <p class="acct-opt-hint" id="acct-opt-hint">Nach dem Absenden wirst du aufgefordert, ein Passwort festzulegen. Du kannst dich danach jederzeit einloggen, um den Status deiner Anfragen zu verfolgen.</p>
+              </div>
+            </div>
             <button type="submit" class="btn btn-gold btn-lg btn-full" data-i18n="form_submit">Materialbedarf jetzt melden →</button>
             <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;font-style:italic" data-i18n="form_bundle_hint">Hinweis: Wird dein Bedarf mit anderen Baufirmen gebündelt, richtet sich deine individuelle Ersparnis nach deinem Volumenanteil am Gesamtbündel.</p>
           </form>
@@ -1066,6 +1086,20 @@ function updateMatUnit(sel){
 document.addEventListener('DOMContentLoaded',function(){
   var firstSel=document.querySelector('#material-rows .material-row .mat-sel');
   if(firstSel)firstSel.addEventListener('change',function(){updateMatUnit(this);});
+  // Show account opt-in section only for non-logged-in users, after Clerk loads
+  function _maybeShowAcctOpt(){
+    var sec=document.getElementById('acct-opt-section');
+    if(!sec)return;
+    if(window.Clerk&&window.Clerk.user){sec.style.display='none';return;}
+    sec.style.display='block';
+  }
+  if(window.Clerk&&window.Clerk.loaded){_maybeShowAcctOpt();}
+  else{
+    var _acctOptTimer=setInterval(function(){
+      if(window.Clerk){clearInterval(_acctOptTimer);_maybeShowAcctOpt();}
+    },300);
+    setTimeout(function(){clearInterval(_acctOptTimer);_maybeShowAcctOpt();},8000);
+  }
 });
 function validateMaterials(){
   const rows=document.querySelectorAll('#material-rows .material-row');
