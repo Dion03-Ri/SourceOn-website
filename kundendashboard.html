@@ -254,6 +254,22 @@ var _matCatalogMap={};
 
   currentUserId=window.Clerk.user.id;
 
+  // Link pending customer row if present in localStorage
+  console.log('[SourceOn] localStorage keys on load — sourceon_pending_customer_link:',localStorage.getItem('sourceon_pending_customer_link'));
+  var _pendingCustId=localStorage.getItem('sourceon_pending_customer_link');
+  if(_pendingCustId){
+    console.log('[SourceOn] Found pending customer link in localStorage:',_pendingCustId);
+    try{
+      var chk=await sb.from('customers').select('id,user_id').eq('id',_pendingCustId).single();
+      if(chk.data&&!chk.data.user_id){
+        var upd=await sb.from('customers').update({user_id:currentUserId}).eq('id',_pendingCustId);
+        if(!upd.error){console.log('[SourceOn] Customer linked successfully:',_pendingCustId,'->',currentUserId);}
+        else{console.log('[SourceOn] Customer link error:',upd.error);}
+      }else{console.log('[SourceOn] Customer already linked or not found, clearing localStorage');}
+      localStorage.removeItem('sourceon_pending_customer_link');
+    }catch(e){console.error('[SourceOn] Customer link error:',e);}
+  }
+
   // Check customer record
   var custRes=await sb.from('customers').select('id,firmenname').eq('user_id',currentUserId);
 

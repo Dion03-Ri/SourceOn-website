@@ -2228,7 +2228,7 @@ function clerkCustomerSignUp(){
 }
 async function _createCustomerIfNeeded(){
   try{
-    if(sessionStorage.getItem('pending_customer_link')){
+    if(localStorage.getItem('sourceon_pending_customer_link')){
       console.log('[SourceOn] _createCustomerIfNeeded skipped — pending customer link exists');
       return;
     }
@@ -2360,9 +2360,10 @@ async function _createCustomerIfNeeded(){
   });
 
   // Link pending customer row to Clerk user (runs on every page load after Clerk resolves)
-  var _pendingCustId=sessionStorage.getItem('pending_customer_link');
-  if(_pendingCustId&&window.Clerk.user){
-    console.log('[SourceOn] Found pending customer link in sessionStorage:',_pendingCustId);
+  console.log('[SourceOn] localStorage keys on load — sourceon_pending_customer_link:',localStorage.getItem('sourceon_pending_customer_link'));
+  var _pendingCustId=localStorage.getItem('sourceon_pending_customer_link');
+  if(_pendingCustId&&window.Clerk.user&&window.Clerk.user.id){
+    console.log('[SourceOn] Found pending customer link in localStorage:',_pendingCustId);
     (async function(){
       try{
         var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
@@ -2370,16 +2371,16 @@ async function _createCustomerIfNeeded(){
         var chkResp=await fetch(sbUrl+'/rest/v1/customers?id=eq.'+encodeURIComponent(_pendingCustId)+'&select=id,user_id&limit=1',{headers:{'apikey':sbKey,'Authorization':'Bearer '+sbKey,'Content-Type':'application/json'}});
         var chkRows=chkResp.ok?await chkResp.json():[];
         if(chkRows.length>0&&!chkRows[0].user_id){
-          var updResp=await fetch(sbUrl+'/rest/v1/customers?id=eq.'+encodeURIComponent(_pendingCustId)+'&user_id=is.null',{method:'PATCH',headers:{'apikey':sbKey,'Authorization':'Bearer '+sbKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({user_id:window.Clerk.user.id})});
+          var updResp=await fetch(sbUrl+'/rest/v1/customers?id=eq.'+encodeURIComponent(_pendingCustId),{method:'PATCH',headers:{'apikey':sbKey,'Authorization':'Bearer '+sbKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({user_id:window.Clerk.user.id})});
           if(updResp.ok){
-            console.log('[SourceOn] Customer linked successfully on page load:',_pendingCustId,'->',window.Clerk.user.id);
-            sessionStorage.removeItem('pending_customer_link');
+            console.log('[SourceOn] Customer linked successfully:',_pendingCustId,'->',window.Clerk.user.id);
+            localStorage.removeItem('sourceon_pending_customer_link');
           }else{
-            console.log('[SourceOn] Customer link failed:',await updResp.text());
+            console.log('[SourceOn] Customer link error:',await updResp.text());
           }
-        }else if(chkRows.length>0&&chkRows[0].user_id){
-          console.log('[SourceOn] Customer already linked, clearing sessionStorage');
-          sessionStorage.removeItem('pending_customer_link');
+        }else if(chkRows.length>0){
+          console.log('[SourceOn] Customer already linked or not found, clearing localStorage');
+          localStorage.removeItem('sourceon_pending_customer_link');
         }
       }catch(e){console.error('[SourceOn] Customer link error:',e);}
     })();
