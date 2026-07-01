@@ -1323,7 +1323,7 @@ async function submitContact(e){
         // Open sign-up — afterSignUpUrl sends user back here after email verification
         // Linking happens via _checkPendingCustomer on page reload
         window.Clerk.openSignUp({
-          appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}},
+          appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'},elements:{footer:'display:none',footerAction:'display:none',footerActionText:'display:none',footerActionLink:'display:none',footer__signUp:'display:none'}},
           initialValues:{emailAddress:userEmail},
           afterSignUpUrl:window.location.href
         });
