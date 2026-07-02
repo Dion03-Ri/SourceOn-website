@@ -270,6 +270,16 @@ var _matCatalogMap={};
     }catch(e){console.error('[SourceOn] Customer link error:',e);}
   }
 
+  // Claim any unlinked customer rows that match this user's email address
+  // (covers form submissions made before/without login)
+  try{
+    var _userEmail=window.Clerk.user.primaryEmailAddress?window.Clerk.user.primaryEmailAddress.emailAddress:null;
+    if(_userEmail){
+      var _claim=await sb.from('customers').update({user_id:currentUserId}).eq('email',_userEmail).is('user_id',null).select('id');
+      console.log('[SourceOn] Email-claim result:',JSON.stringify({data:_claim.data,error:_claim.error}));
+    }
+  }catch(e){console.error('[SourceOn] Email-claim error:',e);}
+
   // Check customer record
   var custRes=await sb.from('customers').select('id,firmenname').eq('user_id',currentUserId);
   console.log('[SourceOn] customers query result:',JSON.stringify({data:custRes.data,error:custRes.error}));
