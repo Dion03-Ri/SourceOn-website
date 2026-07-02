@@ -1312,6 +1312,10 @@ async function submitContact(e){
     // Account creation flow
     var wantsAccount=document.getElementById('c-create-account')&&document.getElementById('c-create-account').checked;
     var userEmail=custPayload.email;
+    if(window.Clerk&&window.Clerk.user){
+      // Bereits eingeloggt → nach kurzer Erfolgsmeldung automatisch zum Dashboard
+      setTimeout(function(){window.location.href='kundendashboard.html';},1500);
+    }
     if(wantsAccount&&window.Clerk){
       if(window.Clerk.user){
         console.log('[SourceOn] User already signed in, linking customer record');
