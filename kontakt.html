@@ -1093,12 +1093,15 @@ document.addEventListener('DOMContentLoaded',function(){
     if(window.Clerk&&window.Clerk.user){sec.style.display='none';return;}
     sec.style.display='block';
   }
-  if(window.Clerk&&window.Clerk.loaded){_maybeShowAcctOpt();}
+  // Entscheide erst, wenn Clerk fertig geladen hat — verhindert Einblenden-dann-Verschwinden
+  var _acctOptDone=false;
+  function _acctOptDecide(){if(_acctOptDone)return;_acctOptDone=true;_maybeShowAcctOpt();}
+  if(window.Clerk&&window.Clerk.loaded){_acctOptDecide();}
   else{
     var _acctOptTimer=setInterval(function(){
-      if(window.Clerk){clearInterval(_acctOptTimer);_maybeShowAcctOpt();}
+      if(window.Clerk&&window.Clerk.loaded){clearInterval(_acctOptTimer);_acctOptDecide();}
     },300);
-    setTimeout(function(){clearInterval(_acctOptTimer);_maybeShowAcctOpt();},8000);
+    setTimeout(function(){clearInterval(_acctOptTimer);_acctOptDecide();},8000);
   }
 });
 function validateMaterials(){
