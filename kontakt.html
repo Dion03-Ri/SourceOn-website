@@ -1313,14 +1313,12 @@ async function submitContact(e){
     var wantsAccount=document.getElementById('c-create-account')&&document.getElementById('c-create-account').checked;
     var userEmail=custPayload.email;
     if(window.Clerk&&window.Clerk.user){
-      // Bereits eingeloggt → nach kurzer Erfolgsmeldung automatisch zum Dashboard
-      setTimeout(function(){window.location.href='kundendashboard.html';},1500);
-    }
-    if(wantsAccount&&window.Clerk){
-      if(window.Clerk.user){
-        console.log('[SourceOn] User already signed in, linking customer record');
-        _linkCustomerAccount(customerId,window.Clerk.user.id);
-      }else{
+      // Eingeloggt: Anfrage immer sofort mit dem bestehenden Kundenkonto verknüpfen,
+      // unabhängig von der "Konto erstellen"-Checkbox
+      console.log('[SourceOn] User already signed in, linking customer record');
+      _linkCustomerAccount(customerId,window.Clerk.user.id);
+    }else if(wantsAccount&&window.Clerk){
+      {
         // Store in sessionStorage as backup for redirect/reload case
         localStorage.setItem('sourceon_pending_customer_link',customerId);
         console.log('[SourceOn] Stored pending customer ID in localStorage:',customerId);
