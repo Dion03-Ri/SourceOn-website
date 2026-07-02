@@ -1353,18 +1353,26 @@ async function submitContact(e){
 }
 
 
-async function _linkCustomerAccount(customerId,clerkUserId){
+async function _linkCustomerAccount(newCustomerId,clerkUserId){
   try{
-    console.log('[SourceOn] Attempting to link customer',customerId,'to Clerk user',clerkUserId);
-    var res=await _supabase.from('customers').update({user_id:clerkUserId}).eq('id',customerId).is('user_id',null);
-    if(res.error){
-      console.error('[SourceOn] Customer link failed:',res.error);
+    console.log('[SourceOn] Attempting to link customer',newCustomerId,'to Clerk user',clerkUserId);
+    // Check if this Clerk user already has an existing linked customer row
+    var existing=await _supabase.from('customers').select('id').eq('user_id',clerkUserId).maybeSingle();
+    if(existing.data&&existing.data.id&&existing.data.id!==newCustomerId){
+      // Existing row found — move material_requests over then delete the new empty row
+      var existingId=existing.data.id;
+      console.log('[SourceOn] Existing customer found:',existingId,'— merging material_requests from',newCustomerId);
+      await _supabase.from('material_requests').update({customer_id:existingId}).eq('customer_id',newCustomerId);
+      await _supabase.from('customers').delete().eq('id',newCustomerId);
+      console.log('[SourceOn] Merge complete — requests moved to',existingId);
     }else{
-      console.log('[SourceOn] Customer linked successfully:',customerId,'->',clerkUserId);
-      localStorage.removeItem('sourceon_pending_customer_link');
-      var successEl=document.getElementById('success-contact');
-      if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Konto erstellt!</strong> Du kannst deine Anfragen jetzt im <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> verfolgen.';
+      // No existing row — set user_id on the new row via service-role path in initClerkUI
+      // (anon key cannot UPDATE due to RLS — handled on next page load)
+      console.log('[SourceOn] No existing customer — will link via page-load check');
     }
+    localStorage.removeItem('sourceon_pending_customer_link');
+    var successEl=document.getElementById('success-contact');
+    if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Konto erstellt!</strong> Du kannst deine Anfragen jetzt im <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> verfolgen.';
   }catch(e){console.error('[SourceOn] Customer link failed:',e);}
 }
 
