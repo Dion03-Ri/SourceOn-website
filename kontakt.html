@@ -1308,9 +1308,6 @@ async function submitContact(e){
     var successEl=document.getElementById('success-contact');
     successEl.classList.add('show');
     successEl.scrollIntoView({behavior:'smooth',block:'center'});
-    if(window.Clerk&&window.Clerk.user){
-      setTimeout(function(){window.location.href='kundendashboard.html';},1500);
-    }
 
     // Account creation flow
     var wantsAccount=document.getElementById('c-create-account')&&document.getElementById('c-create-account').checked;
