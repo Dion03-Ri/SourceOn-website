@@ -1361,18 +1361,29 @@ async function _linkCustomerAccount(newCustomerId,clerkUserId){
     // Check if this Clerk user already has an existing linked customer row
     var existing=await _supabase.from('customers').select('id').eq('user_id',clerkUserId).maybeSingle();
     if(existing.data&&existing.data.id&&existing.data.id!==newCustomerId){
-      // Existing row found — move material_requests over then delete the new empty row
+      // Existing row found — move material_requests over, VERIFY, only then delete the new row
       var existingId=existing.data.id;
       console.log('[SourceOn] Existing customer found:',existingId,'— merging material_requests from',newCustomerId);
-      await _supabase.from('material_requests').update({customer_id:existingId}).eq('customer_id',newCustomerId);
-      await _supabase.from('customers').delete().eq('id',newCustomerId);
-      console.log('[SourceOn] Merge complete — requests moved to',existingId);
+      var mv=await _supabase.from('material_requests').update({customer_id:existingId}).eq('customer_id',newCustomerId).select('id');
+      console.log('[SourceOn] Move result:',JSON.stringify({data:mv.data,error:mv.error}));
+      var left=await _supabase.from('material_requests').select('id').eq('customer_id',newCustomerId);
+      if(!mv.error&&left.data&&left.data.length===0){
+        var del=await _supabase.from('customers').delete().eq('id',newCustomerId);
+        console.log('[SourceOn] Temp customer deleted:',JSON.stringify({error:del.error}));
+        localStorage.removeItem('sourceon_pending_customer_link');
+      }else{
+        // Move blocked (RLS) — do NOT delete; link the new row to the account instead
+        console.warn('[SourceOn] Move failed or unverified — keeping row, linking new customer to account');
+        var lnk=await _supabase.from('customers').update({user_id:clerkUserId}).eq('id',newCustomerId).select('id');
+        console.log('[SourceOn] Fallback link result:',JSON.stringify({data:lnk.data,error:lnk.error}));
+        if(!lnk.error&&lnk.data&&lnk.data.length>0)localStorage.removeItem('sourceon_pending_customer_link');
+      }
     }else{
-      // No existing row — set user_id on the new row via service-role path in initClerkUI
-      // (anon key cannot UPDATE due to RLS — handled on next page load)
-      console.log('[SourceOn] No existing customer — will link via page-load check');
+      // No existing row — link the new row directly to this account
+      var lnk2=await _supabase.from('customers').update({user_id:clerkUserId}).eq('id',newCustomerId).select('id');
+      console.log('[SourceOn] Direct link result:',JSON.stringify({data:lnk2.data,error:lnk2.error}));
+      if(!lnk2.error&&lnk2.data&&lnk2.data.length>0)localStorage.removeItem('sourceon_pending_customer_link');
     }
-    localStorage.removeItem('sourceon_pending_customer_link');
     var successEl=document.getElementById('success-contact');
     if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Konto erstellt!</strong> Du kannst deine Anfragen jetzt im <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> verfolgen.';
   }catch(e){console.error('[SourceOn] Customer link failed:',e);}
