@@ -1322,7 +1322,8 @@ async function submitContact(e){
         console.log('[SourceOn] Stored pending customer ID in localStorage:',customerId);
         window.Clerk.openSignUp({
           appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'},elements:{footer:'display:none',footerAction:'display:none',footerActionText:'display:none',footerActionLink:'display:none',footer__signUp:'display:none'}},
-          initialValues:{emailAddress:userEmail}
+          initialValues:{emailAddress:userEmail},
+          afterSignUpUrl:window.location.href
         });
         // Listen for sign-up completion — fires when modal finishes (no redirect needed)
         var _unsubSignUp=window.Clerk.addListener(function(emission){
