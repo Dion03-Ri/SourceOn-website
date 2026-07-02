@@ -1356,23 +1356,14 @@ async function submitContact(e){
 async function _linkCustomerAccount(customerId,clerkUserId){
   try{
     console.log('[SourceOn] Attempting to link customer',customerId,'to Clerk user',clerkUserId);
-    // Only update if user_id is still NULL — never overwrite an existing link
     var res=await _supabase.from('customers').update({user_id:clerkUserId}).eq('id',customerId).is('user_id',null);
     if(res.error){
       console.error('[SourceOn] Customer link failed:',res.error);
     }else{
-      // Verify the correct row was updated
-      var verify=await _supabase.from('customers').select('id,user_id').eq('id',customerId).single();
-      if(verify.data){
-        console.log('[SourceOn] Verification after link — customer id:',verify.data.id,'user_id now set to:',verify.data.user_id);
-        if(verify.data.user_id===clerkUserId){
-          console.log('[SourceOn] Customer linked successfully');
-          var successEl=document.getElementById('success-contact');
-          if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Konto erstellt!</strong> Du kannst deine Anfragen jetzt im <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> verfolgen.';
-        }else{
-          console.warn('[SourceOn] Customer link — row exists but user_id was already set to:',verify.data.user_id,'(not overwritten)');
-        }
-      }
+      console.log('[SourceOn] Customer linked successfully:',customerId,'->',clerkUserId);
+      localStorage.removeItem('sourceon_pending_customer_link');
+      var successEl=document.getElementById('success-contact');
+      if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Konto erstellt!</strong> Du kannst deine Anfragen jetzt im <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> verfolgen.';
     }
   }catch(e){console.error('[SourceOn] Customer link failed:',e);}
 }
