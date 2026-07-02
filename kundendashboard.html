@@ -272,6 +272,7 @@ var _matCatalogMap={};
 
   // Check customer record
   var custRes=await sb.from('customers').select('id,firmenname').eq('user_id',currentUserId);
+  console.log('[SourceOn] customers query result:',JSON.stringify({data:custRes.data,error:custRes.error}));
 
   if(custRes.error||!custRes.data||custRes.data.length===0){
     showGate('no_customer');
@@ -280,6 +281,7 @@ var _matCatalogMap={};
 
   var customers=custRes.data;
   var customerIds=customers.map(function(c){return c.id;});
+  console.log('[SourceOn] customerIds to query material_requests:',customerIds);
 
   // Show company name in nav
   document.getElementById('nav-company').textContent=customers[0].firmenname||'';
@@ -294,6 +296,7 @@ var _matCatalogMap={};
 
   // Load material requests
   var reqRes=await sb.from('material_requests').select('*').in('customer_id',customerIds).order('created_at',{ascending:false});
+  console.log('[SourceOn] material_requests query result:',JSON.stringify({data:reqRes.data,error:reqRes.error,count:reqRes.data?reqRes.data.length:null}));
 
   document.getElementById('table-loading').style.display='none';
 
