@@ -997,6 +997,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   </div>
 </footer>
 
+<script src="material-i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 // SMOOTH ANCHOR SCROLL
@@ -1077,10 +1078,14 @@ let matRowCount=1;
 var _matById={};
 var _matGroups=null;
 var _matCatalogFailed=false;
-var _CAT_ORDER=['Beton','Armierung','Kies','Mauerwerk','Mörtel','Schalung','Betonfertigteile','Dämmung','Gipskarton','Dach','Fassade','Sanitär','Heizung','Haustechnik'];
+var _CAT_ORDER=['Beton','Armierungsstahl','Kies & Splitt','Mauerwerk & Ziegel','Mörtel','Schalung','Betonfertigteile','Dämmung','Gipskartonplatte','Dach & Fassade','Sanitär & Haustechnik'];
 
 function _escHtml(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 function _matNorm(s){return (s||'').toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss');}
+// Aktuelle Sprache + lokalisierte Material-/Kategorienamen (deutsche Bezeichnung = Katalog)
+function _matLang(){return window._currentLang||localStorage.getItem('sourceon-lang')||'de';}
+function _matLabel(m,lang){lang=lang||_matLang();if(!m)return'';if(lang==='de')return m.bezeichnung;var t=window.MAT_I18N&&window.MAT_I18N[m.sourceon_id];return (t&&t[lang])||m.bezeichnung;}
+function _matCatLabel(cat,lang){lang=lang||_matLang();if(lang==='de')return cat;var t=window.MAT_CAT_I18N&&window.MAT_CAT_I18N[cat];return (t&&t[lang])||cat;}
 
 function _buildMatGroups(){
   var byCat={};
@@ -1111,18 +1116,21 @@ function _renderMatDD(combo,filter){
     dd.classList.add('open');
     return;
   }
+  var lang=_matLang();
   var nf=_matNorm((filter||'').trim());
   var html='';var count=0;
   _matGroups.forEach(function(g){
     var items=g.items.filter(function(m){
       if(!nf)return true;
-      return _matNorm((m.bezeichnung||'')+' '+g.kategorie+' '+(m.sourceon_id||'')).indexOf(nf)!==-1;
+      // Suche über deutsche Bezeichnung, lokalisierten Namen, Kategorie und ID
+      var hay=(m.bezeichnung||'')+' '+_matLabel(m,lang)+' '+g.kategorie+' '+_matCatLabel(g.kategorie,lang)+' '+(m.sourceon_id||'');
+      return _matNorm(hay).indexOf(nf)!==-1;
     });
     if(!items.length)return;
-    html+='<div class="mat-dd-group">'+_escHtml(g.kategorie)+'</div>';
+    html+='<div class="mat-dd-group">'+_escHtml(_matCatLabel(g.kategorie,lang))+'</div>';
     items.forEach(function(m){
       count++;
-      html+='<div class="mat-dd-item" data-id="'+_escHtml(m.sourceon_id)+'"><span>'+_escHtml(m.bezeichnung)+'</span><span class="mat-dd-id">'+_escHtml(m.sourceon_id)+'</span></div>';
+      html+='<div class="mat-dd-item" data-id="'+_escHtml(m.sourceon_id)+'"><span>'+_escHtml(_matLabel(m,lang))+'</span><span class="mat-dd-id">'+_escHtml(m.sourceon_id)+'</span></div>';
     });
   });
   if(!count)html='<div class="mat-dd-empty">Kein Material gefunden — Suchbegriff anpassen.</div>';
@@ -1137,7 +1145,7 @@ function _selectMat(combo,id){
   var m=_matById[id];
   if(!m)return;
   combo.querySelector('.mat-id').value=id;
-  combo.querySelector('.mat-search').value=m.bezeichnung;
+  combo.querySelector('.mat-search').value=_matLabel(m);
   combo.querySelector('.mat-dd').classList.remove('open');
   var row=combo.closest('.material-row');
   var unitEl=row?row.querySelector('.mat-unit'):null;
@@ -1677,27 +1685,23 @@ window.I18N={
 };
 const LANG_LABELS={de:"DE",en:"EN",fr:"FR",it:"IT"};
 
-window.MAT_NAMES={
-  de:{"Transportbeton C20/25":"Transportbeton C20/25","Transportbeton C25/30":"Transportbeton C25/30","Transportbeton C30/37":"Transportbeton C30/37","Transportbeton C35/45":"Transportbeton C35/45","Pumpbeton XC4 druckwasserdicht":"Pumpbeton XC4 druckwasserdicht","Armierungsstahl 8mm":"Armierungsstahl 8mm","Armierungsstahl 10mm":"Armierungsstahl 10mm","Armierungsstahl 12mm":"Armierungsstahl 12mm","Armierungsstahl 16mm":"Armierungsstahl 16mm","Armierungsstahl 20mm":"Armierungsstahl 20mm","Armierungsmatte Q188":"Armierungsmatte Q188","Armierungsmatte Q257":"Armierungsmatte Q257","Armierungsmatte Q335":"Armierungsmatte Q335","Betonstahlkoerbe vorgefertigt":"Betonstahlkoerbe vorgefertigt","Kies 0-32mm":"Kies 0-32mm","Kies 0-16mm":"Kies 0-16mm","Splitt 8-16mm":"Splitt 8-16mm","Splitt 16-32mm":"Splitt 16-32mm","Sand 0-4mm":"Sand 0-4mm","Hochlochziegel 15cm":"Hochlochziegel 15cm","Hochlochziegel 20cm":"Hochlochziegel 20cm","Hochlochziegel 25cm":"Hochlochziegel 25cm","Kalksandstein 15cm":"Kalksandstein 15cm","Porenbetonstein 20cm":"Porenbetonstein 20cm","Mauermoertel MG II":"Mauermoertel MG II","Mauermoertel MG III":"Mauermoertel MG III","Putzmoertel Innen GP":"Putzmoertel Innen GP","Putzmoertel Aussen R":"Putzmoertel Aussen R","Estrichmoertel CT-C25":"Estrichmoertel CT-C25","Klebemoertel C1 Fliesen":"Klebemoertel C1 Fliesen","Schalungsplatte 21mm":"Schalungsplatte 21mm","Schalungsplatte 27mm":"Schalungsplatte 27mm","Systemschalung Wand Miete":"Systemschalung Wand Miete","Traeger H20 Holztraeger":"Traeger H20 Holztraeger","Stahlstuetzen ausziehbar":"Stahlstuetzen ausziehbar","Betonfertigteil Treppe":"Betonfertigteil Treppe","Betonfertigteil Deckenplatte":"Betonfertigteil Deckenplatte","Betonfertigteil Stuetze":"Betonfertigteil Stuetze","EPS-Daemmplatte 100mm Perimeter":"EPS-Daemmplatte 100mm Perimeter","EPS-Daemmplatte 140mm Fassade":"EPS-Daemmplatte 140mm Fassade","EPS-Daemmplatte 200mm Flachdach":"EPS-Daemmplatte 200mm Flachdach","Mineralwolle 80mm Trennwand":"Mineralwolle 80mm Trennwand","Mineralwolle 120mm Steildach":"Mineralwolle 120mm Steildach","XPS-Daemmplatte 80mm Bodenplatte":"XPS-Daemmplatte 80mm Bodenplatte","Gipskartonplatte GKB 12.5mm":"Gipskartonplatte GKB 12.5mm","Gipskartonplatte GKBI Feuchtraum":"Gipskartonplatte GKBI Feuchtraum","Gipskartonplatte GKF Brandschutz":"Gipskartonplatte GKF Brandschutz","Metallstaenderwerk CW 75mm":"Metallstaenderwerk CW 75mm","Metallanschlussprofil UA 75mm":"Metallanschlussprofil UA 75mm","Tondachziegel Standard":"Tondachziegel Standard","Betonroofziegel":"Betonroofziegel","Dachabdichtungsbahn EPDM 1.5mm":"Dachabdichtungsbahn EPDM 1.5mm","Fassadenplatte Faserzement":"Fassadenplatte Faserzement","Kunststoffrohr PVC-U DN 110":"Kunststoffrohr PVC-U DN 110","Kunststoffrohr PP DN 50":"Kunststoffrohr PP DN 50","Kupferrohr 22mm Trinkwasser":"Kupferrohr 22mm Trinkwasser","Verbundrohr PE-RT/Al 16mm":"Verbundrohr PE-RT/Al 16mm","Heizungsverteiler Fussbodenheizung":"Heizungsverteiler Fussbodenheizung"},
-  en:{"Transportbeton C20/25":"Ready-mix concrete C20/25","Transportbeton C25/30":"Ready-mix concrete C25/30","Transportbeton C30/37":"Ready-mix concrete C30/37","Transportbeton C35/45":"Ready-mix concrete C35/45","Pumpbeton XC4 druckwasserdicht":"Pump concrete XC4 waterproof","Armierungsstahl 8mm":"Rebar 8mm","Armierungsstahl 10mm":"Rebar 10mm","Armierungsstahl 12mm":"Rebar 12mm","Armierungsstahl 16mm":"Rebar 16mm","Armierungsstahl 20mm":"Rebar 20mm","Armierungsmatte Q188":"Reinforcement mesh Q188","Armierungsmatte Q257":"Reinforcement mesh Q257","Armierungsmatte Q335":"Reinforcement mesh Q335","Betonstahlkoerbe vorgefertigt":"Prefab rebar cages","Kies 0-32mm":"Gravel 0-32mm","Kies 0-16mm":"Gravel 0-16mm","Splitt 8-16mm":"Chippings 8-16mm","Splitt 16-32mm":"Chippings 16-32mm","Sand 0-4mm":"Sand 0-4mm","Hochlochziegel 15cm":"Perforated brick 15cm","Hochlochziegel 20cm":"Perforated brick 20cm","Hochlochziegel 25cm":"Perforated brick 25cm","Kalksandstein 15cm":"Sand-lime brick 15cm","Porenbetonstein 20cm":"Aerated concrete block 20cm","Mauermoertel MG II":"Masonry mortar MG II","Mauermoertel MG III":"Masonry mortar MG III","Putzmoertel Innen GP":"Interior plaster GP","Putzmoertel Aussen R":"Exterior render R","Estrichmoertel CT-C25":"Screed mortar CT-C25","Klebemoertel C1 Fliesen":"Tile adhesive C1","Schalungsplatte 21mm":"Formwork board 21mm","Schalungsplatte 27mm":"Formwork board 27mm","Systemschalung Wand Miete":"Wall formwork system (rental)","Traeger H20 Holztraeger":"H20 timber beam","Stahlstuetzen ausziehbar":"Telescopic steel props","Betonfertigteil Treppe":"Precast stairs","Betonfertigteil Deckenplatte":"Precast floor slab","Betonfertigteil Stuetze":"Precast column","EPS-Daemmplatte 100mm Perimeter":"EPS insulation 100mm perimeter","EPS-Daemmplatte 140mm Fassade":"EPS insulation 140mm facade","EPS-Daemmplatte 200mm Flachdach":"EPS insulation 200mm flat roof","Mineralwolle 80mm Trennwand":"Mineral wool 80mm partition","Mineralwolle 120mm Steildach":"Mineral wool 120mm pitched roof","XPS-Daemmplatte 80mm Bodenplatte":"XPS insulation 80mm base slab","Gipskartonplatte GKB 12.5mm":"Plasterboard GKB 12.5mm","Gipskartonplatte GKBI Feuchtraum":"Plasterboard GKBI moisture-resistant","Gipskartonplatte GKF Brandschutz":"Plasterboard GKF fire-rated","Metallstaenderwerk CW 75mm":"Metal stud CW 75mm","Metallanschlussprofil UA 75mm":"Metal channel UA 75mm","Tondachziegel Standard":"Clay roof tile standard","Betonroofziegel":"Concrete roof tile","Dachabdichtungsbahn EPDM 1.5mm":"Roof membrane EPDM 1.5mm","Fassadenplatte Faserzement":"Fibre cement facade panel","Kunststoffrohr PVC-U DN 110":"PVC-U pipe DN 110","Kunststoffrohr PP DN 50":"PP pipe DN 50","Kupferrohr 22mm Trinkwasser":"Copper pipe 22mm drinking water","Verbundrohr PE-RT/Al 16mm":"Composite pipe PE-RT/Al 16mm","Heizungsverteiler Fussbodenheizung":"Underfloor heating manifold"},
-  fr:{"Transportbeton C20/25":"Beton C20/25","Transportbeton C25/30":"Beton C25/30","Transportbeton C30/37":"Beton C30/37","Transportbeton C35/45":"Beton C35/45","Pumpbeton XC4 druckwasserdicht":"Beton pompe XC4 etanche","Armierungsstahl 8mm":"Acier d'armature 8mm","Armierungsstahl 10mm":"Acier d'armature 10mm","Armierungsstahl 12mm":"Acier d'armature 12mm","Armierungsstahl 16mm":"Acier d'armature 16mm","Armierungsstahl 20mm":"Acier d'armature 20mm","Armierungsmatte Q188":"Treillis Q188","Armierungsmatte Q257":"Treillis Q257","Armierungsmatte Q335":"Treillis Q335","Betonstahlkoerbe vorgefertigt":"Cages d'armature prefabriquees","Kies 0-32mm":"Gravier 0-32mm","Kies 0-16mm":"Gravier 0-16mm","Splitt 8-16mm":"Gravillons 8-16mm","Splitt 16-32mm":"Gravillons 16-32mm","Sand 0-4mm":"Sable 0-4mm","Hochlochziegel 15cm":"Brique perforee 15cm","Hochlochziegel 20cm":"Brique perforee 20cm","Hochlochziegel 25cm":"Brique perforee 25cm","Kalksandstein 15cm":"Brique silico-calcaire 15cm","Porenbetonstein 20cm":"Bloc beton cellulaire 20cm","Mauermoertel MG II":"Mortier MG II","Mauermoertel MG III":"Mortier MG III","Putzmoertel Innen GP":"Enduit interieur GP","Putzmoertel Aussen R":"Enduit exterieur R","Estrichmoertel CT-C25":"Chape CT-C25","Klebemoertel C1 Fliesen":"Colle carrelage C1","Schalungsplatte 21mm":"Coffrage 21mm","Schalungsplatte 27mm":"Coffrage 27mm","Systemschalung Wand Miete":"Coffrage mural (location)","Traeger H20 Holztraeger":"Poutre H20","Stahlstuetzen ausziehbar":"Etais telescopiques","Betonfertigteil Treppe":"Escalier prefabrique","Betonfertigteil Deckenplatte":"Dalle prefabriquee","Betonfertigteil Stuetze":"Colonne prefabriquee","EPS-Daemmplatte 100mm Perimeter":"Isolation EPS 100mm","EPS-Daemmplatte 140mm Fassade":"Isolation EPS 140mm facade","EPS-Daemmplatte 200mm Flachdach":"Isolation EPS 200mm toit plat","Mineralwolle 80mm Trennwand":"Laine minerale 80mm cloison","Mineralwolle 120mm Steildach":"Laine minerale 120mm toiture","XPS-Daemmplatte 80mm Bodenplatte":"Isolation XPS 80mm radier","Gipskartonplatte GKB 12.5mm":"Plaque de platre 12.5mm","Gipskartonplatte GKBI Feuchtraum":"Plaque hydrofuge","Gipskartonplatte GKF Brandschutz":"Plaque coupe-feu","Metallstaenderwerk CW 75mm":"Montant CW 75mm","Metallanschlussprofil UA 75mm":"Rail UA 75mm","Tondachziegel Standard":"Tuile terre cuite","Betonroofziegel":"Tuile beton","Dachabdichtungsbahn EPDM 1.5mm":"Membrane EPDM 1.5mm","Fassadenplatte Faserzement":"Panneau fibrociment","Kunststoffrohr PVC-U DN 110":"Tuyau PVC-U DN 110","Kunststoffrohr PP DN 50":"Tuyau PP DN 50","Kupferrohr 22mm Trinkwasser":"Tuyau cuivre 22mm","Verbundrohr PE-RT/Al 16mm":"Tuyau multicouche 16mm","Heizungsverteiler Fussbodenheizung":"Collecteur chauffage au sol"},
-  it:{"Transportbeton C20/25":"Calcestruzzo C20/25","Transportbeton C25/30":"Calcestruzzo C25/30","Transportbeton C30/37":"Calcestruzzo C30/37","Transportbeton C35/45":"Calcestruzzo C35/45","Pumpbeton XC4 druckwasserdicht":"Calcestruzzo pompabile XC4","Armierungsstahl 8mm":"Acciaio d'armatura 8mm","Armierungsstahl 10mm":"Acciaio d'armatura 10mm","Armierungsstahl 12mm":"Acciaio d'armatura 12mm","Armierungsstahl 16mm":"Acciaio d'armatura 16mm","Armierungsstahl 20mm":"Acciaio d'armatura 20mm","Armierungsmatte Q188":"Rete d'armatura Q188","Armierungsmatte Q257":"Rete d'armatura Q257","Armierungsmatte Q335":"Rete d'armatura Q335","Betonstahlkoerbe vorgefertigt":"Gabbie d'armatura prefabbricate","Kies 0-32mm":"Ghiaia 0-32mm","Kies 0-16mm":"Ghiaia 0-16mm","Splitt 8-16mm":"Pietrisco 8-16mm","Splitt 16-32mm":"Pietrisco 16-32mm","Sand 0-4mm":"Sabbia 0-4mm","Hochlochziegel 15cm":"Mattone forato 15cm","Hochlochziegel 20cm":"Mattone forato 20cm","Hochlochziegel 25cm":"Mattone forato 25cm","Kalksandstein 15cm":"Silico-calcareo 15cm","Porenbetonstein 20cm":"Blocco cellulare 20cm","Mauermoertel MG II":"Malta MG II","Mauermoertel MG III":"Malta MG III","Putzmoertel Innen GP":"Intonaco interno GP","Putzmoertel Aussen R":"Intonaco esterno R","Estrichmoertel CT-C25":"Massetto CT-C25","Klebemoertel C1 Fliesen":"Colla piastrelle C1","Schalungsplatte 21mm":"Cassero 21mm","Schalungsplatte 27mm":"Cassero 27mm","Systemschalung Wand Miete":"Casseforme parete (noleggio)","Traeger H20 Holztraeger":"Trave H20","Stahlstuetzen ausziehbar":"Puntelli telescopici","Betonfertigteil Treppe":"Scala prefabbricata","Betonfertigteil Deckenplatte":"Solaio prefabbricato","Betonfertigteil Stuetze":"Colonna prefabbricata","EPS-Daemmplatte 100mm Perimeter":"Isolamento EPS 100mm","EPS-Daemmplatte 140mm Fassade":"Isolamento EPS 140mm facciata","EPS-Daemmplatte 200mm Flachdach":"Isolamento EPS 200mm tetto piano","Mineralwolle 80mm Trennwand":"Lana minerale 80mm","Mineralwolle 120mm Steildach":"Lana minerale 120mm tetto","XPS-Daemmplatte 80mm Bodenplatte":"Isolamento XPS 80mm","Gipskartonplatte GKB 12.5mm":"Cartongesso 12.5mm","Gipskartonplatte GKBI Feuchtraum":"Cartongesso idrorepellente","Gipskartonplatte GKF Brandschutz":"Cartongesso antincendio","Metallstaenderwerk CW 75mm":"Montante CW 75mm","Metallanschlussprofil UA 75mm":"Guida UA 75mm","Tondachziegel Standard":"Tegola argilla","Betonroofziegel":"Tegola calcestruzzo","Dachabdichtungsbahn EPDM 1.5mm":"Membrana EPDM 1.5mm","Fassadenplatte Faserzement":"Pannello fibrocemento","Kunststoffrohr PVC-U DN 110":"Tubo PVC-U DN 110","Kunststoffrohr PP DN 50":"Tubo PP DN 50","Kupferrohr 22mm Trinkwasser":"Tubo rame 22mm","Verbundrohr PE-RT/Al 16mm":"Tubo multistrato 16mm","Heizungsverteiler Fussbodenheizung":"Collettore riscaldamento"}
-};
+// MAT_NAMES entfernt — Materialübersetzungen liegen jetzt in material-i18n.js (window.MAT_I18N)
 
 window.CHAT_GREETINGS={de:"Hallo! Ich bin der SourceOn Assistent. Wie kann ich dir helfen?",en:"Hello! I'm the SourceOn Assistant. How can I help you?",fr:"Bonjour! Je suis l'assistant SourceOn. Comment puis-je vous aider?",it:"Ciao! Sono l'assistente SourceOn. Come posso aiutarti?"};
 
 window.translateMaterials=function(lang){
-  var mt=MAT_NAMES[lang]||MAT_NAMES.de;
-  var t=I18N[lang]||I18N.de;
-  document.querySelectorAll('.mat-sel').forEach(function(sel){
-    sel.querySelectorAll('option').forEach(function(opt){
-      if(opt.value===''){ if(t.form_select_material) opt.textContent=t.form_select_material; return; }
-      if(mt[opt.value]) opt.textContent=mt[opt.value];
-    });
-    sel.querySelectorAll('optgroup').forEach(function(og){
-      var k=og.getAttribute('data-i18n-label');
-      if(k&&t[k]) og.label=t[k];
-    });
+  window._currentLang=lang;
+  // Bereits ausgewählte Materialien in der neuen Sprache neu beschriften; offene Listen neu rendern.
+  document.querySelectorAll('.mat-combo').forEach(function(combo){
+    var idEl=combo.querySelector('.mat-id');
+    var id=idEl?idEl.value:'';
+    if(id&&typeof _matById!=='undefined'&&_matById[id]){
+      combo.querySelector('.mat-search').value=_matLabel(_matById[id],lang);
+    }
+    var dd=combo.querySelector('.mat-dd');
+    if(dd&&dd.classList.contains('open')&&typeof _renderMatDD==='function'){
+      _renderMatDD(combo,id?'':combo.querySelector('.mat-search').value);
+    }
   });
 }
 

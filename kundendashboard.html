@@ -202,6 +202,7 @@ a{color:var(--gold);text-decoration:none}
   </div>
 </main>
 
+<script src="material-i18n.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 var SUPABASE_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
@@ -387,6 +388,11 @@ var _matCatalogMap={};
     var matName='--';
     if(r.sourceon_id&&_matCatalogMap[r.sourceon_id]){
       matName=_matCatalogMap[r.sourceon_id].bezeichnung;
+      // Sprache aus der Website-Auswahl übernehmen (Dashboard hat keine eigene Umschaltung)
+      var _dl=localStorage.getItem('sourceon-lang')||'de';
+      if(_dl!=='de'&&window.MAT_I18N&&window.MAT_I18N[r.sourceon_id]&&window.MAT_I18N[r.sourceon_id][_dl]){
+        matName=window.MAT_I18N[r.sourceon_id][_dl];
+      }
     }
 
     var menge='--';
