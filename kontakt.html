@@ -701,6 +701,15 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .mat-qty-wrap .mat-qty{padding-right:52px}
 .mat-unit{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:.78rem;font-weight:600;color:var(--gold);pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .2s}
 .mat-unit.visible{opacity:1}
+/* Durchsuchbare Material-Auswahl */
+.mat-combo{position:relative}
+.mat-dd{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;max-height:280px;overflow-y:auto;background:#fff;border:1.5px solid var(--border);border-radius:10px;box-shadow:0 14px 36px rgba(15,23,42,.16);z-index:60}
+.mat-dd.open{display:block}
+.mat-dd-group{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);padding:10px 14px 4px;background:#fff;position:sticky;top:0}
+.mat-dd-item{display:flex;justify-content:space-between;gap:10px;align-items:baseline;padding:9px 14px;font-size:.84rem;color:var(--text);cursor:pointer}
+.mat-dd-item:hover,.mat-dd-item.active{background:rgba(232,160,32,.12)}
+.mat-dd-id{font-size:.68rem;font-weight:600;color:#94A3B8;white-space:nowrap;flex-shrink:0}
+.mat-dd-empty{padding:12px 14px;font-size:.8rem;color:var(--muted)}
 .mat-remove-btn{width:36px;height:42px;display:flex;align-items:center;justify-content:center;background:none;border:1.5px solid var(--border);border-radius:8px;color:var(--muted);font-size:16px;cursor:pointer;transition:all .15s;flex-shrink:0;margin-top:0;align-self:end;padding:0}
 .mat-remove-btn:hover{border-color:#ef4444;color:#ef4444;background:#fef2f2}
 .add-material-btn{display:inline-flex;align-items:center;gap:6px;font-size:.83rem;font-weight:600;color:var(--gold);background:none;border:none;cursor:pointer;padding:4px 0;transition:opacity .15s}
@@ -888,7 +897,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <label class="form-label" data-i18n-html="form_material_qty">Material &amp; Menge *</label>
               <div class="material-rows" id="material-rows">
                 <div class="material-row first-row">
-                  <select class="form-select mat-sel"><option value="" data-i18n="form_select_material">Material wählen</option><optgroup label="Rohbau Kern" data-i18n-label="optgroup_rohbau"><option value="Transportbeton C20/25">Transportbeton C20/25</option><option value="Transportbeton C25/30">Transportbeton C25/30</option><option value="Transportbeton C30/37">Transportbeton C30/37</option><option value="Transportbeton C35/45">Transportbeton C35/45</option><option value="Pumpbeton XC4 druckwasserdicht">Pumpbeton XC4 druckwasserdicht</option><option value="Armierungsstahl 8mm">Armierungsstahl 8mm</option><option value="Armierungsstahl 10mm">Armierungsstahl 10mm</option><option value="Armierungsstahl 12mm">Armierungsstahl 12mm</option><option value="Armierungsstahl 16mm">Armierungsstahl 16mm</option><option value="Armierungsstahl 20mm">Armierungsstahl 20mm</option><option value="Armierungsmatte Q188">Armierungsmatte Q188</option><option value="Armierungsmatte Q257">Armierungsmatte Q257</option><option value="Armierungsmatte Q335">Armierungsmatte Q335</option><option value="Betonstahlkoerbe vorgefertigt">Betonstahlkoerbe vorgefertigt</option><option value="Kies 0-32mm">Kies 0-32mm</option><option value="Kies 0-16mm">Kies 0-16mm</option><option value="Splitt 8-16mm">Splitt 8-16mm</option><option value="Splitt 16-32mm">Splitt 16-32mm</option><option value="Sand 0-4mm">Sand 0-4mm</option><option value="Hochlochziegel 15cm">Hochlochziegel 15cm</option><option value="Hochlochziegel 20cm">Hochlochziegel 20cm</option><option value="Hochlochziegel 25cm">Hochlochziegel 25cm</option><option value="Kalksandstein 15cm">Kalksandstein 15cm</option><option value="Porenbetonstein 20cm">Porenbetonstein 20cm</option><option value="Mauermoertel MG II">Mauermoertel MG II</option><option value="Mauermoertel MG III">Mauermoertel MG III</option><option value="Putzmoertel Innen GP">Putzmoertel Innen GP</option><option value="Putzmoertel Aussen R">Putzmoertel Aussen R</option><option value="Estrichmoertel CT-C25">Estrichmoertel CT-C25</option><option value="Klebemoertel C1 Fliesen">Klebemoertel C1 Fliesen</option><option value="Schalungsplatte 21mm">Schalungsplatte 21mm</option><option value="Schalungsplatte 27mm">Schalungsplatte 27mm</option><option value="Systemschalung Wand Miete">Systemschalung Wand Miete</option><option value="Traeger H20 Holztraeger">Traeger H20 Holztraeger</option><option value="Stahlstuetzen ausziehbar">Stahlstuetzen ausziehbar</option><option value="Betonfertigteil Treppe">Betonfertigteil Treppe</option><option value="Betonfertigteil Deckenplatte">Betonfertigteil Deckenplatte</option><option value="Betonfertigteil Stuetze">Betonfertigteil Stuetze</option></optgroup><optgroup label="Ausbau" data-i18n-label="optgroup_ausbau"><option value="EPS-Daemmplatte 100mm Perimeter">EPS-Daemmplatte 100mm Perimeter</option><option value="EPS-Daemmplatte 140mm Fassade">EPS-Daemmplatte 140mm Fassade</option><option value="EPS-Daemmplatte 200mm Flachdach">EPS-Daemmplatte 200mm Flachdach</option><option value="Mineralwolle 80mm Trennwand">Mineralwolle 80mm Trennwand</option><option value="Mineralwolle 120mm Steildach">Mineralwolle 120mm Steildach</option><option value="XPS-Daemmplatte 80mm Bodenplatte">XPS-Daemmplatte 80mm Bodenplatte</option><option value="Gipskartonplatte GKB 12.5mm">Gipskartonplatte GKB 12.5mm</option><option value="Gipskartonplatte GKBI Feuchtraum">Gipskartonplatte GKBI Feuchtraum</option><option value="Gipskartonplatte GKF Brandschutz">Gipskartonplatte GKF Brandschutz</option><option value="Metallstaenderwerk CW 75mm">Metallstaenderwerk CW 75mm</option><option value="Metallanschlussprofil UA 75mm">Metallanschlussprofil UA 75mm</option><option value="Tondachziegel Standard">Tondachziegel Standard</option><option value="Betonroofziegel">Betonroofziegel</option><option value="Dachabdichtungsbahn EPDM 1.5mm">Dachabdichtungsbahn EPDM 1.5mm</option><option value="Fassadenplatte Faserzement">Fassadenplatte Faserzement</option></optgroup><optgroup label="Haustechnik" data-i18n-label="optgroup_haustechnik"><option value="Kunststoffrohr PVC-U DN 110">Kunststoffrohr PVC-U DN 110</option><option value="Kunststoffrohr PP DN 50">Kunststoffrohr PP DN 50</option><option value="Kupferrohr 22mm Trinkwasser">Kupferrohr 22mm Trinkwasser</option><option value="Verbundrohr PE-RT/Al 16mm">Verbundrohr PE-RT/Al 16mm</option><option value="Heizungsverteiler Fussbodenheizung">Heizungsverteiler Fussbodenheizung</option></optgroup></select>
+                  <div class="mat-combo"><input type="text" class="form-input mat-search" placeholder="Material suchen oder wählen…" data-i18n-placeholder="form_select_material" autocomplete="off"/><input type="hidden" class="mat-id"/><div class="mat-dd"></div></div>
                   <div class="mat-qty-wrap"><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><span class="mat-unit"></span></div>
                 </div>
               </div>
@@ -1063,38 +1072,157 @@ function emailOk(id,errId){const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.g
 function selOk(id,errId){const ok=document.getElementById(id).value!=='';document.getElementById(errId).style.display=ok?'none':'block';return ok;}
 
 let matRowCount=1;
-const MAT_OPTIONS='<option value="" data-i18n="form_select_material">Material wählen</option><optgroup label="Rohbau Kern" data-i18n-label="optgroup_rohbau"><option value="Transportbeton C20/25">Transportbeton C20/25</option><option value="Transportbeton C25/30">Transportbeton C25/30</option><option value="Transportbeton C30/37">Transportbeton C30/37</option><option value="Transportbeton C35/45">Transportbeton C35/45</option><option value="Pumpbeton XC4 druckwasserdicht">Pumpbeton XC4 druckwasserdicht</option><option value="Armierungsstahl 8mm">Armierungsstahl 8mm</option><option value="Armierungsstahl 10mm">Armierungsstahl 10mm</option><option value="Armierungsstahl 12mm">Armierungsstahl 12mm</option><option value="Armierungsstahl 16mm">Armierungsstahl 16mm</option><option value="Armierungsstahl 20mm">Armierungsstahl 20mm</option><option value="Armierungsmatte Q188">Armierungsmatte Q188</option><option value="Armierungsmatte Q257">Armierungsmatte Q257</option><option value="Armierungsmatte Q335">Armierungsmatte Q335</option><option value="Betonstahlkoerbe vorgefertigt">Betonstahlkoerbe vorgefertigt</option><option value="Kies 0-32mm">Kies 0-32mm</option><option value="Kies 0-16mm">Kies 0-16mm</option><option value="Splitt 8-16mm">Splitt 8-16mm</option><option value="Splitt 16-32mm">Splitt 16-32mm</option><option value="Sand 0-4mm">Sand 0-4mm</option><option value="Hochlochziegel 15cm">Hochlochziegel 15cm</option><option value="Hochlochziegel 20cm">Hochlochziegel 20cm</option><option value="Hochlochziegel 25cm">Hochlochziegel 25cm</option><option value="Kalksandstein 15cm">Kalksandstein 15cm</option><option value="Porenbetonstein 20cm">Porenbetonstein 20cm</option><option value="Mauermoertel MG II">Mauermoertel MG II</option><option value="Mauermoertel MG III">Mauermoertel MG III</option><option value="Putzmoertel Innen GP">Putzmoertel Innen GP</option><option value="Putzmoertel Aussen R">Putzmoertel Aussen R</option><option value="Estrichmoertel CT-C25">Estrichmoertel CT-C25</option><option value="Klebemoertel C1 Fliesen">Klebemoertel C1 Fliesen</option><option value="Schalungsplatte 21mm">Schalungsplatte 21mm</option><option value="Schalungsplatte 27mm">Schalungsplatte 27mm</option><option value="Systemschalung Wand Miete">Systemschalung Wand Miete</option><option value="Traeger H20 Holztraeger">Traeger H20 Holztraeger</option><option value="Stahlstuetzen ausziehbar">Stahlstuetzen ausziehbar</option><option value="Betonfertigteil Treppe">Betonfertigteil Treppe</option><option value="Betonfertigteil Deckenplatte">Betonfertigteil Deckenplatte</option><option value="Betonfertigteil Stuetze">Betonfertigteil Stuetze</option></optgroup><optgroup label="Ausbau" data-i18n-label="optgroup_ausbau"><option value="EPS-Daemmplatte 100mm Perimeter">EPS-Daemmplatte 100mm Perimeter</option><option value="EPS-Daemmplatte 140mm Fassade">EPS-Daemmplatte 140mm Fassade</option><option value="EPS-Daemmplatte 200mm Flachdach">EPS-Daemmplatte 200mm Flachdach</option><option value="Mineralwolle 80mm Trennwand">Mineralwolle 80mm Trennwand</option><option value="Mineralwolle 120mm Steildach">Mineralwolle 120mm Steildach</option><option value="XPS-Daemmplatte 80mm Bodenplatte">XPS-Daemmplatte 80mm Bodenplatte</option><option value="Gipskartonplatte GKB 12.5mm">Gipskartonplatte GKB 12.5mm</option><option value="Gipskartonplatte GKBI Feuchtraum">Gipskartonplatte GKBI Feuchtraum</option><option value="Gipskartonplatte GKF Brandschutz">Gipskartonplatte GKF Brandschutz</option><option value="Metallstaenderwerk CW 75mm">Metallstaenderwerk CW 75mm</option><option value="Metallanschlussprofil UA 75mm">Metallanschlussprofil UA 75mm</option><option value="Tondachziegel Standard">Tondachziegel Standard</option><option value="Betonroofziegel">Betonroofziegel</option><option value="Dachabdichtungsbahn EPDM 1.5mm">Dachabdichtungsbahn EPDM 1.5mm</option><option value="Fassadenplatte Faserzement">Fassadenplatte Faserzement</option></optgroup><optgroup label="Haustechnik" data-i18n-label="optgroup_haustechnik"><option value="Kunststoffrohr PVC-U DN 110">Kunststoffrohr PVC-U DN 110</option><option value="Kunststoffrohr PP DN 50">Kunststoffrohr PP DN 50</option><option value="Kupferrohr 22mm Trinkwasser">Kupferrohr 22mm Trinkwasser</option><option value="Verbundrohr PE-RT/Al 16mm">Verbundrohr PE-RT/Al 16mm</option><option value="Heizungsverteiler Fussbodenheizung">Heizungsverteiler Fussbodenheizung</option></optgroup>';
+
+// ============ Material-Auswahl: direkt aus material_catalog, sourceon_id als Wert ============
+var _matById={};
+var _matGroups=null;
+var _matCatalogFailed=false;
+var _CAT_ORDER=['Beton','Armierung','Kies','Mauerwerk','Mörtel','Schalung','Betonfertigteile','Dämmung','Gipskarton','Dach','Fassade','Sanitär','Heizung','Haustechnik'];
+
+function _escHtml(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function _matNorm(s){return (s||'').toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss');}
+
+function _buildMatGroups(){
+  var byCat={};
+  _matCatalog.forEach(function(m){
+    _matById[m.sourceon_id]=m;
+    var k=m.kategorie||'Weitere';
+    (byCat[k]=byCat[k]||[]).push(m);
+  });
+  var cats=Object.keys(byCat);
+  cats.sort(function(a,b){
+    var ia=_CAT_ORDER.indexOf(a),ib=_CAT_ORDER.indexOf(b);
+    if(ia===-1&&ib===-1)return a.localeCompare(b,'de');
+    if(ia===-1)return 1;
+    if(ib===-1)return -1;
+    return ia-ib;
+  });
+  _matGroups=cats.map(function(c){
+    byCat[c].sort(function(x,y){return (x.sourceon_id||'').localeCompare(y.sourceon_id||'');});
+    return {kategorie:c,items:byCat[c]};
+  });
+  console.log('[SourceOn] Material dropdown built from catalog:',_matCatalog.length,'materials in',_matGroups.length,'categories');
+}
+
+function _renderMatDD(combo,filter){
+  var dd=combo.querySelector('.mat-dd');
+  if(!_matGroups){
+    dd.innerHTML='<div class="mat-dd-empty">Materialliste konnte nicht geladen werden — bitte Seite neu laden.</div>';
+    dd.classList.add('open');
+    return;
+  }
+  var nf=_matNorm((filter||'').trim());
+  var html='';var count=0;
+  _matGroups.forEach(function(g){
+    var items=g.items.filter(function(m){
+      if(!nf)return true;
+      return _matNorm((m.bezeichnung||'')+' '+g.kategorie+' '+(m.sourceon_id||'')).indexOf(nf)!==-1;
+    });
+    if(!items.length)return;
+    html+='<div class="mat-dd-group">'+_escHtml(g.kategorie)+'</div>';
+    items.forEach(function(m){
+      count++;
+      html+='<div class="mat-dd-item" data-id="'+_escHtml(m.sourceon_id)+'"><span>'+_escHtml(m.bezeichnung)+'</span><span class="mat-dd-id">'+_escHtml(m.sourceon_id)+'</span></div>';
+    });
+  });
+  if(!count)html='<div class="mat-dd-empty">Kein Material gefunden — Suchbegriff anpassen.</div>';
+  dd.innerHTML=html;
+  dd.classList.add('open');
+  dd.querySelectorAll('.mat-dd-item').forEach(function(it){
+    it.addEventListener('mousedown',function(e){e.preventDefault();_selectMat(combo,it.getAttribute('data-id'));});
+  });
+}
+
+function _selectMat(combo,id){
+  var m=_matById[id];
+  if(!m)return;
+  combo.querySelector('.mat-id').value=id;
+  combo.querySelector('.mat-search').value=m.bezeichnung;
+  combo.querySelector('.mat-dd').classList.remove('open');
+  var row=combo.closest('.material-row');
+  var unitEl=row?row.querySelector('.mat-unit'):null;
+  if(unitEl){unitEl.textContent=m.einheit||'';unitEl.classList.toggle('visible',!!m.einheit);}
+}
+
+function _initMatCombo(combo){
+  var inp=combo.querySelector('.mat-search');
+  if(!inp||inp._comboInit)return;
+  inp._comboInit=true;
+  inp.addEventListener('focus',function(){
+    _renderMatDD(combo,combo.querySelector('.mat-id').value?'':inp.value);
+  });
+  inp.addEventListener('input',function(){
+    // Sobald getippt wird, gilt die alte Auswahl nicht mehr — nur eine Listen-Auswahl zählt.
+    combo.querySelector('.mat-id').value='';
+    var row=combo.closest('.material-row');
+    var u=row?row.querySelector('.mat-unit'):null;
+    if(u){u.textContent='';u.classList.remove('visible');}
+    _renderMatDD(combo,inp.value);
+  });
+  inp.addEventListener('keydown',function(e){
+    var dd=combo.querySelector('.mat-dd');
+    if(e.key==='Escape'){dd.classList.remove('open');return;}
+    var items=Array.prototype.slice.call(dd.querySelectorAll('.mat-dd-item'));
+    if(e.key==='ArrowDown'&&!dd.classList.contains('open')){e.preventDefault();_renderMatDD(combo,inp.value);return;}
+    if(!items.length)return;
+    var idx=items.findIndex(function(i){return i.classList.contains('active');});
+    if(e.key==='ArrowDown'){e.preventDefault();idx=Math.min(idx+1,items.length-1);}
+    else if(e.key==='ArrowUp'){e.preventDefault();idx=Math.max(idx-1,0);}
+    else if(e.key==='Enter'){
+      if(dd.classList.contains('open')&&idx>=0){e.preventDefault();_selectMat(combo,items[idx].getAttribute('data-id'));}
+      return;
+    }else{return;}
+    items.forEach(function(i,n){i.classList.toggle('active',n===idx);});
+    if(items[idx])items[idx].scrollIntoView({block:'nearest'});
+  });
+  inp.addEventListener('blur',function(){
+    setTimeout(function(){combo.querySelector('.mat-dd').classList.remove('open');},150);
+  });
+}
+
+function _applyCatalogFailure(){
+  _matCatalogFailed=true;
+  document.querySelectorAll('.mat-combo .mat-search').forEach(function(i){
+    i.disabled=true;
+    i.removeAttribute('data-i18n-placeholder'); // verhindert Überschreiben durch Sprachumschaltung
+    i.placeholder='Materialliste konnte nicht geladen werden — bitte Seite neu laden';
+  });
+  var sb=document.querySelector('#form-contact button[type="submit"]');
+  if(sb){sb.disabled=true;sb.style.opacity='0.5';}
+  var err=document.getElementById('e-c-material');
+  if(err){
+    err.removeAttribute('data-i18n');
+    err.textContent='Materialliste konnte nicht geladen werden — bitte Seite neu laden.';
+    err.style.display='block';
+  }
+}
+
+var MAT_COMBO_HTML='<div class="mat-combo"><input type="text" class="form-input mat-search" placeholder="Material suchen oder wählen…" data-i18n-placeholder="form_select_material" autocomplete="off"/><input type="hidden" class="mat-id"/><div class="mat-dd"></div></div>';
+
 function addMaterialRow(){
   if(matRowCount>=10)return;matRowCount++;
   const rows=document.getElementById('material-rows');
   const div=document.createElement('div');div.className='material-row';
-  div.innerHTML='<select class="form-select mat-sel">'+MAT_OPTIONS+'</select><div class="mat-qty-wrap"><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><span class="mat-unit"></span></div><button type="button" class="mat-remove-btn" onclick="removeMaterialRow(this)" title="Entfernen"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
+  div.innerHTML=MAT_COMBO_HTML+'<div class="mat-qty-wrap"><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><span class="mat-unit"></span></div><button type="button" class="mat-remove-btn" onclick="removeMaterialRow(this)" title="Entfernen"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
   rows.appendChild(div);
-  div.querySelector('.mat-sel').addEventListener('change',function(){updateMatUnit(this);});
-  var cl=window._currentLang||localStorage.getItem('sourceon-lang')||'de';if(typeof translateMaterials==='function')translateMaterials(cl);var t=typeof I18N!=='undefined'&&I18N[cl]?I18N[cl]:null;if(t){div.querySelectorAll('[data-i18n]').forEach(function(el){if(t[el.dataset.i18n])el.textContent=t[el.dataset.i18n];});div.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){if(t[el.dataset.i18nPlaceholder])el.placeholder=t[el.dataset.i18nPlaceholder];});}
+  _initMatCombo(div.querySelector('.mat-combo'));
+  if(_matCatalogFailed)_applyCatalogFailure();
+  var cl=window._currentLang||localStorage.getItem('sourceon-lang')||'de';var t=typeof I18N!=='undefined'&&I18N[cl]?I18N[cl]:null;if(t){div.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){if(t[el.dataset.i18nPlaceholder])el.placeholder=t[el.dataset.i18nPlaceholder];});}
   if(matRowCount>=10)document.getElementById('add-material-btn').style.display='none';
 }
 function removeMaterialRow(btn){btn.closest('.material-row').remove();matRowCount--;document.getElementById('add-material-btn').style.display='';}
-function updateMatUnit(sel){
-  var row=sel.closest('.material-row');
-  var unitEl=row.querySelector('.mat-unit');
-  if(!unitEl)return;
-  var val=sel.value;
-  if(!val||!_matCatalog){unitEl.textContent='';unitEl.classList.remove('visible');return;}
-  var match=_findSourceonId(val);
-  if(match&&match.einheit){unitEl.textContent=match.einheit;unitEl.classList.add('visible');}
-  else{unitEl.textContent='';unitEl.classList.remove('visible');}
-}
 document.addEventListener('DOMContentLoaded',function(){
-  var firstSel=document.querySelector('#material-rows .material-row .mat-sel');
-  if(firstSel)firstSel.addEventListener('change',function(){updateMatUnit(this);});
+  document.querySelectorAll('.mat-combo').forEach(_initMatCombo);
   // Konto-Opt-in-Bereich immer anzeigen (unabhängig vom Login-Status)
   var _acctSec=document.getElementById('acct-opt-section');
   if(_acctSec)_acctSec.style.display='block';
 });
 function validateMaterials(){
   const rows=document.querySelectorAll('#material-rows .material-row');
-  const ok=Array.from(rows).some(r=>r.querySelector('.mat-sel').value&&r.querySelector('.mat-qty').value.trim());
+  const ok=Array.from(rows).some(r=>{
+    var idEl=r.querySelector('.mat-id');
+    return idEl&&idEl.value&&r.querySelector('.mat-qty').value.trim();
+  });
   document.getElementById('e-c-material').style.display=ok?'none':'block';return ok;
 }
 function handleFileSelect(input){
@@ -1127,63 +1255,16 @@ var _matCatalog=null;
     if(res.data&&res.data.length>0){
       _matCatalog=res.data;
       console.log('[SourceOn Debug] material_catalog loaded:',res.data.length,'rows');
-      console.log('[SourceOn Debug] catalog sample:',JSON.stringify(res.data.slice(0,3)));
+      _buildMatGroups();
     }else{
       console.warn('[SourceOn Debug] material_catalog returned 0 rows. data=',res.data,'error=',res.error);
-      var test=await _supabase.from('material_catalog').select('*').limit(1);
-      console.log('[SourceOn Debug] Fallback test (select * limit 1):',{data:test.data,error:test.error,status:test.status});
+      _applyCatalogFailure();
     }
   }catch(e){
     console.error('[SourceOn Debug] material_catalog fetch EXCEPTION:',e);
+    _applyCatalogFailure();
   }
 })();
-
-// Normalisiert Umlaute/Sonderzeichen, damit "Betonstahlkoerbe" == "Betonstahlkörbe" usw.
-function _norm(s){
-  return (s||'').toLowerCase()
-    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')
-    .replace(/[øö]/g,'oe').replace(/[éèê]/g,'e').replace(/[àâ]/g,'a')
-    .replace(/[^a-z0-9]+/g,' ').trim();
-}
-
-function _findSourceonId(materialName){
-  if(!_matCatalog||!materialName){
-    console.warn('[SourceOn Debug] _findSourceonId: catalog=',!!_matCatalog,'materialName=',materialName);
-    return null;
-  }
-  var name=materialName.trim();
-  var nName=_norm(name);
-  console.log('[SourceOn Debug] Matching dropdown value:',JSON.stringify(name),'-> normalized:',JSON.stringify(nName));
-
-  // 1) Exakte (normalisierte) Übereinstimmung der Bezeichnung
-  var exact=_matCatalog.find(function(m){return _norm(m.bezeichnung)===nName;});
-  if(exact){console.log('[SourceOn Debug] Exact match:',exact.sourceon_id);return{id:exact.sourceon_id,einheit:exact.einheit};}
-
-  // 2) Katalog-Bezeichnung BEGINNT mit dem Dropdown-Wert
-  //    (Dropdown "Transportbeton C20/25" -> Katalog "Transportbeton C20/25 — Standardbeton…")
-  var starts=_matCatalog.find(function(m){return _norm(m.bezeichnung).indexOf(nName)===0;});
-  if(starts){console.log('[SourceOn Debug] Prefix match:',starts.sourceon_id);return{id:starts.sourceon_id,einheit:starts.einheit};}
-
-  // 3) Dropdown-Wert kommt irgendwo in der Bezeichnung vor
-  var contains=_matCatalog.find(function(m){return _norm(m.bezeichnung).indexOf(nName)!==-1;});
-  if(contains){console.log('[SourceOn Debug] Contains match:',contains.sourceon_id);return{id:contains.sourceon_id,einheit:contains.einheit};}
-
-  // 4) Token-Scoring: möglichst viele der markanten Wörter müssen vorkommen
-  var words=nName.split(/\s+/).filter(function(w){return w.length>1;});
-  var best=null;var bestScore=0;
-  _matCatalog.forEach(function(m){
-    var fields=_norm((m.bezeichnung||'')+' '+(m.kategorie||''));
-    var score=words.filter(function(w){return (' '+fields+' ').indexOf(' '+w+' ')!==-1||fields.indexOf(w)!==-1;}).length;
-    if(score>bestScore){bestScore=score;best=m;}
-  });
-  // Nur akzeptieren, wenn mindestens die HÄLFTE der Wörter passt (verhindert "beton"→falscher Artikel)
-  var need=Math.max(1,Math.ceil(words.length/2));
-  if(best&&bestScore>=need){console.log('[SourceOn Debug] Token match (score '+bestScore+'/'+words.length+'):',best.sourceon_id,best.bezeichnung);return{id:best.sourceon_id,einheit:best.einheit};}
-
-  // Keine verlässliche Zuordnung -> NICHT raten. null zurückgeben (Zeile wird gemeldet, nicht falsch gespeichert).
-  console.error('[SourceOn Debug] No reliable catalog match for:',name,'(normalized:',nName,') — NOT guessing.');
-  return null;
-}
 
 function _parseTiming(sel){
   var v=sel.selectedIndex;
@@ -1264,23 +1345,24 @@ async function submitContact(e){
     var inserts=[];
     var unmatched=[];
     rows.forEach(function(r,idx){
-      var sel=r.querySelector('.mat-sel');
-      var mat=sel.value;
-      var matText=sel.options[sel.selectedIndex]?sel.options[sel.selectedIndex].text:'';
+      var idEl=r.querySelector('.mat-id');
+      var sid=idEl?idEl.value:'';
+      var txtEl=r.querySelector('.mat-search');
+      var txt=txtEl?txtEl.value.trim():'';
       var qty=r.querySelector('.mat-qty').value.trim();
-      console.log('[SourceOn Debug] Row '+idx+': value='+JSON.stringify(mat)+' text='+JSON.stringify(matText)+' qty='+JSON.stringify(qty));
-      if(!mat||!qty)return;
-      var match=_findSourceonId(mat);
-      if(!match||!match.id){
-        console.error('[SourceOn Debug] Row '+idx+' UNMATCHED: no catalog mapping for "'+mat+'"');
-        unmatched.push(mat);
+      console.log('[SourceOn Debug] Row '+idx+': sourceon_id='+JSON.stringify(sid)+' qty='+JSON.stringify(qty));
+      if(!sid){
+        // Freitext ohne gültige Listen-Auswahl wird NIE übermittelt
+        if(txt&&qty)unmatched.push(txt);
         return;
       }
+      if(!qty)return;
+      var m=_matById[sid];
       inserts.push({
         customer_id:customerId,
-        sourceon_id:match.id,
+        sourceon_id:sid,
         menge:qty,
-        einheit:match.einheit||'Stk',
+        einheit:(m&&m.einheit)||'Stk',
         liefer_zeitraum_von:timing.von,
         liefer_zeitraum_bis:timing.bis,
         liefer_zone:zone,
@@ -1297,7 +1379,7 @@ async function submitContact(e){
         umDiv.style.cssText='background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:14px 18px;margin-top:14px;font-size:.85rem;color:#991b1b;line-height:1.6';
         submitBtn.parentNode.insertBefore(umDiv,submitBtn.nextSibling);
       }
-      umDiv.textContent='Folgendes Material konnte nicht zugeordnet werden: '+unmatched.join(', ')+'. Bitte kontaktiere uns direkt unter info@sourceon.ch — wir ergänzen es umgehend.';
+      umDiv.textContent='Bitte wähle das Material aus der Vorschlagsliste aus (Eingabe "'+unmatched.join('", "')+'" ist keine gültige Auswahl). Tippe zum Suchen und klicke einen Eintrag an.';
       umDiv.style.display='block';
       return;
     }

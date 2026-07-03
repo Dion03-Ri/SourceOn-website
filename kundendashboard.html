@@ -428,8 +428,9 @@ var _matCatalogMap={};
       detail='<div class="req-status-detail"><div class="status-msg"><span style="color:#34D399;font-size:1rem;flex-shrink:0">✓</span><span>Lieferant ausgewählt — Lieferung in Vorbereitung</span></div></div>';
     }
 
+    var matIdSub=r.sourceon_id?'<div style="font-size:.68rem;font-weight:600;color:#94A3B8;margin-top:2px">'+esc(r.sourceon_id)+'</div>':'';
     tr.innerHTML='<td>'+esc(datum)+'</td>'
-      +'<td>'+esc(matName)+'</td>'
+      +'<td>'+esc(matName)+matIdSub+'</td>'
       +'<td>'+esc(menge)+'</td>'
       +'<td>'+esc(zeitraum)+'</td>'
       +'<td><span class="status-badge status-'+sc+'">'+esc(sl)+'</span>'+detail+'</td>';
