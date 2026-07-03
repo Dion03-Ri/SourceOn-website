@@ -1349,32 +1349,45 @@ async function submitContact(e){
 async function _linkCustomerAccount(newCustomerId,clerkUserId){
   try{
     console.log('[SourceOn] Attempting to link customer',newCustomerId,'to Clerk user',clerkUserId);
-    // Check if this Clerk user already has an existing linked customer row
-    var existing=await _supabase.from('customers').select('id').eq('user_id',clerkUserId).maybeSingle();
-    if(existing.data&&existing.data.id&&existing.data.id!==newCustomerId){
-      // Existing row found — move material_requests over, VERIFY, only then delete the new row
-      var existingId=existing.data.id;
-      console.log('[SourceOn] Existing customer found:',existingId,'— merging material_requests from',newCustomerId);
-      var mv=await _supabase.from('material_requests').update({customer_id:existingId}).eq('customer_id',newCustomerId).select('id');
-      console.log('[SourceOn] Move result:',JSON.stringify({data:mv.data,error:mv.error}));
-      var left=await _supabase.from('material_requests').select('id').eq('customer_id',newCustomerId);
-      if(!mv.error&&left.data&&left.data.length===0){
-        var del=await _supabase.from('customers').delete().eq('id',newCustomerId);
-        console.log('[SourceOn] Temp customer deleted:',JSON.stringify({error:del.error}));
-        localStorage.removeItem('sourceon_pending_customer_link');
-      }else{
-        // Move blocked (RLS) — do NOT delete; link the new row to the account instead
-        console.warn('[SourceOn] Move failed or unverified — keeping row, linking new customer to account');
-        var lnk=await _supabase.from('customers').update({user_id:clerkUserId}).eq('id',newCustomerId).select('id');
-        console.log('[SourceOn] Fallback link result:',JSON.stringify({data:lnk.data,error:lnk.error}));
-        if(!lnk.error&&lnk.data&&lnk.data.length>0)localStorage.removeItem('sourceon_pending_customer_link');
-      }
+
+    // STEP 1 — Verknüpfe die neue/Temp-Kundenzeile ZUERST mit dem Konto.
+    // Danach sind ihre material_requests unter RLS sichtbar UND verschiebbar. Nie Daten verlieren.
+    var linkRes=await _supabase.from('customers').update({user_id:clerkUserId}).eq('id',newCustomerId).is('user_id',null).select('id,user_id');
+    console.log('[SourceOn] Step1 link temp customer:',JSON.stringify({data:linkRes.data,error:linkRes.error}));
+
+    // Positiv bestätigen, dass die Zeile jetzt WIRKLICH uns gehört (frisch verknüpft ODER bereits verknüpft)
+    var tempCheck=await _supabase.from('customers').select('id,user_id').eq('id',newCustomerId).maybeSingle();
+    var tempOwned=tempCheck.data&&tempCheck.data.user_id===clerkUserId;
+    console.log('[SourceOn] Step1 temp now owned by user?',tempOwned,JSON.stringify(tempCheck.data));
+
+    if(!tempOwned){
+      // Verknüpfen der Kundenzeile schlug fehl (fehlende RLS-UPDATE-Policy).
+      // NICHTS löschen. Anfrage bleibt erhalten; RLS-Policy in der DB muss ergänzt werden.
+      console.error('[SourceOn] Could NOT link customer row (RLS?). Keeping everything — no data loss. Fix RLS UPDATE policy on customers.');
     }else{
-      // No existing row — link the new row directly to this account
-      var lnk2=await _supabase.from('customers').update({user_id:clerkUserId}).eq('id',newCustomerId).select('id');
-      console.log('[SourceOn] Direct link result:',JSON.stringify({data:lnk2.data,error:lnk2.error}));
-      if(!lnk2.error&&lnk2.data&&lnk2.data.length>0)localStorage.removeItem('sourceon_pending_customer_link');
+      // STEP 2 — Gibt es bereits eine ANDERE, dem Konto zugeordnete Kundenzeile? Dann konsolidieren.
+      var others=await _supabase.from('customers').select('id').eq('user_id',clerkUserId).neq('id',newCustomerId);
+      console.log('[SourceOn] Step2 other linked customers:',JSON.stringify({data:others.data,error:others.error}));
+      if(!others.error&&others.data&&others.data.length>0){
+        var primaryId=others.data[0].id;
+        // STEP 3 — Anfragen auf die primäre Zeile verschieben (jetzt erlaubt: beide gehören uns)
+        var mv=await _supabase.from('material_requests').update({customer_id:primaryId}).eq('customer_id',newCustomerId).select('id');
+        console.log('[SourceOn] Step3 move result:',JSON.stringify({data:mv.data,error:mv.error}));
+        // STEP 4 — Verlässlich prüfen, was unter der Temp-Zeile übrig ist (wir besitzen sie jetzt)
+        var remain=await _supabase.from('material_requests').select('id').eq('customer_id',newCustomerId);
+        console.log('[SourceOn] Step4 remaining under temp:',JSON.stringify({data:remain.data,error:remain.error}));
+        // Temp-Zeile NUR löschen, wenn positiv bestätigt: kein Fehler UND nichts mehr übrig
+        if(!remain.error&&remain.data&&remain.data.length===0){
+          var del=await _supabase.from('customers').delete().eq('id',newCustomerId);
+          console.log('[SourceOn] Temp customer deleted:',JSON.stringify({error:del.error}));
+        }else{
+          console.warn('[SourceOn] Requests still under temp row OR check failed — KEEPING temp row linked. Dashboard shows both. No data loss.');
+        }
+      }
+      // Kein anderer Kunde vorhanden → Temp-Zeile bleibt einfach als die Kundenzeile bestehen (bereits verknüpft).
     }
+
+    localStorage.removeItem('sourceon_pending_customer_link');
     var successEl=document.getElementById('success-contact');
     if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Verknüpft!</strong> Deine Anfrage ist jetzt in deinem <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> sichtbar.';
   }catch(e){console.error('[SourceOn] Customer link failed:',e);}
