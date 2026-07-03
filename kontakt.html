@@ -1322,7 +1322,7 @@ async function submitContact(e){
       _linkCustomerAccount(customerId,window.Clerk.user.id);
     }else if(wantsAccount&&window.Clerk){
       {
-        // Store in sessionStorage as backup for redirect/reload case
+        // Store in localStorage as backup for redirect/reload case (persists across reloads)
         localStorage.setItem('sourceon_pending_customer_link',customerId);
         console.log('[SourceOn] Stored pending customer ID in localStorage:',customerId);
         window.Clerk.openSignUp({
