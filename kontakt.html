@@ -1138,52 +1138,51 @@ var _matCatalog=null;
   }
 })();
 
+// Normalisiert Umlaute/Sonderzeichen, damit "Betonstahlkoerbe" == "Betonstahlkörbe" usw.
+function _norm(s){
+  return (s||'').toLowerCase()
+    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')
+    .replace(/[øö]/g,'oe').replace(/[éèê]/g,'e').replace(/[àâ]/g,'a')
+    .replace(/[^a-z0-9]+/g,' ').trim();
+}
+
 function _findSourceonId(materialName){
   if(!_matCatalog||!materialName){
     console.warn('[SourceOn Debug] _findSourceonId: catalog=',!!_matCatalog,'materialName=',materialName);
     return null;
   }
   var name=materialName.trim();
-  var nameLower=name.toLowerCase();
-  console.log('[SourceOn Debug] Matching dropdown value:',JSON.stringify(name));
+  var nName=_norm(name);
+  console.log('[SourceOn Debug] Matching dropdown value:',JSON.stringify(name),'-> normalized:',JSON.stringify(nName));
 
-  var exact=_matCatalog.find(function(m){return m.bezeichnung===name;});
-  if(exact){console.log('[SourceOn Debug] Exact bezeichnung match:',exact.sourceon_id);return{id:exact.sourceon_id,einheit:exact.einheit};}
+  // 1) Exakte (normalisierte) Übereinstimmung der Bezeichnung
+  var exact=_matCatalog.find(function(m){return _norm(m.bezeichnung)===nName;});
+  if(exact){console.log('[SourceOn Debug] Exact match:',exact.sourceon_id);return{id:exact.sourceon_id,einheit:exact.einheit};}
 
-  var iMatch=_matCatalog.find(function(m){return m.bezeichnung&&m.bezeichnung.toLowerCase()===nameLower;});
-  if(iMatch){console.log('[SourceOn Debug] Case-insensitive bezeichnung match:',iMatch.sourceon_id);return{id:iMatch.sourceon_id,einheit:iMatch.einheit};}
+  // 2) Katalog-Bezeichnung BEGINNT mit dem Dropdown-Wert
+  //    (Dropdown "Transportbeton C20/25" -> Katalog "Transportbeton C20/25 — Standardbeton…")
+  var starts=_matCatalog.find(function(m){return _norm(m.bezeichnung).indexOf(nName)===0;});
+  if(starts){console.log('[SourceOn Debug] Prefix match:',starts.sourceon_id);return{id:starts.sourceon_id,einheit:starts.einheit};}
 
-  var katMatch=_matCatalog.find(function(m){return m.kategorie&&m.kategorie.toLowerCase()===nameLower;});
-  if(katMatch){console.log('[SourceOn Debug] Kategorie match:',katMatch.sourceon_id);return{id:katMatch.sourceon_id,einheit:katMatch.einheit};}
+  // 3) Dropdown-Wert kommt irgendwo in der Bezeichnung vor
+  var contains=_matCatalog.find(function(m){return _norm(m.bezeichnung).indexOf(nName)!==-1;});
+  if(contains){console.log('[SourceOn Debug] Contains match:',contains.sourceon_id);return{id:contains.sourceon_id,einheit:contains.einheit};}
 
-  var words=nameLower.replace(/[^a-zäöü0-9\s]/g,' ').split(/\s+/).filter(function(w){return w.length>1;});
+  // 4) Token-Scoring: möglichst viele der markanten Wörter müssen vorkommen
+  var words=nName.split(/\s+/).filter(function(w){return w.length>1;});
   var best=null;var bestScore=0;
   _matCatalog.forEach(function(m){
-    var fields=((m.bezeichnung||'')+' '+(m.kategorie||'')).toLowerCase();
-    var score=words.filter(function(w){return fields.indexOf(w)!==-1;}).length;
+    var fields=_norm((m.bezeichnung||'')+' '+(m.kategorie||''));
+    var score=words.filter(function(w){return (' '+fields+' ').indexOf(' '+w+' ')!==-1||fields.indexOf(w)!==-1;}).length;
     if(score>bestScore){bestScore=score;best=m;}
   });
-  if(best&&bestScore>=1){console.log('[SourceOn Debug] Fuzzy match (score '+bestScore+'):',best.sourceon_id,best.bezeichnung);return{id:best.sourceon_id,einheit:best.einheit};}
+  // Nur akzeptieren, wenn mindestens die HÄLFTE der Wörter passt (verhindert "beton"→falscher Artikel)
+  var need=Math.max(1,Math.ceil(words.length/2));
+  if(best&&bestScore>=need){console.log('[SourceOn Debug] Token match (score '+bestScore+'/'+words.length+'):',best.sourceon_id,best.bezeichnung);return{id:best.sourceon_id,einheit:best.einheit};}
 
-  var optgroupMap={
-    'rohbau kern':['beton','armierung','kies','splitt','sand','ziegel','kalksandstein','porenbeton','mörtel','moertel','schalung','träger','traeger','stütze','stuetze','fertigteil'],
-    'ausbau':['eps','dämmplatte','daemmplatte','mineralwolle','xps','gipskarton','metallständer','metallanschluss','metallstaender','dachziegel','betonroof','dachabdichtung','fassadenplatte'],
-    'haustechnik':['kunststoffrohr','kupferrohr','verbundrohr','heizungsverteiler','pvc','fussbodenheizung']
-  };
-  for(var group in optgroupMap){
-    var kws=optgroupMap[group];
-    if(kws.some(function(k){return nameLower.indexOf(k)!==-1;})){
-      var catHit=_matCatalog.find(function(m){
-        var bz=(m.bezeichnung||'').toLowerCase();
-        return kws.some(function(k){return bz.indexOf(k)!==-1;});
-      });
-      if(catHit){console.log('[SourceOn Debug] Optgroup keyword match ('+group+'):',catHit.sourceon_id);return{id:catHit.sourceon_id,einheit:catHit.einheit};}
-    }
-  }
-
-  console.warn('[SourceOn Debug] No match found for:',name,'- using first catalog entry as fallback');
-  var fallback=_matCatalog[0];
-  return{id:fallback.sourceon_id,einheit:fallback.einheit};
+  // Keine verlässliche Zuordnung -> NICHT raten. null zurückgeben (Zeile wird gemeldet, nicht falsch gespeichert).
+  console.error('[SourceOn Debug] No reliable catalog match for:',name,'(normalized:',nName,') — NOT guessing.');
+  return null;
 }
 
 function _parseTiming(sel){
@@ -1263,6 +1262,7 @@ async function submitContact(e){
     var zone=_extractZone(addrVal);
     var rows=document.querySelectorAll('#material-rows .material-row');
     var inserts=[];
+    var unmatched=[];
     rows.forEach(function(r,idx){
       var sel=r.querySelector('.mat-sel');
       var mat=sel.value;
@@ -1272,7 +1272,8 @@ async function submitContact(e){
       if(!mat||!qty)return;
       var match=_findSourceonId(mat);
       if(!match||!match.id){
-        console.warn('[SourceOn Debug] Row '+idx+' SKIPPED: no sourceon_id mapping for "'+mat+'"');
+        console.error('[SourceOn Debug] Row '+idx+' UNMATCHED: no catalog mapping for "'+mat+'"');
+        unmatched.push(mat);
         return;
       }
       inserts.push({
@@ -1286,6 +1287,20 @@ async function submitContact(e){
         status:'offen'
       });
     });
+
+    // Konnte ein ausgewähltes Material NICHT zugeordnet werden? -> nicht still verschlucken, sondern melden.
+    if(unmatched.length>0){
+      submitBtn.disabled=false;submitBtn.style.opacity='1';
+      var umDiv=document.getElementById('submit-error');
+      if(!umDiv){
+        umDiv=document.createElement('div');umDiv.id='submit-error';
+        umDiv.style.cssText='background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:14px 18px;margin-top:14px;font-size:.85rem;color:#991b1b;line-height:1.6';
+        submitBtn.parentNode.insertBefore(umDiv,submitBtn.nextSibling);
+      }
+      umDiv.textContent='Folgendes Material konnte nicht zugeordnet werden: '+unmatched.join(', ')+'. Bitte kontaktiere uns direkt unter info@sourceon.ch — wir ergänzen es umgehend.';
+      umDiv.style.display='block';
+      return;
+    }
 
     if(inserts.length>0){
       console.log('[SourceOn Debug] material_requests payload:',JSON.stringify(inserts));
