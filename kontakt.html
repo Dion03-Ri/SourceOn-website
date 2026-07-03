@@ -1390,7 +1390,7 @@ async function _linkCustomerAccount(newCustomerId,clerkUserId){
       if(!lnk2.error&&lnk2.data&&lnk2.data.length>0)localStorage.removeItem('sourceon_pending_customer_link');
     }
     var successEl=document.getElementById('success-contact');
-    if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Konto erstellt!</strong> Du kannst deine Anfragen jetzt im <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> verfolgen.';
+    if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Verknüpft!</strong> Deine Anfrage ist jetzt in deinem <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> sichtbar.';
   }catch(e){console.error('[SourceOn] Customer link failed:',e);}
 }
 
@@ -1811,7 +1811,7 @@ async function _createCustomerIfNeeded(){
             console.log('[SourceOn] Customer linked successfully:',_pendingCustId,'->',window.Clerk.user.id);
             localStorage.removeItem('sourceon_pending_customer_link');
             var successEl=document.getElementById('success-contact');
-            if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Konto erstellt!</strong> Du kannst deine Anfragen jetzt im <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> verfolgen.';
+            if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Verknüpft!</strong> Deine Anfrage ist jetzt in deinem <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> sichtbar.';
           }else{
             console.log('[SourceOn] Customer link error:',upd.error);
           }
