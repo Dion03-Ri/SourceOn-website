@@ -1,0 +1,50 @@
+/*
+ * SourceOn — geteilte Mobile-Navigation & Layout-Sicherungen.
+ * Auf allen Seiten eingebunden. Ergänzt die vorhandene Hauptnavigation um ein
+ * aufgeräumtes Mobile-Verhalten (Burger + Overlay mit Sprache & Konto) und
+ * verhindert horizontales Scrollen / zu kleine Schrift auf kleinen Screens.
+ */
+
+/* --- Allgemeine Mobile-Sicherung: kein seitliches Scrollen, Medien skalieren --- */
+@media (max-width: 768px){
+  html, body { overflow-x: hidden; max-width: 100%; }
+  img, video, svg, canvas { max-width: 100%; height: auto; }
+  /* Breite Tabellen scrollen innerhalb ihres Containers statt das Layout zu sprengen */
+  table { max-width: 100%; }
+}
+
+/* --- Hauptnavigation auf Mobile aufräumen (Seiten mit #nav) --- */
+@media (max-width: 900px){
+  /* Die breite Gold-CTA in der Leiste ausblenden — sie ist im Burger-Overlay vorhanden */
+  #nav .nav-right > .btn { display: none !important; }
+  #nav .nav-right { gap: 10px !important; }
+  #nav .nav-inner { gap: 10px; }
+}
+
+/* --- Burger-Overlay: Sprache + Konto (von mobile-nav.js eingefügt) --- */
+#nav-overlay { overflow-y: auto; padding: 80px 20px 40px; -webkit-overflow-scrolling: touch; }
+#nav-overlay a, #nav-overlay button.btn { min-height: 44px; display: flex; align-items: center; justify-content: center; }
+#nav-overlay .mnav-divider { width: 60px; height: 1px; background: rgba(255,255,255,.15); margin: 6px 0; }
+#nav-overlay .mnav-extra { display: flex; flex-direction: column; align-items: center; gap: 18px; margin-top: 4px; width: 100%; }
+#nav-overlay .mnav-langs { display: flex; gap: 10px; }
+#nav-overlay .mnav-langs button {
+  min-width: 54px; min-height: 44px; border-radius: 10px;
+  border: 1.5px solid rgba(255,255,255,.2); background: rgba(255,255,255,.06);
+  color: #fff; font-weight: 700; font-family: inherit; font-size: .95rem; cursor: pointer;
+}
+#nav-overlay .mnav-langs button.active { background: var(--gold, #E8A020); color: #08111E; border-color: transparent; }
+#nav-overlay .mnav-acct { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+#nav-overlay .mnav-acct a { font-size: 1rem !important; font-weight: 500; color: rgba(255,255,255,.75) !important; }
+#nav-overlay .mnav-acct a:hover { color: var(--gold, #E8A020) !important; }
+
+/* --- Einfache Navigationsleisten (Rechtsseiten & Dashboards) umbrechen statt überlaufen --- */
+@media (max-width: 640px){
+  nav.nav { flex-wrap: wrap; height: auto; row-gap: 6px; padding-top: 10px; padding-bottom: 10px; }
+  .topnav { flex-wrap: wrap; height: auto !important; row-gap: 10px; padding-top: 12px !important; padding-bottom: 12px !important; }
+  .topnav-right { flex-wrap: wrap; gap: 8px; }
+}
+
+/* iOS: verhindert Auto-Zoom beim Fokussieren von Eingabefeldern (Schrift < 16px) */
+@media (max-width: 768px){
+  input, select, textarea { font-size: 16px; }
+}
