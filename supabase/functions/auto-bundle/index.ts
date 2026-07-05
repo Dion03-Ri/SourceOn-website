@@ -60,9 +60,15 @@ Deno.serve(async (req: Request) => {
     const sb = createClient(supabaseUrl, supabaseKey);
 
     // 1. Fetch open, unbundled material requests
+    // NOTE (commitment constraint — not yet enforced): committed_min_rabatt is the
+    // minimum discount each customer was guaranteed at request time. A future change
+    // should ensure a bundle's ziel_mindestrabatt >= the HIGHEST committed_min_rabatt
+    // among its member requests, so no customer is bundled below their guaranteed
+    // minimum. Do NOT change bundling logic here yet — the column is selected so the
+    // constraint can be implemented later.
     const { data: openRequests, error: fetchErr } = await sb
       .from("material_requests")
-      .select("id, sourceon_id, menge, einheit, liefer_zone, liefer_zeitraum_von, liefer_zeitraum_bis, fallback_deadline")
+      .select("id, sourceon_id, menge, einheit, liefer_zone, liefer_zeitraum_von, liefer_zeitraum_bis, fallback_deadline, committed_min_rabatt")
       .eq("status", "offen")
       .is("bundle_id", null);
 

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<script>(function(){
+  var PREVIEW_PASSWORD='2026-View-SourceOn@Previewsite003!!';
+  if(localStorage.getItem('sourceon_preview_access')==='granted')return;
+  document.documentElement.style.visibility='hidden';
+  window.addEventListener('DOMContentLoaded',function(){
+    document.body.innerHTML='';
+    document.body.style.cssText='margin:0;padding:0;min-height:100vh;background:#0F2238;display:flex;align-items:center;justify-content:center;font-family:Inter,-apple-system,sans-serif';
+    document.documentElement.style.visibility='visible';
+    var box=document.createElement('div');
+    box.style.cssText='text-align:center;max-width:420px;width:100%;padding:24px';
+    box.innerHTML='<div style="font-size:28px;font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:32px">Source<span style="color:#E8A020">On</span></div>'
+      +'<p style="color:#94A3B8;font-size:.92rem;line-height:1.7;margin-bottom:32px">SourceOn befindet sich im Aufbau.<br>Diese Seite ist noch nicht öffentlich verfügbar.</p>'
+      +'<input id="pg-pw" type="password" placeholder="Passwort" style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:.9rem;font-family:inherit;outline:none;margin-bottom:12px"/>'
+      +'<button id="pg-btn" style="width:100%;padding:12px;border-radius:10px;border:none;background:#E8A020;color:#08111E;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer">Zugang</button>'
+      +'<div id="pg-err" style="color:#EF4444;font-size:.82rem;margin-top:12px;display:none">Falsches Passwort.</div>';
+    document.body.appendChild(box);
+    var inp=document.getElementById('pg-pw');
+    var btn=document.getElementById('pg-btn');
+    var err=document.getElementById('pg-err');
+    function tryAccess(){if(inp.value===PREVIEW_PASSWORD){localStorage.setItem('sourceon_preview_access','granted');window.location.reload();}else{err.style.display='block';inp.value='';}}
+    btn.addEventListener('click',tryAccess);
+    inp.addEventListener('keydown',function(e){if(e.key==='Enter')tryAccess();});
+    inp.focus();
+  });
+})();
+</script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Kundenvereinbarung — SourceOn</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:#08111E;color:#CBD5E1;line-height:1.8;font-size:.92rem}
+.container{max-width:800px;margin:0 auto;padding:0 24px}
+header{padding:20px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-logo{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#fff}
+.nav-logo span{color:#E8A020}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:#E8A020;font-size:.85rem;font-weight:600;text-decoration:none;margin-top:40px}
+.back-link:hover{text-decoration:underline}
+.legal-hero{padding:48px 0 32px;border-bottom:1px solid rgba(255,255,255,.06)}
+.legal-hero h1{font-size:1.8rem;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:8px}
+.legal-hero .subtitle{color:#94A3B8;font-size:.88rem}
+.disclaimer{margin:32px 0;padding:16px 20px;background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25);border-radius:12px;font-size:.84rem;color:#E8A020;line-height:1.7}
+.section{padding:28px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.section:last-of-type{border-bottom:none;padding-bottom:48px}
+.section h2{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.section h2 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:rgba(232,160,32,.12);color:#E8A020;font-size:.78rem;font-weight:700;flex-shrink:0}
+.section p,.section ul{color:#CBD5E1;margin-bottom:10px}
+.section ul{padding-left:20px}
+.section li{margin-bottom:6px}
+footer{padding:32px 0;border-top:1px solid rgba(255,255,255,.06);text-align:center}
+.footer-copy{font-size:.78rem;color:#64748B}
+</style>
+  <link rel="stylesheet" href="mobile-nav.css">
+</head>
+<body>
+
+<header>
+  <div class="container">
+    <a href="index.html" style="text-decoration:none"><div class="nav-logo">Source<span>On</span></div></a>
+  </div>
+</header>
+
+<div class="container">
+  <a href="kontakt.html" class="back-link">← Zurück zum Materialbedarf</a>
+
+  <div class="legal-hero">
+    <h1>Kundenvereinbarung</h1>
+    <div class="subtitle">Fassung v1.0 — 4. Juli 2026</div>
+  </div>
+
+  <div class="disclaimer">
+    Hinweis: Diese Vereinbarung wird vor dem offiziellen Markteintritt von SourceOn final juristisch geprüft. Aktuelle Fassung zur Information.
+  </div>
+
+  <div class="section">
+    <h2><span class="num">1</span> Vertragsgegenstand</h2>
+    <p>SourceOn AG (oder die zukünftige Rechtsform) vermittelt als Mäkler im Sinne von Art. 412 OR zwischen Schweizer Baufirmen (nachfolgend «Kunde») und Lieferanten von Baumaterialien. SourceOn kauft selbst nie Material und wird nicht Vertragspartei des Kaufvertrags — der Kaufvertrag über das Material kommt direkt zwischen dem Kunden und dem Lieferanten zustande.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">2</span> Bedingter Auftrag und Ziel-Mindestrabatt</h2>
+    <p>Der Kunde meldet über das SourceOn-Formular seinen Materialbedarf und bestätigt dabei verbindlich einen individuellen <strong style="color:#E8A020">Ziel-Mindestrabatt</strong>. Dieser richtet sich nach dem geschätzten Auftragswert des Kunden (berechnet aus SourceOn-Richtpreisen) gemäss der gestaffelten Rabatttabelle.</p>
+    <p>Mit dieser Bestätigung wird die Anfrage zu einem <strong>bedingten Auftrag</strong> unter der aufschiebenden Bedingung (Art. 151 OR), dass ein verhandeltes Lieferantenangebot den bestätigten Ziel-Mindestrabatt erreicht oder übertrifft:</p>
+    <ul>
+      <li><strong>Bedingung erfüllt:</strong> Erreicht oder übertrifft das Angebot den Ziel-Mindestrabatt, gilt der Auftrag des Kunden als erteilt und wird zu diesen Konditionen ausgeführt.</li>
+      <li><strong>Bedingung nicht erfüllt:</strong> Wird der Ziel-Mindestrabatt nicht erreicht, entfällt die Anfrage automatisch, ersatzlos und für den Kunden kostenlos. Es entsteht keine Abnahmepflicht.</li>
+    </ul>
+    <p>Der zum Zeitpunkt der Bestätigung angezeigte Ziel-Mindestrabatt wird von SourceOn revisionssicher gespeichert (mit Zeitstempel und Fassungsnummer dieser Vereinbarung).</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">3</span> Bündelung mit anderen Kunden</h2>
+    <p>SourceOn ist berechtigt, den gemeldeten Bedarf des Kunden mit dem Bedarf anderer Baufirmen zu einem Sammelauftrag zu bündeln, um bessere Konditionen zu erzielen. Der individuell bestätigte Ziel-Mindestrabatt bleibt dabei stets als garantiertes Minimum bestehen.</p>
+    <p>Führt die Bündelung zu einem höheren Rabatt als dem Ziel-Mindestrabatt, kommt die zusätzliche Ersparnis dem Kunden zugute — anteilig nach seinem Volumenanteil am Gesamtbündel.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">4</span> Preise und Richtpreise</h2>
+    <p>Die im Formular angezeigten Richtpreise und der daraus geschätzte Auftragswert dienen ausschliesslich der Einordnung in die Rabattstufe und stellen keine verbindliche Preiszusage dar. Massgebend für den Kaufvertrag ist einzig das konkrete Angebot des jeweiligen Lieferanten.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">5</span> Nichtabnahme trotz erfüllter Bedingung</h2>
+    <p>Ist die aufschiebende Bedingung erfüllt (Ziel-Mindestrabatt erreicht oder übertroffen) und verweigert der Kunde dennoch ohne sachlichen Grund die Abnahme, so behält sich SourceOn vor, den Kunden von der Plattform auszuschliessen sowie die SourceOn und dem Lieferanten hierdurch entstandenen Kosten und Aufwände geltend zu machen.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">6</span> Kostenlosigkeit für den Kunden</h2>
+    <p>Die Nutzung von SourceOn ist für den Kunden kostenlos. SourceOn finanziert sich ausschliesslich über eine Provision, die vom Lieferanten bei erfolgreicher Vermittlung getragen wird. Dem Kunden entstehen durch die Vermittlung keine Gebühren.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">7</span> Datenschutz</h2>
+    <p>Die vom Kunden übermittelten Daten werden gemäss Schweizer Datenschutzgesetz (DSG) verarbeitet und ausschliesslich zur Vermittlung und Abwicklung von Materialbeschaffungen genutzt. Eine separate Datenschutzerklärung gilt ergänzend.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">8</span> Haftungsausschluss</h2>
+    <p>SourceOn ist reiner Vermittler und haftet nicht für die Qualität, Lieferfähigkeit oder Zahlungsfähigkeit des Lieferanten. Mängelansprüche sind direkt zwischen Kunde und Lieferant gemäss Schweizer Obligationenrecht zu klären.</p>
+  </div>
+
+  <div class="section">
+    <h2><span class="num">9</span> Gerichtsstand</h2>
+    <p>Es gilt Schweizer Recht. Gerichtsstand ist Zürich.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <span class="footer-copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
+  </div>
+</footer>
+
+  <script src="mobile-nav.js"></script>
+</body>
+</html>

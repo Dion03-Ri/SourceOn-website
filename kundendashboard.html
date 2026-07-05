@@ -436,8 +436,13 @@ var _matCatalogMap={};
     }
 
     var matIdSub=r.sourceon_id?'<div style="font-size:.68rem;font-weight:600;color:#94A3B8;margin-top:2px">'+esc(r.sourceon_id)+'</div>':'';
+    var rabattSub='';
+    if(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt))){
+      var _rp=Math.round(parseFloat(r.committed_min_rabatt)*100);
+      rabattSub='<div style="font-size:.7rem;font-weight:600;color:#E8A020;margin-top:3px">Garantierter Mindestrabatt: '+_rp+'%</div>';
+    }
     tr.innerHTML='<td>'+esc(datum)+'</td>'
-      +'<td>'+esc(matName)+matIdSub+'</td>'
+      +'<td>'+esc(matName)+matIdSub+rabattSub+'</td>'
       +'<td>'+esc(menge)+'</td>'
       +'<td>'+esc(zeitraum)+'</td>'
       +'<td><span class="status-badge status-'+sc+'">'+esc(sl)+'</span>'+detail+'</td>';

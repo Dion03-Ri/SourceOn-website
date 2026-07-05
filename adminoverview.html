@@ -369,7 +369,10 @@ async function loadStats(){
     sbFetch('bundles?select=status,gesamtvolumen,gewonnener_supplier_id'),
     sbFetch('suppliers?select=status'),
     sbFetch('customers?select=id'),
-    sbFetch('material_requests?select=status')
+    // committed_min_rabatt mitladen, damit Bündelungsentscheide die individuellen
+    // Kundenzusagen berücksichtigen können (siehe auto-bundle: ziel_mindestrabatt eines
+    // Bündels muss >= dem höchsten committed_min_rabatt seiner Anfragen sein).
+    sbFetch('material_requests?select=status,sourceon_id,committed_min_rabatt,commitment_accepted')
   ]);
   var activeBundles=bundles.filter(function(b){return b.status==='ausgeschrieben';});
   var awardedBundles=bundles.filter(function(b){return b.status==='vergeben'||b.gewonnener_supplier_id;});
