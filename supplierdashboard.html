@@ -28,6 +28,7 @@
   });
 })();
 </script>
+<script src="debug.js"></script>
 <!--
   SECURITY NOTE: Supplier verification status must be manually reviewed
   and updated in the Supabase Table Editor by changing the 'status' field
@@ -601,7 +602,7 @@ var _bundleDataMap={};
       if(!window.Clerk.client||!window.Clerk.client.signIn)return;
       var si=window.Clerk.client.signIn;
       if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){
-        console.log('[Clerk] Detected needs_client_trust / needs_second_factor, opening verification modal');
+        soLog('[Clerk] Detected needs_client_trust / needs_second_factor, opening verification modal');
         _clerkTrustActive=true;
         _clerkSignInResource=si;
         try{window.Clerk.closeSignIn();}catch(e){}
@@ -918,7 +919,7 @@ function calcBidPreview(bundleId){
   var finalEl=document.getElementById('bidfinal-'+bundleId);
   var finalTextEl=document.getElementById('bidfinaltext-'+bundleId);
 
-  console.log('[SourceOn Debug] calcBidPreview:',bundleId,'einheit:',b.einheit,'unit:',b.unit,'richtpreis:',richtpreis,'vol:',vol,'sourceon_id:',b.sourceon_id,'catEntry:',catEntry);
+  soLog('[SourceOn Debug] calcBidPreview:',bundleId,'einheit:',b.einheit,'unit:',b.unit,'richtpreis:',richtpreis,'vol:',vol,'sourceon_id:',b.sourceon_id,'catEntry:',catEntry);
 
   if(!rabatt||isNaN(rabatt)||rabatt<=0){
     breakdownEl.style.display='none';
@@ -1394,7 +1395,7 @@ var _clerkTrustActive=false;
 var _clerkTrustStrategy='email_code';
 
 async function _clerkSendVerificationCode(){
-  console.log('[Clerk] Sending verification code (prepareSecondFactor)');
+  soLog('[Clerk] Sending verification code (prepareSecondFactor)');
   _clerkTrustStrategy='email_code';
   try{
     var si=_clerkSignInResource;
@@ -1430,11 +1431,11 @@ async function clerkTrustVerify(){
   var btn=document.getElementById('clerk-trust-submit');
   btn.disabled=true;btn.textContent='Wird geprüft…';
   document.getElementById('clerk-trust-error').textContent='';
-  console.log('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
+  soLog('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
   try{
     var result=await _clerkSignInResource.attemptSecondFactor({strategy:_clerkTrustStrategy,code:code});
     if(result.status==='complete'){
-      console.log('[Clerk] Second factor complete, activating session');
+      soLog('[Clerk] Second factor complete, activating session');
       await window.Clerk.setActive({session:result.createdSessionId});
       document.getElementById('clerk-trust-overlay').classList.remove('open');
       _clerkTrustActive=false;
@@ -1453,7 +1454,7 @@ async function clerkTrustVerify(){
 
 async function clerkTrustResend(){
   document.getElementById('clerk-trust-error').textContent='';
-  console.log('[Clerk] User requested resend — sending new code');
+  soLog('[Clerk] User requested resend — sending new code');
   await _clerkSendVerificationCode();
 }
 

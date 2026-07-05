@@ -28,6 +28,7 @@
   });
 })();
 </script>
+<script src="debug.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title data-i18n="page_title">Materialien & Lieferanten — SourceOn</title>
@@ -1469,9 +1470,9 @@ try{var sl=localStorage.getItem('sourceon-lang');if(sl&&sl!=='de')newSetLang(sl)
 </script>
 <script>
 // CLERK AUTH
-console.log('[SourceOn] PAGE LOAD — cookies:', document.cookie);
-console.log('[SourceOn] PAGE LOAD — localStorage keys:', Object.keys(localStorage));
-console.log('[SourceOn] PAGE LOAD — sessionStorage keys:', Object.keys(sessionStorage));
+soLog('[SourceOn] PAGE LOAD — cookies:', document.cookie);
+soLog('[SourceOn] PAGE LOAD — localStorage keys:', Object.keys(localStorage));
+soLog('[SourceOn] PAGE LOAD — sessionStorage keys:', Object.keys(sessionStorage));
 function toggleAcctDD(){var dd=document.getElementById('acct-dd');if(dd)dd.classList.toggle('open');}
 document.addEventListener('click',function(e){var w=document.getElementById('acct-wrap');if(w&&!w.contains(e.target)){var dd=document.getElementById('acct-dd');if(dd)dd.classList.remove('open');}});
 
@@ -1483,12 +1484,12 @@ function clerkSignIn(){
 }
 function clerkSignOut(){
   if(!window.Clerk)return;
-  console.log('[SourceOn] BEFORE signOut — cookies:', document.cookie);
-  console.log('[SourceOn] BEFORE signOut — localStorage keys:', Object.keys(localStorage));
-  console.log('[SourceOn] BEFORE signOut — sessionStorage keys:', Object.keys(sessionStorage));
+  soLog('[SourceOn] BEFORE signOut — cookies:', document.cookie);
+  soLog('[SourceOn] BEFORE signOut — localStorage keys:', Object.keys(localStorage));
+  soLog('[SourceOn] BEFORE signOut — sessionStorage keys:', Object.keys(sessionStorage));
   window.Clerk.signOut().then(function(){
-    console.log('[SourceOn] AFTER signOut — cookies:', document.cookie);
-    console.log('[SourceOn] AFTER signOut — localStorage keys:', Object.keys(localStorage));
+    soLog('[SourceOn] AFTER signOut — cookies:', document.cookie);
+    soLog('[SourceOn] AFTER signOut — localStorage keys:', Object.keys(localStorage));
     window.location.reload();
   });
 }
@@ -1515,10 +1516,10 @@ async function _createCustomerIfNeeded(){
     var auth=token?'Bearer '+token:'Bearer '+sbKey;
     var checkResp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(u.id)+'&select=id&limit=1',{headers:{'apikey':sbKey,'Content-Type':'application/json','Authorization':auth}});
     var existing=checkResp.ok?await checkResp.json():[];
-    if(existing&&existing.length>0){console.log('[SourceOn] Customer profile already exists');return;}
+    if(existing&&existing.length>0){soLog('[SourceOn] Customer profile already exists');return;}
     var payload={user_id:u.id,email:email,firmenname:'',ansprechperson:u.fullName||u.firstName||'',telefon:'',lieferadresse:'',kanton:''};
     var resp=await fetch(sbUrl+'/rest/v1/customers',{method:'POST',headers:{'apikey':sbKey,'Content-Type':'application/json','Authorization':auth,'Prefer':'return=representation'},body:JSON.stringify(payload)});
-    if(resp.ok){console.log('[SourceOn] Customer profile created');}
+    if(resp.ok){soLog('[SourceOn] Customer profile created');}
     else{console.error('[SourceOn] Failed to create customer:',await resp.text());}
   }catch(e){console.error('[SourceOn] _createCustomerIfNeeded error:',e);}
 }
@@ -1526,39 +1527,39 @@ async function _createCustomerIfNeeded(){
 (async function initClerkUI(){
   function waitForClerk(){
     return new Promise(function(resolve,reject){
-      console.log('[Clerk] Waiting for Clerk script...');
+      soLog('[Clerk] Waiting for Clerk script...');
       var elapsed=0;
       var iv=setInterval(function(){
         elapsed+=200;
         if(window.Clerk){
           clearInterval(iv);
-          console.log('[Clerk] window.Clerk found, calling Clerk.load()...');
+          soLog('[Clerk] window.Clerk found, calling Clerk.load()...');
           if(typeof window.Clerk.load==='function'){
             window.Clerk.load().then(function(){
-              console.log('[Clerk] Clerk.load() resolved successfully');
+              soLog('[Clerk] Clerk.load() resolved successfully');
               resolve(true);
             }).catch(function(e){
               console.error('[Clerk] Clerk.load() failed:',e);
               resolve(false);
             });
           }else{
-            console.log('[Clerk] Clerk.load not a function, checking .loaded property');
+            soLog('[Clerk] Clerk.load not a function, checking .loaded property');
             if(window.Clerk.loaded){resolve(true);}
             else{
               var iv2=setInterval(function(){
-                if(window.Clerk.loaded){clearInterval(iv2);console.log('[Clerk] Clerk.loaded became true');resolve(true);}
+                if(window.Clerk.loaded){clearInterval(iv2);soLog('[Clerk] Clerk.loaded became true');resolve(true);}
               },200);
-              setTimeout(function(){clearInterval(iv2);console.warn('[Clerk] Timed out waiting for Clerk.loaded');resolve(false);},8000);
+              setTimeout(function(){clearInterval(iv2);soWarn('[Clerk] Timed out waiting for Clerk.loaded');resolve(false);},8000);
             }
           }
           return;
         }
-        if(elapsed>=10000){clearInterval(iv);console.warn('[Clerk] Timed out waiting for window.Clerk');resolve(false);}
+        if(elapsed>=10000){clearInterval(iv);soWarn('[Clerk] Timed out waiting for window.Clerk');resolve(false);}
       },200);
     });
   }
   var clerkReady=await waitForClerk();
-  console.log('[Clerk] Checking auth state now. Ready:',clerkReady);
+  soLog('[Clerk] Checking auth state now. Ready:',clerkReady);
   if(!clerkReady||!window.Clerk)return;
 
 
@@ -1580,10 +1581,10 @@ async function _createCustomerIfNeeded(){
       var supplierRows=supplierResp.ok?await supplierResp.json():[];
       var customerResp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(clerkId)+'&select=id&limit=1',{headers:headers});
       var customerRows=customerResp.ok?await customerResp.json():[];
-      console.log('[SourceOn] Profile check — Supplier rows found:',supplierRows.length,'Customer rows found:',customerRows.length);
+      soLog('[SourceOn] Profile check — Supplier rows found:',supplierRows.length,'Customer rows found:',customerRows.length);
       var isVerifiedSupplier=supplierRows&&supplierRows.length>0&&supplierRows[0].status==='verified';
       var isLinkedCustomer=customerRows&&customerRows.length>0;
-      console.log('[SourceOn] Final decision — Show supplier link:',isVerifiedSupplier,'Show customer link:',isLinkedCustomer);
+      soLog('[SourceOn] Final decision — Show supplier link:',isVerifiedSupplier,'Show customer link:',isLinkedCustomer);
       if(dashLink)dashLink.style.display=isVerifiedSupplier?'flex':'none';
       if(custLink)custLink.style.display=isLinkedCustomer?'flex':'none';
       if(statusWrap){
@@ -1625,7 +1626,7 @@ async function _createCustomerIfNeeded(){
     if(!window.Clerk.client||!window.Clerk.client.signIn)return;
     var si=window.Clerk.client.signIn;
     if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){
-      console.log('[Clerk] Detected needs_client_trust / needs_second_factor, opening verification modal');
+      soLog('[Clerk] Detected needs_client_trust / needs_second_factor, opening verification modal');
       _clerkTrustActive=true;
       _clerkSignInResource=si;
       try{window.Clerk.closeSignIn();}catch(e){}
@@ -1636,10 +1637,10 @@ async function _createCustomerIfNeeded(){
   // Handle customer signup: create customer row if needed (no redirect)
 
   // Link pending customer row to Clerk user (runs on every page load after Clerk resolves)
-  console.log('[SourceOn] localStorage keys on load — sourceon_pending_customer_link:',localStorage.getItem('sourceon_pending_customer_link'));
+  soLog('[SourceOn] localStorage keys on load — sourceon_pending_customer_link:',localStorage.getItem('sourceon_pending_customer_link'));
   var _pendingCustId=localStorage.getItem('sourceon_pending_customer_link');
   if(_pendingCustId&&window.Clerk.user&&window.Clerk.user.id){
-    console.log('[SourceOn] Found pending customer link in localStorage:',_pendingCustId);
+    soLog('[SourceOn] Found pending customer link in localStorage:',_pendingCustId);
     (async function(){
       try{
         var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
@@ -1649,13 +1650,13 @@ async function _createCustomerIfNeeded(){
         if(chkRows.length>0&&!chkRows[0].user_id){
           var updResp=await fetch(sbUrl+'/rest/v1/customers?id=eq.'+encodeURIComponent(_pendingCustId),{method:'PATCH',headers:{'apikey':sbKey,'Authorization':'Bearer '+sbKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({user_id:window.Clerk.user.id})});
           if(updResp.ok){
-            console.log('[SourceOn] Customer linked successfully:',_pendingCustId,'->',window.Clerk.user.id);
+            soLog('[SourceOn] Customer linked successfully:',_pendingCustId,'->',window.Clerk.user.id);
             localStorage.removeItem('sourceon_pending_customer_link');
           }else{
-            console.log('[SourceOn] Customer link error:',await updResp.text());
+            soLog('[SourceOn] Customer link error:',await updResp.text());
           }
         }else if(chkRows.length>0){
-          console.log('[SourceOn] Customer already linked or not found, clearing localStorage');
+          soLog('[SourceOn] Customer already linked or not found, clearing localStorage');
           localStorage.removeItem('sourceon_pending_customer_link');
         }
       }catch(e){console.error('[SourceOn] Customer link error:',e);}
@@ -1703,7 +1704,7 @@ var _clerkTrustActive=false;
 var _clerkTrustStrategy='email_code';
 
 async function _clerkSendVerificationCode(){
-  console.log('[Clerk] Sending verification code (prepareSecondFactor)');
+  soLog('[Clerk] Sending verification code (prepareSecondFactor)');
   _clerkTrustStrategy='email_code';
   try{
     var si=_clerkSignInResource;
@@ -1739,11 +1740,11 @@ async function clerkTrustVerify(){
   var btn=document.getElementById('clerk-trust-submit');
   btn.disabled=true;btn.textContent='Wird geprüft…';
   document.getElementById('clerk-trust-error').textContent='';
-  console.log('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
+  soLog('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
   try{
     var result=await _clerkSignInResource.attemptSecondFactor({strategy:_clerkTrustStrategy,code:code});
     if(result.status==='complete'){
-      console.log('[Clerk] Second factor complete, activating session');
+      soLog('[Clerk] Second factor complete, activating session');
       await window.Clerk.setActive({session:result.createdSessionId});
       document.getElementById('clerk-trust-overlay').classList.remove('open');
       _clerkTrustActive=false;
@@ -1761,7 +1762,7 @@ async function clerkTrustVerify(){
 
 async function clerkTrustResend(){
   document.getElementById('clerk-trust-error').textContent='';
-  console.log('[Clerk] User requested resend — sending new code');
+  soLog('[Clerk] User requested resend — sending new code');
   await _clerkSendVerificationCode();
 }
 

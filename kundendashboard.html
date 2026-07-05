@@ -28,6 +28,7 @@
   });
 })();
 </script>
+<script src="debug.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Kunden-Dashboard — SourceOn</title>
@@ -258,17 +259,17 @@ var _matCatalogMap={};
   currentUserId=window.Clerk.user.id;
 
   // Link pending customer row if present in localStorage
-  console.log('[SourceOn] localStorage keys on load — sourceon_pending_customer_link:',localStorage.getItem('sourceon_pending_customer_link'));
+  soLog('[SourceOn] localStorage keys on load — sourceon_pending_customer_link:',localStorage.getItem('sourceon_pending_customer_link'));
   var _pendingCustId=localStorage.getItem('sourceon_pending_customer_link');
   if(_pendingCustId){
-    console.log('[SourceOn] Found pending customer link in localStorage:',_pendingCustId);
+    soLog('[SourceOn] Found pending customer link in localStorage:',_pendingCustId);
     try{
       var chk=await sb.from('customers').select('id,user_id').eq('id',_pendingCustId).single();
       if(chk.data&&!chk.data.user_id){
         var upd=await sb.from('customers').update({user_id:currentUserId}).eq('id',_pendingCustId);
-        if(!upd.error){console.log('[SourceOn] Customer linked successfully:',_pendingCustId,'->',currentUserId);}
-        else{console.log('[SourceOn] Customer link error:',upd.error);}
-      }else{console.log('[SourceOn] Customer already linked or not found, clearing localStorage');}
+        if(!upd.error){soLog('[SourceOn] Customer linked successfully:',_pendingCustId,'->',currentUserId);}
+        else{soLog('[SourceOn] Customer link error:',upd.error);}
+      }else{soLog('[SourceOn] Customer already linked or not found, clearing localStorage');}
       localStorage.removeItem('sourceon_pending_customer_link');
     }catch(e){console.error('[SourceOn] Customer link error:',e);}
   }
@@ -279,13 +280,13 @@ var _matCatalogMap={};
     var _userEmail=window.Clerk.user.primaryEmailAddress?window.Clerk.user.primaryEmailAddress.emailAddress:null;
     if(_userEmail){
       var _claim=await sb.from('customers').update({user_id:currentUserId}).eq('email',_userEmail).is('user_id',null).select('id');
-      console.log('[SourceOn] Email-claim result:',JSON.stringify({data:_claim.data,error:_claim.error}));
+      soLog('[SourceOn] Email-claim result:',JSON.stringify({data:_claim.data,error:_claim.error}));
     }
   }catch(e){console.error('[SourceOn] Email-claim error:',e);}
 
   // Check customer record
   var custRes=await sb.from('customers').select('id,firmenname').eq('user_id',currentUserId);
-  console.log('[SourceOn] customers query result:',JSON.stringify({data:custRes.data,error:custRes.error}));
+  soLog('[SourceOn] customers query result:',JSON.stringify({data:custRes.data,error:custRes.error}));
 
   if(custRes.error||!custRes.data||custRes.data.length===0){
     showGate('no_customer');
@@ -294,7 +295,7 @@ var _matCatalogMap={};
 
   var customers=custRes.data;
   var customerIds=customers.map(function(c){return c.id;});
-  console.log('[SourceOn] customerIds to query material_requests:',customerIds);
+  soLog('[SourceOn] customerIds to query material_requests:',customerIds);
 
   // Show company name in nav
   document.getElementById('nav-company').textContent=customers[0].firmenname||'';
@@ -309,7 +310,7 @@ var _matCatalogMap={};
 
   // Load material requests
   var reqRes=await sb.from('material_requests').select('*').in('customer_id',customerIds).order('created_at',{ascending:false});
-  console.log('[SourceOn] material_requests query result:',JSON.stringify({data:reqRes.data,error:reqRes.error,count:reqRes.data?reqRes.data.length:null}));
+  soLog('[SourceOn] material_requests query result:',JSON.stringify({data:reqRes.data,error:reqRes.error,count:reqRes.data?reqRes.data.length:null}));
 
   document.getElementById('table-loading').style.display='none';
 

@@ -28,6 +28,7 @@
   });
 })();
 </script>
+<script src="debug.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Kontakt — SourceOn</title>
@@ -1212,7 +1213,7 @@ function _buildMatGroups(){
     byCat[c].sort(function(x,y){return (x.sourceon_id||'').localeCompare(y.sourceon_id||'');});
     return {kategorie:c,items:byCat[c]};
   });
-  console.log('[SourceOn] Material dropdown built from catalog:',_matCatalog.length,'materials in',_matGroups.length,'categories');
+  soLog('[SourceOn] Material dropdown built from catalog:',_matCatalog.length,'materials in',_matGroups.length,'categories');
 }
 
 function _renderMatDD(combo,filter){
@@ -1366,19 +1367,19 @@ var _supabase=window.supabase.createClient(
 var _matCatalog=null;
 (async function(){
   try{
-    console.log('[SourceOn Debug] Fetching material_catalog...');
+    soLog('[SourceOn Debug] Fetching material_catalog...');
     var res=await _supabase.from('material_catalog').select('sourceon_id,bezeichnung,kategorie,einheit,richtpreis_chf');
-    console.log('[SourceOn Debug] Catalog fetch result:',{data:res.data,error:res.error,status:res.status,statusText:res.statusText,count:res.data?res.data.length:'null'});
+    soLog('[SourceOn Debug] Catalog fetch result:',{data:res.data,error:res.error,status:res.status,statusText:res.statusText,count:res.data?res.data.length:'null'});
     if(res.error){
       console.error('[SourceOn Debug] material_catalog fetch ERROR:',res.error.message,res.error.code,res.error.hint,res.error.details);
     }
     if(res.data&&res.data.length>0){
       _matCatalog=res.data;
-      console.log('[SourceOn Debug] material_catalog loaded:',res.data.length,'rows');
+      soLog('[SourceOn Debug] material_catalog loaded:',res.data.length,'rows');
       _buildMatGroups();
       if(typeof _recalcTier==='function')_recalcTier();
     }else{
-      console.warn('[SourceOn Debug] material_catalog returned 0 rows. data=',res.data,'error=',res.error);
+      soWarn('[SourceOn Debug] material_catalog returned 0 rows. data=',res.data,'error=',res.error);
       _applyCatalogFailure();
     }
   }catch(e){
@@ -1457,9 +1458,9 @@ async function submitContact(e){
     if(window.Clerk&&window.Clerk.user){custPayload.user_id=window.Clerk.user.id;}
     var _dbUrl=_supabase.supabaseUrl||(_supabase.rest?_supabase.rest.url:'unknown');
     var _dbKey=_supabase.supabaseKey||(_supabase.rest&&_supabase.rest.headers?_supabase.rest.headers.apikey:'unknown');
-    console.log('[SourceOn Debug] Supabase URL:',_dbUrl);
-    console.log('[SourceOn Debug] Supabase key (first 20):',typeof _dbKey==='string'?_dbKey.substring(0,20):'MISSING');
-    console.log('[SourceOn Debug] Customer payload:',JSON.stringify(custPayload));
+    soLog('[SourceOn Debug] Supabase URL:',_dbUrl);
+    soLog('[SourceOn Debug] Supabase key (first 20):',typeof _dbKey==='string'?_dbKey.substring(0,20):'MISSING');
+    soLog('[SourceOn Debug] Customer payload:',JSON.stringify(custPayload));
 
     // Reuse existing customer if user is logged in
     var customerId=null;
@@ -1468,12 +1469,12 @@ async function submitContact(e){
       if(existingCust.data){
         customerId=existingCust.data.id;
         await _supabase.from('customers').update(custPayload).eq('id',customerId);
-        console.log('[SourceOn Debug] Reused existing customer:',customerId);
+        soLog('[SourceOn Debug] Reused existing customer:',customerId);
       }
     }
     if(!customerId){
       var custRes=await _supabase.from('customers').insert(custPayload).select('id').single();
-      console.log('[SourceOn Debug] Customer insert result:',JSON.stringify({data:custRes.data,error:custRes.error}));
+      soLog('[SourceOn Debug] Customer insert result:',JSON.stringify({data:custRes.data,error:custRes.error}));
       if(custRes.error)throw custRes.error;
       customerId=custRes.data.id;
     }
@@ -1489,7 +1490,7 @@ async function submitContact(e){
       var txtEl=r.querySelector('.mat-search');
       var txt=txtEl?txtEl.value.trim():'';
       var qty=r.querySelector('.mat-qty').value.trim();
-      console.log('[SourceOn Debug] Row '+idx+': sourceon_id='+JSON.stringify(sid)+' qty='+JSON.stringify(qty));
+      soLog('[SourceOn Debug] Row '+idx+': sourceon_id='+JSON.stringify(sid)+' qty='+JSON.stringify(qty));
       if(!sid){
         // Freitext ohne gültige Listen-Auswahl wird NIE übermittelt
         if(txt&&qty)unmatched.push(txt);
@@ -1529,9 +1530,9 @@ async function submitContact(e){
     }
 
     if(inserts.length>0){
-      console.log('[SourceOn Debug] material_requests payload:',JSON.stringify(inserts));
+      soLog('[SourceOn Debug] material_requests payload:',JSON.stringify(inserts));
       var matRes=await _supabase.from('material_requests').insert(inserts);
-      console.log('[SourceOn Debug] Material requests insert result:',JSON.stringify({data:matRes.data,error:matRes.error}));
+      soLog('[SourceOn Debug] Material requests insert result:',JSON.stringify({data:matRes.data,error:matRes.error}));
       if(matRes.error)throw matRes.error;
     }
 
@@ -1547,13 +1548,13 @@ async function submitContact(e){
     if(window.Clerk&&window.Clerk.user){
       // Eingeloggt: Anfrage immer sofort mit dem bestehenden Kundenkonto verknüpfen,
       // unabhängig von der "Konto erstellen"-Checkbox
-      console.log('[SourceOn] User already signed in, linking customer record');
+      soLog('[SourceOn] User already signed in, linking customer record');
       _linkCustomerAccount(customerId,window.Clerk.user.id);
     }else if(wantsAccount&&window.Clerk){
       {
         // Store in localStorage as backup for redirect/reload case (persists across reloads)
         localStorage.setItem('sourceon_pending_customer_link',customerId);
-        console.log('[SourceOn] Stored pending customer ID in localStorage:',customerId);
+        soLog('[SourceOn] Stored pending customer ID in localStorage:',customerId);
         window.Clerk.openSignUp({
           appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'},elements:{footer:'display:none',footerAction:'display:none',footerActionText:'display:none',footerActionLink:'display:none',footer__signUp:'display:none'}},
           initialValues:{emailAddress:userEmail},
@@ -1567,7 +1568,7 @@ async function submitContact(e){
           if(!pid)return;
           if(typeof _unsubSignUp==='function')_unsubSignUp();
           localStorage.removeItem('sourceon_pending_customer_link');
-          console.log('[SourceOn] Sign-up complete, linking customer:',pid,'->',u.id);
+          soLog('[SourceOn] Sign-up complete, linking customer:',pid,'->',u.id);
           _linkCustomerAccount(pid,u.id);
         });
       }
@@ -1589,17 +1590,17 @@ async function submitContact(e){
 
 async function _linkCustomerAccount(newCustomerId,clerkUserId){
   try{
-    console.log('[SourceOn] Attempting to link customer',newCustomerId,'to Clerk user',clerkUserId);
+    soLog('[SourceOn] Attempting to link customer',newCustomerId,'to Clerk user',clerkUserId);
 
     // STEP 1 — Verknüpfe die neue/Temp-Kundenzeile ZUERST mit dem Konto.
     // Danach sind ihre material_requests unter RLS sichtbar UND verschiebbar. Nie Daten verlieren.
     var linkRes=await _supabase.from('customers').update({user_id:clerkUserId}).eq('id',newCustomerId).is('user_id',null).select('id,user_id');
-    console.log('[SourceOn] Step1 link temp customer:',JSON.stringify({data:linkRes.data,error:linkRes.error}));
+    soLog('[SourceOn] Step1 link temp customer:',JSON.stringify({data:linkRes.data,error:linkRes.error}));
 
     // Positiv bestätigen, dass die Zeile jetzt WIRKLICH uns gehört (frisch verknüpft ODER bereits verknüpft)
     var tempCheck=await _supabase.from('customers').select('id,user_id').eq('id',newCustomerId).maybeSingle();
     var tempOwned=tempCheck.data&&tempCheck.data.user_id===clerkUserId;
-    console.log('[SourceOn] Step1 temp now owned by user?',tempOwned,JSON.stringify(tempCheck.data));
+    soLog('[SourceOn] Step1 temp now owned by user?',tempOwned,JSON.stringify(tempCheck.data));
 
     if(!tempOwned){
       // Verknüpfen der Kundenzeile schlug fehl (fehlende RLS-UPDATE-Policy).
@@ -1608,21 +1609,21 @@ async function _linkCustomerAccount(newCustomerId,clerkUserId){
     }else{
       // STEP 2 — Gibt es bereits eine ANDERE, dem Konto zugeordnete Kundenzeile? Dann konsolidieren.
       var others=await _supabase.from('customers').select('id').eq('user_id',clerkUserId).neq('id',newCustomerId);
-      console.log('[SourceOn] Step2 other linked customers:',JSON.stringify({data:others.data,error:others.error}));
+      soLog('[SourceOn] Step2 other linked customers:',JSON.stringify({data:others.data,error:others.error}));
       if(!others.error&&others.data&&others.data.length>0){
         var primaryId=others.data[0].id;
         // STEP 3 — Anfragen auf die primäre Zeile verschieben (jetzt erlaubt: beide gehören uns)
         var mv=await _supabase.from('material_requests').update({customer_id:primaryId}).eq('customer_id',newCustomerId).select('id');
-        console.log('[SourceOn] Step3 move result:',JSON.stringify({data:mv.data,error:mv.error}));
+        soLog('[SourceOn] Step3 move result:',JSON.stringify({data:mv.data,error:mv.error}));
         // STEP 4 — Verlässlich prüfen, was unter der Temp-Zeile übrig ist (wir besitzen sie jetzt)
         var remain=await _supabase.from('material_requests').select('id').eq('customer_id',newCustomerId);
-        console.log('[SourceOn] Step4 remaining under temp:',JSON.stringify({data:remain.data,error:remain.error}));
+        soLog('[SourceOn] Step4 remaining under temp:',JSON.stringify({data:remain.data,error:remain.error}));
         // Temp-Zeile NUR löschen, wenn positiv bestätigt: kein Fehler UND nichts mehr übrig
         if(!remain.error&&remain.data&&remain.data.length===0){
           var del=await _supabase.from('customers').delete().eq('id',newCustomerId);
-          console.log('[SourceOn] Temp customer deleted:',JSON.stringify({error:del.error}));
+          soLog('[SourceOn] Temp customer deleted:',JSON.stringify({error:del.error}));
         }else{
-          console.warn('[SourceOn] Requests still under temp row OR check failed — KEEPING temp row linked. Dashboard shows both. No data loss.');
+          soWarn('[SourceOn] Requests still under temp row OR check failed — KEEPING temp row linked. Dashboard shows both. No data loss.');
         }
       }
       // Kein anderer Kunde vorhanden → Temp-Zeile bleibt einfach als die Kundenzeile bestehen (bereits verknüpft).
@@ -1864,9 +1865,9 @@ document.addEventListener('click',function(e){var sw=document.getElementById('la
 
 <script>
 // CLERK AUTH
-console.log('[SourceOn] PAGE LOAD — cookies:', document.cookie);
-console.log('[SourceOn] PAGE LOAD — localStorage keys:', Object.keys(localStorage));
-console.log('[SourceOn] PAGE LOAD — sessionStorage keys:', Object.keys(sessionStorage));
+soLog('[SourceOn] PAGE LOAD — cookies:', document.cookie);
+soLog('[SourceOn] PAGE LOAD — localStorage keys:', Object.keys(localStorage));
+soLog('[SourceOn] PAGE LOAD — sessionStorage keys:', Object.keys(sessionStorage));
 function toggleAcctDD(){var dd=document.getElementById('acct-dd');if(dd)dd.classList.toggle('open');}
 document.addEventListener('click',function(e){var w=document.getElementById('acct-wrap');if(w&&!w.contains(e.target)){var dd=document.getElementById('acct-dd');if(dd)dd.classList.remove('open');}});
 
@@ -1878,12 +1879,12 @@ function clerkSignIn(){
 }
 function clerkSignOut(){
   if(!window.Clerk)return;
-  console.log('[SourceOn] BEFORE signOut — cookies:', document.cookie);
-  console.log('[SourceOn] BEFORE signOut — localStorage keys:', Object.keys(localStorage));
-  console.log('[SourceOn] BEFORE signOut — sessionStorage keys:', Object.keys(sessionStorage));
+  soLog('[SourceOn] BEFORE signOut — cookies:', document.cookie);
+  soLog('[SourceOn] BEFORE signOut — localStorage keys:', Object.keys(localStorage));
+  soLog('[SourceOn] BEFORE signOut — sessionStorage keys:', Object.keys(sessionStorage));
   window.Clerk.signOut().then(function(){
-    console.log('[SourceOn] AFTER signOut — cookies:', document.cookie);
-    console.log('[SourceOn] AFTER signOut — localStorage keys:', Object.keys(localStorage));
+    soLog('[SourceOn] AFTER signOut — cookies:', document.cookie);
+    soLog('[SourceOn] AFTER signOut — localStorage keys:', Object.keys(localStorage));
     window.location.reload();
   });
 }
@@ -1903,7 +1904,7 @@ async function _createCustomerIfNeeded(){
   try{
     // Skip if a form-submitted customer is about to be linked — avoid creating a competing blank row
     if(localStorage.getItem('sourceon_pending_customer_link')){
-      console.log('[SourceOn] _createCustomerIfNeeded skipped — pending customer link exists');
+      soLog('[SourceOn] _createCustomerIfNeeded skipped — pending customer link exists');
       return;
     }
     var u=window.Clerk.user;if(!u)return;
@@ -1915,10 +1916,10 @@ async function _createCustomerIfNeeded(){
     var auth=token?'Bearer '+token:'Bearer '+sbKey;
     var checkResp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(u.id)+'&select=id&limit=1',{headers:{'apikey':sbKey,'Content-Type':'application/json','Authorization':auth}});
     var existing=checkResp.ok?await checkResp.json():[];
-    if(existing&&existing.length>0){console.log('[SourceOn] Customer profile already exists');return;}
+    if(existing&&existing.length>0){soLog('[SourceOn] Customer profile already exists');return;}
     var payload={user_id:u.id,email:email,firmenname:'',ansprechperson:u.fullName||u.firstName||'',telefon:'',lieferadresse:'',kanton:''};
     var resp=await fetch(sbUrl+'/rest/v1/customers',{method:'POST',headers:{'apikey':sbKey,'Content-Type':'application/json','Authorization':auth,'Prefer':'return=representation'},body:JSON.stringify(payload)});
-    if(resp.ok){console.log('[SourceOn] Customer profile created');}
+    if(resp.ok){soLog('[SourceOn] Customer profile created');}
     else{console.error('[SourceOn] Failed to create customer:',await resp.text());}
   }catch(e){console.error('[SourceOn] _createCustomerIfNeeded error:',e);}
 }
@@ -1926,39 +1927,39 @@ async function _createCustomerIfNeeded(){
 (async function initClerkUI(){
   function waitForClerk(){
     return new Promise(function(resolve,reject){
-      console.log('[Clerk] Waiting for Clerk script...');
+      soLog('[Clerk] Waiting for Clerk script...');
       var elapsed=0;
       var iv=setInterval(function(){
         elapsed+=200;
         if(window.Clerk){
           clearInterval(iv);
-          console.log('[Clerk] window.Clerk found, calling Clerk.load()...');
+          soLog('[Clerk] window.Clerk found, calling Clerk.load()...');
           if(typeof window.Clerk.load==='function'){
             window.Clerk.load().then(function(){
-              console.log('[Clerk] Clerk.load() resolved successfully');
+              soLog('[Clerk] Clerk.load() resolved successfully');
               resolve(true);
             }).catch(function(e){
               console.error('[Clerk] Clerk.load() failed:',e);
               resolve(false);
             });
           }else{
-            console.log('[Clerk] Clerk.load not a function, checking .loaded property');
+            soLog('[Clerk] Clerk.load not a function, checking .loaded property');
             if(window.Clerk.loaded){resolve(true);}
             else{
               var iv2=setInterval(function(){
-                if(window.Clerk.loaded){clearInterval(iv2);console.log('[Clerk] Clerk.loaded became true');resolve(true);}
+                if(window.Clerk.loaded){clearInterval(iv2);soLog('[Clerk] Clerk.loaded became true');resolve(true);}
               },200);
-              setTimeout(function(){clearInterval(iv2);console.warn('[Clerk] Timed out waiting for Clerk.loaded');resolve(false);},8000);
+              setTimeout(function(){clearInterval(iv2);soWarn('[Clerk] Timed out waiting for Clerk.loaded');resolve(false);},8000);
             }
           }
           return;
         }
-        if(elapsed>=10000){clearInterval(iv);console.warn('[Clerk] Timed out waiting for window.Clerk');resolve(false);}
+        if(elapsed>=10000){clearInterval(iv);soWarn('[Clerk] Timed out waiting for window.Clerk');resolve(false);}
       },200);
     });
   }
   var clerkReady=await waitForClerk();
-  console.log('[Clerk] Checking auth state now. Ready:',clerkReady);
+  soLog('[Clerk] Checking auth state now. Ready:',clerkReady);
   if(!clerkReady||!window.Clerk)return;
 
 
@@ -1980,10 +1981,10 @@ async function _createCustomerIfNeeded(){
       var supplierRows=supplierResp.ok?await supplierResp.json():[];
       var customerResp=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(clerkId)+'&select=id&limit=1',{headers:headers});
       var customerRows=customerResp.ok?await customerResp.json():[];
-      console.log('[SourceOn] Profile check — Supplier rows found:',supplierRows.length,'Customer rows found:',customerRows.length);
+      soLog('[SourceOn] Profile check — Supplier rows found:',supplierRows.length,'Customer rows found:',customerRows.length);
       var isVerifiedSupplier=supplierRows&&supplierRows.length>0&&supplierRows[0].status==='verified';
       var isLinkedCustomer=customerRows&&customerRows.length>0;
-      console.log('[SourceOn] Final decision — Show supplier link:',isVerifiedSupplier,'Show customer link:',isLinkedCustomer);
+      soLog('[SourceOn] Final decision — Show supplier link:',isVerifiedSupplier,'Show customer link:',isLinkedCustomer);
       if(dashLink)dashLink.style.display=isVerifiedSupplier?'flex':'none';
       if(custLink)custLink.style.display=isLinkedCustomer?'flex':'none';
       if(statusWrap){
@@ -2025,7 +2026,7 @@ async function _createCustomerIfNeeded(){
     if(!window.Clerk.client||!window.Clerk.client.signIn)return;
     var si=window.Clerk.client.signIn;
     if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){
-      console.log('[Clerk] Detected needs_client_trust / needs_second_factor, opening verification modal');
+      soLog('[Clerk] Detected needs_client_trust / needs_second_factor, opening verification modal');
       _clerkTrustActive=true;
       _clerkSignInResource=si;
       try{window.Clerk.closeSignIn();}catch(e){}
@@ -2034,25 +2035,25 @@ async function _createCustomerIfNeeded(){
   });
 
   // Link pending customer row to Clerk user (runs on every page load after Clerk resolves)
-  console.log('[SourceOn] localStorage keys on load — sourceon_pending_customer_link:',localStorage.getItem('sourceon_pending_customer_link'));
+  soLog('[SourceOn] localStorage keys on load — sourceon_pending_customer_link:',localStorage.getItem('sourceon_pending_customer_link'));
   var _pendingCustId=localStorage.getItem('sourceon_pending_customer_link');
   if(_pendingCustId&&window.Clerk.user&&window.Clerk.user.id){
-    console.log('[SourceOn] Found pending customer link in localStorage:',_pendingCustId);
+    soLog('[SourceOn] Found pending customer link in localStorage:',_pendingCustId);
     (async function(){
       try{
         var chk=await _supabase.from('customers').select('id,user_id').eq('id',_pendingCustId).single();
         if(chk.data&&!chk.data.user_id){
           var upd=await _supabase.from('customers').update({user_id:window.Clerk.user.id}).eq('id',_pendingCustId);
           if(!upd.error){
-            console.log('[SourceOn] Customer linked successfully:',_pendingCustId,'->',window.Clerk.user.id);
+            soLog('[SourceOn] Customer linked successfully:',_pendingCustId,'->',window.Clerk.user.id);
             localStorage.removeItem('sourceon_pending_customer_link');
             var successEl=document.getElementById('success-contact');
             if(successEl)successEl.innerHTML+='<br><br><strong style="color:#34D399">Verknüpft!</strong> Deine Anfrage ist jetzt in deinem <a href="kundendashboard.html" style="color:#E8A020;text-decoration:underline">Kunden-Dashboard</a> sichtbar.';
           }else{
-            console.log('[SourceOn] Customer link error:',upd.error);
+            soLog('[SourceOn] Customer link error:',upd.error);
           }
         }else if(chk.data&&chk.data.user_id){
-          console.log('[SourceOn] Customer already linked or not found, clearing localStorage');
+          soLog('[SourceOn] Customer already linked or not found, clearing localStorage');
           localStorage.removeItem('sourceon_pending_customer_link');
         }
       }catch(e){console.error('[SourceOn] Customer link error:',e);}
@@ -2101,7 +2102,7 @@ var _clerkTrustActive=false;
 var _clerkTrustStrategy='email_code';
 
 async function _clerkSendVerificationCode(){
-  console.log('[Clerk] Sending verification code (prepareSecondFactor)');
+  soLog('[Clerk] Sending verification code (prepareSecondFactor)');
   _clerkTrustStrategy='email_code';
   try{
     var si=_clerkSignInResource;
@@ -2137,11 +2138,11 @@ async function clerkTrustVerify(){
   var btn=document.getElementById('clerk-trust-submit');
   btn.disabled=true;btn.textContent='Wird geprüft…';
   document.getElementById('clerk-trust-error').textContent='';
-  console.log('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
+  soLog('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
   try{
     var result=await _clerkSignInResource.attemptSecondFactor({strategy:_clerkTrustStrategy,code:code});
     if(result.status==='complete'){
-      console.log('[Clerk] Second factor complete, activating session');
+      soLog('[Clerk] Second factor complete, activating session');
       await window.Clerk.setActive({session:result.createdSessionId});
       document.getElementById('clerk-trust-overlay').classList.remove('open');
       _clerkTrustActive=false;
@@ -2159,7 +2160,7 @@ async function clerkTrustVerify(){
 
 async function clerkTrustResend(){
   document.getElementById('clerk-trust-error').textContent='';
-  console.log('[Clerk] User requested resend — sending new code');
+  soLog('[Clerk] User requested resend — sending new code');
   await _clerkSendVerificationCode();
 }
 
