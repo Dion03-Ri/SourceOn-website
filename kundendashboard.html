@@ -204,6 +204,7 @@ a{color:var(--gold);text-decoration:none}
 </main>
 
 <script src="material-i18n.js"></script>
+<script src="timing.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 var SUPABASE_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
@@ -416,7 +417,13 @@ var _matCatalogMap={};
     // Build status detail
     var detail='';
     if(r.status==='offen'&&!r.bundle_id){
-      detail='<div class="req-status-detail"><div class="status-msg"><span class="pulse-dot"></span><span>Sammelt Bündelungspartner — wir suchen weitere Baufirmen mit ähnlichem Bedarf, um dir den bestmöglichen Mengenrabatt zu sichern.</span></div></div>';
+      // "Ausschreibung spätestens am …" — dieselbe Formel wie in der Edge Function (timing.js).
+      var ceLine='';
+      if(r.liefer_zeitraum_von&&window.SO_TIMING){
+        var ce=window.SO_TIMING.collectionEnd(r.liefer_zeitraum_von,r.created_at);
+        if(ce)ceLine='<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.05);color:#FBBF24;font-weight:600">Ausschreibung spätestens am '+ce.toLocaleDateString('de-CH')+'</div>';
+      }
+      detail='<div class="req-status-detail"><div class="status-msg"><span class="pulse-dot"></span><span>Sammelt Bündelungspartner — wir suchen weitere Baufirmen mit ähnlichem Bedarf, um dir den bestmöglichen Mengenrabatt zu sichern.</span></div>'+ceLine+'</div>';
     }else if((r.status==='gebuendelt'||r.status==='offen')&&r.bundle_id){
       var bundle=_bundleMap[r.bundle_id]||{};
       var bids=bidCounts[r.bundle_id]||0;

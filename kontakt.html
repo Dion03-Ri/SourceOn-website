@@ -497,6 +497,8 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 
 /* ACCOUNT OPT-IN */
 .acct-opt-section{margin-bottom:18px;border-top:1px solid var(--gold-b);padding-top:18px;margin-top:4px}
+/* Tempo-Indikator (Lieferzeitraum) */
+.tempo-indicator{background:#0F2238;border:1px solid rgba(255,255,255,.1);border-left:3px solid var(--gold);border-radius:10px;padding:12px 16px;margin:4px 0 14px;font-size:.82rem;color:rgba(255,255,255,.85);line-height:1.5}
 /* Live-Auftragswert + Rabattstufe */
 .tier-summary{background:#0F2238;border:1px solid rgba(232,160,32,.28);border-radius:12px;padding:18px 20px;margin:18px 0 14px}
 .tier-summary .tier-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
@@ -940,18 +942,15 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             </div>
             <div class="form-grid">
               <div class="form-group"><label class="form-label" data-i18n="form_timing_label">Gewünschter Lieferzeitraum *</label>
-                <select class="form-select" id="c-timing" required>
-                  <option value="" data-i18n="form_select_please">Bitte wählen</option>
-                  <option data-i18n="form_timing_asap">So schnell wie möglich</option>
-                  <option data-i18n="form_timing_1week">Innerhalb 1 Woche</option>
-                  <option data-i18n="form_timing_2weeks">Innerhalb 2 Wochen</option>
-                  <option data-i18n="form_timing_1month">Innerhalb 1 Monat</option>
-                  <option data-i18n="form_timing_flexible">Flexibel — nach Absprache</option>
-                </select>
-                <div class="form-error" data-i18n="form_error_select" id="e-c-timing">Bitte wählen</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                  <div><span style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:4px" data-i18n="form_date_from">Frühestens</span><input type="date" class="form-input" id="c-date-von" oninput="_onDateChange()" required/></div>
+                  <div><span style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:4px" data-i18n="form_date_to">Spätestens</span><input type="date" class="form-input" id="c-date-bis" oninput="_onDateChange()" required/></div>
+                </div>
+                <div class="form-error" id="e-c-timing">Bitte gültigen Lieferzeitraum wählen</div>
               </div>
               <div class="form-group"><label class="form-label" data-i18n="form_address_label">Lieferadresse / Kanton *</label><input type="text" class="form-input" id="c-canton" placeholder="z.B. Zürich, Baustelle Hauptstr. 5" data-i18n-placeholder="form_placeholder_address" required/><div class="form-error" data-i18n="form_error_required" id="e-c-canton">Pflichtfeld</div></div>
             </div>
+            <div id="tempo-indicator" class="tempo-indicator" style="display:none"></div>
             <div class="form-group"><label class="form-label" data-i18n-html="form_project_label">Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span></label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und weitere Anforderungen…" data-i18n-placeholder="form_placeholder_project"></textarea></div>
             <div id="acct-opt-section" class="acct-opt-section">
               <span class="acct-opt-label">Anfragen jederzeit verfolgen</span>
@@ -1031,6 +1030,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 </footer>
 
 <script src="material-i18n.js"></script>
+<script src="timing.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 // SMOOTH ANCHOR SCROLL
@@ -1146,6 +1146,51 @@ function _recalcTier(){
     else{box.style.display='none';}
   }
   ['tier-rate','tier-rate-inline','commit-rate'].forEach(function(idn){var el=document.getElementById(idn);if(el)el.textContent=pct+'%';});
+}
+
+// ============ Lieferzeitraum: Tempo-Indikator + Validierung (nutzt timing.js) ============
+function _isoDays(dateStr){
+  if(!dateStr)return null;
+  if(window.SO_TIMING)return window.SO_TIMING.availableDaysFromToday(dateStr);
+  var d=new Date(dateStr);d.setHours(0,0,0,0);var t=new Date();t.setHours(0,0,0,0);
+  return Math.floor((d-t)/86400000);
+}
+function _onDateChange(){
+  var von=document.getElementById('c-date-von').value;
+  var bis=document.getElementById('c-date-bis').value;
+  var bisEl=document.getElementById('c-date-bis');
+  if(von)bisEl.min=von; // bis nie vor von
+  var err=document.getElementById('e-c-timing');if(err)err.style.display='none';
+  var box=document.getElementById('tempo-indicator');
+  if(!von||!bis){if(box)box.style.display='none';return;}
+  var avail=_isoDays(von);
+  if(box){
+    if(avail>23){box.textContent='🟢 Flexibler Zeitraum — deine Anfrage sammelt bis zu 14 Tage Bündelungspartner für maximale Ersparnis.';box.style.display='block';}
+    else if(avail>=14){box.textContent='🟡 Mittlerer Zeitraum — deine Anfrage sammelt einige Tage Partner und wird dann ausgeschrieben.';box.style.display='block';}
+    else if(avail>=5){box.textContent='🟠 Knapper Zeitraum — deine Anfrage wird beschleunigt ausgeschrieben (verkürzte Gebotsfrist für Lieferanten).';box.style.display='block';}
+    else{box.style.display='none';} // <5 Tage: Validierung greift beim Absenden
+  }
+}
+function _validateDates(){
+  var von=document.getElementById('c-date-von').value;
+  var bis=document.getElementById('c-date-bis').value;
+  var err=document.getElementById('e-c-timing');
+  var minLead=(window.SO_TIMING&&window.SO_TIMING.MIN_LEAD_DAYS)||5;
+  function fail(msg){if(err){err.textContent=msg;err.style.display='block';}return false;}
+  if(!von||!bis)return fail('Bitte frühestes und spätestes Lieferdatum angeben.');
+  if(_isoDays(von)<minLead)return fail('Für Lieferungen innerhalb von 5 Tagen kontaktiere uns bitte direkt: info@sourceon.ch');
+  if(bis<von)return fail('Das späteste Datum darf nicht vor dem frühesten liegen.');
+  if(err)err.style.display='none';
+  return true;
+}
+function _initDateFields(){
+  var vonEl=document.getElementById('c-date-von');
+  if(!vonEl)return;
+  var minLead=(window.SO_TIMING&&window.SO_TIMING.MIN_LEAD_DAYS)||5;
+  var min=new Date();min.setDate(min.getDate()+minLead);
+  var minStr=min.toISOString().split('T')[0];
+  vonEl.min=minStr;
+  var bisEl=document.getElementById('c-date-bis');if(bisEl)bisEl.min=minStr;
 }
 
 function _buildMatGroups(){
@@ -1284,6 +1329,7 @@ function addMaterialRow(){
 function removeMaterialRow(btn){btn.closest('.material-row').remove();matRowCount--;document.getElementById('add-material-btn').style.display='';if(typeof _recalcTier==='function')_recalcTier();}
 document.addEventListener('DOMContentLoaded',function(){
   document.querySelectorAll('.mat-combo').forEach(_initMatCombo);
+  _initDateFields();
   // Auftragswert + Rabattstufe live neu berechnen, sobald eine Menge geändert wird (auch dynamische Zeilen)
   var mr=document.getElementById('material-rows');
   if(mr)mr.addEventListener('input',function(e){if(e.target&&e.target.classList.contains('mat-qty')&&typeof _recalcTier==='function')_recalcTier();});
@@ -1375,7 +1421,8 @@ function _extractKanton(addr){
 async function submitContact(e){
   e.preventDefault();
   var matOk=validateMaterials();
-  if(![req('c-company','e-c-company'),req('c-name','e-c-name'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone'),matOk,selOk('c-timing','e-c-timing'),req('c-canton','e-c-canton')].every(Boolean))return;
+  var datesOk=_validateDates();
+  if(![req('c-company','e-c-company'),req('c-name','e-c-name'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone'),matOk,datesOk,req('c-canton','e-c-canton')].every(Boolean))return;
 
   // Pflicht: verbindliche Auftragsbestätigung (Ziel-Mindestrabatt)
   var commitEl=document.getElementById('c-commitment');
@@ -1431,7 +1478,7 @@ async function submitContact(e){
       customerId=custRes.data.id;
     }
 
-    var timing=_parseTiming(document.getElementById('c-timing'));
+    var timing={von:document.getElementById('c-date-von').value,bis:document.getElementById('c-date-bis').value};
     var zone=_extractZone(addrVal);
     var rows=document.querySelectorAll('#material-rows .material-row');
     var inserts=[];

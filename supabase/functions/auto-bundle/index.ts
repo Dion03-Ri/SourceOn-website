@@ -17,6 +17,36 @@ function getTargetDiscount(estimatedValueCHF: number): number | null {
   return null; // below 50k — not enough volume
 }
 
+// ---------------------------------------------------------------------------
+// Dynamische Timing-Formeln (Sammelfenster + Gebotsfrist).
+// ⚠️ MÜSSEN synchron bleiben mit /timing.js (Kunden-Dashboard-Anzeige) und dem
+// Tempo-Indikator in kontakt.html. Jede Änderung hier dort ebenfalls nachziehen.
+// ---------------------------------------------------------------------------
+const DAY_MS = 86_400_000;
+function midnight(d: Date): Date { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; }
+function availableDaysFromToday(vonISO: string): number {
+  return Math.floor((midnight(new Date(vonISO)).getTime() - midnight(new Date()).getTime()) / DAY_MS);
+}
+function bidDeadlineDays(availableDays: number): number {
+  if (availableDays >= 16) return 7;
+  if (availableDays >= 12) return 5;
+  if (availableDays >= 9) return 3;
+  return 2; // Minimum
+}
+// collection_end = liefer_zeitraum_von − (bidDeadlineDays + 2 Tage Puffer),
+// jedoch nie später als created_at + 14 Tage (bestehende Fallback-Obergrenze).
+function collectionEnd(vonISO: string, createdAtISO: string | null): Date {
+  const bdd = bidDeadlineDays(availableDaysFromToday(vonISO));
+  const ce = new Date(vonISO);
+  ce.setDate(ce.getDate() - (bdd + 2));
+  if (createdAtISO) {
+    const cap = new Date(createdAtISO);
+    cap.setDate(cap.getDate() + 14);
+    if (ce.getTime() > cap.getTime()) return cap;
+  }
+  return ce;
+}
+
 function datesOverlap(
   aVon: string, aBis: string,
   bVon: string, bBis: string,
@@ -41,6 +71,7 @@ interface MaterialRequest {
   liefer_zeitraum_von: string;
   liefer_zeitraum_bis: string;
   fallback_deadline: string | null;
+  created_at: string | null;
 }
 
 interface RequestGroup {
@@ -68,7 +99,7 @@ Deno.serve(async (req: Request) => {
     // constraint can be implemented later.
     const { data: openRequests, error: fetchErr } = await sb
       .from("material_requests")
-      .select("id, sourceon_id, menge, einheit, liefer_zone, liefer_zeitraum_von, liefer_zeitraum_bis, fallback_deadline, committed_min_rabatt")
+      .select("id, sourceon_id, menge, einheit, liefer_zone, liefer_zeitraum_von, liefer_zeitraum_bis, fallback_deadline, committed_min_rabatt, created_at")
       .eq("status", "offen")
       .is("bundle_id", null);
 
@@ -147,6 +178,8 @@ Deno.serve(async (req: Request) => {
     }> = [];
     const skipped: Array<{ sourceon_id: string; liefer_zone: string; estimatedCHF: number; reason: string }> = [];
 
+    const nowMs = Date.now();
+
     for (const g of groups) {
       const catEntry = catalogMap[g.sourceon_id];
       const richtpreis = catEntry?.richtpreis ?? null;
@@ -161,75 +194,55 @@ Deno.serve(async (req: Request) => {
         continue;
       }
       const estimatedCHF = g.totalMenge * richtpreis;
-      const discount = getTargetDiscount(estimatedCHF);
+      const discount = getTargetDiscount(estimatedCHF); // null if < 50k
 
-      if (discount === null) {
-        // Check if any requests in this group have passed their fallback deadline
-        const now = new Date().toISOString();
-        const expiredRequests = g.requests.filter(
-          (r) => r.fallback_deadline && r.fallback_deadline <= now
+      // --- Window-based timing: evaluate every request in the group ---
+      // The group publishes when the EARLIEST collection_end among its requests is
+      // reached; until then it keeps collecting partners (large orders wait too —
+      // their committed minimum discount is guaranteed regardless).
+      let groupCollEnd: Date | null = null;   // earliest collection_end
+      let earliestVon: string | null = null;  // most urgent (closest delivery)
+      let urgentBidDays = 7;                   // bid_deadline_days of the most urgent request
+      for (const r of g.requests) {
+        const avail = availableDaysFromToday(r.liefer_zeitraum_von);
+        const bdd = bidDeadlineDays(avail);
+        const ce = collectionEnd(r.liefer_zeitraum_von, r.created_at ?? r.fallback_deadline ?? null);
+        console.log(
+          `[auto-bundle] eval req ${r.id} (${g.sourceon_id}/${g.liefer_zone}): ` +
+          `availDays=${avail}, bidDeadlineDays=${bdd}, collectionEnd=${ce.toISOString().slice(0, 10)}`
         );
-
-        if (expiredRequests.length > 0) {
-          // Fallback: create bundle at lowest tier (7%) even below threshold
-          const bidDeadline = new Date();
-          bidDeadline.setDate(bidDeadline.getDate() + 7);
-
-          const { data: fbBundle, error: fbInsertErr } = await sb
-            .from("bundles")
-            .insert({
-              sourceon_id: g.sourceon_id,
-              liefer_zone: g.liefer_zone,
-              liefer_zeitraum_von: g.liefer_zeitraum_von,
-              liefer_zeitraum_bis: g.liefer_zeitraum_bis,
-              gesamtvolumen: g.totalMenge,
-              einheit: g.einheit,
-              ziel_mindestrabatt: 0.07,
-              status: "ausgeschrieben",
-              bid_deadline: bidDeadline.toISOString(),
-              bundle_type: "single_material",
-              is_fallback_bundle: true,
-            })
-            .select("id")
-            .single();
-
-          if (!fbInsertErr && fbBundle) {
-            const reqIds = g.requests.map((r) => r.id);
-            await sb
-              .from("material_requests")
-              .update({ bundle_id: fbBundle.id, status: "gebuendelt" })
-              .in("id", reqIds);
-
-            console.log(
-              `[auto-bundle] FALLBACK bundle for ${g.sourceon_id}/${g.liefer_zone} ` +
-              `(~${Math.round(estimatedCHF)} CHF, ${expiredRequests.length} expired) → 7% tier`
-            );
-            summary.push({
-              sourceon_id: g.sourceon_id,
-              liefer_zone: g.liefer_zone,
-              totalMenge: g.totalMenge,
-              einheit: g.einheit,
-              estimatedCHF: Math.round(estimatedCHF),
-              targetDiscount: 0.07,
-              requestCount: reqIds.length,
-            });
-            continue;
-          }
+        if (groupCollEnd === null || ce.getTime() < groupCollEnd.getTime()) groupCollEnd = ce;
+        if (earliestVon === null || r.liefer_zeitraum_von < earliestVon) {
+          earliestVon = r.liefer_zeitraum_von;
+          urgentBidDays = bdd;
         }
+      }
 
+      // Not yet time to publish → keep collecting (also large ≥50k groups wait).
+      if (groupCollEnd && nowMs < groupCollEnd.getTime()) {
+        console.log(
+          `[auto-bundle] group ${g.sourceon_id}/${g.liefer_zone} STILL COLLECTING ` +
+          `until ${groupCollEnd.toISOString().slice(0, 10)} ` +
+          `(~${Math.round(estimatedCHF)} CHF, ${g.requests.length} req, tier ${discount === null ? "<50k" : (discount * 100) + "%"})`
+        );
         skipped.push({
           sourceon_id: g.sourceon_id,
           liefer_zone: g.liefer_zone,
           estimatedCHF: Math.round(estimatedCHF),
-          reason: `Below 50k CHF threshold (${Math.round(estimatedCHF)} CHF)`,
+          reason: `Collecting until ${groupCollEnd.toISOString().slice(0, 10)}`,
         });
         continue;
       }
 
+      // collection_end reached → PUBLISH now.
+      // bid_deadline uses the bid_deadline_days of the MOST URGENT request so the
+      // auction always finishes in time for every member's delivery.
       const bidDeadline = new Date();
-      bidDeadline.setDate(bidDeadline.getDate() + 7);
+      bidDeadline.setDate(bidDeadline.getDate() + urgentBidDays);
 
-      // 5. Create bundle
+      const isFallback = discount === null;
+      const targetRabatt = isFallback ? 0.07 : (discount as number);
+
       const { data: bundle, error: insertErr } = await sb
         .from("bundles")
         .insert({
@@ -239,10 +252,11 @@ Deno.serve(async (req: Request) => {
           liefer_zeitraum_bis: g.liefer_zeitraum_bis,
           gesamtvolumen: g.totalMenge,
           einheit: g.einheit,
-          ziel_mindestrabatt: discount,
+          ziel_mindestrabatt: targetRabatt,
           status: "ausgeschrieben",
           bid_deadline: bidDeadline.toISOString(),
           bundle_type: "single_material",
+          is_fallback_bundle: isFallback,
         })
         .select("id")
         .single();
@@ -252,16 +266,21 @@ Deno.serve(async (req: Request) => {
         continue;
       }
 
-      // 6. Update material_requests with bundle_id and status
       const requestIds = g.requests.map((r) => r.id);
       const { error: updateErr } = await sb
         .from("material_requests")
         .update({ bundle_id: bundle.id, status: "gebuendelt" })
         .in("id", requestIds);
-
       if (updateErr) {
         console.error(`Failed to update requests for bundle ${bundle.id}:`, updateErr);
       }
+
+      console.log(
+        `[auto-bundle] PUBLISHED ${isFallback ? "FALLBACK " : ""}bundle ${g.sourceon_id}/${g.liefer_zone} — ` +
+        `${g.totalMenge} ${g.einheit} (~${Math.round(estimatedCHF)} CHF) → ${(targetRabatt * 100).toFixed(0)}% target, ` +
+        `${requestIds.length} req, bidDeadline=+${urgentBidDays}d ` +
+        `(reason: collection_end ${groupCollEnd ? groupCollEnd.toISOString().slice(0, 10) : "?"} reached)`
+      );
 
       summary.push({
         sourceon_id: g.sourceon_id,
@@ -269,7 +288,7 @@ Deno.serve(async (req: Request) => {
         totalMenge: g.totalMenge,
         einheit: g.einheit,
         estimatedCHF: Math.round(estimatedCHF),
-        targetDiscount: discount,
+        targetDiscount: targetRabatt,
         requestCount: requestIds.length,
       });
     }

@@ -7,7 +7,18 @@ Groups open material requests (`status = 'offen'`, `bundle_id = null`) by:
 - Same `liefer_zone` (exact match)
 - Overlapping delivery windows (≥3 days overlap)
 
-Creates bundles when estimated value ≥ 50,000 CHF, with volume-based discount tiers (7%–28%).
+Publishes a bundle when the EARLIEST `collection_end` among its requests is reached
+(window-based timing driven by each customer's `liefer_zeitraum_von`), not immediately
+at 50k. Groups keep collecting partners until then — large ≥50k orders wait too.
+- `bid_deadline_days`: 7 (≥16 days lead), 5 (12–15), 3 (9–11), 2 (<9) — set from the
+  MOST URGENT request so the auction finishes in time for every member.
+- `collection_end = liefer_zeitraum_von − (bid_deadline_days + 2)`, capped at
+  `created_at + 14 days`.
+- ≥50k → normal bundle with volume-based discount tier (7%–28%); <50k at collection_end
+  → fallback bundle (7%, `is_fallback_bundle = true`).
+
+⚠️ These timing formulas MUST stay in sync with `/timing.js` (customer dashboard) and
+the tempo indicator in `kontakt.html`.
 
 ## Option A: Deploy via Supabase CLI
 
