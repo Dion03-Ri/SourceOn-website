@@ -860,9 +860,9 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <h2 class="h2" data-i18n="about_h2">Bündelungsmacht für alle Baufirmen.</h2>
         <p style="font-size:.92rem;color:var(--body);line-height:1.75;margin-top:16px;margin-bottom:24px" data-i18n="about_desc">SourceOn wurde mit einer einfachen Überzeugung gegründet: Zu viele Baufirmen — vom KMU bis zum Grosskonzern — zahlen mehr als nötig für Baumaterial. Nicht weil es keine günstigeren Preise gibt, sondern weil sie alleine zu wenig Volumen haben um sie zu bekommen. Wir ändern das — für alle.</p>
         <div class="about-features">
-          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><strong data-i18n="feat1_title">Erfolgsbasiertes Modell</strong><span data-i18n="feat1_desc">Du zahlst nur, wenn dir gespart wird</span></div></div>
+          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><div><strong data-i18n="feat1_title">Erfolgsbasiertes Modell</strong><span data-i18n="feat1_desc">Für dich kostenlos — Provision zahlt der Lieferant</span></div></div>
           <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><strong data-i18n="feat2_title">Schweizer Qualitätsstandards</strong><span data-i18n="feat2_desc">SIA/ISO-konforme Lieferanten, SN EN Normen</span></div></div>
-          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div><strong data-i18n="feat3_title">Schnelle Abwicklung</strong><span data-i18n="feat3_desc">Erste Angebote innerhalb von 48 Stunden</span></div></div>
+          <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><div><strong data-i18n="feat3_title">Schnelle Abwicklung</strong><span data-i18n="feat3_desc">Dein Lieferzeitraum gibt das Tempo vor</span></div></div>
           <div class="about-feature"><div class="about-feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><strong data-i18n="feat4_title">Persönliche Betreuung</strong><span data-i18n="feat4_desc">Direkter Ansprechpartner für jede Anfrage</span></div></div>
         </div>
       </div>
@@ -888,7 +888,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text" data-i18n="faq_q2">Wie lange dauert es bis ich ein Angebot bekomme?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq_a2">In der Regel erhältst du innerhalb von 48 Stunden ein konkretes Angebot. Bei Standardmaterialien wie Beton oder Armierungsstahl oft schneller. Bei komplexen oder grossen Bestellungen kann es etwas länger dauern — du wirst immer proaktiv informiert.</div></div>
+        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq_a2">Das hängt von deinem Lieferzeitraum ab: Je flexibler dein Termin, desto länger sammelt deine Anfrage Bündelungspartner — und desto grösser deine Ersparnis. Grossaufträge werden oft innerhalb einer Woche ausgeschrieben, kleinere Mengen dauern 1–3 Wochen. Den spätesten Ausschreibungstermin siehst du jederzeit in deinem Dashboard.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="toggleFaq(this)"><svg class="faq-q-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,18 15,12 9,6"/></svg><span class="faq-q-text" data-i18n="faq_q3">Muss ich einen Vertrag unterschreiben?</span><span class="faq-toggle">+</span></button>
@@ -1126,11 +1126,11 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       about_h2: 'Bündelungsmacht für alle Baufirmen.',
       about_desc: 'SourceOn wurde mit einer einfachen Überzeugung gegründet: Zu viele Baufirmen — vom KMU bis zum Grosskonzern — zahlen mehr als nötig für Baumaterial. Nicht weil es keine günstigeren Preise gibt, sondern weil sie alleine zu wenig Volumen haben um sie zu bekommen. Wir ändern das — für alle.',
       feat1_title: 'Erfolgsbasiertes Modell',
-      feat1_desc: 'Du zahlst nur, wenn dir gespart wird',
+      feat1_desc: 'Für dich kostenlos — Provision zahlt der Lieferant',
       feat2_title: 'Schweizer Qualitätsstandards',
       feat2_desc: 'SIA/ISO-konforme Lieferanten, SN EN Normen',
       feat3_title: 'Schnelle Abwicklung',
-      feat3_desc: 'Erste Angebote innerhalb von 48 Stunden',
+      feat3_desc: 'Dein Lieferzeitraum gibt das Tempo vor',
       feat4_title: 'Persönliche Betreuung',
       feat4_desc: 'Direkter Ansprechpartner für jede Anfrage',
       faq_label: 'FAQ',
@@ -1139,7 +1139,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_q1: 'Was kostet mich SourceOn wenn ich nichts spare?',
       faq_a1: 'Gar nichts. SourceOn verlangt ausschliesslich eine Provision von 2.25% auf den Materialwert — und das nur dann, wenn wir dir tatsächlich günstiger einkaufen als dein bisheriger Preis. Sparst du nichts, zahlst du nichts. Kein Abo, keine Fixgebühr, kein Risiko.',
       faq_q2: 'Wie lange dauert es bis ich ein Angebot bekomme?',
-      faq_a2: 'In der Regel erhältst du innerhalb von 48 Stunden ein konkretes Angebot. Bei Standardmaterialien wie Beton oder Armierungsstahl oft schneller. Bei komplexen oder grossen Bestellungen kann es etwas länger dauern — du wirst immer proaktiv informiert.',
+      faq_a2: 'Das hängt von deinem Lieferzeitraum ab: Je flexibler dein Termin, desto länger sammelt deine Anfrage Bündelungspartner — und desto grösser deine Ersparnis. Grossaufträge werden oft innerhalb einer Woche ausgeschrieben, kleinere Mengen dauern 1–3 Wochen. Den spätesten Ausschreibungstermin siehst du jederzeit in deinem Dashboard.',
       faq_q3: 'Muss ich einen Vertrag unterschreiben?',
       faq_a3: 'Für den ersten Auftrag reicht eine einfache Auftragsbestätigung. Für eine langfristige Zusammenarbeit schliessen wir eine Vermittlungsvereinbarung ab — diese schützt beide Seiten und regelt die Provision transparent.',
       faq_q4: 'Was passiert wenn die Lieferung fehlerhaft ist?',
@@ -1165,11 +1165,11 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       about_h2: 'Bundling power for all construction companies.',
       about_desc: 'SourceOn was founded with a simple conviction: too many construction companies — from SMEs to large corporations — pay more than necessary for building materials. Not because cheaper prices do not exist, but because they lack the volume to access them on their own. We are changing that — for everyone.',
       feat1_title: 'Success-based model',
-      feat1_desc: 'You only pay when we save you money',
+      feat1_desc: 'Free for you — the supplier pays our commission',
       feat2_title: 'Swiss quality standards',
       feat2_desc: 'SIA/ISO-compliant suppliers, SN EN standards',
       feat3_title: 'Fast processing',
-      feat3_desc: 'First quotes within 48 hours',
+      feat3_desc: 'Your delivery timeframe sets the pace',
       feat4_title: 'Personal support',
       feat4_desc: 'Dedicated contact person for every enquiry',
       faq_label: 'FAQ',
@@ -1178,7 +1178,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_q1: 'What does SourceOn cost me if I save nothing?',
       faq_a1: 'Nothing at all. SourceOn charges a commission of 2.25% on the material value only — and only when we actually purchase at a lower price than your current one. If you save nothing, you pay nothing. No subscription, no fixed fee, no risk.',
       faq_q2: 'How long until I receive a quote?',
-      faq_a2: 'Typically you receive a concrete offer within 48 hours. For standard materials like concrete or reinforcing steel, often faster. For complex or large orders it may take a little longer — you will always be proactively informed.',
+      faq_a2: 'It depends on your delivery timeframe: the more flexible your date, the longer your request collects bundling partners — and the greater your savings. Large orders are often put out to tender within a week, smaller quantities take 1–3 weeks. You can see the latest tender date anytime in your dashboard.',
       faq_q3: 'Do I need to sign a contract?',
       faq_a3: 'For the first order, a simple order confirmation is sufficient. For long-term collaboration, we conclude a brokerage agreement — this protects both sides and regulates the commission transparently.',
       faq_q4: 'What happens if the delivery is defective?',
@@ -1204,11 +1204,11 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       about_h2: 'La puissance du regroupement pour toutes les entreprises de construction.',
       about_desc: 'SourceOn a été fondé avec une conviction simple : trop d\'entreprises de construction — des PME aux grands groupes — paient plus que nécessaire pour les matériaux. Non pas parce que des prix plus avantageux n\'existent pas, mais parce qu\'elles n\'ont pas le volume suffisant pour y accéder seules. Nous changeons cela — pour tous.',
       feat1_title: 'Modèle basé sur le succès',
-      feat1_desc: 'Vous ne payez que lorsque nous vous faisons économiser',
+      feat1_desc: 'Gratuit pour vous — le fournisseur paie la commission',
       feat2_title: 'Standards de qualité suisses',
       feat2_desc: 'Fournisseurs conformes SIA/ISO, normes SN EN',
       feat3_title: 'Traitement rapide',
-      feat3_desc: 'Premières offres sous 48 heures',
+      feat3_desc: 'Votre délai de livraison donne le rythme',
       feat4_title: 'Accompagnement personnalisé',
       feat4_desc: 'Un interlocuteur dédié pour chaque demande',
       faq_label: 'FAQ',
@@ -1217,7 +1217,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_q1: 'Que me coûte SourceOn si je n\'économise rien ?',
       faq_a1: 'Rien du tout. SourceOn ne facture qu\'une commission de 2,25 % sur la valeur du matériel — et uniquement lorsque nous achetons effectivement moins cher que votre prix actuel. Pas d\'économie, pas de frais. Pas d\'abonnement, pas de frais fixes, aucun risque.',
       faq_q2: 'Combien de temps avant de recevoir une offre ?',
-      faq_a2: 'En règle générale, vous recevez une offre concrète dans les 48 heures. Pour les matériaux standard comme le béton ou l\'acier d\'armature, souvent plus vite. Pour les commandes complexes ou volumineuses, cela peut prendre un peu plus de temps — vous êtes toujours informé de manière proactive.',
+      faq_a2: 'Cela dépend de votre délai de livraison : plus votre date est flexible, plus votre demande regroupe de partenaires — et plus vos économies sont importantes. Les grandes commandes sont souvent mises en appel d\'offres en une semaine, les quantités plus petites prennent 1 à 3 semaines. Vous voyez la date limite dans votre tableau de bord à tout moment.',
       faq_q3: 'Dois-je signer un contrat ?',
       faq_a3: 'Pour la première commande, une simple confirmation suffit. Pour une collaboration à long terme, nous concluons un accord de courtage — celui-ci protège les deux parties et règle la commission de manière transparente.',
       faq_q4: 'Que se passe-t-il si la livraison est défectueuse ?',
@@ -1243,11 +1243,11 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       about_h2: 'Potere di aggregazione per tutte le imprese edili.',
       about_desc: 'SourceOn è stata fondata con una convinzione semplice: troppe imprese edili — dalle PMI alle grandi aziende — pagano più del necessario per i materiali da costruzione. Non perché non esistano prezzi migliori, ma perché da sole non hanno il volume sufficiente per ottenerli. Noi cambiamo questo — per tutti.',
       feat1_title: 'Modello basato sul successo',
-      feat1_desc: 'Paghi solo quando ti facciamo risparmiare',
+      feat1_desc: 'Gratuito per te — la provvigione la paga il fornitore',
       feat2_title: 'Standard di qualità svizzeri',
       feat2_desc: 'Fornitori conformi SIA/ISO, norme SN EN',
       feat3_title: 'Elaborazione rapida',
-      feat3_desc: 'Prime offerte entro 48 ore',
+      feat3_desc: 'Il tuo periodo di consegna detta il ritmo',
       feat4_title: 'Assistenza personale',
       feat4_desc: 'Un referente dedicato per ogni richiesta',
       faq_label: 'FAQ',
@@ -1256,7 +1256,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_q1: 'Quanto mi costa SourceOn se non risparmio nulla?',
       faq_a1: 'Niente. SourceOn addebita esclusivamente una commissione del 2,25% sul valore del materiale — e solo quando acquistiamo effettivamente a un prezzo inferiore al tuo attuale. Nessun risparmio, nessun costo. Nessun abbonamento, nessuna quota fissa, nessun rischio.',
       faq_q2: 'Quanto tempo ci vuole per ricevere un\'offerta?',
-      faq_a2: 'Di norma ricevi un\'offerta concreta entro 48 ore. Per materiali standard come calcestruzzo o acciaio d\'armatura, spesso ancora più veloce. Per ordini complessi o grandi, potrebbe richiedere un po\' più di tempo — sarai sempre informato proattivamente.',
+      faq_a2: 'Dipende dal tuo periodo di consegna: più la tua data è flessibile, più a lungo la tua richiesta raccoglie partner — e maggiore è il tuo risparmio. I grandi ordini vengono spesso messi a gara entro una settimana, le quantità più piccole richiedono 1–3 settimane. Vedi la data ultima in qualsiasi momento nella tua dashboard.',
       faq_q3: 'Devo firmare un contratto?',
       faq_a3: 'Per il primo ordine è sufficiente una semplice conferma d\'ordine. Per una collaborazione a lungo termine, stipuliamo un accordo di intermediazione — questo tutela entrambe le parti e regola la commissione in modo trasparente.',
       faq_q4: 'Cosa succede se la consegna è difettosa?',

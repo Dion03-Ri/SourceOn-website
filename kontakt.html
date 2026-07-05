@@ -895,7 +895,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <div>
         <div class="label" data-i18n="kontakt_badge">Materialbedarf melden</div>
         <h2 class="h2" data-i18n="kontakt_title" style="font-size:clamp(24px,3vw,38px)">Jetzt Materialbedarf melden</h2>
-        <p class="contact-desc" data-i18n="kontakt_desc">Kostenlos und unverbindlich. Wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</p>
+        <p class="contact-desc" data-i18n="kontakt_desc">Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.</p>
         <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.93 5.93l1.3-1.31a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span data-i18n="kontakt_phone">+41 44 000 00 00</span></div>
         <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span data-i18n="kontakt_email">info@SourceOn.ch</span></div>
         <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="kontakt_location">Zürich, Schweiz</span></div>
@@ -978,7 +978,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             <button type="submit" class="btn btn-gold btn-lg btn-full" data-i18n="form_submit">Materialbedarf jetzt melden →</button>
             <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;font-style:italic" data-i18n="form_bundle_hint">Hinweis: Wird dein Bedarf mit anderen Baufirmen gebündelt, richtet sich deine individuelle Ersparnis nach deinem Volumenanteil am Gesamtbündel.</p>
           </form>
-            <div class="form-success" id="success-contact" data-i18n-html="form_success"><span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.</div>
+            <div class="form-success" id="success-contact" data-i18n-html="form_success"><span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — deine Anfrage ist eingegangen. Verfolge den Status jederzeit in deinem Dashboard. Sobald dein Bündel steht, erhältst du dein konkretes Angebot.</div>
         </div>
       </div>
     </div>
@@ -1703,7 +1703,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 window.I18N={
   de:{
     nav_home:"Home",nav_process:"Wie es funktioniert",nav_calculator:"Kalkulator",nav_materials:"Materialien",nav_for_whom:"Für wen",nav_supplier:"Lieferant werden",nav_about:"Über uns",nav_contact:"Kontakt",nav_cta:"Materialbedarf melden",
-    kontakt_badge:"Materialbedarf melden",kontakt_title:"Jetzt Materialbedarf melden",kontakt_desc:"Kostenlos und unverbindlich. Wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.",
+    kontakt_badge:"Materialbedarf melden",kontakt_title:"Jetzt Materialbedarf melden",kontakt_desc:"Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.",
     kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zürich, Schweiz",
     kontakt_how_title:"Wie es funktioniert",kontakt_how_text:"Sende uns einfach deinen Materialbedarf in eigenen Worten — kein spezielles Format nötig. Wir kümmern uns um den Rest.",
     form_company:"Firmenname *",form_contact_person:"Ansprechperson *",form_email:"E-Mail *",form_phone:"Telefon *",
@@ -1722,7 +1722,7 @@ window.I18N={
     form_project_label:'Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span>',form_placeholder_project:"Kurze Beschreibung des Projekts und weitere Anforderungen…",
     form_submit:"Materialbedarf jetzt melden →",
     form_bundle_hint:"Hinweis: Wird dein Bedarf mit anderen Baufirmen gebündelt, richtet sich deine individuelle Ersparnis nach deinem Volumenanteil am Gesamtbündel.",
-    form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — wir analysieren deinen Bedarf und melden uns innerhalb von 48 Stunden mit einer konkreten Einschätzung des Einsparpotenzials.',
+    form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — deine Anfrage ist eingegangen. Verfolge den Status jederzeit in deinem Dashboard. Sobald dein Bündel steht, erhältst du dein konkretes Angebot.',
     footer_desc:"Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.",
     footer_services:"Leistungen",footer_company:"Unternehmen",footer_legal:"Rechtliches",
     footer_calculator:"Einsparkalkulator",footer_privacy:"Datenschutz",footer_imprint:"Impressum",footer_terms:"AGB",
@@ -1732,7 +1732,7 @@ window.I18N={
   },
   en:{
     nav_home:"Home",nav_process:"How it works",nav_calculator:"Calculator",nav_materials:"Materials",nav_for_whom:"For whom",nav_supplier:"Become a supplier",nav_about:"About us",nav_contact:"Contact",nav_cta:"Report material needs",
-    kontakt_badge:"Report material needs",kontakt_title:"Report your material needs now",kontakt_desc:"Free and non-binding. We analyse your requirements and get back to you within 48 hours with a concrete estimate of your savings potential.",
+    kontakt_badge:"Report material needs",kontakt_title:"Report your material needs now",kontakt_desc:"Free for you. You see your guaranteed target minimum discount right away and track the status anytime in your dashboard.",
     kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Switzerland",
     kontakt_how_title:"How it works",kontakt_how_text:"Simply send us your material requirements in your own words — no special format needed. We take care of the rest.",
     form_company:"Company name *",form_contact_person:"Contact person *",form_email:"Email *",form_phone:"Phone *",
@@ -1752,7 +1752,7 @@ window.I18N={
     form_placeholder_project:"Brief description of the project and further requirements…",
     form_submit:"Report material needs now →",
     form_bundle_hint:"Note: If your demand is bundled with other construction firms, your individual savings depend on your volume share of the total bundle.",
-    form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Thank you — we will analyse your requirements and get back to you within 48 hours with a concrete estimate of your savings potential.',
+    form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Thank you — your request has been received. Track the status anytime in your dashboard. As soon as your bundle is ready, you\'ll receive your concrete offer.',
     footer_desc:"Swiss B2B procurement intermediary for the construction industry. You only pay when we save you money.",
     footer_services:"Services",footer_company:"Company",footer_legal:"Legal",
     footer_calculator:"Savings calculator",footer_privacy:"Privacy policy",footer_imprint:"Legal notice",footer_terms:"Terms & conditions",
@@ -1762,7 +1762,7 @@ window.I18N={
   },
   fr:{
     nav_home:"Accueil",nav_process:"Comment ça marche",nav_calculator:"Calculateur",nav_materials:"Matériaux",nav_for_whom:"Pour qui",nav_supplier:"Devenir fournisseur",nav_about:"À propos",nav_contact:"Contact",nav_cta:"Déclarer un besoin",
-    kontakt_badge:"Déclarer un besoin",kontakt_title:"Déclarez vos besoins en matériaux",kontakt_desc:"Gratuit et sans engagement. Nous analysons vos besoins et vous recontactons sous 48 heures avec une estimation concrète du potentiel d'économies.",
+    kontakt_badge:"Déclarer un besoin",kontakt_title:"Déclarez vos besoins en matériaux",kontakt_desc:"Gratuit pour vous. Vous voyez immédiatement votre rabais minimum cible garanti et suivez le statut à tout moment dans votre tableau de bord.",
     kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Suisse",
     kontakt_how_title:"Comment ça marche",kontakt_how_text:"Envoyez-nous simplement vos besoins en matériaux dans vos propres mots — aucun format spécifique requis. Nous nous occupons du reste.",
     form_company:"Nom de l'entreprise *",form_contact_person:"Personne de contact *",form_email:"E-mail *",form_phone:"Téléphone *",
@@ -1781,7 +1781,7 @@ window.I18N={
     form_project_label:'Description du projet <span style="font-weight:400;color:var(--body)">(optionnel)</span>',form_placeholder_project:"Brève description du projet et exigences supplémentaires…",
     form_submit:"Déclarer le besoin maintenant →",
     form_bundle_hint:"Remarque : Si votre besoin est regroupé avec d'autres entreprises de construction, vos économies individuelles dépendent de votre part de volume dans le regroupement total.",
-    form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Merci — nous analysons vos besoins et vous recontactons sous 48 heures avec une estimation concrète du potentiel d\'économies.',
+    form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Merci — votre demande a bien été reçue. Suivez le statut à tout moment dans votre tableau de bord. Dès que votre regroupement est prêt, vous recevez votre offre concrète.',
     footer_desc:"Intermédiaire B2B suisse pour l'approvisionnement dans le secteur de la construction. Vous ne payez que lorsque nous vous faisons économiser.",
     footer_services:"Services",footer_company:"Entreprise",footer_legal:"Mentions légales",
     footer_calculator:"Calculateur d'économies",footer_privacy:"Protection des données",footer_imprint:"Mentions légales",footer_terms:"CGV",
@@ -1791,7 +1791,7 @@ window.I18N={
   },
   it:{
     nav_home:"Home",nav_process:"Come funziona",nav_calculator:"Calcolatore",nav_materials:"Materiali",nav_for_whom:"Per chi",nav_supplier:"Diventare fornitore",nav_about:"Chi siamo",nav_contact:"Contatto",nav_cta:"Segnalare fabbisogno",
-    kontakt_badge:"Segnalare fabbisogno",kontakt_title:"Segnala ora il tuo fabbisogno di materiali",kontakt_desc:"Gratuito e senza impegno. Analizziamo le tue esigenze e ti ricontattiamo entro 48 ore con una stima concreta del potenziale di risparmio.",
+    kontakt_badge:"Segnalare fabbisogno",kontakt_title:"Segnala ora il tuo fabbisogno di materiali",kontakt_desc:"Gratuito per te. Vedi subito il tuo sconto minimo obiettivo garantito e segui lo stato in qualsiasi momento nella tua dashboard.",
     kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurigo, Svizzera",
     kontakt_how_title:"Come funziona",kontakt_how_text:"Inviaci semplicemente il tuo fabbisogno di materiali con parole tue — nessun formato speciale richiesto. Ci occupiamo noi del resto.",
     form_company:"Nome azienda *",form_contact_person:"Persona di contatto *",form_email:"E-mail *",form_phone:"Telefono *",
@@ -1810,7 +1810,7 @@ window.I18N={
     form_project_label:'Descrizione del progetto <span style="font-weight:400;color:var(--body)">(opzionale)</span>',form_placeholder_project:"Breve descrizione del progetto e ulteriori requisiti…",
     form_submit:"Segnalare fabbisogno ora →",
     form_bundle_hint:"Nota: Se il tuo fabbisogno viene raggruppato con altre imprese edili, il tuo risparmio individuale dipende dalla tua quota di volume nel raggruppamento totale.",
-    form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Grazie — analizziamo le tue esigenze e ti ricontattiamo entro 48 ore con una stima concreta del potenziale di risparmio.',
+    form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Grazie — la tua richiesta è stata ricevuta. Segui lo stato in qualsiasi momento nella tua dashboard. Non appena il tuo raggruppamento è pronto, ricevi la tua offerta concreta.',
     footer_desc:"Intermediario B2B svizzero per gli approvvigionamenti nel settore edile. Paghi solo quando ti facciamo risparmiare.",
     footer_services:"Servizi",footer_company:"Azienda",footer_legal:"Note legali",
     footer_calculator:"Calcolatore di risparmio",footer_privacy:"Protezione dei dati",footer_imprint:"Impressum",footer_terms:"CGC",
