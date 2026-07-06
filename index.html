@@ -1273,6 +1273,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   var scene=new THREE.Scene();
   scene.background=new THREE.Color(0x0F2238);
+  scene.fog=new THREE.Fog(0x0F2238,20,52); // subtile Tiefen-Staffelung (Apple-Look)
 
   // Der grüne "Lieferant"-Würfel sitzt bei x=7.5 (fest positioniert, siehe unten).
   // Bei einem festen vertikalen FOV (50°) schrumpft das horizontale Sichtfeld auf
@@ -1297,34 +1298,74 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.setSize(W,H);
+  if(THREE.sRGBEncoding)renderer.outputEncoding=THREE.sRGBEncoding;
+  if(THREE.ACESFilmicToneMapping){renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;}
 
-  /* Lighting */
-  scene.add(new THREE.AmbientLight(0x1B3A5C,1.2));
+  /* Lighting — weiches Studio-Setup mit kühlem Rim-Light (Apple-Look) */
+  scene.add(new THREE.HemisphereLight(0xbcd4ff,0x0a1626,0.95)); // kühler Himmel, dunkler Boden
   var goldLight=new THREE.PointLight(0xE8A020,2.5,30);
   goldLight.position.set(0,0,0);
   scene.add(goldLight);
-  var dirLight=new THREE.DirectionalLight(0xffffff,0.6);
-  dirLight.position.set(6,10,5);
-  scene.add(dirLight);
+  var keyLight=new THREE.DirectionalLight(0xffffff,1.15);
+  keyLight.position.set(6,10,6);
+  scene.add(keyLight);
+  var rimLight=new THREE.DirectionalLight(0x8fb8ff,0.85); // kühles Streiflicht von hinten
+  rimLight.position.set(-9,3,-7);
+  scene.add(rimLight);
 
   /* Stars */
   var sCnt=200,sBuf=new Float32Array(sCnt*3);
   for(var i=0;i<sCnt*3;i++)sBuf[i]=(Math.random()-.5)*100;
   var sGeo=new THREE.BufferGeometry();
   sGeo.setAttribute('position',new THREE.BufferAttribute(sBuf,3));
-  var stars=new THREE.Points(sGeo,new THREE.PointsMaterial({color:0xffffff,size:0.1,transparent:true,opacity:0.55}));
+  var stars=new THREE.Points(sGeo,new THREE.PointsMaterial({color:0xbcd4ff,size:0.075,transparent:true,opacity:0.4,depthWrite:false}));
   scene.add(stars);
 
-  /* Sprite label helper */
+  /* Apple-Style Glas-Pill-Label — gemeinsamer Zeichner (auch vom i18n-Updater genutzt,
+     damit die Optik beim Sprachwechsel erhalten bleibt). Signatur (txt,col,sz) unverändert. */
+  function _hexA(hex,a){
+    hex=(hex||'#ffffff').replace('#','');
+    if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+    var r=parseInt(hex.slice(0,2),16),g=parseInt(hex.slice(2,4),16),b=parseInt(hex.slice(4,6),16);
+    return 'rgba('+r+','+g+','+b+','+a+')';
+  }
+  function _rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+  var _LDPR=2,_LW=320,_LH=72;
+  window._holoDrawLabel=function(c,txt,col,sz){
+    col=col||'#ffffff';sz=sz||24;
+    if(c.width!==_LW*_LDPR){c.width=_LW*_LDPR;c.height=_LH*_LDPR;}
+    var ctx=c.getContext('2d');
+    ctx.setTransform(_LDPR,0,0,_LDPR,0,0);
+    ctx.clearRect(0,0,_LW,_LH);
+    ctx.font='600 '+sz+'px Inter,-apple-system,BlinkMacSystemFont,sans-serif';
+    ctx.textAlign='center';ctx.textBaseline='middle';
+    var tw=ctx.measureText(txt).width;
+    var bh=sz+18,bw=Math.min(_LW-10,Math.max(bh,tw+40)),r=bh/2;
+    var bx=(_LW-bw)/2,by=(_LH-bh)/2;
+    /* frosted-glass Füllung + weicher farbiger Glow */
+    ctx.save();
+    _rr(ctx,bx,by,bw,bh,r);
+    ctx.shadowColor=_hexA(col,0.85);ctx.shadowBlur=16;ctx.shadowOffsetY=0;
+    ctx.fillStyle='rgba(9,18,32,0.80)';
+    ctx.fill();
+    ctx.restore();
+    /* dezenter oberer Glanz */
+    var g=ctx.createLinearGradient(0,by,0,by+bh);
+    g.addColorStop(0,'rgba(255,255,255,0.14)');
+    g.addColorStop(0.55,'rgba(255,255,255,0)');
+    _rr(ctx,bx,by,bw,bh,r);ctx.fillStyle=g;ctx.fill();
+    /* feine, farblich getönte Kante */
+    _rr(ctx,bx+0.6,by+0.6,bw-1.2,bh-1.2,r);
+    ctx.lineWidth=1.2;ctx.strokeStyle=_hexA(col,0.5);ctx.stroke();
+    /* Text */
+    ctx.fillStyle=col;ctx.fillText(txt,_LW/2,_LH/2+1);
+  };
   function mkLabel(txt,col,sz){
     var c=document.createElement('canvas');
-    c.width=320;c.height=72;
-    var ctx=c.getContext('2d');
-    ctx.font='bold '+(sz||24)+'px Inter,sans-serif';
-    ctx.fillStyle=col||'#ffffff';
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    ctx.fillText(txt,160,36);
+    window._holoDrawLabel(c,txt,col,sz);
     var tex=new THREE.CanvasTexture(c);
+    tex.anisotropy=4;
+    if(THREE.sRGBEncoding)tex.encoding=THREE.sRGBEncoding;
     var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false}));
     sp.scale.set(4.2,0.95,1);
     return sp;
@@ -1350,7 +1391,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   var BNAMES=['Firma A','Firma B','Firma C'];
   var BNAMES_I18N={de:['Firma A','Firma B','Firma C'],en:['Company A','Company B','Company C'],fr:['Entreprise A','Entreprise B','Entreprise C'],it:['Impresa A','Impresa B','Impresa C']};
   for(var i=0;i<3;i++){
-    var bmat=new THREE.MeshPhongMaterial({color:0x1a4a8a,emissive:0x0d2d5a,transparent:true,opacity:0});
+    var bmat=new THREE.MeshStandardMaterial({color:0x2a5a9a,emissive:0x0a2547,emissiveIntensity:0.6,roughness:0.35,metalness:0.15,transparent:true,opacity:0});
     var bm=new THREE.Mesh(boxGeo,bmat);
     bm.position.copy(startPos[i]);
     bm.visible=false;
@@ -1364,8 +1405,8 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   /* Central SourceOn sphere */
   var sphere=new THREE.Mesh(
-    new THREE.SphereGeometry(0.9,32,32),
-    new THREE.MeshPhongMaterial({color:0xE8A020,emissive:0xb06000,transparent:true,opacity:0})
+    new THREE.SphereGeometry(0.9,48,48),
+    new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.55,roughness:0.25,metalness:0.45,transparent:true,opacity:0})
   );
   sphere.visible=false;
   scene.add(sphere);
@@ -1376,7 +1417,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   /* Green Lieferant box */
   var greenBox=new THREE.Mesh(
     new THREE.BoxGeometry(2.2,1.6,1.6),
-    new THREE.MeshPhongMaterial({color:0x16a34a,emissive:0x0a5c28,transparent:true,opacity:0})
+    new THREE.MeshStandardMaterial({color:0x1fae57,emissive:0x0c6b34,emissiveIntensity:0.5,roughness:0.3,metalness:0.15,transparent:true,opacity:0})
   );
   greenBox.position.set(7.5,0,0);
   greenBox.visible=false;
@@ -2242,13 +2283,8 @@ function setLang(lang){
 function updateSpriteTex(sprite,txt,col,sz){
   if(!sprite||!sprite.material||!sprite.material.map)return;
   var c=sprite.material.map.image;
-  if(!c||!c.getContext)return;
-  var ctx=c.getContext('2d');
-  ctx.clearRect(0,0,c.width,c.height);
-  ctx.font='bold '+(sz||24)+'px Inter,sans-serif';
-  ctx.fillStyle=col||'#ffffff';
-  ctx.textAlign='center';ctx.textBaseline='middle';
-  ctx.fillText(txt,c.width/2,c.height/2);
+  if(!c||!c.getContext||!window._holoDrawLabel)return;
+  window._holoDrawLabel(c,txt,col,sz); // gleicher Apple-Pill-Zeichner wie im Setup
   sprite.material.map.needsUpdate=true;
 }
 
