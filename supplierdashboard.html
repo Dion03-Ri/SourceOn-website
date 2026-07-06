@@ -29,6 +29,7 @@
 })();
 </script>
 <script src="debug.js"></script>
+<script src="tiers.js"></script>
 <!--
   SECURITY NOTE: Supplier verification status must be manually reviewed
   and updated in the Supabase Table Editor by changing the 'status' field
@@ -844,8 +845,11 @@ function createBundleCard(b,otherBidCount){
   html+='<div class="bid-breakdown-row"><span class="bid-breakdown-label">Reguläre Marktkonditionen (Richtwert)</span><span class="bid-breakdown-val" id="bidbase-'+b.id+'">—</span></div>';
   html+='<div class="bid-breakdown-row"><span class="bid-breakdown-label">Dein Rabatt</span><span class="bid-breakdown-val bid-breakdown-discount" id="biddiscount-'+b.id+'">—</span></div>';
   html+='<div class="bid-breakdown-divider"></div>';
-  html+='<div class="bid-breakdown-row bid-breakdown-total-row"><span class="bid-breakdown-label">Dein Gesamtangebot</span><span class="bid-breakdown-total" id="bidtotal-'+b.id+'">—</span></div>';
-  html+='<div class="bid-breakdown-note">Hinweis: Basiert auf SourceOn-Richtpreisen. Der tatsächliche Marktpreis kann variieren — massgebend ist dein verbindliches Gesamtangebot.</div>';
+  html+='<div class="bid-breakdown-row bid-breakdown-total-row"><span class="bid-breakdown-label">Dein Gesamtangebot (Bestellwert)</span><span class="bid-breakdown-total" id="bidtotal-'+b.id+'">—</span></div>';
+  html+='<div class="bid-breakdown-row"><span class="bid-breakdown-label">SourceOn-Vermittlungsprovision (2.25% des Bestellwerts)</span><span class="bid-breakdown-val bid-breakdown-discount" id="bidcomm-'+b.id+'">—</span></div>';
+  html+='<div class="bid-breakdown-divider"></div>';
+  html+='<div class="bid-breakdown-row bid-breakdown-total-row"><span class="bid-breakdown-label">Dein Nettoerlös</span><span class="bid-breakdown-total" id="bidnet-'+b.id+'">—</span></div>';
+  html+='<div class="bid-breakdown-note">Bei Zuschlag stellt SourceOn dir 2.25% des Bestellwerts in Rechnung — sie ist im geforderten Mindestrabatt bereits einkalkuliert (gemäss Lieferantenvereinbarung). Basiert auf SourceOn-Richtpreisen; massgebend ist dein verbindliches Gesamtangebot.</div>';
   html+='</div>';
 
   // Section 3: Delivery confirmation
@@ -936,9 +940,15 @@ function calcBidPreview(bundleId){
     var discountAmount=baseline*(rabatt/100);
     var totalAfter=baseline-discountAmount;
 
+    var commRate=(window.SO_TIERS?window.SO_TIERS.COMMISSION_RATE:0.0225);
+    var commission=totalAfter*commRate;       // 2.25% des Bestellwerts
+    var nettoerloes=totalAfter-commission;
+    var f2=function(n){return Number(n).toLocaleString('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2});};
     document.getElementById('bidbase-'+bundleId).textContent=Number(vol).toLocaleString('de-CH')+' '+einheit+' × CHF '+Number(richtpreis).toLocaleString('de-CH')+' = CHF '+Math.round(baseline).toLocaleString('de-CH');
     document.getElementById('biddiscount-'+bundleId).textContent='-'+rabatt+'% = -CHF '+Math.round(discountAmount).toLocaleString('de-CH');
     document.getElementById('bidtotal-'+bundleId).textContent='CHF '+Math.round(totalAfter).toLocaleString('de-CH');
+    document.getElementById('bidcomm-'+bundleId).textContent='-CHF '+f2(commission);
+    document.getElementById('bidnet-'+bundleId).textContent='CHF '+f2(nettoerloes);
     breakdownEl.style.display='block';
 
     finalEl.style.display='block';

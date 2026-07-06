@@ -1,20 +1,27 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-const DISCOUNT_TIERS = [
-  { min: 6_000_000, rate: 0.28 },
-  { min: 3_000_000, rate: 0.24 },
-  { min: 1_200_000, rate: 0.20 },
-  { min: 600_000, rate: 0.16 },
-  { min: 300_000, rate: 0.13 },
-  { min: 150_000, rate: 0.10 },
-  { min: 50_000, rate: 0.07 },
+// Rabattstufen — GROSS-Werte werden als bundle.ziel_mindestrabatt an Lieferanten
+// ausgeschrieben (der Kunde erhält den NETTO-Wert nach 2.25% Provision).
+// ⚠️ MUSS synchron bleiben mit /tiers.js (window.SO_TIERS).
+// gross = ceil_to_0.25%( (net + 0.0225) / 1.0225 ) — aufgerundet, damit die
+// Netto-Garantie nach Abzug der Provision (2.25% des Bestellwerts) zuverlässig erreicht wird.
+const SUPPLIER_TIERS = [
+  { min: 6_000_000, net: 0.28, gross: 0.2975 }, // über 6M
+  { min: 3_000_000, net: 0.24, gross: 0.2575 }, // 3M–6M
+  { min: 1_200_000, net: 0.20, gross: 0.22 },   // 1.2M–3M
+  { min: 600_000,   net: 0.16, gross: 0.18 },   // 600k–1.2M
+  { min: 300_000,   net: 0.13, gross: 0.15 },   // 300k–600k
+  { min: 150_000,   net: 0.10, gross: 0.12 },   // 150k–300k
+  { min: 50_000,    net: 0.07, gross: 0.0925 }, // 50k–150k
 ];
+const FALLBACK_GROSS = 0.0925; // unter 50k (Fallback-Bündel) → Kunde netto 7%
 
-function getTargetDiscount(estimatedValueCHF: number): number | null {
-  for (const tier of DISCOUNT_TIERS) {
-    if (estimatedValueCHF >= tier.min) return tier.rate;
+// Liefert den auszuschreibenden GROSS-Mindestrabatt (oder null, wenn < 50k → Fallback).
+function getGrossTarget(estimatedValueCHF: number): number | null {
+  for (const tier of SUPPLIER_TIERS) {
+    if (estimatedValueCHF >= tier.min) return tier.gross;
   }
-  return null; // below 50k — not enough volume
+  return null; // below 50k — fallback bundle
 }
 
 // ---------------------------------------------------------------------------
@@ -194,7 +201,7 @@ Deno.serve(async (req: Request) => {
         continue;
       }
       const estimatedCHF = g.totalMenge * richtpreis;
-      const discount = getTargetDiscount(estimatedCHF); // null if < 50k
+      const discount = getGrossTarget(estimatedCHF); // GROSS gross target, null if < 50k
 
       // --- Window-based timing: evaluate every request in the group ---
       // The group publishes when the EARLIEST collection_end among its requests is
@@ -241,7 +248,7 @@ Deno.serve(async (req: Request) => {
       bidDeadline.setDate(bidDeadline.getDate() + urgentBidDays);
 
       const isFallback = discount === null;
-      const targetRabatt = isFallback ? 0.07 : (discount as number);
+      const targetRabatt = isFallback ? FALLBACK_GROSS : (discount as number); // GROSS published to suppliers
 
       const { data: bundle, error: insertErr } = await sb
         .from("bundles")

@@ -896,7 +896,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <div>
         <div class="label" data-i18n="kontakt_badge">Materialbedarf melden</div>
         <h2 class="h2" data-i18n="kontakt_title" style="font-size:clamp(24px,3vw,38px)">Jetzt Materialbedarf melden</h2>
-        <p class="contact-desc" data-i18n="kontakt_desc">Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.</p>
+        <p class="contact-desc" data-i18n="kontakt_desc">Du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.</p>
         <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.93 5.93l1.3-1.31a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span data-i18n="kontakt_phone">+41 44 000 00 00</span></div>
         <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span data-i18n="kontakt_email">info@SourceOn.ch</span></div>
         <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="kontakt_location">Zürich, Schweiz</span></div>
@@ -966,13 +966,13 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             <div id="tier-summary" class="tier-summary" style="display:none">
               <div class="tier-row"><span class="tier-label">Geschätzter Auftragswert</span><span class="tier-val" id="tier-value">CHF 0</span></div>
               <div class="tier-note-sub">basierend auf SourceOn-Richtpreisen</div>
-              <div class="tier-row tier-row-hl"><span class="tier-label">Dein garantierter Ziel-Mindestrabatt</span><span class="tier-rate" id="tier-rate">7%</span></div>
-              <p class="tier-hint">Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus — <strong id="tier-rate-inline">7%</strong> ist dein garantiertes Minimum, an dem wir uns messen lassen.</p>
+              <div class="tier-row tier-row-hl"><span class="tier-label">Dein garantierter Netto-Mindestrabatt</span><span class="tier-rate" id="tier-rate">7%</span></div>
+              <p class="tier-hint">Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">7%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.</p>
             </div>
             <div class="commit-box" id="commit-box">
               <label class="commit-check">
                 <input type="checkbox" id="c-commitment" onchange="if(this.checked){var b=document.getElementById('commit-box');b&&b.classList.remove('commit-error');var e=document.getElementById('e-c-commitment');e&&(e.style.display='none');}"/>
-                <span class="commit-text">Ich bestätige verbindlich: Erreicht oder übertrifft das verhandelte Angebot den Ziel-Mindestrabatt von <strong id="commit-rate">7%</strong>, gilt mein Auftrag als erteilt und wird zu diesen Konditionen ausgeführt. Wird der Mindestrabatt nicht erreicht, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a></span>
+                <span class="commit-text">Ich bestätige verbindlich: Erreicht das verhandelte Angebot meinen garantierten Netto-Mindestrabatt von <strong id="commit-rate">7%</strong>, gilt mein Auftrag als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt — <strong id="commit-rate2">7%</strong> kommen vollständig bei mir an. Wird die Zielmarke verfehlt, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a></span>
               </label>
               <div class="form-error" id="e-c-commitment">Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.</div>
             </div>
@@ -1031,6 +1031,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 </footer>
 
 <script src="material-i18n.js"></script>
+<script src="tiers.js"></script>
 <script src="timing.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
@@ -1121,11 +1122,12 @@ function _matLang(){return window._currentLang||localStorage.getItem('sourceon-l
 function _matLabel(m,lang){lang=lang||_matLang();if(!m)return'';if(lang==='de')return m.bezeichnung;var t=window.MAT_I18N&&window.MAT_I18N[m.sourceon_id];return (t&&t[lang])||m.bezeichnung;}
 function _matCatLabel(cat,lang){lang=lang||_matLang();if(lang==='de')return cat;var t=window.MAT_CAT_I18N&&window.MAT_CAT_I18N[cat];return (t&&t[lang])||cat;}
 
-// ============ Rabattstufen: individueller Ziel-Mindestrabatt nach Auftragswert ============
-// Muss mit DISCOUNT_TIERS in supabase/functions/auto-bundle/index.ts übereinstimmen.
-var COMMITMENT_VERSION='v1.0-2026-07-04';
+// ============ Rabattstufen: individueller NETTO-Mindestrabatt nach Auftragswert ============
+// Quelle: tiers.js (window.SO_TIERS). Kunde sieht/bestätigt immer den NETTO-Wert.
+var COMMITMENT_VERSION='v1.1-2026-07-05';
+// Fallback (falls tiers.js nicht geladen) — NETTO-Werte, synchron mit tiers.js:
 var _DISCOUNT_TIERS=[[6000000,0.28],[3000000,0.24],[1200000,0.20],[600000,0.16],[300000,0.13],[150000,0.10],[50000,0.07]];
-function _tierRate(v){for(var i=0;i<_DISCOUNT_TIERS.length;i++){if(v>=_DISCOUNT_TIERS[i][0])return _DISCOUNT_TIERS[i][1];}return 0.07;} // 0–50k → 7% (Fallback-Stufe)
+function _tierRate(v){if(window.SO_TIERS)return window.SO_TIERS.netRate(v);for(var i=0;i<_DISCOUNT_TIERS.length;i++){if(v>=_DISCOUNT_TIERS[i][0])return _DISCOUNT_TIERS[i][1];}return 0.07;}
 window._orderValue=0;window._committedRate=0.07;
 function _parseQty(s){var n=parseFloat(String(s||'').replace(/'/g,'').replace(',','.').replace(/[^0-9.]/g,''));return isNaN(n)?0:n;}
 function _recalcTier(){
@@ -1146,7 +1148,7 @@ function _recalcTier(){
     if(total>0){box.style.display='block';var tv=document.getElementById('tier-value');if(tv)tv.textContent='CHF '+Math.round(total).toLocaleString('de-CH');}
     else{box.style.display='none';}
   }
-  ['tier-rate','tier-rate-inline','commit-rate'].forEach(function(idn){var el=document.getElementById(idn);if(el)el.textContent=pct+'%';});
+  ['tier-rate','tier-rate-inline','commit-rate','commit-rate2'].forEach(function(idn){var el=document.getElementById(idn);if(el)el.textContent=pct+'%';});
 }
 
 // ============ Lieferzeitraum: Tempo-Indikator + Validierung (nutzt timing.js) ============
@@ -1704,7 +1706,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 window.I18N={
   de:{
     nav_home:"Home",nav_process:"Wie es funktioniert",nav_calculator:"Kalkulator",nav_materials:"Materialien",nav_for_whom:"Für wen",nav_supplier:"Lieferant werden",nav_about:"Über uns",nav_contact:"Kontakt",nav_cta:"Materialbedarf melden",
-    kontakt_badge:"Materialbedarf melden",kontakt_title:"Jetzt Materialbedarf melden",kontakt_desc:"Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.",
+    kontakt_badge:"Materialbedarf melden",kontakt_title:"Jetzt Materialbedarf melden",kontakt_desc:"Du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.",
     kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zürich, Schweiz",
     kontakt_how_title:"Wie es funktioniert",kontakt_how_text:"Sende uns einfach deinen Materialbedarf in eigenen Worten — kein spezielles Format nötig. Wir kümmern uns um den Rest.",
     form_company:"Firmenname *",form_contact_person:"Ansprechperson *",form_email:"E-Mail *",form_phone:"Telefon *",
@@ -1733,7 +1735,7 @@ window.I18N={
   },
   en:{
     nav_home:"Home",nav_process:"How it works",nav_calculator:"Calculator",nav_materials:"Materials",nav_for_whom:"For whom",nav_supplier:"Become a supplier",nav_about:"About us",nav_contact:"Contact",nav_cta:"Report material needs",
-    kontakt_badge:"Report material needs",kontakt_title:"Report your material needs now",kontakt_desc:"Free for you. You see your guaranteed target minimum discount right away and track the status anytime in your dashboard.",
+    kontakt_badge:"Report material needs",kontakt_title:"Report your material needs now",kontakt_desc:"You only pay when we save you money. You see your guaranteed net minimum discount right away and track the status anytime in your dashboard.",
     kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Switzerland",
     kontakt_how_title:"How it works",kontakt_how_text:"Simply send us your material requirements in your own words — no special format needed. We take care of the rest.",
     form_company:"Company name *",form_contact_person:"Contact person *",form_email:"Email *",form_phone:"Phone *",
@@ -1763,7 +1765,7 @@ window.I18N={
   },
   fr:{
     nav_home:"Accueil",nav_process:"Comment ça marche",nav_calculator:"Calculateur",nav_materials:"Matériaux",nav_for_whom:"Pour qui",nav_supplier:"Devenir fournisseur",nav_about:"À propos",nav_contact:"Contact",nav_cta:"Déclarer un besoin",
-    kontakt_badge:"Déclarer un besoin",kontakt_title:"Déclarez vos besoins en matériaux",kontakt_desc:"Gratuit pour vous. Vous voyez immédiatement votre rabais minimum cible garanti et suivez le statut à tout moment dans votre tableau de bord.",
+    kontakt_badge:"Déclarer un besoin",kontakt_title:"Déclarez vos besoins en matériaux",kontakt_desc:"Vous ne payez que si nous vous faisons économiser. Vous voyez immédiatement votre rabais minimum net garanti et suivez le statut à tout moment dans votre tableau de bord.",
     kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Suisse",
     kontakt_how_title:"Comment ça marche",kontakt_how_text:"Envoyez-nous simplement vos besoins en matériaux dans vos propres mots — aucun format spécifique requis. Nous nous occupons du reste.",
     form_company:"Nom de l'entreprise *",form_contact_person:"Personne de contact *",form_email:"E-mail *",form_phone:"Téléphone *",
@@ -1792,7 +1794,7 @@ window.I18N={
   },
   it:{
     nav_home:"Home",nav_process:"Come funziona",nav_calculator:"Calcolatore",nav_materials:"Materiali",nav_for_whom:"Per chi",nav_supplier:"Diventare fornitore",nav_about:"Chi siamo",nav_contact:"Contatto",nav_cta:"Segnalare fabbisogno",
-    kontakt_badge:"Segnalare fabbisogno",kontakt_title:"Segnala ora il tuo fabbisogno di materiali",kontakt_desc:"Gratuito per te. Vedi subito il tuo sconto minimo obiettivo garantito e segui lo stato in qualsiasi momento nella tua dashboard.",
+    kontakt_badge:"Segnalare fabbisogno",kontakt_title:"Segnala ora il tuo fabbisogno di materiali",kontakt_desc:"Paghi solo se ti facciamo risparmiare. Vedi subito il tuo sconto minimo netto garantito e segui lo stato in qualsiasi momento nella tua dashboard.",
     kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurigo, Svizzera",
     kontakt_how_title:"Come funziona",kontakt_how_text:"Inviaci semplicemente il tuo fabbisogno di materiali con parole tue — nessun formato speciale richiesto. Ci occupiamo noi del resto.",
     form_company:"Nome azienda *",form_contact_person:"Persona di contatto *",form_email:"E-mail *",form_phone:"Telefono *",

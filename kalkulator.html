@@ -29,6 +29,7 @@
 })();
 </script>
 <script src="debug.js"></script>
+<script src="tiers.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>Einsparkalkulator — SourceOn</title>
@@ -852,17 +853,17 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="calc-range-labels"><span>CHF 50'000</span><span>CHF 10'000'000</span></div>
         <input type="text" class="calc-text-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" data-i18n-placeholder="calc_placeholder" value="150'000"/>
         <p style="font-size:.75rem;color:var(--muted);font-style:italic;margin-top:8px" data-i18n="calc_manual_note">Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.</p>
-        <div class="calc-tier-label" data-i18n="calc_discount_label">Ø Rabatt: <span class="calc-tier-rate" id="calc-rate">10%</span></div>
+        <div class="calc-tier-label" data-i18n="calc_discount_label">Ø garantierter Netto-Rabatt: <span class="calc-tier-rate" id="calc-rate">10%</span></div>
       </div>
       <div class="reveal reveal-d2">
         <div class="calc-card">
           <div class="calc-row-gross">
-            <div class="calc-row-label" data-i18n="calc_gross_label">Bruttoersparnis (vor Provision)</div>
+            <div class="calc-row-label" data-i18n="calc_gross_label">Verhandelter Rabatt (brutto)</div>
             <div class="calc-row-val" id="calc-gross">CHF 15'000</div>
           </div>
           <div class="calc-divider"></div>
           <div class="calc-row-net">
-            <div class="calc-row-label" data-i18n="calc_net_label">Netto-Einsparpotenzial (nach Provision)</div>
+            <div class="calc-row-label" data-i18n="calc_net_label">Deine garantierte Ersparnis (netto, nach SourceOn-Provision)</div>
             <div class="calc-row-val" id="calc-net">CHF 11'625</div>
           </div>
           <div class="calc-cta">
@@ -926,7 +927,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 <section id="cta-banner">
   <div class="container" style="position:relative;z-index:1">
     <h2 class="cta-title" data-i18n="cta_title">Bereit für tiefere Einkaufspreise?</h2>
-    <p class="cta-sub" data-i18n="cta_sub">Melde deinen nächsten Materialbedarf — für dich kostenlos. Du siehst sofort deinen garantierten Mindestrabatt und verfolgst alles in deinem Dashboard.</p>
+    <p class="cta-sub" data-i18n="cta_sub">Melde deinen nächsten Materialbedarf — du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst alles in deinem Dashboard.</p>
     <div class="cta-btns">
       <button class="btn btn-gold btn-lg" onclick="window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
       <a href="mailto:info@SourceOn.ch" class="btn btn-outline-w btn-lg">info@SourceOn.ch</a>
@@ -1049,11 +1050,13 @@ function animateNum(id,target){
 }
 function updateCalc(v,fromSlider){
   v=Math.max(MIN_V,fromSlider?Math.min(MAX_V,v):v);
-  const tier=getTier(v);
-  const gross=v*tier.rate,net=gross-v*0.0225;
+  const tier=(window.SO_TIERS?window.SO_TIERS.tierFor(v):getTier(v));
+  const netRate=(tier.net!=null?tier.net:tier.rate);      // was der Kunde garantiert behält
+  const grossRate=(tier.gross!=null?tier.gross:tier.rate); // im Bündel ausgeschriebener Brutto-Rabatt
+  const gross=v*grossRate,net=v*netRate;
   document.getElementById('calc-display').textContent=fmtChf(v);
   if(fromSlider)document.getElementById('calc-input').value=Math.round(v).toLocaleString('de-CH');
-  document.getElementById('calc-rate').textContent=Math.round(tier.rate*100)+'%';
+  document.getElementById('calc-rate').textContent=Math.round(netRate*100)+'%';
   document.getElementById('calc-gross').textContent=fmtChf(gross);
   animateNum('calc-net',net);
   const pos=valToPos(Math.min(v,MAX_V));
@@ -1132,9 +1135,9 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_subtitle: 'Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.',
       calc_placeholder: 'Betrag eingeben z.B. 75000',
       calc_manual_note: 'Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.',
-      calc_discount_label: 'Ø Rabatt: ',
-      calc_gross_label: 'Bruttoersparnis (vor Provision)',
-      calc_net_label: 'Netto-Einsparpotenzial (nach Provision)',
+      calc_discount_label: 'Ø garantierter Netto-Rabatt: ',
+      calc_gross_label: 'Verhandelter Rabatt (brutto)',
+      calc_net_label: 'Deine garantierte Ersparnis (netto, nach SourceOn-Provision)',
       calc_cta: 'Materialbedarf melden — kostenlos',
       calc_disclaimer: 'Unverbindliche Schätzung basierend auf Schweizer Marktdaten. Potenzielle Einsparungen variieren je nach Material, Volumen und Lieferant.',
       calc_footnote: '* Ab CHF 500\'000 Jahresvolumen individuelle Konditionen möglich.',
@@ -1150,7 +1153,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier3_val: 'Maximale Ersparnis im Bündel',
 
       cta_title: 'Bereit für tiefere Einkaufspreise?',
-      cta_sub: 'Melde deinen nächsten Materialbedarf — für dich kostenlos. Du siehst sofort deinen garantierten Mindestrabatt und verfolgst alles in deinem Dashboard.',
+      cta_sub: 'Melde deinen nächsten Materialbedarf — du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst alles in deinem Dashboard.',
       footer_desc: 'Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.',
       footer_services: 'Leistungen',
       footer_calc: 'Einsparkalkulator',
@@ -1177,9 +1180,9 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_subtitle: 'Calculate your personal savings potential — based on your annual volume.',
       calc_placeholder: 'Enter amount e.g. 75000',
       calc_manual_note: 'For amounts over CHF 10 million, please enter manually — savings potential is calculated automatically.',
-      calc_discount_label: 'Avg. discount: ',
-      calc_gross_label: 'Gross savings (before commission)',
-      calc_net_label: 'Net savings potential (after commission)',
+      calc_discount_label: 'Avg. guaranteed net discount: ',
+      calc_gross_label: 'Negotiated discount (gross)',
+      calc_net_label: 'Your guaranteed saving (net, after SourceOn commission)',
       calc_cta: 'Submit material needs — free of charge',
       calc_disclaimer: 'Non-binding estimate based on Swiss market data. Potential savings vary depending on material, volume and supplier.',
       calc_footnote: '* Individual terms available from CHF 500,000 annual volume.',
@@ -1195,7 +1198,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier3_val: 'Maximum bundle savings',
 
       cta_title: 'Ready for lower procurement prices?',
-      cta_sub: 'Submit your next material need — free for you. You see your guaranteed minimum discount right away and track everything in your dashboard.',
+      cta_sub: 'Submit your next material need — you only pay when we save you money. You see your guaranteed net minimum discount right away and track everything in your dashboard.',
       footer_desc: 'Swiss B2B procurement intermediary for the construction industry. You only pay when we save you money.',
       footer_services: 'Services',
       footer_calc: 'Savings calculator',
@@ -1222,9 +1225,9 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_subtitle: 'Calculez votre potentiel d\'économies personnelles — basé sur votre volume annuel.',
       calc_placeholder: 'Entrez un montant p.ex. 75000',
       calc_manual_note: 'Pour les montants supérieurs à CHF 10 millions, veuillez saisir manuellement — le potentiel d\'économies est calculé automatiquement.',
-      calc_discount_label: 'Remise moy. : ',
-      calc_gross_label: 'Économie brute (avant commission)',
-      calc_net_label: 'Potentiel d\'économie net (après commission)',
+      calc_discount_label: 'Rabais net garanti moyen : ',
+      calc_gross_label: 'Rabais négocié (brut)',
+      calc_net_label: 'Votre économie garantie (nette, après commission SourceOn)',
       calc_cta: 'Déclarer un besoin matériel — gratuit',
       calc_disclaimer: 'Estimation non contraignante basée sur les données du marché suisse. Les économies potentielles varient selon le matériau, le volume et le fournisseur.',
       calc_footnote: '* Conditions individuelles possibles à partir de CHF 500\'000 de volume annuel.',
@@ -1240,7 +1243,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier3_val: '\u00c9conomie maximale dans le regroupement',
 
       cta_title: 'Prêt pour des prix d\'achat plus bas ?',
-      cta_sub: 'Déclarez votre prochain besoin matériel — gratuit pour vous. Vous voyez immédiatement votre rabais minimum garanti et suivez tout dans votre tableau de bord.',
+      cta_sub: 'Déclarez votre prochain besoin matériel — vous ne payez que si nous vous faisons économiser. Vous voyez immédiatement votre rabais minimum net garanti et suivez tout dans votre tableau de bord.',
       footer_desc: 'Intermédiaire suisse d\'approvisionnement B2B pour le secteur de la construction. Vous ne payez que lorsque nous vous faisons économiser.',
       footer_services: 'Services',
       footer_calc: 'Calculateur d\'économies',
@@ -1267,9 +1270,9 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_subtitle: 'Calcola il tuo potenziale di risparmio personale — in base al tuo volume annuale.',
       calc_placeholder: 'Inserisci importo es. 75000',
       calc_manual_note: 'Per importi superiori a CHF 10 milioni, inserire manualmente — il potenziale di risparmio viene calcolato automaticamente.',
-      calc_discount_label: 'Sconto medio: ',
-      calc_gross_label: 'Risparmio lordo (prima della commissione)',
-      calc_net_label: 'Potenziale di risparmio netto (dopo la commissione)',
+      calc_discount_label: 'Sconto netto medio garantito: ',
+      calc_gross_label: 'Sconto negoziato (lordo)',
+      calc_net_label: 'Il tuo risparmio garantito (netto, dopo la provvigione SourceOn)',
       calc_cta: 'Segnala fabbisogno materiale — gratuito',
       calc_disclaimer: 'Stima non vincolante basata sui dati del mercato svizzero. I risparmi potenziali variano in base a materiale, volume e fornitore.',
       calc_footnote: '* Condizioni individuali possibili a partire da CHF 500\'000 di volume annuale.',
@@ -1285,7 +1288,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier3_val: 'Risparmio massimo nel raggruppamento',
 
       cta_title: 'Pronti per prezzi d\'acquisto più bassi?',
-      cta_sub: 'Segnala il tuo prossimo fabbisogno materiale — gratuito per te. Vedi subito il tuo sconto minimo garantito e segui tutto nella tua dashboard.',
+      cta_sub: 'Segnala il tuo prossimo fabbisogno materiale — paghi solo se ti facciamo risparmiare. Vedi subito il tuo sconto minimo netto garantito e segui tutto nella tua dashboard.',
       footer_desc: 'Intermediario svizzero di approvvigionamento B2B per il settore edile. Paghi solo quando ti facciamo risparmiare.',
       footer_services: 'Servizi',
       footer_calc: 'Calcolatore di risparmio',

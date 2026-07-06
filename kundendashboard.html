@@ -205,6 +205,7 @@ a{color:var(--gold);text-decoration:none}
 </main>
 
 <script src="material-i18n.js"></script>
+<script src="tiers.js"></script>
 <script src="timing.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
@@ -447,7 +448,7 @@ var _matCatalogMap={};
     var rabattSub='';
     if(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt))){
       var _rp=Math.round(parseFloat(r.committed_min_rabatt)*100);
-      rabattSub='<div style="font-size:.7rem;font-weight:600;color:#E8A020;margin-top:3px">Garantierter Mindestrabatt: '+_rp+'%</div>';
+      rabattSub='<div style="font-size:.7rem;font-weight:600;color:#E8A020;margin-top:3px">Garantierter Mindestrabatt: '+_rp+'% (netto, nach Provision)</div>';
     }
     tr.innerHTML='<td>'+esc(datum)+'</td>'
       +'<td>'+esc(matName)+matIdSub+rabattSub+'</td>'

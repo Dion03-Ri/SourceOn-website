@@ -465,7 +465,7 @@ async function loadBundles(){
   bundles.forEach(function(b){
     var mat=b.bundle_type==='multi_material'?'Mehrere Materialien':(b.sourceon_id||'–');
     var vol=(b.gesamtvolumen?Number(b.gesamtvolumen).toLocaleString('de-CH'):'-')+' '+(b.einheit||'');
-    var rabatt=b.ziel_mindestrabatt?(b.ziel_mindestrabatt*100).toFixed(0)+'%':'–';
+    var rabatt=_rabattBruttoNetto(b.ziel_mindestrabatt); // ausgeschriebener BRUTTO-Wert + impliziertes Kunden-NETTO
     var finalR=b.finaler_rabatt?(b.finaler_rabatt*100).toFixed(0)+'%':'–';
     var winner=b.gewonnener_supplier_id?(supMap[b.gewonnener_supplier_id]||b.gewonnener_supplier_id):'–';
     var bc=bidCounts[b.id]||0;
@@ -483,6 +483,16 @@ async function loadBundles(){
   });
   html+='</tbody></table>';
   document.getElementById('bundles-table').innerHTML=html;
+}
+
+// Interne Admin-Anzeige: ausgeschriebener BRUTTO-Mindestrabatt + impliziertes Kunden-NETTO.
+// netto = brutto − 2.25% × (1 − brutto). Synchron mit /tiers.js.
+function _rabattBruttoNetto(z){
+  if(z==null||z==='')return '–';
+  var g=Number(z); if(isNaN(g))return '–';
+  var gross=g<1?g:g/100;
+  var net=gross-0.0225*(1-gross);
+  return Math.round(gross*100)+'% brutto (~'+Math.round(net*100)+'% netto)';
 }
 
 async function loadExpiredBundles(){
@@ -505,7 +515,7 @@ async function loadExpiredBundles(){
   bundles.forEach(function(b){
     var mat=b.bundle_type==='multi_material'?'Mehrere Materialien':(b.sourceon_id||'–');
     var vol=(b.gesamtvolumen?Number(b.gesamtvolumen).toLocaleString('de-CH'):'-')+' '+(b.einheit||'');
-    var rabatt=b.ziel_mindestrabatt?((b.ziel_mindestrabatt<1?b.ziel_mindestrabatt*100:b.ziel_mindestrabatt).toFixed(0)+'%'):'–';
+    var rabatt=_rabattBruttoNetto(b.ziel_mindestrabatt); // brutto (ausgeschrieben) + impliziertes netto
     var bb=bidsByBundle[b.id]||[];
     var rabattList=bb.length?bb.map(function(bi){return Number(bi.rabatt_prozent||0).toFixed(1)+'%';}).join(', '):'–';
     html+='<tr>'
