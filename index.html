@@ -599,6 +599,31 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 /* TECHNOLOGIE */
 .tech-section{background:var(--dark3);position:relative;overflow:hidden}
+/* ===== SVG Buendelungs-Animation (Apple-Style) ===== */
+.bundle-anim{display:block;width:100%;height:auto;margin:0 auto;overflow:visible;font-family:'Inter',-apple-system,sans-serif}
+.bundle-anim .ba-card{fill:#0F2238;stroke:#E8A020;stroke-width:1.5;filter:url(#ba-shadow)}
+.bundle-anim .ba-name{fill:#fff;font-size:13px;font-weight:500}
+.bundle-anim .ba-vol{fill:#E8A020;font-size:12px;font-weight:500}
+.bundle-anim .ba-hubtext{fill:#0F2238;font-size:14px;font-weight:600}
+.bundle-anim .ba-savetext{fill:#0F2238;font-size:11px;font-weight:600}
+.bundle-anim .ba-node{opacity:0;animation:ba-fade 8s ease-in-out infinite}
+.bundle-anim .ba-supplier{opacity:0;animation:ba-fade 8s ease-in-out infinite}
+.bundle-anim .ba-supcard{animation:ba-suphi 8s ease-in-out infinite}
+.bundle-anim .ba-hub{opacity:0;transform-box:fill-box;transform-origin:center;animation:ba-fadeop 8s ease-in-out infinite, ba-pulse 8s ease-in-out infinite}
+.bundle-anim .ba-line{stroke:#E8A020;stroke-width:1.5;opacity:0;stroke-dasharray:6 8;animation:ba-linein 8s ease-in-out infinite, ba-flow 1.4s linear infinite}
+.bundle-anim .ba-supline{stroke:#E8A020;stroke-width:2;fill:none;stroke-dasharray:130;stroke-dashoffset:130;animation:ba-supdraw 8s ease-in-out infinite}
+.bundle-anim .ba-chevron{opacity:0;animation:ba-chevron 8s ease-in-out infinite}
+.bundle-anim .ba-save{opacity:0;transform-box:fill-box;transform-origin:center;animation:ba-save 8s ease-in-out infinite}
+@keyframes ba-fade{0%{opacity:0;transform:translateY(10px)}12%{opacity:1;transform:translateY(0)}90%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-6px)}}
+@keyframes ba-fadeop{0%{opacity:0}12%{opacity:1}90%{opacity:1}100%{opacity:0}}
+@keyframes ba-pulse{0%,37%{transform:scale(1)}44%{transform:scale(1.06)}50%,100%{transform:scale(1)}}
+@keyframes ba-linein{0%,12%{opacity:0}20%{opacity:.5}90%{opacity:.5}100%{opacity:0}}
+@keyframes ba-flow{to{stroke-dashoffset:-28}}
+@keyframes ba-supdraw{0%,50%{stroke-dashoffset:130;opacity:0}52%{opacity:1}62%{stroke-dashoffset:0}90%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes ba-chevron{0%,52%{opacity:0;transform:translateX(0)}56%{opacity:1}86%{opacity:1;transform:translateX(108px)}100%{opacity:0;transform:translateX(108px)}}
+@keyframes ba-suphi{0%,50%{stroke-opacity:.55}56%{stroke-opacity:1}64%{stroke-opacity:.55}100%{stroke-opacity:.55}}
+@keyframes ba-save{0%,62%{opacity:0;transform:scale(.85)}70%{opacity:1;transform:scale(1)}90%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.bundle-anim *{animation:none!important;opacity:1!important}.bundle-anim .ba-supline{stroke-dashoffset:0!important}}
 .tech-section::before{content:'';position:absolute;top:20%;right:-15%;width:600px;height:600px;background:radial-gradient(circle,rgba(232,160,32,.08) 0%,transparent 65%);pointer-events:none}
 .tech-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
 
@@ -955,10 +980,61 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <h2 class="h2" style="margin-top:0;margin-bottom:16px;color:#fff" data-i18n-html="tech.title">Die Maschine hinter<br>jedem Angebot.</h2>
       <p class="subtitle" style="color:rgba(255,255,255,.6);margin:0 auto" data-i18n="tech.sub">SourceOn bündelt den Materialbedarf mehrerer Baufirmen zu einem gemeinsamen Auftrag — und verhandelt mit dem gesamten Volumen beim Lieferanten. Je grösser das Bündel, desto höher der Rabatt.</p>
     </div>
-    <div style="max-width:1100px;width:100%;margin:0 auto;padding:0 24px;box-sizing:border-box;overflow:hidden">
-      <div id="webgl-wrap" style="width:100%;max-width:100%;min-height:420px;height:600px;position:relative;overflow:hidden">
-        <canvas id="bundling-canvas" style="display:block;width:100%;height:100%"></canvas>
-      </div>
+    <div style="max-width:820px;width:100%;margin:0 auto;padding:0 16px;box-sizing:border-box">
+      <svg class="bundle-anim" viewBox="0 0 800 400" role="img" aria-label="Bündelungsprozess: drei Baufirmen bündeln über SourceOn beim Lieferanten" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <filter id="ba-shadow" x="-30%" y="-30%" width="160%" height="160%">
+            <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000000" flood-opacity="0.35"/>
+          </filter>
+        </defs>
+        <!-- connection lines: customer -> hub -->
+        <line class="ba-line" x1="205" y1="75"  x2="352" y2="176"/>
+        <line class="ba-line" x1="205" y1="200" x2="348" y2="200"/>
+        <line class="ba-line" x1="205" y1="325" x2="352" y2="224"/>
+        <!-- hub -> supplier line + moving chevron -->
+        <line class="ba-supline" x1="452" y1="200" x2="572" y2="200"/>
+        <polygon class="ba-chevron" points="452,193 465,200 452,207" fill="#E8A020"/>
+        <!-- customer nodes -->
+        <g class="ba-node">
+          <rect class="ba-card" x="30" y="45" width="175" height="60" rx="12"/>
+          <text class="ba-name" x="48" y="72">Firma A</text>
+          <text class="ba-vol"  x="48" y="92">80 m&#179; Beton</text>
+        </g>
+        <g class="ba-node">
+          <rect class="ba-card" x="30" y="170" width="175" height="60" rx="12"/>
+          <text class="ba-name" x="48" y="197">Firma B</text>
+          <text class="ba-vol"  x="48" y="217">60 m&#179; Beton</text>
+        </g>
+        <g class="ba-node">
+          <rect class="ba-card" x="30" y="295" width="175" height="60" rx="12"/>
+          <text class="ba-name" x="48" y="322">Firma C</text>
+          <text class="ba-vol"  x="48" y="342">40 m&#179; Beton</text>
+        </g>
+        <!-- SourceOn hub -->
+        <g class="ba-hub">
+          <circle cx="400" cy="200" r="52" fill="#E8A020" filter="url(#ba-shadow)"/>
+          <text class="ba-hubtext" x="400" y="205" text-anchor="middle">SourceOn</text>
+        </g>
+        <!-- supplier node -->
+        <g class="ba-supplier">
+          <rect class="ba-card ba-supcard" x="572" y="150" width="200" height="100" rx="12"/>
+          <text class="ba-name" x="596" y="192">Lieferant</text>
+          <text class="ba-vol"  x="596" y="216">180 m&#179; &#8212; 12% Rabatt</text>
+        </g>
+        <!-- savings pills -->
+        <g class="ba-save">
+          <rect x="55" y="16" width="150" height="26" rx="13" fill="#E8A020"/>
+          <text class="ba-savetext" x="130" y="33" text-anchor="middle">+CHF 5&#8217;850 &#183; &#8722;12%</text>
+        </g>
+        <g class="ba-save">
+          <rect x="55" y="141" width="150" height="26" rx="13" fill="#E8A020"/>
+          <text class="ba-savetext" x="130" y="158" text-anchor="middle">+CHF 4&#8217;388 &#183; &#8722;12%</text>
+        </g>
+        <g class="ba-save">
+          <rect x="55" y="266" width="150" height="26" rx="13" fill="#E8A020"/>
+          <text class="ba-savetext" x="130" y="283" text-anchor="middle">+CHF 2&#8217;925 &#183; &#8722;12%</text>
+        </g>
+      </svg>
     </div>
     <p style="text-align:center;font-size:.8rem;color:rgba(255,255,255,.42);margin:24px auto 0" data-i18n="tech.illus">Illustrativ — vereinfachte Darstellung des Bündelungsprozesses</p>
     <div style="text-align:center;margin-top:22px">
@@ -1078,501 +1154,8 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   </div>
 </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-<script>
-(function(){
-  var wrap=document.getElementById('webgl-wrap');
-  var canvas=document.getElementById('bundling-canvas');
-  if(!wrap||!canvas||typeof THREE==='undefined')return;
 
-  var isMobile=window.innerWidth<640;
-  var H=isMobile?400:600;
-  var W=wrap.offsetWidth||window.innerWidth;
-  wrap.style.height=H+'px';
-  canvas.style.height=H+'px';
-
-  var scene=new THREE.Scene();
-  scene.background=new THREE.Color(0x0F2238);
-  scene.fog=new THREE.Fog(0x0F2238,20,52); // subtile Tiefen-Staffelung (Apple-Look)
-
-  // Der grüne "Lieferant"-Würfel sitzt bei x=7.5 (fest positioniert, siehe unten).
-  // Bei einem festen vertikalen FOV (50°) schrumpft das horizontale Sichtfeld auf
-  // schmalen/mobilen Seitenverhältnissen so stark, dass dieser Würfel ausserhalb des
-  // Kamera-Frustums fällt und "abgeschnitten" wirkt. Fix: vertikales FOV so berechnen,
-  // dass das horizontale FOV der Desktop-Ansicht (Referenz-Seitenverhältnis 1100/600)
-  // auf JEDEM Seitenverhältnis erhalten bleibt — dadurch bleiben alle Szenen-Elemente
-  // (inkl. Lieferant-Würfel bei x=7.5) auch auf schmalen Screens (<900px) im Bild.
-  var BASE_ASPECT=1100/600,BASE_VFOV_DEG=50;
-  function computeVFov(aspect){
-    if(aspect>=BASE_ASPECT)return BASE_VFOV_DEG; // Desktop-Framing unverändert
-    var baseVFovRad=BASE_VFOV_DEG*Math.PI/180;
-    var hFovRad=2*Math.atan(Math.tan(baseVFovRad/2)*BASE_ASPECT);
-    var vFovRad=2*Math.atan(Math.tan(hFovRad/2)/aspect);
-    return Math.min(vFovRad*180/Math.PI,95); // Obergrenze gegen extreme Fischaugen-Verzerrung
-  }
-
-  var camera=new THREE.PerspectiveCamera(computeVFov(W/H),W/H,0.1,300);
-  camera.position.set(0,4,14);
-  camera.lookAt(0,0,0);
-
-  var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
-  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-  renderer.setSize(W,H);
-  renderer.setClearColor(0x0F2238,1); // Hintergrund = SourceOn-Navy
-  if(THREE.sRGBEncoding)renderer.outputEncoding=THREE.sRGBEncoding;
-  if(THREE.ACESFilmicToneMapping){renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;}
-
-  /* Lighting — weiches Studio-Setup mit kühlem Rim-Light (Apple-Look) */
-  scene.add(new THREE.HemisphereLight(0xbcd4ff,0x0a1626,0.95)); // kühler Himmel, dunkler Boden
-  var goldLight=new THREE.PointLight(0xE8A020,2.5,30);
-  goldLight.position.set(0,0,0);
-  scene.add(goldLight);
-  var keyLight=new THREE.DirectionalLight(0xffffff,1.15);
-  keyLight.position.set(6,10,6);
-  scene.add(keyLight);
-  var rimLight=new THREE.DirectionalLight(0x8fb8ff,0.85); // kühles Streiflicht von hinten
-  rimLight.position.set(-9,3,-7);
-  scene.add(rimLight);
-
-  /* Stars */
-  var sCnt=200,sBuf=new Float32Array(sCnt*3);
-  for(var i=0;i<sCnt*3;i++)sBuf[i]=(Math.random()-.5)*100;
-  var sGeo=new THREE.BufferGeometry();
-  sGeo.setAttribute('position',new THREE.BufferAttribute(sBuf,3));
-  var stars=new THREE.Points(sGeo,new THREE.PointsMaterial({color:0xbcd4ff,size:0.075,transparent:true,opacity:0.4,depthWrite:false}));
-  scene.add(stars);
-
-  /* Apple-Style Glas-Pill-Label — gemeinsamer Zeichner (auch vom i18n-Updater genutzt,
-     damit die Optik beim Sprachwechsel erhalten bleibt). Signatur (txt,col,sz) unverändert. */
-  function _hexA(hex,a){
-    hex=(hex||'#ffffff').replace('#','');
-    if(hex.length===3)hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-    var r=parseInt(hex.slice(0,2),16),g=parseInt(hex.slice(2,4),16),b=parseInt(hex.slice(4,6),16);
-    return 'rgba('+r+','+g+','+b+','+a+')';
-  }
-  function _rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
-  var _LDPR=2,_LW=320,_LH=72;
-  window._holoDrawLabel=function(c,txt,col,sz){
-    col=col||'#ffffff';sz=sz||24;
-    if(c.width!==_LW*_LDPR){c.width=_LW*_LDPR;c.height=_LH*_LDPR;}
-    var ctx=c.getContext('2d');
-    ctx.setTransform(_LDPR,0,0,_LDPR,0,0);
-    ctx.clearRect(0,0,_LW,_LH);
-    ctx.font='600 '+sz+'px Inter,-apple-system,BlinkMacSystemFont,sans-serif';
-    ctx.textAlign='center';ctx.textBaseline='middle';
-    var tw=ctx.measureText(txt).width;
-    var bh=sz+18,bw=Math.min(_LW-10,Math.max(bh,tw+40)),r=bh/2;
-    var bx=(_LW-bw)/2,by=(_LH-bh)/2;
-    /* frosted-glass Füllung + weicher farbiger Glow */
-    ctx.save();
-    _rr(ctx,bx,by,bw,bh,r);
-    ctx.shadowColor=_hexA(col,0.85);ctx.shadowBlur=16;ctx.shadowOffsetY=0;
-    ctx.fillStyle='rgba(15,34,56,0.82)';
-    ctx.fill();
-    ctx.restore();
-    /* dezenter oberer Glanz */
-    var g=ctx.createLinearGradient(0,by,0,by+bh);
-    g.addColorStop(0,'rgba(255,255,255,0.14)');
-    g.addColorStop(0.55,'rgba(255,255,255,0)');
-    _rr(ctx,bx,by,bw,bh,r);ctx.fillStyle=g;ctx.fill();
-    /* feine, farblich getönte Kante */
-    _rr(ctx,bx+0.6,by+0.6,bw-1.2,bh-1.2,r);
-    ctx.lineWidth=1.2;ctx.strokeStyle=_hexA(col,0.5);ctx.stroke();
-    /* Text */
-    ctx.fillStyle=col;ctx.fillText(txt,_LW/2,_LH/2+1);
-  };
-  function mkLabel(txt,col,sz){
-    var c=document.createElement('canvas');
-    window._holoDrawLabel(c,txt,col,sz);
-    var tex=new THREE.CanvasTexture(c);
-    tex.anisotropy=4;
-    if(THREE.sRGBEncoding)tex.encoding=THREE.sRGBEncoding;
-    var sp=new THREE.Sprite(new THREE.SpriteMaterial({map:tex,transparent:true,depthTest:false}));
-    sp.scale.set(4.2,0.95,1);
-    return sp;
-  }
-
-  /* Positions */
-  var restPos=[
-    new THREE.Vector3(-3.8,0,2.2),
-    new THREE.Vector3(3.8,0,2.2),
-    new THREE.Vector3(-1.2,0,-3.2)
-  ];
-  var startPos=[
-    new THREE.Vector3(-16,4,10),
-    new THREE.Vector3(16,4,10),
-    new THREE.Vector3(-9,-5,-14)
-  ];
-
-  /* Company boxes */
-  var boxGeo=new THREE.BoxGeometry(1.6,1.1,1.6);
-  var boxes=[],boxLabels=[],boxNames=[];
-  var BLABELS=['80 m³ Beton','60 m³ Beton','40 m³ Beton'];
-  var BLABELS_I18N={de:['80 m³ Beton','60 m³ Beton','40 m³ Beton'],en:['80 m³ Concrete','60 m³ Concrete','40 m³ Concrete'],fr:['80 m³ Béton','60 m³ Béton','40 m³ Béton'],it:['80 m³ Calcestruzzo','60 m³ Calcestruzzo','40 m³ Calcestruzzo']};
-  var BNAMES=['Firma A','Firma B','Firma C'];
-  var BNAMES_I18N={de:['Firma A','Firma B','Firma C'],en:['Company A','Company B','Company C'],fr:['Entreprise A','Entreprise B','Entreprise C'],it:['Impresa A','Impresa B','Impresa C']};
-  for(var i=0;i<3;i++){
-    var bmat=new THREE.MeshStandardMaterial({color:0x1a3a5c,emissive:0xE8A020,emissiveIntensity:0.15,roughness:0.35,metalness:0.15,transparent:true,opacity:0});
-    var bm=new THREE.Mesh(boxGeo,bmat);
-    bm.position.copy(startPos[i]);
-    bm.visible=false;
-    scene.add(bm);
-    boxes.push(bm);
-    var lb=mkLabel(BLABELS[i],'#E8A020',22);
-    lb.position.set(0,1.3,0);lb.visible=false;bm.add(lb);boxLabels.push(lb);
-    var ln=mkLabel(BNAMES[i],'#ffffff',20);
-    ln.position.set(0,0.85,0);ln.visible=false;bm.add(ln);boxNames.push(ln);
-  }
-
-  /* Central SourceOn sphere */
-  var sphere=new THREE.Mesh(
-    new THREE.SphereGeometry(0.9,48,48),
-    new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.4,roughness:0.25,metalness:0.45,transparent:true,opacity:0})
-  );
-  sphere.visible=false;
-  scene.add(sphere);
-  var sphereLbl=mkLabel('SourceOn','#E8A020',28);
-  sphereLbl.position.set(0,1.7,0);
-  sphere.add(sphereLbl);
-
-  /* Green Lieferant box */
-  var greenBox=new THREE.Mesh(
-    new THREE.BoxGeometry(2.2,1.6,1.6),
-    new THREE.MeshStandardMaterial({color:0x1e4a6e,emissive:0x4488aa,emissiveIntensity:0.1,roughness:0.3,metalness:0.15,transparent:true,opacity:0})
-  );
-  greenBox.position.set(7.5,0,0);
-  greenBox.visible=false;
-  scene.add(greenBox);
-  var gLbl=mkLabel('180 m³ — 12% Rabatt','#E8A020',20);
-  var GLBL_I18N={de:'180 m³ — 12% Rabatt',en:'180 m³ — 12% Discount',fr:'180 m³ — 12% Remise',it:'180 m³ — 12% Sconto'};
-  gLbl.position.set(0,1.5,0);gLbl.visible=false;greenBox.add(gLbl);
-  var gName=mkLabel('Lieferant','#ffffff',20);
-  var GNAME_I18N={de:'Lieferant',en:'Supplier',fr:'Fournisseur',it:'Fornitore'};
-  gName.position.set(0,0.9,0);gName.visible=false;greenBox.add(gName);
-
-  /* Beam sphere→lieferant (from sphere edge to greenBox edge) */
-  var beamLen=6.4-0.9;
-  var beam=new THREE.Mesh(
-    new THREE.CylinderGeometry(0.07,0.07,beamLen,8),
-    new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0})
-  );
-  beam.rotation.z=Math.PI/2;
-  beam.position.set(0.9+beamLen/2,0,0);
-  beam.visible=false;
-  scene.add(beam);
-
-  /* Flow particles */
-  var PCNT=120,pBuf=new Float32Array(PCNT*3);
-  var pGeo=new THREE.BufferGeometry();
-  pGeo.setAttribute('position',new THREE.BufferAttribute(pBuf,3));
-  var particles=new THREE.Points(pGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.13,transparent:true,opacity:0}));
-  scene.add(particles);
-
-  /* Explosion particles */
-  var ECNT=100,eBuf=new Float32Array(ECNT*3);
-  var eGeo=new THREE.BufferGeometry();
-  eGeo.setAttribute('position',new THREE.BufferAttribute(eBuf,3));
-  var eVel=[];
-  for(var i=0;i<ECNT;i++){
-    var th=Math.random()*Math.PI*2,ph=Math.random()*Math.PI;
-    eVel.push(new THREE.Vector3(
-      Math.sin(ph)*Math.cos(th),Math.sin(ph)*Math.sin(th),Math.cos(ph)
-    ).multiplyScalar(.07+Math.random()*.1));
-  }
-  var explParts=new THREE.Points(eGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.11,transparent:true,opacity:0}));
-  scene.add(explParts);
-
-  /* Savings sprites */
-  var SAV_TEXTS=["+CHF 5'850","+CHF 4'388","+CHF 2'925"];
-  var savSprites=SAV_TEXTS.map(function(t,i){
-    var s=mkLabel(t,'#E8A020',22);
-    s.position.copy(restPos[i]);s.position.y+=2;
-    s.visible=false;scene.add(s);return s;
-  });
-
-  /* Checkmarks */
-  var checkSprites=restPos.map(function(p){
-    var s=mkLabel('✓','#E8A020',36);
-    s.position.copy(p);s.position.y+=1.6;
-    s.visible=false;scene.add(s);return s;
-  });
-
-  /* Return beams lieferant→companies (green, matching forward beam style) */
-  var returnBeams=[];
-  for(var i=0;i<3;i++){
-    var rp=restPos[i];
-    // Start at lieferant box edge (box is 2.2 wide at x=7.5, so left edge ~6.4)
-    var sx=6.4,sy=0,sz=0;
-    // End at company box edge (box is 1.6 wide, so nearest edge)
-    var ex=rp.x+(rp.x<0?0.8:-0.8),ey=rp.y,ez=rp.z+(rp.z<0?0.8:(rp.z>0?-0.8:0));
-    var dx=ex-sx,dy=ey-sy,dz=ez-sz;
-    var bLen=Math.sqrt(dx*dx+dy*dy+dz*dz);
-    var rb=new THREE.Mesh(
-      new THREE.CylinderGeometry(0.07,0.07,bLen,8),
-      new THREE.MeshBasicMaterial({color:0xE8A020,transparent:true,opacity:0})
-    );
-    rb.position.set((sx+ex)/2,(sy+ey)/2,(sz+ez)/2);
-    rb.lookAt(ex,ey,ez);
-    rb.rotateX(Math.PI/2);
-    rb.visible=false;
-    scene.add(rb);
-    returnBeams.push({mesh:rb,sx:sx,sy:sy,sz:sz,ex:ex,ey:ey,ez:ez});
-  }
-
-  /* Return flow particles */
-  var RPCNT=90,rpBuf=new Float32Array(RPCNT*3);
-  var rpGeo=new THREE.BufferGeometry();
-  rpGeo.setAttribute('position',new THREE.BufferAttribute(rpBuf,3));
-  var returnParticles=new THREE.Points(rpGeo,new THREE.PointsMaterial({color:0xE8A020,size:0.12,transparent:true,opacity:0}));
-  scene.add(returnParticles);
-
-  /* Savings % labels on companies */
-  var savPctTexts=['-12% gespart','-12% gespart','-12% gespart'];
-  var SAVPCT_I18N={de:'-12% gespart',en:'-12% saved',fr:'-12% économisé',it:'-12% risparmiato'};
-  var savPctSprites=savPctTexts.map(function(t,i){
-    var s=mkLabel(t,'#E8A020',22);
-    s.position.copy(restPos[i]);s.position.y+=2.5;
-    s.visible=false;scene.add(s);return s;
-  });
-
-  /* Expose hologram sprites for i18n */
-  window._holoSprites={boxLabels:boxLabels,boxNames:boxNames,gLbl:gLbl,gName:gName,savSprites:savSprites,savPctSprites:savPctSprites,mkLabel:mkLabel,
-    BLABELS_I18N:BLABELS_I18N,BNAMES_I18N:BNAMES_I18N,GLBL_I18N:GLBL_I18N,GNAME_I18N:GNAME_I18N,SAVPCT_I18N:SAVPCT_I18N};
-
-  /* Mouse parallax */
-  var mx=0,my=0,camRX=0,camRY=0;
-  wrap.addEventListener('mousemove',function(e){
-    var r=wrap.getBoundingClientRect();
-    mx=(e.clientX-r.left)/r.width-.5;
-    my=(e.clientY-r.top)/r.height-.5;
-  });
-
-  function lerp(a,b,t){return a+(b-a)*t;}
-  function eOut(t){return 1-Math.pow(1-Math.min(1,t),3);}
-
-  var t0=null;
-  var animRunning=false;
-  function animate(){
-    requestAnimationFrame(animate);
-    if(!animRunning)return;
-    if(!t0)t0=performance.now();
-    var now=(performance.now()-t0)/1000;
-    var cy=now%12;
-
-    stars.rotation.y=now*.025;stars.rotation.x=now*.008;
-    sphere.rotation.y=now*.3;
-
-    camRX=lerp(camRX,-my*.08,.05);
-    camRY=lerp(camRY,mx*.08,.05);
-    camera.position.x=Math.sin(camRY)*14;
-    camera.position.y=4+camRX*6;
-    camera.position.z=Math.cos(camRY)*14;
-    camera.lookAt(0,0,0);
-
-    goldLight.intensity=2+Math.sin(now*2.5)*.6;
-
-    function hideAll(){
-      boxes.forEach(function(b){b.visible=false;});
-      sphere.visible=false;greenBox.visible=false;beam.visible=false;
-      particles.material.opacity=0;explParts.material.opacity=0;
-      returnParticles.material.opacity=0;
-      returnBeams.forEach(function(b){b.mesh.visible=false;});
-      savSprites.forEach(function(s){s.visible=false;});
-      checkSprites.forEach(function(s){s.visible=false;});
-      savPctSprites.forEach(function(s){s.visible=false;});
-    }
-
-    /* Phase 1: 0-2s — boxes fly in */
-    if(cy<2){
-      hideAll();
-      var t=cy/2;
-      for(var i=0;i<3;i++){
-        var delay=i*.2,lt=eOut(Math.max(0,(t-delay*.5)/.8));
-        boxes[i].visible=true;
-        boxes[i].position.lerpVectors(startPos[i],restPos[i],lt);
-        boxes[i].material.opacity=lt*.85;
-        boxes[i].rotation.y=(1-lt)*Math.PI*.4;
-        var vis=lt>.25;boxLabels[i].visible=vis;boxNames[i].visible=vis;
-      }
-    }
-    /* Phase 2: 2-4s — sphere + particles */
-    else if(cy<4){
-      var t=(cy-2)/2;
-      for(var i=0;i<3;i++){
-        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
-        boxes[i].material.opacity=.85;boxes[i].rotation.y=0;
-        boxLabels[i].visible=true;boxNames[i].visible=true;
-      }
-      sphere.visible=true;
-      sphere.material.opacity=eOut(Math.min(1,t*4));
-      sphere.scale.setScalar(1+Math.sin(t*Math.PI*4)*.07+t*.12);
-      sphereLbl.visible=t>.1;
-      greenBox.visible=false;beam.visible=false;explParts.material.opacity=0;
-      savSprites.forEach(function(s){s.visible=false;});
-      checkSprites.forEach(function(s){s.visible=false;});
-      if(t>.1){
-        particles.material.opacity=Math.min(1,(t-.1)*4)*.75;
-        var pa=pGeo.getAttribute('position');
-        for(var i=0;i<PCNT;i++){
-          var si2=i%3,src=restPos[si2];
-          var frac=((i/PCNT)+t*1.8)%1;
-          pa.setXYZ(i,lerp(src.x,0,frac)+(Math.random()-.5)*.15,lerp(src.y,0,frac),lerp(src.z,0,frac)+(Math.random()-.5)*.15);
-        }
-        pa.needsUpdate=true;
-      } else particles.material.opacity=0;
-    }
-    /* Phase 3: 4-6s — explosion + lieferant */
-    else if(cy<6){
-      var t=(cy-4)/2;
-      for(var i=0;i<3;i++){
-        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
-        boxes[i].material.opacity=.85;
-        boxLabels[i].visible=true;boxNames[i].visible=true;
-      }
-      sphere.visible=true;sphere.material.opacity=.9;
-      sphere.scale.setScalar(1+t*.08);sphereLbl.visible=true;
-      particles.material.opacity=0;
-      if(t<.5){
-        var ef=1-t/.5;
-        explParts.material.opacity=ef*.85;
-        var ea=eGeo.getAttribute('position');
-        for(var i=0;i<ECNT;i++){var d=t*10;ea.setXYZ(i,eVel[i].x*d,eVel[i].y*d,eVel[i].z*d);}
-        ea.needsUpdate=true;
-      } else explParts.material.opacity=0;
-      var ap=eOut(Math.max(0,(t-.25)/.4));
-      greenBox.visible=true;greenBox.material.opacity=ap*.85;
-      greenBox.scale.setScalar(ap+.001);
-      gLbl.visible=ap>.3;gName.visible=ap>.3;
-      beam.visible=ap>.1;beam.material.opacity=ap*.7;
-      savSprites.forEach(function(s){s.visible=false;});
-      checkSprites.forEach(function(s){s.visible=false;});
-    }
-    /* Phase 4: 6-8s — return flow from lieferant to companies */
-    else if(cy<8){
-      var t=(cy-6)/2;
-      for(var i=0;i<3;i++){
-        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
-        boxes[i].material.opacity=.85;
-        boxLabels[i].visible=true;boxNames[i].visible=true;
-      }
-      sphere.visible=true;sphere.material.opacity=.9;sphereLbl.visible=true;
-      greenBox.visible=true;greenBox.material.opacity=.85;
-      gLbl.visible=true;gName.visible=true;
-      beam.visible=true;beam.material.opacity=.7;
-      particles.material.opacity=0;explParts.material.opacity=0;
-      savSprites.forEach(function(s){s.visible=false;});
-
-      // Return beams appear
-      var rbAp=eOut(Math.min(1,t*3));
-      for(var i=0;i<3;i++){
-        returnBeams[i].mesh.visible=rbAp>.05;
-        returnBeams[i].mesh.material.opacity=rbAp*.6;
-      }
-
-      // Return particles flow from lieferant (7.5,0,0) to each company
-      if(t>.15){
-        returnParticles.material.opacity=Math.min(1,(t-.15)*4)*.7;
-        var rpa=rpGeo.getAttribute('position');
-        for(var i=0;i<RPCNT;i++){
-          var si2=i%3,rb=returnBeams[si2];
-          var frac=((i/RPCNT)+t*1.5)%1;
-          rpa.setXYZ(i,lerp(rb.sx,rb.ex,frac)+(Math.random()-.5)*.1,lerp(rb.sy,rb.ey,frac),lerp(rb.sz,rb.ez,frac)+(Math.random()-.5)*.1);
-        }
-        rpa.needsUpdate=true;
-      } else returnParticles.material.opacity=0;
-
-      checkSprites.forEach(function(s){s.visible=false;});
-      savPctSprites.forEach(function(s){s.visible=false;});
-    }
-    /* Phase 5: 8-10s — savings appear on companies */
-    else if(cy<10){
-      var t=(cy-8)/2;
-      for(var i=0;i<3;i++){
-        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
-        boxes[i].material.opacity=.85;
-        boxLabels[i].visible=true;boxNames[i].visible=true;
-      }
-      sphere.visible=true;sphere.material.opacity=.9;sphereLbl.visible=true;
-      greenBox.visible=true;greenBox.material.opacity=.85;
-      gLbl.visible=true;gName.visible=true;
-      beam.visible=true;beam.material.opacity=.7;
-      particles.material.opacity=0;explParts.material.opacity=0;
-      for(var i=0;i<3;i++){
-        returnBeams[i].mesh.visible=true;returnBeams[i].mesh.material.opacity=.6;
-      }
-      returnParticles.material.opacity=.5;
-      var rpa2=rpGeo.getAttribute('position');
-      for(var i=0;i<RPCNT;i++){
-        var si2=i%3,rb=returnBeams[si2];
-        var frac=((i/RPCNT)+t*1.5)%1;
-        rpa2.setXYZ(i,lerp(rb.sx,rb.ex,frac)+(Math.random()-.5)*.1,lerp(rb.sy,rb.ey,frac),lerp(rb.sz,rb.ez,frac)+(Math.random()-.5)*.1);
-      }
-      rpa2.needsUpdate=true;
-
-      // Savings % + checkmarks appear
-      for(var i=0;i<3;i++){
-        var dl=i*.15,lt=eOut(Math.max(0,(t-dl)*4));
-        savPctSprites[i].visible=lt>.0;
-        savPctSprites[i].position.copy(restPos[i]);savPctSprites[i].position.y=2.2+lt*.6;
-        if(savPctSprites[i].material)savPctSprites[i].material.opacity=lt;
-        checkSprites[i].visible=lt>.0;
-        checkSprites[i].position.copy(restPos[i]);checkSprites[i].position.y=1.6;
-        if(checkSprites[i].material)checkSprites[i].material.opacity=lt;
-        savSprites[i].visible=lt>.0;
-        savSprites[i].position.copy(restPos[i]);savSprites[i].position.y=2.8+lt*.5;
-        if(savSprites[i].material)savSprites[i].material.opacity=lt;
-      }
-    }
-    /* Phase 6: 10-12s — hold + fade out */
-    else{
-      var t=(cy-10)/2;
-      var fa=Math.max(0,1-(t-.5)/.5);
-      for(var i=0;i<3;i++){
-        boxes[i].visible=true;boxes[i].position.copy(restPos[i]);
-        boxes[i].material.opacity=.85*fa;
-        boxLabels[i].visible=fa>.1;boxNames[i].visible=fa>.1;
-      }
-      sphere.visible=fa>.05;sphere.material.opacity=.9*fa;sphereLbl.visible=fa>.1;
-      greenBox.visible=fa>.05;greenBox.material.opacity=.85*fa;
-      gLbl.visible=fa>.2;gName.visible=fa>.2;
-      beam.visible=fa>.05;beam.material.opacity=.7*fa;
-      particles.material.opacity=0;explParts.material.opacity=0;
-      returnParticles.material.opacity=.5*fa;
-      for(var i=0;i<3;i++){
-        returnBeams[i].mesh.visible=fa>.05;returnBeams[i].mesh.material.opacity=.6*fa;
-        savPctSprites[i].visible=fa>.1;
-        if(savPctSprites[i].material)savPctSprites[i].material.opacity=fa;
-        checkSprites[i].visible=fa>.1;
-        if(checkSprites[i].material)checkSprites[i].material.opacity=fa;
-        savSprites[i].visible=fa>.1;
-        if(savSprites[i].material)savSprites[i].material.opacity=fa;
-      }
-    }
-
-    renderer.render(scene,camera);
-  }
-  animate();
-
-  var scrollObs=new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(e.isIntersecting&&!animRunning){
-        animRunning=true;
-        t0=performance.now();
-      }
-    });
-  },{threshold:0});
-  scrollObs.observe(wrap);
-
-  window.addEventListener('resize',function(){
-    var nW=wrap.offsetWidth,nH=window.innerWidth<640?400:600;
-    wrap.style.height=nH+'px';canvas.style.height=nH+'px';
-    camera.fov=computeVFov(nW/nH);
-    camera.aspect=nW/nH;camera.updateProjectionMatrix();
-    renderer.setSize(nW,nH);
-  });
-})();
-</script>
 
 <script>
 // SMOOTH ANCHOR SCROLL
