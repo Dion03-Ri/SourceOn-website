@@ -1119,6 +1119,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   var renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true});
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.setSize(W,H);
+  renderer.setClearColor(0x0F2238,1); // Hintergrund = SourceOn-Navy
   if(THREE.sRGBEncoding)renderer.outputEncoding=THREE.sRGBEncoding;
   if(THREE.ACESFilmicToneMapping){renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.15;}
 
@@ -1227,7 +1228,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   /* Central SourceOn sphere */
   var sphere=new THREE.Mesh(
     new THREE.SphereGeometry(0.9,48,48),
-    new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.55,roughness:0.25,metalness:0.45,transparent:true,opacity:0})
+    new THREE.MeshStandardMaterial({color:0xE8A020,emissive:0xE8A020,emissiveIntensity:0.4,roughness:0.25,metalness:0.45,transparent:true,opacity:0})
   );
   sphere.visible=false;
   scene.add(sphere);
@@ -1238,7 +1239,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   /* Green Lieferant box */
   var greenBox=new THREE.Mesh(
     new THREE.BoxGeometry(2.2,1.6,1.6),
-    new THREE.MeshStandardMaterial({color:0x1e4a6e,emissive:0xE8A020,emissiveIntensity:0.15,roughness:0.3,metalness:0.15,transparent:true,opacity:0})
+    new THREE.MeshStandardMaterial({color:0x1e4a6e,emissive:0x4488aa,emissiveIntensity:0.1,roughness:0.3,metalness:0.15,transparent:true,opacity:0})
   );
   greenBox.position.set(7.5,0,0);
   greenBox.visible=false;
