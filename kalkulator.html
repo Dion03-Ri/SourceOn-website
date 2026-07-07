@@ -888,23 +888,48 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <h2 class="h2" data-i18n="tier_title" style="font-size:clamp(28px,4vw,44px)">Wie die Ersparnis innerhalb<br>eines Bündels verteilt wird.</h2>
       <p class="subtitle" style="margin-top:28px;max-width:640px" data-i18n="tier_text">SourceOn verhandelt für jedes Bündel einen garantierten Mindestrabatt beim Lieferanten — basierend auf dem Gesamtvolumen aller beteiligten Baufirmen. Innerhalb des Bündels gilt: je grösser dein eigener Anteil, desto höher deine individuelle Ersparnis. Kleinere Beiträge erhalten die Basis-Ersparnis, grössere Beiträge profitieren zusätzlich vom kombinierten Bündelvolumen.</p>
     </div>
-    <div class="bundle-grid reveal" style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto">
-      <div style="background:var(--dark);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:44px 32px;text-align:center">
-        <div style="font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px" data-i18n="tier1_label">Anteil bis CHF 100’000</div>
-        <div style="font-size:1.25rem;font-weight:700;color:rgba(255,255,255,.85)" data-i18n="tier1_val">Basis-Ersparnis</div>
+    <div class="bundle-grid reveal">
+      <div class="btier">
+        <svg class="btier-bars" viewBox="0 0 62 40" width="62" height="40" aria-hidden="true">
+          <rect class="on"  x="2"  y="22" width="14" height="16" rx="3"/>
+          <rect class="off" x="24" y="12" width="14" height="26" rx="3"/>
+          <rect class="off" x="46" y="2"  width="14" height="36" rx="3"/>
+        </svg>
+        <div class="btier-label" data-i18n="tier1_label">Anteil bis CHF 100’000</div>
+        <div class="btier-val" data-i18n="tier1_val">Basis-Ersparnis</div>
       </div>
-      <div style="background:var(--dark);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:44px 32px;text-align:center">
-        <div style="font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:14px" data-i18n="tier2_label">Anteil CHF 100’000–250’000</div>
-        <div style="font-size:1.25rem;font-weight:700;color:#fff" data-i18n="tier2_val">Erhöhte Ersparnis</div>
+      <div class="btier">
+        <svg class="btier-bars" viewBox="0 0 62 40" width="62" height="40" aria-hidden="true">
+          <rect class="on"  x="2"  y="22" width="14" height="16" rx="3"/>
+          <rect class="on"  x="24" y="12" width="14" height="26" rx="3"/>
+          <rect class="off" x="46" y="2"  width="14" height="36" rx="3"/>
+        </svg>
+        <div class="btier-label" data-i18n="tier2_label">Anteil CHF 100’000–250’000</div>
+        <div class="btier-val" data-i18n="tier2_val">Erhöhte Ersparnis</div>
       </div>
-      <div style="background:var(--dark);border:1px solid rgba(232,160,32,.2);border-radius:16px;padding:44px 32px;text-align:center">
-        <div style="font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px" data-i18n="tier3_label">Über CHF 250’000</div>
-        <div style="font-size:1.25rem;font-weight:700;color:var(--gold)" data-i18n="tier3_val">Maximale Ersparnis im Bündel</div>
+      <div class="btier btier--max">
+        <svg class="btier-bars" viewBox="0 0 62 40" width="62" height="40" aria-hidden="true">
+          <rect class="on" x="2"  y="22" width="14" height="16" rx="3"/>
+          <rect class="on" x="24" y="12" width="14" height="26" rx="3"/>
+          <rect class="on" x="46" y="2"  width="14" height="36" rx="3"/>
+        </svg>
+        <div class="btier-label" data-i18n="tier3_label">Über CHF 250’000</div>
+        <div class="btier-val" data-i18n="tier3_val">Maximale Ersparnis im Bündel</div>
       </div>
     </div>
   </div>
   <style>
-    @media(max-width:768px){.bundle-grid{grid-template-columns:1fr!important;max-width:380px!important}}
+    .bundle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:940px;margin:0 auto;align-items:stretch}
+    .btier{position:relative;background:#fff;border:1px solid var(--border);border-radius:20px;padding:40px 30px 36px;text-align:center;box-shadow:0 4px 20px rgba(15,23,42,.05);transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}
+    .btier:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(15,23,42,.10)}
+    .btier--max{border-color:var(--gold-b);background:linear-gradient(180deg,rgba(232,160,32,.07) 0%,#fff 62%);box-shadow:0 12px 36px rgba(232,160,32,.15)}
+    .btier-bars{display:block;margin:0 auto 22px}
+    .btier-bars .on{fill:var(--gold)}
+    .btier-bars .off{fill:#E2E8F0}
+    .btier-label{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+    .btier-val{font-size:1.2rem;font-weight:700;color:var(--text);line-height:1.35}
+    .btier--max .btier-label,.btier--max .btier-val{color:var(--gold)}
+    @media(max-width:768px){.bundle-grid{grid-template-columns:1fr!important;max-width:400px!important}}
   
 /* CLERK TRUST VERIFICATION MODAL */
 .clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
