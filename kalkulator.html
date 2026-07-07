@@ -883,53 +883,13 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 <!-- BUNDLE TIER EXPLANATION -->
 <section id="bundle-tiers" style="background:var(--bg);padding:120px 0">
   <div class="container">
-    <div class="text-center reveal" style="margin-bottom:80px">
+    <div class="text-center reveal">
       <div class="label" data-i18n="tier_label">Bündel-Ersparnis</div>
-      <h2 class="h2" data-i18n="tier_title" style="font-size:clamp(28px,4vw,44px)">Wie die Ersparnis innerhalb<br>eines Bündels verteilt wird.</h2>
-      <p class="subtitle" style="margin-top:28px;max-width:640px" data-i18n="tier_text">SourceOn verhandelt für jedes Bündel einen garantierten Mindestrabatt beim Lieferanten — basierend auf dem Gesamtvolumen aller beteiligten Baufirmen. Innerhalb des Bündels gilt: je grösser dein eigener Anteil, desto höher deine individuelle Ersparnis. Kleinere Beiträge erhalten die Basis-Ersparnis, grössere Beiträge profitieren zusätzlich vom kombinierten Bündelvolumen.</p>
-    </div>
-    <div class="bundle-grid reveal">
-      <div class="btier">
-        <svg class="btier-bars" viewBox="0 0 62 40" width="62" height="40" aria-hidden="true">
-          <rect class="on"  x="2"  y="22" width="14" height="16" rx="3"/>
-          <rect class="off" x="24" y="12" width="14" height="26" rx="3"/>
-          <rect class="off" x="46" y="2"  width="14" height="36" rx="3"/>
-        </svg>
-        <div class="btier-label" data-i18n="tier1_label">Anteil bis CHF 100’000</div>
-        <div class="btier-val" data-i18n="tier1_val">Basis-Ersparnis</div>
-      </div>
-      <div class="btier">
-        <svg class="btier-bars" viewBox="0 0 62 40" width="62" height="40" aria-hidden="true">
-          <rect class="on"  x="2"  y="22" width="14" height="16" rx="3"/>
-          <rect class="on"  x="24" y="12" width="14" height="26" rx="3"/>
-          <rect class="off" x="46" y="2"  width="14" height="36" rx="3"/>
-        </svg>
-        <div class="btier-label" data-i18n="tier2_label">Anteil CHF 100’000–250’000</div>
-        <div class="btier-val" data-i18n="tier2_val">Erhöhte Ersparnis</div>
-      </div>
-      <div class="btier btier--max">
-        <svg class="btier-bars" viewBox="0 0 62 40" width="62" height="40" aria-hidden="true">
-          <rect class="on" x="2"  y="22" width="14" height="16" rx="3"/>
-          <rect class="on" x="24" y="12" width="14" height="26" rx="3"/>
-          <rect class="on" x="46" y="2"  width="14" height="36" rx="3"/>
-        </svg>
-        <div class="btier-label" data-i18n="tier3_label">Über CHF 250’000</div>
-        <div class="btier-val" data-i18n="tier3_val">Maximale Ersparnis im Bündel</div>
-      </div>
+      <h2 class="h2" data-i18n="tier_title" style="font-size:clamp(28px,4vw,44px)">Wie wird die Ersparnis verteilt?</h2>
+      <p class="subtitle" style="margin-top:28px;max-width:720px" data-i18n="tier_text">Jede Baufirma im Bündel erhält mindestens ihren garantierten Netto-Mindestrabatt — basierend auf ihrem eigenen eingebrachten Volumen. Übertrifft der verhandelte Gesamtrabatt die Summe aller individuellen Garantien, wird die Zusatzersparnis proportional zum Volumenanteil verteilt. Wer mehr einbringt, profitiert mehr — aber jeder gewinnt mindestens sein garantiertes Minimum.</p>
     </div>
   </div>
   <style>
-    .bundle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:940px;margin:0 auto;align-items:stretch}
-    .btier{position:relative;background:#fff;border:1px solid var(--border);border-radius:20px;padding:40px 30px 36px;text-align:center;box-shadow:0 4px 20px rgba(15,23,42,.05);transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease}
-    .btier:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(15,23,42,.10)}
-    .btier--max{border-color:var(--gold-b);background:linear-gradient(180deg,rgba(232,160,32,.07) 0%,#fff 62%);box-shadow:0 12px 36px rgba(232,160,32,.15)}
-    .btier-bars{display:block;margin:0 auto 22px}
-    .btier-bars .on{fill:var(--gold)}
-    .btier-bars .off{fill:#E2E8F0}
-    .btier-label{font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
-    .btier-val{font-size:1.2rem;font-weight:700;color:var(--text);line-height:1.35}
-    .btier--max .btier-label,.btier--max .btier-val{color:var(--gold)}
-    @media(max-width:768px){.bundle-grid{grid-template-columns:1fr!important;max-width:400px!important}}
   
 /* CLERK TRUST VERIFICATION MODAL */
 .clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
@@ -1168,14 +1128,8 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_footnote: '* Ab CHF 500\'000 Jahresvolumen individuelle Konditionen möglich.',
       calc_bundle_note: 'Die hier angezeigte Ersparnis ist eine Schätzung basierend auf deinem Volumen allein. Bist du Teil eines grösseren Bündels mit anderen Baufirmen, kann deine tatsächliche Ersparnis je nach deinem Anteil am Gesamtbündel höher ausfallen.',
       tier_label: 'Bündel-Ersparnis',
-      tier_title: 'Wie die Ersparnis innerhalb eines Bündels verteilt wird.',
-      tier_text: 'SourceOn verhandelt für jedes Bündel einen garantierten Mindestrabatt beim Lieferanten \u2014 basierend auf dem Gesamtvolumen aller beteiligten Baufirmen. Innerhalb des Bündels gilt: je grösser dein eigener Anteil, desto höher deine individuelle Ersparnis. Kleinere Beiträge erhalten die Basis-Ersparnis, grössere Beiträge profitieren zusätzlich vom kombinierten Bündelvolumen.',
-      tier1_label: 'Anteil bis CHF 100\u2019000',
-      tier1_val: 'Basis-Ersparnis',
-      tier2_label: 'Anteil CHF 100\u2019000\u2013250\u2019000',
-      tier2_val: 'Erhöhte Ersparnis',
-      tier3_label: '\u00dcber CHF 250\u2019000',
-      tier3_val: 'Maximale Ersparnis im Bündel',
+      tier_title: 'Wie wird die Ersparnis verteilt?',
+      tier_text: 'Jede Baufirma im Bündel erhält mindestens ihren garantierten Netto-Mindestrabatt — basierend auf ihrem eigenen eingebrachten Volumen. Übertrifft der verhandelte Gesamtrabatt die Summe aller individuellen Garantien, wird die Zusatzersparnis proportional zum Volumenanteil verteilt. Wer mehr einbringt, profitiert mehr — aber jeder gewinnt mindestens sein garantiertes Minimum.',
 
       cta_title: 'Bereit für tiefere Einkaufspreise?',
       cta_sub: 'Melde deinen nächsten Materialbedarf — du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst alles in deinem Dashboard.',
@@ -1213,14 +1167,8 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_footnote: '* Individual terms available from CHF 500,000 annual volume.',
       calc_bundle_note: 'The savings shown here are an estimate based on your volume alone. If you are part of a larger bundle with other construction firms, your actual savings may be higher depending on your share of the total bundle.',
       tier_label: 'Bundle savings',
-      tier_title: 'How savings are distributed within a bundle.',
-      tier_text: 'SourceOn negotiates a guaranteed minimum discount with the supplier for each bundle \u2014 based on the total volume of all participating construction firms. Within the bundle: the larger your share, the higher your individual savings. Smaller contributions receive the base savings, larger contributions benefit additionally from the combined bundle volume.',
-      tier1_label: 'Share up to CHF 100,000',
-      tier1_val: 'Base savings',
-      tier2_label: 'Share CHF 100,000\u2013250,000',
-      tier2_val: 'Enhanced savings',
-      tier3_label: 'Over CHF 250,000',
-      tier3_val: 'Maximum bundle savings',
+      tier_title: 'How are the savings distributed?',
+      tier_text: 'Every construction firm in the bundle receives at least their guaranteed net minimum discount — based on their own contributed volume. If the negotiated total discount exceeds the sum of all individual guarantees, the additional savings are distributed proportionally to volume share. Those who contribute more benefit more — but everyone receives at least their guaranteed minimum.',
 
       cta_title: 'Ready for lower procurement prices?',
       cta_sub: 'Submit your next material need — you only pay when we save you money. You see your guaranteed net minimum discount right away and track everything in your dashboard.',
@@ -1258,14 +1206,8 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_footnote: '* Conditions individuelles possibles à partir de CHF 500\'000 de volume annuel.',
       calc_bundle_note: 'Les économies affichées ici sont une estimation basée sur votre seul volume. Si vous faites partie d\'un regroupement plus important avec d\'autres entreprises de construction, vos économies réelles peuvent être plus élevées selon votre part dans le volume total.',
       tier_label: '\u00c9conomies group\u00e9es',
-      tier_title: 'Comment les économies sont réparties au sein d\'un regroupement.',
-      tier_text: 'SourceOn négocie un rabais minimum garanti auprès du fournisseur pour chaque regroupement \u2014 basé sur le volume total de toutes les entreprises participantes. Au sein du regroupement : plus votre part est importante, plus vos économies individuelles sont élevées.',
-      tier1_label: 'Part jusqu\'\u00e0 CHF 100\'000',
-      tier1_val: '\u00c9conomie de base',
-      tier2_label: 'Part CHF 100\'000\u2013250\'000',
-      tier2_val: '\u00c9conomie accrue',
-      tier3_label: 'Plus de CHF 250\'000',
-      tier3_val: '\u00c9conomie maximale dans le regroupement',
+      tier_title: 'Comment les économies sont-elles réparties ?',
+      tier_text: 'Chaque entreprise de construction du lot reçoit au moins sa remise minimale nette garantie — basée sur son propre volume apporté. Si la remise totale négociée dépasse la somme de toutes les garanties individuelles, les économies supplémentaires sont réparties proportionnellement à la part de volume. Ceux qui apportent plus bénéficient davantage — mais chacun reçoit au moins son minimum garanti.',
 
       cta_title: 'Prêt pour des prix d\'achat plus bas ?',
       cta_sub: 'Déclarez votre prochain besoin matériel — vous ne payez que si nous vous faisons économiser. Vous voyez immédiatement votre rabais minimum net garanti et suivez tout dans votre tableau de bord.',
@@ -1303,14 +1245,8 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_footnote: '* Condizioni individuali possibili a partire da CHF 500\'000 di volume annuale.',
       calc_bundle_note: 'Il risparmio qui indicato è una stima basata solo sul tuo volume. Se fai parte di un raggruppamento più ampio con altre imprese edili, il tuo risparmio effettivo può essere maggiore a seconda della tua quota nel volume totale.',
       tier_label: 'Risparmio raggruppato',
-      tier_title: 'Come il risparmio viene distribuito all\'interno di un raggruppamento.',
-      tier_text: 'SourceOn negozia uno sconto minimo garantito con il fornitore per ogni raggruppamento \u2014 basato sul volume totale di tutte le imprese partecipanti. All\'interno del raggruppamento: maggiore è la tua quota, maggiore è il tuo risparmio individuale.',
-      tier1_label: 'Quota fino a CHF 100\'000',
-      tier1_val: 'Risparmio base',
-      tier2_label: 'Quota CHF 100\'000\u2013250\'000',
-      tier2_val: 'Risparmio aumentato',
-      tier3_label: 'Oltre CHF 250\'000',
-      tier3_val: 'Risparmio massimo nel raggruppamento',
+      tier_title: 'Come viene distribuito il risparmio?',
+      tier_text: 'Ogni impresa edile nel lotto riceve almeno il suo sconto minimo netto garantito — basato sul proprio volume apportato. Se lo sconto totale negoziato supera la somma di tutte le garanzie individuali, il risparmio aggiuntivo viene distribuito proporzionalmente alla quota di volume. Chi apporta di più beneficia di più — ma tutti ricevono almeno il loro minimo garantito.',
 
       cta_title: 'Pronti per prezzi d\'acquisto più bassi?',
       cta_sub: 'Segnala il tuo prossimo fabbisogno materiale — paghi solo se ti facciamo risparmiare. Vedi subito il tuo sconto minimo netto garantito e segui tutto nella tua dashboard.',
