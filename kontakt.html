@@ -847,11 +847,11 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div id="acct-dd">
           <div id="acct-signed-out">
             <div class="acct-group-label">Kunden</div>
-            <a href="#" onclick="clerkSignIn();return false" data-i18n="acct_customer_login">Kunden-Login</a>
+            <a href="#" onclick="clerkCustomerLogin();return false" data-i18n="acct_customer_login">Kunden-Login</a>
             <a href="#" onclick="clerkCustomerSignUp();return false" data-i18n="acct_customer_register" class="acct-customer-reg">Als Kunde registrieren</a>
             <div class="acct-divider"></div>
             <div class="acct-group-label">Lieferanten</div>
-            <a href="#" onclick="clerkSignIn();return false" data-i18n="acct_login">Lieferanten-Login</a>
+            <a href="#" onclick="clerkSupplierLogin();return false" data-i18n="acct_login">Lieferanten-Login</a>
             <a href="lieferant.html" data-i18n="acct_register">Als Lieferant registrieren</a>
           </div>
           <div id="acct-signed-in" style="display:none">
@@ -1848,6 +1848,66 @@ function clerkSignIn(){
   window.Clerk.openSignIn({
     appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}
   });
+}
+
+// --- Role-scoped login: supplier and customer flows are fully independent ---
+function clerkSupplierLogin(){_soStartLogin('supplier');}
+function clerkCustomerLogin(){_soStartLogin('customer');}
+function _soStartLogin(kind){
+  if(!window.Clerk)return;
+  if(window.Clerk.user){_soProcessLogin(kind);return;}
+  var done=false,unsub=window.Clerk.addListener(function(){
+    if(done||!window.Clerk.user)return;
+    done=true;try{if(typeof unsub==='function')unsub();}catch(e){}
+    _soProcessLogin(kind);
+  });
+  window.Clerk.openSignIn({appearance:{variables:{colorPrimary:kind==='supplier'?'#E8A020':'#34D399',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});
+}
+function _soProcessLogin(kind){
+  if(!(window.Clerk&&window.Clerk.user))return;
+  if(kind==='supplier')_soCheckSupplierLogin(window.Clerk.user.id);
+  else _soCheckCustomerLogin(window.Clerk.user.id);
+}
+async function _soLoginHeaders(){
+  var k='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';var token=null;
+  try{if(window.Clerk&&window.Clerk.session){token=await window.Clerk.session.getToken();}}catch(e){}
+  return {'apikey':k,'Content-Type':'application/json','Authorization':token?('Bearer '+token):('Bearer '+k)};
+}
+async function _soCheckSupplierLogin(clerkId){
+  var found=false;
+  try{
+    var h=await _soLoginHeaders();
+    var r=await fetch('https://mttzsqtuaisdjisjxrey.supabase.co/rest/v1/suppliers?id=eq.'+encodeURIComponent(clerkId)+'&select=id&limit=1',{headers:h});
+    var rows=r.ok?await r.json():[];found=!!(rows&&rows.length>0);
+  }catch(e){console.error('[SourceOn] Supplier login check error:',e);}
+  console.log('[SourceOn] Supplier login check: found='+found);
+  if(found){window.open('supplierdashboard.html','_blank');}
+  else{_soShowLoginMessage('Du bist noch nicht als Lieferant registriert. M\u00f6chtest du dich als Lieferant bewerben?','Als Lieferant bewerben','lieferant.html');}
+}
+async function _soCheckCustomerLogin(clerkId){
+  var found=false;
+  try{
+    var h=await _soLoginHeaders();
+    var r=await fetch('https://mttzsqtuaisdjisjxrey.supabase.co/rest/v1/customers?user_id=eq.'+encodeURIComponent(clerkId)+'&select=id&limit=1',{headers:h});
+    var rows=r.ok?await r.json():[];found=!!(rows&&rows.length>0);
+  }catch(e){console.error('[SourceOn] Customer login check error:',e);}
+  console.log('[SourceOn] Customer login check: found='+found);
+  if(found){window.open('kundendashboard.html','_blank');}
+  else{_soShowLoginMessage('Du hast noch kein Kundenkonto. M\u00f6chtest du Materialbedarf melden?','Materialbedarf melden','kontakt.html');}
+}
+function _soShowLoginMessage(msg,linkText,linkHref){
+  var ex=document.getElementById('so-login-msg-overlay');if(ex&&ex.parentNode)ex.parentNode.removeChild(ex);
+  var ov=document.createElement('div');ov.id='so-login-msg-overlay';
+  ov.style.cssText='position:fixed;inset:0;z-index:100000;background:rgba(8,17,30,.78);display:flex;align-items:center;justify-content:center;padding:24px';
+  var box=document.createElement('div');
+  box.style.cssText='background:#0F2238;border:1px solid rgba(232,160,32,.35);border-radius:16px;max-width:420px;width:100%;padding:32px;text-align:center;font-family:Inter,-apple-system,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.5)';
+  var d=document.createElement('div');d.style.cssText='font-size:1.02rem;font-weight:700;color:#fff;line-height:1.5;margin-bottom:24px';d.textContent=msg;
+  var a=document.createElement('a');a.href=linkHref;a.textContent=linkText+' \u2192';a.style.cssText='display:block;width:100%;padding:13px;border-radius:10px;background:#E8A020;color:#08111E;font-size:.9rem;font-weight:700;text-decoration:none;margin-bottom:10px';
+  var b=document.createElement('button');b.type='button';b.textContent='Schliessen';b.style.cssText='width:100%;padding:11px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit';
+  b.addEventListener('click',function(){if(ov.parentNode)ov.parentNode.removeChild(ov);});
+  box.appendChild(d);box.appendChild(a);box.appendChild(b);ov.appendChild(box);
+  ov.addEventListener('click',function(e){if(e.target===ov&&ov.parentNode)ov.parentNode.removeChild(ov);});
+  document.body.appendChild(ov);
 }
 function clerkSignOut(){
   if(!window.Clerk)return;
