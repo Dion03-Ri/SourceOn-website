@@ -45,98 +45,163 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --dark:#08111E;--dark2:#0A1626;--dark3:#0F2238;
-  --gold:#E8A020;--gold-h:#f0b840;--gold-dim:rgba(232,160,32,.12);--gold-b:rgba(232,160,32,.3);
-  --muted:#94A3B8;--body:#64748B;
-  --green:#10B981;--red:#EF4444;--amber:#F59E0B;
-  --r:16px;
-  --ease:cubic-bezier(0.4,0,0.2,1);
+  --navy:#0F2238;--navy-d:#091929;
+  --gold:#E8A020;--gold-h:#f0b840;
+  --line:#1E3A5F;
+  --gray:#64748B;--gray2:#94A3B8;
+  --white:#FFFFFF;
 }
-body{font-family:'Inter',-apple-system,sans-serif;background:var(--dark2);color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased}
-a{color:var(--gold);text-decoration:none}
+html{-webkit-text-size-adjust:100%}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--navy);color:var(--white);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.5}
+a{color:var(--gold);text-decoration:none;transition:color .15s ease}
 ::selection{background:var(--gold);color:#1a1a1a}
+.wrap{max-width:960px;margin:0 auto;padding:0 32px}
 
-/* TOP NAV */
-.topnav{background:var(--dark3);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.topnav-logo{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#fff;cursor:pointer;text-decoration:none}
-.topnav-logo span{color:var(--gold)}
-.topnav-right{display:flex;align-items:center;gap:16px}
-.topnav-company{font-size:.82rem;color:var(--muted);font-weight:500}
-.btn-logout{padding:8px 18px;border-radius:100px;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:var(--muted);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s}
-.btn-logout:hover{border-color:var(--gold);color:var(--gold)}
-.btn-back{padding:8px 18px;border-radius:100px;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:var(--muted);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-.btn-back:hover{border-color:rgba(255,255,255,.3);color:#fff}
+/* ── HEADER ── */
+.hdr{height:60px;border-bottom:1px solid var(--line);display:flex;align-items:center}
+.hdr-inner{display:flex;align-items:center;justify-content:space-between;width:100%}
+.hdr-left,.hdr-right{flex:1;display:flex;align-items:center;gap:18px}
+.hdr-right{justify-content:flex-end}
+.hdr-center{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--gray)}
+.hdr-link{font-size:.82rem;color:var(--gray2);font-weight:500}
+.hdr-link:hover{color:var(--white)}
+.hdr-email{font-size:.8rem;color:var(--gray);font-weight:500;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-/* AUTH GATE */
-.auth-gate{display:flex;align-items:center;justify-content:center;min-height:80vh;padding:24px}
-.auth-gate-card{background:var(--dark3);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:48px;text-align:center;max-width:460px;width:100%}
-.auth-gate-card h2{font-size:1.4rem;font-weight:700;margin-bottom:12px}
-.auth-gate-card p{font-size:.9rem;color:var(--muted);line-height:1.7}
-.auth-gate-card .status-icon{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:24px}
-.status-icon.pending{background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.2)}
+/* ── GREETING ── */
+.greet{padding:44px 0 28px;display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.greet-hi{font-size:clamp(24px,3.4vw,32px);font-weight:800;letter-spacing:-.025em;color:var(--white)}
+.greet-date{font-size:.85rem;color:var(--gray);font-weight:500;padding-bottom:5px}
+.cta-line{display:flex;justify-content:flex-end;padding-bottom:40px}
+.cta{display:inline-flex;align-items:center;gap:8px;background:var(--gold);color:#0F172A;font-size:.86rem;font-weight:700;font-family:inherit;padding:11px 22px;border-radius:9px;border:none;cursor:pointer;transition:background .15s ease,transform .15s ease;text-decoration:none}
+.cta:hover{background:var(--gold-h);transform:translateY(-1px);color:#0F172A}
 
-/* MAIN */
-.dash-main{max-width:1100px;margin:0 auto;padding:40px 24px 80px;display:none}
-.dash-title{font-size:clamp(22px,3vw,28px);font-weight:800;margin-bottom:6px;letter-spacing:-.02em}
-.dash-subtitle{font-size:.85rem;color:var(--muted);margin-bottom:36px;line-height:1.6}
-.dash-header{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap;margin-bottom:36px}
-.dash-header .dash-subtitle{margin-bottom:0;max-width:560px}
-.btn-report{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:10px;border:1px solid var(--gold-b);background:rgba(232,160,32,.08);color:var(--gold);font-size:.84rem;font-weight:600;font-family:inherit;text-decoration:none;transition:background .2s,border-color .2s,color .2s;white-space:nowrap;margin-top:2px}
-.btn-report:hover{background:rgba(232,160,32,.16);border-color:var(--gold);color:var(--gold-h)}
-.dash-support{text-align:center;font-size:.8rem;color:var(--body);margin-top:52px;padding-top:24px;border-top:1px solid rgba(255,255,255,.05);line-height:1.7}
-.dash-support a{color:var(--muted);font-weight:600}
-.dash-support a:hover{color:var(--gold)}
+/* ── SECTION 2: FINANCIAL ── */
+.fin{background:var(--navy-d);padding:48px 0}
+.fin-row{display:flex}
+.fin-col{flex:1;padding:0 30px;border-left:1px solid var(--line)}
+.fin-col:first-child{border-left:none;padding-left:0}
+.fin-col:last-child{padding-right:0}
+.fin-num{font-size:clamp(34px,5vw,48px);font-weight:800;letter-spacing:-.035em;color:var(--white);line-height:1}
+.fin-num.gold{color:var(--gold)}
+.fin-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--gray);margin-top:16px}
+.fin-sub{font-size:13px;color:var(--gray);margin-top:7px}
 
-/* OVERVIEW STATS */
-.ov-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px}
-.ov-stat{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:28px 24px;transition:border-color .2s}
-.ov-stat:hover{border-color:rgba(232,160,32,.15)}
-.ov-stat-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
-.ov-stat-value{font-size:1.8rem;font-weight:800;letter-spacing:-.02em}
-.ov-stat-value.gold{color:var(--gold)}
-.ov-stat-value.green{color:#34D399}
-.ov-stat-sub{font-size:.76rem;color:var(--body);margin-top:4px}
+/* ── GENERIC SECTION ── */
+.sec{padding:44px 0}
+.sec-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.sec-title{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:var(--gray)}
+.count-badge{font-size:11px;font-weight:600;color:var(--gray2);background:rgba(148,163,184,.1);border-radius:100px;padding:2px 9px}
+.sec-empty{font-size:.88rem;color:var(--gray);padding:18px 0}
 
-/* TABLE */
-.req-table{width:100%;border-collapse:collapse}
-.req-table th{text-align:left;font-size:.68rem;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.06)}
-.req-table td{font-size:.84rem;padding:14px 12px;border-bottom:1px solid rgba(255,255,255,.04);color:#CBD5E1}
-.status-badge{display:inline-block;padding:4px 12px;border-radius:100px;font-size:.72rem;font-weight:600;letter-spacing:.02em}
-.status-offen{background:rgba(232,160,32,.1);color:var(--gold)}
-.status-gebuendelt{background:rgba(245,158,11,.1);color:#FBBF24}
-.status-vergeben{background:rgba(59,130,246,.1);color:#60A5FA}
-.status-abgeschlossen{background:rgba(16,185,129,.1);color:#34D399}
-.status-abgesagt{background:rgba(239,68,68,.08);color:#FCA5A5}
+/* ── SECTION 3: AGENDA ── */
+.agenda{margin-top:14px}
+.agenda-item{display:flex;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid var(--line);font-size:.88rem}
+.agenda-item:last-child{border-bottom:none}
+.agenda-dot{width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.agenda-date{color:var(--white);font-weight:600;white-space:nowrap;min-width:96px}
+.agenda-desc{color:var(--gray2);flex:1}
+.agenda-mat{color:var(--gray);white-space:nowrap}
 
-/* STATUS DETAIL ROW */
-.req-status-detail{margin-top:8px;padding:12px 16px;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);border-radius:10px;font-size:.8rem;color:var(--muted);line-height:1.7}
-.req-status-detail .status-msg{display:flex;align-items:flex-start;gap:10px}
-.pulse-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:5px;animation:pulse-glow 2s ease-in-out infinite}
-@keyframes pulse-glow{0%,100%{opacity:.4;box-shadow:0 0 0 0 rgba(232,160,32,.3)}50%{opacity:1;box-shadow:0 0 0 6px rgba(232,160,32,0)}}
-.bundle-detail{margin-top:8px;padding:10px 14px;background:rgba(232,160,32,.04);border:1px solid rgba(232,160,32,.1);border-radius:8px;font-size:.78rem;color:#CBD5E1}
-.bundle-detail strong{color:var(--gold)}
+/* ── SECTION 4: REQUESTS ── */
+.proc-row{border-bottom:1px solid var(--line)}
+.proc-toggle{width:100%;background:none;border:none;color:var(--gray2);font-family:inherit;font-size:.84rem;font-weight:600;padding:15px 0;display:flex;align-items:center;gap:8px;cursor:pointer;transition:color .15s ease;min-height:44px}
+.proc-toggle:hover{color:var(--white)}
+.proc-chev{color:var(--gold);transition:transform .2s ease;font-size:1rem}
+.proc-row.open .proc-chev{transform:rotate(90deg)}
+.proc-detail{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.proc-row.open .proc-detail{max-height:360px}
+.proc-steps{list-style:none;padding:2px 0 20px;display:flex;flex-direction:column;gap:11px}
+.proc-steps li{display:flex;gap:12px;font-size:.85rem;color:var(--gray2);line-height:1.5}
+.proc-n{width:20px;height:20px;border-radius:50%;background:rgba(232,160,32,.12);color:var(--gold);font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.proc-steps strong{color:var(--white);font-weight:600}
 
-/* EMPTY STATE */
-.empty-state{text-align:center;padding:72px 24px;color:var(--body)}
-.empty-state-icon{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;color:var(--muted)}
-.empty-state p{font-size:.9rem;line-height:1.7;max-width:420px;margin:0 auto}
+.req-list{margin-top:6px}
+.req-row{border-bottom:1px solid var(--line)}
+.req-head{display:flex;align-items:center;gap:22px;padding:18px 0;cursor:pointer;transition:opacity .15s ease;min-height:44px}
+.req-head:hover{opacity:.82}
+.req-main{flex:1.5;min-width:0}
+.req-mat{font-size:15px;font-weight:600;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.req-id{font-size:12px;font-weight:600;color:var(--gold);margin-top:3px}
+.req-mid{flex:1;min-width:0}
+.req-v{font-size:14px;font-weight:600;color:var(--white);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.req-v.gold{color:var(--gold)}
+.req-s{font-size:12px;color:var(--gray);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.req-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.req-chev{color:var(--gray);font-size:1.15rem;transition:transform .2s ease}
+.req-row.open .req-chev{transform:rotate(90deg);color:var(--gold)}
+.badge{font-size:11px;font-weight:600;padding:4px 11px;border-radius:100px;letter-spacing:.01em;white-space:nowrap}
+.b-gold{background:rgba(232,160,32,.12);color:var(--gold)}
+.b-blue{background:rgba(96,165,250,.13);color:#93C5FD}
+.b-green{background:rgba(52,211,153,.13);color:#34D399}
+.b-mut{background:rgba(148,163,184,.1);color:var(--gray2)}
 
-.btn-cta{display:inline-block;padding:13px 32px;border:none;border-radius:10px;background:linear-gradient(135deg,var(--gold),var(--gold-h));color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;transition:transform .15s,box-shadow .15s;text-decoration:none;margin-top:20px}
-.btn-cta:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(232,160,32,.25);color:#0F172A}
+.req-detail{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.req-row.open .req-detail{max-height:360px}
+.req-detail-inner{padding:6px 0 26px}
+/* timeline */
+.tl{display:flex;margin:6px 0 20px;max-width:520px}
+.tl-step{flex:1;display:flex;flex-direction:column;align-items:center;gap:9px;position:relative}
+.tl-dot{width:13px;height:13px;border-radius:50%;background:transparent;border:2px solid #33475f;position:relative;z-index:2}
+.tl-step.done .tl-dot,.tl-step.active .tl-dot{background:var(--gold);border-color:var(--gold)}
+.tl-step::before{content:'';position:absolute;top:6px;left:-50%;width:100%;height:2px;background:#2b3d54;z-index:1}
+.tl-step:first-child::before{display:none}
+.tl-step.done::before,.tl-step.active::before{background:var(--gold)}
+.tl-lbl{font-size:11px;color:var(--gray);text-align:center;white-space:nowrap}
+.tl-step.done .tl-lbl,.tl-step.active .tl-lbl{color:var(--gray2)}
+.req-exp{font-size:.85rem;color:var(--gray2);line-height:1.6;max-width:600px}
+.req-when{font-size:.82rem;color:var(--gray);margin-top:8px}
+.req-when strong{color:var(--gray2);font-weight:600}
+.req-links{display:flex;gap:22px;margin-top:18px;font-size:.82rem;font-weight:600}
+.req-links .lk{cursor:pointer;color:var(--gray2);transition:color .15s ease}
+.req-links .lk:hover{color:var(--white)}
+.req-links .lk-danger{color:#94A3B8}
+.req-links .lk-danger:hover{color:#F87171}
+.confirm-inline{display:none;align-items:center;gap:16px;font-size:.82rem;font-weight:600;color:var(--gray2)}
+.confirm-inline.show{display:flex}
+.confirm-inline .yes{color:#F87171;cursor:pointer}
+.confirm-inline .no{color:var(--gray2);cursor:pointer}
 
-/* LOADING */
-.loading{text-align:center;padding:48px;color:var(--body);font-size:.85rem}
+/* empty */
+.req-empty{text-align:center;padding:48px 0}
+.req-empty p{font-size:.92rem;color:var(--gray2);margin-bottom:22px}
+
+/* ── SECTION 5: VERLAUF ── */
+.feed{margin-top:12px}
+.feed-row{display:flex;align-items:center;gap:16px;padding:0 12px;height:40px;font-size:.82rem;border-radius:6px}
+.feed-row:nth-child(odd){background:rgba(255,255,255,.018)}
+.feed-date{color:var(--gray);min-width:78px;white-space:nowrap}
+.feed-mat{color:var(--white);font-weight:500;flex:1.4;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.feed-qty{color:var(--gray2);flex:1;white-space:nowrap}
+.feed-status{color:var(--gray2);flex:1;white-space:nowrap}
+.feed-sav{color:var(--gold);text-align:right;white-space:nowrap;min-width:90px}
+
+/* ── SECTION 6: SUPPORT ── */
+.support{border-top:1px solid var(--line);text-align:center;font-size:.8rem;color:var(--gray);padding:18px 0 40px;line-height:1.7}
+.support a{color:var(--gray2);font-weight:600}
+.support a:hover{color:var(--gold)}
+
+/* ── AUTH GATE / LOADING ── */
+.auth-gate{display:flex;align-items:center;justify-content:center;min-height:70vh;padding:24px}
+.auth-gate-card{text-align:center;max-width:440px;width:100%}
+.auth-gate-card h2{font-size:1.35rem;font-weight:700;margin-bottom:12px}
+.auth-gate-card p{font-size:.9rem;color:var(--gray2);line-height:1.7}
+.status-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.2)}
+.loading{text-align:center;padding:44px;color:var(--gray);font-size:.85rem}
 .loading-dots::after{content:'';animation:dots 1.5s steps(4) infinite}
 @keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
+.dash{display:none}
+.pad-hide{display:none}
 
-.section-title{font-size:1.15rem;font-weight:700;margin-bottom:20px}
-
-@media(max-width:900px){.topnav{padding:0 20px}}
-@media(max-width:768px){.ov-stats{grid-template-columns:1fr}}
 @media(max-width:640px){
-  .topnav-company{display:none}
-  .req-table{font-size:.78rem}
-  .req-table th,.req-table td{padding:8px 6px}
+  .wrap{padding:0 16px}
+  .hdr-center,.hdr-email{display:none}
+  .fin-row{flex-direction:column;gap:28px}
+  .fin-col{border-left:none;padding:0}
+  .fin-col+.fin-col{border-top:1px solid var(--line);padding-top:28px}
+  .req-head{gap:14px}
+  .req-mid{display:none}
+  .agenda-mat{display:none}
+  .feed-qty,.feed-status{display:none}
 }
 
 /* CLERK TRUST VERIFICATION MODAL */
@@ -158,15 +223,6 @@ a{color:var(--gold);text-decoration:none}
 </head>
 <body>
 
-<nav class="topnav">
-  <a href="index.html" class="topnav-logo">Source<span>On</span></a>
-  <div class="topnav-right">
-    <a href="index.html" class="btn-back">← Zur Hauptseite</a>
-    <span class="topnav-company" id="nav-company"></span>
-    <button class="btn-logout" onclick="handleLogout()">Abmelden</button>
-  </div>
-</nav>
-
 <!-- Auth gate -->
 <div class="auth-gate" id="auth-gate">
   <div class="auth-gate-card" id="auth-gate-card">
@@ -174,51 +230,88 @@ a{color:var(--gold);text-decoration:none}
   </div>
 </div>
 
-<main class="dash-main" id="dash-main">
-  <div class="dash-header">
-    <div>
-      <h1 class="dash-title">Kunden-Dashboard</h1>
-      <p class="dash-subtitle">Behalte den Überblick über deine Materialanfragen und Bestellungen.</p>
+<div class="dash" id="dash">
+  <!-- SECTION 1: HEADER -->
+  <header class="hdr">
+    <div class="wrap hdr-inner">
+      <div class="hdr-left"><a href="index.html" class="hdr-link">← Zurück zur Website</a></div>
+      <div class="hdr-center">Kunden-Dashboard</div>
+      <div class="hdr-right"><span class="hdr-email" id="hdr-email"></span><a href="#" class="hdr-link" onclick="handleLogout();return false">Abmelden</a></div>
     </div>
-    <a href="kontakt.html" class="btn-report">Weiteres Material melden →</a>
+  </header>
+
+  <div class="wrap">
+    <div class="greet">
+      <div class="greet-hi" id="greet-hi">Guten Tag.</div>
+      <div class="greet-date" id="greet-date"></div>
+    </div>
+    <div class="cta-line"><a href="kontakt.html" class="cta">Weiteres Material melden →</a></div>
   </div>
 
-  <div class="ov-stats">
-    <div class="ov-stat">
-      <div class="ov-stat-label">Aktive Anfragen</div>
-      <div class="ov-stat-value gold" id="stat-active">0</div>
-      <div class="ov-stat-sub" id="stat-active-sub">Offene und gebündelte Anfragen</div>
-    </div>
-    <div class="ov-stat">
-      <div class="ov-stat-label">Abgeschlossene Bestellungen</div>
-      <div class="ov-stat-value green" id="stat-done">0</div>
-      <div class="ov-stat-sub" id="stat-done-sub">Erfolgreich abgeschlossen</div>
-    </div>
-    <div class="ov-stat">
-      <div class="ov-stat-label">Gesamte Ersparnis</div>
-      <div class="ov-stat-value" id="stat-savings" style="color:#fff">--</div>
-      <div class="ov-stat-sub" id="stat-savings-sub">Noch keine Ersparnis verfügbar</div>
+  <!-- SECTION 2: FINANCIAL OVERVIEW -->
+  <div class="fin">
+    <div class="wrap">
+      <div class="fin-row">
+        <div class="fin-col">
+          <div class="fin-num" id="fin-earned">CHF 0</div>
+          <div class="fin-label">Erzielte Ersparnis</div>
+          <div class="fin-sub" id="fin-earned-sub">Noch kein Zuschlag</div>
+        </div>
+        <div class="fin-col">
+          <div class="fin-num" id="fin-potential">CHF 0</div>
+          <div class="fin-label">Einsparpotenzial</div>
+          <div class="fin-sub">Garantiertes Minimum bei Zuschlag</div>
+        </div>
+        <div class="fin-col">
+          <div class="fin-num" id="fin-active">0</div>
+          <div class="fin-label">Aktive Anfragen</div>
+          <div class="fin-sub" id="fin-active-sub">0 abgeschlossen</div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <h2 class="section-title">Deine Materialanfragen</h2>
-  <div id="table-loading" class="loading"><span class="loading-dots">Anfragen werden geladen</span></div>
-  <div id="table-empty" class="empty-state" style="display:none">
-    <div class="empty-state-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
-    <p>Du hast noch keine Materialanfragen gestellt. Melde jetzt deinen Bedarf.</p>
-    <a href="kontakt.html" class="btn-cta">Bedarf melden</a>
-  </div>
-  <div style="overflow-x:auto">
-    <table class="req-table" id="req-table" style="display:none">
-      <thead><tr><th>Datum</th><th>Material</th><th>Menge</th><th>Lieferzeitraum</th><th>Status</th></tr></thead>
-      <tbody id="req-body"></tbody>
-    </table>
+  <!-- SECTION 3: BEVORSTEHEND -->
+  <div class="wrap sec" id="sec-agenda">
+    <div class="sec-head"><span class="sec-title">Bevorstehend</span></div>
+    <div class="agenda" id="agenda"></div>
   </div>
 
-  <div class="dash-support">
-    Fragen zu deinen Anfragen? Schreib uns: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> &nbsp;·&nbsp; Antwort innerhalb von 48 Stunden
+  <!-- SECTION 4: ANFRAGEN -->
+  <div class="wrap sec">
+    <div class="sec-head"><span class="sec-title">Anfragen</span><span class="count-badge" id="req-count">0</span></div>
+
+    <div class="proc-row" id="proc-row">
+      <button type="button" class="proc-toggle" onclick="toggleProc()">Wie funktioniert der Prozess?<span class="proc-chev">›</span></button>
+      <div class="proc-detail">
+        <ol class="proc-steps">
+          <li><span class="proc-n">1</span><span><strong>Bündelung</strong> — wir suchen weitere Baufirmen mit ähnlichem Bedarf.</span></li>
+          <li><span class="proc-n">2</span><span><strong>Ausschreibung</strong> — verifizierte Lieferanten geben verdeckte Angebote ab.</span></li>
+          <li><span class="proc-n">3</span><span><strong>Zuschlag</strong> — das beste Angebot über deinem Mindestrabatt gewinnt automatisch.</span></li>
+          <li><span class="proc-n">4</span><span><strong>Lieferung</strong> — der Lieferant koordiniert die Lieferung direkt mit dir.</span></li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="req-list" id="req-list"></div>
+
+    <div class="req-empty" id="req-empty" style="display:none">
+      <p>Noch keine Anfragen. Melde deinen ersten Materialbedarf.</p>
+      <a href="kontakt.html" class="cta">Materialbedarf melden →</a>
+    </div>
   </div>
-</main>
+
+  <!-- SECTION 5: VERLAUF -->
+  <div class="wrap sec" id="sec-feed" style="display:none">
+    <div class="sec-head"><span class="sec-title">Verlauf</span></div>
+    <div class="feed" id="feed"></div>
+  </div>
+
+  <!-- SECTION 6: SUPPORT -->
+  <div class="wrap">
+    <div class="support">Fragen zu deinen Anfragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+  </div>
+</div>
 
 <script src="material-i18n.js"></script>
 <script src="tiers.js"></script>
@@ -236,281 +329,302 @@ var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{
 var currentUserId=null;
 var _matCatalogMap={};
 
+// ── Helpers (null-safe) ──
+var _WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
+var _MON=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+function fmtCHF(n){return 'CHF '+Math.round(n).toLocaleString('de-CH');}
+function fmtAgenda(d){return _WD[d.getDay()]+', '+d.getDate()+'. '+_MON[d.getMonth()];}
+function fmtDMY(d){return d.getDate()+'. '+_MON[d.getMonth()]+' '+d.getFullYear();}
+function fmtShort(d){return d.getDate()+'. '+_MON[d.getMonth()];}
+function esc(s){if(s==null)return '';var d=document.createElement('div');d.textContent=String(s);return d.innerHTML;}
+function matNameFor(r){
+  var n='--';
+  if(r.sourceon_id&&_matCatalogMap[r.sourceon_id]){
+    n=_matCatalogMap[r.sourceon_id].bezeichnung;
+    var dl=localStorage.getItem('sourceon-lang')||'de';
+    if(dl!=='de'&&window.MAT_I18N&&window.MAT_I18N[r.sourceon_id]&&window.MAT_I18N[r.sourceon_id][dl]){n=window.MAT_I18N[r.sourceon_id][dl];}
+  }
+  return n;
+}
+function reqEstValue(r){
+  var rp=(r.sourceon_id&&_matCatalogMap[r.sourceon_id])?_matCatalogMap[r.sourceon_id].richtpreis_chf:null;
+  var m=parseFloat(r.menge);
+  if(rp==null||rp===''||isNaN(Number(rp))||isNaN(m))return null;
+  return m*Number(rp);
+}
+function reqGuaranteedSaving(r){
+  var v=reqEstValue(r);var rab=parseFloat(r.committed_min_rabatt);
+  if(v==null||isNaN(rab))return null;
+  return v*rab;
+}
+function isActive(r){return r.status==='offen'||r.status==='gebuendelt';}
+function badgeFor(s){
+  if(s==='offen')return {t:'Sammelt Partner',c:'b-gold'};
+  if(s==='gebuendelt')return {t:'Ausgeschrieben',c:'b-blue'};
+  if(s==='vergeben')return {t:'Zuschlag',c:'b-green'};
+  if(s==='abgeschlossen')return {t:'Abgeschlossen',c:'b-green'};
+  if(s==='storniert'||s==='abgesagt')return {t:'Storniert',c:'b-mut'};
+  if(s==='abgelaufen')return {t:'Abgelaufen',c:'b-mut'};
+  return {t:s||'--',c:'b-mut'};
+}
+function timelineStates(s){
+  var st=['future','future','future','future'];st[0]='done';
+  if(s==='offen'){st[1]='active';}
+  else if(s==='gebuendelt'){st[1]='done';st[2]='active';}
+  else if(s==='vergeben'){st[1]='done';st[2]='done';st[3]='active';}
+  else if(s==='abgeschlossen'){st[1]='done';st[2]='done';st[3]='done';}
+  else if(s==='abgelaufen'){st[1]='active';}
+  return st;
+}
+function statusText(r,bundle){
+  var s=r.status;
+  if(s==='offen')return 'Wir suchen Bündelungspartner mit ähnlichem Bedarf.';
+  if(s==='gebuendelt')return 'Deine Anfrage ist Teil eines aktiven Bündels — Lieferanten reichen Angebote ein.';
+  if(s==='vergeben')return 'Zuschlag erteilt — dein Lieferant koordiniert die Lieferung direkt mit dir.';
+  if(s==='abgeschlossen')return 'Bestellung abgeschlossen — die Lieferung ist erfolgt.';
+  if(s==='abgelaufen')return 'Diese Ausschreibung ist abgelaufen. Deine Anfrage wird neu gebündelt.';
+  if(s==='storniert'||s==='abgesagt')return 'Diese Anfrage wurde storniert.';
+  return '';
+}
+function reqDeadline(r,bundle){
+  if(r.status==='gebuendelt'&&bundle&&bundle.bid_deadline){var d=new Date(bundle.bid_deadline);if(!isNaN(d))return {label:'Angebotsfrist',date:d};}
+  if(r.status==='offen'&&r.liefer_zeitraum_von&&window.SO_TIMING){var ce=window.SO_TIMING.collectionEnd(r.liefer_zeitraum_von,r.created_at);if(ce)return {label:'Ausschreibung spätestens',date:ce};}
+  return null;
+}
+
 (async function init(){
-  // Wait for Clerk
   await new Promise(function(resolve){
     var elapsed=0;
     var iv=setInterval(function(){
       elapsed+=200;
-      if(window.Clerk){
-        clearInterval(iv);
-        if(typeof window.Clerk.load==='function'){
-          window.Clerk.load().then(function(){resolve();}).catch(function(){resolve();});
-        }else{resolve();}
-        return;
-      }
+      if(window.Clerk){clearInterval(iv);if(typeof window.Clerk.load==='function'){window.Clerk.load().then(function(){resolve();}).catch(function(){resolve();});}else{resolve();}return;}
       if(elapsed>=10000){clearInterval(iv);resolve();}
     },200);
   });
 
-  // Global trust listener
   if(window.Clerk){
     window.Clerk.addListener(function _globalTrustWatch(){
       if(_clerkTrustActive)return;
       if(!window.Clerk.client||!window.Clerk.client.signIn)return;
       var si=window.Clerk.client.signIn;
       if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){
-        _clerkTrustActive=true;
-        _clerkSignInResource=si;
+        _clerkTrustActive=true;_clerkSignInResource=si;
         try{window.Clerk.closeSignIn();}catch(e){}
         _clerkSendVerificationCode();
       }
     });
   }
 
-  if(!window.Clerk||!window.Clerk.user){
-    showGate('login');
-    return;
-  }
-
+  if(!window.Clerk||!window.Clerk.user){showGate('login');return;}
   currentUserId=window.Clerk.user.id;
 
-  // Link pending customer row if present in localStorage
-  soLog('[SourceOn] localStorage keys on load — sourceon_pending_customer_link:',localStorage.getItem('sourceon_pending_customer_link'));
+  // Link pending customer row if present
   var _pendingCustId=localStorage.getItem('sourceon_pending_customer_link');
   if(_pendingCustId){
-    soLog('[SourceOn] Found pending customer link in localStorage:',_pendingCustId);
     try{
       var chk=await sb.from('customers').select('id,user_id').eq('id',_pendingCustId).single();
-      if(chk.data&&!chk.data.user_id){
-        var upd=await sb.from('customers').update({user_id:currentUserId}).eq('id',_pendingCustId);
-        if(!upd.error){soLog('[SourceOn] Customer linked successfully:',_pendingCustId,'->',currentUserId);}
-        else{soLog('[SourceOn] Customer link error:',upd.error);}
-      }else{soLog('[SourceOn] Customer already linked or not found, clearing localStorage');}
+      if(chk.data&&!chk.data.user_id){await sb.from('customers').update({user_id:currentUserId}).eq('id',_pendingCustId);}
       localStorage.removeItem('sourceon_pending_customer_link');
     }catch(e){console.error('[SourceOn] Customer link error:',e);}
   }
-
-  // Claim any unlinked customer rows that match this user's email address
-  // (covers form submissions made before/without login)
+  // Claim unlinked rows by email
   try{
     var _userEmail=window.Clerk.user.primaryEmailAddress?window.Clerk.user.primaryEmailAddress.emailAddress:null;
-    if(_userEmail){
-      var _claim=await sb.from('customers').update({user_id:currentUserId}).eq('email',_userEmail).is('user_id',null).select('id');
-      soLog('[SourceOn] Email-claim result:',JSON.stringify({data:_claim.data,error:_claim.error}));
-    }
+    if(_userEmail){await sb.from('customers').update({user_id:currentUserId}).eq('email',_userEmail).is('user_id',null).select('id');}
   }catch(e){console.error('[SourceOn] Email-claim error:',e);}
 
-  // Check customer record
+  // Customer record
   var custRes=await sb.from('customers').select('id,firmenname').eq('user_id',currentUserId);
-  soLog('[SourceOn] customers query result:',JSON.stringify({data:custRes.data,error:custRes.error}));
-
-  if(custRes.error||!custRes.data||custRes.data.length===0){
-    showGate('no_customer');
-    return;
-  }
-
+  if(custRes.error||!custRes.data||custRes.data.length===0){showGate('no_customer');return;}
   var customers=custRes.data;
   var customerIds=customers.map(function(c){return c.id;});
-  soLog('[SourceOn] customerIds to query material_requests:',customerIds);
 
-  // Show company name in nav
-  document.getElementById('nav-company').textContent=customers[0].firmenname||'';
+  // Reveal dashboard
+  var email=window.Clerk.user.primaryEmailAddress?window.Clerk.user.primaryEmailAddress.emailAddress:'';
+  document.getElementById('hdr-email').textContent=email;
+  document.getElementById('greet-hi').textContent='Guten Tag'+(customers[0].firmenname?', '+customers[0].firmenname:'')+'.';
+  document.getElementById('greet-date').textContent=new Date().toLocaleDateString('de-CH',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   document.getElementById('auth-gate').style.display='none';
-  document.getElementById('dash-main').style.display='block';
+  document.getElementById('dash').style.display='block';
 
-  // Load material catalog
-  var catRes=await sb.from('material_catalog').select('sourceon_id,bezeichnung,einheit');
-  if(catRes.data){
-    catRes.data.forEach(function(m){_matCatalogMap[m.sourceon_id]=m;});
+  // Catalog (incl. richtpreis_chf)
+  var catRes=await sb.from('material_catalog').select('sourceon_id,bezeichnung,einheit,richtpreis_chf');
+  if(catRes.data){catRes.data.forEach(function(m){_matCatalogMap[m.sourceon_id]=m;});}
+
+  // Requests
+  var reqRes=await sb.from('material_requests').select('*').in('customer_id',customerIds).order('created_at',{ascending:false});
+  var requests=(reqRes.data&&!reqRes.error)?reqRes.data:[];
+
+  // Bundles (incl. bid_deadline)
+  var bundleMap={},bundleIds=[];
+  requests.forEach(function(r){if(r.bundle_id)bundleIds.push(r.bundle_id);});
+  if(bundleIds.length>0){
+    try{var bRes=await sb.from('bundles').select('id,status,bid_deadline').in('id',bundleIds);if(bRes.data){bRes.data.forEach(function(b){bundleMap[b.id]=b;});}}catch(e){}
+  }
+  // Commissions (actual savings)
+  var commMap={},reqIds=requests.map(function(r){return r.id;});
+  if(reqIds.length>0){
+    try{var cRes=await sb.from('commissions').select('kunden_ersparnis_netto,material_request_id').in('material_request_id',reqIds);
+      if(cRes.data){cRes.data.forEach(function(c){if(c.kunden_ersparnis_netto)commMap[c.material_request_id]=(commMap[c.material_request_id]||0)+Number(c.kunden_ersparnis_netto);});}
+    }catch(e){}
   }
 
-  // Load material requests
-  var reqRes=await sb.from('material_requests').select('*').in('customer_id',customerIds).order('created_at',{ascending:false});
-  soLog('[SourceOn] material_requests query result:',JSON.stringify({data:reqRes.data,error:reqRes.error,count:reqRes.data?reqRes.data.length:null}));
+  renderFinancial(requests,bundleMap,commMap);
+  renderAgenda(requests,bundleMap);
+  renderRequests(requests,bundleMap);
+  renderFeed(requests,commMap);
+})();
 
-  document.getElementById('table-loading').style.display='none';
+function renderFinancial(requests,bundleMap,commMap){
+  var earned=0,earnedCount=0,potential=0,active=0,done=0;
+  requests.forEach(function(r){
+    if(commMap[r.id]){earned+=commMap[r.id];earnedCount++;}
+    if(isActive(r)){active++;var gs=reqGuaranteedSaving(r);if(gs!=null)potential+=gs;}
+    if(r.status==='vergeben'||r.status==='abgeschlossen')done++;
+  });
+  document.getElementById('fin-earned').textContent=fmtCHF(earned);
+  document.getElementById('fin-earned-sub').textContent=earned>0?('aus '+earnedCount+' Bestellung'+(earnedCount!==1?'en':'')):'Noch kein Zuschlag';
+  var pe=document.getElementById('fin-potential');
+  pe.textContent=potential>0?fmtCHF(potential):'CHF 0';
+  pe.className='fin-num'+(potential>0?' gold':'');
+  document.getElementById('fin-active').textContent=active;
+  document.getElementById('fin-active-sub').textContent=done+' abgeschlossen';
+}
 
-  if(reqRes.error||!reqRes.data||reqRes.data.length===0){
-    document.getElementById('table-empty').style.display='block';
+function renderAgenda(requests,bundleMap){
+  var now=new Date();var events=[];
+  requests.forEach(function(r){
+    if(r.status==='offen'&&r.liefer_zeitraum_von&&window.SO_TIMING){
+      var ce=window.SO_TIMING.collectionEnd(r.liefer_zeitraum_von,r.created_at);
+      if(ce&&ce>now)events.push({date:ce,desc:'Ausschreibung spätestens',mat:matNameFor(r)});
+    }else if(r.status==='gebuendelt'&&r.bundle_id&&bundleMap[r.bundle_id]&&bundleMap[r.bundle_id].bid_deadline){
+      var bd=new Date(bundleMap[r.bundle_id].bid_deadline);
+      if(!isNaN(bd)&&bd>now)events.push({date:bd,desc:'Angebotsfrist endet',mat:matNameFor(r)});
+    }
+  });
+  events.sort(function(a,b){return a.date-b.date;});
+  events=events.slice(0,5);
+  var el=document.getElementById('agenda');
+  if(events.length===0){el.innerHTML='<div class="sec-empty">Keine bevorstehenden Ereignisse.</div>';return;}
+  var html='';
+  events.forEach(function(e){
+    html+='<div class="agenda-item"><span class="agenda-dot"></span><span class="agenda-date">'+esc(fmtAgenda(e.date))+'</span><span class="agenda-desc">'+esc(e.desc)+'</span><span class="agenda-mat">'+esc(e.mat)+'</span></div>';
+  });
+  el.innerHTML=html;
+}
+
+function renderRequests(requests,bundleMap){
+  document.getElementById('req-count').textContent=requests.length;
+  // process explainer only for new customers (< 3)
+  if(requests.length>=3){document.getElementById('proc-row').style.display='none';}
+  var list=document.getElementById('req-list');
+  if(requests.length===0){
+    document.getElementById('req-empty').style.display='block';
+    document.getElementById('proc-row').style.display='none';
     return;
   }
-
-  // Fetch bundle details separately for requests that have a bundle_id
-  var _bundleMap={};
-  var _bundleIds=[];
-  reqRes.data.forEach(function(r){if(r.bundle_id)_bundleIds.push(r.bundle_id);});
-  if(_bundleIds.length>0){
-    try{
-      var bRes=await sb.from('bundles').select('id,gesamtvolumen,einheit,ziel_mindestrabatt,status').in('id',_bundleIds);
-      if(bRes.data){bRes.data.forEach(function(b){_bundleMap[b.id]=b;});}
-    }catch(e){}
-  }
-
-  var requests=reqRes.data;
-
-  // Compute stats
-  var activeCount=0;
-  var doneCount=0;
-  var requestIds=[];
+  var html='';
   requests.forEach(function(r){
-    requestIds.push(r.id);
-    if(r.status==='offen'||r.status==='gebuendelt')activeCount++;
-    if(r.status==='abgeschlossen')doneCount++;
+    var bundle=r.bundle_id?bundleMap[r.bundle_id]:null;
+    var mat=matNameFor(r);
+    var b=badgeFor(r.status);
+    var menge=(r.menge!=null&&r.menge!=='')?(esc(r.menge)+(r.einheit?' '+esc(r.einheit):'')):'--';
+    var zeit='--';
+    if(r.liefer_zeitraum_von&&r.liefer_zeitraum_bis)zeit=fmtShort(new Date(r.liefer_zeitraum_von))+' – '+fmtShort(new Date(r.liefer_zeitraum_bis));
+    else if(r.liefer_zeitraum_von)zeit='Ab '+fmtShort(new Date(r.liefer_zeitraum_von));
+    else if(r.liefer_zeitraum_bis)zeit='Bis '+fmtShort(new Date(r.liefer_zeitraum_bis));
+    var gs=reqGuaranteedSaving(r);
+    var pct=(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt)))?Math.round(parseFloat(r.committed_min_rabatt)*100):null;
+    var savTop=(gs!=null)?('mind. '+fmtCHF(gs)+' Ersparnis'):(pct!=null?'Rabatt garantiert':'--');
+    var savBot=(pct!=null)?(pct+'% garantiert'):'';
+
+    // timeline
+    var st=timelineStates(r.status);var tlLbl=['Eingegangen','Bündelung','Ausschreibung','Zuschlag'];
+    var tl='<div class="tl">';for(var i=0;i<4;i++){tl+='<div class="tl-step '+st[i]+'"><div class="tl-dot"></div><div class="tl-lbl">'+tlLbl[i]+'</div></div>';}tl+='</div>';
+    // deadline line
+    var dl=reqDeadline(r,bundle);
+    var whenHtml=dl?'<div class="req-when"><strong>'+esc(dl.label)+':</strong> '+esc(fmtDMY(dl.date))+'</div>':'';
+    // links
+    var subj='Frage zu Anfrage '+(r.sourceon_id||'')+' — '+mat;
+    var mailto='mailto:info@sourceon.ch?subject='+encodeURIComponent(subj);
+    var links='<div class="req-links">';
+    if(isActive(r)){
+      links+='<span class="lk lk-danger" onclick="askCancel(\''+esc(r.id)+'\')">Anfrage stornieren</span>'
+        +'<span class="confirm-inline" id="cf-'+esc(r.id)+'">Wirklich stornieren? <span class="yes" onclick="doCancel(\''+esc(r.id)+'\')">Ja, stornieren</span> <span class="no" onclick="hideCancel(\''+esc(r.id)+'\')">Abbrechen</span></span>';
+    }
+    links+='<a class="lk" href="'+esc(mailto)+'">Frage zu dieser Anfrage →</a></div>';
+
+    html+='<div class="req-row" data-id="'+esc(r.id)+'">'
+      +'<div class="req-head">'
+        +'<div class="req-main"><div class="req-mat">'+esc(mat)+'</div>'+(r.sourceon_id?'<div class="req-id">'+esc(r.sourceon_id)+'</div>':'')+'</div>'
+        +'<div class="req-mid"><div class="req-v">'+menge+'</div><div class="req-s">'+esc(zeit)+'</div></div>'
+        +'<div class="req-mid"><div class="req-v gold">'+esc(savTop)+'</div><div class="req-s">'+esc(savBot)+'</div></div>'
+        +'<div class="req-right"><span class="badge '+b.c+'">'+esc(b.t)+'</span><span class="req-chev">›</span></div>'
+      +'</div>'
+      +'<div class="req-detail"><div class="req-detail-inner">'+tl
+        +'<div class="req-exp">'+esc(statusText(r,bundle))+'</div>'+whenHtml+links
+      +'</div></div>'
+    +'</div>';
   });
+  list.innerHTML=html;
+  // expand/collapse via delegation
+  list.addEventListener('click',function(e){
+    var head=e.target.closest('.req-head');
+    if(!head)return;
+    head.parentNode.classList.toggle('open');
+  });
+}
 
-  document.getElementById('stat-active').textContent=activeCount;
-  document.getElementById('stat-active-sub').textContent=activeCount===1?'Offene oder gebündelte Anfrage':'Offene und gebündelte Anfragen';
-  document.getElementById('stat-done').textContent=doneCount;
-  document.getElementById('stat-done-sub').textContent=doneCount===1?'Erfolgreich abgeschlossen':'Erfolgreich abgeschlossen';
+function renderFeed(requests,commMap){
+  if(requests.length<3){return;}
+  document.getElementById('sec-feed').style.display='block';
+  var html='';
+  requests.forEach(function(r){
+    var d=r.created_at?new Date(r.created_at):null;
+    var date=d?fmtShort(d):'--';
+    var mat=matNameFor(r);
+    var menge=(r.menge!=null&&r.menge!=='')?(esc(r.menge)+(r.einheit?' '+esc(r.einheit):'')):'--';
+    var b=badgeFor(r.status);
+    var sav=commMap[r.id]?fmtCHF(commMap[r.id]):'—';
+    html+='<div class="feed-row"><span class="feed-date">'+esc(date)+'</span><span class="feed-mat">'+esc(mat)+'</span><span class="feed-qty">'+menge+'</span><span class="feed-status">'+esc(b.t)+'</span><span class="feed-sav">'+esc(sav)+'</span></div>';
+  });
+  document.getElementById('feed').innerHTML=html;
+}
 
-  // Try to fetch savings from commissions
+// ── Stornieren (inline confirm) ──
+function askCancel(id){var el=document.getElementById('cf-'+id);if(el)el.classList.add('show');
+  var row=document.querySelector('.req-row[data-id="'+id+'"]');if(row){var lk=row.querySelector('.lk-danger');if(lk)lk.style.display='none';}}
+function hideCancel(id){var el=document.getElementById('cf-'+id);if(el)el.classList.remove('show');
+  var row=document.querySelector('.req-row[data-id="'+id+'"]');if(row){var lk=row.querySelector('.lk-danger');if(lk)lk.style.display='';}}
+async function doCancel(id){
   try{
-    var commRes=await sb.from('commissions').select('kunden_ersparnis_netto,material_request_id').in('material_request_id',requestIds);
-    if(!commRes.error&&commRes.data&&commRes.data.length>0){
-      var totalSavings=0;
-      commRes.data.forEach(function(c){
-        if(c.kunden_ersparnis_netto)totalSavings+=Number(c.kunden_ersparnis_netto);
-      });
-      if(totalSavings>0){
-        document.getElementById('stat-savings').textContent='CHF '+totalSavings.toLocaleString('de-CH',{minimumFractionDigits:0,maximumFractionDigits:0});
-        document.getElementById('stat-savings').style.color='#34D399';
-        document.getElementById('stat-savings-sub').textContent='Netto-Ersparnis durch Bündelung';
-      }
-    }
-  }catch(e){
-    // Keep fallback text
-  }
+    var res=await sb.from('material_requests').update({status:'storniert'}).eq('id',id);
+    if(res.error){alert('Stornierung fehlgeschlagen: '+res.error.message);return;}
+    window.location.reload();
+  }catch(e){alert('Stornierung fehlgeschlagen. Bitte kontaktiere info@sourceon.ch');}
+}
 
-  // Fetch bid counts for all bundles referenced by these requests
-  var bundleIds=[];
-  requests.forEach(function(r){if(r.bundle_id)bundleIds.push(r.bundle_id);});
-  var bidCounts={};
-  if(bundleIds.length>0){
-    try{
-      var bidRes=await sb.from('bids').select('bundle_id').in('bundle_id',bundleIds);
-      if(bidRes.data){bidRes.data.forEach(function(b){bidCounts[b.bundle_id]=(bidCounts[b.bundle_id]||0)+1;});}
-    }catch(e){}
-  }
-
-  // Render table
-  document.getElementById('req-table').style.display='table';
-  var tbody=document.getElementById('req-body');
-
-  var statusLabels={offen:'Sammelt Partner',gebuendelt:'Gebündelt',vergeben:'Vergeben',abgeschlossen:'Abgeschlossen',abgesagt:'Abgesagt'};
-  var statusClasses={offen:'offen',gebuendelt:'gebuendelt',vergeben:'vergeben',abgeschlossen:'abgeschlossen',abgesagt:'abgesagt'};
-
-  requests.forEach(function(r){
-    var tr=document.createElement('tr');
-
-    var datum=r.created_at?new Date(r.created_at).toLocaleDateString('de-CH'):'--';
-
-    var matName='--';
-    if(r.sourceon_id&&_matCatalogMap[r.sourceon_id]){
-      matName=_matCatalogMap[r.sourceon_id].bezeichnung;
-      // Sprache aus der Website-Auswahl übernehmen (Dashboard hat keine eigene Umschaltung)
-      var _dl=localStorage.getItem('sourceon-lang')||'de';
-      if(_dl!=='de'&&window.MAT_I18N&&window.MAT_I18N[r.sourceon_id]&&window.MAT_I18N[r.sourceon_id][_dl]){
-        matName=window.MAT_I18N[r.sourceon_id][_dl];
-      }
-    }
-
-    var menge='--';
-    if(r.menge){
-      menge=r.menge+(r.einheit?' '+r.einheit:'');
-    }
-
-    var zeitraum='--';
-    if(r.liefer_zeitraum_von&&r.liefer_zeitraum_bis){
-      zeitraum=new Date(r.liefer_zeitraum_von).toLocaleDateString('de-CH')+' – '+new Date(r.liefer_zeitraum_bis).toLocaleDateString('de-CH');
-    }else if(r.liefer_zeitraum_von){
-      zeitraum='Ab '+new Date(r.liefer_zeitraum_von).toLocaleDateString('de-CH');
-    }else if(r.liefer_zeitraum_bis){
-      zeitraum='Bis '+new Date(r.liefer_zeitraum_bis).toLocaleDateString('de-CH');
-    }
-
-    var sl=statusLabels[r.status]||r.status||'--';
-    var sc=statusClasses[r.status]||'offen';
-
-    // Build status detail
-    var detail='';
-    if(r.status==='offen'&&!r.bundle_id){
-      // "Ausschreibung spätestens am …" — dieselbe Formel wie in der Edge Function (timing.js).
-      var ceLine='';
-      if(r.liefer_zeitraum_von&&window.SO_TIMING){
-        var ce=window.SO_TIMING.collectionEnd(r.liefer_zeitraum_von,r.created_at);
-        if(ce)ceLine='<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.05);color:#FBBF24;font-weight:600">Ausschreibung spätestens am '+ce.toLocaleDateString('de-CH')+'</div>';
-      }
-      detail='<div class="req-status-detail"><div class="status-msg"><span class="pulse-dot"></span><span>Sammelt Bündelungspartner — wir suchen weitere Baufirmen mit ähnlichem Bedarf, um dir den bestmöglichen Mengenrabatt zu sichern.</span></div>'+ceLine+'</div>';
-    }else if((r.status==='gebuendelt'||r.status==='offen')&&r.bundle_id){
-      var bundle=_bundleMap[r.bundle_id]||{};
-      var bids=bidCounts[r.bundle_id]||0;
-      var volStr=bundle.gesamtvolumen?Number(bundle.gesamtvolumen).toLocaleString('de-CH')+' '+(bundle.einheit||''):'';
-      var discStr=bundle.ziel_mindestrabatt?Math.round(bundle.ziel_mindestrabatt*100)+'%':'';
-      detail='<div class="req-status-detail"><div class="status-msg"><span style="color:#FBBF24;font-size:1rem;flex-shrink:0">⚡</span><span>Teil eines aktiven Bündels — '+bids+' von Anbieter'+(bids!==1?'n':'')+' eingegangen</span></div>';
-      if(volStr||discStr){
-        detail+='<div class="bundle-detail">';
-        if(volStr)detail+='Gesamtvolumen: <strong>'+esc(volStr)+'</strong>';
-        if(volStr&&discStr)detail+=' · ';
-        if(discStr)detail+='Ziel-Rabatt: <strong>'+discStr+'</strong>';
-        detail+='</div>';
-      }
-      detail+='</div>';
-    }else if(r.status==='vergeben'){
-      detail='<div class="req-status-detail"><div class="status-msg"><span style="color:#34D399;font-size:1rem;flex-shrink:0">✓</span><span>Lieferant ausgewählt — Lieferung in Vorbereitung</span></div></div>';
-    }
-
-    var matIdSub=r.sourceon_id?'<div style="font-size:.68rem;font-weight:600;color:#94A3B8;margin-top:2px">'+esc(r.sourceon_id)+'</div>':'';
-    var rabattSub='';
-    if(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt))){
-      var _rp=Math.round(parseFloat(r.committed_min_rabatt)*100);
-      rabattSub='<div style="font-size:.7rem;font-weight:600;color:#E8A020;margin-top:3px">Garantierter Mindestrabatt: '+_rp+'% (netto, nach Provision)</div>';
-    }
-    tr.innerHTML='<td>'+esc(datum)+'</td>'
-      +'<td>'+esc(matName)+matIdSub+rabattSub+'</td>'
-      +'<td>'+esc(menge)+'</td>'
-      +'<td>'+esc(zeitraum)+'</td>'
-      +'<td><span class="status-badge status-'+sc+'">'+esc(sl)+'</span>'+detail+'</td>';
-    tbody.appendChild(tr);
-  });
-})();
+function toggleProc(){document.getElementById('proc-row').classList.toggle('open');localStorage.setItem('sourceon_process_seen','1');}
 
 function showGate(type){
   var card=document.getElementById('auth-gate-card');
   if(type==='login'){
-    card.innerHTML='<div class="status-icon pending" style="background:rgba(232,160,32,.1)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8A020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h2>Anmeldung erforderlich</h2><p>Bitte melde dich an, um auf das Kunden-Dashboard zuzugreifen.</p><br><button class="btn-cta" onclick="clerkSignIn()" style="margin:0 auto">Anmelden</button><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';
+    card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8A020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h2>Anmeldung erforderlich</h2><p>Bitte melde dich an, um auf das Kunden-Dashboard zuzugreifen.</p><br><a href="#" class="cta" onclick="clerkSignIn();return false" style="margin:0 auto">Anmelden</a><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';
   }else{
-    card.innerHTML='<div class="status-icon pending"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><h2>Kein Kundenprofil gefunden</h2><p>Hast du bereits eine Materialanfrage gestellt? Verknüpfe dein Konto über das Kontaktformular.</p><br><a href="kontakt.html" class="btn-cta" style="margin:0 auto">Zum Kontaktformular</a><br><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';
+    card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><h2>Kein Kundenprofil gefunden</h2><p>Hast du bereits eine Materialanfrage gestellt? Verknüpfe dein Konto über das Kontaktformular.</p><br><a href="kontakt.html" class="cta" style="margin:0 auto">Zum Kontaktformular</a><br><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';
   }
 }
-
-function clerkSignIn(){
-  if(!window.Clerk)return;
-  window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});
-}
-
-async function handleLogout(){
-  if(window.Clerk){await window.Clerk.signOut();}
-  window.location.href='index.html';
-}
-
-function esc(s){
-  if(!s)return '';
-  var d=document.createElement('div');
-  d.textContent=String(s);
-  return d.innerHTML;
-}
+function clerkSignIn(){if(!window.Clerk)return;window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});}
+async function handleLogout(){if(window.Clerk){await window.Clerk.signOut();}window.location.href='index.html';}
 
 // CLERK needs_client_trust HANDLER
 var _clerkSignInResource=null;
 var _clerkTrustActive=false;
 var _clerkTrustStrategy='email_code';
-
 async function _clerkSendVerificationCode(){
   _clerkTrustStrategy='email_code';
   try{
-    var si=_clerkSignInResource;
-    if(!si)return;
+    var si=_clerkSignInResource;if(!si)return;
     await si.prepareSecondFactor({strategy:'email_code'});
     document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';
     _clerkShowTrustModal();
@@ -520,20 +634,10 @@ async function _clerkSendVerificationCode(){
       _clerkTrustStrategy='phone_code';
       document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';
       _clerkShowTrustModal();
-    }catch(e2){
-      _clerkTrustActive=false;
-      alert('Verifizierung konnte nicht gestartet werden: '+(e2.errors?e2.errors[0].longMessage:e2.message));
-    }
+    }catch(e2){_clerkTrustActive=false;alert('Verifizierung konnte nicht gestartet werden: '+(e2.errors?e2.errors[0].longMessage:e2.message));}
   }
 }
-
-function _clerkShowTrustModal(){
-  document.getElementById('clerk-trust-overlay').classList.add('open');
-  document.getElementById('clerk-trust-code').value='';
-  document.getElementById('clerk-trust-error').textContent='';
-  document.getElementById('clerk-trust-code').focus();
-}
-
+function _clerkShowTrustModal(){document.getElementById('clerk-trust-overlay').classList.add('open');document.getElementById('clerk-trust-code').value='';document.getElementById('clerk-trust-error').textContent='';document.getElementById('clerk-trust-code').focus();}
 async function clerkTrustVerify(){
   var code=document.getElementById('clerk-trust-code').value.trim();
   if(!code||!_clerkSignInResource){return;}
@@ -545,34 +649,14 @@ async function clerkTrustVerify(){
     if(result.status==='complete'){
       await window.Clerk.setActive({session:result.createdSessionId});
       document.getElementById('clerk-trust-overlay').classList.remove('open');
-      _clerkTrustActive=false;
-      window.location.reload();
-      return;
-    }else{
-      document.getElementById('clerk-trust-error').textContent='Unerwarteter Status: '+result.status;
-    }
-  }catch(e){
-    var msg=e.errors?e.errors[0].longMessage:(e.message||'Ungültiger Code');
-    document.getElementById('clerk-trust-error').textContent=msg;
-  }
+      _clerkTrustActive=false;window.location.reload();return;
+    }else{document.getElementById('clerk-trust-error').textContent='Unerwarteter Status: '+result.status;}
+  }catch(e){var msg=e.errors?e.errors[0].longMessage:(e.message||'Ungültiger Code');document.getElementById('clerk-trust-error').textContent=msg;}
   btn.disabled=false;btn.textContent='Bestätigen';
 }
-
-async function clerkTrustResend(){
-  document.getElementById('clerk-trust-error').textContent='';
-  await _clerkSendVerificationCode();
-}
-
-function clerkTrustCancel(){
-  document.getElementById('clerk-trust-overlay').classList.remove('open');
-  _clerkSignInResource=null;
-  _clerkTrustActive=false;
-}
-document.addEventListener('keydown',function(e){
-  if(e.key==='Enter'&&document.getElementById('clerk-trust-overlay').classList.contains('open')){
-    clerkTrustVerify();
-  }
-});
+async function clerkTrustResend(){document.getElementById('clerk-trust-error').textContent='';await _clerkSendVerificationCode();}
+function clerkTrustCancel(){document.getElementById('clerk-trust-overlay').classList.remove('open');_clerkSignInResource=null;_clerkTrustActive=false;}
+document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.getElementById('clerk-trust-overlay').classList.contains('open')){clerkTrustVerify();}});
 </script>
 
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
