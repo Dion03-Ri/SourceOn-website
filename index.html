@@ -599,31 +599,40 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 /* TECHNOLOGIE */
 .tech-section{background:var(--dark3);position:relative;overflow:hidden}
-/* ===== SVG Buendelungs-Animation (Apple-Style) ===== */
+/* ===== SVG Buendelungs-Animation (Apple-Style, 9s Loop mit Rueckfluss) ===== */
 .bundle-anim{display:block;width:100%;height:auto;margin:0 auto;overflow:visible;font-family:'Inter',-apple-system,sans-serif}
 .bundle-anim .ba-card{fill:#0F2238;stroke:#E8A020;stroke-width:1.5;filter:url(#ba-shadow)}
 .bundle-anim .ba-name{fill:#fff;font-size:13px;font-weight:500}
 .bundle-anim .ba-vol{fill:#E8A020;font-size:12px;font-weight:500}
 .bundle-anim .ba-hubtext{fill:#0F2238;font-size:14px;font-weight:600}
 .bundle-anim .ba-savetext{fill:#0F2238;font-size:11px;font-weight:600}
-.bundle-anim .ba-node{opacity:0;animation:ba-fade 8s ease-in-out infinite}
-.bundle-anim .ba-supplier{opacity:0;animation:ba-fade 8s ease-in-out infinite}
-.bundle-anim .ba-supcard{animation:ba-suphi 8s ease-in-out infinite}
-.bundle-anim .ba-hub{opacity:0;transform-box:fill-box;transform-origin:center;animation:ba-fadeop 8s ease-in-out infinite, ba-pulse 8s ease-in-out infinite}
-.bundle-anim .ba-line{stroke:#E8A020;stroke-width:1.5;opacity:0;stroke-dasharray:6 8;animation:ba-linein 8s ease-in-out infinite, ba-flow 1.4s linear infinite}
-.bundle-anim .ba-supline{stroke:#E8A020;stroke-width:2;fill:none;stroke-dasharray:130;stroke-dashoffset:130;animation:ba-supdraw 8s ease-in-out infinite}
-.bundle-anim .ba-chevron{opacity:0;animation:ba-chevron 8s ease-in-out infinite}
-.bundle-anim .ba-save{opacity:0;transform-box:fill-box;transform-origin:center;animation:ba-save 8s ease-in-out infinite}
-@keyframes ba-fade{0%{opacity:0;transform:translateY(10px)}12%{opacity:1;transform:translateY(0)}90%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-6px)}}
-@keyframes ba-fadeop{0%{opacity:0}12%{opacity:1}90%{opacity:1}100%{opacity:0}}
-@keyframes ba-pulse{0%,37%{transform:scale(1)}44%{transform:scale(1.06)}50%,100%{transform:scale(1)}}
-@keyframes ba-linein{0%,12%{opacity:0}20%{opacity:.5}90%{opacity:.5}100%{opacity:0}}
+.bundle-anim .ba-node{opacity:0;animation:ba-fade 9s ease-in-out infinite}
+.bundle-anim .ba-supplier{opacity:0;animation:ba-fade 9s ease-in-out infinite}
+.bundle-anim .ba-supcard{animation:ba-suphi 9s ease-in-out infinite}
+.bundle-anim .ba-hub{opacity:0;transform-box:fill-box;transform-origin:center;animation:ba-fadeop 9s ease-in-out infinite, ba-pulse 9s ease-in-out infinite}
+.bundle-anim .ba-line{stroke:#E8A020;stroke-width:1.5;opacity:0;stroke-dasharray:6 8;animation:ba-linein 9s ease-in-out infinite, ba-flow 1.4s linear infinite}
+.bundle-anim .ba-supline{stroke:#E8A020;stroke-width:2;fill:none;stroke-dasharray:130;stroke-dashoffset:130;animation:ba-supdraw 9s ease-in-out infinite}
+.bundle-anim .ba-chevron{opacity:0;animation:ba-chevron 9s ease-in-out infinite}
+.bundle-anim .ba-chevback{opacity:0;animation:ba-chevback 9s ease-in-out infinite}
+.bundle-anim .ba-dot{opacity:0;fill:#E8A020}
+.bundle-anim .ba-dot--a{animation:ba-dot-a 9s ease-in-out infinite}
+.bundle-anim .ba-dot--b{animation:ba-dot-b 9s ease-in-out infinite}
+.bundle-anim .ba-dot--c{animation:ba-dot-c 9s ease-in-out infinite}
+.bundle-anim .ba-save{opacity:0;transform-box:fill-box;transform-origin:center;animation:ba-save 9s ease-in-out infinite}
+@keyframes ba-fade{0%{opacity:0;transform:translateY(10px)}10%{opacity:1;transform:translateY(0)}94%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-6px)}}
+@keyframes ba-fadeop{0%{opacity:0}10%{opacity:1}94%{opacity:1}100%{opacity:0}}
+@keyframes ba-pulse{0%,30%{transform:scale(1)}36%{transform:scale(1.06)}43%,100%{transform:scale(1)}}
+@keyframes ba-linein{0%,10%{opacity:0}18%{opacity:.5}94%{opacity:.5}100%{opacity:0}}
 @keyframes ba-flow{to{stroke-dashoffset:-28}}
-@keyframes ba-supdraw{0%,50%{stroke-dashoffset:130;opacity:0}52%{opacity:1}62%{stroke-dashoffset:0}90%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
-@keyframes ba-chevron{0%,52%{opacity:0;transform:translateX(0)}56%{opacity:1}86%{opacity:1;transform:translateX(108px)}100%{opacity:0;transform:translateX(108px)}}
-@keyframes ba-suphi{0%,50%{stroke-opacity:.55}56%{stroke-opacity:1}64%{stroke-opacity:.55}100%{stroke-opacity:.55}}
-@keyframes ba-save{0%,62%{opacity:0;transform:scale(.85)}70%{opacity:1;transform:scale(1)}90%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
-@media(prefers-reduced-motion:reduce){.bundle-anim *{animation:none!important;opacity:1!important}.bundle-anim .ba-supline{stroke-dashoffset:0!important}}
+@keyframes ba-supdraw{0%,38%{stroke-dashoffset:130;opacity:0}40%{opacity:1}50%{stroke-dashoffset:0}94%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes ba-chevron{0%,40%{opacity:0;transform:translateX(0)}44%{opacity:1}50%{transform:translateX(108px)}55%{opacity:0;transform:translateX(108px)}100%{opacity:0}}
+@keyframes ba-suphi{0%,40%{stroke-opacity:.55}46%{stroke-opacity:1}54%{stroke-opacity:.55}100%{stroke-opacity:.55}}
+@keyframes ba-chevback{0%,54%{opacity:0;transform:translateX(0)}58%{opacity:1}68%{opacity:1;transform:translateX(-108px)}72%{opacity:0;transform:translateX(-108px)}100%{opacity:0}}
+@keyframes ba-dot-a{0%,55%{opacity:0;transform:translate(0,0)}59%{opacity:1}70%{opacity:1;transform:translate(-147px,-101px)}74%{opacity:0;transform:translate(-147px,-101px)}100%{opacity:0}}
+@keyframes ba-dot-b{0%,55%{opacity:0;transform:translate(0,0)}59%{opacity:1}70%{opacity:1;transform:translate(-143px,0)}74%{opacity:0;transform:translate(-143px,0)}100%{opacity:0}}
+@keyframes ba-dot-c{0%,55%{opacity:0;transform:translate(0,0)}59%{opacity:1}70%{opacity:1;transform:translate(-147px,101px)}74%{opacity:0;transform:translate(-147px,101px)}100%{opacity:0}}
+@keyframes ba-save{0%,70%{opacity:0;transform:scale(.85)}78%{opacity:1;transform:scale(1)}94%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.bundle-anim *{animation:none!important;opacity:1!important}.bundle-anim .ba-supline{stroke-dashoffset:0!important}.bundle-anim .ba-dot{opacity:0!important}}
 .tech-section::before{content:'';position:absolute;top:20%;right:-15%;width:600px;height:600px;background:radial-gradient(circle,rgba(232,160,32,.08) 0%,transparent 65%);pointer-events:none}
 .tech-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
 
@@ -994,6 +1003,11 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <!-- hub -> supplier line + moving chevron -->
         <line class="ba-supline" x1="452" y1="200" x2="572" y2="200"/>
         <polygon class="ba-chevron" points="452,193 465,200 452,207" fill="#E8A020"/>
+        <!-- return flow: chevron back to hub + dots flowing out to each customer -->
+        <polygon class="ba-chevback" points="572,193 559,200 572,207" fill="#E8A020"/>
+        <circle class="ba-dot ba-dot--a" cx="352" cy="176" r="4.5"/>
+        <circle class="ba-dot ba-dot--b" cx="348" cy="200" r="4.5"/>
+        <circle class="ba-dot ba-dot--c" cx="352" cy="224" r="4.5"/>
         <!-- customer nodes -->
         <g class="ba-node">
           <rect class="ba-card" x="30" y="45" width="175" height="60" rx="12"/>
