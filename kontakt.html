@@ -897,12 +897,11 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="label" data-i18n="kontakt_badge">Materialbedarf melden</div>
         <h2 class="h2" data-i18n="kontakt_title" style="font-size:clamp(24px,3vw,38px)">Jetzt Materialbedarf melden</h2>
         <p class="contact-desc" data-i18n="kontakt_desc">Du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.</p>
-        <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 5.93 5.93l1.3-1.31a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span data-i18n="kontakt_phone">+41 44 000 00 00</span></div>
         <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span data-i18n="kontakt_email">info@SourceOn.ch</span></div>
         <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="kontakt_location">Zürich, Schweiz</span></div>
         <div style="margin-top:32px;padding:20px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:var(--r)">
           <p style="font-size:.83rem;color:var(--navy);font-weight:600;margin-bottom:4px" data-i18n="kontakt_how_title">Wie es funktioniert</p>
-          <p style="font-size:.8rem;color:var(--body);line-height:1.6" data-i18n-html="kontakt_how_text">Sende uns einfach deinen Materialbedarf in eigenen Worten — kein spezielles Format nötig. Wir kümmern uns um den Rest.</p>
+          <p style="font-size:.8rem;color:var(--body);line-height:1.6" data-i18n-html="kontakt_how_text">Wähle dein Material aus dem Katalog, gib Menge und Lieferzeitraum an — fertig. Du siehst sofort deinen garantierten Netto-Mindestrabatt, bevor du absendest.</p>
         </div>
       </div>
       <div>
@@ -927,19 +926,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <div class="form-error" data-i18n="form_error_material" id="e-c-material">Bitte mindestens ein Material mit Menge angeben</div>
               <button type="button" class="add-material-btn" id="add-material-btn" data-i18n-html="form_add_material" onclick="addMaterialRow()">＋ Weiteres Material hinzufügen</button>
               <p style="font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.6" data-i18n-html="form_material_hint">Dein Material ist nicht dabei? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.</p>
-            </div>
-            <div class="form-group">
-              <label class="form-label" data-i18n-html="form_file_label">Materialbedarf hochladen <span style="font-weight:400;color:var(--body)">(optional — Scan, PDF oder Excel deiner Materialliste)</span></label>
-              <div class="file-upload-zone" id="file-upload-zone">
-                <input type="file" id="c-file" accept=".pdf,.xlsx,.xls,.csv,.jpg,.jpeg,.png" onchange="handleFileSelect(this)"/>
-                <div class="file-upload-icon"><svg class="ic-clip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></div>
-                <div class="file-upload-text" data-i18n="form_file_drop">Datei hier ablegen oder klicken zum Auswählen</div>
-                <div class="file-upload-hint" data-i18n="form_file_hint">PDF, Excel, CSV, JPG, PNG — max. 10 MB</div>
-              </div>
-              <div class="file-selected" id="file-selected">
-                <span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span><span id="file-name"></span>
-                <span class="file-remove" data-i18n="form_file_remove" onclick="removeFile()">Datei entfernen</span>
-              </div>
             </div>
             <div class="form-grid">
               <div class="form-group"><label class="form-label" data-i18n="form_timing_label">Gewünschter Lieferzeitraum *</label>
@@ -977,6 +963,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <div class="form-error" id="e-c-commitment">Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.</div>
             </div>
             <button type="submit" class="btn btn-gold btn-lg btn-full" data-i18n="form_submit">Materialbedarf jetzt melden →</button>
+            <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;text-align:center;font-style:italic" data-i18n="form_post_submit">Nach dem Absenden siehst du sofort deinen garantierten Mindestrabatt und kannst den Status deiner Anfrage jederzeit in deinem Dashboard verfolgen.</p>
             <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;font-style:italic" data-i18n="form_bundle_hint">Hinweis: Wird dein Bedarf mit anderen Baufirmen gebündelt, richtet sich deine individuelle Ersparnis nach deinem Volumenanteil am Gesamtbündel.</p>
           </form>
             <div class="form-success" id="success-contact" data-i18n-html="form_success"><span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — deine Anfrage ist eingegangen. Verfolge den Status jederzeit in deinem Dashboard. Sobald dein Bündel steht, erhältst du dein konkretes Angebot.</div>
@@ -1348,19 +1335,6 @@ function validateMaterials(){
   });
   document.getElementById('e-c-material').style.display=ok?'none':'block';return ok;
 }
-function handleFileSelect(input){
-  const file=input.files[0];if(!file)return;
-  if(file.size>10*1024*1024){var fl=window._currentLang||localStorage.getItem('sourceon-lang')||'de';alert(typeof FILE_ALERTS!=='undefined'&&FILE_ALERTS[fl]?FILE_ALERTS[fl]:'Datei ist groesser als 10 MB.');input.value='';return;}
-  document.getElementById('file-name').textContent=file.name;
-  document.getElementById('file-selected').classList.add('show');
-}
-function removeFile(){document.getElementById('c-file').value='';document.getElementById('file-name').textContent='';document.getElementById('file-selected').classList.remove('show');}
-(function(){
-  const zone=document.getElementById('file-upload-zone');if(!zone)return;
-  zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('drag-over');});
-  zone.addEventListener('dragleave',()=>zone.classList.remove('drag-over'));
-  zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('drag-over');const file=e.dataTransfer.files[0];if(file){document.getElementById('c-file').files=e.dataTransfer.files;handleFileSelect(document.getElementById('c-file'));}});
-})();
 var _supabase=window.supabase.createClient(
   'https://mttzsqtuaisdjisjxrey.supabase.co',
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U',
@@ -1707,8 +1681,8 @@ window.I18N={
   de:{
     nav_home:"Home",nav_process:"Wie es funktioniert",nav_calculator:"Kalkulator",nav_materials:"Materialien",nav_for_whom:"Für wen",nav_supplier:"Lieferant werden",nav_about:"Über uns",nav_contact:"Kontakt",nav_cta:"Materialbedarf melden",
     kontakt_badge:"Materialbedarf melden",kontakt_title:"Jetzt Materialbedarf melden",kontakt_desc:"Du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.",
-    kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zürich, Schweiz",
-    kontakt_how_title:"Wie es funktioniert",kontakt_how_text:"Sende uns einfach deinen Materialbedarf in eigenen Worten — kein spezielles Format nötig. Wir kümmern uns um den Rest.",
+    kontakt_email:"info@SourceOn.ch",kontakt_location:"Zürich, Schweiz",
+    kontakt_how_title:"Wie es funktioniert",kontakt_how_text:"Wähle dein Material aus dem Katalog, gib Menge und Lieferzeitraum an — fertig. Du siehst sofort deinen garantierten Netto-Mindestrabatt, bevor du absendest.",
     form_company:"Firmenname *",form_contact_person:"Ansprechperson *",form_email:"E-Mail *",form_phone:"Telefon *",
     form_material_qty:"Material &amp; Menge *",
     form_error_required:"Pflichtfeld",form_error_email:"Gültige E-Mail",form_error_material:"Bitte mindestens ein Material mit Menge angeben",form_error_select:"Bitte wählen",
@@ -1717,13 +1691,12 @@ window.I18N={
     form_placeholder_qty:"z.B. 200 m³",
     form_add_material:"＋ Weiteres Material hinzufügen",
     form_material_hint:'Dein Material ist nicht dabei? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.',
-    form_file_label:'Materialbedarf hochladen <span style="font-weight:400;color:var(--body)">(optional — Scan, PDF oder Excel deiner Materialliste)</span>',
-    form_file_drop:"Datei hier ablegen oder klicken zum Auswählen",form_file_hint:"PDF, Excel, CSV, JPG, PNG — max. 10 MB",form_file_remove:"Datei entfernen",
     form_timing_label:"Gewünschter Lieferzeitraum *",
     form_timing_asap:"So schnell wie möglich",form_timing_1week:"Innerhalb 1 Woche",form_timing_2weeks:"Innerhalb 2 Wochen",form_timing_1month:"Innerhalb 1 Monat",form_timing_flexible:"Flexibel — nach Absprache",
     form_address_label:"Lieferadresse / Kanton *",form_placeholder_address:"z.B. Zürich, Baustelle Hauptstr. 5",
     form_project_label:'Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span>',form_placeholder_project:"Kurze Beschreibung des Projekts und weitere Anforderungen…",
     form_submit:"Materialbedarf jetzt melden →",
+    form_post_submit:"Nach dem Absenden siehst du sofort deinen garantierten Mindestrabatt und kannst den Status deiner Anfrage jederzeit in deinem Dashboard verfolgen.",
     form_bundle_hint:"Hinweis: Wird dein Bedarf mit anderen Baufirmen gebündelt, richtet sich deine individuelle Ersparnis nach deinem Volumenanteil am Gesamtbündel.",
     form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — deine Anfrage ist eingegangen. Verfolge den Status jederzeit in deinem Dashboard. Sobald dein Bündel steht, erhältst du dein konkretes Angebot.',
     footer_desc:"Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.",
@@ -1736,8 +1709,8 @@ window.I18N={
   en:{
     nav_home:"Home",nav_process:"How it works",nav_calculator:"Calculator",nav_materials:"Materials",nav_for_whom:"For whom",nav_supplier:"Become a supplier",nav_about:"About us",nav_contact:"Contact",nav_cta:"Report material needs",
     kontakt_badge:"Report material needs",kontakt_title:"Report your material needs now",kontakt_desc:"You only pay when we save you money. You see your guaranteed net minimum discount right away and track the status anytime in your dashboard.",
-    kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Switzerland",
-    kontakt_how_title:"How it works",kontakt_how_text:"Simply send us your material requirements in your own words — no special format needed. We take care of the rest.",
+    kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Switzerland",
+    kontakt_how_title:"How it works",kontakt_how_text:"Select your material from the catalog, enter quantity and delivery timeframe — done. You immediately see your guaranteed net minimum discount before submitting.",
     form_company:"Company name *",form_contact_person:"Contact person *",form_email:"Email *",form_phone:"Phone *",
     form_material_qty:"Material &amp; quantity *",
     form_error_required:"Required field",form_error_email:"Valid email required",form_error_material:"Please specify at least one material with quantity",form_error_select:"Please select",
@@ -1746,14 +1719,13 @@ window.I18N={
     form_placeholder_qty:"e.g. 200 m³",
     form_add_material:"＋ Add another material",
     form_material_hint:'Your material is not listed? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Ask us about custom procurement</a> — we are happy to check if we can bundle it for you.',
-    form_file_label:'Upload material list <span style="font-weight:400;color:var(--body)">(optional — scan, PDF or Excel of your material list)</span>',
-    form_file_drop:"Drop file here or click to select",form_file_hint:"PDF, Excel, CSV, JPG, PNG — max. 10 MB",form_file_remove:"Remove file",
     form_timing_label:"Desired delivery period *",
     form_timing_asap:"As soon as possible",form_timing_1week:"Within 1 week",form_timing_2weeks:"Within 2 weeks",form_timing_1month:"Within 1 month",form_timing_flexible:"Flexible — by arrangement",
     form_address_label:"Delivery address / canton *",form_placeholder_address:"e.g. Zurich, construction site Hauptstr. 5",
     form_project_label:'Project description <span style="font-weight:400;color:var(--body)">(optional)</span>',
     form_placeholder_project:"Brief description of the project and further requirements…",
     form_submit:"Report material needs now →",
+    form_post_submit:"After submitting, you immediately see your guaranteed minimum discount and can track your request status anytime in your dashboard.",
     form_bundle_hint:"Note: If your demand is bundled with other construction firms, your individual savings depend on your volume share of the total bundle.",
     form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Thank you — your request has been received. Track the status anytime in your dashboard. As soon as your bundle is ready, you\'ll receive your concrete offer.',
     footer_desc:"Swiss B2B procurement intermediary for the construction industry. You only pay when we save you money.",
@@ -1766,8 +1738,8 @@ window.I18N={
   fr:{
     nav_home:"Accueil",nav_process:"Comment ça marche",nav_calculator:"Calculateur",nav_materials:"Matériaux",nav_for_whom:"Pour qui",nav_supplier:"Devenir fournisseur",nav_about:"À propos",nav_contact:"Contact",nav_cta:"Déclarer un besoin",
     kontakt_badge:"Déclarer un besoin",kontakt_title:"Déclarez vos besoins en matériaux",kontakt_desc:"Vous ne payez que si nous vous faisons économiser. Vous voyez immédiatement votre rabais minimum net garanti et suivez le statut à tout moment dans votre tableau de bord.",
-    kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Suisse",
-    kontakt_how_title:"Comment ça marche",kontakt_how_text:"Envoyez-nous simplement vos besoins en matériaux dans vos propres mots — aucun format spécifique requis. Nous nous occupons du reste.",
+    kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Suisse",
+    kontakt_how_title:"Comment ça marche",kontakt_how_text:"Sélectionnez votre matériau dans le catalogue, indiquez la quantité et le délai de livraison — c'est tout. Vous voyez immédiatement votre remise minimale nette garantie avant d'envoyer.",
     form_company:"Nom de l'entreprise *",form_contact_person:"Personne de contact *",form_email:"E-mail *",form_phone:"Téléphone *",
     form_material_qty:"Matériau &amp; quantité *",
     form_error_required:"Champ obligatoire",form_error_email:"E-mail valide requis",form_error_material:"Veuillez indiquer au moins un matériau avec quantité",form_error_select:"Veuillez sélectionner",
@@ -1776,13 +1748,12 @@ window.I18N={
     form_placeholder_qty:"p.ex. 200 m³",
     form_add_material:"＋ Ajouter un autre matériau",
     form_material_hint:'Votre matériau n\'est pas listé ? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Demandez-nous un approvisionnement personnalisé</a> — nous vérifions volontiers si nous pouvons le regrouper pour vous.',
-    form_file_label:'Télécharger la liste de matériaux <span style="font-weight:400;color:var(--body)">(optionnel — scan, PDF ou Excel de votre liste)</span>',
-    form_file_drop:"Déposez le fichier ici ou cliquez pour sélectionner",form_file_hint:"PDF, Excel, CSV, JPG, PNG — max. 10 Mo",form_file_remove:"Supprimer le fichier",
     form_timing_label:"Délai de livraison souhaité *",
     form_timing_asap:"Dès que possible",form_timing_1week:"Sous 1 semaine",form_timing_2weeks:"Sous 2 semaines",form_timing_1month:"Sous 1 mois",form_timing_flexible:"Flexible — à convenir",
     form_address_label:"Adresse de livraison / canton *",form_placeholder_address:"p.ex. Zurich, chantier Hauptstr. 5",
     form_project_label:'Description du projet <span style="font-weight:400;color:var(--body)">(optionnel)</span>',form_placeholder_project:"Brève description du projet et exigences supplémentaires…",
     form_submit:"Déclarer le besoin maintenant →",
+    form_post_submit:"Après envoi, vous voyez immédiatement votre remise minimale garantie et pouvez suivre le statut de votre demande à tout moment dans votre tableau de bord.",
     form_bundle_hint:"Remarque : Si votre besoin est regroupé avec d'autres entreprises de construction, vos économies individuelles dépendent de votre part de volume dans le regroupement total.",
     form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Merci — votre demande a bien été reçue. Suivez le statut à tout moment dans votre tableau de bord. Dès que votre regroupement est prêt, vous recevez votre offre concrète.',
     footer_desc:"Intermédiaire B2B suisse pour l'approvisionnement dans le secteur de la construction. Vous ne payez que lorsque nous vous faisons économiser.",
@@ -1795,8 +1766,8 @@ window.I18N={
   it:{
     nav_home:"Home",nav_process:"Come funziona",nav_calculator:"Calcolatore",nav_materials:"Materiali",nav_for_whom:"Per chi",nav_supplier:"Diventare fornitore",nav_about:"Chi siamo",nav_contact:"Contatto",nav_cta:"Segnalare fabbisogno",
     kontakt_badge:"Segnalare fabbisogno",kontakt_title:"Segnala ora il tuo fabbisogno di materiali",kontakt_desc:"Paghi solo se ti facciamo risparmiare. Vedi subito il tuo sconto minimo netto garantito e segui lo stato in qualsiasi momento nella tua dashboard.",
-    kontakt_phone:"+41 44 000 00 00",kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurigo, Svizzera",
-    kontakt_how_title:"Come funziona",kontakt_how_text:"Inviaci semplicemente il tuo fabbisogno di materiali con parole tue — nessun formato speciale richiesto. Ci occupiamo noi del resto.",
+    kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurigo, Svizzera",
+    kontakt_how_title:"Come funziona",kontakt_how_text:"Seleziona il tuo materiale dal catalogo, inserisci quantità e tempistica di consegna — fatto. Vedi immediatamente il tuo sconto minimo netto garantito prima di inviare.",
     form_company:"Nome azienda *",form_contact_person:"Persona di contatto *",form_email:"E-mail *",form_phone:"Telefono *",
     form_material_qty:"Materiale &amp; quantità *",
     form_error_required:"Campo obbligatorio",form_error_email:"E-mail valida richiesta",form_error_material:"Indicare almeno un materiale con quantità",form_error_select:"Selezionare",
@@ -1805,13 +1776,12 @@ window.I18N={
     form_placeholder_qty:"es. 200 m³",
     form_add_material:"＋ Aggiungere un altro materiale",
     form_material_hint:'Il tuo materiale non è elencato? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Chiedici un approvvigionamento personalizzato</a> — verificheremo volentieri se possiamo raggrupparlo per te.',
-    form_file_label:'Caricare lista materiali <span style="font-weight:400;color:var(--body)">(opzionale — scansione, PDF o Excel della tua lista)</span>',
-    form_file_drop:"Trascina il file qui o clicca per selezionare",form_file_hint:"PDF, Excel, CSV, JPG, PNG — max. 10 MB",form_file_remove:"Rimuovere file",
     form_timing_label:"Periodo di consegna desiderato *",
     form_timing_asap:"Il prima possibile",form_timing_1week:"Entro 1 settimana",form_timing_2weeks:"Entro 2 settimane",form_timing_1month:"Entro 1 mese",form_timing_flexible:"Flessibile — da concordare",
     form_address_label:"Indirizzo di consegna / cantone *",form_placeholder_address:"es. Zurigo, cantiere Hauptstr. 5",
     form_project_label:'Descrizione del progetto <span style="font-weight:400;color:var(--body)">(opzionale)</span>',form_placeholder_project:"Breve descrizione del progetto e ulteriori requisiti…",
     form_submit:"Segnalare fabbisogno ora →",
+    form_post_submit:"Dopo l'invio, vedi immediatamente il tuo sconto minimo garantito e puoi seguire lo stato della tua richiesta in qualsiasi momento nella tua dashboard.",
     form_bundle_hint:"Nota: Se il tuo fabbisogno viene raggruppato con altre imprese edili, il tuo risparmio individuale dipende dalla tua quota di volume nel raggruppamento totale.",
     form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Grazie — la tua richiesta è stata ricevuta. Segui lo stato in qualsiasi momento nella tua dashboard. Non appena il tuo raggruppamento è pronto, ricevi la tua offerta concreta.',
     footer_desc:"Intermediario B2B svizzero per gli approvvigionamenti nel settore edile. Paghi solo quando ti facciamo risparmiare.",
