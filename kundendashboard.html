@@ -747,8 +747,40 @@ function makePDF(id){
 }
 
 // ── ICS ──
-function icsDate(d){function p(n){return (n<10?'0':'')+n;}return d.getUTCFullYear()+p(d.getUTCMonth()+1)+p(d.getUTCDate())+'T'+p(d.getUTCHours())+p(d.getUTCMinutes())+'00Z';}
-function exportICS(){var lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SourceOn//Dashboard//DE'],n=0;_requests.forEach(function(r){var dl=reqDeadline(r);if(!dl)return;n++;var s=dl.date,e=new Date(s.getTime()+3600000);lines.push('BEGIN:VEVENT','UID:so-'+r.id+'@sourceon.ch','DTSTAMP:'+icsDate(new Date()),'DTSTART:'+icsDate(s),'DTEND:'+icsDate(e),'SUMMARY:'+dl.label+' — '+matNameFor(r),'END:VEVENT');});lines.push('END:VCALENDAR');if(n===0){alert('Keine anstehenden Termine zum Exportieren.');return;}var blob=new Blob([lines.join('\r\n')],{type:'text/calendar'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='sourceon-termine.ics';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);}
+function _p2(n){return (n<10?'0':'')+n;}
+function icsStamp(d){return d.getUTCFullYear()+_p2(d.getUTCMonth()+1)+_p2(d.getUTCDate())+'T'+_p2(d.getUTCHours())+_p2(d.getUTCMinutes())+_p2(d.getUTCSeconds())+'Z';}
+function icsDay(d){return d.getFullYear()+_p2(d.getMonth()+1)+_p2(d.getDate());}
+function icsEsc(s){return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');}
+function exportICS(){
+  var events=[];
+  _requests.forEach(function(r){var dl=reqDeadline(r);if(dl)events.push({r:r,dl:dl});});
+  if(events.length===0){alert('Keine anstehenden Termine zum Exportieren.');return;}
+  var stamp=icsStamp(new Date());
+  var lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SourceOn//Kundendashboard//DE','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+  events.forEach(function(ev){
+    var start=ev.dl.date;                                  // all-day event on the deadline date (local, no TZ shift)
+    var endEx=new Date(start.getFullYear(),start.getMonth(),start.getDate()+1); // DTEND is exclusive → next day
+    var mat=matNameFor(ev.r);
+    var summary=ev.dl.label+' — '+mat+(ev.r.sourceon_id?' ('+ev.r.sourceon_id+')':'');
+    var desc='SourceOn — '+ev.dl.label+' für '+mat+'. Details in deinem Dashboard: sourceon.ch';
+    lines.push(
+      'BEGIN:VEVENT',
+      'UID:so-'+ev.r.id+'-'+icsDay(start)+'@sourceon.ch',
+      'DTSTAMP:'+stamp,
+      'DTSTART;VALUE=DATE:'+icsDay(start),
+      'DTEND;VALUE=DATE:'+icsDay(endEx),
+      'SUMMARY:'+icsEsc(summary),
+      'DESCRIPTION:'+icsEsc(desc),
+      'STATUS:CONFIRMED',
+      'TRANSP:TRANSPARENT',
+      'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(summary),'TRIGGER:-P1D','END:VALARM',
+      'END:VEVENT'
+    );
+  });
+  lines.push('END:VCALENDAR');
+  var blob=new Blob([lines.join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'});
+  var url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='sourceon-termine.ics';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1500);
+}
 
 // ── stornieren ──
 function askCancel(id){var el=document.getElementById('cf-'+id);if(el)el.classList.add('show');var row=document.querySelector('.req-row[data-id="'+id+'"]');if(row){var lk=row.querySelector('.act-danger');if(lk)lk.style.display='none';}}
