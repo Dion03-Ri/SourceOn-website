@@ -233,9 +233,12 @@ a{color:var(--gold);text-decoration:none;transition:color .15s ease}
 .fld>input:focus,.fld>select:focus,.fld>textarea:focus{border-color:var(--gold)}
 .fld select option{background:#0F2238}
 .checks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.chk{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-secondary);padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:border-color .15s ease}
+.chk{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-secondary);padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:border-color .15s ease}
 .chk:hover{border-color:var(--gold-dim)}
-.chk input{accent-color:var(--gold);width:15px;height:15px;flex-shrink:0}
+.chk input[type=checkbox]{-webkit-appearance:none;appearance:none;width:16px;height:16px;flex:0 0 16px;margin:0;border:1.5px solid var(--border-strong,#334);border-radius:4px;background:var(--bg-elevated);cursor:pointer;position:relative;transition:background .15s ease,border-color .15s ease}
+.chk input[type=checkbox]:checked{background:var(--gold);border-color:var(--gold)}
+.chk input[type=checkbox]:checked::after{content:'';position:absolute;left:4.5px;top:1px;width:4px;height:8px;border:solid #08111D;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.chk span{flex:1;min-width:0;line-height:1.35}
 .save-msg{font-size:13px;margin-left:12px}
 .danger-card{background:var(--danger-dim);border:1px solid rgba(239,68,68,0.2);border-radius:var(--radius-md);padding:20px}
 .danger-title{font-size:14px;font-weight:600;color:var(--danger)}
