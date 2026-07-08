@@ -8,7 +8,7 @@
   document.documentElement.style.visibility='hidden';
   window.addEventListener('DOMContentLoaded',function(){
     document.body.innerHTML='';
-    document.body.style.cssText='margin:0;padding:0;min-height:100vh;background:#0F2238;display:flex;align-items:center;justify-content:center;font-family:Inter,-apple-system,sans-serif';
+    document.body.style.cssText='margin:0;padding:0;min-height:100vh;background:#070F1A;display:flex;align-items:center;justify-content:center;font-family:Inter,-apple-system,sans-serif';
     document.documentElement.style.visibility='visible';
     var box=document.createElement('div');
     box.style.cssText='text-align:center;max-width:420px;width:100%;padding:24px';
@@ -18,13 +18,9 @@
       +'<button id="pg-btn" style="width:100%;padding:12px;border-radius:10px;border:none;background:#E8A020;color:#08111E;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer">Zugang</button>'
       +'<div id="pg-err" style="color:#EF4444;font-size:.82rem;margin-top:12px;display:none">Falsches Passwort.</div>';
     document.body.appendChild(box);
-    var inp=document.getElementById('pg-pw');
-    var btn=document.getElementById('pg-btn');
-    var err=document.getElementById('pg-err');
+    var inp=document.getElementById('pg-pw');var btn=document.getElementById('pg-btn');var err=document.getElementById('pg-err');
     function tryAccess(){if(inp.value===PREVIEW_PASSWORD){localStorage.setItem('sourceon_preview_access','granted');window.location.reload();}else{err.style.display='block';inp.value='';}}
-    btn.addEventListener('click',tryAccess);
-    inp.addEventListener('keydown',function(e){if(e.key==='Enter')tryAccess();});
-    inp.focus();
+    btn.addEventListener('click',tryAccess);inp.addEventListener('keydown',function(e){if(e.key==='Enter')tryAccess();});inp.focus();
   });
 })();
 </script>
@@ -34,273 +30,246 @@
 <title>Lieferanten-Dashboard — SourceOn</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
-<script
-  async
-  crossorigin="anonymous"
-  data-clerk-publishable-key="pk_test_dG9sZXJhbnQtc2tpbmstNjIuY2xlcmsuYWNjb3VudHMuZGV2JA"
-  src="https://tolerant-skink-62.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
-  type="text/javascript"
-></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<script async crossorigin="anonymous" data-clerk-publishable-key="pk_test_dG9sZXJhbnQtc2tpbmstNjIuY2xlcmsuYWNjb3VudHMuZGV2JA" src="https://tolerant-skink-62.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js" type="text/javascript"></script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg-base:#08111D;--bg-surface:#0D1E2E;--bg-elevated:#122334;--bg-subtle:#162840;
-  --border:#1E3A5F;--border-subtle:#162840;
-  --text-primary:#F8FAFC;--text-secondary:#94A3B8;--text-muted:#4A6080;
-  --gold:#E8A020;--gold-dim:rgba(232,160,32,0.12);--gold-dim2:rgba(232,160,32,0.06);
-  --success:#22C55E;--success-dim:rgba(34,197,94,0.1);
-  --danger:#EF4444;--danger-dim:rgba(239,68,68,0.1);--warning:#F59E0B;
-  --radius-sm:6px;--radius-md:10px;--radius-lg:16px;
+  --bg:#070F1A;--bg-1:#0C1824;--bg-2:#111F2E;--bg-3:#162840;
+  --border:rgba(255,255,255,0.06);--border-strong:rgba(255,255,255,0.12);
+  --text-1:#F1F5F9;--text-2:#94A3B8;--text-3:#4A6080;
+  --gold:#E8A020;--gold-bg:rgba(232,160,32,0.08);--gold-border:rgba(232,160,32,0.2);
+  --green:#22C55E;--green-bg:rgba(34,197,94,0.08);
+  --amber:#F59E0B;--amber-bg:rgba(245,158,11,0.08);
+  --red:#EF4444;--red-bg:rgba(239,68,68,0.08);
+  --r-sm:6px;--r-md:10px;--r-lg:16px;
 }
-html,body{background:var(--bg-base);color:var(--text-primary);margin:0;padding:0;min-height:100vh}
-body{font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
-a{color:var(--gold);text-decoration:none;transition:color .15s ease}
+html,body{background:var(--bg);color:var(--text-1);font-family:'Inter',-apple-system,sans-serif;font-size:14px;line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit}
 ::selection{background:var(--gold);color:#1a1a1a}
-.dashboard-wrapper{max-width:1320px;margin:0 auto;padding:0 48px}
-.gold{color:var(--gold)}.muted{color:var(--text-muted)}
+.db-wrap{max-width:1200px;margin:0 auto;padding:0 32px}
 
-/* TOP BAR */
-.topbar{position:sticky;top:0;z-index:100;height:60px;background:rgba(8,17,29,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.topbar-inner{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
-.tb-logo{font-size:17px;font-weight:700;color:var(--text-primary);white-space:nowrap;letter-spacing:-.01em}
-.tb-logo span{color:var(--gold)}
-.tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{height:60px;padding:0 22px;font-size:13px;font-weight:500;letter-spacing:.01em;color:var(--text-muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;display:flex;align-items:center;transition:color .15s ease,border-color .15s ease;font-family:inherit}
-.tab:hover{color:var(--text-secondary)}
-.tab.active{color:var(--text-primary);border-bottom-color:var(--gold)}
-.tab .tab-ab{display:none}
-.tb-right{display:flex;align-items:center;gap:20px;white-space:nowrap}
-.tb-firm{font-size:13px;color:var(--text-secondary);max-width:200px;overflow:hidden;text-overflow:ellipsis}
-.tb-logout{font-size:13px;color:var(--text-muted);cursor:pointer;text-decoration:none}
-.tb-logout:hover{color:var(--gold)}
+.db-nav{position:sticky;top:0;z-index:100;background:rgba(7,15,26,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center}
+.db-nav-inner{width:100%;max-width:1200px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:relative}
+.db-logo{font-size:16px;font-weight:700;color:var(--text-1)}
+.db-logo span{color:var(--gold)}
+.db-tabs{display:flex;position:absolute;left:50%;transform:translateX(-50%)}
+.db-tab{height:56px;padding:0 20px;font-size:13px;font-weight:500;color:var(--text-3);border-bottom:2px solid transparent;display:flex;align-items:center;transition:all .15s;white-space:nowrap}
+.db-tab:hover{color:var(--text-2)}
+.db-tab.active{color:var(--text-1);border-bottom-color:var(--gold)}
+.db-user{display:flex;align-items:center;gap:16px;white-space:nowrap}
+.db-firm{font-size:13px;color:var(--text-2);max-width:180px;overflow:hidden;text-overflow:ellipsis}
+.db-logout{font-size:13px;color:var(--text-3);transition:color .15s}.db-logout:hover{color:var(--gold)}
+@media(max-width:860px){.db-tabs{position:static;transform:none;overflow-x:auto;scrollbar-width:none;flex:1;margin:0 10px}.db-tabs::-webkit-scrollbar{display:none}.db-tab{padding:0 13px;font-size:12px}.db-firm{display:none}}
 
-/* SECTIONS */
-.tabsec{display:none;opacity:0;transition:opacity .1s ease}
-.tabsec.active{display:block;opacity:1}
-.page-title{font-size:30px;font-weight:600;color:var(--text-primary);line-height:1.2;letter-spacing:-.01em}
-.page-sub{font-size:13px;color:var(--text-muted);margin-top:4px}
-.gold-btn{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#08111D;font-size:14px;font-weight:600;font-family:inherit;padding:11px 22px;border-radius:var(--radius-sm);border:none;cursor:pointer;text-decoration:none;transition:all .2s ease}
-.gold-btn:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 4px 12px rgba(232,160,32,0.3);color:#08111D}
-.gold-btn:disabled{opacity:.45;cursor:not-allowed;filter:none;transform:none;box-shadow:none}
-.link-gold{font-size:12px;color:var(--gold);cursor:pointer;text-decoration:none}
-.link-muted{font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:none;transition:color .15s ease}
-.link-muted:hover{color:var(--gold)}
+.db-content{display:none;padding:48px 0 40px}
+.db-content.active{display:block;animation:fadeIn .15s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.sec-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:12px;display:block}
+.divider{height:1px;background:var(--border);margin:32px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.link-g{font-size:12px;color:var(--gold)}
+.link-m{font-size:12px;color:var(--text-3);transition:color .15s}.link-m:hover{color:var(--gold)}
 
-/* greeting */
-.greet{padding-top:40px;padding-bottom:32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.greet-date{font-size:13px;color:var(--text-muted);margin-top:4px}
-.status-badge{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500}
-.status-badge .dot{width:8px;height:8px;border-radius:50%}
-.status-badge.verified{color:var(--success)}.status-badge.verified .dot{background:var(--success)}
-.status-badge.pending{color:var(--warning)}.status-badge.pending .dot{background:var(--warning)}
+.btn-gold{background:var(--gold);color:#07111A;font-size:13px;font-weight:600;padding:10px 20px;border-radius:var(--r-sm);transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-gold:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 4px 16px rgba(232,160,32,.25);color:#07111A}
+.btn-gold:disabled{opacity:.4;cursor:not-allowed;filter:none;transform:none;box-shadow:none}
 
-/* notification banner */
-.notif{display:none;align-items:center;gap:10px;background:var(--gold-dim);border:1px solid rgba(232,160,32,0.3);border-radius:var(--radius-sm);padding:12px 20px;margin-bottom:8px;cursor:pointer;font-size:14px;color:var(--text-primary);transition:background .15s ease}
-.notif:hover{background:rgba(232,160,32,0.18)}
-.notif.show{display:flex}
-.notif .arw{margin-left:auto;color:var(--gold)}
+.greet{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;padding-top:8px;gap:20px;flex-wrap:wrap}
+.greet-hi{font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
+.greet-date{font-size:13px;color:var(--text-3);margin-top:6px}
+.verif{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500}
+.verif .dot{width:8px;height:8px;border-radius:50%}
+.verif.ok{color:var(--green)}.verif.ok .dot{background:var(--green)}
+.verif.pend{color:var(--amber)}.verif.pend .dot{background:var(--amber)}
 
-/* METRICS */
-.metrics{margin:0 -48px;background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:36px 48px;display:grid;grid-template-columns:repeat(3,1fr);gap:0}
-.metric{padding:0 40px;border-right:1px solid var(--border)}
-.metric:first-child{padding-left:0}
-.metric:last-child{border-right:none;padding-right:0}
-.metric-num{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1;color:var(--text-primary)}
-.metric-num.gold{color:var(--gold)}
-.metric-num.dim{color:var(--text-muted);font-weight:300}
-.metric-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-top:10px}
-.metric-sub{display:block;font-size:13px;color:var(--text-secondary);margin-top:3px}
-/* symmetric tiles */
-.ov-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.ghost-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--border);color:var(--text-secondary);font-size:13px;font-weight:500;font-family:inherit;padding:10px 16px;border-radius:var(--radius-sm);cursor:pointer;transition:all .15s ease;text-decoration:none}
-.ghost-btn:hover{border-color:var(--gold);color:var(--gold)}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:8px 0 20px}
-.tile{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 26px;transition:border-color .15s ease}
-.tile:hover{border-color:rgba(232,160,32,.25)}
-.tile .metric-num{font-size:38px}
-.fin-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px 24px;margin-top:16px}
-.fin-card-head{padding-bottom:6px}
-.fin-card .dtable{margin-top:6px}
-.fin-card .dtable tr:nth-child(even) td{background:var(--bg-elevated)}
-@media(max-width:768px){.grid3{grid-template-columns:1fr}.ov-actions .ghost-btn{flex:1;justify-content:center}}
+.notif{display:none;align-items:center;gap:10px;background:var(--amber-bg);border:1px solid rgba(245,158,11,.2);border-radius:var(--r-sm);padding:12px 20px;margin-bottom:32px;cursor:pointer;font-size:14px;transition:filter .15s}
+.notif:hover{filter:brightness(1.1)}.notif.show{display:flex}.notif .arw{margin-left:auto;color:var(--amber)}
 
-/* section headers */
-.sec-head{display:flex;justify-content:space-between;align-items:center;padding:32px 0 12px}
-.stitle{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted)}
-.sec-empty{text-align:center;padding:60px 0}
-.sec-empty svg{color:var(--text-muted);margin-bottom:16px}
-.sec-empty h3{font-size:18px;font-weight:600;color:var(--text-secondary)}
-.sec-empty p{font-size:14px;color:var(--text-muted);margin-top:8px;max-width:440px;margin-left:auto;margin-right:auto}
+.hero{text-align:center;padding:44px 0}
+.hero-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:12px}
+.hero-num{font-size:72px;font-weight:800;color:var(--gold);letter-spacing:-.04em;line-height:1}
+.hero-num.zero{color:var(--text-3)}
+.hero-sub{font-size:14px;color:var(--text-3);margin-top:8px}
+@media(max-width:640px){.hero-num{font-size:52px}}
 
-/* filters */
-.filters{display:flex;gap:8px;flex-wrap:wrap;padding:28px 0 20px}
-.filt{padding:7px 18px;border-radius:999px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:inherit;background:var(--bg-elevated);color:var(--text-secondary);transition:all .15s ease}
-.filt:hover{background:var(--bg-subtle)}
-.filt.active{background:var(--gold);color:#08111D}
+.metrics3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--r-md);overflow:hidden;margin-bottom:40px}
+.m3{background:var(--bg-1);padding:24px 28px}
+.m3-num{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.m3-num.dim{color:var(--text-3);font-weight:400}.m3-num.gold{color:var(--gold)}.m3-num.green{color:var(--green)}.m3-num.amber{color:var(--amber)}
+.m3-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-top:6px}
+@media(max-width:640px){.metrics3{grid-template-columns:1fr}}
 
-/* pills */
-.pill{font-size:11px;font-weight:500;padding:3px 10px;border-radius:999px;white-space:nowrap;display:inline-block}
-.p-mut{background:var(--bg-elevated);color:var(--text-secondary)}
-.p-green{background:var(--success-dim);color:var(--success)}
-.p-gold{background:var(--gold-dim);color:var(--gold)}
-.p-sub{background:var(--bg-subtle);color:var(--text-muted)}
-.p-warn{background:rgba(245,158,11,.12);color:var(--warning)}
+.status-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap;display:inline-block}
+.p-mut{background:var(--bg-3);color:var(--text-2)}.p-green{background:var(--green-bg);color:var(--green)}.p-gold{background:var(--gold-bg);color:var(--gold)}.p-amber{background:var(--amber-bg);color:var(--amber)}.p-red{background:var(--red-bg);color:var(--red)}
+
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px}
+.filt{padding:6px 14px;border-radius:999px;font-size:12px;font-weight:500;transition:all .15s;background:var(--bg-2);color:var(--text-3)}
+.filt.active{background:var(--gold);color:#070F1A}.filt:not(.active):hover{background:var(--bg-3);color:var(--text-2)}
 
 /* expandable rows (bundles / deliveries) */
 .row-x{border-bottom:1px solid var(--border)}
-.row-head{display:grid;align-items:center;padding:20px 16px;margin:0 -16px;cursor:pointer;border-radius:var(--radius-sm);transition:background .15s ease;min-height:48px;gap:12px}
-.row-head:hover{background:var(--bg-surface)}
-.bundle-head{grid-template-columns:32% 20% 20% 16% 12%}
-.deliv-head{grid-template-columns:30% 18% 20% 22% 10%}
-.rc-t{font-size:15px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row-head{display:grid;align-items:center;gap:12px;padding:20px 16px;margin:0 -16px;cursor:pointer;border-radius:var(--r-sm);transition:background .1s;min-height:48px}
+.row-head:hover{background:var(--bg-1)}
+.b-head{grid-template-columns:32% 20% 20% 16% 12%}
+.d-head{grid-template-columns:32% 18% 22% 1fr auto}
+.rc-t{font-size:15px;font-weight:600;color:var(--text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rc-id{font-size:11px;color:var(--gold);margin-top:2px}
-.rc-v{font-size:14px;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-v{font-size:14px;color:var(--text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rc-v.gold{color:var(--gold);font-weight:600}
-.rc-s{font-size:12px;color:var(--text-secondary);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc-s{font-size:12px;color:var(--text-3);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rc-right{display:flex;align-items:center;justify-content:flex-end;gap:10px}
-.rc-chev{font-size:20px;color:var(--text-muted);transition:transform .2s ease}
+.rc-chev{font-size:20px;color:var(--text-3);transition:transform .2s}
 .row-x.open .rc-chev{transform:rotate(90deg);color:var(--gold)}
 .cd{font-size:13px;font-weight:600;white-space:nowrap}
-.cd-green{color:var(--text-secondary)}.cd-amber{color:var(--warning)}.cd-red{color:var(--danger);animation:pulse 1.6s ease-in-out infinite}
+.cd-green{color:var(--text-2)}.cd-amber{color:var(--amber)}.cd-red{color:var(--red);animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
-.row-detail{max-height:0;overflow:hidden;transition:max-height .25s ease;background:var(--bg-surface)}
-.row-x.open .row-detail{max-height:1400px}
-.row-detail-inner{border-left:3px solid var(--gold);padding:24px 28px;margin-top:1px}
-
-/* bundle summary box */
-.sumbox{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;background:var(--bg-elevated);border-radius:var(--radius-sm);padding:16px 20px;margin-bottom:16px}
-.sumbox .l{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted)}
-.sumbox .v{font-size:15px;color:var(--text-primary);margin-top:4px}
+.row-detail{max-height:0;overflow:hidden;transition:max-height .25s ease}
+.row-x.open .row-detail{max-height:1600px}
+.row-detail-inner{background:var(--bg-1);border-left:3px solid var(--gold);padding:24px 28px;margin-top:1px;border-radius:0 var(--r-sm) var(--r-sm) 0}
+.sumbox{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;background:var(--bg-2);border-radius:var(--r-md);padding:16px 20px;margin-bottom:16px}
+.sumbox .l{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)}
+.sumbox .v{font-size:14px;color:var(--text-1);margin-top:4px}
 .sumbox .v.gold{font-size:20px;font-weight:700;color:var(--gold)}
-.sumnote{font-size:11px;color:var(--text-muted);margin-bottom:16px}
-.fomo{font-size:13px;color:var(--text-secondary);margin-bottom:18px}
-.fomo .dots{letter-spacing:3px;margin-left:8px}
-.fomo .dots .on{color:var(--gold)}.fomo .dots .off{color:var(--border)}
+.sumnote{font-size:11px;color:var(--text-3);margin-bottom:16px}
+.fomo{font-size:13px;color:var(--text-2);margin-bottom:18px}
+.fomo .dots{letter-spacing:3px;margin-left:8px}.fomo .dots .on{color:var(--gold)}.fomo .dots .off{color:var(--border-strong)}
 
 /* bid form */
-.bidlbl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:8px}
+.bidlbl{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:8px}
 .rabatt-wrap{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
-.rabatt-in{background:transparent;border:none;border-bottom:2px solid var(--border);color:var(--text-primary);font-family:inherit;font-size:32px;font-weight:300;padding:4px 0;width:90px;outline:none;transition:border-color .15s ease}
+.rabatt-in{background:transparent;border:none;border-bottom:2px solid var(--border-strong);font-size:40px;font-weight:300;color:var(--text-1);width:88px;padding:4px 0;outline:none;transition:border-color .15s}
 .rabatt-in:focus{border-bottom-color:var(--gold)}
-.rabatt-suf{font-size:24px;color:var(--text-secondary)}
-.minhint{font-size:12px;color:var(--text-muted);margin-bottom:6px}
-.minwarn{display:none;font-size:12px;color:var(--warning);margin-bottom:10px}
-.minwarn.show{display:block}
-.breakdown{margin:16px 0}
-.bd-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;font-size:13px}
-.bd-row .l{color:var(--text-secondary)}
-.bd-row .v{color:var(--text-primary);font-variant-numeric:tabular-nums}
-.bd-row .v.neg{color:var(--danger)}
-.bd-row .v.mut{color:var(--text-muted)}
-.bd-div{height:1px;background:var(--border);margin:6px 0}
-.bd-net .l{color:var(--text-primary);font-weight:600}
-.bd-net .v{color:var(--gold);font-weight:700;font-size:18px}
-.bd-note{font-size:11px;color:var(--text-muted);margin-top:8px}
-.dark-input{width:100%;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text-primary);font-family:inherit;font-size:14px;outline:none;transition:border-color .15s ease;resize:vertical}
+.rabatt-suf{font-size:24px;color:var(--text-3);padding-bottom:6px}
+.minhint{font-size:12px;color:var(--text-3);margin-bottom:4px}
+.minwarn{display:none;font-size:12px;color:var(--amber);margin-bottom:10px}.minwarn.show{display:block}
+.breakdown{margin:16px 0;max-width:460px}
+.bd-row{display:flex;justify-content:space-between;padding:7px 0;font-size:13px}
+.bd-row .l{color:var(--text-2)}.bd-row .v{color:var(--text-1);font-variant-numeric:tabular-nums}
+.bd-row .v.neg{color:var(--red)}.bd-row .v.mut{color:var(--text-3)}
+.bd-div{height:1px;background:var(--border);margin:8px 0}
+.bd-net .l{color:var(--text-1);font-weight:600}.bd-net .v{color:var(--gold);font-weight:700;font-size:18px}
+.bd-note{font-size:11px;color:var(--text-3);margin-top:8px}
+.dark-input{width:100%;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px;color:var(--text-1);font-size:14px;outline:none;transition:border-color .15s;resize:vertical;min-height:80px}
 .dark-input:focus{border-color:var(--gold)}
-.bidcheck{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--text-secondary);line-height:1.5;padding:10px 0;cursor:pointer}
-.bidcheck input{margin-top:2px;width:16px;height:16px;accent-color:var(--gold);flex-shrink:0;cursor:pointer}
-.bid-submitted{background:var(--success-dim);border:1px solid rgba(34,197,94,0.25);border-radius:var(--radius-sm);padding:14px 18px;font-size:14px;color:var(--text-primary)}
-.bid-submitted b{color:var(--gold)}
+.bidcheck{display:flex;gap:10px;padding:8px 0;cursor:pointer;align-items:flex-start;font-size:13px;color:var(--text-2);line-height:1.5}
+.bidcheck input[type=checkbox]{-webkit-appearance:none;appearance:none;width:16px;height:16px;flex:0 0 16px;margin-top:1px;border:1px solid var(--border-strong);border-radius:3px;background:transparent;position:relative;cursor:pointer;transition:all .15s}
+.bidcheck input[type=checkbox]:checked{background:var(--gold);border-color:var(--gold)}
+.bidcheck input[type=checkbox]:checked::after{content:'';position:absolute;left:4.5px;top:1px;width:4px;height:8px;border:solid #07111A;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.bid-done{background:var(--green-bg);border:1px solid rgba(34,197,94,.25);border-radius:var(--r-md);padding:14px 18px}
+.bid-done .t{font-size:15px;font-weight:600;color:var(--green)}
+.bid-done .s{font-size:13px;color:var(--text-3);margin-top:4px}
+.award-box{background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:var(--r-md);padding:18px 20px;margin:16px 0}
+.award-box .t{font-size:16px;font-weight:600;color:var(--gold);margin-bottom:10px}
 
-/* tables */
-.dtable{width:100%;border-collapse:collapse;margin-top:8px}
-.dtable th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);padding:10px 12px;border-bottom:1px solid var(--border)}
-.dtable td{padding:14px 12px;border-bottom:1px solid var(--border-subtle);font-size:14px;color:var(--text-secondary)}
-.dtable tr:nth-child(even) td{background:var(--bg-surface)}
-.dtable td.num,.dtable th.num{text-align:right;font-variant-numeric:tabular-nums}
-.dtable .total td{font-weight:600;color:var(--text-primary);border-top:2px solid var(--border);border-bottom:none;background:transparent}
-.dtable .total td.gold{color:var(--gold)}
-.note{font-size:12px;color:var(--text-muted);margin-top:12px;line-height:1.5}
-.chart-box{background:var(--bg-surface);border-radius:var(--radius-md);padding:24px;margin-top:8px}
-.hint-box{border:1px solid var(--border);border-radius:var(--radius-sm);padding:16px 18px;font-size:13px;color:var(--text-secondary);line-height:1.55;margin-top:20px}
+/* SPLIT VIEW */
+.split{display:grid;grid-template-columns:340px 1fr;gap:1px;background:var(--border);min-height:560px;border-radius:var(--r-md);overflow:hidden}
+.sv-list{background:var(--bg-1);overflow-y:auto;max-height:calc(100vh-160px)}
+.sv-filters{padding:16px;border-bottom:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap}
+.sv-item{padding:16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;border-left:2px solid transparent}
+.sv-item:hover{background:var(--bg-2)}.sv-item.active{background:var(--bg-2);border-left-color:var(--gold)}
+.sv-top{display:flex;justify-content:space-between;gap:8px}
+.sv-mat{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sv-date{font-size:12px;color:var(--text-3);white-space:nowrap}
+.sv-bot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.sv-detail{background:var(--bg);padding:32px;min-height:560px}
+.sv-empty{display:flex;align-items:center;justify-content:center;height:480px;color:var(--text-3);font-size:14px}
+.rd-mat{font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+.rd-id{font-size:12px;color:var(--gold)}
+.rd-head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.rd-head-meta{text-align:right;flex-shrink:0}.rd-date{font-size:12px;color:var(--text-3);margin-top:6px}
+.rd-key{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--r-md);overflow:hidden;margin:24px 0}
+.rd-key div{background:var(--bg-1);padding:16px 18px}
+.rd-key .k-num{font-size:18px;font-weight:700}.rd-key .k-num.gold{color:var(--gold)}
+.rd-key .k-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-top:5px}
+.rd-actions{display:flex;gap:24px;align-items:center;margin-top:24px;padding-top:16px;border-top:1px solid var(--border);flex-wrap:wrap}
+.act-link{font-size:13px;color:var(--text-3);transition:color .15s}.act-link:hover{color:var(--gold)}.act-danger:hover{color:var(--red)}
+.confirm-inline{display:none;align-items:center;gap:10px;font-size:13px;color:var(--text-2)}.confirm-inline.show{display:inline-flex}
+.confirm-inline .yes{color:var(--red)}.confirm-inline .no{color:var(--text-3)}
+.muted-msg{font-size:14px;color:var(--text-3);line-height:1.6;margin:16px 0}
+/* timeline */
+.tl{display:flex;align-items:flex-start;margin:24px 0}
+.tl-step{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.tl-dot{width:14px;height:14px;border-radius:50%;background:transparent;border:1px solid var(--border-strong);position:relative;z-index:2}
+.tl-step.done .tl-dot{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-bg)}
+.tl-step.active .tl-dot{border:2px solid var(--gold)}
+.tl-step.active .tl-dot::after{content:'';position:absolute;inset:0;margin:auto;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.tl-lbl{font-size:11px;color:var(--text-3);margin-top:8px;text-align:center;white-space:nowrap}
+.tl-step.active .tl-lbl,.tl-step.done .tl-lbl{color:var(--text-1)}
+.tl-conn{flex:1;height:1px;background:var(--border);margin-top:6px}.tl-conn.done{background:var(--gold)}
+@media(max-width:768px){.split{grid-template-columns:1fr}.sv-list{max-height:none}.sv-detail{min-height:auto}}
+
+/* TABLES */
+.ftable{width:100%;border-collapse:collapse}
+.ftable th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);padding:10px 0;border-bottom:1px solid var(--border-strong);text-align:left;font-weight:500}
+.ftable td{padding:14px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-1)}
+.ftable td.num,.ftable th.num{text-align:right;font-variant-numeric:tabular-nums}
+.ftable tbody tr:nth-child(even) td{background:var(--bg-1)}
+.ftable .total td{font-weight:600;border-top:2px solid var(--border-strong);border-bottom:none;background:transparent!important}
+.ftable .total td.gold{color:var(--gold)}
+.prov-note{background:var(--bg-1);border-radius:var(--r-sm);padding:14px 16px;margin-top:20px;font-size:13px;color:var(--text-2);line-height:1.55}
+.chart-box{background:var(--bg-1);border-radius:var(--r-md);padding:24px;margin-top:24px}
+.chart-wrap{position:relative;height:200px}
+.empty-line{font-size:14px;color:var(--text-3);padding:16px 0;text-align:center}
 
 /* PROFIL */
-.card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;margin-bottom:20px}
-.card-title{font-size:15px;font-weight:600;color:var(--text-primary)}
-.prof-head{display:flex;align-items:center;gap:16px}
-.avatar{width:44px;height:44px;border-radius:50%;background:var(--gold-dim);color:var(--gold);font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.prof-name{font-size:17px;font-weight:600;color:var(--text-primary)}
-.prof-email{font-size:13px;color:var(--text-secondary);margin-top:2px}
-.progress-track{height:6px;background:var(--bg-elevated);border-radius:999px;margin-top:8px;overflow:hidden}
-.progress-fill{height:100%;background:var(--gold);border-radius:999px;transition:width .3s ease}
-.miss-list{font-size:12px;color:var(--text-muted);margin-top:10px;line-height:1.7}
+.prof-head{display:flex;align-items:center;gap:20px;padding:8px 0 24px}
+.avatar{width:52px;height:52px;border-radius:50%;background:var(--gold-bg);border:1px solid var(--gold-border);color:var(--gold);font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.prof-name{font-size:20px;font-weight:600}.prof-email{font-size:14px;color:var(--text-3)}
+.progress-track{height:3px;background:var(--bg-2);border-radius:999px;overflow:hidden;margin-top:8px}
+.progress-fill{height:100%;background:var(--gold);transition:width .3s}
+.miss{font-size:12px;color:var(--text-3);margin-top:10px;line-height:1.7}
+.field-row{display:flex;align-items:center;padding:14px 0;border-bottom:1px solid var(--border);gap:12px}
+.field-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);min-width:160px;flex-shrink:0}
+.field-value{font-size:14px;color:var(--text-1);flex:1;min-width:0}
+.field-value .muted{color:var(--text-3)}
+.field-edit{font-size:13px;color:var(--text-3);padding:4px;transition:color .15s}.field-edit:hover{color:var(--gold)}
+.acct-input{background:var(--bg-2);border:1px solid var(--border-strong);border-radius:var(--r-sm);padding:6px 10px;color:var(--text-1);font-size:14px;width:100%;max-width:320px;outline:none}.acct-input:focus{border-color:var(--gold)}
+.acct-save{margin-left:12px;font-size:13px;color:var(--gold)}.acct-cancel{margin-left:10px;font-size:13px;color:var(--text-3)}
 .fld{margin-top:16px}
-.fld label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:6px}
-.fld>input,.fld>select,.fld>textarea{width:100%;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:10px 12px;color:var(--text-primary);font-family:inherit;font-size:14px;outline:none;transition:border-color .15s ease;resize:vertical}
-.fld>input:focus,.fld>select:focus,.fld>textarea:focus{border-color:var(--gold)}
-.fld select option{background:#0F2238}
+.fld label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-bottom:6px}
+.fld>select,.fld>textarea{width:100%;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;color:var(--text-1);font-size:14px;outline:none;transition:border-color .15s;resize:vertical}
+.fld>select:focus,.fld>textarea:focus{border-color:var(--gold)}
+.fld>select option{background:#0F2238}
 .checks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.chk{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-secondary);padding:9px 12px;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;transition:border-color .15s ease}
-.chk:hover{border-color:var(--gold-dim)}
-.chk input[type=checkbox]{-webkit-appearance:none;appearance:none;width:16px;height:16px;flex:0 0 16px;margin:0;border:1.5px solid var(--border-strong,#334);border-radius:4px;background:var(--bg-elevated);cursor:pointer;position:relative;transition:background .15s ease,border-color .15s ease}
+.chk{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-2);padding:9px 12px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:border-color .15s}
+.chk:hover{border-color:var(--gold-border)}
+.chk input[type=checkbox]{-webkit-appearance:none;appearance:none;width:16px;height:16px;flex:0 0 16px;margin:0;border:1px solid var(--border-strong);border-radius:3px;background:transparent;position:relative;cursor:pointer;transition:all .15s}
 .chk input[type=checkbox]:checked{background:var(--gold);border-color:var(--gold)}
-.chk input[type=checkbox]:checked::after{content:'';position:absolute;left:4.5px;top:1px;width:4px;height:8px;border:solid #08111D;border-width:0 2px 2px 0;transform:rotate(45deg)}
+.chk input[type=checkbox]:checked::after{content:'';position:absolute;left:4.5px;top:1px;width:4px;height:8px;border:solid #07111A;border-width:0 2px 2px 0;transform:rotate(45deg)}
 .chk span{flex:1;min-width:0;line-height:1.35}
-.save-msg{font-size:13px;margin-left:12px}
-.danger-card{background:var(--danger-dim);border:1px solid rgba(239,68,68,0.2);border-radius:var(--radius-md);padding:20px}
-.danger-title{font-size:14px;font-weight:600;color:var(--danger)}
-.danger-text{font-size:13px;color:var(--text-secondary);margin-top:4px}
-.danger-btn{background:none;border:1px solid var(--danger);color:var(--danger);padding:8px 16px;border-radius:var(--radius-sm);cursor:pointer;font-size:13px;font-family:inherit;margin-top:12px;transition:background .15s ease}
-.danger-btn:hover{background:var(--danger-dim)}
-.del-confirm{display:none;align-items:center;gap:16px;margin-top:12px;font-size:13px;color:var(--text-secondary)}
-.del-confirm.show{display:flex}
-.del-confirm .yes{color:var(--danger);cursor:pointer;font-weight:600}
-.del-confirm .no{color:var(--text-muted);cursor:pointer}
+.agree-box{background:var(--bg-1);border-radius:var(--r-md);padding:20px;margin-top:20px}
+.danger-zone{margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.danger-link{font-size:13px;color:var(--red)}
+.del-confirm{display:none;align-items:center;gap:14px;margin-top:12px;font-size:13px;color:var(--text-2)}.del-confirm.show{display:flex}
+.del-confirm .yes{color:var(--red)}.del-confirm .no{color:var(--text-3)}
+.save-msg{margin-left:12px;font-size:13px}
 
-/* support */
-.support{border-top:1px solid var(--border);padding:20px 0;text-align:center;margin-top:48px;font-size:12px;color:var(--text-muted)}
-.support a{color:var(--text-muted);font-weight:500}
-.support a:hover{color:var(--gold)}
+.support{margin-top:64px;padding:20px 0;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--text-3)}
+.support a{color:var(--text-3);transition:color .15s}.support a:hover{color:var(--gold)}
 
-/* auth gate */
 .auth-gate{display:flex;align-items:center;justify-content:center;min-height:80vh;padding:24px}
 .auth-gate-card{text-align:center;max-width:460px;width:100%}
 .auth-gate-card h2{font-size:1.35rem;font-weight:700;margin-bottom:12px}
-.auth-gate-card p{font-size:.9rem;color:var(--text-secondary);line-height:1.7}
-.status-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;background:var(--gold-dim);border:1px solid rgba(232,160,32,.2)}
-.status-icon.rejected{background:var(--danger-dim);border-color:rgba(239,68,68,.2)}
-.loading{text-align:center;padding:60px;color:var(--text-muted);font-size:.85rem}
+.auth-gate-card p{font-size:.9rem;color:var(--text-2);line-height:1.7}
+.status-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;background:var(--gold-bg);border:1px solid var(--gold-border)}
+.status-icon.rejected{background:var(--red-bg);border-color:rgba(239,68,68,.2)}
+.loading{text-align:center;padding:60px;color:var(--text-3);font-size:.85rem}
 .loading-dots::after{content:'';animation:dots 1.5s steps(4) infinite}
 @keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
 .dash{display:none}
 
-@media(max-width:768px){
-  .dashboard-wrapper{padding:0 16px}
-  .topbar,.topbar-inner{height:52px}
-  .tab{height:52px;padding:0 14px}
-  .tab .tab-full{display:none}.tab .tab-ab{display:inline}
-  .tb-firm{display:none}
-  .greet{padding-top:28px;padding-bottom:22px}
-  .page-title{font-size:22px}
-  .metrics{margin:0 -16px;padding:24px 16px;grid-template-columns:1fr;gap:0}
-  .metric{padding:0;border-right:none}
-  .metric+.metric{border-top:1px solid var(--border);padding-top:22px;margin-top:22px}
-  .metric-num{font-size:36px}
-  .bundle-head,.deliv-head{grid-template-columns:1fr auto}
-  .rc-col-hide{display:none}
-  .sumbox{grid-template-columns:1fr}
-  .checks{grid-template-columns:1fr}
-  .dtable{font-size:13px}
-}
-
-/* PRINT */
 .print-content{display:none}
-@media print{
-  body *{visibility:hidden!important}
-  .print-content,.print-content *{visibility:visible!important}
-  .print-content{display:block!important;position:absolute;left:0;top:0;width:100%;padding:40px;background:#fff;color:#111;font-family:Inter,Arial,sans-serif}
-}
+@media print{body *{visibility:hidden!important}.print-content,.print-content *{visibility:visible!important}.print-content{display:block!important;position:absolute;left:0;top:0;width:100%;padding:40px;background:#fff;color:#111;font-family:Inter,Arial,sans-serif}}
 
-/* CLERK TRUST MODAL */
 .clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
 .clerk-trust-overlay.open{opacity:1;pointer-events:auto}
 .clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;color:#fff}
 .clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
 .clerk-trust-modal p{font-size:.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px}
-.clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none;transition:border-color .2s}
+.clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none}
 .clerk-trust-modal input:focus{border-color:#E8A020}
 .clerk-trust-modal .btn-verify{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,#E8A020,#f0b840);color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:14px}
 .clerk-trust-modal .btn-verify:disabled{opacity:.5;cursor:not-allowed}
@@ -311,166 +280,132 @@ a{color:var(--gold);text-decoration:none;transition:color .15s ease}
 </head>
 <body>
 
-<div class="auth-gate" id="auth-gate">
-  <div class="auth-gate-card" id="auth-gate-card">
-    <div class="loading"><span class="loading-dots">Authentifizierung wird geprüft</span></div>
-  </div>
-</div>
+<div class="auth-gate" id="auth-gate"><div class="auth-gate-card" id="auth-gate-card"><div class="loading"><span class="loading-dots">Authentifizierung wird geprüft</span></div></div></div>
 
 <div class="dash" id="dash">
-  <div class="topbar">
-    <div class="dashboard-wrapper topbar-inner">
-      <div class="tb-logo">Source<span>On</span></div>
-      <div class="tabs" id="tabs">
-        <button class="tab" data-tab="ausschreibungen" onclick="showTab('ausschreibungen')"><span class="tab-full">Ausschreibungen</span><span class="tab-ab">Ausschr.</span></button>
-        <button class="tab" data-tab="angebote" onclick="showTab('angebote')"><span class="tab-full">Angebote</span><span class="tab-ab">Angebote</span></button>
-        <button class="tab" data-tab="finanzen" onclick="showTab('finanzen')"><span class="tab-full">Finanzen</span><span class="tab-ab">Finanzen</span></button>
-        <button class="tab" data-tab="lieferungen" onclick="showTab('lieferungen')"><span class="tab-full">Lieferungen</span><span class="tab-ab">Lieferg.</span></button>
-        <button class="tab" data-tab="profil" onclick="showTab('profil')"><span class="tab-full">Profil</span><span class="tab-ab">Profil</span></button>
-      </div>
-      <div class="tb-right"><span class="tb-firm" id="tb-firm"></span><span class="tb-logout" onclick="handleLogout()">Abmelden</span></div>
+  <nav class="db-nav"><div class="db-nav-inner">
+    <div class="db-logo">Source<span>On</span></div>
+    <div class="db-tabs" id="tabs">
+      <button class="db-tab" data-tab="ausschreibungen" onclick="showTab('ausschreibungen')">Ausschreibungen</button>
+      <button class="db-tab" data-tab="angebote" onclick="showTab('angebote')">Angebote</button>
+      <button class="db-tab" data-tab="finanzen" onclick="showTab('finanzen')">Finanzen</button>
+      <button class="db-tab" data-tab="lieferungen" onclick="showTab('lieferungen')">Lieferungen</button>
+      <button class="db-tab" data-tab="profil" onclick="showTab('profil')">Profil</button>
     </div>
-  </div>
+    <div class="db-user"><span class="db-firm" id="db-firm"></span><a class="db-logout" onclick="handleLogout()">Abmelden</a></div>
+  </div></nav>
 
   <!-- TAB 1: AUSSCHREIBUNGEN -->
-  <section class="tabsec" id="sec-ausschreibungen">
-    <div class="dashboard-wrapper">
-      <div class="greet">
-        <div><div class="page-title" id="greet-hi">Guten Tag.</div><div class="greet-date" id="greet-date"></div></div>
-        <div class="status-badge verified" id="status-badge"><span class="dot"></span><span id="status-text">Verifiziert</span></div>
-      </div>
-      <div class="notif" id="notif" onclick="showTab('ausschreibungen')"></div>
-      <div class="filters" id="filters"></div>
-      <div id="bundles-list"></div>
-      <div class="sec-empty" id="bundles-empty" style="display:none">
-        <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-        <h3>Aktuell keine offenen Ausschreibungen</h3>
-        <p>Neue Ausschreibungen werden dir per E-Mail mitgeteilt, sobald sie zu deinem Profil passen.</p>
-      </div>
+  <div class="db-content" id="sec-ausschreibungen"><div class="db-wrap">
+    <div class="greet">
+      <div><div class="greet-hi" id="greet-hi">Guten Tag.</div><div class="greet-date" id="greet-date"></div></div>
+      <div class="verif ok" id="verif"><span class="dot"></span><span id="verif-t">Verifiziert</span></div>
     </div>
-  </section>
+    <div class="notif" id="notif" onclick="showTab('ausschreibungen')"></div>
+    <div class="hero">
+      <div class="hero-label">Offene Ausschreibungen</div>
+      <div class="hero-num" id="au-hero">0</div>
+      <div class="hero-sub" id="au-hero-sub">Passende Ausschreibungen für dein Profil</div>
+    </div>
+    <div class="filters" id="au-filters"></div>
+    <div id="bundles-list"></div>
+    <div id="bundles-empty" style="display:none"><div class="hero"><div class="hero-num zero" style="font-size:20px">Aktuell keine offenen Ausschreibungen</div><div class="hero-sub">Du wirst benachrichtigt, sobald eine passende Ausschreibung verfügbar ist.</div></div></div>
+    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+  </div></div>
 
-  <!-- TAB 2: ANGEBOTE -->
-  <section class="tabsec" id="sec-angebote">
-    <div class="dashboard-wrapper"><div class="greet"><div class="page-title">Angebote</div>
-      <button class="ghost-btn" onclick="printPortfolio()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Portfolio als PDF</button>
-    </div></div>
-    <div class="dashboard-wrapper">
-      <div class="grid3">
-        <div class="tile"><div class="metric-num" id="a1">0</div><span class="metric-label">Eingereichte Angebote</span><span class="metric-sub">Insgesamt</span></div>
-        <div class="tile"><div class="metric-num gold" id="a2">0</div><span class="metric-label">Gewonnen</span><span class="metric-sub">Erhaltene Zuschläge</span></div>
-        <div class="tile"><div class="metric-num dim" id="a3">--</div><span class="metric-label">Erfolgsquote</span><span class="metric-sub">Gewonnen / eingereicht</span></div>
-      </div>
-      <div class="filters" id="bid-filters">
-        <button class="filt active" data-bf="alle" onclick="setBidFilter('alle')">Alle</button>
-        <button class="filt" data-bf="eingereicht" onclick="setBidFilter('eingereicht')">Eingereicht</button>
-        <button class="filt" data-bf="gewonnen" onclick="setBidFilter('gewonnen')">Gewonnen</button>
-        <button class="filt" data-bf="verloren" onclick="setBidFilter('verloren')">Verloren</button>
-        <button class="filt" data-bf="abgelaufen" onclick="setBidFilter('abgelaufen')">Abgelaufen</button>
-      </div>
-      <div id="bid-list"></div>
-      <div class="sec-empty" id="bid-empty" style="display:none"><h3>Noch keine Angebote eingereicht</h3><p>Sieh dir die offenen Ausschreibungen an.</p></div>
+  <!-- TAB 2: ANGEBOTE (split) -->
+  <div class="db-content" id="sec-angebote"><div class="db-wrap">
+    <div class="greet"><div class="greet-hi" style="font-size:24px">Angebote</div></div>
+    <div class="metrics3">
+      <div class="m3"><div class="m3-num" id="a1">0</div><div class="m3-label">Eingereichte Angebote</div></div>
+      <div class="m3"><div class="m3-num gold" id="a2">0</div><div class="m3-label">Gewonnen</div></div>
+      <div class="m3"><div class="m3-num dim" id="a3">--</div><div class="m3-label">Erfolgsquote</div></div>
     </div>
-  </section>
+    <div class="split" id="ang-split">
+      <div class="sv-list">
+        <div class="sv-filters" id="bid-filters">
+          <button class="filt active" data-bf="alle" onclick="setBidFilter('alle')">Alle</button>
+          <button class="filt" data-bf="eingereicht" onclick="setBidFilter('eingereicht')">Eingereicht</button>
+          <button class="filt" data-bf="gewonnen" onclick="setBidFilter('gewonnen')">Gewonnen</button>
+          <button class="filt" data-bf="verloren" onclick="setBidFilter('verloren')">Verloren</button>
+          <button class="filt" data-bf="abgelaufen" onclick="setBidFilter('abgelaufen')">Abgelaufen</button>
+        </div>
+        <div id="bid-items"></div>
+      </div>
+      <div class="sv-detail" id="bid-detail"><div class="sv-empty">← Angebot auswählen</div></div>
+    </div>
+    <div id="ang-empty" style="display:none"><div class="hero"><div class="hero-num zero" style="font-size:20px">Noch keine Angebote</div><div class="hero-sub">Sieh dir die offenen Ausschreibungen an.</div></div></div>
+    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+  </div></div>
 
   <!-- TAB 3: FINANZEN -->
-  <section class="tabsec" id="sec-finanzen">
-    <div class="dashboard-wrapper"><div class="greet"><div><div class="page-title">Finanzen</div><div class="page-sub">Deine Erlöse aus SourceOn-Aufträgen — netto, nach abgezogener Vermittlungsgebühr.</div></div>
-      <button class="ghost-btn" onclick="printProvisions()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Erlösübersicht als PDF</button>
-    </div></div>
-    <div class="dashboard-wrapper">
-      <div class="grid3">
-        <div class="tile"><div class="metric-num gold" id="f1">CHF 0</div><span class="metric-label">Gesamterlös</span><span class="metric-sub">Netto aus gewonnenen Aufträgen</span></div>
-        <div class="tile"><div class="metric-num dim" id="f2">--</div><span class="metric-label">Ausstehender Betrag</span><span class="metric-sub">Noch offen — vor Lieferbestätigung</span></div>
-        <div class="tile"><div class="metric-num dim" id="f3">--</div><span class="metric-label">Bereits erhalten</span><span class="metric-sub">Nach Lieferbestätigung</span></div>
-      </div>
-
-      <div class="fin-card">
-        <div class="fin-card-head"><span class="stitle">Auftrags- &amp; Erlösübersicht</span></div>
-        <div style="overflow-x:auto"><table class="dtable" id="prov-table"></table></div>
-      </div>
-
-      <div class="fin-card" id="chart-blk" style="display:none">
-        <div class="fin-card-head"><span class="stitle">Erlös über Zeit</span></div>
-        <div style="position:relative;height:200px"><canvas id="fin-chart"></canvas></div>
-      </div>
-
-      <div class="hint-box">Der Kunde bezahlt den Bestellwert direkt an dich. SourceOn zieht eine Vermittlungsgebühr von 2.25 % des Bestellwerts ab — sie ist in deinem ausgewiesenen Nettoerlös bereits berücksichtigt. Abrechnung nach Lieferbestätigung, Zahlungsfrist 14 Tage netto. Fragen: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
+  <div class="db-content" id="sec-finanzen"><div class="db-wrap">
+    <div class="greet"><div class="greet-hi" style="font-size:24px">Finanzen</div></div>
+    <div class="hero">
+      <div class="hero-label">Gesamtumsatz durch SourceOn</div>
+      <div class="hero-num" id="fin-hero">CHF 0</div>
+      <div class="hero-sub" id="fin-hero-sub">Noch keine gewonnenen Aufträge</div>
     </div>
-  </section>
+    <div class="metrics3">
+      <div class="m3"><div class="m3-num amber" id="f-open">--</div><div class="m3-label">Offene Provisionen</div></div>
+      <div class="m3"><div class="m3-num green" id="f-paid">--</div><div class="m3-label">Bezahlte Provisionen</div></div>
+      <div class="m3"><div class="m3-num dim" id="f-avg">--</div><div class="m3-label">Ø Nettoerlös</div></div>
+    </div>
+    <div class="sec-head"><span class="sec-label">Provisionsabrechnung</span><span class="link-m" onclick="printProvisions()">↓ Als PDF exportieren</span></div>
+    <div style="overflow-x:auto"><table class="ftable" id="prov-table"></table></div>
+    <div class="prov-note">Provisionsrechnungen werden von SourceOn nach Lieferbestätigung ausgestellt. Zahlungsfrist: 14 Tage netto.</div>
+    <div class="chart-box" id="chart-blk" style="display:none"><span class="sec-label">Umsatz über Zeit</span><div class="chart-wrap"><canvas id="fin-chart"></canvas></div></div>
+    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+  </div></div>
 
   <!-- TAB 4: LIEFERUNGEN -->
-  <section class="tabsec" id="sec-lieferungen">
-    <div class="dashboard-wrapper"><div class="greet"><div class="page-title">Lieferungen</div></div></div>
-    <div class="dashboard-wrapper">
-      <div class="sec-head"><span class="stitle">Bevorstehende Lieferungen</span><span class="link-muted" onclick="exportDeliveryICS()">Termine exportieren →</span></div>
-      <div id="deliv-upcoming"></div>
-      <div class="sec-head"><span class="stitle">Abgeschlossene Lieferungen</span></div>
-      <div style="overflow-x:auto"><table class="dtable" id="deliv-past"></table></div>
-      <div class="sec-empty" id="deliv-empty" style="display:none"><h3>Noch keine gewonnenen Aufträge</h3><p>Reiche Angebote auf offene Ausschreibungen ein.</p></div>
-    </div>
-  </section>
+  <div class="db-content" id="sec-lieferungen"><div class="db-wrap">
+    <div class="greet"><div class="greet-hi" style="font-size:24px">Lieferungen</div></div>
+    <div class="sec-head"><span class="sec-label">Bevorstehende Lieferungen</span><span class="link-m" onclick="exportDeliveryICS()">↓ Termine exportieren</span></div>
+    <div id="deliv-upcoming"></div>
+    <div class="divider"></div>
+    <div class="sec-head"><span class="sec-label">Abgeschlossene Lieferungen</span></div>
+    <div style="overflow-x:auto"><table class="ftable" id="deliv-past"></table></div>
+    <div id="deliv-empty" style="display:none"><div class="hero"><div class="hero-num zero" style="font-size:20px">Noch keine gewonnenen Aufträge</div><div class="hero-sub">Reiche Angebote auf offene Ausschreibungen ein.</div></div></div>
+    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+  </div></div>
 
   <!-- TAB 5: PROFIL -->
-  <section class="tabsec" id="sec-profil">
-    <div class="dashboard-wrapper"><div class="greet"><div class="page-title">Profil</div></div></div>
-    <div class="dashboard-wrapper">
-      <div class="card">
-        <div class="prof-head">
-          <div class="avatar" id="prof-avatar">S</div>
-          <div style="flex:1"><div class="prof-name" id="prof-name">—</div><div class="prof-email" id="prof-email"></div></div>
-          <div class="status-badge verified" id="prof-status"><span class="dot"></span><span>Verifiziert</span></div>
-        </div>
-        <div style="margin-top:20px">
-          <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary)"><span>Profil-Vollständigkeit</span><span id="prof-pct">0%</span></div>
-          <div class="progress-track"><div class="progress-fill" id="prof-bar" style="width:0%"></div></div>
-          <div class="miss-list" id="prof-missing"></div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Kontaktdaten</div>
-        <div class="fld"><label>Firmenname</label><input id="pf-company"/></div>
-        <div class="fld"><label>Ansprechperson</label><input id="pf-contact"/></div>
-        <div class="fld"><label>E-Mail</label><input id="pf-email" type="email"/></div>
-        <div class="fld"><label>Telefon</label><input id="pf-phone"/></div>
-        <div class="fld"><label>Website</label><input id="pf-website" placeholder="https://"/></div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Leistungsprofil</div>
-        <div class="fld"><label>Jahreskapazität</label>
-          <select id="pf-capacity">
-            <option value="">Bitte wählen</option>
-            <option>Unter CHF 500'000</option><option>CHF 500'000 – 2'000'000</option><option>CHF 2'000'000 – 10'000'000</option><option>CHF 10'000'000 – 50'000'000</option><option>Über CHF 50'000'000</option>
-          </select>
-        </div>
-        <div class="fld"><label>Materialien</label><div class="checks" id="pf-materials"></div></div>
-        <div class="fld"><label>Regionen</label><div class="checks" id="pf-regions"></div></div>
-        <div class="fld"><label>Zertifizierungen</label><div class="checks" id="pf-certs"></div></div>
-        <div class="fld"><label>Bemerkungen</label><textarea id="pf-notes" rows="3"></textarea></div>
-        <div style="margin-top:20px;display:flex;align-items:center"><button class="gold-btn" id="btn-save" onclick="saveProfile()">Änderungen speichern</button><span class="save-msg" id="save-msg" style="display:none"></span></div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Rechtliches</div>
-        <div style="font-size:13px;color:var(--text-secondary);margin-top:8px" id="agree-line">Lieferantenvereinbarung</div>
-        <div style="font-size:11px;color:var(--text-muted);margin-top:4px" id="agree-ver"></div>
-        <a href="lieferantenvereinbarung.html" target="_blank" class="link-gold" style="display:inline-block;margin-top:10px;font-size:13px">Vereinbarung lesen →</a>
-        <div style="font-size:12px;color:var(--text-muted);margin-top:12px;line-height:1.6">Jedes Angebot erfordert eine Lieferbestätigung und eine Rechtsverbindlichkeits-Bestätigung gemäss Lieferantenvereinbarung.</div>
-        <a href="datenschutz.html" target="_blank" class="link-muted" style="display:inline-block;margin-top:8px">Datenschutzerklärung →</a>
-      </div>
-
-      <div class="danger-card">
-        <div class="danger-title">Profil deaktivieren</div>
-        <div class="danger-text">Dein Profil wird aus dem aktiven Lieferantenpool entfernt. Deine Daten bleiben erhalten.</div>
-        <button class="danger-btn" id="deact-btn" onclick="askDeactivate()">Profil deaktivieren</button>
-        <div class="del-confirm" id="deact-confirm">Bist du sicher? <span class="yes" onclick="doDeactivate()">Ja, deaktivieren</span> <span class="no" onclick="hideDeactivate()">Abbrechen</span></div>
+  <div class="db-content" id="sec-profil"><div class="db-wrap">
+    <div class="prof-head">
+      <div class="avatar" id="pf-avatar">S</div>
+      <div style="flex:1"><div class="prof-name" id="pf-name">—</div><div class="prof-email" id="pf-email"></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-2);margin-top:10px"><span>Profil-Vollständigkeit</span><span id="pf-pct">0%</span></div>
+        <div class="progress-track"><div class="progress-fill" id="pf-bar" style="width:0%"></div></div>
+        <div class="miss" id="pf-miss"></div>
       </div>
     </div>
-  </section>
+    <span class="sec-label">Kontaktdaten</span>
+    <div id="acct-fields"></div>
+    <div style="margin-top:32px"></div>
+    <span class="sec-label">Leistungsprofil</span>
+    <div class="fld"><label>Jahreskapazität</label><select id="pf-capacity"><option value="">Bitte wählen</option><option>Unter CHF 500'000</option><option>CHF 500'000 – 2'000'000</option><option>CHF 2'000'000 – 10'000'000</option><option>CHF 10'000'000 – 50'000'000</option><option>Über CHF 50'000'000</option></select></div>
+    <div class="fld"><label>Materialien</label><div class="checks" id="pf-materials"></div></div>
+    <div class="fld"><label>Regionen</label><div class="checks" id="pf-regions"></div></div>
+    <div class="fld"><label>Zertifizierungen</label><div class="checks" id="pf-certs"></div></div>
+    <div class="fld"><label>Bemerkungen</label><textarea id="pf-notes" rows="3"></textarea></div>
+    <div style="margin-top:20px;display:flex;align-items:center"><button class="btn-gold" id="btn-save" onclick="saveProfile()">Änderungen speichern</button><span class="save-msg" id="save-msg" style="display:none"></span></div>
 
-  <div class="dashboard-wrapper"><div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div></div>
+    <div class="agree-box">
+      <span class="sec-label">Rechtliches</span>
+      <div style="font-size:14px;color:var(--green)" id="agree-line">Lieferantenvereinbarung</div>
+      <div style="font-size:12px;color:var(--text-3);margin-top:4px" id="agree-ver"></div>
+      <a href="lieferantenvereinbarung.html" target="_blank" class="link-g" style="display:inline-block;margin-top:10px;font-size:13px">Vereinbarung lesen →</a>
+      <div style="font-size:13px;color:var(--text-3);margin-top:12px;line-height:1.6">Jedes Angebot erfordert eine Lieferbestätigung und eine rechtliche Zustimmung gemäss Lieferantenvereinbarung.</div>
+      <a href="datenschutz.html" target="_blank" class="link-m" style="display:inline-block;margin-top:8px">Datenschutzerklärung →</a>
+    </div>
+
+    <div class="danger-zone">
+      <span class="danger-link" id="deact-btn" onclick="askDeactivate()">Profil deaktivieren</span>
+      <div class="del-confirm" id="deact-confirm">Dein Profil wird aus dem aktiven Lieferantenpool entfernt. <span class="yes" onclick="doDeactivate()">Ja, deaktivieren</span> <span class="no" onclick="hideDeactivate()">Abbrechen</span></div>
+    </div>
+    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+  </div></div>
 </div>
 
 <div class="print-content" id="print-content"></div>
@@ -484,10 +419,8 @@ a{color:var(--gold);text-decoration:none;transition:color .15s ease}
 var SUPABASE_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
 var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
 var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{accessToken:async function(){if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}return null;}});
-var currentUserId=null,_profile=null,_catalog={},_bundles=[],_myBids={},_bids=[],_bidFilter='alle',_bundleFilter='alle';
+var currentUserId=null,_profile=null,_catalog={},_bundles=[],_myBids={},_bids=[],_bidFilter='alle',_bundleFilter='alle',_bidCounts={},_selBid=null;
 var COMM=0.0225;
-
-// ── helpers ──
 var _WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
 var _MON=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
 var _MONF=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
@@ -497,7 +430,6 @@ function fmtShort(d){return d.getDate()+'. '+_MON[d.getMonth()];}
 function fmtDMY(d){return d.getDate()+'. '+_MON[d.getMonth()]+' '+d.getFullYear();}
 function fmtDMYfull(d){return d.getDate()+'. '+_MONF[d.getMonth()]+' '+d.getFullYear();}
 function esc(s){if(s==null)return '';var d=document.createElement('div');d.textContent=String(s);return d.innerHTML;}
-
 function bMat(b){if(b.sourceon_id&&_catalog[b.sourceon_id])return _catalog[b.sourceon_id].bezeichnung;if(b.bundle_type==='multi_material')return 'Mehrere Materialien';return b.material_type||'Material';}
 function bVol(b){var v=b.gesamtvolumen||b.total_quantity;return (v==null||v==='')?null:Number(v);}
 function bUnit(b){return b.einheit||b.unit||'';}
@@ -506,15 +438,15 @@ function bZone(b){return b.delivery_zone||b.liefer_zone||'--';}
 function bRicht(b){var rp=(b.sourceon_id&&_catalog[b.sourceon_id])?_catalog[b.sourceon_id].richtpreis_chf:null;return (rp==null||rp===''||isNaN(Number(rp)))?null:Number(rp);}
 function bZiel(b){var z=b.ziel_mindestrabatt||b.min_discount;if(z==null)return null;z=Number(z);return z<1?Math.round(z*1000)/10:z;}
 function bZeitraum(b){if(b.liefer_zeitraum_von&&b.liefer_zeitraum_bis)return fmtShort(new Date(b.liefer_zeitraum_von))+' – '+fmtShort(new Date(b.liefer_zeitraum_bis));if(b.delivery_timeframe)return b.delivery_timeframe;return '--';}
-// bestellwert for a won/estimated bid
-function bestellwert(bid,bundle){var v=bVol(bundle);if(bid.preis_pro_einheit&&v)return Number(bid.preis_pro_einheit)*v;var rp=bRicht(bundle),r=parseFloat(bid.rabatt_prozent);if(rp==null||v==null||isNaN(r))return null;return rp*v*(1-r/100);}
+function estValue(b){var rp=bRicht(b),v=bVol(b);return (rp==null||v==null)?null:rp*v;}
+function bestellwert(bid,b){var v=bVol(b);if(bid.preis_pro_einheit&&v)return Number(bid.preis_pro_einheit)*v;var rp=bRicht(b),r=parseFloat(bid.rabatt_prozent);if(rp==null||v==null||isNaN(r))return null;return rp*v*(1-r/100);}
 function normStatus(s){if(s==='won')return 'gewonnen';if(s==='submitted')return 'eingereicht';if(s==='lost')return 'verloren';if(s==='expired')return 'abgelaufen';return s;}
-function bidBadge(s){s=normStatus(s);if(s==='eingereicht')return {t:'Eingereicht',c:'p-mut'};if(s==='gewonnen')return {t:'Gewonnen',c:'p-green'};if(s==='verloren')return {t:'Verloren',c:'p-sub'};if(s==='abgelaufen')return {t:'Abgelaufen',c:'p-sub'};if(s==='zurueckgezogen')return {t:'Zurückgezogen',c:'p-sub'};return {t:s||'--',c:'p-mut'};}
-function countdown(deadline){var now=new Date(),diff=deadline-now;if(diff<=0)return {text:'Abgelaufen',cls:'cd-red'};var days=Math.floor(diff/86400000),hrs=Math.floor((diff%86400000)/3600000);var txt='Noch '+(days>0?days+' Tag'+(days>1?'e':'')+' ':'')+hrs+' Std';var cls='cd-green';if(diff<86400000)cls='cd-red';else if(diff<3*86400000)cls='cd-amber';return {text:txt,cls:cls};}
+function bidBadge(s){s=normStatus(s);if(s==='eingereicht')return {t:'Eingereicht',c:'p-mut'};if(s==='gewonnen')return {t:'Gewonnen',c:'p-green'};if(s==='verloren')return {t:'Verloren',c:'p-mut'};if(s==='abgelaufen')return {t:'Abgelaufen',c:'p-mut'};if(s==='zurueckgezogen')return {t:'Zurückgezogen',c:'p-mut'};return {t:s||'--',c:'p-mut'};}
+function countdown(deadline){var now=new Date(),diff=deadline-now;if(diff<=0)return {text:'Abgelaufen',cls:'cd-red'};var days=Math.floor(diff/86400000),hrs=Math.floor((diff%86400000)/3600000);var txt=(days>0?days+' Tag'+(days>1?'e':'')+' ':'')+hrs+' Std';var cls='cd-green';if(diff<86400000){cls='cd-red';txt='⚠ '+txt;}else if(diff<3*86400000){cls='cd-amber';txt='⚠ '+txt;}return {text:txt,cls:cls};}
+function timelineStates(s){var st=['future','future','future','future'];st[0]='done';st[1]='done';if(s==='gewonnen'){st[2]='done';st[3]='done';}else{st[2]='active';}return st;}
 
-// ── TABS ──
 var VALID_TABS=['ausschreibungen','angebote','finanzen','lieferungen','profil'];
-function showTab(name){if(VALID_TABS.indexOf(name)<0)name='ausschreibungen';VALID_TABS.forEach(function(t){var sec=document.getElementById('sec-'+t);if(sec)sec.classList.toggle('active',t===name);});document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')===name);});if(location.hash!=='#'+name){history.replaceState(null,'','#'+name);}}
+function showTab(name){if(VALID_TABS.indexOf(name)<0)name='ausschreibungen';VALID_TABS.forEach(function(t){var sec=document.getElementById('sec-'+t);if(sec)sec.classList.toggle('active',t===name);});document.querySelectorAll('.db-tab').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')===name);});if(location.hash!=='#'+name){history.replaceState(null,'','#'+name);}}
 window.addEventListener('hashchange',function(){showTab(location.hash.replace('#',''));});
 
 (async function init(){
@@ -522,211 +454,175 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   if(window.Clerk){window.Clerk.addListener(function(){if(_clerkTrustActive)return;if(!window.Clerk.client||!window.Clerk.client.signIn)return;var si=window.Clerk.client.signIn;if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){_clerkTrustActive=true;_clerkSignInResource=si;try{window.Clerk.closeSignIn();}catch(e){}_clerkSendVerificationCode();}});}
   if(!window.Clerk||!window.Clerk.user){showGate('login');return;}
   currentUserId=window.Clerk.user.id;
-
   var pRes=await sb.from('suppliers').select('*').eq('id',currentUserId).maybeSingle();
   if(pRes.error||!pRes.data){showGate('not_supplier');return;}
   _profile=pRes.data;
   if(_profile.status==='pending'){showGate('pending');return;}
   if(_profile.status==='rejected'){showGate('rejected');return;}
   if(_profile.status!=='verified'){showGate('not_supplier');return;}
-
   var email=window.Clerk.user.primaryEmailAddress?window.Clerk.user.primaryEmailAddress.emailAddress:(_profile.email||'');
-  document.getElementById('tb-firm').textContent=_profile.company_name||'';
+  document.getElementById('db-firm').textContent=_profile.company_name||'';
   document.getElementById('greet-hi').textContent='Guten Tag'+(_profile.company_name?', '+_profile.company_name:'')+'.';
   document.getElementById('greet-date').textContent=new Date().toLocaleDateString('de-CH',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('pf-email').textContent=email;
   document.getElementById('auth-gate').style.display='none';
   document.getElementById('dash').style.display='block';
   showTab(location.hash.replace('#','')||'ausschreibungen');
-
   var catRes=await sb.from('material_catalog').select('sourceon_id,bezeichnung,einheit,richtpreis_chf');
   if(catRes.data){catRes.data.forEach(function(m){_catalog[m.sourceon_id]=m;});}
-
   var bRes=await sb.from('bundles').select('*').eq('status','ausgeschrieben').order('bid_deadline',{ascending:true});
   _bundles=(bRes.data&&!bRes.error)?bRes.data:[];
-
   var myRes=await sb.from('bids').select('*,bundles(*)').eq('supplier_id',currentUserId).order('created_at',{ascending:false});
   _bids=(myRes.data&&!myRes.error)?myRes.data:[];
   _bids.forEach(function(b){_myBids[b.bundle_id]=b;});
-
-  // bid counts per bundle (all suppliers)
-  window._bidCounts={};
-  try{var abRes=await sb.from('bids').select('bundle_id');if(abRes.data)abRes.data.forEach(function(b){window._bidCounts[b.bundle_id]=(window._bidCounts[b.bundle_id]||0)+1;});}catch(e){}
-
-  renderNotif();renderBundles();renderAngebote();renderFinanzen();renderLieferungen();renderProfil();
+  try{var abRes=await sb.from('bids').select('bundle_id');if(abRes.data)abRes.data.forEach(function(b){_bidCounts[b.bundle_id]=(_bidCounts[b.bundle_id]||0)+1;});}catch(e){}
+  renderNotif();renderAusschreibungen();renderAngebote();renderFinanzen();renderLieferungen();renderProfil();
   setInterval(refreshCountdowns,60000);
 })();
 
 // ── AUSSCHREIBUNGEN ──
 function renderNotif(){
   var open=_bundles.filter(function(b){return new Date(b.bid_deadline)>new Date()&&!_myBids[b.id];});
-  if(open.length===0){return;}
-  var b=open[0];var days=Math.max(0,Math.ceil((new Date(b.bid_deadline)-new Date())/86400000));
+  if(open.length===0)return;
+  var b=open[0],days=Math.max(0,Math.ceil((new Date(b.bid_deadline)-new Date())/86400000));
   var el=document.getElementById('notif');
-  el.innerHTML='<span>⚡</span><span>Neue Ausschreibung: <b>'+esc(bMat(b))+'</b> '+esc(bVolStr(b))+', '+esc(bZone(b))+' — Frist in '+days+' Tag'+(days!==1?'en':'')+'</span><span class="arw">→</span>';
+  el.innerHTML='<span>⚡</span><span>Neue Ausschreibung: <b>'+esc(bMat(b))+'</b> · '+esc(bVolStr(b))+' · '+esc(bZone(b))+' · Frist in '+days+' Tag'+(days!==1?'en':'')+'</span><span class="arw">→</span>';
   el.classList.add('show');
 }
-function renderBundles(){
-  var st=document.getElementById('status-badge'),sTxt=document.getElementById('status-text');
-  if(_profile.status==='verified'){st.className='status-badge verified';sTxt.textContent='Verifiziert';}else{st.className='status-badge pending';sTxt.textContent='Ausstehend';}
-  // filters
+function renderAusschreibungen(){
+  var v=document.getElementById('verif');if(_profile.status==='verified'){v.className='verif ok';document.getElementById('verif-t').textContent='Verifiziert';}else{v.className='verif pend';document.getElementById('verif-t').textContent='Ausstehend';}
+  var openCount=_bundles.filter(function(b){return new Date(b.bid_deadline)>new Date();}).length;
+  var h=document.getElementById('au-hero');h.textContent=openCount;h.className='hero-num'+(openCount>0?'':' zero');
+  document.getElementById('au-hero-sub').textContent=openCount>0?'Passende Ausschreibungen für dein Profil':'Aktuell keine passenden Ausschreibungen';
   var cats={};_bundles.forEach(function(b){cats[bMat(b)]=true;});
   var fkeys=['alle'].concat(Object.keys(cats));
-  document.getElementById('filters').innerHTML=fkeys.map(function(k){return '<button class="filt'+(k===_bundleFilter?' active':'')+'" onclick="setBundleFilter(\''+esc(k)+'\')">'+(k==='alle'?'Alle':esc(k))+'</button>';}).join('');
-
+  document.getElementById('au-filters').innerHTML=_bundles.length?fkeys.map(function(k){return '<button class="filt'+(k===_bundleFilter?' active':'')+'" onclick="setBundleFilter(\''+esc(k)+'\')">'+(k==='alle'?'Alle':esc(k))+'</button>';}).join(''):'';
   var rows=_bundles.filter(function(b){return _bundleFilter==='alle'||bMat(b)===_bundleFilter;});
   var list=document.getElementById('bundles-list');
-  if(_bundles.length===0){document.getElementById('bundles-empty').style.display='block';document.getElementById('filters').style.display='none';return;}
-  if(rows.length===0){list.innerHTML='<div class="sec-empty"><p>Keine Ausschreibungen in dieser Kategorie.</p></div>';return;}
-  list.innerHTML=rows.map(buildBundleRow).join('');
-  list.querySelectorAll('.row-head').forEach(function(h){h.addEventListener('click',function(e){if(e.target.closest('.rabatt-in,.dark-input,.bidcheck,button,a,input,textarea'))return;h.parentNode.classList.toggle('open');});});
+  if(_bundles.length===0){document.getElementById('bundles-empty').style.display='block';return;}
+  list.innerHTML=rows.length?rows.map(buildBundleRow).join(''):'<div class="empty-line">Keine Ausschreibungen in dieser Kategorie.</div>';
+  list.querySelectorAll('.row-head').forEach(function(hd){hd.addEventListener('click',function(e){if(e.target.closest('.rabatt-in,.dark-input,.bidcheck,button,a,input,textarea,.act-link'))return;hd.parentNode.classList.toggle('open');});});
 }
-function setBundleFilter(f){_bundleFilter=f;renderBundles();}
+function setBundleFilter(f){_bundleFilter=f;renderAusschreibungen();}
 function buildBundleRow(b){
   var deadline=new Date(b.bid_deadline),cd=countdown(deadline),expired=deadline<=new Date();
-  var others=Math.max(0,(window._bidCounts[b.id]||0)-(_myBids[b.id]?1:0));
+  var others=Math.max(0,(_bidCounts[b.id]||0)-(_myBids[b.id]?1:0));
   var ziel=bZiel(b),myBid=_myBids[b.id];
-  var comp=Math.min(5,others);var dots='';for(var i=0;i<5;i++){dots+='<span class="'+(i<comp?'on':'off')+'">●</span>';}
-  var detail='';
-  detail+='<div class="sumbox"><div><div class="l">Gesamtvolumen</div><div class="v gold">'+esc(bVolStr(b))+'</div></div><div><div class="l">Lieferzeitraum</div><div class="v">'+esc(bZeitraum(b))+'</div></div><div><div class="l">Liefergebiet</div><div class="v">'+esc(bZone(b))+'</div></div></div>';
-  detail+='<div class="sumnote">Exakte Lieferadressen werden nach Zuschlag freigegeben.</div>';
-  if(others>0)detail+='<div class="fomo">'+others+' weitere'+(others!==1?'':'r')+' Lieferant'+(others!==1?'en':'')+' '+(others!==1?'haben':'hat')+' bereits ein Angebot eingereicht.<span class="dots">'+dots+'</span></div>';
+  var detail='<div class="sumbox"><div><div class="l">Gesamtvolumen</div><div class="v gold">'+esc(bVolStr(b))+'</div></div><div><div class="l">Lieferzeitraum</div><div class="v">'+esc(bZeitraum(b))+'</div></div><div><div class="l">Geschätzter Auftragswert</div><div class="v">'+(estValue(b)!=null?fmtCHF(estValue(b)):'--')+'</div></div></div>';
+  detail+='<div class="sumnote">Exakte Lieferadressen werden erst nach Zuschlag freigegeben.</div>';
+  if(others>0){var comp=Math.min(5,others),dots='';for(var i=0;i<5;i++){dots+='<span class="'+(i<comp?'on':'off')+'">●</span>';}detail+='<div class="fomo">'+others+' weitere'+(others!==1?'':'r')+' Lieferant'+(others!==1?'en':'')+' '+(others!==1?'haben':'hat')+' bereits ein Angebot eingereicht.<span class="dots">'+dots+'</span></div>';}
   if(myBid&&normStatus(myBid.status)!=='zurueckgezogen'){
     var net=bestellwert(myBid,b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';
-    detail+='<div class="bid-submitted">Dein Angebot: <b>'+Number(myBid.rabatt_prozent).toFixed(1)+'% Rabatt</b> — Nettoerlös '+netStr+'<div style="font-size:12px;color:var(--text-muted);margin-top:6px">Eingereicht am '+esc(new Date(myBid.created_at).toLocaleDateString('de-CH'))+'</div>'+(expired?'':'<div style="margin-top:10px"><span class="link-muted" onclick="withdrawBid(\''+esc(b.id)+'\')">Angebot zurückziehen</span></div>')+'</div>';
+    detail+='<div class="bid-done"><div class="t">Dein Angebot: '+Number(myBid.rabatt_prozent).toFixed(1)+'% Rabatt · Nettoerlös '+netStr+'</div><div class="s">Eingereicht am '+esc(fmtDMY(new Date(myBid.created_at)))+(expired?'':' · <span class="act-link act-danger" onclick="withdrawBid(\''+esc(b.id)+'\')">Angebot zurückziehen</span>')+'</div></div>';
   }else if(expired){
-    detail+='<div class="bid-submitted" style="background:var(--bg-elevated);border-color:var(--border);color:var(--text-muted)">Frist abgelaufen — kein Angebot mehr möglich.</div>';
-  }else{
-    detail+=buildBidForm(b,ziel);
-  }
-  return '<div class="row-x" data-id="'+esc(b.id)+'">'
-    +'<div class="row-head bundle-head">'
-      +'<div><div class="rc-t">'+esc(bMat(b))+'</div>'+(b.sourceon_id?'<div class="rc-id">'+esc(b.sourceon_id)+'</div>':'')+'</div>'
-      +'<div class="rc-col-hide"><div class="rc-v">'+esc(bVolStr(b))+'</div><div class="rc-s">'+esc(bZone(b))+'</div></div>'
-      +'<div class="rc-col-hide"><div class="rc-v gold">'+(ziel!=null?'Min. '+ziel+'%':'--')+'</div><div class="rc-s">Brutto-Mindestrabatt</div></div>'
-      +'<div class="rc-col-hide"><div class="cd '+cd.cls+'" id="cd-'+esc(b.id)+'">'+esc(cd.text)+'</div></div>'
-      +'<div class="rc-right"><span class="rc-s">'+others+' Bieter</span><span class="rc-chev">›</span></div>'
-    +'</div>'
-    +'<div class="row-detail"><div class="row-detail-inner">'+detail+'</div></div>'
-  +'</div>';
+    detail+='<div class="muted-msg">Frist abgelaufen — kein Angebot mehr möglich.</div>';
+  }else{detail+=buildBidForm(b,ziel);}
+  return '<div class="row-x" data-id="'+esc(b.id)+'"><div class="row-head b-head">'
+    +'<div><div class="rc-t">'+esc(bMat(b))+'</div>'+(b.sourceon_id?'<div class="rc-id">'+esc(b.sourceon_id)+'</div>':'')+'</div>'
+    +'<div><div class="rc-v">'+esc(bVolStr(b))+'</div><div class="rc-s">'+esc(bZone(b))+'</div></div>'
+    +'<div><div class="rc-v gold">'+(ziel!=null?'Min. '+ziel+'%':'--')+'</div><div class="rc-s">Brutto-Mindestrabatt</div></div>'
+    +'<div><div class="cd '+cd.cls+'" id="cd-'+esc(b.id)+'">'+esc(cd.text)+'</div></div>'
+    +'<div class="rc-right"><span class="rc-s">'+others+' Bieter</span><span class="rc-chev">›</span></div>'
+    +'</div><div class="row-detail"><div class="row-detail-inner">'+detail+'</div></div></div>';
 }
 function buildBidForm(b,ziel){
   var id=b.id;
-  var h='<div class="bidlbl">Dein Angebot</div>';
-  h+='<div class="rabatt-wrap"><input class="rabatt-in" type="number" step="0.1" min="0" max="100" id="rb-'+id+'" placeholder="0" oninput="calcBid(\''+id+'\')"/><span class="rabatt-suf">%</span></div>';
-  h+='<div class="minhint">'+(ziel!=null?'Mindestens '+ziel+'% gefordert.':'Rabatt in Prozent angeben.')+'</div>';
-  h+='<div class="minwarn" id="mw-'+id+'">⚠ Unter Mindestanforderung — Angebot wird wahrscheinlich nicht berücksichtigt.</div>';
-  h+='<div class="breakdown">'
-    +'<div class="bd-row"><span class="l">Regulärer Marktpreis (Richtwert)</span><span class="v" id="bd-base-'+id+'">--</span></div>'
-    +'<div class="bd-row"><span class="l">Dein Rabatt (<span id="bd-pct-'+id+'">0</span>%)</span><span class="v neg" id="bd-disc-'+id+'">--</span></div>'
-    +'<div class="bd-row"><span class="l">Bestellwert (Preis für Kunden)</span><span class="v" id="bd-order-'+id+'">--</span></div>'
-    +'<div class="bd-row"><span class="l">SourceOn-Vermittlungsgebühr (2.25%)</span><span class="v mut" id="bd-prov-'+id+'">--</span></div>'
-    +'<div class="bd-div"></div>'
-    +'<div class="bd-row bd-net"><span class="l">Dein Nettoerlös</span><span class="v" id="bd-net-'+id+'">--</span></div>'
-    +'<div class="bd-note">Die Vermittlungsgebühr ist im geforderten Mindestrabatt bereits einkalkuliert.</div>'
-  +'</div>';
-  h+='<div class="fld"><label>Lieferfähigkeit / Bemerkungen (optional)</label><textarea class="dark-input" id="nt-'+id+'" rows="3"></textarea></div>';
+  var h='<div class="bidlbl">Dein Rabatt-Angebot</div><div class="rabatt-wrap"><input class="rabatt-in" type="number" step="0.1" min="0" max="100" id="rb-'+id+'" placeholder="0" oninput="calcBid(\''+id+'\')"/><span class="rabatt-suf">%</span></div>';
+  h+='<div class="minhint">'+(ziel!=null?'Mindestens '+ziel+'% gefordert':'Rabatt in Prozent angeben')+'</div><div class="minwarn" id="mw-'+id+'">⚠ Unter Mindestanforderung</div>';
+  h+='<div class="breakdown"><div class="bd-row"><span class="l">Regulärer Marktpreis (Richtwert)</span><span class="v" id="bd-base-'+id+'">--</span></div><div class="bd-row"><span class="l">Dein Rabatt (−<span id="bd-pct-'+id+'">0</span>%)</span><span class="v neg" id="bd-disc-'+id+'">--</span></div><div class="bd-row"><span class="l">Bestellwert</span><span class="v" id="bd-order-'+id+'">--</span></div><div class="bd-row"><span class="l">SourceOn-Provision (2.25%)</span><span class="v mut" id="bd-prov-'+id+'">--</span></div><div class="bd-div"></div><div class="bd-row bd-net"><span class="l">Dein Nettoerlös</span><span class="v" id="bd-net-'+id+'">--</span></div><div class="bd-note">Provision im Mindestrabatt bereits einkalkuliert</div></div>';
+  h+='<div class="bidlbl">Bemerkungen (optional)</div><textarea class="dark-input" id="nt-'+id+'"></textarea>';
   h+='<label class="bidcheck"><input type="checkbox" id="c1-'+id+'" onchange="updBidBtn(\''+id+'\')"/><span>Ich bestätige, dass ich '+esc(bVolStr(b))+' innerhalb des angegebenen Lieferzeitraums liefern kann.</span></label>';
-  h+='<label class="bidcheck"><input type="checkbox" id="c2-'+id+'" onchange="updBidBtn(\''+id+'\')"/><span>Dieses Angebot ist verbindlich gemäss der <a href="lieferantenvereinbarung.html" target="_blank">Lieferantenvereinbarung →</a></span></label>';
-  h+='<button class="gold-btn" id="sub-'+id+'" style="width:100%;justify-content:center;margin-top:14px" disabled onclick="submitBid(\''+id+'\')">Angebot einreichen →</button>';
-  h+='<div id="err-'+id+'" style="display:none;color:#FCA5A5;font-size:13px;margin-top:10px"></div>';
+  h+='<label class="bidcheck"><input type="checkbox" id="c2-'+id+'" onchange="updBidBtn(\''+id+'\')"/><span>Dieses Angebot ist verbindlich gemäss der <a href="lieferantenvereinbarung.html" target="_blank" style="color:var(--gold)">Lieferantenvereinbarung →</a> von SourceOn.</span></label>';
+  h+='<button class="btn-gold" id="sub-'+id+'" style="width:100%;justify-content:center;margin-top:16px" disabled onclick="submitBid(\''+id+'\')">Angebot einreichen →</button><div id="err-'+id+'" style="display:none;color:#FCA5A5;font-size:13px;margin-top:10px"></div>';
   return h;
 }
 function calcBid(id){
   var b=_bundles.filter(function(x){return x.id===id;})[0];if(!b)return;
-  var r=parseFloat(document.getElementById('rb-'+id).value);var ziel=bZiel(b),rp=bRicht(b),v=bVol(b);
+  var r=parseFloat(document.getElementById('rb-'+id).value),ziel=bZiel(b),rp=bRicht(b),v=bVol(b);
   document.getElementById('bd-pct-'+id).textContent=isNaN(r)?'0':r;
-  var mw=document.getElementById('mw-'+id);mw.classList.toggle('show',!isNaN(r)&&ziel!=null&&r<ziel);
+  document.getElementById('mw-'+id).classList.toggle('show',!isNaN(r)&&ziel!=null&&r<ziel);
   if(rp==null||v==null||isNaN(r)){['bd-base','bd-disc','bd-order','bd-prov','bd-net'].forEach(function(k){document.getElementById(k+'-'+id).textContent='--';});updBidBtn(id);return;}
   var base=rp*v,disc=base*(r/100),order=base-disc,prov=order*COMM,net=order-prov;
   document.getElementById('bd-base-'+id).textContent=fmtCHF(base);
-  document.getElementById('bd-disc-'+id).textContent='-'+fmtCHF(disc);
+  document.getElementById('bd-disc-'+id).textContent='−'+fmtCHF(disc);
   document.getElementById('bd-order-'+id).textContent=fmtCHF(order);
-  document.getElementById('bd-prov-'+id).textContent='-'+fmtCHF(prov);
+  document.getElementById('bd-prov-'+id).textContent='−'+fmtCHF(prov);
   document.getElementById('bd-net-'+id).textContent=fmtCHF(net);
   updBidBtn(id);
 }
 function updBidBtn(id){var r=parseFloat(document.getElementById('rb-'+id).value);var c1=document.getElementById('c1-'+id).checked,c2=document.getElementById('c2-'+id).checked;document.getElementById('sub-'+id).disabled=!(c1&&c2&&!isNaN(r)&&r>0);}
 async function submitBid(id){
   var b=_bundles.filter(function(x){return x.id===id;})[0];if(!b)return;
-  var r=parseFloat(document.getElementById('rb-'+id).value);
-  if(isNaN(r)||r<=0){showBidErr(id,'Bitte gib einen gültigen Rabatt an.');return;}
+  var r=parseFloat(document.getElementById('rb-'+id).value);if(isNaN(r)||r<=0){showBidErr(id,'Bitte gib einen gültigen Rabatt an.');return;}
   var notes=document.getElementById('nt-'+id).value.trim();
   var btn=document.getElementById('sub-'+id);btn.disabled=true;btn.textContent='Wird eingereicht…';
   var payload={bundle_id:id,supplier_id:currentUserId,status:'eingereicht',rabatt_prozent:r,delivery_confirmed:true,legal_confirmed:true,legal_confirmed_at:new Date().toISOString()};
   if(notes)payload.lieferfaehigkeit_notes=notes;
-  var res;
-  if(_myBids[id]){res=await sb.from('bids').update(payload).eq('bundle_id',id).eq('supplier_id',currentUserId);}
-  else{res=await sb.from('bids').insert(payload);}
+  var res=_myBids[id]?await sb.from('bids').update(payload).eq('bundle_id',id).eq('supplier_id',currentUserId):await sb.from('bids').insert(payload);
   if(res.error){if(res.error.code==='23505'){res=await sb.from('bids').update(payload).eq('bundle_id',id).eq('supplier_id',currentUserId);}if(res.error){showBidErr(id,'Fehler: '+res.error.message);btn.disabled=false;btn.textContent='Angebot einreichen →';return;}}
-  var now=new Date();
-  var detail=document.querySelector('.row-x[data-id="'+id+'"] .row-detail-inner');
-  var net=bestellwert({rabatt_prozent:r},b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';
-  _myBids[id]={bundle_id:id,rabatt_prozent:r,status:'eingereicht',created_at:now.toISOString(),bundles:b};
-  if(detail){var deadline=new Date(b.bid_deadline);detail.innerHTML=detail.innerHTML.split('<div class="bidlbl">')[0]+'<div class="bid-submitted">✓ Angebot eingereicht um '+now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes()+' Uhr — verbindlich bis '+esc(fmtDMY(deadline))+'<div style="margin-top:10px"><span class="link-muted" onclick="withdrawBid(\''+id+'\')">Angebot zurückziehen</span></div></div>';}
+  var now=new Date();_myBids[id]={bundle_id:id,rabatt_prozent:r,status:'eingereicht',created_at:now.toISOString(),bundles:b};
+  var inner=document.querySelector('.row-x[data-id="'+id+'"] .row-detail-inner');
+  if(inner){var net=bestellwert({rabatt_prozent:r},b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';var hh=now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();inner.innerHTML=inner.innerHTML.split('<div class="bidlbl">')[0]+'<div class="bid-done"><div class="t">✓ Angebot eingereicht um '+hh+' Uhr</div><div class="s">Verbindlich bis '+esc(fmtDMY(new Date(b.bid_deadline)))+' · <span class="act-link act-danger" onclick="withdrawBid(\''+id+'\')">Angebot zurückziehen</span></div></div>';}
   renderAngebote();renderFinanzen();
 }
-function showBidErr(id,msg){var e=document.getElementById('err-'+id);if(e){e.textContent=msg;e.style.display='block';}}
-async function withdrawBid(id){
-  if(!confirm('Möchtest du dein Angebot wirklich zurückziehen?'))return;
-  var res=await sb.from('bids').update({status:'zurueckgezogen'}).eq('bundle_id',id).eq('supplier_id',currentUserId);
-  if(res.error){alert('Fehler: '+res.error.message);return;}
-  if(_myBids[id])_myBids[id].status='zurueckgezogen';
-  window.location.reload();
-}
+function showBidErr(id,m){var e=document.getElementById('err-'+id);if(e){e.textContent=m;e.style.display='block';}}
+async function withdrawBid(id){if(!confirm('Möchtest du dein Angebot wirklich zurückziehen?'))return;var res=await sb.from('bids').update({status:'zurueckgezogen'}).eq('bundle_id',id).eq('supplier_id',currentUserId);if(res.error){alert('Fehler: '+res.error.message);return;}if(_myBids[id])_myBids[id].status='zurueckgezogen';window.location.reload();}
 function refreshCountdowns(){_bundles.forEach(function(b){var el=document.getElementById('cd-'+b.id);if(el){var cd=countdown(new Date(b.bid_deadline));el.textContent=cd.text;el.className='cd '+cd.cls;}});}
 
-// ── ANGEBOTE ──
-function setBidFilter(f){_bidFilter=f;document.querySelectorAll('#bid-filters .filt').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-bf')===f);});renderBidList();}
+// ── ANGEBOTE (split) ──
+function setBidFilter(f){_bidFilter=f;document.querySelectorAll('#bid-filters .filt').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-bf')===f);});renderBidItems();}
 function renderAngebote(){
   var total=0,won=0;_bids.forEach(function(b){var s=normStatus(b.status);if(s==='zurueckgezogen')return;total++;if(s==='gewonnen')won++;});
-  document.getElementById('a1').textContent=total;
-  document.getElementById('a2').textContent=won;
-  var q=document.getElementById('a3');if(total>0){q.textContent=Math.round(won/total*100)+'%';q.className='metric-num';}else{q.textContent='--';q.className='metric-num dim';}
-  if(_bids.length===0){document.getElementById('bid-empty').style.display='block';document.getElementById('bid-filters').style.display='none';return;}
-  renderBidList();
+  document.getElementById('a1').textContent=total;document.getElementById('a2').textContent=won;
+  var q=document.getElementById('a3');if(total>0){q.textContent=Math.round(won/total*100)+'%';q.className='m3-num';}else{q.textContent='--';q.className='m3-num dim';}
+  var real=_bids.filter(function(b){return normStatus(b.status)!=='zurueckgezogen';});
+  if(real.length===0){document.getElementById('ang-split').style.display='none';document.getElementById('ang-empty').style.display='block';return;}
+  renderBidItems();
 }
-function renderBidList(){
-  var list=document.getElementById('bid-list');
+function renderBidItems(){
+  var el=document.getElementById('bid-items');
   var rows=_bids.filter(function(b){var s=normStatus(b.status);if(s==='zurueckgezogen')return false;return _bidFilter==='alle'||s===_bidFilter;});
-  if(rows.length===0){list.innerHTML='<div class="sec-empty"><p>Keine Angebote in dieser Kategorie.</p></div>';return;}
-  list.innerHTML=rows.map(function(bid){
-    var b=bid.bundles||{};var s=normStatus(bid.status);var bg=bidBadge(bid.status);
-    var net=bestellwert(bid,b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';
-    var d=bid.created_at?fmtShort(new Date(bid.created_at)):'--';
-    var won=s==='gewonnen';
-    var head='<div class="row-head bundle-head"'+(won?'':' style="cursor:default"')+'>'
-      +'<div><div class="rc-t">'+esc(bMat(b))+'</div>'+(b.sourceon_id?'<div class="rc-id">'+esc(b.sourceon_id)+'</div>':'')+'</div>'
-      +'<div class="rc-col-hide"><div class="rc-v">'+esc(bVolStr(b))+'</div><div class="rc-s">'+esc(d)+'</div></div>'
-      +'<div class="rc-col-hide"><div class="rc-v">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% Rabatt</div><div class="rc-s gold">Nettoerlös '+netStr+'</div></div>'
-      +'<div class="rc-col-hide"><div class="rc-s">'+esc(bZone(b))+'</div></div>'
-      +'<div class="rc-right"><span class="pill '+bg.c+'">'+esc(bg.t)+'</span>'+(won?'<span class="rc-chev">›</span>':'')+'</div>'
-    +'</div>';
-    var detail='';
-    if(won){detail='<div class="row-detail"><div class="row-detail-inner">'
-      +'<div class="sumbox"><div><div class="l">Lieferzeitraum</div><div class="v">'+esc(bZeitraum(b))+'</div></div><div><div class="l">Kunde</div><div class="v">Baufirma, '+esc(bZone(b))+'</div></div><div><div class="l">Nettoerlös</div><div class="v gold">'+netStr+'</div></div></div>'
-      +'<div class="sumnote">Kontaktdaten des Kunden werden nach Lieferbestätigung im Tab „Lieferungen" angezeigt.</div>'
-      +'<div style="display:flex;gap:12px;flex-wrap:wrap"><button class="gold-btn" onclick="showTab(\'lieferungen\')">Zur Lieferung →</button><button class="danger-btn" style="border-color:var(--border);color:var(--text-secondary)" onclick="makeDeliveryPDF(\''+esc(bid.id)+'\')">Lieferauftrag als PDF</button></div>'
-      +'</div></div>';}
-    return '<div class="row-x">'+head+detail+'</div>';
-  }).join('');
-  list.querySelectorAll('.row-head').forEach(function(h){h.addEventListener('click',function(e){if(h.parentNode.querySelector('.row-detail')){if(e.target.closest('button'))return;h.parentNode.classList.toggle('open');}});});
+  if(rows.length===0){el.innerHTML='<div class="empty-line" style="padding:16px">Keine Angebote.</div>';return;}
+  el.innerHTML=rows.map(function(bid){var b=bid.bundles||{};var bg=bidBadge(bid.status);var d=bid.created_at?fmtShort(new Date(bid.created_at)):'';return '<div class="sv-item'+(bid.id===_selBid?' active':'')+'" data-id="'+esc(bid.id)+'" onclick="selectBid(\''+esc(bid.id)+'\')"><div class="sv-top"><span class="sv-mat">'+esc(bMat(b))+'</span><span class="sv-date">'+esc(d)+'</span></div><div class="sv-bot"><span style="font-size:13px">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% Rabatt</span><span class="status-pill '+bg.c+'">'+esc(bg.t)+'</span></div></div>';}).join('');
+}
+function selectBid(id){
+  _selBid=id;document.querySelectorAll('.sv-item').forEach(function(it){it.classList.toggle('active',it.getAttribute('data-id')===id);});
+  var bid=_bids.filter(function(x){return x.id===id;})[0];if(!bid)return;var b=bid.bundles||{};var s=normStatus(bid.status),bg=bidBadge(bid.status);
+  var net=bestellwert(bid,b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';
+  var d=bid.created_at?fmtDMY(new Date(bid.created_at)):'';
+  var html='<div class="rd-head-row"><div><div class="rd-mat">'+esc(bMat(b))+'</div>'+(b.sourceon_id?'<div class="rd-id">'+esc(b.sourceon_id)+'</div>':'')+'</div><div class="rd-head-meta"><span class="status-pill '+bg.c+'">'+esc(bg.t)+'</span><div class="rd-date">'+esc(d)+'</div></div></div>';
+  html+='<div class="rd-key"><div><div class="k-num">'+Number(bid.rabatt_prozent||0).toFixed(1)+'%</div><div class="k-lbl">Rabatt</div></div><div><div class="k-num gold">'+netStr+'</div><div class="k-lbl">Nettoerlös</div></div><div><div class="k-num">'+esc(bVolStr(b))+'</div><div class="k-lbl">Menge</div></div></div>';
+  if(s==='gewonnen'){
+    var confirmed=bid.delivery_confirmed===true;
+    html+='<div class="award-box"><div class="t">🏆 Zuschlag erhalten</div>'
+      +'<div style="font-size:13px;color:var(--text-2);line-height:1.7"><b style="color:var(--text-1)">Auftraggeber:</b> Baufirma, '+esc(bZone(b))+'<br>Kontaktdaten werden per E-Mail übermittelt.<br><b style="color:var(--text-1)">Lieferzeitraum:</b> '+esc(bZeitraum(b))+'</div>';
+    if(confirmed){html+='<div style="color:var(--green);font-size:13px;margin-top:12px">✓ Lieferung bestätigt'+(bid.delivery_confirmed_at?' am '+esc(fmtDMY(new Date(bid.delivery_confirmed_at))):'')+'</div>';}
+    else{html+='<button class="btn-gold" style="margin-top:14px" onclick="confirmDelivery(\''+esc(bid.id)+'\')">Lieferung bestätigen →</button>';}
+    html+='</div>';
+  }else if(s==='eingereicht'){
+    var st=timelineStates(s),tlLbl=['Eingegangen','Bündelung','Ausschreibung','Zuschlag'];var tl='<div class="tl">';for(var i=0;i<4;i++){tl+='<div class="tl-step '+st[i]+'"><div class="tl-dot"></div><div class="tl-lbl">'+tlLbl[i]+'</div></div>';if(i<3)tl+='<div class="tl-conn'+(st[i]==='done'?' done':'')+'"></div>';}tl+='</div>';
+    html+=tl+'<div class="muted-msg">Dein Angebot ist eingereicht. Du wirst benachrichtigt, sobald über den Zuschlag entschieden ist.</div>';
+  }else if(s==='verloren'){html+='<div class="muted-msg">Dieser Auftrag wurde an einen anderen Lieferanten vergeben.</div>';}
+  else if(s==='abgelaufen'){html+='<div class="muted-msg">Ausschreibung ohne Zuschlag abgelaufen.</div>';}
+  var mailto='mailto:info@sourceon.ch?subject='+encodeURIComponent('Angebot '+(b.sourceon_id||''));
+  html+='<div class="rd-actions">'+(s==='gewonnen'?'<span class="act-link" onclick="makeDeliveryPDF(\''+esc(bid.id)+'\')">Lieferauftrag als PDF →</span>':'')+'<a class="act-link" href="'+mailto+'">Frage zu diesem Angebot →</a></div>';
+  document.getElementById('bid-detail').innerHTML=html;
 }
 
 // ── FINANZEN ──
 function renderFinanzen(){
-  var netTotal=0,outstanding=0,received=0,rows='';
+  var revenue=0,openProv=0,paidProv=0,netSum=0,netCount=0,rows='';
   var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
-  won.forEach(function(bid){var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;var net=ord*(1-COMM);netTotal+=net;
-    var delivered=bid.delivery_confirmed===true;
-    if(delivered)received+=net;else outstanding+=net;
-    var due=bid.delivery_confirmed_at?new Date(new Date(bid.delivery_confirmed_at).getTime()+14*86400000):null;
-    rows+='<tr><td>'+esc((b.sourceon_id||'—'))+'</td><td>'+esc(bMat(b))+'</td><td class="num">'+fmtCHF(ord)+'</td><td class="num gold">'+fmtCHF(net)+'</td><td>'+(delivered?(due?esc(fmtShort(due)):'in Abrechnung'):'nach Lieferung')+'</td><td><span class="pill '+(delivered?'p-green':'p-warn')+'">'+(delivered?'Erhalten':'Offen')+'</span></td></tr>';
-  });
-  document.getElementById('f1').textContent=netTotal>0?fmtCHF(netTotal):'CHF 0';document.getElementById('f1').className='metric-num gold';
-  var f2=document.getElementById('f2');f2.textContent=outstanding>0?fmtCHF(outstanding):'--';f2.className='metric-num'+(outstanding>0?'':' dim');
-  var f3=document.getElementById('f3');f3.textContent=received>0?fmtCHF(received):'--';f3.className='metric-num'+(received>0?'':' dim');
-  var head='<thead><tr><th>Auftrag</th><th>Material</th><th class="num">Bestellwert CHF</th><th class="num">Dein Nettoerlös</th><th>Zahlung</th><th>Status</th></tr></thead>';
-  var body='<tbody>'+(rows||'<tr><td colspan="6" style="color:var(--text-muted)">Noch keine gewonnenen Aufträge.</td></tr>')+'<tr class="total"><td>Total</td><td></td><td></td><td class="num gold">'+fmtCHF(netTotal)+'</td><td></td><td></td></tr></tbody>';
+  won.forEach(function(bid){var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;revenue+=ord;var prov=ord*COMM;var paid=bid.provision_paid===true;if(paid)paidProv+=prov;else openProv+=prov;netSum+=ord*(1-COMM);netCount++;
+    var d=bid.created_at?fmtShort(new Date(bid.created_at)):'--';
+    rows+='<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td class="num">'+fmtCHF(ord)+'</td><td class="num">'+fmtCHF(prov)+'</td><td><span class="status-pill '+(paid?'p-green':'p-amber')+'">'+(paid?'Bezahlt':'Offen')+'</span></td></tr>';});
+  var h=document.getElementById('fin-hero');h.textContent=revenue>0?fmtCHF(revenue):'CHF 0';h.className='hero-num'+(revenue>0?'':' zero');
+  document.getElementById('fin-hero-sub').textContent=won.length>0?('Aus '+won.length+' gewonnenen Auftrag'+(won.length!==1?'en':'')):'Noch keine gewonnenen Aufträge';
+  var fo=document.getElementById('f-open');fo.textContent=openProv>0?fmtCHF(openProv):'--';fo.className='m3-num'+(openProv>0?' amber':' dim');
+  var fp=document.getElementById('f-paid');fp.textContent=paidProv>0?fmtCHF(paidProv):'--';fp.className='m3-num'+(paidProv>0?' green':' dim');
+  var fa=document.getElementById('f-avg');fa.textContent=netCount>0?fmtCHF(netSum/netCount):'--';fa.className='m3-num'+(netCount>0?'':' dim');
+  var head='<thead><tr><th>Datum</th><th>Material</th><th class="num">Bestellwert CHF</th><th class="num">Provision (2.25%)</th><th>Status</th></tr></thead>';
+  var body='<tbody>'+(rows||'<tr><td colspan="5" style="color:var(--text-3)">Noch keine Provisionen — erst nach gewonnenen Aufträgen</td></tr>')+(rows?'<tr class="total"><td>Total</td><td></td><td class="num">'+fmtCHF(revenue)+'</td><td class="num gold">'+fmtCHF(openProv+paidProv)+'</td><td></td></tr>':'')+'</tbody>';
   document.getElementById('prov-table').innerHTML=head+body;
   renderChart(won);
 }
@@ -734,37 +630,18 @@ function renderChart(won){
   var now=new Date(),buckets={},order=[];
   for(var i=5;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i,1);var key=d.getFullYear()+'-'+d.getMonth();buckets[key]={label:_MON[d.getMonth()]+' '+String(d.getFullYear()).slice(2),val:0};order.push(key);}
   var monthsWithData=0;
-  won.forEach(function(bid){if(!bid.created_at)return;var d=new Date(bid.created_at);var key=d.getFullYear()+'-'+d.getMonth();if(buckets[key]){var ord=bestellwert(bid,bid.bundles||{});if(ord!=null)buckets[key].val+=ord*(1-COMM);}});
+  won.forEach(function(bid){if(!bid.created_at)return;var d=new Date(bid.created_at);var key=d.getFullYear()+'-'+d.getMonth();if(buckets[key]){var ord=bestellwert(bid,bid.bundles||{});if(ord!=null)buckets[key].val+=ord;}});
   order.forEach(function(k){if(buckets[k].val>0)monthsWithData++;});
   if(monthsWithData<2||!window.Chart){document.getElementById('chart-blk').style.display='none';return;}
   document.getElementById('chart-blk').style.display='block';
   window.Chart.defaults.color='#94A3B8';
   var ctx=document.getElementById('fin-chart').getContext('2d');
-  new window.Chart(ctx,{type:'bar',data:{labels:order.map(function(k){return buckets[k].label;}),datasets:[{data:order.map(function(k){return Math.round(buckets[k].val);}),backgroundColor:'rgba(232,160,32,0.7)',borderColor:'#E8A020',borderWidth:1,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return 'CHF '+fmtNum(c.parsed.y);}}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(30,58,95,0.8)'},ticks:{callback:function(v){return fmtNum(v);}}}}}});
-}
-function printPortfolio(){
-  var total=0,won=0,rev=0;var rows='';
-  _bids.forEach(function(bid){var s=normStatus(bid.status);if(s==='zurueckgezogen')return;total++;if(s==='gewonnen')won++;var b=bid.bundles||{};var bg=bidBadge(bid.status);var net=bestellwert(bid,b);if(s==='gewonnen'&&net!=null)rev+=net;var d=bid.created_at?fmtDMY(new Date(bid.created_at)):'--';rows+='<tr><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(d)+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(bMat(b))+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(bVolStr(b))+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+Number(bid.rabatt_prozent||0).toFixed(1)+'%</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(bg.t)+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5;text-align:right">'+(net!=null?fmtCHF(net*(1-COMM)):'--')+'</td></tr>';});
-  var quote=total>0?Math.round(won/total*100)+'%':'--';
-  document.getElementById('print-content').innerHTML='<div style="max-width:720px">'
-    +'<div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div>'
-    +'<div style="font-size:15px;color:#555;margin-bottom:4px">Lieferanten-Portfolio</div>'
-    +'<div style="font-size:12px;color:#888;margin-bottom:22px">'+esc(_profile.company_name||'')+' · Erstellt am '+fmtDMY(new Date())+'</div>'
-    +'<div style="display:flex;gap:28px;margin-bottom:24px;font-size:13px;color:#111">'
-      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Eingereicht</div><div style="font-size:20px;font-weight:700">'+total+'</div></div>'
-      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Gewonnen</div><div style="font-size:20px;font-weight:700;color:#E8A020">'+won+'</div></div>'
-      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Erfolgsquote</div><div style="font-size:20px;font-weight:700">'+quote+'</div></div>'
-      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Umsatz (netto)</div><div style="font-size:20px;font-weight:700">'+(rev>0?fmtCHF(rev*(1-COMM)):'--')+'</div></div>'
-    +'</div>'
-    +'<table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.05em"><th style="padding:6px 8px;border-bottom:2px solid #333">Datum</th><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333">Menge</th><th style="padding:6px 8px;border-bottom:2px solid #333">Rabatt</th><th style="padding:6px 8px;border-bottom:2px solid #333">Status</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Nettoerlös</th></tr>'+(rows||'<tr><td colspan="6" style="padding:10px;color:#888">Noch keine Angebote.</td></tr>')+'</table>'
-    +'<div style="margin-top:30px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999">Dokument erstellt via SourceOn · sourceon.ch · Nettoerlös nach 2.25% Vermittlungsgebühr, Richtwerte</div></div>';
-  window.print();
+  new window.Chart(ctx,{type:'bar',data:{labels:order.map(function(k){return buckets[k].label;}),datasets:[{data:order.map(function(k){return Math.round(buckets[k].val);}),backgroundColor:'rgba(232,160,32,0.7)',borderColor:'#E8A020',borderWidth:1,borderRadius:4,maxBarThickness:44}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return 'CHF '+fmtNum(c.parsed.y);}}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(30,58,95,0.6)'},ticks:{callback:function(v){return fmtNum(v);}}}}}});
 }
 function printProvisions(){
-  var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
-  var rows='',rev=0,net=0;
-  won.forEach(function(bid){var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;rev+=ord;var nt=ord*(1-COMM);net+=nt;var delivered=bid.delivery_confirmed===true;rows+='<tr><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+esc(bMat(b))+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(ord)+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(nt)+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+(delivered?'Erhalten':'Offen')+'</td></tr>';});
-  document.getElementById('print-content').innerHTML='<div style="max-width:660px"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:15px;color:#555;margin-bottom:6px">Erlösübersicht</div><div style="font-size:12px;color:#888;margin-bottom:20px">'+esc(_profile.company_name||'')+' · Erstellt am '+fmtDMY(new Date())+'</div><table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.05em"><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Bestellwert</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Dein Nettoerlös</th><th style="padding:6px 8px;border-bottom:2px solid #333">Status</th></tr>'+(rows||'<tr><td colspan="4" style="padding:8px">Keine Aufträge.</td></tr>')+'<tr><td style="padding:8px;font-weight:700">Total</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(rev)+'</td><td style="padding:8px;text-align:right;font-weight:700;color:#B8801A">'+fmtCHF(net)+'</td><td></td></tr></table><div style="margin-top:30px;font-size:11px;color:#999">Der Kunde bezahlt den Bestellwert direkt an dich. Nettoerlös nach abgezogener SourceOn-Vermittlungsgebühr (2.25 %). Zahlungsfrist: 14 Tage netto nach Lieferbestätigung · sourceon.ch</div></div>';
+  var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});var rows='',rev=0,prov=0;
+  won.forEach(function(bid){var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;rev+=ord;var pr=ord*COMM;prov+=pr;var d=bid.created_at?fmtDMY(new Date(bid.created_at)):'--';rows+='<tr><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+esc(d)+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+esc(bMat(b))+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(ord)+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(pr)+'</td></tr>';});
+  document.getElementById('print-content').innerHTML='<div style="max-width:660px"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:15px;color:#555;margin-bottom:4px">Provisionsabrechnung</div><div style="font-size:12px;color:#888;margin-bottom:22px">'+esc(_profile.company_name||'')+' · Erstellt am '+fmtDMY(new Date())+'</div><table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase"><th style="padding:6px 8px;border-bottom:2px solid #333">Datum</th><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Bestellwert</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Provision (2.25%)</th></tr>'+(rows||'<tr><td colspan="4" style="padding:8px">Keine Aufträge.</td></tr>')+'<tr><td style="padding:8px;font-weight:700" colspan="2">Total</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(rev)+'</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(prov)+'</td></tr></table><div style="margin-top:30px;font-size:11px;color:#999">Zahlungsfrist: 14 Tage netto nach Lieferbestätigung · sourceon.ch</div></div>';
   window.print();
 }
 
@@ -772,67 +649,54 @@ function printProvisions(){
 function renderLieferungen(){
   var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
   if(won.length===0){document.getElementById('deliv-empty').style.display='block';return;}
-  var upcoming=won.filter(function(b){return !b.delivery_confirmed;});
-  var past=won.filter(function(b){return b.delivery_confirmed;});
+  var upcoming=won.filter(function(b){return !b.delivery_confirmed;}),past=won.filter(function(b){return b.delivery_confirmed;});
   var up=document.getElementById('deliv-upcoming');
-  up.innerHTML=upcoming.length?upcoming.map(buildDeliveryRow).join(''):'<div class="sec-empty" style="padding:32px 0"><p>Keine bevorstehenden Lieferungen.</p></div>';
-  up.querySelectorAll('.row-head').forEach(function(h){h.addEventListener('click',function(e){if(e.target.closest('button'))return;h.parentNode.classList.toggle('open');});});
-  var head='<thead><tr><th>Datum</th><th>Material</th><th>Menge</th><th>Kunde</th><th class="num">Nettoerlös</th><th>Status</th></tr></thead>';
-  var body='<tbody>'+(past.length?past.map(function(bid){var b=bid.bundles||{};var net=bestellwert(bid,b);var d=bid.delivery_confirmed_at?fmtShort(new Date(bid.delivery_confirmed_at)):'--';return '<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td>'+esc(bVolStr(b))+'</td><td>Baufirma, '+esc(bZone(b))+'</td><td class="num">'+(net!=null?fmtCHF(net*(1-COMM)):'--')+'</td><td><span class="pill p-green">Geliefert</span></td></tr>';}).join(''):'<tr><td colspan="6" style="color:var(--text-muted)">Noch keine abgeschlossenen Lieferungen.</td></tr>')+'</tbody>';
+  up.innerHTML=upcoming.length?upcoming.map(buildDeliveryRow).join(''):'<div class="empty-line">Keine bevorstehenden Lieferungen.</div>';
+  up.querySelectorAll('.row-head').forEach(function(hd){hd.addEventListener('click',function(e){if(e.target.closest('button,.act-link,a'))return;hd.parentNode.classList.toggle('open');});});
+  var head='<thead><tr><th>Datum</th><th>Material</th><th>Menge</th><th>Auftraggeber</th><th class="num">Nettoerlös</th><th>Status</th></tr></thead>';
+  var body='<tbody>'+(past.length?past.map(function(bid){var b=bid.bundles||{};var net=bestellwert(bid,b);var d=bid.delivery_confirmed_at?fmtShort(new Date(bid.delivery_confirmed_at)):'--';return '<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td>'+esc(bVolStr(b))+'</td><td>Baufirma, '+esc(bZone(b))+'</td><td class="num">'+(net!=null?fmtCHF(net*(1-COMM)):'--')+'</td><td><span class="status-pill p-green">Geliefert</span></td></tr>';}).join(''):'<tr><td colspan="6" style="color:var(--text-3)">Noch keine abgeschlossenen Lieferungen.</td></tr>')+'</tbody>';
   document.getElementById('deliv-past').innerHTML=head+body;
 }
 function buildDeliveryRow(bid){
   var b=bid.bundles||{};var net=bestellwert(bid,b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';
   var lieferdatum=b.liefer_zeitraum_von?fmtShort(new Date(b.liefer_zeitraum_von)):(b.delivery_timeframe||'--');
-  var detail='<div class="row-detail"><div class="row-detail-inner">'
-    +'<div class="sumbox"><div><div class="l">Lieferzeitraum</div><div class="v">'+esc(bZeitraum(b))+'</div></div><div><div class="l">Kunde</div><div class="v">Baufirma, '+esc(bZone(b))+'</div></div><div><div class="l">Nettoerlös</div><div class="v gold">'+netStr+'</div></div></div>'
-    +'<div class="sumnote">Genaue Lieferadresse und Kontaktdaten werden nach Lieferbestätigung übermittelt.</div>'
-    +'<div style="display:flex;gap:12px;flex-wrap:wrap"><button class="gold-btn" onclick="confirmDelivery(\''+esc(bid.id)+'\')">Lieferung bestätigen</button><button class="danger-btn" style="border-color:var(--border);color:var(--text-secondary)" onclick="makeDeliveryPDF(\''+esc(bid.id)+'\')">Lieferauftrag als PDF</button></div>'
-    +'</div></div>';
-  return '<div class="row-x">'
-    +'<div class="row-head deliv-head">'
-      +'<div><div class="rc-t">'+esc(bMat(b))+'</div>'+(b.sourceon_id?'<div class="rc-id">'+esc(b.sourceon_id)+'</div>':'')+'</div>'
-      +'<div class="rc-col-hide"><div class="rc-v">'+esc(bVolStr(b))+'</div></div>'
-      +'<div class="rc-col-hide"><div class="rc-v">'+esc(lieferdatum)+'</div></div>'
-      +'<div class="rc-col-hide"><div class="rc-s">Baufirma, '+esc(bZone(b))+'</div></div>'
-      +'<div class="rc-right"><span class="pill p-warn">Ausstehend</span><span class="rc-chev">›</span></div>'
-    +'</div>'+detail
-  +'</div>';
+  var confirmed=bid.delivery_confirmed===true;
+  var detail='<div class="sumbox"><div><div class="l">Auftraggeber</div><div class="v">Baufirma, '+esc(bZone(b))+'</div></div><div><div class="l">Lieferzeitraum</div><div class="v">'+esc(bZeitraum(b))+'</div></div><div><div class="l">Vereinb. Rabatt · Nettoerlös</div><div class="v gold">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% · '+netStr+'</div></div></div>';
+  detail+='<div class="sumnote">Genaue Lieferadresse und Kontaktdaten werden per E-Mail übermittelt.</div>';
+  detail+='<div class="rd-actions" style="border-top:none;padding-top:0;margin-top:0">'+(confirmed?'<span style="color:var(--green);font-size:13px">✓ Bestätigt'+(bid.delivery_confirmed_at?' am '+esc(fmtDMY(new Date(bid.delivery_confirmed_at))):'')+'</span>':'<button class="btn-gold" onclick="confirmDelivery(\''+esc(bid.id)+'\')">Lieferung bestätigen →</button>')+'<span class="act-link" onclick="makeDeliveryPDF(\''+esc(bid.id)+'\')">Lieferauftrag als PDF →</span></div>';
+  return '<div class="row-x"><div class="row-head d-head"><div><div class="rc-t">'+esc(bMat(b))+'</div>'+(b.sourceon_id?'<div class="rc-id">'+esc(b.sourceon_id)+'</div>':'')+'</div><div><div class="rc-v">'+esc(bVolStr(b))+'</div></div><div><div class="rc-v">'+esc(lieferdatum)+'</div></div><div><span class="status-pill p-amber">Ausstehend</span></div><div class="rc-right"><span class="rc-chev">›</span></div></div><div class="row-detail"><div class="row-detail-inner">'+detail+'</div></div></div>';
 }
 async function confirmDelivery(bidId){
   if(!confirm('Lieferung als erfolgt bestätigen?'))return;
-  var payload={delivery_confirmed:true,delivery_confirmed_at:new Date().toISOString()};
-  var res=await sb.from('bids').update(payload).eq('id',bidId);
+  var res=await sb.from('bids').update({delivery_confirmed:true,delivery_confirmed_at:new Date().toISOString()}).eq('id',bidId);
   if(res.error){res=await sb.from('bids').update({delivery_confirmed:true}).eq('id',bidId);if(res.error){alert('Fehler: '+res.error.message);return;}}
-  for(var i=0;i<_bids.length;i++){if(_bids[i].id===bidId){_bids[i].delivery_confirmed=true;_bids[i].delivery_confirmed_at=payload.delivery_confirmed_at;}}
-  renderLieferungen();renderFinanzen();
+  for(var i=0;i<_bids.length;i++){if(_bids[i].id===bidId){_bids[i].delivery_confirmed=true;_bids[i].delivery_confirmed_at=new Date().toISOString();}}
+  renderLieferungen();renderFinanzen();if(_selBid===bidId)selectBid(bidId);
 }
 function makeDeliveryPDF(bidId){
-  var bid=_bids.filter(function(x){return x.id===bidId;})[0];if(!bid)return;var b=bid.bundles||{};var net=bestellwert(bid,b);
-  document.getElementById('print-content').innerHTML='<div style="max-width:640px"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:15px;color:#555;margin-bottom:6px">Lieferauftrag</div><div style="font-size:12px;color:#888;margin-bottom:20px">Erstellt am '+fmtDMY(new Date())+'</div><table style="width:100%;border-collapse:collapse;font-size:14px;color:#111">'
-    +'<tr><td style="padding:6px 0;color:#555;width:200px">Lieferant</td><td style="padding:6px 0">'+esc(_profile.company_name||'--')+'</td></tr>'
+  var bid=_bids.filter(function(x){return x.id===bidId;})[0];if(!bid)return;var b=bid.bundles||{};var ord=bestellwert(bid,b);var prov=ord!=null?ord*COMM:null;var net=ord!=null?ord*(1-COMM):null;
+  document.getElementById('print-content').innerHTML='<div style="max-width:660px"><div style="display:flex;justify-content:space-between"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:12px;color:#888;text-align:right">Ausgestellt '+fmtDMY(new Date())+'</div></div><div style="font-size:15px;color:#555;margin:2px 0 16px">Lieferauftrag</div><hr style="border:none;border-top:1px solid #ddd;margin-bottom:16px"/><table style="width:100%;border-collapse:collapse;font-size:14px;color:#111">'
+    +'<tr><td style="padding:6px 0;color:#555;width:220px">Lieferant</td><td style="padding:6px 0">'+esc(_profile.company_name||'--')+(_profile.contact_person?' · '+esc(_profile.contact_person):'')+'</td></tr>'
+    +'<tr><td style="padding:6px 0;color:#555">Auftraggeber</td><td style="padding:6px 0">Baufirma, '+esc(bZone(b))+' (Kontaktdaten per E-Mail)</td></tr>'
     +'<tr><td style="padding:6px 0;color:#555">Material</td><td style="padding:6px 0">'+esc(bMat(b))+' ('+esc(b.sourceon_id||'--')+')</td></tr>'
     +'<tr><td style="padding:6px 0;color:#555">Menge</td><td style="padding:6px 0">'+esc(bVolStr(b))+'</td></tr>'
     +'<tr><td style="padding:6px 0;color:#555">Lieferzeitraum</td><td style="padding:6px 0">'+esc(bZeitraum(b))+'</td></tr>'
-    +'<tr><td style="padding:6px 0;color:#555">Liefergebiet</td><td style="padding:6px 0">'+esc(bZone(b))+'</td></tr>'
     +'<tr><td style="padding:6px 0;color:#555">Vereinbarter Rabatt</td><td style="padding:6px 0">'+Number(bid.rabatt_prozent||0).toFixed(1)+'%</td></tr>'
-    +'<tr><td style="padding:6px 0;color:#555">Nettoerlös (nach 2.25% Vermittlungsgebühr)</td><td style="padding:6px 0">'+(net!=null?fmtCHF(net*(1-COMM)):'--')+'</td></tr>'
-    +'</table><div style="margin-top:30px;padding-top:14px;border-top:1px solid #ddd;font-size:11px;color:#999">Dokument erstellt via SourceOn · sourceon.ch · Verbindlich gemäss Lieferantenvereinbarung</div></div>';
+    +'<tr><td style="padding:6px 0;color:#555">Bestellwert</td><td style="padding:6px 0">'+(ord!=null?fmtCHF(ord):'--')+'</td></tr>'
+    +'<tr><td style="padding:6px 0;color:#555">SourceOn-Provision (2.25%)</td><td style="padding:6px 0">'+(prov!=null?fmtCHF(prov):'--')+'</td></tr>'
+    +'<tr><td style="padding:6px 0;color:#555">Nettoerlös</td><td style="padding:6px 0;font-weight:700">'+(net!=null?fmtCHF(net):'--')+'</td></tr>'
+    +'</table><div style="margin-top:30px;font-size:11px;color:#999">SourceOn · sourceon.ch · Ausgestellt '+fmtDMY(new Date())+'</div></div>';
   window.print();
 }
-
-// ── ICS ──
 function _p2(n){return (n<10?'0':'')+n;}
 function icsStamp(d){return d.getUTCFullYear()+_p2(d.getUTCMonth()+1)+_p2(d.getUTCDate())+'T'+_p2(d.getUTCHours())+_p2(d.getUTCMinutes())+_p2(d.getUTCSeconds())+'Z';}
 function icsDay(d){return d.getFullYear()+_p2(d.getMonth()+1)+_p2(d.getDate());}
 function icsEsc(s){return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');}
 function exportDeliveryICS(){
-  var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen'&&!b.delivery_confirmed;});
-  var evs=won.filter(function(b){return (b.bundles||{}).liefer_zeitraum_von;});
-  if(evs.length===0){alert('Keine bevorstehenden Lieferungen zum Exportieren.');return;}
-  var stamp=icsStamp(new Date());
-  var lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SourceOn//Lieferdashboard//DE','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
-  evs.forEach(function(bid){var b=bid.bundles;var start=new Date(b.liefer_zeitraum_von);var endEx=new Date(start.getFullYear(),start.getMonth(),start.getDate()+1);var sum='Lieferung — '+bMat(b)+' ('+bVolStr(b)+')';lines.push('BEGIN:VEVENT','UID:sod-'+bid.id+'@sourceon.ch','DTSTAMP:'+stamp,'DTSTART;VALUE=DATE:'+icsDay(start),'DTEND;VALUE=DATE:'+icsDay(endEx),'SUMMARY:'+icsEsc(sum),'DESCRIPTION:'+icsEsc('SourceOn-Lieferauftrag. Details im Dashboard: sourceon.ch'),'STATUS:CONFIRMED','BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(sum),'TRIGGER:-P1D','END:VALARM','END:VEVENT');});
+  var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen'&&(b.bundles||{}).liefer_zeitraum_von;});
+  if(won.length===0){alert('Keine Lieferungen mit Datum zum Exportieren.');return;}
+  var stamp=icsStamp(new Date());var lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SourceOn//Lieferdashboard//DE','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
+  won.forEach(function(bid){var b=bid.bundles;var start=new Date(b.liefer_zeitraum_von);var endEx=new Date(start.getFullYear(),start.getMonth(),start.getDate()+1);var sum='Lieferung — '+bMat(b)+' ('+bVolStr(b)+')';lines.push('BEGIN:VEVENT','UID:sod-'+bid.id+'@sourceon.ch','DTSTAMP:'+stamp,'DTSTART;VALUE=DATE:'+icsDay(start),'DTEND;VALUE=DATE:'+icsDay(endEx),'SUMMARY:'+icsEsc(sum),'DESCRIPTION:'+icsEsc('SourceOn-Lieferauftrag · sourceon.ch'),'STATUS:CONFIRMED','BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(sum),'TRIGGER:-P1D','END:VALARM','END:VEVENT');});
   lines.push('END:VCALENDAR');
   var blob=new Blob([lines.join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'});var url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='sourceon-lieferungen.ics';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1500);
 }
@@ -841,62 +705,55 @@ function exportDeliveryICS(){
 var CATALOG_MATERIALS=['Beton','Armierungsstahl','Kies & Splitt','Mauerwerk & Ziegel','Dämmung','Schalung','Mörtel','Sanitär & HLKS','Vollsortiment'];
 var REGIONS=['Zürich','Bern','Basel','Luzern','Ostschweiz','Zentralschweiz','Aargau','Tessin','Westschweiz','Ganze Schweiz'];
 var CERTS=['ISO 9001','ISO 14001','SIA-konform','SN EN','SUVA-zertifiziert','Minergie'];
-function renderChecks(containerId,items,selected){var sel=Array.isArray(selected)?selected:[];document.getElementById(containerId).innerHTML=items.map(function(it){return '<label class="chk"><input type="checkbox" value="'+esc(it)+'"'+(sel.indexOf(it)!==-1?' checked':'')+'/><span>'+esc(it)+'</span></label>';}).join('');}
+var ACCT_FIELDS=[['company_name','Firmenname'],['contact_person','Ansprechperson'],['email','E-Mail'],['phone','Telefon'],['website','Website']];
+function renderChecks(cid,items,sel){var s=Array.isArray(sel)?sel:[];document.getElementById(cid).innerHTML=items.map(function(it){return '<label class="chk"><input type="checkbox" value="'+esc(it)+'"'+(s.indexOf(it)!==-1?' checked':'')+'/><span>'+esc(it)+'</span></label>';}).join('');}
 function renderProfil(){
   var p=_profile;
-  document.getElementById('prof-avatar').textContent=(p.company_name||'S').charAt(0).toUpperCase();
-  document.getElementById('prof-name').textContent=p.company_name||'—';
-  document.getElementById('prof-email').textContent=p.email||'';
-  var ps=document.getElementById('prof-status');if(p.status==='verified'){ps.className='status-badge verified';ps.querySelector('span:last-child').textContent='Verifiziert';}
-  document.getElementById('pf-company').value=p.company_name||'';
-  document.getElementById('pf-contact').value=p.contact_person||'';
-  document.getElementById('pf-email').value=p.email||'';
-  document.getElementById('pf-phone').value=p.phone||'';
-  document.getElementById('pf-website').value=p.website||'';
+  document.getElementById('pf-avatar').textContent=(p.company_name||'S').charAt(0).toUpperCase();
+  document.getElementById('pf-name').textContent=p.company_name||'—';
+  document.getElementById('acct-fields').innerHTML=ACCT_FIELDS.map(function(f){var val=p[f[0]]||'';return '<div class="field-row" id="ar-'+f[0]+'"><span class="field-label">'+esc(f[1])+'</span><span class="field-value" id="av-'+f[0]+'">'+(val?esc(val):'<span class="muted">—</span>')+'</span><span class="field-edit" id="ae-'+f[0]+'" onclick="editField(\''+f[0]+'\')">✎</span></div>';}).join('');
   document.getElementById('pf-capacity').value=p.annual_capacity||'';
   document.getElementById('pf-notes').value=p.notes||'';
   renderChecks('pf-materials',CATALOG_MATERIALS,p.materials);
   renderChecks('pf-regions',REGIONS,p.regions);
   renderChecks('pf-certs',CERTS,p.certifications);
-  if(p.agreement_accepted||p.agreement_accepted_at){document.getElementById('agree-line').innerHTML='✓ Akzeptiert am '+(p.agreement_accepted_at?esc(fmtDMYfull(new Date(p.agreement_accepted_at))):'Registrierung');}else{document.getElementById('agree-line').textContent='Beim ersten Angebot akzeptiert';}
+  if(p.agreement_accepted||p.agreement_accepted_at){document.getElementById('agree-line').innerHTML='✓ Akzeptiert'+(p.agreement_accepted_at?' am '+esc(fmtDMYfull(new Date(p.agreement_accepted_at))):'');}else{document.getElementById('agree-line').textContent='Beim ersten Angebot akzeptiert';}
   if(p.agreement_version)document.getElementById('agree-ver').textContent='Version '+p.agreement_version;
   updateCompletion();
 }
 function updateCompletion(){
   var p=_profile;var checks=[['company_name',p.company_name],['contact_person',p.contact_person],['email',p.email],['phone',p.phone],['website',p.website],['annual_capacity',p.annual_capacity],['materials',(p.materials||[]).length],['regions',(p.regions||[]).length],['certifications',(p.certifications||[]).length]];
   var labels={company_name:'Firmenname',contact_person:'Ansprechperson',email:'E-Mail',phone:'Telefonnummer',website:'Website',annual_capacity:'Jahreskapazität',materials:'Materialien',regions:'Regionen',certifications:'Zertifizierungen'};
-  var filled=0,missing=[];checks.forEach(function(c){if(c[1])filled++;else missing.push(labels[c[0]]);});
-  var pct=Math.round(filled/checks.length*100);
-  document.getElementById('prof-pct').textContent=pct+'%';document.getElementById('prof-bar').style.width=pct+'%';
-  document.getElementById('prof-missing').innerHTML=missing.length?missing.map(function(m){return '✗ '+esc(m)+' fehlt';}).join('<br>'):'';
+  var filled=0,miss=[];checks.forEach(function(c){if(c[1])filled++;else miss.push(labels[c[0]]);});
+  var pct=Math.round(filled/checks.length*100);document.getElementById('pf-pct').textContent=pct+'%';document.getElementById('pf-bar').style.width=pct+'%';
+  document.getElementById('pf-miss').innerHTML=miss.length?miss.map(function(m){return '✗ '+esc(m)+' fehlt';}).join('<br>'):'';
 }
+function editField(key){var valEl=document.getElementById('av-'+key),editEl=document.getElementById('ae-'+key);var cur=_profile[key]||'';valEl.innerHTML='<input class="acct-input" id="ai-'+key+'" value="'+esc(cur)+'"/>';editEl.outerHTML='<span class="acct-save" id="ae-'+key+'" onclick="saveField(\''+key+'\')">Speichern</span><span class="acct-cancel" onclick="renderProfil()">Abbrechen</span>';document.getElementById('ai-'+key).focus();}
+async function saveField(key){var inp=document.getElementById('ai-'+key);if(!inp)return;var val=inp.value.trim();try{var upd={};upd[key]=val;var res=await sb.from('suppliers').update(upd).eq('id',currentUserId);if(res.error){alert('Speichern fehlgeschlagen: '+res.error.message);return;}_profile[key]=val;renderProfil();if(key==='company_name'){document.getElementById('greet-hi').textContent='Guten Tag, '+val+'.';document.getElementById('db-firm').textContent=val;}}catch(e){alert('Speichern fehlgeschlagen.');}}
 function getChecked(id){var v=[];document.getElementById(id).querySelectorAll('input:checked').forEach(function(cb){v.push(cb.value);});return v;}
 async function saveProfile(){
   var btn=document.getElementById('btn-save'),msg=document.getElementById('save-msg');btn.disabled=true;btn.textContent='Wird gespeichert…';msg.style.display='none';
-  var payload={company_name:document.getElementById('pf-company').value.trim(),contact_person:document.getElementById('pf-contact').value.trim(),email:document.getElementById('pf-email').value.trim(),phone:document.getElementById('pf-phone').value.trim(),website:document.getElementById('pf-website').value.trim(),annual_capacity:document.getElementById('pf-capacity').value,materials:getChecked('pf-materials'),regions:getChecked('pf-regions'),certifications:getChecked('pf-certs'),notes:document.getElementById('pf-notes').value.trim()};
+  var payload={annual_capacity:document.getElementById('pf-capacity').value,materials:getChecked('pf-materials'),regions:getChecked('pf-regions'),certifications:getChecked('pf-certs'),notes:document.getElementById('pf-notes').value.trim()};
   var res=await sb.from('suppliers').update(payload).eq('id',currentUserId);
   btn.disabled=false;btn.textContent='Änderungen speichern';
   if(res.error){msg.textContent='Fehler: '+res.error.message;msg.style.color='#FCA5A5';msg.style.display='inline';return;}
-  Object.assign(_profile,payload);
-  document.getElementById('prof-name').textContent=payload.company_name||'—';document.getElementById('prof-email').textContent=payload.email||'';document.getElementById('prof-avatar').textContent=(payload.company_name||'S').charAt(0).toUpperCase();document.getElementById('tb-firm').textContent=payload.company_name||'';document.getElementById('greet-hi').textContent='Guten Tag'+(payload.company_name?', '+payload.company_name:'')+'.';
-  updateCompletion();
-  msg.textContent='Gespeichert ✓';msg.style.color='var(--success)';msg.style.display='inline';setTimeout(function(){msg.style.display='none';},3000);
+  Object.assign(_profile,payload);updateCompletion();
+  msg.textContent='Gespeichert ✓';msg.style.color='var(--green)';msg.style.display='inline';setTimeout(function(){msg.style.display='none';},3000);
 }
 function askDeactivate(){document.getElementById('deact-btn').style.display='none';document.getElementById('deact-confirm').classList.add('show');}
 function hideDeactivate(){document.getElementById('deact-btn').style.display='';document.getElementById('deact-confirm').classList.remove('show');}
 async function doDeactivate(){try{await sb.from('suppliers').update({status:'inactive'}).eq('id',currentUserId);}catch(e){}if(window.Clerk){try{await window.Clerk.signOut();}catch(e){}}window.location.href='index.html';}
 
-// ── auth gate ──
+// ── auth ──
 function showGate(type){var card=document.getElementById('auth-gate-card');
-  if(type==='login'){card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8A020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h2>Anmeldung erforderlich</h2><p>Bitte melde dich an, um auf das Lieferanten-Portal zuzugreifen.</p><br><a href="#" class="gold-btn" onclick="clerkSignIn();return false" style="margin:0 auto">Anmelden</a><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}
+  if(type==='login'){card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8A020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h2>Anmeldung erforderlich</h2><p>Bitte melde dich an, um auf das Lieferanten-Portal zuzugreifen.</p><br><a href="#" class="btn-gold" onclick="clerkSignIn();return false" style="margin:0 auto">Anmelden</a><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}
   else if(type==='pending'){card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8A020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h2>Profil wird geprüft</h2><p>Dein Profil wird noch geprüft. Wir melden uns innerhalb von 48 Stunden.</p><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}
-  else if(type==='rejected'){card.innerHTML='<div class="status-icon rejected"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FCA5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div><h2>Bewerbung nicht angenommen</h2><p>Deine Bewerbung wurde leider nicht angenommen. Kontaktiere uns: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a></p><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}
+  else if(type==='rejected'){card.innerHTML='<div class="status-icon rejected"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FCA5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div><h2>Bewerbung nicht angenommen</h2><p>Kontaktiere uns: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a></p><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}
   else{card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><h2>Kein Lieferanten-Profil</h2><p>Für dieses Konto wurde kein Lieferanten-Profil gefunden. <a href="lieferant.html">Jetzt als Lieferant bewerben →</a></p><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}
 }
 function clerkSignIn(){if(!window.Clerk)return;window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}},fallbackRedirectUrl:window.location.href});}
 async function handleLogout(){if(window.Clerk){await window.Clerk.signOut();}window.location.href='index.html';}
 
-// CLERK needs_client_trust
 var _clerkSignInResource=null,_clerkTrustActive=false,_clerkTrustStrategy='email_code';
 async function _clerkSendVerificationCode(){_clerkTrustStrategy='email_code';try{var si=_clerkSignInResource;if(!si)return;await si.prepareSecondFactor({strategy:'email_code'});document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';_clerkShowTrustModal();}catch(e){try{await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});_clerkTrustStrategy='phone_code';document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';_clerkShowTrustModal();}catch(e2){_clerkTrustActive=false;alert('Verifizierung konnte nicht gestartet werden: '+(e2.errors?e2.errors[0].longMessage:e2.message));}}}
 function _clerkShowTrustModal(){document.getElementById('clerk-trust-overlay').classList.add('open');document.getElementById('clerk-trust-code').value='';document.getElementById('clerk-trust-error').textContent='';document.getElementById('clerk-trust-code').focus();}
