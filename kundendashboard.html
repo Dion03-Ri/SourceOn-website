@@ -102,6 +102,25 @@ a{color:var(--gold);text-decoration:none;transition:color .15s ease}
 .metric-num.dim{color:var(--text-muted);font-weight:300}
 .metric-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-top:10px}
 .metric-sub{display:block;font-size:13px;color:var(--text-secondary);margin-top:3px}
+/* symmetric tile overview */
+.ov-actions{display:flex;gap:12px;align-items:center}
+.ghost-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--border);color:var(--text-secondary);font-size:13px;font-weight:500;font-family:inherit;padding:10px 16px;border-radius:var(--radius-sm);cursor:pointer;transition:all .15s ease;text-decoration:none}
+.ghost-btn:hover{border-color:var(--gold);color:var(--gold)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:8px 0 4px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;align-items:stretch}
+.tile{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 26px;transition:border-color .15s ease}
+.tile:hover{border-color:rgba(232,160,32,.25)}
+.tile .metric-num{font-size:38px}
+.ov-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px 8px;display:flex;flex-direction:column}
+.ov-card.pad{padding-bottom:22px}
+.ov-card-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:6px}
+.ov-card .ev-row{padding:12px 0}
+.ov-card .ev-row:last-child,.ov-card .prev-row:last-child,.ov-card .feed-row:last-child{border-bottom:none}
+.ov-card .prev-row{margin:0;padding:13px 0;border-radius:0}
+.ov-card .prev-row:hover{background:transparent}
+.ov-card .sec-empty{padding:24px 0;text-align:left}
+.ov-chart-wrap{position:relative;height:200px;margin-top:8px}
+@media(max-width:768px){.grid3,.grid2{grid-template-columns:1fr}.ov-actions .ghost-btn,.ov-actions .gold-btn{flex:1;justify-content:center}}
 
 /* ── SECTION HEADERS / LISTS ── */
 .sec-head{display:flex;justify-content:space-between;align-items:center;padding:32px 0 12px}
@@ -360,25 +379,45 @@ select.uinput option{background:#0F2238;color:#fff}
     <div class="dashboard-wrapper">
       <div class="greet">
         <div><div class="page-title" id="greet-hi">Guten Tag.</div><div class="greet-date" id="greet-date"></div></div>
-        <a href="kontakt.html" class="gold-btn">Weiteres Material melden →</a>
-      </div>
-    </div>
-    <div class="dashboard-wrapper">
-      <div class="metrics">
-        <div class="metric"><div class="metric-num gold" id="m1">CHF 0</div><span class="metric-label">Einsparpotenzial</span><span class="metric-sub">Garantiertes Minimum aller aktiven Anfragen</span></div>
-        <div class="metric"><div class="metric-num dim" id="m2">--</div><span class="metric-label">Erzielte Ersparnis</span><span class="metric-sub" id="m2s">Noch kein Zuschlag</span></div>
-        <div class="metric"><div class="metric-num" id="m3">0</div><span class="metric-label">Aktive Anfragen</span><span class="metric-sub" id="m3s">0 abgeschlossen · 0 gesamt</span></div>
+        <div class="ov-actions">
+          <button class="ghost-btn" onclick="printOverview()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Übersicht als PDF</button>
+          <a href="kontakt.html" class="gold-btn">Weiteres Material melden →</a>
+        </div>
       </div>
 
-      <div class="sec-head"><span class="stitle">Bevorstehend</span><span class="link-muted" onclick="exportICS()">ICS exportieren</span></div>
-      <div id="ov-agenda"></div>
+      <!-- KPI tiles -->
+      <div class="grid3">
+        <div class="tile"><div class="metric-num gold" id="m1">CHF 0</div><span class="metric-label">Einsparpotenzial</span><span class="metric-sub">Garantiertes Minimum aller aktiven Anfragen</span></div>
+        <div class="tile"><div class="metric-num dim" id="m2">--</div><span class="metric-label">Erzielte Ersparnis</span><span class="metric-sub" id="m2s">Noch kein Zuschlag</span></div>
+        <div class="tile"><div class="metric-num" id="m3">0</div><span class="metric-label">Aktive Anfragen</span><span class="metric-sub" id="m3s">0 abgeschlossen · 0 gesamt</span></div>
+      </div>
 
-      <div class="sec-head"><span class="stitle">Letzte Anfragen</span><span class="link-gold" onclick="showTab('anfragen')">Alle anzeigen →</span></div>
-      <div id="ov-preview"></div>
+      <!-- symmetric 2-up cards -->
+      <div class="grid2">
+        <div class="ov-card">
+          <div class="ov-card-head"><span class="stitle">Bevorstehend</span><span class="link-muted" onclick="exportICS()">ICS exportieren</span></div>
+          <div id="ov-agenda"></div>
+        </div>
+        <div class="ov-card">
+          <div class="ov-card-head"><span class="stitle">Letzte Anfragen</span><span class="link-gold" onclick="showTab('anfragen')">Alle anzeigen →</span></div>
+          <div id="ov-preview"></div>
+        </div>
+      </div>
 
-      <div id="ov-verlauf-wrap" style="display:none">
-        <div class="sec-head"><span class="stitle">Verlauf</span><span class="link-muted" id="verlauf-more" style="display:none" onclick="showAllVerlauf()">Mehr anzeigen</span></div>
-        <div id="ov-verlauf"></div>
+      <!-- chart card -->
+      <div class="grid2" id="ov-chart-row" style="grid-template-columns:1fr;display:none">
+        <div class="ov-card pad">
+          <div class="ov-card-head"><span class="stitle">Einsparpotenzial über Zeit</span></div>
+          <div class="ov-chart-wrap"><canvas id="ov-chart"></canvas></div>
+        </div>
+      </div>
+
+      <!-- verlauf card -->
+      <div class="grid2" id="ov-verlauf-wrap" style="grid-template-columns:1fr;display:none">
+        <div class="ov-card pad">
+          <div class="ov-card-head"><span class="stitle">Verlauf</span><span class="link-muted" id="verlauf-more" style="display:none" onclick="showAllVerlauf()">Mehr anzeigen</span></div>
+          <div id="ov-verlauf"></div>
+        </div>
       </div>
     </div>
   </section>
@@ -636,6 +675,38 @@ function renderUebersicht(){
   pv.innerHTML=_requests.length?_requests.slice(0,3).map(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);return '<div class="prev-row" onclick="showTab(\'anfragen\')"><span class="prev-mat">'+esc(matNameFor(r))+'</span><span class="prev-qty">'+mengeStr(r)+'</span><span class="pill '+b.c+'">'+esc(b.t)+'</span><span class="prev-sav">'+(gs!=null?fmtCHF(gs):'--')+'</span></div>';}).join(''):'<div class="sec-empty">Noch keine Anfragen.</div>';
 
   if(_requests.length>=3){document.getElementById('ov-verlauf-wrap').style.display='block';renderVerlauf();}
+  renderOverviewChart();
+}
+var _ovChart=null;
+function renderOverviewChart(){
+  var now=new Date(),buckets={},order=[];
+  for(var i=5;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i,1);var key=d.getFullYear()+'-'+d.getMonth();buckets[key]={label:_MON[d.getMonth()]+' '+String(d.getFullYear()).slice(2),val:0};order.push(key);}
+  var withData=0;
+  _requests.forEach(function(r){if(!r.created_at)return;var d=new Date(r.created_at);var key=d.getFullYear()+'-'+d.getMonth();if(buckets[key]){var gs=reqGuaranteedSaving(r);if(gs!=null)buckets[key].val+=gs;}});
+  order.forEach(function(k){if(buckets[k].val>0)withData++;});
+  if(withData<1||!window.Chart){document.getElementById('ov-chart-row').style.display='none';return;}
+  document.getElementById('ov-chart-row').style.display='grid';
+  window.Chart.defaults.color='#94A3B8';
+  if(_ovChart)_ovChart.destroy();
+  var ctx=document.getElementById('ov-chart').getContext('2d');
+  _ovChart=new window.Chart(ctx,{type:'bar',data:{labels:order.map(function(k){return buckets[k].label;}),datasets:[{data:order.map(function(k){return Math.round(buckets[k].val);}),backgroundColor:'rgba(232,160,32,0.7)',borderColor:'#E8A020',borderWidth:1,borderRadius:4,maxBarThickness:44}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return 'CHF '+fmtNum(c.parsed.y);}}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(30,58,95,0.8)'},ticks:{callback:function(v){return fmtNum(v);}}}}}});
+}
+function printOverview(){
+  var t=computeTotals();
+  var rows='';
+  _requests.forEach(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);var d=r.created_at?fmtDMY(new Date(r.created_at)):'--';rows+='<tr><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(d)+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(matNameFor(r))+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(mengeStr(r))+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(b.t)+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5;text-align:right">'+(gs!=null?fmtCHF(gs):'--')+'</td></tr>';});
+  document.getElementById('print-content').innerHTML='<div style="max-width:680px">'
+    +'<div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div>'
+    +'<div style="font-size:15px;color:#555;margin-bottom:4px">Kunden-Übersicht</div>'
+    +'<div style="font-size:12px;color:#888;margin-bottom:22px">'+esc((_customer&&_customer.firmenname)||'')+' · Erstellt am '+fmtDMY(new Date())+'</div>'
+    +'<div style="display:flex;gap:28px;margin-bottom:24px;font-size:13px;color:#111">'
+      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Einsparpotenzial</div><div style="font-size:20px;font-weight:700;color:#E8A020">'+(t.potential>0?fmtCHF(t.potential):'CHF 0')+'</div></div>'
+      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Erzielte Ersparnis</div><div style="font-size:20px;font-weight:700">'+(t.earned>0?fmtCHF(t.earned):'--')+'</div></div>'
+      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Aktive Anfragen</div><div style="font-size:20px;font-weight:700">'+t.active+'</div></div>'
+    +'</div>'
+    +'<table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.05em"><th style="padding:6px 8px;border-bottom:2px solid #333">Datum</th><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333">Menge</th><th style="padding:6px 8px;border-bottom:2px solid #333">Status</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Garant. Ersparnis</th></tr>'+(rows||'<tr><td colspan="5" style="padding:10px;color:#888">Noch keine Anfragen.</td></tr>')+'</table>'
+    +'<div style="margin-top:30px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999">Dokument erstellt via SourceOn · sourceon.ch · Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen</div></div>';
+  window.print();
 }
 function renderVerlauf(){
   var rows=_verlaufAll?_requests:_requests.slice(0,5);

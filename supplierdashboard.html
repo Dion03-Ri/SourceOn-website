@@ -112,6 +112,15 @@ a{color:var(--gold);text-decoration:none;transition:color .15s ease}
 .metric-num.dim{color:var(--text-muted);font-weight:300}
 .metric-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-top:10px}
 .metric-sub{display:block;font-size:13px;color:var(--text-secondary);margin-top:3px}
+/* symmetric tiles */
+.ov-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.ghost-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--border);color:var(--text-secondary);font-size:13px;font-weight:500;font-family:inherit;padding:10px 16px;border-radius:var(--radius-sm);cursor:pointer;transition:all .15s ease;text-decoration:none}
+.ghost-btn:hover{border-color:var(--gold);color:var(--gold)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:8px 0 20px}
+.tile{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 26px;transition:border-color .15s ease}
+.tile:hover{border-color:rgba(232,160,32,.25)}
+.tile .metric-num{font-size:38px}
+@media(max-width:768px){.grid3{grid-template-columns:1fr}.ov-actions .ghost-btn{flex:1;justify-content:center}}
 
 /* section headers */
 .sec-head{display:flex;justify-content:space-between;align-items:center;padding:32px 0 12px}
@@ -336,12 +345,14 @@ a{color:var(--gold);text-decoration:none;transition:color .15s ease}
 
   <!-- TAB 2: ANGEBOTE -->
   <section class="tabsec" id="sec-angebote">
-    <div class="dashboard-wrapper"><div class="greet"><div class="page-title">Angebote</div></div></div>
+    <div class="dashboard-wrapper"><div class="greet"><div class="page-title">Angebote</div>
+      <button class="ghost-btn" onclick="printPortfolio()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Portfolio als PDF</button>
+    </div></div>
     <div class="dashboard-wrapper">
-      <div class="metrics">
-        <div class="metric"><div class="metric-num" id="a1">0</div><span class="metric-label">Eingereichte Angebote</span><span class="metric-sub">Insgesamt</span></div>
-        <div class="metric"><div class="metric-num gold" id="a2">0</div><span class="metric-label">Gewonnen</span><span class="metric-sub">Erhaltene Zuschläge</span></div>
-        <div class="metric"><div class="metric-num dim" id="a3">--</div><span class="metric-label">Erfolgsquote</span><span class="metric-sub">Gewonnen / eingereicht</span></div>
+      <div class="grid3">
+        <div class="tile"><div class="metric-num" id="a1">0</div><span class="metric-label">Eingereichte Angebote</span><span class="metric-sub">Insgesamt</span></div>
+        <div class="tile"><div class="metric-num gold" id="a2">0</div><span class="metric-label">Gewonnen</span><span class="metric-sub">Erhaltene Zuschläge</span></div>
+        <div class="tile"><div class="metric-num dim" id="a3">--</div><span class="metric-label">Erfolgsquote</span><span class="metric-sub">Gewonnen / eingereicht</span></div>
       </div>
       <div class="filters" id="bid-filters">
         <button class="filt active" data-bf="alle" onclick="setBidFilter('alle')">Alle</button>
@@ -359,10 +370,10 @@ a{color:var(--gold);text-decoration:none;transition:color .15s ease}
   <section class="tabsec" id="sec-finanzen">
     <div class="dashboard-wrapper"><div class="greet"><div class="page-title">Finanzen</div></div></div>
     <div class="dashboard-wrapper">
-      <div class="metrics">
-        <div class="metric"><div class="metric-num gold" id="f1">CHF 0</div><span class="metric-label">Gesamtumsatz durch SourceOn</span><span class="metric-sub">Aus gewonnenen Aufträgen</span></div>
-        <div class="metric"><div class="metric-num dim" id="f2">--</div><span class="metric-label">Offene Provisionen</span><span class="metric-sub">Noch nicht abgerechnet</span></div>
-        <div class="metric"><div class="metric-num dim" id="f3">--</div><span class="metric-label">Bezahlte Provisionen</span><span class="metric-sub">Beglichen</span></div>
+      <div class="grid3">
+        <div class="tile"><div class="metric-num gold" id="f1">CHF 0</div><span class="metric-label">Gesamtumsatz durch SourceOn</span><span class="metric-sub">Aus gewonnenen Aufträgen</span></div>
+        <div class="tile"><div class="metric-num dim" id="f2">--</div><span class="metric-label">Offene Provisionen</span><span class="metric-sub">Noch nicht abgerechnet</span></div>
+        <div class="tile"><div class="metric-num dim" id="f3">--</div><span class="metric-label">Bezahlte Provisionen</span><span class="metric-sub">Beglichen</span></div>
       </div>
       <div class="sec-head"><span class="stitle">Provisionsabrechnung</span><span class="link-gold" onclick="printProvisions()">Provisionsübersicht exportieren →</span></div>
       <div style="overflow-x:auto"><table class="dtable" id="prov-table"></table></div>
@@ -715,6 +726,24 @@ function renderChart(won){
   window.Chart.defaults.color='#94A3B8';
   var ctx=document.getElementById('fin-chart').getContext('2d');
   new window.Chart(ctx,{type:'bar',data:{labels:order.map(function(k){return buckets[k].label;}),datasets:[{data:order.map(function(k){return Math.round(buckets[k].val);}),backgroundColor:'rgba(232,160,32,0.7)',borderColor:'#E8A020',borderWidth:1,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return 'CHF '+fmtNum(c.parsed.y);}}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(30,58,95,0.8)'},ticks:{callback:function(v){return fmtNum(v);}}}}}});
+}
+function printPortfolio(){
+  var total=0,won=0,rev=0;var rows='';
+  _bids.forEach(function(bid){var s=normStatus(bid.status);if(s==='zurueckgezogen')return;total++;if(s==='gewonnen')won++;var b=bid.bundles||{};var bg=bidBadge(bid.status);var net=bestellwert(bid,b);if(s==='gewonnen'&&net!=null)rev+=net;var d=bid.created_at?fmtDMY(new Date(bid.created_at)):'--';rows+='<tr><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(d)+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(bMat(b))+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(bVolStr(b))+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+Number(bid.rabatt_prozent||0).toFixed(1)+'%</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(bg.t)+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5;text-align:right">'+(net!=null?fmtCHF(net*(1-COMM)):'--')+'</td></tr>';});
+  var quote=total>0?Math.round(won/total*100)+'%':'--';
+  document.getElementById('print-content').innerHTML='<div style="max-width:720px">'
+    +'<div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div>'
+    +'<div style="font-size:15px;color:#555;margin-bottom:4px">Lieferanten-Portfolio</div>'
+    +'<div style="font-size:12px;color:#888;margin-bottom:22px">'+esc(_profile.company_name||'')+' · Erstellt am '+fmtDMY(new Date())+'</div>'
+    +'<div style="display:flex;gap:28px;margin-bottom:24px;font-size:13px;color:#111">'
+      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Eingereicht</div><div style="font-size:20px;font-weight:700">'+total+'</div></div>'
+      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Gewonnen</div><div style="font-size:20px;font-weight:700;color:#E8A020">'+won+'</div></div>'
+      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Erfolgsquote</div><div style="font-size:20px;font-weight:700">'+quote+'</div></div>'
+      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Umsatz (netto)</div><div style="font-size:20px;font-weight:700">'+(rev>0?fmtCHF(rev*(1-COMM)):'--')+'</div></div>'
+    +'</div>'
+    +'<table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.05em"><th style="padding:6px 8px;border-bottom:2px solid #333">Datum</th><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333">Menge</th><th style="padding:6px 8px;border-bottom:2px solid #333">Rabatt</th><th style="padding:6px 8px;border-bottom:2px solid #333">Status</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Nettoerlös</th></tr>'+(rows||'<tr><td colspan="6" style="padding:10px;color:#888">Noch keine Angebote.</td></tr>')+'</table>'
+    +'<div style="margin-top:30px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999">Dokument erstellt via SourceOn · sourceon.ch · Nettoerlös nach 2.25% Provision, Richtwerte</div></div>';
+  window.print();
 }
 function printProvisions(){
   var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
