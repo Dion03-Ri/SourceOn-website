@@ -619,7 +619,7 @@ function buildBidForm(b,ziel){
     +'<div class="bd-row"><span class="l">SourceOn-Vermittlungsgebühr (2.25%)</span><span class="v mut" id="bd-prov-'+id+'">--</span></div>'
     +'<div class="bd-div"></div>'
     +'<div class="bd-row bd-net"><span class="l">Dein Nettoerlös</span><span class="v" id="bd-net-'+id+'">--</span></div>'
-    +'<div class="bd-note">Die Provision ist im geforderten Mindestrabatt bereits einkalkuliert.</div>'
+    +'<div class="bd-note">Die Vermittlungsgebühr ist im geforderten Mindestrabatt bereits einkalkuliert.</div>'
   +'</div>';
   h+='<div class="fld"><label>Lieferfähigkeit / Bemerkungen (optional)</label><textarea class="dark-input" id="nt-'+id+'" rows="3"></textarea></div>';
   h+='<label class="bidcheck"><input type="checkbox" id="c1-'+id+'" onchange="updBidBtn(\''+id+'\')"/><span>Ich bestätige, dass ich '+esc(bVolStr(b))+' innerhalb des angegebenen Lieferzeitraums liefern kann.</span></label>';
@@ -754,7 +754,7 @@ function printPortfolio(){
       +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Umsatz (netto)</div><div style="font-size:20px;font-weight:700">'+(rev>0?fmtCHF(rev*(1-COMM)):'--')+'</div></div>'
     +'</div>'
     +'<table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.05em"><th style="padding:6px 8px;border-bottom:2px solid #333">Datum</th><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333">Menge</th><th style="padding:6px 8px;border-bottom:2px solid #333">Rabatt</th><th style="padding:6px 8px;border-bottom:2px solid #333">Status</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Nettoerlös</th></tr>'+(rows||'<tr><td colspan="6" style="padding:10px;color:#888">Noch keine Angebote.</td></tr>')+'</table>'
-    +'<div style="margin-top:30px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999">Dokument erstellt via SourceOn · sourceon.ch · Nettoerlös nach 2.25% Provision, Richtwerte</div></div>';
+    +'<div style="margin-top:30px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999">Dokument erstellt via SourceOn · sourceon.ch · Nettoerlös nach 2.25% Vermittlungsgebühr, Richtwerte</div></div>';
   window.print();
 }
 function printProvisions(){
@@ -813,7 +813,7 @@ function makeDeliveryPDF(bidId){
     +'<tr><td style="padding:6px 0;color:#555">Lieferzeitraum</td><td style="padding:6px 0">'+esc(bZeitraum(b))+'</td></tr>'
     +'<tr><td style="padding:6px 0;color:#555">Liefergebiet</td><td style="padding:6px 0">'+esc(bZone(b))+'</td></tr>'
     +'<tr><td style="padding:6px 0;color:#555">Vereinbarter Rabatt</td><td style="padding:6px 0">'+Number(bid.rabatt_prozent||0).toFixed(1)+'%</td></tr>'
-    +'<tr><td style="padding:6px 0;color:#555">Nettoerlös (nach 2.25% Provision)</td><td style="padding:6px 0">'+(net!=null?fmtCHF(net*(1-COMM)):'--')+'</td></tr>'
+    +'<tr><td style="padding:6px 0;color:#555">Nettoerlös (nach 2.25% Vermittlungsgebühr)</td><td style="padding:6px 0">'+(net!=null?fmtCHF(net*(1-COMM)):'--')+'</td></tr>'
     +'</table><div style="margin-top:30px;padding-top:14px;border-top:1px solid #ddd;font-size:11px;color:#999">Dokument erstellt via SourceOn · sourceon.ch · Verbindlich gemäss Lieferantenvereinbarung</div></div>';
   window.print();
 }
