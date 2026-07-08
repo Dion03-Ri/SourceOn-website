@@ -120,6 +120,10 @@ a{color:var(--gold);text-decoration:none;transition:color .15s ease}
 .tile{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 26px;transition:border-color .15s ease}
 .tile:hover{border-color:rgba(232,160,32,.25)}
 .tile .metric-num{font-size:38px}
+.fin-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:22px 24px;margin-top:16px}
+.fin-card-head{padding-bottom:6px}
+.fin-card .dtable{margin-top:6px}
+.fin-card .dtable tr:nth-child(even) td{background:var(--bg-elevated)}
 @media(max-width:768px){.grid3{grid-template-columns:1fr}.ov-actions .ghost-btn{flex:1;justify-content:center}}
 
 /* section headers */
@@ -368,20 +372,27 @@ a{color:var(--gold);text-decoration:none;transition:color .15s ease}
 
   <!-- TAB 3: FINANZEN -->
   <section class="tabsec" id="sec-finanzen">
-    <div class="dashboard-wrapper"><div class="greet"><div class="page-title">Finanzen</div></div></div>
+    <div class="dashboard-wrapper"><div class="greet"><div><div class="page-title">Finanzen</div><div class="page-sub">Deine Erlöse aus SourceOn-Aufträgen — netto, nach abgezogener Vermittlungsgebühr.</div></div>
+      <button class="ghost-btn" onclick="printProvisions()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Erlösübersicht als PDF</button>
+    </div></div>
     <div class="dashboard-wrapper">
       <div class="grid3">
-        <div class="tile"><div class="metric-num gold" id="f1">CHF 0</div><span class="metric-label">Gesamtumsatz durch SourceOn</span><span class="metric-sub">Aus gewonnenen Aufträgen</span></div>
-        <div class="tile"><div class="metric-num dim" id="f2">--</div><span class="metric-label">Offene Provisionen</span><span class="metric-sub">Noch nicht abgerechnet</span></div>
-        <div class="tile"><div class="metric-num dim" id="f3">--</div><span class="metric-label">Bezahlte Provisionen</span><span class="metric-sub">Beglichen</span></div>
+        <div class="tile"><div class="metric-num gold" id="f1">CHF 0</div><span class="metric-label">Gesamterlös</span><span class="metric-sub">Netto aus gewonnenen Aufträgen</span></div>
+        <div class="tile"><div class="metric-num dim" id="f2">--</div><span class="metric-label">Ausstehender Betrag</span><span class="metric-sub">Noch offen — vor Lieferbestätigung</span></div>
+        <div class="tile"><div class="metric-num dim" id="f3">--</div><span class="metric-label">Bereits erhalten</span><span class="metric-sub">Nach Lieferbestätigung</span></div>
       </div>
-      <div class="sec-head"><span class="stitle">Provisionsabrechnung</span><span class="link-gold" onclick="printProvisions()">Provisionsübersicht exportieren →</span></div>
-      <div style="overflow-x:auto"><table class="dtable" id="prov-table"></table></div>
-      <div id="chart-blk" style="display:none">
-        <div class="sec-head"><span class="stitle">Umsatz über Zeit</span></div>
-        <div class="chart-box"><canvas id="fin-chart" height="200"></canvas></div>
+
+      <div class="fin-card">
+        <div class="fin-card-head"><span class="stitle">Auftrags- &amp; Erlösübersicht</span></div>
+        <div style="overflow-x:auto"><table class="dtable" id="prov-table"></table></div>
       </div>
-      <div class="hint-box">Provisionsrechnungen werden von SourceOn nach Lieferbestätigung ausgestellt. Zahlungsfrist: 14 Tage netto. Bei Fragen: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
+
+      <div class="fin-card" id="chart-blk" style="display:none">
+        <div class="fin-card-head"><span class="stitle">Erlös über Zeit</span></div>
+        <div style="position:relative;height:200px"><canvas id="fin-chart"></canvas></div>
+      </div>
+
+      <div class="hint-box">Der Kunde bezahlt den Bestellwert direkt an dich. SourceOn zieht eine Vermittlungsgebühr von 2.25 % des Bestellwerts ab — sie ist in deinem ausgewiesenen Nettoerlös bereits berücksichtigt. Abrechnung nach Lieferbestätigung, Zahlungsfrist 14 Tage netto. Fragen: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
     </div>
   </section>
 
@@ -605,7 +616,7 @@ function buildBidForm(b,ziel){
     +'<div class="bd-row"><span class="l">Regulärer Marktpreis (Richtwert)</span><span class="v" id="bd-base-'+id+'">--</span></div>'
     +'<div class="bd-row"><span class="l">Dein Rabatt (<span id="bd-pct-'+id+'">0</span>%)</span><span class="v neg" id="bd-disc-'+id+'">--</span></div>'
     +'<div class="bd-row"><span class="l">Bestellwert (Preis für Kunden)</span><span class="v" id="bd-order-'+id+'">--</span></div>'
-    +'<div class="bd-row"><span class="l">SourceOn-Provision (2.25%)</span><span class="v mut" id="bd-prov-'+id+'">--</span></div>'
+    +'<div class="bd-row"><span class="l">SourceOn-Vermittlungsgebühr (2.25%)</span><span class="v mut" id="bd-prov-'+id+'">--</span></div>'
     +'<div class="bd-div"></div>'
     +'<div class="bd-row bd-net"><span class="l">Dein Nettoerlös</span><span class="v" id="bd-net-'+id+'">--</span></div>'
     +'<div class="bd-note">Die Provision ist im geforderten Mindestrabatt bereits einkalkuliert.</div>'
@@ -700,18 +711,19 @@ function renderBidList(){
 
 // ── FINANZEN ──
 function renderFinanzen(){
-  var revenue=0,openProv=0,paidProv=0,rows='';
+  var netTotal=0,outstanding=0,received=0,rows='';
   var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
-  won.forEach(function(bid){var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;revenue+=ord;var prov=ord*COMM;var paid=bid.provision_paid===true;if(paid)paidProv+=prov;else openProv+=prov;
+  won.forEach(function(bid){var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;var net=ord*(1-COMM);netTotal+=net;
+    var delivered=bid.delivery_confirmed===true;
+    if(delivered)received+=net;else outstanding+=net;
     var due=bid.delivery_confirmed_at?new Date(new Date(bid.delivery_confirmed_at).getTime()+14*86400000):null;
-    rows+='<tr><td>'+esc((b.sourceon_id||'—'))+'</td><td>'+esc(bMat(b))+'</td><td class="num">'+fmtCHF(ord)+'</td><td class="num">'+fmtCHF(prov)+'</td><td>'+(due?esc(fmtShort(due)):'nach Lieferung')+'</td><td><span class="pill '+(paid?'p-green':'p-warn')+'">'+(paid?'Bezahlt':'Offen')+'</span></td></tr>';
+    rows+='<tr><td>'+esc((b.sourceon_id||'—'))+'</td><td>'+esc(bMat(b))+'</td><td class="num">'+fmtCHF(ord)+'</td><td class="num gold">'+fmtCHF(net)+'</td><td>'+(delivered?(due?esc(fmtShort(due)):'in Abrechnung'):'nach Lieferung')+'</td><td><span class="pill '+(delivered?'p-green':'p-warn')+'">'+(delivered?'Erhalten':'Offen')+'</span></td></tr>';
   });
-  document.getElementById('f1').textContent=revenue>0?fmtCHF(revenue):'CHF 0';document.getElementById('f1').className='metric-num gold';
-  var f2=document.getElementById('f2');f2.textContent=openProv>0?fmtCHF(openProv):'--';f2.className='metric-num'+(openProv>0?'':' dim');
-  var f3=document.getElementById('f3');f3.textContent=paidProv>0?fmtCHF(paidProv):'--';f3.className='metric-num'+(paidProv>0?'':' dim');
-  var head='<thead><tr><th>Auftrag</th><th>Material</th><th class="num">Bestellwert CHF</th><th class="num">Provision (2.25%)</th><th>Fällig am</th><th>Status</th></tr></thead>';
-  var totProv=openProv+paidProv;
-  var body='<tbody>'+(rows||'<tr><td colspan="6" style="color:var(--text-muted)">Noch keine gewonnenen Aufträge.</td></tr>')+'<tr class="total"><td>Total</td><td></td><td class="num">'+fmtCHF(revenue)+'</td><td class="num gold">'+fmtCHF(totProv)+'</td><td></td><td></td></tr></tbody>';
+  document.getElementById('f1').textContent=netTotal>0?fmtCHF(netTotal):'CHF 0';document.getElementById('f1').className='metric-num gold';
+  var f2=document.getElementById('f2');f2.textContent=outstanding>0?fmtCHF(outstanding):'--';f2.className='metric-num'+(outstanding>0?'':' dim');
+  var f3=document.getElementById('f3');f3.textContent=received>0?fmtCHF(received):'--';f3.className='metric-num'+(received>0?'':' dim');
+  var head='<thead><tr><th>Auftrag</th><th>Material</th><th class="num">Bestellwert CHF</th><th class="num">Dein Nettoerlös</th><th>Zahlung</th><th>Status</th></tr></thead>';
+  var body='<tbody>'+(rows||'<tr><td colspan="6" style="color:var(--text-muted)">Noch keine gewonnenen Aufträge.</td></tr>')+'<tr class="total"><td>Total</td><td></td><td></td><td class="num gold">'+fmtCHF(netTotal)+'</td><td></td><td></td></tr></tbody>';
   document.getElementById('prov-table').innerHTML=head+body;
   renderChart(won);
 }
@@ -719,7 +731,7 @@ function renderChart(won){
   var now=new Date(),buckets={},order=[];
   for(var i=5;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i,1);var key=d.getFullYear()+'-'+d.getMonth();buckets[key]={label:_MON[d.getMonth()]+' '+String(d.getFullYear()).slice(2),val:0};order.push(key);}
   var monthsWithData=0;
-  won.forEach(function(bid){if(!bid.created_at)return;var d=new Date(bid.created_at);var key=d.getFullYear()+'-'+d.getMonth();if(buckets[key]){var ord=bestellwert(bid,bid.bundles||{});if(ord!=null)buckets[key].val+=ord;}});
+  won.forEach(function(bid){if(!bid.created_at)return;var d=new Date(bid.created_at);var key=d.getFullYear()+'-'+d.getMonth();if(buckets[key]){var ord=bestellwert(bid,bid.bundles||{});if(ord!=null)buckets[key].val+=ord*(1-COMM);}});
   order.forEach(function(k){if(buckets[k].val>0)monthsWithData++;});
   if(monthsWithData<2||!window.Chart){document.getElementById('chart-blk').style.display='none';return;}
   document.getElementById('chart-blk').style.display='block';
@@ -747,9 +759,9 @@ function printPortfolio(){
 }
 function printProvisions(){
   var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
-  var rows='',rev=0,prov=0;
-  won.forEach(function(bid){var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;rev+=ord;var pr=ord*COMM;prov+=pr;rows+='<tr><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+esc(bMat(b))+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(ord)+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(pr)+'</td></tr>';});
-  document.getElementById('print-content').innerHTML='<div style="max-width:640px"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:15px;color:#555;margin-bottom:6px">Provisionsübersicht</div><div style="font-size:12px;color:#888;margin-bottom:20px">'+esc(_profile.company_name||'')+' · Erstellt am '+fmtDMY(new Date())+'</div><table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr><th style="text-align:left;padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="text-align:right;padding:6px 8px;border-bottom:2px solid #333">Bestellwert</th><th style="text-align:right;padding:6px 8px;border-bottom:2px solid #333">Provision (2.25%)</th></tr>'+(rows||'<tr><td colspan="3" style="padding:8px">Keine Aufträge.</td></tr>')+'<tr><td style="padding:8px;font-weight:700">Total</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(rev)+'</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(prov)+'</td></tr></table><div style="margin-top:30px;font-size:11px;color:#999">Zahlungsfrist: 14 Tage netto nach Lieferbestätigung · sourceon.ch</div></div>';
+  var rows='',rev=0,net=0;
+  won.forEach(function(bid){var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;rev+=ord;var nt=ord*(1-COMM);net+=nt;var delivered=bid.delivery_confirmed===true;rows+='<tr><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+esc(bMat(b))+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(ord)+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(nt)+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+(delivered?'Erhalten':'Offen')+'</td></tr>';});
+  document.getElementById('print-content').innerHTML='<div style="max-width:660px"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:15px;color:#555;margin-bottom:6px">Erlösübersicht</div><div style="font-size:12px;color:#888;margin-bottom:20px">'+esc(_profile.company_name||'')+' · Erstellt am '+fmtDMY(new Date())+'</div><table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.05em"><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Bestellwert</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Dein Nettoerlös</th><th style="padding:6px 8px;border-bottom:2px solid #333">Status</th></tr>'+(rows||'<tr><td colspan="4" style="padding:8px">Keine Aufträge.</td></tr>')+'<tr><td style="padding:8px;font-weight:700">Total</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(rev)+'</td><td style="padding:8px;text-align:right;font-weight:700;color:#B8801A">'+fmtCHF(net)+'</td><td></td></tr></table><div style="margin-top:30px;font-size:11px;color:#999">Der Kunde bezahlt den Bestellwert direkt an dich. Nettoerlös nach abgezogener SourceOn-Vermittlungsgebühr (2.25 %). Zahlungsfrist: 14 Tage netto nach Lieferbestätigung · sourceon.ch</div></div>';
   window.print();
 }
 
