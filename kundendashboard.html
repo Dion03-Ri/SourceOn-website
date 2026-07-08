@@ -101,7 +101,19 @@ input,select,textarea{font-family:inherit}
 .greet-date{font-size:13px;color:var(--text-3);margin-top:6px}
 
 /* hero metric */
-.hero{text-align:center;padding:48px 0}
+.hero{text-align:center;padding:56px 0}
+.deal-box{background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:var(--r-md);padding:22px 24px;margin:20px 0}
+.deal-box .dl-ok{font-size:16px;font-weight:600;color:var(--green);margin-bottom:14px}
+.deal-box .dl-row{display:flex;justify-content:space-between;padding:6px 0;font-size:13px}
+.deal-box .dl-row .l{color:var(--text-3)}.deal-box .dl-row .v{color:var(--text-1)}
+.deal-box .dl-save{text-align:center;padding:14px 0 4px}
+.deal-box .dl-save .l{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3)}
+.deal-box .dl-save .n{font-size:28px;font-weight:700;color:var(--gold);margin-top:4px}
+.jahr{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--r-md);overflow:hidden;margin-top:12px}
+.jahr div{background:var(--bg-1);padding:20px 22px}
+.jahr .n{font-size:22px;font-weight:700}.jahr .n.gold{color:var(--gold)}
+.jahr .l{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-top:5px}
+@media(max-width:640px){.jahr{grid-template-columns:1fr}}
 .hero-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:12px}
 .hero-num{font-size:72px;font-weight:800;color:var(--gold);letter-spacing:-.04em;line-height:1}
 .hero-num.zero{color:var(--text-3)}
@@ -337,6 +349,11 @@ select.cinput option{background:#0F2238}
     <div class="divider"></div>
     <div class="sec-head"><span class="sec-label">Letzte Anfragen</span><span class="link-g" onclick="showTab('anfragen')">Alle anzeigen →</span></div>
     <div id="ov-preview"></div>
+    <div id="ov-verlauf-wrap" style="display:none">
+      <div class="divider"></div>
+      <span class="sec-label">Verlauf</span>
+      <div style="overflow-x:auto"><table class="ftable" id="ov-verlauf"></table></div>
+    </div>
     <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
   </div></div>
 
@@ -375,6 +392,16 @@ select.cinput option{background:#0F2238}
     <div class="sec-head"><span class="sec-label">Aufschlüsselung</span><span class="link-m" onclick="printOverview()">↓ Finanzübersicht exportieren</span></div>
     <div style="overflow-x:auto"><table class="ftable" id="fin-table"></table></div>
     <div class="prov-note" id="prov-text"></div>
+    <div id="realized-wrap" style="display:none">
+      <div class="divider"></div>
+      <span class="sec-label">Erzielte Einsparungen</span>
+      <div style="overflow-x:auto"><table class="ftable" id="realized-table"></table></div>
+    </div>
+    <div id="jahr-wrap" style="display:none">
+      <div class="divider"></div>
+      <span class="sec-label" id="jahr-label">Jahresübersicht</span>
+      <div class="jahr" id="jahr-grid"></div>
+    </div>
     <div class="chart-box" id="chart-blk" style="display:none">
       <span class="sec-label">Einsparpotenzial über Zeit</span>
       <div class="chart-wrap"><canvas id="fin-chart"></canvas></div>
@@ -441,7 +468,7 @@ select.cinput option{background:#0F2238}
   <div class="db-content" id="sec-konto"><div class="db-wrap">
     <div class="prof-head">
       <div class="avatar" id="kt-avatar">S</div>
-      <div style="flex:1"><div class="prof-name" id="kt-name">—</div><div class="prof-email" id="kt-email"></div><div class="prof-badge">Verifiziertes Kundenkonto ●</div></div>
+      <div style="flex:1"><div class="prof-name" id="kt-name">—</div><div class="prof-email" id="kt-email"></div><div class="prof-badge">Aktives Konto ●</div></div>
     </div>
     <span class="sec-label">Kontakt</span>
     <div id="acct-fields"></div>
@@ -494,6 +521,12 @@ function statusText(r){var s=r.status;if(s==='offen')return 'Wir suchen Bündelu
 function reqDeadline(r){var bundle=r.bundle_id?_bundleMap[r.bundle_id]:null;if(r.status==='gebuendelt'&&bundle&&bundle.bid_deadline){var d=new Date(bundle.bid_deadline);if(!isNaN(d))return {label:'Angebotsfrist',date:d};}if(r.status==='offen'&&r.liefer_zeitraum_von&&window.SO_TIMING){var ce=window.SO_TIMING.collectionEnd(r.liefer_zeitraum_von,r.created_at);if(ce)return {label:'Ausschreibung spätestens',date:ce};}return null;}
 function zeitraumStr(r){if(r.liefer_zeitraum_von&&r.liefer_zeitraum_bis)return fmtShort(new Date(r.liefer_zeitraum_von))+' – '+fmtShort(new Date(r.liefer_zeitraum_bis));if(r.liefer_zeitraum_von)return 'Ab '+fmtShort(new Date(r.liefer_zeitraum_von));if(r.liefer_zeitraum_bis)return 'Bis '+fmtShort(new Date(r.liefer_zeitraum_bis));return '--';}
 function mengeStr(r){return (r.menge!=null&&r.menge!=='')?(esc(r.menge)+(r.einheit?' '+esc(r.einheit):'')):'--';}
+function isCompleted(r){return r.status==='vergeben'||r.status==='abgeschlossen';}
+function _normPct(x){if(x==null)return null;x=Number(x);if(isNaN(x))return null;return x<1?Math.round(x*1000)/10:x;}
+function finalRabattPct(r){var b=r.bundle_id?_bundleMap[r.bundle_id]:null;var fr=(b&&b.finaler_rabatt!=null)?b.finaler_rabatt:r.finaler_rabatt;return _normPct(fr);}
+function effRabattPct(r){var fp=finalRabattPct(r);if(fp!=null)return fp;var cm=parseFloat(r.committed_min_rabatt);return isNaN(cm)?null:Math.round(cm*1000)/10;}
+function orderValue(r){var rp=richtpreis(r),m=parseFloat(r.menge),p=effRabattPct(r);if(rp==null||isNaN(m)||p==null)return null;return rp*m*(1-p/100);}
+function realizedSaving(r){if(_commMap[r.id])return _commMap[r.id];var rp=richtpreis(r),m=parseFloat(r.menge),p=effRabattPct(r);if(rp==null||isNaN(m)||p==null)return null;var gross=rp*m*(p/100);return gross-(rp*m*(1-p/100))*0.0225;}
 
 var VALID_TABS=['uebersicht','anfragen','finanzen','werkzeuge','konto'];
 function showTab(name){if(VALID_TABS.indexOf(name)<0)name='uebersicht';VALID_TABS.forEach(function(t){var sec=document.getElementById('sec-'+t);if(sec)sec.classList.toggle('active',t===name);});document.querySelectorAll('.db-tab').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')===name);});if(location.hash!=='#'+name){history.replaceState(null,'','#'+name);}}
@@ -524,13 +557,13 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   var reqRes=await sb.from('material_requests').select('*').in('customer_id',customerIds).order('created_at',{ascending:false});
   _requests=(reqRes.data&&!reqRes.error)?reqRes.data:[];
   var bundleIds=[];_requests.forEach(function(r){if(r.bundle_id)bundleIds.push(r.bundle_id);});
-  if(bundleIds.length>0){try{var bRes=await sb.from('bundles').select('id,status,bid_deadline').in('id',bundleIds);if(bRes.data){bRes.data.forEach(function(b){_bundleMap[b.id]=b;});}}catch(e){}}
+  if(bundleIds.length>0){try{var bRes=await sb.from('bundles').select('id,status,bid_deadline,finaler_rabatt,liefer_zeitraum_von,liefer_zeitraum_bis').in('id',bundleIds);if(bRes.data){bRes.data.forEach(function(b){_bundleMap[b.id]=b;});}}catch(e){}}
   var reqIds=_requests.map(function(r){return r.id;});
   if(reqIds.length>0){try{var cRes=await sb.from('commissions').select('kunden_ersparnis_netto,material_request_id').in('material_request_id',reqIds);if(cRes.data){cRes.data.forEach(function(c){if(c.kunden_ersparnis_netto)_commMap[c.material_request_id]=(_commMap[c.material_request_id]||0)+Number(c.kunden_ersparnis_netto);});}}catch(e){}}
   renderUebersicht();renderAnfragen();renderFinanzen();renderKonto();renderDocs();
 })();
 
-function computeTotals(){var potential=0,earned=0,earnedCount=0,active=0,done=0,rabSum=0,rabN=0;_requests.forEach(function(r){if(_commMap[r.id]){earned+=_commMap[r.id];earnedCount++;}if(isActive(r)){active++;var gs=reqGuaranteedSaving(r);if(gs!=null)potential+=gs;}if(r.status==='vergeben'||r.status==='abgeschlossen')done++;var rb=parseFloat(r.committed_min_rabatt);if(!isNaN(rb)){rabSum+=rb;rabN++;}});return {potential:potential,earned:earned,earnedCount:earnedCount,active:active,done:done,total:_requests.length,avgRab:rabN?rabSum/rabN:null};}
+function computeTotals(){var potential=0,earned=0,earnedCount=0,active=0,done=0,rabSum=0,rabN=0;_requests.forEach(function(r){if(isActive(r)){active++;var gs=reqGuaranteedSaving(r);if(gs!=null)potential+=gs;}if(isCompleted(r)){done++;var rs=realizedSaving(r);if(rs!=null){earned+=rs;earnedCount++;}}var rb=parseFloat(r.committed_min_rabatt);if(!isNaN(rb)){rabSum+=rb;rabN++;}});return {potential:potential,earned:earned,earnedCount:earnedCount,active:active,done:done,total:_requests.length,avgRab:rabN?rabSum/rabN:null};}
 
 // ── ÜBERSICHT ──
 function renderUebersicht(){
@@ -545,6 +578,14 @@ function renderUebersicht(){
   events.sort(function(a,b){return a.date-b.date;});events=events.slice(0,5);
   document.getElementById('ov-agenda').innerHTML=events.length?events.map(function( e2){return '<div class="ev-row"><span class="ev-dot"></span><span class="ev-date">'+esc(fmtAgenda(e2.date))+'</span><span class="ev-desc">'+esc(e2.desc)+'</span><span class="status-pill '+e2.pill.c+'">'+esc(e2.pill.t)+'</span></div>';}).join(''):'<div class="empty-line">Keine bevorstehenden Ereignisse</div>';
   document.getElementById('ov-preview').innerHTML=_requests.length?_requests.slice(0,3).map(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);return '<div class="prev-row" onclick="showTab(\'anfragen\')"><span class="prev-mat">'+esc(matNameFor(r))+'</span><span class="prev-qty">'+mengeStr(r)+'</span><span class="status-pill '+b.c+'">'+esc(b.t)+'</span><span class="prev-sav">'+(gs!=null?fmtCHF(gs):'--')+'</span></div>';}).join(''):'<div class="empty-line">Noch keine Anfragen</div>';
+  // FIX8 — Verlauf (all requests, if >=3)
+  var vw=document.getElementById('ov-verlauf-wrap');
+  if(_requests.length>=3){
+    vw.style.display='block';
+    var head='<thead><tr><th>Datum</th><th>Material</th><th class="num">Menge</th><th>Status</th><th class="num">CHF</th></tr></thead><tbody>';
+    var body=_requests.map(function(r){var b=badgeFor(r.status);var d=r.created_at?fmtShort(new Date(r.created_at)):'--';var done=isCompleted(r);var val=done?realizedSaving(r):reqGuaranteedSaving(r);var cls=done?'gold':'';return '<tr><td>'+esc(d)+'</td><td>'+esc(matNameFor(r))+'</td><td class="num">'+mengeStr(r)+'</td><td><span class="status-pill '+b.c+'">'+esc(b.t)+'</span></td><td class="num'+(cls?' '+cls:'')+'" style="'+(cls?'color:var(--gold)':'color:var(--text-3)')+'">'+(val!=null?fmtCHF(val):'--')+'</td></tr>';}).join('');
+    document.getElementById('ov-verlauf').innerHTML=head+body+'</tbody>';
+  }else{vw.style.display='none';}
 }
 
 // ── ANFRAGEN (split) ──
@@ -573,13 +614,34 @@ function selectReq(id){
   var saveBox=(gs!=null&&pct!=null)?'<div class="save-box"><div class="sb-l">Garantierte Ersparnis bei Zuschlag</div><div class="sb-n">'+fmtCHF(gs)+'</div><div class="sb-s">'+pct+'% netto · basierend auf SourceOn-Richtpreisen</div></div>':'';
   var d=r.created_at?fmtDMY(new Date(r.created_at)):'';
   var mailto='mailto:info@sourceon.ch?subject='+encodeURIComponent('Anfrage '+(r.sourceon_id||''));
+  var mid;
+  if(r.status==='vergeben'){
+    var fr=finalRabattPct(r),rp=richtpreis(r),m=parseFloat(r.menge);
+    var ov=orderValue(r),rs=realizedSaving(r);
+    var prov=(ov!=null)?ov*0.0225:null;
+    var bundle=r.bundle_id?_bundleMap[r.bundle_id]:null;
+    var von=(bundle&&bundle.liefer_zeitraum_von)?bundle.liefer_zeitraum_von:r.liefer_zeitraum_von;
+    var bis=(bundle&&bundle.liefer_zeitraum_bis)?bundle.liefer_zeitraum_bis:r.liefer_zeitraum_bis;
+    var lz=(von&&bis)?(fmtShort(new Date(von))+' – '+fmtShort(new Date(bis))):zeitraumStr(r);
+    mid='<div class="deal-box"><div class="dl-ok">✓ Auftrag vergeben</div>'
+      +'<div class="dl-row"><span class="l">Vergeben an</span><span class="v">Verifizierter SourceOn-Lieferant</span></div>'
+      +'<div class="dl-row"><span class="l">Finaler Rabatt</span><span class="v">'+(fr!=null?fr+'%':'--')+'</span></div>'
+      +'<div class="dl-row"><span class="l">Bestellwert</span><span class="v">'+(ov!=null?fmtCHF(ov):'--')+'</span></div>'
+      +'<div class="dl-save"><div class="l">Deine Ersparnis</div><div class="n">'+(rs!=null?fmtCHF(rs):'--')+'</div></div>'
+      +'<div class="dl-row"><span class="l">Enthaltene SourceOn-Provision</span><span class="v" style="color:var(--text-3)">'+(prov!=null?fmtCHF(prov):'--')+'</span></div>'
+      +'<div class="dl-row"><span class="l">Lieferzeitraum</span><span class="v">'+esc(lz)+'</span></div>'
+      +'</div>';
+  }else{
+    mid=tl+'<div class="rd-status">'+esc(statusText(r))+'</div>'+saveBox+when;
+  }
   var actions='<div class="rd-actions">';
   if(isActive(r)){actions+='<span class="act-link act-danger" id="cancel-lk" onclick="askCancel(\''+esc(id)+'\')">Anfrage stornieren</span><span class="confirm-inline" id="cf-'+esc(id)+'">Wirklich? <span class="yes" onclick="doCancel(\''+esc(id)+'\')">Ja</span> · <span class="no" onclick="hideCancel(\''+esc(id)+'\')">Nein</span></span>';}
+  if(r.status==='vergeben'||r.status==='abgeschlossen'){actions+='<span class="act-link" onclick="makePDF(\''+esc(id)+'\')">Bestellbestätigung als PDF →</span>';}
   actions+='<a class="act-link" href="'+mailto+'">Frage stellen →</a></div>';
   document.getElementById('req-detail').innerHTML=
     '<div class="rd-head-row"><div><div class="rd-mat">'+esc(matNameFor(r))+'</div>'+(r.sourceon_id?'<div class="rd-id">'+esc(r.sourceon_id)+'</div>':'')+'</div><div class="rd-head-meta"><span class="status-pill '+b.c+'">'+esc(b.t)+'</span><div class="rd-date">'+esc(d)+'</div></div></div>'
     +'<div class="rd-key"><div><div class="k-num">'+mengeStr(r)+'</div><div class="k-lbl">Menge</div></div><div><div class="k-num">'+esc(zeitraumStr(r))+'</div><div class="k-lbl">Lieferzeitraum</div></div><div><div class="k-num gold">'+(gs!=null?fmtCHF(gs):'--')+'</div><div class="k-lbl">Min. Ersparnis</div></div></div>'
-    +tl+'<div class="rd-status">'+esc(statusText(r))+'</div>'+saveBox+when+actions;
+    +mid+actions;
 }
 
 // ── FINANZEN ──
@@ -595,6 +657,27 @@ function renderFinanzen(){
   body+='<tr class="total"><td>Total</td><td class="num">'+fmtCHF(totVol)+'</td><td></td><td class="num gold">'+fmtCHF(totSav)+'</td><td></td></tr></tbody>';
   document.getElementById('fin-table').innerHTML=head+body;
   document.getElementById('prov-text').textContent='SourceOn-Provision (2.25% des Bestellwerts, '+fmtCHF(totVol*0.0225)+') ist im Einsparpotenzial bereits berücksichtigt. Du zahlst SourceOn nichts direkt.';
+
+  // FIX6 — realized savings (completed orders)
+  var completed=_requests.filter(isCompleted);
+  var rw=document.getElementById('realized-wrap');
+  if(completed.length>0){
+    rw.style.display='block';
+    var rhead='<thead><tr><th>Datum</th><th>Material</th><th class="num">Ersparnis CHF</th><th class="num">Rabatt</th><th>Status</th></tr></thead>';
+    var rbody='<tbody>',rtot=0;
+    completed.forEach(function(r){var rs=realizedSaving(r),p=effRabattPct(r);var d=r.created_at?fmtShort(new Date(r.created_at)):'--';if(rs!=null)rtot+=rs;rbody+='<tr><td>'+esc(d)+'</td><td>'+esc(matNameFor(r))+'</td><td class="num gold">'+(rs!=null?fmtCHF(rs):'--')+'</td><td class="num">'+(p!=null?p+'%':'--')+'</td><td><span class="status-pill p-green">Abgeschlossen</span></td></tr>';});
+    rbody+='<tr class="total"><td colspan="2">Gesamtersparnis</td><td class="num gold" style="font-size:16px">'+fmtCHF(rtot)+'</td><td></td><td></td></tr></tbody>';
+    document.getElementById('realized-table').innerHTML=rhead+rbody;
+    // FIX7 — Jahresübersicht (current year completed)
+    var yr=new Date().getFullYear();
+    var yGespart=0,yEingekauft=0,yCount=0;
+    completed.forEach(function(r){var dt=r.created_at?new Date(r.created_at):null;if(!dt||dt.getFullYear()!==yr)return;var rs=realizedSaving(r),ov=orderValue(r);if(rs!=null)yGespart+=rs;if(ov!=null)yEingekauft+=ov;yCount++;});
+    if(yCount>0){
+      document.getElementById('jahr-wrap').style.display='block';
+      document.getElementById('jahr-label').textContent='Jahresübersicht '+yr;
+      document.getElementById('jahr-grid').innerHTML='<div><div class="n gold">'+fmtCHF(yGespart)+'</div><div class="l">gespart</div></div><div><div class="n">'+fmtCHF(yEingekauft)+'</div><div class="l">eingekauft</div></div><div><div class="n">'+yCount+'</div><div class="l">Bestellungen abgeschlossen</div></div>';
+    }else{document.getElementById('jahr-wrap').style.display='none';}
+  }else{rw.style.display='none';document.getElementById('jahr-wrap').style.display='none';}
   renderChart();
 }
 function renderChart(){
@@ -618,15 +701,32 @@ function printOverview(){
 
 // ── KONTO ──
 var ACCT_FIELDS=[['firmenname','Firmenname'],['ansprechperson','Ansprechperson'],['telefon','Telefon'],['lieferadresse','Lieferadresse'],['kanton','Kanton']];
+var _editingField=null;
+function commitmentDate(){
+  var best=null,ver=null;
+  _requests.forEach(function(r){if(r.commitment_accepted_at){var d=new Date(r.commitment_accepted_at);if(!isNaN(d)&&(!best||d<best)){best=d;ver=r.commitment_version||ver;}}});
+  if(!best&&_customer.commitment_accepted_at){var cd=new Date(_customer.commitment_accepted_at);if(!isNaN(cd))best=cd;}
+  if(!ver)ver=_customer.commitment_version||null;
+  return {date:best,version:ver};
+}
 function renderKonto(){
   document.getElementById('kt-name').textContent=_customer.firmenname||'—';
   document.getElementById('kt-avatar').textContent=(_customer.firmenname||'S').charAt(0).toUpperCase();
-  document.getElementById('acct-fields').innerHTML=ACCT_FIELDS.map(function(f){var val=_customer[f[0]]||'';return '<div class="field-row" id="ar-'+f[0]+'"><span class="field-label">'+esc(f[1])+'</span><span class="field-value" id="av-'+f[0]+'">'+(val?esc(val):'<span class="muted">—</span>')+'</span><span class="field-edit" id="ae-'+f[0]+'" onclick="editField(\''+f[0]+'\')">✎</span></div>';}).join('');
-  if(_customer.commitment_accepted_at){try{document.getElementById('agreement-line').textContent='✓ Angenommen am '+fmtDMYfull(new Date(_customer.commitment_accepted_at));}catch(e){}}
-  if(_customer.commitment_version){document.getElementById('agreement-ver').textContent='Version '+_customer.commitment_version;}
+  document.getElementById('acct-fields').innerHTML=ACCT_FIELDS.map(function(f){
+    var key=f[0],val=_customer[key]||'';
+    if(_editingField===key){
+      return '<div class="field-row"><span class="field-label">'+esc(f[1])+'</span><span class="field-value"><input class="acct-input" id="ai-'+key+'" value="'+esc(val)+'"/></span><span class="acct-save" onclick="saveField(\''+key+'\')">Speichern</span><span class="acct-cancel" onclick="cancelEdit()">Abbrechen</span></div>';
+    }
+    return '<div class="field-row"><span class="field-label">'+esc(f[1])+'</span><span class="field-value">'+(val?esc(val):'<span class="muted">—</span>')+'</span><span class="field-edit" onclick="editField(\''+key+'\')">✎</span></div>';
+  }).join('');
+  if(_editingField){var ip=document.getElementById('ai-'+_editingField);if(ip)ip.focus();}
+  var cm=commitmentDate();
+  document.getElementById('agreement-line').textContent=cm.date?('✓ Angenommen am '+fmtDMYfull(cm.date)):'Beim ersten Auftrag akzeptiert';
+  document.getElementById('agreement-ver').textContent=cm.version?('Version '+cm.version):'';
 }
-function editField(key){var valEl=document.getElementById('av-'+key),editEl=document.getElementById('ae-'+key);var cur=_customer[key]||'';valEl.innerHTML='<input class="acct-input" id="ai-'+key+'" value="'+esc(cur)+'"/>';editEl.outerHTML='<span class="acct-save" id="ae-'+key+'" onclick="saveField(\''+key+'\')">Speichern</span><span class="acct-cancel" onclick="renderKonto()">Abbrechen</span>';document.getElementById('ai-'+key).focus();}
-async function saveField(key){var inp=document.getElementById('ai-'+key);if(!inp)return;var val=inp.value.trim();try{var upd={};upd[key]=val;var res=await sb.from('customers').update(upd).eq('id',_customer.id);if(res.error){alert('Speichern fehlgeschlagen: '+res.error.message);return;}_customer[key]=val;renderKonto();if(key==='firmenname'){document.getElementById('greet-hi').textContent='Guten Tag, '+val+'.';document.getElementById('db-firm').textContent=val;}}catch(e){alert('Speichern fehlgeschlagen.');}}
+function editField(key){_editingField=key;renderKonto();}
+function cancelEdit(){_editingField=null;renderKonto();}
+async function saveField(key){var inp=document.getElementById('ai-'+key);if(!inp)return;var val=inp.value.trim();try{var upd={};upd[key]=val;var res=await sb.from('customers').update(upd).eq('id',_customer.id);if(res.error){alert('Speichern fehlgeschlagen: '+res.error.message);return;}_customer[key]=val;_editingField=null;renderKonto();if(key==='firmenname'){document.getElementById('greet-hi').textContent='Guten Tag, '+val+'.';document.getElementById('db-firm').textContent=val;}}catch(e){alert('Speichern fehlgeschlagen.');}}
 function askDelete(){document.getElementById('del-btn').style.display='none';document.getElementById('del-confirm').classList.add('show');}
 function hideDelete(){document.getElementById('del-btn').style.display='';document.getElementById('del-confirm').classList.remove('show');}
 async function doDelete(){try{await sb.from('customers').delete().eq('id',_customer.id);}catch(e){}if(window.Clerk){try{await window.Clerk.signOut();}catch(e){}}window.location.href='index.html';}
