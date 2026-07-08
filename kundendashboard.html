@@ -8,7 +8,7 @@
   document.documentElement.style.visibility='hidden';
   window.addEventListener('DOMContentLoaded',function(){
     document.body.innerHTML='';
-    document.body.style.cssText='margin:0;padding:0;min-height:100vh;background:#0F2238;display:flex;align-items:center;justify-content:center;font-family:Inter,-apple-system,sans-serif';
+    document.body.style.cssText='margin:0;padding:0;min-height:100vh;background:#070F1A;display:flex;align-items:center;justify-content:center;font-family:Inter,-apple-system,sans-serif';
     document.documentElement.style.visibility='visible';
     var box=document.createElement('div');
     box.style.cssText='text-align:center;max-width:420px;width:100%;padding:24px';
@@ -34,7 +34,7 @@
 <title>Kunden-Dashboard — SourceOn</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script
   async
   crossorigin="anonymous"
@@ -43,292 +43,236 @@
   type="text/javascript"
 ></script>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+*{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg-base:#08111D;--bg-surface:#0D1E2E;--bg-elevated:#122334;--bg-subtle:#162840;
-  --border:#1E3A5F;--border-subtle:#162840;
-  --text-primary:#F8FAFC;--text-secondary:#94A3B8;--text-muted:#4A6080;
-  --gold:#E8A020;--gold-dim:rgba(232,160,32,0.12);--gold-dim2:rgba(232,160,32,0.06);
-  --success:#22C55E;--success-dim:rgba(34,197,94,0.1);
-  --danger:#EF4444;--danger-dim:rgba(239,68,68,0.1);--warning:#F59E0B;
-  --radius-sm:6px;--radius-md:10px;--radius-lg:16px;
-  --shadow:0 1px 3px rgba(0,0,0,0.4);
+  --bg:#070F1A;--bg-1:#0C1824;--bg-2:#111F2E;--bg-3:#162840;
+  --border:rgba(255,255,255,0.06);--border-strong:rgba(255,255,255,0.12);
+  --text-1:#F1F5F9;--text-2:#94A3B8;--text-3:#4A6080;
+  --gold:#E8A020;--gold-bg:rgba(232,160,32,0.08);--gold-border:rgba(232,160,32,0.2);
+  --green:#22C55E;--green-bg:rgba(34,197,94,0.08);
+  --amber:#F59E0B;--amber-bg:rgba(245,158,11,0.08);
+  --red:#EF4444;--red-bg:rgba(239,68,68,0.08);
+  --r-sm:6px;--r-md:10px;--r-lg:16px;
 }
-html,body{background:var(--bg-base);color:var(--text-primary);margin:0;padding:0;min-height:100vh}
-body{font-family:'Inter',-apple-system,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
-a{color:var(--gold);text-decoration:none;transition:color .15s ease}
+html,body{background:var(--bg);color:var(--text-1);font-family:'Inter',-apple-system,sans-serif;font-size:14px;line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit}
 ::selection{background:var(--gold);color:#1a1a1a}
-.dashboard-wrapper{max-width:1320px;margin:0 auto;padding:0 48px}
-.gold{color:var(--gold)}.muted{color:var(--text-muted)}
+.db-wrap{max-width:1200px;margin:0 auto;padding:0 32px}
 
-/* ── TOP BAR ── */
-.topbar{position:sticky;top:0;z-index:100;height:60px;background:rgba(8,17,29,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
-.topbar-inner{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
-.tb-logo{font-size:17px;font-weight:700;color:var(--text-primary);white-space:nowrap;letter-spacing:-.01em}
-.tb-logo span{color:var(--gold)}
-.tabs{display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{height:60px;padding:0 24px;font-size:13px;font-weight:500;letter-spacing:.01em;color:var(--text-muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;display:flex;align-items:center;transition:color .15s ease,border-color .15s ease;font-family:inherit}
-.tab:hover{color:var(--text-secondary)}
-.tab.active{color:var(--text-primary);border-bottom-color:var(--gold)}
-.tab .tab-ab{display:none}
-.tb-right{display:flex;align-items:center;gap:20px;white-space:nowrap}
-.tb-email{font-size:13px;color:var(--text-secondary);max-width:200px;overflow:hidden;text-overflow:ellipsis}
-.tb-logout{font-size:13px;color:var(--text-muted);cursor:pointer;text-decoration:none}
-.tb-logout:hover{color:var(--gold)}
+/* NAV */
+.db-nav{position:sticky;top:0;z-index:100;background:rgba(7,15,26,0.85);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center}
+.db-nav-inner{width:100%;max-width:1200px;margin:0 auto;padding:0 32px;display:flex;align-items:center;justify-content:space-between;position:relative}
+.db-logo{font-size:16px;font-weight:700;color:var(--text-1)}
+.db-logo span{color:var(--gold)}
+.db-tabs{display:flex;gap:0;position:absolute;left:50%;transform:translateX(-50%)}
+.db-tab{height:56px;padding:0 20px;font-size:13px;font-weight:500;color:var(--text-3);border-bottom:2px solid transparent;display:flex;align-items:center;transition:all .15s;letter-spacing:.01em;white-space:nowrap}
+.db-tab:hover{color:var(--text-2)}
+.db-tab.active{color:var(--text-1);border-bottom-color:var(--gold)}
+.db-user{display:flex;align-items:center;gap:16px;white-space:nowrap}
+.db-firm{font-size:13px;color:var(--text-2);max-width:180px;overflow:hidden;text-overflow:ellipsis}
+.db-logout{font-size:13px;color:var(--text-3);transition:color .15s}
+.db-logout:hover{color:var(--gold)}
+@media(max-width:820px){
+  .db-tabs{position:static;transform:none;overflow-x:auto;scrollbar-width:none;flex:1;margin:0 12px}
+  .db-tabs::-webkit-scrollbar{display:none}
+  .db-tab{padding:0 14px;font-size:12px}
+  .db-firm{display:none}
+}
 
-/* ── SECTIONS ── */
-.tabsec{display:none;opacity:0;transition:opacity .1s ease}
-.tabsec.active{display:block;opacity:1}
-.page-title{font-size:30px;font-weight:600;color:var(--text-primary);line-height:1.2;letter-spacing:-.01em}
-.page-sub{font-size:13px;color:var(--text-muted);margin-top:4px}
-.gold-btn{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:#08111D;font-size:14px;font-weight:600;font-family:inherit;padding:11px 22px;border-radius:var(--radius-sm);border:none;cursor:pointer;text-decoration:none;transition:all .2s ease}
-.gold-btn:hover{filter:brightness(1.1);transform:translateY(-1px);box-shadow:0 4px 12px rgba(232,160,32,0.3);color:#08111D}
-.link-gold{font-size:12px;color:var(--gold);cursor:pointer;text-decoration:none}
-.link-muted{font-size:12px;color:var(--text-muted);cursor:pointer;text-decoration:none;transition:color .15s ease}
-.link-muted:hover{color:var(--gold)}
+/* CONTENT */
+.db-content{display:none;padding:48px 0 40px}
+.db-content.active{display:block;animation:fadeIn .15s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.sec-label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.1em;color:var(--text-3);margin-bottom:12px;display:block}
+.divider{height:1px;background:var(--border);margin:32px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.link-g{font-size:12px;color:var(--gold)}
+.link-m{font-size:12px;color:var(--text-3);transition:color .15s}.link-m:hover{color:var(--gold)}
+
+/* buttons */
+.btn-gold{background:var(--gold);color:#07111A;font-size:13px;font-weight:600;padding:10px 20px;border-radius:var(--r-sm);transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-gold:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 4px 16px rgba(232,160,32,.25);color:#07111A}
 
 /* greeting */
-.greet{padding-top:40px;padding-bottom:32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.greet-date{font-size:13px;color:var(--text-muted);margin-top:4px}
+.greet{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:48px;padding-top:8px;gap:20px;flex-wrap:wrap}
+.greet-hi{font-size:32px;font-weight:700;color:var(--text-1);letter-spacing:-.02em;line-height:1.15}
+.greet-date{font-size:13px;color:var(--text-3);margin-top:6px}
 
-/* ── METRICS STRIP ── */
-.metrics{margin:0 -48px;background:var(--bg-surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:36px 48px;display:grid;grid-template-columns:repeat(3,1fr);gap:0}
-.metric{padding:0 40px;border-right:1px solid var(--border)}
-.metric:first-child{padding-left:0}
-.metric:last-child{border-right:none;padding-right:0}
-.metric-num{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1;color:var(--text-primary)}
-.metric-num.gold{color:var(--gold)}
-.metric-num.dim{color:var(--text-muted);font-weight:300}
-.metric-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-top:10px}
-.metric-sub{display:block;font-size:13px;color:var(--text-secondary);margin-top:3px}
-/* symmetric tile overview */
-.ov-actions{display:flex;gap:12px;align-items:center}
-.ghost-btn{display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--border);color:var(--text-secondary);font-size:13px;font-weight:500;font-family:inherit;padding:10px 16px;border-radius:var(--radius-sm);cursor:pointer;transition:all .15s ease;text-decoration:none}
-.ghost-btn:hover{border-color:var(--gold);color:var(--gold)}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:8px 0 4px}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;align-items:stretch}
-.tile{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 26px;transition:border-color .15s ease}
-.tile:hover{border-color:rgba(232,160,32,.25)}
-.tile .metric-num{font-size:38px}
-.ov-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px 8px;display:flex;flex-direction:column}
-.ov-card.pad{padding-bottom:22px}
-.ov-card-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:6px}
-.ov-card .ev-row{padding:12px 0}
-.ov-card .ev-row:last-child,.ov-card .prev-row:last-child,.ov-card .feed-row:last-child{border-bottom:none}
-.ov-card .prev-row{margin:0;padding:13px 0;border-radius:0}
-.ov-card .prev-row:hover{background:transparent}
-.ov-card .sec-empty{padding:24px 0;text-align:left}
-.ov-chart-wrap{position:relative;height:200px;margin-top:8px}
-@media(max-width:768px){.grid3,.grid2{grid-template-columns:1fr}.ov-actions .ghost-btn,.ov-actions .gold-btn{flex:1;justify-content:center}}
+/* hero metric */
+.hero{text-align:center;padding:48px 0}
+.hero-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:12px}
+.hero-num{font-size:72px;font-weight:800;color:var(--gold);letter-spacing:-.04em;line-height:1}
+.hero-num.zero{color:var(--text-3)}
+.hero-sub{font-size:14px;color:var(--text-3);margin-top:8px}
+@media(max-width:640px){.hero-num{font-size:52px}}
 
-/* ── SECTION HEADERS / LISTS ── */
-.sec-head{display:flex;justify-content:space-between;align-items:center;padding:32px 0 12px}
-.stitle{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted)}
-.sec-empty{font-size:14px;color:var(--text-muted);padding:16px 0}
+/* secondary metric row */
+.metrics3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--r-md);overflow:hidden;margin-bottom:48px}
+.m3{background:var(--bg-1);padding:24px 28px}
+.m3-num{font-size:28px;font-weight:700;color:var(--text-1);letter-spacing:-.02em;line-height:1}
+.m3-num.dim{color:var(--text-3);font-weight:400}
+.m3-num.gold{color:var(--gold)}
+.m3-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-top:6px}
+@media(max-width:640px){.metrics3{grid-template-columns:1fr}}
 
-.ev-row{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--border-subtle)}
-.ev-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0}
-.ev-date{font-size:13px;color:var(--text-secondary);min-width:90px;font-variant-numeric:tabular-nums}
-.ev-desc{font-size:14px;color:var(--text-primary);flex:1}
+/* event list */
+.ev-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
+.ev-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);flex-shrink:0}
+.ev-date{font-size:13px;color:var(--text-3);min-width:90px}
+.ev-desc{font-size:14px;color:var(--text-1);flex:1}
+.empty-line{font-size:14px;color:var(--text-3);padding:16px 0}
 
-.pill{font-size:11px;font-weight:500;padding:3px 10px;border-radius:999px;white-space:nowrap;display:inline-block}
-.p-mut{background:var(--bg-elevated);color:var(--text-secondary)}
-.p-green{background:var(--success-dim);color:var(--success)}
-.p-gold{background:var(--gold-dim);color:var(--gold)}
-.p-danger{background:var(--danger-dim);color:var(--danger)}
+/* preview rows */
+.prev-row{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;margin:0 -16px;padding:14px 16px;border-radius:var(--r-sm)}
+.prev-row:hover{background:var(--bg-1)}
+.prev-mat{font-size:14px;color:var(--text-1);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prev-qty{font-size:13px;color:var(--text-2);white-space:nowrap}
+.prev-sav{font-size:14px;font-weight:600;color:var(--gold);white-space:nowrap;min-width:84px;text-align:right}
 
-.prev-row{display:flex;align-items:center;gap:16px;padding:16px;margin:0 -16px;border-bottom:1px solid var(--border-subtle);cursor:pointer;border-radius:var(--radius-sm);transition:background .15s ease}
-.prev-row:hover{background:var(--bg-elevated)}
-.prev-mat{font-size:14px;font-weight:500;color:var(--text-primary);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.prev-qty{font-size:13px;color:var(--text-secondary);white-space:nowrap}
-.prev-sav{font-size:14px;font-weight:600;color:var(--gold);white-space:nowrap;min-width:84px;text-align:right;font-variant-numeric:tabular-nums}
+/* pills */
+.status-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap;display:inline-block}
+.p-mut{background:var(--bg-3);color:var(--text-2)}
+.p-green{background:var(--green-bg);color:var(--green)}
+.p-gold{background:var(--gold-bg);color:var(--gold)}
+.p-red{background:var(--red-bg);color:var(--red)}
 
-.feed-row{display:flex;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--border-subtle);font-size:13px}
-.feed-date{color:var(--text-muted);min-width:70px;white-space:nowrap;font-variant-numeric:tabular-nums}
-.feed-mat{color:var(--text-primary);font-weight:500;flex:1.3;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.feed-qty{color:var(--text-secondary);flex:.8;white-space:nowrap}
-.feed-status{flex:.9}
-.feed-sav{color:var(--gold);text-align:right;white-space:nowrap;min-width:78px;font-variant-numeric:tabular-nums}
-
-/* ── FILTERS ── */
-.filters{display:flex;gap:8px;flex-wrap:wrap;padding:28px 0 20px}
-.filt{padding:7px 18px;border-radius:999px;font-size:13px;font-weight:500;cursor:pointer;border:none;font-family:inherit;background:var(--bg-elevated);color:var(--text-secondary);transition:all .15s ease}
-.filt:hover{background:var(--bg-subtle)}
-.filt.active{background:var(--gold);color:#08111D}
-
-/* ── PROCESS EXPLAINER ── */
-.proc{border-bottom:1px solid var(--border)}
-.proc-toggle{width:100%;display:flex;justify-content:space-between;align-items:center;padding:14px 0;cursor:pointer;background:none;border:none;font-family:inherit}
-.proc-toggle span{font-size:13px;color:var(--text-secondary)}
-.proc-chev{font-size:18px;color:var(--text-muted);transition:transform .2s ease}
-.proc.open .proc-chev{transform:rotate(90deg)}
-.proc-body{max-height:0;overflow:hidden;transition:max-height .25s ease}
-.proc.open .proc-body{max-height:260px}
-.proc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:20px 0 8px}
-.proc-n{font-size:22px;font-weight:700;color:var(--gold);margin-bottom:4px}
-.proc-t{font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:2px}
-.proc-d{font-size:12px;color:var(--text-secondary);line-height:1.5}
-
-/* ── REQUEST ROWS ── */
-.req-row{border-bottom:1px solid var(--border)}
-.req-head{display:grid;grid-template-columns:35% 20% 25% 20%;align-items:center;padding:20px 16px;margin:0 -16px;cursor:pointer;border-radius:var(--radius-sm);transition:background .15s ease;min-height:48px;gap:12px}
-.req-head:hover{background:var(--bg-surface)}
-.rc-mat{font-size:15px;font-weight:600;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rc-id{font-size:11px;color:var(--gold);margin-top:2px}
-.rc-v{font-size:14px;color:var(--text-primary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rc-v.gold{font-size:15px;font-weight:600;color:var(--gold);font-variant-numeric:tabular-nums}
-.rc-s{font-size:12px;color:var(--text-secondary);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rc-right{display:flex;align-items:center;justify-content:flex-end;gap:10px}
-.rc-chev{font-size:20px;color:var(--text-muted);transition:transform .2s ease}
-.req-row.open .rc-chev{transform:rotate(90deg);color:var(--gold)}
-.req-detail{max-height:0;overflow:hidden;transition:max-height .25s ease;background:var(--bg-surface)}
-.req-row.open .req-detail{max-height:640px}
-.req-detail-inner{border-left:3px solid var(--gold);padding:24px 28px;margin-top:1px}
+/* SPLIT VIEW (Tab 2) */
+.split{display:grid;grid-template-columns:340px 1fr;gap:1px;background:var(--border);min-height:600px;border-radius:var(--r-md);overflow:hidden}
+.req-list{background:var(--bg-1);overflow-y:auto;max-height:calc(100vh - 160px)}
+.req-list-filters{padding:16px;border-bottom:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap}
+.filt{padding:5px 12px;border-radius:999px;font-size:12px;font-weight:500;transition:all .15s}
+.filt.active{background:var(--gold);color:#070F1A}
+.filt:not(.active){background:var(--bg-2);color:var(--text-3)}
+.filt:not(.active):hover{background:var(--bg-3)}
+.req-item{padding:16px;border-bottom:1px solid var(--border);cursor:pointer;transition:background .1s;border-left:2px solid transparent}
+.req-item:hover{background:var(--bg-2)}
+.req-item.active{background:var(--bg-2);border-left-color:var(--gold)}
+.req-item-top{display:flex;justify-content:space-between;gap:8px}
+.req-item-mat{font-size:14px;font-weight:600;color:var(--text-1);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.req-item-date{font-size:12px;color:var(--text-3);white-space:nowrap}
+.req-item-bot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
+.req-item-chf{font-size:13px;font-weight:600;color:var(--gold)}
+.req-detail{background:var(--bg);padding:32px;min-height:600px}
+.req-empty{display:flex;align-items:center;justify-content:center;height:520px;color:var(--text-3);font-size:14px}
+.rd-mat{font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
+.rd-id{font-size:12px;color:var(--gold);font-weight:500}
+.rd-head-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.rd-head-meta{text-align:right;flex-shrink:0}
+.rd-date{font-size:12px;color:var(--text-3);margin-top:6px}
+.rd-key{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--r-md);overflow:hidden;margin:24px 0}
+.rd-key div{background:var(--bg-1);padding:16px 18px}
+.rd-key .k-num{font-size:18px;font-weight:700;color:var(--text-1)}
+.rd-key .k-num.gold{color:var(--gold)}
+.rd-key .k-lbl{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-top:5px}
 /* timeline */
-.tl{display:flex;align-items:flex-start;margin-bottom:20px;max-width:560px}
-.tl-step{flex:1;display:flex;flex-direction:column;align-items:center;position:relative}
-.tl-dot{width:14px;height:14px;border-radius:50%;position:relative;z-index:2;background:transparent;border:2px solid var(--border)}
-.tl-step.done .tl-dot{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-dim)}
-.tl-step.active .tl-dot{background:transparent;border:2px solid var(--gold)}
+.tl{display:flex;align-items:flex-start;margin:28px 0}
+.tl-step{display:flex;flex-direction:column;align-items:center;flex-shrink:0}
+.tl-dot{width:14px;height:14px;border-radius:50%;background:transparent;border:1px solid var(--border-strong);position:relative;z-index:2}
+.tl-step.done .tl-dot{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px var(--gold-bg)}
+.tl-step.active .tl-dot{border:2px solid var(--gold);background:transparent}
 .tl-step.active .tl-dot::after{content:'';position:absolute;inset:0;margin:auto;width:6px;height:6px;border-radius:50%;background:var(--gold)}
-.tl-step::before{content:'';position:absolute;top:6px;left:-50%;width:100%;height:2px;background:var(--border);z-index:1}
-.tl-step:first-child::before{display:none}
-.tl-step.done::before,.tl-step.active::before{background:var(--gold)}
-.tl-lbl{font-size:11px;color:var(--text-muted);margin-top:8px;text-align:center;white-space:nowrap}
-.tl-step.active .tl-lbl,.tl-step.done .tl-lbl{color:var(--text-primary)}
-.req-exp{font-size:14px;color:var(--text-secondary);margin-bottom:8px;line-height:1.5}
-.req-when{font-size:13px;color:var(--text-muted);margin-bottom:16px}
-.req-when strong{color:var(--text-secondary);font-weight:600}
-.save-box{background:var(--gold-dim2);border:1px solid rgba(232,160,32,0.2);border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:16px}
-.save-box .sb-main{font-size:13px;color:var(--text-secondary)}
-.save-box .sb-main b{font-size:20px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums}
-.save-box .sb-sub{font-size:11px;color:var(--text-muted);margin-top:4px}
-.req-actions{display:flex;gap:24px;align-items:center;margin-top:4px;flex-wrap:wrap}
-.act-link{font-size:13px;color:var(--text-muted);background:none;border:none;cursor:pointer;padding:0;font-family:inherit;text-decoration:none;transition:color .15s ease}
+.tl-lbl{font-size:11px;color:var(--text-3);margin-top:8px;text-align:center;white-space:nowrap}
+.tl-step.active .tl-lbl,.tl-step.done .tl-lbl{color:var(--text-1)}
+.tl-conn{flex:1;height:1px;background:var(--border);margin-top:6px}
+.tl-conn.done{background:var(--gold)}
+.rd-status{font-size:14px;color:var(--text-2);line-height:1.6;margin:16px 0}
+.save-box{background:var(--gold-bg);border:1px solid var(--gold-border);border-radius:var(--r-md);padding:16px 20px;margin:16px 0}
+.save-box .sb-l{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)}
+.save-box .sb-n{font-size:28px;font-weight:700;color:var(--gold);margin-top:4px}
+.save-box .sb-s{font-size:12px;color:var(--text-3);margin-top:2px}
+.rd-daterow{display:flex;gap:8px;font-size:13px;margin:8px 0}
+.rd-daterow .l{color:var(--text-3)}.rd-daterow .v{color:var(--text-1)}
+.rd-actions{display:flex;gap:24px;align-items:center;margin-top:24px;padding-top:16px;border-top:1px solid var(--border)}
+.act-link{font-size:13px;color:var(--text-3);transition:color .15s}
 .act-link:hover{color:var(--gold)}
-.act-danger:hover{color:var(--danger)}
-.confirm-inline{display:none;align-items:center;gap:12px;font-size:13px;color:var(--text-secondary)}
+.act-danger:hover{color:var(--red)}
+.confirm-inline{display:none;align-items:center;gap:10px;font-size:13px;color:var(--text-2)}
 .confirm-inline.show{display:inline-flex}
-.confirm-inline .yes{color:var(--danger);cursor:pointer;font-weight:600}
-.confirm-inline .no{color:var(--text-muted);cursor:pointer}
-.empty-c{text-align:center;padding:60px 0}
-.empty-c h3{font-size:18px;font-weight:600;color:var(--text-secondary)}
-.empty-c p{font-size:14px;color:var(--text-muted);margin:8px 0 22px}
+.confirm-inline .yes{color:var(--red)}.confirm-inline .no{color:var(--text-3)}
+@media(max-width:768px){.split{grid-template-columns:1fr}.req-list{max-height:none}.req-detail{min-height:auto}}
 
-/* ── FINANZEN ── */
-.ftable{width:100%;border-collapse:collapse;margin-top:8px}
-.ftable th{text-align:left;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);padding:10px 0;border-bottom:1px solid var(--border)}
-.ftable td{padding:14px 0;border-bottom:1px solid var(--border-subtle);font-size:14px;color:var(--text-secondary)}
-.ftable td:first-child,.ftable th:first-child{padding-left:12px}
-.ftable td:last-child,.ftable th:last-child{padding-right:12px}
-.ftable tr:nth-child(even) td{background:var(--bg-surface)}
+/* TABLE (Finanzen) */
+.ftable{width:100%;border-collapse:collapse}
+.ftable th{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);padding:10px 0;border-bottom:1px solid var(--border);text-align:left;font-weight:500}
+.ftable td{padding:14px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-1)}
 .ftable td.num,.ftable th.num{text-align:right;font-variant-numeric:tabular-nums}
-.ftable .total td{font-weight:600;color:var(--text-primary);border-top:2px solid var(--border);border-bottom:none;padding-top:14px;background:transparent}
+.ftable tbody tr:nth-child(even) td{background:var(--bg-1)}
+.ftable .total td{font-weight:600;border-top:2px solid var(--border-strong);border-bottom:none;padding-top:14px;background:transparent!important}
 .ftable .total td.gold{color:var(--gold)}
-.note{font-size:12px;color:var(--text-muted);margin-top:12px;line-height:1.5}
-.chart-box{background:var(--bg-surface);border-radius:var(--radius-md);padding:24px;margin-top:8px}
-.prov-box{border:1px solid var(--border);border-radius:var(--radius-md);padding:18px 20px;margin-top:20px;display:flex;align-items:flex-start;gap:12px;font-size:13px;color:var(--text-secondary);line-height:1.55}
-.prov-i{color:var(--gold);font-size:16px;flex-shrink:0;line-height:1.4}
+.prov-note{background:var(--bg-1);border-radius:var(--r-sm);padding:14px 16px;margin-top:20px;font-size:13px;color:var(--text-2);line-height:1.55}
+.chart-box{background:var(--bg-1);border-radius:var(--r-md);padding:24px;margin-top:24px}
+.chart-wrap{position:relative;height:200px}
 
-/* ── WERKZEUGE ── */
-.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:8px}
-.tool-card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px}
-.tool-title{font-size:17px;font-weight:600;color:var(--text-primary)}
-.tool-sub{font-size:13px;color:var(--text-secondary);margin-top:2px;margin-bottom:20px}
+/* TOOLS (Tab 4) */
+.tools-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+@media(max-width:768px){.tools-grid{grid-template-columns:1fr}}
+.tool-card{background:var(--bg-1);border-radius:var(--r-lg);padding:28px;border:1px solid var(--border)}
+.tool-title{font-size:17px;font-weight:600}
+.tool-sub{font-size:13px;color:var(--text-3);margin-top:2px;margin-bottom:20px}
 .subtabs{display:flex;gap:8px;margin-bottom:22px;flex-wrap:wrap}
-.subtab{padding:6px 14px;border-radius:999px;font-size:12px;cursor:pointer;border:none;font-family:inherit;background:var(--bg-elevated);color:var(--text-secondary);transition:all .15s ease}
-.subtab.active{background:var(--gold);color:#08111D;font-weight:600}
-.calc-panel{display:none}
-.calc-panel.active{display:block}
-.calc-grid{display:flex;align-items:flex-end;gap:8px;flex-wrap:wrap}
-.calc-field{display:flex;flex-direction:column;gap:6px}
-.calc-field label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted)}
-.uinput{background:transparent;border:none;border-bottom:2px solid var(--border);color:var(--text-primary);font-family:inherit;font-size:28px;font-weight:300;padding:4px 0;width:120px;outline:none;transition:border-color .15s ease}
-.uinput:focus{border-bottom-color:var(--gold)}
-select.uinput{font-size:15px;width:auto;min-width:150px}
-select.uinput option{background:#0F2238;color:#fff}
-.calc-op{font-size:24px;color:var(--text-muted);margin:0 8px;padding-bottom:8px}
-.calc-out{font-size:36px;font-weight:700;color:var(--gold);padding-bottom:2px;font-variant-numeric:tabular-nums}
-.calc-unit{font-size:14px;color:var(--text-secondary);padding-bottom:10px;margin-left:4px}
-.calc-ex{font-size:12px;color:var(--text-muted);margin-top:12px;border-top:1px solid var(--border-subtle);padding-top:12px}
-.calc-cta{display:inline-block;font-size:12px;color:var(--gold);margin-top:10px}
-.doc-row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid var(--border-subtle)}
-.doc-l{min-width:0}
-.doc-mat{font-size:14px;font-weight:500;color:var(--text-primary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.doc-date{font-size:12px;color:var(--text-muted);margin-top:2px}
-.doc-btn{margin-left:auto;background:none;border:none;font-family:inherit;font-size:13px;color:var(--gold);cursor:pointer;white-space:nowrap}
-.doc-btn:hover{text-decoration:underline}
+.subtab{padding:6px 14px;border-radius:999px;font-size:12px;font-weight:500;transition:all .15s;background:var(--bg-2);color:var(--text-3)}
+.subtab.active{background:var(--gold);color:#070F1A;font-weight:600}
+.calc-panel{display:none}.calc-panel.active{display:block}
+.calc-row{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.calc-field{display:flex;flex-direction:column}
+.calc-field label{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3);margin-bottom:6px}
+.cinput{background:transparent;border:none;border-bottom:2px solid var(--border-strong);font-size:32px;font-weight:300;color:var(--text-1);width:100px;padding:4px 0;outline:none;transition:border-color .15s}
+.cinput:focus{border-bottom-color:var(--gold)}
+select.cinput{font-size:15px;width:auto;min-width:150px}
+select.cinput option{background:#0F2238}
+.calc-op{font-size:24px;color:var(--text-3);padding-bottom:6px}
+.calc-out{font-size:40px;font-weight:700;color:var(--gold);min-width:120px}
+.calc-unit{font-size:14px;color:var(--text-3);padding-bottom:8px}
+.calc-ex{font-size:12px;color:var(--text-3);border-top:1px solid var(--border);padding-top:12px;margin-top:16px}
+.calc-cta{font-size:13px;color:var(--gold);margin-top:8px;display:block}
+.calc-cta:hover{text-decoration:underline}
+.doc-row{padding:14px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.doc-mat{font-size:14px;font-weight:500;color:var(--text-1);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.doc-date{font-size:12px;color:var(--text-3);margin-top:2px}
+.doc-btn{margin-left:auto;font-size:12px;color:var(--text-3);background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:5px 12px;transition:all .15s;white-space:nowrap}
+.doc-btn:hover{border-color:var(--gold);color:var(--gold)}
 
-/* ── KONTO ── */
-.card{background:var(--bg-surface);border:1px solid var(--border);border-radius:var(--radius-lg);padding:28px;margin-bottom:20px}
-.card-title{font-size:15px;font-weight:600;color:var(--text-primary)}
-.prof-head{display:flex;align-items:center;gap:16px}
-.avatar{width:44px;height:44px;border-radius:50%;background:var(--gold-dim);color:var(--gold);font-size:18px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.prof-name{font-size:17px;font-weight:600;color:var(--text-primary)}
-.prof-email{font-size:13px;color:var(--text-secondary);margin-top:2px}
-.prof-fields{margin-top:20px;border-top:1px solid var(--border);padding-top:6px}
-.acct-row{display:flex;align-items:center;padding:14px 0;border-bottom:1px solid var(--border-subtle);gap:12px}
-.acct-row:last-child{border-bottom:none}
-.acct-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);min-width:160px}
-.acct-val{font-size:14px;color:var(--text-primary);flex:1;min-width:0}
-.acct-val .muted{color:var(--text-muted)}
-.acct-edit{font-size:14px;color:var(--text-muted);cursor:pointer;margin-left:12px;transition:color .15s ease}
-.acct-edit:hover{color:var(--gold)}
-.acct-input{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius-sm);padding:5px 10px;color:#fff;font-family:inherit;font-size:14px;outline:none;width:100%;max-width:300px;transition:border-color .15s ease}
+/* KONTO (Tab 5) */
+.prof-head{display:flex;align-items:center;gap:20px;padding:8px 0 32px}
+.avatar{width:52px;height:52px;border-radius:50%;background:var(--gold-bg);border:1px solid var(--gold-border);color:var(--gold);font-size:20px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.prof-name{font-size:20px;font-weight:600}
+.prof-email{font-size:14px;color:var(--text-3)}
+.prof-badge{font-size:12px;color:var(--green);margin-top:4px}
+.field-row{display:flex;align-items:center;padding:14px 0;border-bottom:1px solid var(--border)}
+.field-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);min-width:160px;flex-shrink:0}
+.field-value{font-size:14px;color:var(--text-1);flex:1}
+.field-value .muted{color:var(--text-3)}
+.field-edit{font-size:13px;color:var(--text-3);padding:4px;transition:color .15s}
+.field-edit:hover{color:var(--gold)}
+.acct-input{background:var(--bg-2);border:1px solid var(--border-strong);border-radius:var(--r-sm);padding:6px 10px;color:var(--text-1);font-size:14px;width:100%;max-width:320px;outline:none;transition:border-color .15s}
 .acct-input:focus{border-color:var(--gold)}
-.acct-save{font-size:13px;color:var(--gold);cursor:pointer;margin-left:12px}
-.acct-cancel{font-size:13px;color:var(--text-muted);cursor:pointer;margin-left:10px}
-.danger-card{background:var(--danger-dim);border:1px solid rgba(239,68,68,0.2);border-radius:var(--radius-md);padding:20px;margin-bottom:20px}
-.danger-title{font-size:14px;font-weight:600;color:var(--danger)}
-.danger-text{font-size:13px;color:var(--text-secondary);margin-top:4px}
-.danger-btn{background:none;border:1px solid var(--danger);color:var(--danger);padding:8px 16px;border-radius:var(--radius-sm);cursor:pointer;font-size:13px;font-family:inherit;margin-top:12px;transition:background .15s ease}
-.danger-btn:hover{background:var(--danger-dim)}
-.del-confirm{display:none;align-items:center;gap:16px;margin-top:12px;font-size:13px;color:var(--text-secondary)}
+.acct-save{margin-left:12px;font-size:13px;color:var(--gold)}
+.acct-cancel{margin-left:10px;font-size:13px;color:var(--text-3)}
+.agree-box{background:var(--bg-1);border-radius:var(--r-md);padding:20px;margin-top:8px}
+.danger-zone{margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
+.danger-link{font-size:13px;color:var(--red)}
+.del-confirm{display:none;align-items:center;gap:14px;margin-top:12px;font-size:13px;color:var(--text-2)}
 .del-confirm.show{display:flex}
-.del-confirm .yes{color:var(--danger);cursor:pointer;font-weight:600}
-.del-confirm .no{color:var(--text-muted);cursor:pointer}
+.del-confirm .yes{color:var(--red)}.del-confirm .no{color:var(--text-3)}
 
-/* ── SUPPORT ── */
-.support{border-top:1px solid var(--border);padding:20px 0;text-align:center;margin-top:48px;font-size:12px;color:var(--text-muted)}
-.support a{color:var(--text-muted);font-weight:500}
-.support a:hover{color:var(--gold)}
+/* support */
+.support{margin-top:64px;padding:20px 0;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--text-3)}
+.support a{color:var(--text-3);transition:color .15s}.support a:hover{color:var(--gold)}
 
-/* ── AUTH GATE ── */
+/* auth gate */
 .auth-gate{display:flex;align-items:center;justify-content:center;min-height:80vh;padding:24px}
 .auth-gate-card{text-align:center;max-width:440px;width:100%}
 .auth-gate-card h2{font-size:1.35rem;font-weight:700;margin-bottom:12px}
-.auth-gate-card p{font-size:.9rem;color:var(--text-secondary);line-height:1.7}
-.status-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;background:var(--gold-dim);border:1px solid rgba(232,160,32,.2)}
-.loading{text-align:center;padding:60px;color:var(--text-muted);font-size:.85rem}
+.auth-gate-card p{font-size:.9rem;color:var(--text-2);line-height:1.7}
+.status-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;background:var(--gold-bg);border:1px solid var(--gold-border)}
+.loading{text-align:center;padding:60px;color:var(--text-3);font-size:.85rem}
 .loading-dots::after{content:'';animation:dots 1.5s steps(4) infinite}
 @keyframes dots{0%{content:''}25%{content:'.'}50%{content:'..'}75%{content:'...'}}
 .dash{display:none}
 
-/* ── MOBILE ── */
-@media(max-width:768px){
-  .dashboard-wrapper{padding:0 16px}
-  .topbar,.topbar-inner{height:52px}
-  .tab{height:52px;padding:0 14px}
-  .tab .tab-full{display:none}.tab .tab-ab{display:inline}
-  .tb-email{display:none}
-  .greet{padding-top:28px;padding-bottom:22px}
-  .page-title{font-size:22px}
-  .greet .gold-btn{width:100%;justify-content:center}
-  .metrics{margin:0 -16px;padding:24px 16px;grid-template-columns:1fr;gap:0}
-  .metric{padding:0;border-right:none}
-  .metric+.metric{border-top:1px solid var(--border);padding-top:22px;margin-top:22px}
-  .metric-num{font-size:36px}
-  .req-head{grid-template-columns:1fr auto;gap:10px}
-  .rc-cl,.rc-cr{display:none}
-  .prev-qty,.feed-qty,.feed-status{display:none}
-  .proc-grid{grid-template-columns:1fr 1fr;gap:18px}
-  .tools-grid{grid-template-columns:1fr}
-  .acct-row{flex-wrap:wrap}
-  .acct-label{min-width:120px}
-}
-
-/* ── PRINT ── */
+/* PRINT */
 .print-content{display:none}
 @media print{
   body *{visibility:hidden!important}
@@ -354,224 +298,165 @@ select.uinput option{background:#0F2238;color:#fff}
 <body>
 
 <div class="auth-gate" id="auth-gate">
-  <div class="auth-gate-card" id="auth-gate-card">
-    <div class="loading"><span class="loading-dots">Authentifizierung wird geprüft</span></div>
-  </div>
+  <div class="auth-gate-card" id="auth-gate-card"><div class="loading"><span class="loading-dots">Authentifizierung wird geprüft</span></div></div>
 </div>
 
 <div class="dash" id="dash">
-  <div class="topbar">
-    <div class="dashboard-wrapper topbar-inner">
-      <div class="tb-logo">Source<span>On</span></div>
-      <div class="tabs" id="tabs">
-        <button class="tab" data-tab="uebersicht" onclick="showTab('uebersicht')"><span class="tab-full">Übersicht</span><span class="tab-ab">Ü</span></button>
-        <button class="tab" data-tab="anfragen" onclick="showTab('anfragen')"><span class="tab-full">Anfragen</span><span class="tab-ab">A</span></button>
-        <button class="tab" data-tab="finanzen" onclick="showTab('finanzen')"><span class="tab-full">Finanzen</span><span class="tab-ab">F</span></button>
-        <button class="tab" data-tab="werkzeuge" onclick="showTab('werkzeuge')"><span class="tab-full">Werkzeuge</span><span class="tab-ab">W</span></button>
-        <button class="tab" data-tab="konto" onclick="showTab('konto')"><span class="tab-full">Konto</span><span class="tab-ab">K</span></button>
+  <nav class="db-nav">
+    <div class="db-nav-inner">
+      <div class="db-logo">Source<span>On</span></div>
+      <div class="db-tabs" id="tabs">
+        <button class="db-tab" data-tab="uebersicht" onclick="showTab('uebersicht')">Übersicht</button>
+        <button class="db-tab" data-tab="anfragen" onclick="showTab('anfragen')">Anfragen</button>
+        <button class="db-tab" data-tab="finanzen" onclick="showTab('finanzen')">Finanzen</button>
+        <button class="db-tab" data-tab="werkzeuge" onclick="showTab('werkzeuge')">Werkzeuge</button>
+        <button class="db-tab" data-tab="konto" onclick="showTab('konto')">Konto</button>
       </div>
-      <div class="tb-right"><span class="tb-email" id="tb-email"></span><span class="tb-logout" onclick="handleLogout()">Abmelden</span></div>
+      <div class="db-user"><span class="db-firm" id="db-firm"></span><a class="db-logout" onclick="handleLogout()">Abmelden</a></div>
     </div>
-  </div>
+  </nav>
 
   <!-- TAB 1: ÜBERSICHT -->
-  <section class="tabsec" id="sec-uebersicht">
-    <div class="dashboard-wrapper">
-      <div class="greet">
-        <div><div class="page-title" id="greet-hi">Guten Tag.</div><div class="greet-date" id="greet-date"></div></div>
-        <div class="ov-actions">
-          <button class="ghost-btn" onclick="printOverview()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>Übersicht als PDF</button>
-          <a href="kontakt.html" class="gold-btn">Weiteres Material melden →</a>
-        </div>
-      </div>
-
-      <!-- KPI tiles -->
-      <div class="grid3">
-        <div class="tile"><div class="metric-num gold" id="m1">CHF 0</div><span class="metric-label">Einsparpotenzial</span><span class="metric-sub">Garantiertes Minimum aller aktiven Anfragen</span></div>
-        <div class="tile"><div class="metric-num dim" id="m2">--</div><span class="metric-label">Erzielte Ersparnis</span><span class="metric-sub" id="m2s">Noch kein Zuschlag</span></div>
-        <div class="tile"><div class="metric-num" id="m3">0</div><span class="metric-label">Aktive Anfragen</span><span class="metric-sub" id="m3s">0 abgeschlossen · 0 gesamt</span></div>
-      </div>
-
-      <!-- symmetric 2-up cards -->
-      <div class="grid2">
-        <div class="ov-card">
-          <div class="ov-card-head"><span class="stitle">Bevorstehend</span><span class="link-muted" onclick="exportICS()">ICS exportieren</span></div>
-          <div id="ov-agenda"></div>
-        </div>
-        <div class="ov-card">
-          <div class="ov-card-head"><span class="stitle">Letzte Anfragen</span><span class="link-gold" onclick="showTab('anfragen')">Alle anzeigen →</span></div>
-          <div id="ov-preview"></div>
-        </div>
-      </div>
-
-      <!-- chart card -->
-      <div class="grid2" id="ov-chart-row" style="grid-template-columns:1fr;display:none">
-        <div class="ov-card pad">
-          <div class="ov-card-head"><span class="stitle">Einsparpotenzial über Zeit</span></div>
-          <div class="ov-chart-wrap"><canvas id="ov-chart"></canvas></div>
-        </div>
-      </div>
-
-      <!-- verlauf card -->
-      <div class="grid2" id="ov-verlauf-wrap" style="grid-template-columns:1fr;display:none">
-        <div class="ov-card pad">
-          <div class="ov-card-head"><span class="stitle">Verlauf</span><span class="link-muted" id="verlauf-more" style="display:none" onclick="showAllVerlauf()">Mehr anzeigen</span></div>
-          <div id="ov-verlauf"></div>
-        </div>
-      </div>
+  <div class="db-content" id="sec-uebersicht"><div class="db-wrap">
+    <div class="greet">
+      <div><div class="greet-hi" id="greet-hi">Guten Tag.</div><div class="greet-date" id="greet-date"></div></div>
+      <a href="kontakt.html" class="btn-gold">Weiteres Material melden →</a>
     </div>
-  </section>
-
-  <!-- TAB 2: ANFRAGEN -->
-  <section class="tabsec" id="sec-anfragen">
-    <div class="dashboard-wrapper">
-      <div class="filters" id="filters">
-        <button class="filt active" data-f="alle" onclick="setFilter('alle')">Alle</button>
-        <button class="filt" data-f="offen" onclick="setFilter('offen')">Offen</button>
-        <button class="filt" data-f="gebuendelt" onclick="setFilter('gebuendelt')">Gebündelt</button>
-        <button class="filt" data-f="vergeben" onclick="setFilter('vergeben')">Vergeben</button>
-        <button class="filt" data-f="abgeschlossen" onclick="setFilter('abgeschlossen')">Abgeschlossen</button>
-      </div>
-
-      <div class="proc" id="proc">
-        <button type="button" class="proc-toggle" onclick="toggleProc()"><span>Wie funktioniert der Prozess?</span><span class="proc-chev">›</span></button>
-        <div class="proc-body">
-          <div class="proc-grid">
-            <div><div class="proc-n">1</div><div class="proc-t">Bündelung läuft</div><div class="proc-d">Wir suchen Baufirmen mit ähnlichem Bedarf.</div></div>
-            <div><div class="proc-n">2</div><div class="proc-t">Ausschreibung</div><div class="proc-d">Lieferanten geben verdeckte Angebote ab.</div></div>
-            <div><div class="proc-n">3</div><div class="proc-t">Zuschlag</div><div class="proc-d">Das beste Angebot über deinem Mindestrabatt gewinnt automatisch.</div></div>
-            <div><div class="proc-n">4</div><div class="proc-t">Lieferung</div><div class="proc-d">Der Lieferant koordiniert die Lieferung direkt mit dir.</div></div>
-          </div>
-        </div>
-      </div>
-
-      <div id="req-list"></div>
-      <div class="empty-c" id="req-empty" style="display:none">
-        <h3>Noch keine Anfragen</h3>
-        <p>Melde deinen ersten Materialbedarf.</p>
-        <a href="kontakt.html" class="gold-btn">Materialbedarf melden →</a>
-      </div>
+    <div class="hero">
+      <div class="hero-label">Einsparpotenzial</div>
+      <div class="hero-num" id="ov-hero">CHF 0</div>
+      <div class="hero-sub" id="ov-hero-sub">Garantiertes Minimum aller aktiven Anfragen</div>
     </div>
-  </section>
+    <div class="metrics3">
+      <div class="m3"><div class="m3-num dim" id="ov-earned">--</div><div class="m3-label">Erzielte Ersparnis</div></div>
+      <div class="m3"><div class="m3-num" id="ov-active">0</div><div class="m3-label">Aktive Anfragen</div></div>
+      <div class="m3"><div class="m3-num" id="ov-done">0</div><div class="m3-label">Abgeschlossen</div></div>
+    </div>
+    <div class="sec-head"><span class="sec-label">Bevorstehend</span><span class="link-m" onclick="exportICS()">↓ Kalender</span></div>
+    <div id="ov-agenda"></div>
+    <div class="divider"></div>
+    <div class="sec-head"><span class="sec-label">Letzte Anfragen</span><span class="link-g" onclick="showTab('anfragen')">Alle anzeigen →</span></div>
+    <div id="ov-preview"></div>
+    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+  </div></div>
+
+  <!-- TAB 2: ANFRAGEN (split) -->
+  <div class="db-content" id="sec-anfragen"><div class="db-wrap">
+    <div class="greet"><div class="greet-hi" style="font-size:24px">Deine Anfragen</div></div>
+    <div class="split" id="split">
+      <div class="req-list">
+        <div class="req-list-filters" id="filters">
+          <button class="filt active" data-f="alle" onclick="setFilter('alle')">Alle</button>
+          <button class="filt" data-f="offen" onclick="setFilter('offen')">Offen</button>
+          <button class="filt" data-f="gebuendelt" onclick="setFilter('gebuendelt')">Gebündelt</button>
+          <button class="filt" data-f="vergeben" onclick="setFilter('vergeben')">Vergeben</button>
+        </div>
+        <div id="req-items"></div>
+      </div>
+      <div class="req-detail" id="req-detail"><div class="req-empty">← Anfrage auswählen</div></div>
+    </div>
+    <div id="req-empty" style="display:none"><div class="hero"><div class="hero-num zero" style="font-size:22px">Noch keine Anfragen</div><div class="hero-sub" style="margin-bottom:20px">Melde deinen ersten Materialbedarf.</div><a href="kontakt.html" class="btn-gold">Materialbedarf melden →</a></div></div>
+    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+  </div></div>
 
   <!-- TAB 3: FINANZEN -->
-  <section class="tabsec" id="sec-finanzen">
-    <div class="dashboard-wrapper"><div class="greet"><div class="page-title">Finanzen</div></div></div>
-    <div class="dashboard-wrapper">
-      <div class="metrics">
-        <div class="metric"><div class="metric-num gold" id="f1">CHF 0</div><span class="metric-label">Einsparpotenzial</span><span class="metric-sub">Alle aktiven Anfragen</span></div>
-        <div class="metric"><div class="metric-num dim" id="f2">--</div><span class="metric-label">Bereits gespart</span><span class="metric-sub">Aus abgeschlossenen Bestellungen</span></div>
-        <div class="metric"><div class="metric-num dim" id="f3">--</div><span class="metric-label">Ø Rabatt</span><span class="metric-sub">Durchschnitt aller Anfragen</span></div>
-      </div>
-      <div class="sec-head"><span class="stitle">Aufschlüsselung nach Anfrage</span></div>
-      <div style="overflow-x:auto"><table class="ftable" id="fin-table"></table></div>
-      <div class="note">Richtwerte basierend auf SourceOn-Richtpreisen. Definitive Beträge nach Zuschlag.</div>
-
-      <div id="chart-blk" style="display:none">
-        <div class="sec-head"><span class="stitle">Einsparpotenzial über Zeit</span></div>
-        <div class="chart-box"><canvas id="fin-chart" height="220"></canvas></div>
-      </div>
-
-      <div class="prov-box"><span class="prov-i">ⓘ</span><span id="prov-text"></span></div>
+  <div class="db-content" id="sec-finanzen"><div class="db-wrap">
+    <div class="greet"><div class="greet-hi" style="font-size:24px">Finanzen</div></div>
+    <div class="hero">
+      <div class="hero-label">Einsparpotenzial</div>
+      <div class="hero-num" id="fin-hero">CHF 0</div>
+      <div class="hero-sub">Garantiertes Minimum aller aktiven Anfragen</div>
     </div>
-  </section>
+    <div class="metrics3">
+      <div class="m3"><div class="m3-num dim" id="fin-earned">--</div><div class="m3-label">Bereits gespart</div></div>
+      <div class="m3"><div class="m3-num" id="fin-avgrab">--</div><div class="m3-label">Ø Rabatt</div></div>
+      <div class="m3"><div class="m3-num" id="fin-total">0</div><div class="m3-label">Anfragen gesamt</div></div>
+    </div>
+    <div class="sec-head"><span class="sec-label">Aufschlüsselung</span><span class="link-m" onclick="printOverview()">↓ Finanzübersicht exportieren</span></div>
+    <div style="overflow-x:auto"><table class="ftable" id="fin-table"></table></div>
+    <div class="prov-note" id="prov-text"></div>
+    <div class="chart-box" id="chart-blk" style="display:none">
+      <span class="sec-label">Einsparpotenzial über Zeit</span>
+      <div class="chart-wrap"><canvas id="fin-chart"></canvas></div>
+    </div>
+    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+  </div></div>
 
   <!-- TAB 4: WERKZEUGE -->
-  <section class="tabsec" id="sec-werkzeuge">
-    <div class="dashboard-wrapper"><div class="greet"><div><div class="page-title">Werkzeuge</div><div class="page-sub">Praktische Rechner für den Baustellenalltag</div></div></div></div>
-    <div class="dashboard-wrapper">
-      <div class="tools-grid">
-        <div class="tool-card">
-          <div class="tool-title">Mengenrechner</div>
-          <div class="tool-sub">Baumaterialien berechnen</div>
-          <div class="subtabs">
-            <button class="subtab active" data-c="flaeche" onclick="calcTab('flaeche')">Fläche → m³</button>
-            <button class="subtab" data-c="einheiten" onclick="calcTab('einheiten')">Einheiten</button>
-            <button class="subtab" data-c="ziegel" onclick="calcTab('ziegel')">Ziegel</button>
+  <div class="db-content" id="sec-werkzeuge"><div class="db-wrap">
+    <div class="greet"><div><div class="greet-hi" style="font-size:24px">Werkzeuge</div><div class="greet-date">Praktische Rechner &amp; Dokumente</div></div></div>
+    <div class="tools-grid">
+      <div class="tool-card">
+        <div class="tool-title">Mengenrechner</div>
+        <div class="tool-sub">Praktische Berechnung für den Baustellenalltag</div>
+        <div class="subtabs">
+          <button class="subtab active" data-c="flaeche" onclick="calcTab('flaeche')">Fläche → m³</button>
+          <button class="subtab" data-c="einheiten" onclick="calcTab('einheiten')">Einheiten</button>
+          <button class="subtab" data-c="ziegel" onclick="calcTab('ziegel')">Ziegel</button>
+        </div>
+        <div class="calc-panel active" id="calc-flaeche">
+          <div class="calc-row">
+            <div class="calc-field"><label>Fläche (m²)</label><input class="cinput" type="number" id="fl-a" value="200" oninput="calcFlaeche()"/></div>
+            <div class="calc-op">×</div>
+            <div class="calc-field"><label>Dicke (cm)</label><input class="cinput" type="number" id="fl-t" value="14" oninput="calcFlaeche()"/></div>
+            <div class="calc-op">=</div>
+            <div class="calc-out" id="fl-o">28</div><div class="calc-unit">m³</div>
           </div>
-
-          <div class="calc-panel active" id="calc-flaeche">
-            <div class="calc-grid">
-              <div class="calc-field"><label>Fläche (m²)</label><input class="uinput" type="number" id="fl-a" value="200" oninput="calcFlaeche()"/></div>
-              <div class="calc-op">×</div>
-              <div class="calc-field"><label>Dicke (cm)</label><input class="uinput" type="number" id="fl-t" value="14" oninput="calcFlaeche()"/></div>
-              <div class="calc-op">=</div>
-              <div class="calc-out" id="fl-o">28</div><div class="calc-unit">m³</div>
+          <div class="calc-ex" id="fl-ex">200 m² × 14 cm = 28 m³</div>
+          <a class="calc-cta" id="fl-cta" href="kontakt.html">→ Diesen Bedarf jetzt melden</a>
+        </div>
+        <div class="calc-panel" id="calc-einheiten">
+          <div class="calc-row">
+            <div class="calc-field"><label>Umrechnung</label>
+              <select class="cinput" id="un-type" onchange="calcEinheiten()"><option value="kg-t">kg → t</option><option value="t-kg">t → kg</option><option value="m-lm">m → lm</option><option value="lm-m">lm → m</option><option value="m2-m3">m² → m³</option><option value="m3-m2">m³ → m²</option></select>
             </div>
-            <div class="calc-ex" id="fl-ex">200 m² × 14 cm = 28 m³</div>
-            <a class="calc-cta" id="fl-cta" href="kontakt.html">→ Materialbedarf melden</a>
-          </div>
-
-          <div class="calc-panel" id="calc-einheiten">
-            <div class="calc-grid">
-              <div class="calc-field"><label>Umrechnung</label>
-                <select class="uinput" id="un-type" onchange="calcEinheiten()">
-                  <option value="kg-t">kg → t</option><option value="t-kg">t → kg</option>
-                  <option value="m-lm">m → lm</option><option value="lm-m">lm → m</option>
-                  <option value="m2-m3">m² → m³</option><option value="m3-m2">m³ → m²</option>
-                </select>
-              </div>
-              <div class="calc-field"><label>Wert</label><input class="uinput" type="number" id="un-in" value="1000" oninput="calcEinheiten()"/></div>
-              <div class="calc-field" id="un-tw" style="display:none"><label>Dicke (cm)</label><input class="uinput" type="number" id="un-t" value="14" oninput="calcEinheiten()"/></div>
-              <div class="calc-op">=</div>
-              <div class="calc-out" id="un-o">1</div><div class="calc-unit" id="un-u">t</div>
-            </div>
-          </div>
-
-          <div class="calc-panel" id="calc-ziegel">
-            <div class="calc-grid">
-              <div class="calc-field"><label>Wandfläche (m²)</label><input class="uinput" type="number" id="zg-a" value="50" oninput="calcZiegel()"/></div>
-              <div class="calc-field"><label>Format</label>
-                <select class="uinput" id="zg-f" onchange="calcZiegel()">
-                  <option value="51">HLZ 15 cm</option><option value="40">HLZ 20 cm</option><option value="32">HLZ 25 cm</option>
-                  <option value="48">KS 15 cm</option><option value="20">Porenbeton 20 cm</option>
-                </select>
-              </div>
-              <div class="calc-op">=</div>
-              <div class="calc-out" id="zg-o">2'550</div><div class="calc-unit">Stk</div>
-            </div>
-            <div class="calc-ex" id="zg-ex">Inkl. 5 % Verschnitt: 2'678 Stk · Richtwert</div>
+            <div class="calc-field"><label>Wert</label><input class="cinput" type="number" id="un-in" value="1000" oninput="calcEinheiten()"/></div>
+            <div class="calc-field" id="un-tw" style="display:none"><label>Dicke (cm)</label><input class="cinput" type="number" id="un-t" value="14" oninput="calcEinheiten()"/></div>
+            <div class="calc-op">=</div>
+            <div class="calc-out" id="un-o">1</div><div class="calc-unit" id="un-u">t</div>
           </div>
         </div>
-
-        <div class="tool-card">
-          <div class="tool-title">Dokumenten-Center</div>
-          <div class="tool-sub">Anfragen als PDF speichern oder drucken</div>
-          <div id="doc-list"></div>
+        <div class="calc-panel" id="calc-ziegel">
+          <div class="calc-row">
+            <div class="calc-field"><label>Wandfläche (m²)</label><input class="cinput" type="number" id="zg-a" value="50" oninput="calcZiegel()"/></div>
+            <div class="calc-field"><label>Format</label>
+              <select class="cinput" id="zg-f" onchange="calcZiegel()"><option value="51">HLZ 15 cm</option><option value="40">HLZ 20 cm</option><option value="32">HLZ 25 cm</option><option value="48">KS 15 cm</option><option value="20">Porenbeton 20 cm</option></select>
+            </div>
+            <div class="calc-op">=</div>
+            <div class="calc-out" id="zg-o">2'550</div><div class="calc-unit">Stk</div>
+          </div>
+          <div class="calc-ex" id="zg-ex">Inkl. 5 % Verschnitt: 2'678 Stk · Richtwert</div>
         </div>
       </div>
+      <div class="tool-card">
+        <div class="tool-title">Dokumenten-Center</div>
+        <div class="tool-sub">Anfragen als professionelles PDF speichern</div>
+        <div id="doc-list"></div>
+      </div>
     </div>
-  </section>
+    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+  </div></div>
 
   <!-- TAB 5: KONTO -->
-  <section class="tabsec" id="sec-konto">
-    <div class="dashboard-wrapper"><div class="greet"><div class="page-title">Mein Konto</div></div></div>
-    <div class="dashboard-wrapper">
-      <div class="card">
-        <div class="prof-head">
-          <div class="avatar" id="prof-avatar">S</div>
-          <div><div class="prof-name" id="prof-name">—</div><div class="prof-email" id="prof-email"></div></div>
-        </div>
-        <div class="prof-fields" id="acct-fields"></div>
-      </div>
-
-      <div class="card">
-        <div class="card-title">Kundenvereinbarung</div>
-        <div style="font-size:13px;color:var(--text-secondary);margin-top:6px" id="agreement-line">Beim ersten Auftrag akzeptiert</div>
-        <a href="kundenvereinbarung.html" target="_blank" class="link-gold" style="display:inline-block;margin-top:10px;font-size:13px">Vereinbarung lesen →</a>
-        <div style="font-size:11px;color:var(--text-muted);margin-top:8px" id="agreement-ver"></div>
-      </div>
-
-      <div class="danger-card">
-        <div class="danger-title">Konto löschen</div>
-        <div class="danger-text">Alle deine Anfragen und Daten werden dauerhaft entfernt.</div>
-        <button class="danger-btn" id="del-btn" onclick="askDelete()">Konto löschen</button>
-        <div class="del-confirm" id="del-confirm">Bist du sicher? <span class="yes" onclick="doDelete()">Ja, löschen</span> <span class="no" onclick="hideDelete()">Abbrechen</span></div>
-      </div>
+  <div class="db-content" id="sec-konto"><div class="db-wrap">
+    <div class="prof-head">
+      <div class="avatar" id="kt-avatar">S</div>
+      <div style="flex:1"><div class="prof-name" id="kt-name">—</div><div class="prof-email" id="kt-email"></div><div class="prof-badge">Verifiziertes Kundenkonto ●</div></div>
     </div>
-  </section>
-
-  <div class="dashboard-wrapper"><div class="support">Fragen zu deinen Anfragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div></div>
+    <span class="sec-label">Kontakt</span>
+    <div id="acct-fields"></div>
+    <div class="agree-box">
+      <span class="sec-label">Kundenvereinbarung</span>
+      <div style="font-size:14px;color:var(--green)" id="agreement-line">Beim ersten Auftrag akzeptiert</div>
+      <div style="font-size:12px;color:var(--text-3);margin-top:4px" id="agreement-ver"></div>
+      <a href="kundenvereinbarung.html" target="_blank" class="link-g" style="display:inline-block;margin-top:10px;font-size:13px">Vereinbarung lesen →</a>
+    </div>
+    <div class="danger-zone">
+      <span class="danger-link" id="del-btn" onclick="askDelete()">Konto löschen</span>
+      <div class="del-confirm" id="del-confirm">Alle Daten werden dauerhaft gelöscht. <span class="yes" onclick="doDelete()">Ja, löschen</span> <span class="no" onclick="hideDelete()">Abbrechen</span></div>
+    </div>
+    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+  </div></div>
 </div>
 
 <div class="print-content" id="print-content"></div>
@@ -586,9 +471,8 @@ var SUPABASE_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
 var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
 var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{accessToken:async function(){if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}return null;}});
 var currentUserId=null,_matCatalogMap={};
-var _requests=[],_bundleMap={},_commMap={},_customer=null,_filter='alle',_verlaufAll=false;
+var _requests=[],_bundleMap={},_commMap={},_customer=null,_filter='alle',_selId=null;
 
-// ── helpers ──
 var _WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
 var _MON=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
 var _MONF=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
@@ -604,16 +488,15 @@ function richtpreis(r){var rp=(r.sourceon_id&&_matCatalogMap[r.sourceon_id])?_ma
 function reqEstValue(r){var rp=richtpreis(r);var m=parseFloat(r.menge);if(rp==null||isNaN(m))return null;return m*rp;}
 function reqGuaranteedSaving(r){var v=reqEstValue(r);var rab=parseFloat(r.committed_min_rabatt);if(v==null||isNaN(rab))return null;return v*rab;}
 function isActive(r){return r.status==='offen'||r.status==='gebuendelt';}
-function badgeFor(s){if(s==='offen')return {t:'Sammelt Partner',c:'p-mut'};if(s==='gebuendelt')return {t:'Ausgeschrieben',c:'p-green'};if(s==='vergeben')return {t:'Zuschlag erteilt',c:'p-gold'};if(s==='abgeschlossen')return {t:'Abgeschlossen',c:'p-green'};if(s==='storniert'||s==='abgesagt')return {t:'Storniert',c:'p-danger'};if(s==='abgelaufen')return {t:'Abgelaufen',c:'p-mut'};return {t:s||'--',c:'p-mut'};}
+function badgeFor(s){if(s==='offen')return {t:'Sammelt Partner',c:'p-mut'};if(s==='gebuendelt')return {t:'Ausgeschrieben',c:'p-green'};if(s==='vergeben')return {t:'Zuschlag',c:'p-gold'};if(s==='abgeschlossen')return {t:'Abgeschlossen',c:'p-green'};if(s==='storniert'||s==='abgesagt')return {t:'Storniert',c:'p-red'};if(s==='abgelaufen')return {t:'Abgelaufen',c:'p-mut'};return {t:s||'--',c:'p-mut'};}
 function timelineStates(s){var st=['future','future','future','future'];st[0]='done';if(s==='offen'){st[1]='active';}else if(s==='gebuendelt'){st[1]='done';st[2]='active';}else if(s==='vergeben'){st[1]='done';st[2]='done';st[3]='active';}else if(s==='abgeschlossen'){st[1]='done';st[2]='done';st[3]='done';}else if(s==='abgelaufen'){st[1]='active';}return st;}
 function statusText(r){var s=r.status;if(s==='offen')return 'Wir suchen Bündelungspartner mit ähnlichem Bedarf.';if(s==='gebuendelt')return 'Deine Anfrage ist Teil eines aktiven Bündels — Lieferanten reichen Angebote ein.';if(s==='vergeben')return 'Zuschlag erteilt — dein Lieferant koordiniert die Lieferung direkt mit dir.';if(s==='abgeschlossen')return 'Bestellung abgeschlossen — die Lieferung ist erfolgt.';if(s==='abgelaufen')return 'Diese Ausschreibung ist abgelaufen. Deine Anfrage wird neu gebündelt.';if(s==='storniert'||s==='abgesagt')return 'Diese Anfrage wurde storniert.';return '';}
 function reqDeadline(r){var bundle=r.bundle_id?_bundleMap[r.bundle_id]:null;if(r.status==='gebuendelt'&&bundle&&bundle.bid_deadline){var d=new Date(bundle.bid_deadline);if(!isNaN(d))return {label:'Angebotsfrist',date:d};}if(r.status==='offen'&&r.liefer_zeitraum_von&&window.SO_TIMING){var ce=window.SO_TIMING.collectionEnd(r.liefer_zeitraum_von,r.created_at);if(ce)return {label:'Ausschreibung spätestens',date:ce};}return null;}
 function zeitraumStr(r){if(r.liefer_zeitraum_von&&r.liefer_zeitraum_bis)return fmtShort(new Date(r.liefer_zeitraum_von))+' – '+fmtShort(new Date(r.liefer_zeitraum_bis));if(r.liefer_zeitraum_von)return 'Ab '+fmtShort(new Date(r.liefer_zeitraum_von));if(r.liefer_zeitraum_bis)return 'Bis '+fmtShort(new Date(r.liefer_zeitraum_bis));return '--';}
 function mengeStr(r){return (r.menge!=null&&r.menge!=='')?(esc(r.menge)+(r.einheit?' '+esc(r.einheit):'')):'--';}
 
-// ── TABS ──
 var VALID_TABS=['uebersicht','anfragen','finanzen','werkzeuge','konto'];
-function showTab(name){if(VALID_TABS.indexOf(name)<0)name='uebersicht';VALID_TABS.forEach(function(t){var sec=document.getElementById('sec-'+t);if(sec)sec.classList.toggle('active',t===name);});document.querySelectorAll('.tab').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')===name);});if(location.hash!=='#'+name){history.replaceState(null,'','#'+name);}}
+function showTab(name){if(VALID_TABS.indexOf(name)<0)name='uebersicht';VALID_TABS.forEach(function(t){var sec=document.getElementById('sec-'+t);if(sec)sec.classList.toggle('active',t===name);});document.querySelectorAll('.db-tab').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-tab')===name);});if(location.hash!=='#'+name){history.replaceState(null,'','#'+name);}}
 window.addEventListener('hashchange',function(){showTab(location.hash.replace('#',''));});
 
 (async function init(){
@@ -621,147 +504,97 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   if(window.Clerk){window.Clerk.addListener(function(){if(_clerkTrustActive)return;if(!window.Clerk.client||!window.Clerk.client.signIn)return;var si=window.Clerk.client.signIn;if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){_clerkTrustActive=true;_clerkSignInResource=si;try{window.Clerk.closeSignIn();}catch(e){}_clerkSendVerificationCode();}});}
   if(!window.Clerk||!window.Clerk.user){showGate('login');return;}
   currentUserId=window.Clerk.user.id;
-
   var _p=localStorage.getItem('sourceon_pending_customer_link');
   if(_p){try{var chk=await sb.from('customers').select('id,user_id').eq('id',_p).single();if(chk.data&&!chk.data.user_id){await sb.from('customers').update({user_id:currentUserId}).eq('id',_p);}localStorage.removeItem('sourceon_pending_customer_link');}catch(e){console.error('[SourceOn] Customer link error:',e);}}
   try{var _em=window.Clerk.user.primaryEmailAddress?window.Clerk.user.primaryEmailAddress.emailAddress:null;if(_em){await sb.from('customers').update({user_id:currentUserId}).eq('email',_em).is('user_id',null).select('id');}}catch(e){console.error('[SourceOn] Email-claim error:',e);}
-
   var custRes=await sb.from('customers').select('*').eq('user_id',currentUserId);
   if(custRes.error||!custRes.data||custRes.data.length===0){showGate('no_customer');return;}
   _customer=custRes.data[0];
   var customerIds=custRes.data.map(function(c){return c.id;});
-
   var email=window.Clerk.user.primaryEmailAddress?window.Clerk.user.primaryEmailAddress.emailAddress:'';
-  document.getElementById('tb-email').textContent=email;
+  document.getElementById('db-firm').textContent=_customer.firmenname||'';
   document.getElementById('greet-hi').textContent='Guten Tag'+(_customer.firmenname?', '+_customer.firmenname:'')+'.';
   document.getElementById('greet-date').textContent=new Date().toLocaleDateString('de-CH',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
-  document.getElementById('prof-email').textContent=email;
+  document.getElementById('kt-email').textContent=email;
   document.getElementById('auth-gate').style.display='none';
   document.getElementById('dash').style.display='block';
   showTab(location.hash.replace('#','')||'uebersicht');
-
   var catRes=await sb.from('material_catalog').select('sourceon_id,bezeichnung,einheit,richtpreis_chf');
   if(catRes.data){catRes.data.forEach(function(m){_matCatalogMap[m.sourceon_id]=m;});}
-
   var reqRes=await sb.from('material_requests').select('*').in('customer_id',customerIds).order('created_at',{ascending:false});
   _requests=(reqRes.data&&!reqRes.error)?reqRes.data:[];
-
   var bundleIds=[];_requests.forEach(function(r){if(r.bundle_id)bundleIds.push(r.bundle_id);});
   if(bundleIds.length>0){try{var bRes=await sb.from('bundles').select('id,status,bid_deadline').in('id',bundleIds);if(bRes.data){bRes.data.forEach(function(b){_bundleMap[b.id]=b;});}}catch(e){}}
   var reqIds=_requests.map(function(r){return r.id;});
   if(reqIds.length>0){try{var cRes=await sb.from('commissions').select('kunden_ersparnis_netto,material_request_id').in('material_request_id',reqIds);if(cRes.data){cRes.data.forEach(function(c){if(c.kunden_ersparnis_netto)_commMap[c.material_request_id]=(_commMap[c.material_request_id]||0)+Number(c.kunden_ersparnis_netto);});}}catch(e){}}
-
   renderUebersicht();renderAnfragen();renderFinanzen();renderKonto();renderDocs();
-  if(localStorage.getItem('sk_process_seen')!=='1'){document.getElementById('proc').classList.add('open');}
 })();
 
 function computeTotals(){var potential=0,earned=0,earnedCount=0,active=0,done=0,rabSum=0,rabN=0;_requests.forEach(function(r){if(_commMap[r.id]){earned+=_commMap[r.id];earnedCount++;}if(isActive(r)){active++;var gs=reqGuaranteedSaving(r);if(gs!=null)potential+=gs;}if(r.status==='vergeben'||r.status==='abgeschlossen')done++;var rb=parseFloat(r.committed_min_rabatt);if(!isNaN(rb)){rabSum+=rb;rabN++;}});return {potential:potential,earned:earned,earnedCount:earnedCount,active:active,done:done,total:_requests.length,avgRab:rabN?rabSum/rabN:null};}
 
+// ── ÜBERSICHT ──
 function renderUebersicht(){
   var t=computeTotals();
-  var m1=document.getElementById('m1');m1.textContent=t.potential>0?fmtCHF(t.potential):'CHF 0';
-  var m2=document.getElementById('m2');m2.textContent=t.earned>0?fmtCHF(t.earned):'--';m2.className='metric-num'+(t.earned>0?'':' dim');
-  document.getElementById('m2s').textContent=t.earned>0?('Aus '+t.earnedCount+' Bestellung'+(t.earnedCount!==1?'en':'')):'Noch kein Zuschlag';
-  document.getElementById('m3').textContent=t.active;
-  document.getElementById('m3s').textContent=t.done+' abgeschlossen · '+t.total+' gesamt';
-
+  var h=document.getElementById('ov-hero');h.textContent=t.potential>0?fmtCHF(t.potential):'CHF 0';h.className='hero-num'+(t.potential>0?'':' zero');
+  document.getElementById('ov-hero-sub').textContent=t.potential>0?'Garantiertes Minimum aller aktiven Anfragen':'Noch keine aktiven Anfragen';
+  var e=document.getElementById('ov-earned');e.textContent=t.earned>0?fmtCHF(t.earned):'--';e.className='m3-num'+(t.earned>0?'':' dim');
+  document.getElementById('ov-active').textContent=t.active;
+  document.getElementById('ov-done').textContent=t.done;
   var now=new Date(),events=[];
   _requests.forEach(function(r){var dl=reqDeadline(r);if(dl&&dl.date>now){events.push({date:dl.date,desc:(r.status==='offen'?'Ausschreibung spätestens':'Angebotsfrist endet')+' — '+matNameFor(r),pill:badgeFor(r.status)});}});
   events.sort(function(a,b){return a.date-b.date;});events=events.slice(0,5);
-  var ag=document.getElementById('ov-agenda');
-  ag.innerHTML=events.length?events.map(function(e){return '<div class="ev-row"><span class="ev-dot"></span><span class="ev-date">'+esc(fmtAgenda(e.date))+'</span><span class="ev-desc">'+esc(e.desc)+'</span><span class="pill '+e.pill.c+'">'+esc(e.pill.t)+'</span></div>';}).join(''):'<div class="sec-empty">Keine bevorstehenden Ereignisse.</div>';
+  document.getElementById('ov-agenda').innerHTML=events.length?events.map(function( e2){return '<div class="ev-row"><span class="ev-dot"></span><span class="ev-date">'+esc(fmtAgenda(e2.date))+'</span><span class="ev-desc">'+esc(e2.desc)+'</span><span class="status-pill '+e2.pill.c+'">'+esc(e2.pill.t)+'</span></div>';}).join(''):'<div class="empty-line">Keine bevorstehenden Ereignisse</div>';
+  document.getElementById('ov-preview').innerHTML=_requests.length?_requests.slice(0,3).map(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);return '<div class="prev-row" onclick="showTab(\'anfragen\')"><span class="prev-mat">'+esc(matNameFor(r))+'</span><span class="prev-qty">'+mengeStr(r)+'</span><span class="status-pill '+b.c+'">'+esc(b.t)+'</span><span class="prev-sav">'+(gs!=null?fmtCHF(gs):'--')+'</span></div>';}).join(''):'<div class="empty-line">Noch keine Anfragen</div>';
+}
 
-  var pv=document.getElementById('ov-preview');
-  pv.innerHTML=_requests.length?_requests.slice(0,3).map(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);return '<div class="prev-row" onclick="showTab(\'anfragen\')"><span class="prev-mat">'+esc(matNameFor(r))+'</span><span class="prev-qty">'+mengeStr(r)+'</span><span class="pill '+b.c+'">'+esc(b.t)+'</span><span class="prev-sav">'+(gs!=null?fmtCHF(gs):'--')+'</span></div>';}).join(''):'<div class="sec-empty">Noch keine Anfragen.</div>';
-
-  if(_requests.length>=3){document.getElementById('ov-verlauf-wrap').style.display='block';renderVerlauf();}
-  renderOverviewChart();
+// ── ANFRAGEN (split) ──
+function setFilter(f){_filter=f;document.querySelectorAll('#filters .filt').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-f')===f);});renderReqItems();}
+function renderAnfragen(){
+  if(_requests.length===0){document.getElementById('split').style.display='none';document.getElementById('req-empty').style.display='block';return;}
+  renderReqItems();
 }
-var _ovChart=null;
-function renderOverviewChart(){
-  var now=new Date(),buckets={},order=[];
-  for(var i=5;i>=0;i--){var d=new Date(now.getFullYear(),now.getMonth()-i,1);var key=d.getFullYear()+'-'+d.getMonth();buckets[key]={label:_MON[d.getMonth()]+' '+String(d.getFullYear()).slice(2),val:0};order.push(key);}
-  var withData=0;
-  _requests.forEach(function(r){if(!r.created_at)return;var d=new Date(r.created_at);var key=d.getFullYear()+'-'+d.getMonth();if(buckets[key]){var gs=reqGuaranteedSaving(r);if(gs!=null)buckets[key].val+=gs;}});
-  order.forEach(function(k){if(buckets[k].val>0)withData++;});
-  if(withData<1||!window.Chart){document.getElementById('ov-chart-row').style.display='none';return;}
-  document.getElementById('ov-chart-row').style.display='grid';
-  window.Chart.defaults.color='#94A3B8';
-  if(_ovChart)_ovChart.destroy();
-  var ctx=document.getElementById('ov-chart').getContext('2d');
-  _ovChart=new window.Chart(ctx,{type:'bar',data:{labels:order.map(function(k){return buckets[k].label;}),datasets:[{data:order.map(function(k){return Math.round(buckets[k].val);}),backgroundColor:'rgba(232,160,32,0.7)',borderColor:'#E8A020',borderWidth:1,borderRadius:4,maxBarThickness:44}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return 'CHF '+fmtNum(c.parsed.y);}}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(30,58,95,0.8)'},ticks:{callback:function(v){return fmtNum(v);}}}}}});
-}
-function printOverview(){
-  var t=computeTotals();
-  var rows='';
-  _requests.forEach(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);var d=r.created_at?fmtDMY(new Date(r.created_at)):'--';rows+='<tr><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(d)+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(matNameFor(r))+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(mengeStr(r))+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(b.t)+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5;text-align:right">'+(gs!=null?fmtCHF(gs):'--')+'</td></tr>';});
-  document.getElementById('print-content').innerHTML='<div style="max-width:680px">'
-    +'<div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div>'
-    +'<div style="font-size:15px;color:#555;margin-bottom:4px">Kunden-Übersicht</div>'
-    +'<div style="font-size:12px;color:#888;margin-bottom:22px">'+esc((_customer&&_customer.firmenname)||'')+' · Erstellt am '+fmtDMY(new Date())+'</div>'
-    +'<div style="display:flex;gap:28px;margin-bottom:24px;font-size:13px;color:#111">'
-      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Einsparpotenzial</div><div style="font-size:20px;font-weight:700;color:#E8A020">'+(t.potential>0?fmtCHF(t.potential):'CHF 0')+'</div></div>'
-      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Erzielte Ersparnis</div><div style="font-size:20px;font-weight:700">'+(t.earned>0?fmtCHF(t.earned):'--')+'</div></div>'
-      +'<div><div style="color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.06em">Aktive Anfragen</div><div style="font-size:20px;font-weight:700">'+t.active+'</div></div>'
-    +'</div>'
-    +'<table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase;letter-spacing:.05em"><th style="padding:6px 8px;border-bottom:2px solid #333">Datum</th><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333">Menge</th><th style="padding:6px 8px;border-bottom:2px solid #333">Status</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Garant. Ersparnis</th></tr>'+(rows||'<tr><td colspan="5" style="padding:10px;color:#888">Noch keine Anfragen.</td></tr>')+'</table>'
-    +'<div style="margin-top:30px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999">Dokument erstellt via SourceOn · sourceon.ch · Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen</div></div>';
-  window.print();
-}
-function renderVerlauf(){
-  var rows=_verlaufAll?_requests:_requests.slice(0,5);
-  document.getElementById('verlauf-more').style.display=(!_verlaufAll&&_requests.length>5)?'inline':'none';
-  document.getElementById('ov-verlauf').innerHTML=rows.map(function(r){var b=badgeFor(r.status);var d=r.created_at?fmtShort(new Date(r.created_at)):'--';var sav=_commMap[r.id]?fmtCHF(_commMap[r.id]):'—';return '<div class="feed-row"><span class="feed-date">'+esc(d)+'</span><span class="feed-mat">'+esc(matNameFor(r))+'</span><span class="feed-qty">'+mengeStr(r)+'</span><span class="feed-status"><span class="pill '+b.c+'">'+esc(b.t)+'</span></span><span class="feed-sav">'+esc(sav)+'</span></div>';}).join('');
-}
-function showAllVerlauf(){_verlaufAll=true;renderVerlauf();}
-
-// ── ANFRAGEN ──
-function setFilter(f){_filter=f;document.querySelectorAll('.filt').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-f')===f);});renderReqList();}
-function renderAnfragen(){if(_requests.length===0){document.getElementById('req-empty').style.display='block';document.getElementById('filters').style.display='none';document.getElementById('proc').style.display='none';return;}renderReqList();}
-function renderReqList(){
-  var list=document.getElementById('req-list');
+function renderReqItems(){
+  var el=document.getElementById('req-items');
   var rows=_requests.filter(function(r){return _filter==='alle'||r.status===_filter;});
-  if(rows.length===0){list.innerHTML='<div class="sec-empty">Keine Anfragen in dieser Kategorie.</div>';return;}
-  list.innerHTML=rows.map(buildReqRow).join('');
-  list.querySelectorAll('.req-head').forEach(function(h){h.addEventListener('click',function(){h.parentNode.classList.toggle('open');});});
+  if(rows.length===0){el.innerHTML='<div class="empty-line" style="padding:16px">Keine Anfragen.</div>';return;}
+  el.innerHTML=rows.map(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);var d=r.created_at?fmtShort(new Date(r.created_at)):'';return '<div class="req-item'+(r.id===_selId?' active':'')+'" data-id="'+esc(r.id)+'" onclick="selectReq(\''+esc(r.id)+'\')"><div class="req-item-top"><span class="req-item-mat">'+esc(matNameFor(r))+'</span><span class="req-item-date">'+esc(d)+'</span></div><div class="req-item-bot"><span class="status-pill '+b.c+'">'+esc(b.t)+'</span><span class="req-item-chf">'+(gs!=null?fmtCHF(gs):'--')+'</span></div></div>';}).join('');
+  if(_selId&&!rows.some(function(r){return r.id===_selId;}))_selId=null;
 }
-function buildReqRow(r){
-  var mat=matNameFor(r),b=badgeFor(r.status),gs=reqGuaranteedSaving(r);
+function selectReq(id){
+  _selId=id;
+  document.querySelectorAll('.req-item').forEach(function(it){it.classList.toggle('active',it.getAttribute('data-id')===id);});
+  var r=_requests.filter(function(x){return x.id===id;})[0];if(!r)return;
+  var b=badgeFor(r.status),gs=reqGuaranteedSaving(r);
   var pct=(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt)))?Math.round(parseFloat(r.committed_min_rabatt)*100):null;
   var st=timelineStates(r.status),tlLbl=['Eingegangen','Bündelung','Ausschreibung','Zuschlag'];
-  var tl='<div class="tl">';for(var i=0;i<4;i++){tl+='<div class="tl-step '+st[i]+'"><div class="tl-dot"></div><div class="tl-lbl">'+tlLbl[i]+'</div></div>';}tl+='</div>';
-  var dl=reqDeadline(r);var when=dl?'<div class="req-when"><strong>'+esc(dl.label)+':</strong> '+esc(fmtDMY(dl.date))+'</div>':'';
-  var saveBox=(gs!=null&&pct!=null)?'<div class="save-box"><div class="sb-main">Garantierte Ersparnis bei Zuschlag: <b>'+fmtCHF(gs)+'</b> (netto, '+pct+'%)</div><div class="sb-sub">Basierend auf SourceOn-Richtpreisen.</div></div>':'';
+  var tl='<div class="tl">';for(var i=0;i<4;i++){tl+='<div class="tl-step '+st[i]+'"><div class="tl-dot"></div><div class="tl-lbl">'+tlLbl[i]+'</div></div>';if(i<3){tl+='<div class="tl-conn'+(st[i]==='done'?' done':'')+'"></div>';}}tl+='</div>';
+  var dl=reqDeadline(r);
+  var when=dl?'<div class="rd-daterow"><span class="l">'+esc(dl.label)+':</span><span class="v">'+esc(fmtDMY(dl.date))+'</span></div>':'';
+  var saveBox=(gs!=null&&pct!=null)?'<div class="save-box"><div class="sb-l">Garantierte Ersparnis bei Zuschlag</div><div class="sb-n">'+fmtCHF(gs)+'</div><div class="sb-s">'+pct+'% netto · basierend auf SourceOn-Richtpreisen</div></div>':'';
+  var d=r.created_at?fmtDMY(new Date(r.created_at)):'';
   var mailto='mailto:info@sourceon.ch?subject='+encodeURIComponent('Anfrage '+(r.sourceon_id||''));
-  var actions='<div class="req-actions">';
-  if(isActive(r)){actions+='<button class="act-link act-danger" onclick="askCancel(\''+esc(r.id)+'\')">Anfrage stornieren</button><span class="confirm-inline" id="cf-'+esc(r.id)+'">Wirklich stornieren? <span class="yes" onclick="doCancel(\''+esc(r.id)+'\')">Ja</span> · <span class="no" onclick="hideCancel(\''+esc(r.id)+'\')">Abbrechen</span></span>';}
-  actions+='<a class="act-link" href="'+esc(mailto)+'">Frage stellen →</a></div>';
-  var savTop=(gs!=null)?('mind. '+fmtCHF(gs)):'--';
-  return '<div class="req-row" data-id="'+esc(r.id)+'">'
-    +'<div class="req-head">'
-      +'<div><div class="rc-mat">'+esc(mat)+'</div>'+(r.sourceon_id?'<div class="rc-id">'+esc(r.sourceon_id)+'</div>':'')+'</div>'
-      +'<div class="rc-cl"><div class="rc-v">'+mengeStr(r)+'</div><div class="rc-s">'+esc(zeitraumStr(r))+'</div></div>'
-      +'<div class="rc-cr"><div class="rc-v gold">'+esc(savTop)+'</div><div class="rc-s">'+(pct!=null?pct+'% garantiert':'')+'</div></div>'
-      +'<div class="rc-right"><span class="pill '+b.c+'">'+esc(b.t)+'</span><span class="rc-chev">›</span></div>'
-    +'</div>'
-    +'<div class="req-detail"><div class="req-detail-inner">'+tl+'<div class="req-exp">'+esc(statusText(r))+'</div>'+when+saveBox+actions+'</div></div>'
-  +'</div>';
+  var actions='<div class="rd-actions">';
+  if(isActive(r)){actions+='<span class="act-link act-danger" id="cancel-lk" onclick="askCancel(\''+esc(id)+'\')">Anfrage stornieren</span><span class="confirm-inline" id="cf-'+esc(id)+'">Wirklich? <span class="yes" onclick="doCancel(\''+esc(id)+'\')">Ja</span> · <span class="no" onclick="hideCancel(\''+esc(id)+'\')">Nein</span></span>';}
+  actions+='<a class="act-link" href="'+mailto+'">Frage stellen →</a></div>';
+  document.getElementById('req-detail').innerHTML=
+    '<div class="rd-head-row"><div><div class="rd-mat">'+esc(matNameFor(r))+'</div>'+(r.sourceon_id?'<div class="rd-id">'+esc(r.sourceon_id)+'</div>':'')+'</div><div class="rd-head-meta"><span class="status-pill '+b.c+'">'+esc(b.t)+'</span><div class="rd-date">'+esc(d)+'</div></div></div>'
+    +'<div class="rd-key"><div><div class="k-num">'+mengeStr(r)+'</div><div class="k-lbl">Menge</div></div><div><div class="k-num">'+esc(zeitraumStr(r))+'</div><div class="k-lbl">Lieferzeitraum</div></div><div><div class="k-num gold">'+(gs!=null?fmtCHF(gs):'--')+'</div><div class="k-lbl">Min. Ersparnis</div></div></div>'
+    +tl+'<div class="rd-status">'+esc(statusText(r))+'</div>'+saveBox+when+actions;
 }
-function toggleProc(){document.getElementById('proc').classList.toggle('open');localStorage.setItem('sk_process_seen','1');}
 
 // ── FINANZEN ──
 function renderFinanzen(){
   var t=computeTotals();
-  document.getElementById('f1').textContent=t.potential>0?fmtCHF(t.potential):'CHF 0';
-  var f2=document.getElementById('f2');f2.textContent=t.earned>0?fmtCHF(t.earned):'--';f2.className='metric-num'+(t.earned>0?'':' dim');
-  var f3=document.getElementById('f3');f3.textContent=t.avgRab!=null?(Math.round(t.avgRab*100)+'%'):'--';f3.className='metric-num'+(t.avgRab!=null?'':' dim');
-
+  var h=document.getElementById('fin-hero');h.textContent=t.potential>0?fmtCHF(t.potential):'CHF 0';h.className='hero-num'+(t.potential>0?'':' zero');
+  var e=document.getElementById('fin-earned');e.textContent=t.earned>0?fmtCHF(t.earned):'--';e.className='m3-num'+(t.earned>0?'':' dim');
+  var ar=document.getElementById('fin-avgrab');ar.textContent=t.avgRab!=null?(Math.round(t.avgRab*100)+'%'):'--';ar.className='m3-num'+(t.avgRab!=null?'':' dim');
+  document.getElementById('fin-total').textContent=t.total;
   var head='<thead><tr><th>Material</th><th class="num">Volumen CHF</th><th class="num">Rabatt</th><th class="num">Ersparnis min. CHF</th><th>Status</th></tr></thead>';
   var body='<tbody>',totVol=0,totSav=0;
-  _requests.forEach(function(r){var v=reqEstValue(r),gs=reqGuaranteedSaving(r),b=badgeFor(r.status);var pct=(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt)))?Math.round(parseFloat(r.committed_min_rabatt)*100)+'%':'--';if(v!=null)totVol+=v;if(gs!=null)totSav+=gs;body+='<tr><td>'+esc(matNameFor(r))+'</td><td class="num">'+(v!=null?fmtCHF(v):'--')+'</td><td class="num">'+pct+'</td><td class="num">'+(gs!=null?fmtCHF(gs):'--')+'</td><td><span class="pill '+b.c+'">'+esc(b.t)+'</span></td></tr>';});
+  _requests.forEach(function(r){var v=reqEstValue(r),gs=reqGuaranteedSaving(r),b=badgeFor(r.status);var pct=(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt)))?Math.round(parseFloat(r.committed_min_rabatt)*100)+'%':'--';if(v!=null)totVol+=v;if(gs!=null)totSav+=gs;body+='<tr><td>'+esc(matNameFor(r))+'</td><td class="num">'+(v!=null?fmtCHF(v):'--')+'</td><td class="num">'+pct+'</td><td class="num">'+(gs!=null?fmtCHF(gs):'--')+'</td><td><span class="status-pill '+b.c+'">'+esc(b.t)+'</span></td></tr>';});
   body+='<tr class="total"><td>Total</td><td class="num">'+fmtCHF(totVol)+'</td><td></td><td class="num gold">'+fmtCHF(totSav)+'</td><td></td></tr></tbody>';
   document.getElementById('fin-table').innerHTML=head+body;
-  document.getElementById('prov-text').textContent='SourceOn-Provision (2.25%): '+fmtCHF(totVol*0.0225)+' — bereits im ausgewiesenen Einsparpotenzial berücksichtigt. Du zahlst SourceOn nichts separat.';
+  document.getElementById('prov-text').textContent='SourceOn-Provision (2.25% des Bestellwerts, '+fmtCHF(totVol*0.0225)+') ist im Einsparpotenzial bereits berücksichtigt. Du zahlst SourceOn nichts direkt.';
   renderChart();
 }
 function renderChart(){
@@ -774,46 +607,48 @@ function renderChart(){
   document.getElementById('chart-blk').style.display='block';
   window.Chart.defaults.color='#94A3B8';
   var ctx=document.getElementById('fin-chart').getContext('2d');
-  new window.Chart(ctx,{type:'bar',data:{labels:order.map(function(k){return buckets[k].label;}),datasets:[{data:order.map(function(k){return Math.round(buckets[k].val);}),backgroundColor:'rgba(232,160,32,0.7)',borderColor:'#E8A020',borderWidth:1,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return 'CHF '+fmtNum(c.parsed.y);}}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(30,58,95,0.8)'},ticks:{callback:function(v){return fmtNum(v);}}}}}});
+  new window.Chart(ctx,{type:'bar',data:{labels:order.map(function(k){return buckets[k].label;}),datasets:[{data:order.map(function(k){return Math.round(buckets[k].val);}),backgroundColor:'rgba(232,160,32,0.7)',borderColor:'#E8A020',borderWidth:1,borderRadius:4,maxBarThickness:44}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return 'CHF '+fmtNum(c.parsed.y);}}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(30,58,95,0.6)'},ticks:{callback:function(v){return fmtNum(v);}}}}}});
+}
+function printOverview(){
+  var t=computeTotals();var rows='';
+  _requests.forEach(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);var v=reqEstValue(r);rows+='<tr><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(matNameFor(r))+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5;text-align:right">'+(v!=null?fmtCHF(v):'--')+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5">'+esc(b.t)+'</td><td style="padding:7px 8px;border-bottom:1px solid #e5e5e5;text-align:right">'+(gs!=null?fmtCHF(gs):'--')+'</td></tr>';});
+  document.getElementById('print-content').innerHTML='<div style="max-width:680px"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:15px;color:#555;margin-bottom:4px">Finanzübersicht</div><div style="font-size:12px;color:#888;margin-bottom:22px">'+esc((_customer&&_customer.firmenname)||'')+' · Erstellt am '+fmtDMY(new Date())+'</div><div style="display:flex;gap:28px;margin-bottom:24px;font-size:13px;color:#111"><div><div style="color:#888;font-size:11px;text-transform:uppercase">Einsparpotenzial</div><div style="font-size:20px;font-weight:700;color:#E8A020">'+(t.potential>0?fmtCHF(t.potential):'CHF 0')+'</div></div><div><div style="color:#888;font-size:11px;text-transform:uppercase">Bereits gespart</div><div style="font-size:20px;font-weight:700">'+(t.earned>0?fmtCHF(t.earned):'--')+'</div></div></div><table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase"><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Volumen CHF</th><th style="padding:6px 8px;border-bottom:2px solid #333">Status</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Ersparnis min.</th></tr>'+(rows||'<tr><td colspan="4" style="padding:10px;color:#888">Noch keine Anfragen.</td></tr>')+'</table><div style="margin-top:30px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999">SourceOn · sourceon.ch · Dokument erstellt '+fmtDMY(new Date())+' · Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen</div></div>';
+  window.print();
 }
 
 // ── KONTO ──
 var ACCT_FIELDS=[['firmenname','Firmenname'],['ansprechperson','Ansprechperson'],['telefon','Telefon'],['lieferadresse','Lieferadresse'],['kanton','Kanton']];
 function renderKonto(){
-  document.getElementById('prof-name').textContent=_customer.firmenname||'—';
-  document.getElementById('prof-avatar').textContent=(_customer.firmenname||'S').charAt(0).toUpperCase();
-  document.getElementById('acct-fields').innerHTML=ACCT_FIELDS.map(function(f){var val=_customer[f[0]]||'';return '<div class="acct-row" id="ar-'+f[0]+'"><span class="acct-label">'+esc(f[1])+'</span><span class="acct-val" id="av-'+f[0]+'">'+(val?esc(val):'<span class="muted">—</span>')+'</span><span class="acct-edit" id="ae-'+f[0]+'" onclick="editField(\''+f[0]+'\')" title="Bearbeiten">✎</span></div>';}).join('');
-  if(_customer.commitment_accepted_at){try{document.getElementById('agreement-line').textContent='Angenommen am '+fmtDMYfull(new Date(_customer.commitment_accepted_at));}catch(e){}}
+  document.getElementById('kt-name').textContent=_customer.firmenname||'—';
+  document.getElementById('kt-avatar').textContent=(_customer.firmenname||'S').charAt(0).toUpperCase();
+  document.getElementById('acct-fields').innerHTML=ACCT_FIELDS.map(function(f){var val=_customer[f[0]]||'';return '<div class="field-row" id="ar-'+f[0]+'"><span class="field-label">'+esc(f[1])+'</span><span class="field-value" id="av-'+f[0]+'">'+(val?esc(val):'<span class="muted">—</span>')+'</span><span class="field-edit" id="ae-'+f[0]+'" onclick="editField(\''+f[0]+'\')">✎</span></div>';}).join('');
+  if(_customer.commitment_accepted_at){try{document.getElementById('agreement-line').textContent='✓ Angenommen am '+fmtDMYfull(new Date(_customer.commitment_accepted_at));}catch(e){}}
   if(_customer.commitment_version){document.getElementById('agreement-ver').textContent='Version '+_customer.commitment_version;}
 }
 function editField(key){var valEl=document.getElementById('av-'+key),editEl=document.getElementById('ae-'+key);var cur=_customer[key]||'';valEl.innerHTML='<input class="acct-input" id="ai-'+key+'" value="'+esc(cur)+'"/>';editEl.outerHTML='<span class="acct-save" id="ae-'+key+'" onclick="saveField(\''+key+'\')">Speichern</span><span class="acct-cancel" onclick="renderKonto()">Abbrechen</span>';document.getElementById('ai-'+key).focus();}
-async function saveField(key){var inp=document.getElementById('ai-'+key);if(!inp)return;var val=inp.value.trim();try{var upd={};upd[key]=val;var res=await sb.from('customers').update(upd).eq('id',_customer.id);if(res.error){alert('Speichern fehlgeschlagen: '+res.error.message);return;}_customer[key]=val;renderKonto();if(key==='firmenname'){document.getElementById('greet-hi').textContent='Guten Tag, '+val+'.';}}catch(e){alert('Speichern fehlgeschlagen.');}}
+async function saveField(key){var inp=document.getElementById('ai-'+key);if(!inp)return;var val=inp.value.trim();try{var upd={};upd[key]=val;var res=await sb.from('customers').update(upd).eq('id',_customer.id);if(res.error){alert('Speichern fehlgeschlagen: '+res.error.message);return;}_customer[key]=val;renderKonto();if(key==='firmenname'){document.getElementById('greet-hi').textContent='Guten Tag, '+val+'.';document.getElementById('db-firm').textContent=val;}}catch(e){alert('Speichern fehlgeschlagen.');}}
 function askDelete(){document.getElementById('del-btn').style.display='none';document.getElementById('del-confirm').classList.add('show');}
 function hideDelete(){document.getElementById('del-btn').style.display='';document.getElementById('del-confirm').classList.remove('show');}
 async function doDelete(){try{await sb.from('customers').delete().eq('id',_customer.id);}catch(e){}if(window.Clerk){try{await window.Clerk.signOut();}catch(e){}}window.location.href='index.html';}
 
 // ── DOCS / PDF ──
-function renderDocs(){var el=document.getElementById('doc-list');if(_requests.length===0){el.innerHTML='<div class="sec-empty">Noch keine Dokumente verfügbar.</div>';return;}el.innerHTML=_requests.map(function(r){var b=badgeFor(r.status);var d=r.created_at?fmtShort(new Date(r.created_at)):'--';return '<div class="doc-row"><div class="doc-l"><div class="doc-mat">'+esc(matNameFor(r))+'</div><div class="doc-date">'+esc(d)+'</div></div><span class="pill '+b.c+'">'+esc(b.t)+'</span><button class="doc-btn" onclick="makePDF(\''+esc(r.id)+'\')">PDF erstellen →</button></div>';}).join('');}
+function renderDocs(){var el=document.getElementById('doc-list');if(_requests.length===0){el.innerHTML='<div class="empty-line">Noch keine Dokumente verfügbar</div>';return;}el.innerHTML=_requests.map(function(r){var b=badgeFor(r.status);var d=r.created_at?fmtShort(new Date(r.created_at)):'--';return '<div class="doc-row"><div><div class="doc-mat">'+esc(matNameFor(r))+'</div><div class="doc-date">'+esc(d)+'</div></div><span class="status-pill '+b.c+'">'+esc(b.t)+'</span><button class="doc-btn" onclick="makePDF(\''+esc(r.id)+'\')">PDF</button></div>';}).join('');}
 function makePDF(id){
   var r=_requests.filter(function(x){return x.id===id;})[0];if(!r)return;
   var gs=reqGuaranteedSaving(r),pct=(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt)))?Math.round(parseFloat(r.committed_min_rabatt)*100):null,b=badgeFor(r.status);
-  var extra='';
-  if(r.status==='vergeben'||r.status==='abgeschlossen'){extra='<tr><td style="padding:6px 0;color:#555">Lieferant</td><td style="padding:6px 0">Verifizierter SourceOn-Partner</td></tr>';if(pct!=null)extra+='<tr><td style="padding:6px 0;color:#555">Erreichter Rabatt</td><td style="padding:6px 0">'+pct+'% (netto)</td></tr>';if(gs!=null)extra+='<tr><td style="padding:6px 0;color:#555">Ersparnis</td><td style="padding:6px 0">'+fmtCHF(gs)+'</td></tr>';}
   document.getElementById('print-content').innerHTML='<div style="max-width:640px">'
-    +'<div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div>'
-    +'<div style="font-size:15px;color:#555;margin-bottom:20px">Anfragedokumentation</div>'
-    +'<div style="font-size:12px;color:#888;margin-bottom:20px">Erstellt am '+fmtDMY(new Date())+'</div>'
+    +'<div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:12px;color:#888;text-align:right">Erstellt am '+fmtDMY(new Date())+'</div></div>'
+    +'<div style="font-size:15px;color:#555;margin:2px 0 18px">Anfragedokumentation</div><hr style="border:none;border-top:1px solid #ddd;margin-bottom:18px"/>'
     +'<table style="width:100%;border-collapse:collapse;font-size:14px;color:#111">'
-    +'<tr><td style="padding:6px 0;color:#555;width:200px">Firma</td><td style="padding:6px 0">'+esc(_customer.firmenname||'--')+'</td></tr>'
-    +'<tr><td style="padding:6px 0;color:#555">Ansprechperson</td><td style="padding:6px 0">'+esc(_customer.ansprechperson||'--')+'</td></tr>'
+    +'<tr><td style="padding:6px 0;color:#555;width:220px">Auftraggeber</td><td style="padding:6px 0">'+esc(_customer.firmenname||'--')+(_customer.ansprechperson?' · '+esc(_customer.ansprechperson):'')+'</td></tr>'
     +'<tr><td style="padding:6px 0;color:#555">Material</td><td style="padding:6px 0">'+esc(matNameFor(r))+' ('+esc(r.sourceon_id||'--')+')</td></tr>'
     +'<tr><td style="padding:6px 0;color:#555">Menge</td><td style="padding:6px 0">'+esc(mengeStr(r))+'</td></tr>'
     +'<tr><td style="padding:6px 0;color:#555">Lieferzeitraum</td><td style="padding:6px 0">'+esc(zeitraumStr(r))+'</td></tr>'
-    +'<tr><td style="padding:6px 0;color:#555">Garantierter Mindestrabatt</td><td style="padding:6px 0">'+(pct!=null?pct+'% (netto)':'--')+'</td></tr>'
-    +'<tr><td style="padding:6px 0;color:#555">Garantierte Mindestersparnis</td><td style="padding:6px 0">'+(gs!=null?fmtCHF(gs):'--')+'</td></tr>'
-    +'<tr><td style="padding:6px 0;color:#555">Status</td><td style="padding:6px 0">'+esc(b.t)+'</td></tr>'+extra
+    +'<tr><td style="padding:6px 0;color:#555">Garantierter Netto-Mindestrabatt</td><td style="padding:6px 0">'+(pct!=null?pct+'%':'--')+'</td></tr>'
+    +'<tr><td style="padding:6px 0;color:#555">Geschätzte Mindestersparnis</td><td style="padding:6px 0">'+(gs!=null?fmtCHF(gs):'--')+'</td></tr>'
+    +'<tr><td style="padding:6px 0;color:#555">Status</td><td style="padding:6px 0">'+esc(b.t)+'</td></tr>'
     +'</table>'
-    +'<div style="margin-top:36px;padding-top:14px;border-top:1px solid #ddd;font-size:11px;color:#999">Dokument erstellt via SourceOn · sourceon.ch · Unverbindliche Schätzung</div></div>';
+    +'<div style="margin-top:36px;padding-top:14px;border-top:1px solid #ddd;font-size:11px;color:#999">SourceOn · sourceon.ch · Dokument erstellt '+fmtDMY(new Date())+' · Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen</div></div>';
   window.print();
 }
 
@@ -823,49 +658,28 @@ function icsStamp(d){return d.getUTCFullYear()+_p2(d.getUTCMonth()+1)+_p2(d.getU
 function icsDay(d){return d.getFullYear()+_p2(d.getMonth()+1)+_p2(d.getDate());}
 function icsEsc(s){return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');}
 function exportICS(){
-  var events=[];
-  _requests.forEach(function(r){var dl=reqDeadline(r);if(dl)events.push({r:r,dl:dl});});
+  var events=[];_requests.forEach(function(r){var dl=reqDeadline(r);if(dl)events.push({r:r,dl:dl});});
   if(events.length===0){alert('Keine anstehenden Termine zum Exportieren.');return;}
   var stamp=icsStamp(new Date());
   var lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SourceOn//Kundendashboard//DE','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
-  events.forEach(function(ev){
-    var start=ev.dl.date;                                  // all-day event on the deadline date (local, no TZ shift)
-    var endEx=new Date(start.getFullYear(),start.getMonth(),start.getDate()+1); // DTEND is exclusive → next day
-    var mat=matNameFor(ev.r);
-    var summary=ev.dl.label+' — '+mat+(ev.r.sourceon_id?' ('+ev.r.sourceon_id+')':'');
-    var desc='SourceOn — '+ev.dl.label+' für '+mat+'. Details in deinem Dashboard: sourceon.ch';
-    lines.push(
-      'BEGIN:VEVENT',
-      'UID:so-'+ev.r.id+'-'+icsDay(start)+'@sourceon.ch',
-      'DTSTAMP:'+stamp,
-      'DTSTART;VALUE=DATE:'+icsDay(start),
-      'DTEND;VALUE=DATE:'+icsDay(endEx),
-      'SUMMARY:'+icsEsc(summary),
-      'DESCRIPTION:'+icsEsc(desc),
-      'STATUS:CONFIRMED',
-      'TRANSP:TRANSPARENT',
-      'BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(summary),'TRIGGER:-P1D','END:VALARM',
-      'END:VEVENT'
-    );
-  });
+  events.forEach(function(ev){var start=ev.dl.date;var endEx=new Date(start.getFullYear(),start.getMonth(),start.getDate()+1);var mat=matNameFor(ev.r);var summary=ev.dl.label+' — '+mat+(ev.r.sourceon_id?' ('+ev.r.sourceon_id+')':'');lines.push('BEGIN:VEVENT','UID:so-'+ev.r.id+'-'+icsDay(start)+'@sourceon.ch','DTSTAMP:'+stamp,'DTSTART;VALUE=DATE:'+icsDay(start),'DTEND;VALUE=DATE:'+icsDay(endEx),'SUMMARY:'+icsEsc(summary),'DESCRIPTION:'+icsEsc('SourceOn — '+ev.dl.label+' für '+mat+'. sourceon.ch'),'STATUS:CONFIRMED','TRANSP:TRANSPARENT','BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(summary),'TRIGGER:-P1D','END:VALARM','END:VEVENT');});
   lines.push('END:VCALENDAR');
-  var blob=new Blob([lines.join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'});
-  var url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='sourceon-termine.ics';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1500);
+  var blob=new Blob([lines.join('\r\n')+'\r\n'],{type:'text/calendar;charset=utf-8'});var url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='sourceon-termine.ics';document.body.appendChild(a);a.click();document.body.removeChild(a);setTimeout(function(){URL.revokeObjectURL(url);},1500);
 }
 
 // ── stornieren ──
-function askCancel(id){var el=document.getElementById('cf-'+id);if(el)el.classList.add('show');var row=document.querySelector('.req-row[data-id="'+id+'"]');if(row){var lk=row.querySelector('.act-danger');if(lk)lk.style.display='none';}}
-function hideCancel(id){var el=document.getElementById('cf-'+id);if(el)el.classList.remove('show');var row=document.querySelector('.req-row[data-id="'+id+'"]');if(row){var lk=row.querySelector('.act-danger');if(lk)lk.style.display='';}}
-async function doCancel(id){try{var res=await sb.from('material_requests').update({status:'storniert'}).eq('id',id);if(res.error){alert('Stornierung fehlgeschlagen: '+res.error.message);return;}for(var i=0;i<_requests.length;i++){if(_requests[i].id===id)_requests[i].status='storniert';}renderUebersicht();renderReqList();renderFinanzen();renderDocs();}catch(e){alert('Stornierung fehlgeschlagen. Bitte kontaktiere info@sourceon.ch');}}
+function askCancel(id){var el=document.getElementById('cf-'+id);if(el)el.classList.add('show');var lk=document.getElementById('cancel-lk');if(lk)lk.style.display='none';}
+function hideCancel(id){var el=document.getElementById('cf-'+id);if(el)el.classList.remove('show');var lk=document.getElementById('cancel-lk');if(lk)lk.style.display='';}
+async function doCancel(id){try{var res=await sb.from('material_requests').update({status:'storniert'}).eq('id',id);if(res.error){alert('Stornierung fehlgeschlagen: '+res.error.message);return;}for(var i=0;i<_requests.length;i++){if(_requests[i].id===id)_requests[i].status='storniert';}renderUebersicht();renderReqItems();selectReq(id);renderFinanzen();renderDocs();}catch(e){alert('Stornierung fehlgeschlagen.');}}
 
 // ── CALCULATORS ──
 function calcTab(name){document.querySelectorAll('.subtab').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-c')===name);});['flaeche','einheiten','ziegel'].forEach(function(c){document.getElementById('calc-'+c).classList.toggle('active',c===name);});}
-function calcFlaeche(){var a=parseFloat(document.getElementById('fl-a').value),t=parseFloat(document.getElementById('fl-t').value);if(isNaN(a)||isNaN(t)){document.getElementById('fl-o').textContent='--';return;}var v=Math.round(a*(t/100)*100)/100;document.getElementById('fl-o').textContent=v;document.getElementById('fl-ex').textContent=a+' m² × '+t+' cm = '+v+' m³';document.getElementById('fl-cta').href='kontakt.html?menge='+v;}
+function calcFlaeche(){var a=parseFloat(document.getElementById('fl-a').value),t=parseFloat(document.getElementById('fl-t').value);if(isNaN(a)||isNaN(t)){document.getElementById('fl-o').textContent='--';return;}var v=Math.round(a*(t/100)*100)/100;document.getElementById('fl-o').textContent=v;document.getElementById('fl-ex').textContent=a+' m² × '+t+' cm = '+v+' m³';document.getElementById('fl-cta').href='kontakt.html?menge='+v+'&einheit=m3';}
 function calcEinheiten(){var type=document.getElementById('un-type').value,val=parseFloat(document.getElementById('un-in').value);var tw=document.getElementById('un-tw');tw.style.display=(type==='m2-m3'||type==='m3-m2')?'flex':'none';var out='--',unit='';if(!isNaN(val)){if(type==='kg-t'){out=Math.round(val/10)/100;unit='t';}else if(type==='t-kg'){out=val*1000;unit='kg';}else if(type==='m-lm'){out=val;unit='lm';}else if(type==='lm-m'){out=val;unit='m';}else if(type==='m2-m3'){var th=parseFloat(document.getElementById('un-t').value);if(!isNaN(th)){out=Math.round(val*(th/100)*100)/100;unit='m³';}}else if(type==='m3-m2'){var th2=parseFloat(document.getElementById('un-t').value);if(!isNaN(th2)&&th2>0){out=Math.round(val/(th2/100)*100)/100;unit='m²';}}}document.getElementById('un-o').textContent=(out==='--')?'--':out;document.getElementById('un-u').textContent=unit;}
 function calcZiegel(){var a=parseFloat(document.getElementById('zg-a').value),per=parseFloat(document.getElementById('zg-f').value);if(isNaN(a)||isNaN(per)){document.getElementById('zg-o').textContent='--';return;}var stk=Math.ceil(a*per),order=Math.ceil(stk*1.05);document.getElementById('zg-o').textContent=fmtNum(stk);document.getElementById('zg-ex').textContent='Inkl. 5 % Verschnitt: '+fmtNum(order)+' Stk · Richtwert';}
 
 // ── auth gate / logout ──
-function showGate(type){var card=document.getElementById('auth-gate-card');if(type==='login'){card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8A020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h2>Anmeldung erforderlich</h2><p>Bitte melde dich an, um auf das Kunden-Dashboard zuzugreifen.</p><br><a href="#" class="gold-btn" onclick="clerkSignIn();return false" style="margin:0 auto">Anmelden</a><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}else{card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><h2>Kein Kundenprofil gefunden</h2><p>Hast du bereits eine Materialanfrage gestellt? Verknüpfe dein Konto über das Kontaktformular.</p><br><a href="kontakt.html" class="gold-btn" style="margin:0 auto">Zum Kontaktformular</a><br><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}}
+function showGate(type){var card=document.getElementById('auth-gate-card');if(type==='login'){card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#E8A020" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h2>Anmeldung erforderlich</h2><p>Bitte melde dich an, um auf das Kunden-Dashboard zuzugreifen.</p><br><a href="#" class="btn-gold" onclick="clerkSignIn();return false" style="margin:0 auto">Anmelden</a><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}else{card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><h2>Kein Kundenprofil gefunden</h2><p>Hast du bereits eine Materialanfrage gestellt? Verknüpfe dein Konto über das Kontaktformular.</p><br><a href="kontakt.html" class="btn-gold" style="margin:0 auto">Zum Kontaktformular</a><br><br><a href="index.html" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}}
 function clerkSignIn(){if(!window.Clerk)return;window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});}
 async function handleLogout(){if(window.Clerk){await window.Clerk.signOut();}window.location.href='index.html';}
 
