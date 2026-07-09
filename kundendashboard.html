@@ -166,7 +166,7 @@ input,select,textarea{font-family:inherit}
 .req-item-date{font-size:12px;color:var(--text-3);white-space:nowrap}
 .req-item-bot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
 .req-item-chf{font-size:13px;font-weight:600;color:var(--gold)}
-.req-detail{background:var(--bg);padding:32px;min-height:600px}
+.req-detail{background:var(--bg);padding:32px;min-height:600px;transition:opacity .15s ease}
 .req-empty{display:flex;align-items:center;justify-content:center;height:520px;color:var(--text-3);font-size:14px}
 .rd-mat{font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
 .rd-id{font-size:12px;color:var(--gold);font-weight:500}
@@ -589,10 +589,15 @@ function renderUebersicht(){
 }
 
 // ── ANFRAGEN (split) ──
-function setFilter(f){_filter=f;document.querySelectorAll('#filters .filt').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-f')===f);});renderReqItems();}
+function setFilter(f){_filter=f;document.querySelectorAll('#filters .filt').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-f')===f);});renderReqItems();autoSelect();}
+function autoSelect(){
+  var vis=_requests.filter(function(r){return _filter==='alle'||r.status===_filter;});
+  if(vis.length===0){document.getElementById('req-detail').innerHTML='<div class="req-empty">Keine Anfragen in dieser Kategorie.</div>';_selId=null;return;}
+  if(!_selId||!vis.some(function(r){return r.id===_selId;}))selectReq(vis[0].id);
+}
 function renderAnfragen(){
   if(_requests.length===0){document.getElementById('split').style.display='none';document.getElementById('req-empty').style.display='block';return;}
-  renderReqItems();
+  renderReqItems();autoSelect();
 }
 function renderReqItems(){
   var el=document.getElementById('req-items');
@@ -638,10 +643,13 @@ function selectReq(id){
   if(isActive(r)){actions+='<span class="act-link act-danger" id="cancel-lk" onclick="askCancel(\''+esc(id)+'\')">Anfrage stornieren</span><span class="confirm-inline" id="cf-'+esc(id)+'">Wirklich? <span class="yes" onclick="doCancel(\''+esc(id)+'\')">Ja</span> · <span class="no" onclick="hideCancel(\''+esc(id)+'\')">Nein</span></span>';}
   if(r.status==='vergeben'||r.status==='abgeschlossen'){actions+='<span class="act-link" onclick="makePDF(\''+esc(id)+'\')">Bestellbestätigung als PDF →</span>';}
   actions+='<a class="act-link" href="'+mailto+'">Frage stellen →</a></div>';
-  document.getElementById('req-detail').innerHTML=
+  var det=document.getElementById('req-detail');
+  det.style.opacity='0';
+  det.innerHTML=
     '<div class="rd-head-row"><div><div class="rd-mat">'+esc(matNameFor(r))+'</div>'+(r.sourceon_id?'<div class="rd-id">'+esc(r.sourceon_id)+'</div>':'')+'</div><div class="rd-head-meta"><span class="status-pill '+b.c+'">'+esc(b.t)+'</span><div class="rd-date">'+esc(d)+'</div></div></div>'
     +'<div class="rd-key"><div><div class="k-num">'+mengeStr(r)+'</div><div class="k-lbl">Menge</div></div><div><div class="k-num">'+esc(zeitraumStr(r))+'</div><div class="k-lbl">Lieferzeitraum</div></div><div><div class="k-num gold">'+(gs!=null?fmtCHF(gs):'--')+'</div><div class="k-lbl">Min. Ersparnis</div></div></div>'
     +mid+actions;
+  requestAnimationFrame(function(){det.style.opacity='1';});
 }
 
 // ── FINANZEN ──
