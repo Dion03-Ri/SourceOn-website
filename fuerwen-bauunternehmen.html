@@ -833,6 +833,7 @@ body{background:#070F1A}
 #lpfoot .fbottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--lpb);padding-top:24px;margin-top:32px;font-size:12px;color:var(--t3)}
 #lpfoot .fbottom a{color:var(--t3)}#lpfoot .fbottom a:hover{color:var(--gold)}
 
+.num-range{font-variant-numeric:tabular-nums;letter-spacing:-0.01em;white-space:nowrap}
 </style>
 <script>
 (function(){
@@ -859,7 +860,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-investoren.html">Investoren &amp; Eigentümer</a><a href="fuerwen-architekten.html">Architekten &amp; Planer</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
@@ -908,7 +909,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <a href="prozess.html" onclick="toggleNav()" data-i18n="nav_process">Wie es funktioniert</a>
   <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calc">Kalkulator</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom">Für wen</a>
-  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()">Handwerk</a><a href="fuerwen-investoren.html" onclick="toggleNav()">Investoren</a><a href="fuerwen-architekten.html" onclick="toggleNav()">Architekten &amp; Planer</a></div>
+  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()">Öffentliche Auftraggeber</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier">Lieferant werden</a>
   <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav_about">Über uns</a>
   <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav_contact">Kontakt</a>
@@ -925,8 +926,8 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   </div></section>
 
   <section class="sec bt"><div class="wrap"><div class="statgrid">
-    <div class="prose reveal"><h2>Jede Bestellung alleine kostet dich mehr als nötig.</h2><p>Als KMU-Baufirma kaufst du Einzelmengen zu Einzelpreisen. Grössere Bauunternehmen bekommen für dieselben Materialien 15–25 % günstigere Konditionen — weil sie grössere Volumen bestellen.</p><p>SourceOn löst dieses Problem: Dein Bedarf wird mit anderen Baufirmen gebündelt. Das gemeinsame Volumen gibt uns die Verhandlungsmacht eines Grossabnehmers — und der Rabatt kommt vollständig zu dir.</p><p>Du bestätigst nur, wenn der garantierte Mindestrabatt erreicht ist. Kein Ergebnis — keine Kosten.</p></div>
-    <div class="reveal"><div class="keynum">15–25 %</div><div class="keynum-sub">Preisunterschied zwischen Einzel- und Grossabnehmer bei Baustoffen</div><div class="bullets"><div>Profitabel ab CHF 50'000 Jahresvolumen</div><div>Kein Mindestumsatz, keine Bindung</div><div>Direktlieferung auf die Baustelle</div><div>Du zahlst erst, wenn du sparst</div></div></div>
+    <div class="prose reveal"><h2>Jede Bestellung alleine kostet dich mehr als nötig.</h2><p>Als KMU-Baufirma kaufst du Einzelmengen zu Einzelpreisen. Grössere Bauunternehmen bekommen für dieselben Materialien <span class="num-range">15–25 %</span> günstigere Konditionen — weil sie grössere Volumen bestellen.</p><p>SourceOn löst dieses Problem: Dein Bedarf wird mit anderen Baufirmen gebündelt. Das gemeinsame Volumen gibt uns die Verhandlungsmacht eines Grossabnehmers — und der Rabatt kommt vollständig zu dir.</p><p>Du bestätigst nur, wenn der garantierte Mindestrabatt erreicht ist. Kein Ergebnis — keine Kosten.</p></div>
+    <div class="reveal"><div class="keynum"><span class="num-range" style="letter-spacing:-0.02em">15–25 %</span></div><div class="keynum-sub">Preisunterschied zwischen Einzel- und Grossabnehmer bei Baustoffen</div><div class="bullets"><div>Profitabel ab CHF 50'000 Jahresvolumen</div><div>Kein Mindestumsatz, keine Bindung</div><div>Direktlieferung auf die Baustelle</div><div>Du zahlst erst, wenn du sparst</div></div></div>
   </div></div></section>
 
   <section class="sec bt"><div class="wrap">

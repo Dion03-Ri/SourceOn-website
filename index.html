@@ -871,6 +871,7 @@ body{background:#070F1A}
 .nav-dd a:hover{background:#111F2E;color:#F1F5F9}
 .nav-ov-sub{display:flex;flex-direction:column;gap:12px;margin-top:-18px;margin-bottom:2px}
 .nav-ov-sub a{font-size:1.05rem!important;color:#94A3B8!important;font-weight:500!important}
+.num-range{font-variant-numeric:tabular-nums;letter-spacing:-0.01em;white-space:nowrap}
 </style>
 <script>
 (function(){
@@ -897,7 +898,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav.process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav.calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav.materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-investoren.html">Investoren &amp; Eigentümer</a><a href="fuerwen-architekten.html">Architekten &amp; Planer</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav.supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav.about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav.contact">Kontakt</a></li>
@@ -949,7 +950,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <a href="prozess.html" onclick="toggleNav()" data-i18n="nav.process">Wie es funktioniert</a>
   <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav.calc">Kalkulator</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav.forwhom">Für wen</a>
-  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()">Handwerk</a><a href="fuerwen-investoren.html" onclick="toggleNav()">Investoren</a><a href="fuerwen-architekten.html" onclick="toggleNav()">Architekten &amp; Planer</a></div>
+  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()">Öffentliche Auftraggeber</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav.supplier">Lieferant werden</a>
   <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav.about">Über uns</a>
   <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav.contact">Kontakt</a>
@@ -1007,7 +1008,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     <div class="statgrid">
       <div class="reveal">
         <div class="stat-label">Der Schweizer Baumarkt</div>
-        <div class="stat-num">CHF 8–10 Mrd.</div>
+        <div class="stat-num"><span class="num-range" style="letter-spacing:-0.02em">CHF 8–10 Mrd.</span></div>
         <div class="stat-sub">Jährliches Einkaufsvolumen</div>
       </div>
       <div class="reveal">
@@ -1034,16 +1035,16 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="tile-desc">Schnelle Abwicklung, keine Vorauszahlung.</div>
         <div class="tile-link">→</div>
       </a>
-      <a class="tile" href="fuerwen-investoren.html">
-        <div class="tile-cat">Investoren</div>
-        <div class="tile-title">Renovation und Neubau.</div>
-        <div class="tile-desc">Geprüfte Qualitätsstandards, SIA-konform.</div>
+      <a class="tile" href="fuerwen-generalunternehmer.html">
+        <div class="tile-cat">Generalunternehmer &amp; TU</div>
+        <div class="tile-title">Grosse Projekte, maximale Einkaufsmacht.</div>
+        <div class="tile-desc">GU und TU beschaffen riesige Materialmengen — SourceOn bündelt und verhandelt für das gesamte Projektvolumen.</div>
         <div class="tile-link">→</div>
       </a>
-      <a class="tile" href="fuerwen-architekten.html">
-        <div class="tile-cat">Architekten &amp; Planer</div>
-        <div class="tile-title">Integration ab der Planungsphase.</div>
-        <div class="tile-desc">Materialbeschaffung früh einplanen.</div>
+      <a class="tile" href="fuerwen-oeffentlich.html">
+        <div class="tile-cat">Öffentliche Auftraggeber</div>
+        <div class="tile-title">Normkonforme Beschaffung für öffentliche Bauprojekte.</div>
+        <div class="tile-desc">Gemeinden, Kantone und staatsnahe Betriebe profitieren von transparenter, SIA/ISO-konformer Beschaffung mit nachvollziehbarer Dokumentation.</div>
         <div class="tile-link">→</div>
       </a>
     </div>
@@ -1240,8 +1241,8 @@ var I18N={
     'suppliers.title':'Unsere Partnerlieferanten',
     'suppliers.note':'Weitere Partnerlieferanten in Aufbau. Logos werden nach Vertragsabschluss ergänzt.',
     'zahlen.label':'ZAHLEN & FAKTEN','zahlen.title':'Der Schweizer Baumarkt — in Zahlen.',
-    'zahlen.vol_num':'CHF 8-10 Mrd.','zahlen.vol':'Jährliches Einkaufsvolumen Baumarkt CH',
-    'zahlen.kmu':'der CH-Baufirmen sind KMU','zahlen.costs_num':'15 – 25%',
+    'zahlen.vol_num':'CHF 8–10 Mrd.','zahlen.vol':'Jährliches Einkaufsvolumen Baumarkt CH',
+    'zahlen.kmu':'der CH-Baufirmen sind KMU','zahlen.costs_num':'15–25%',
     'zahlen.costs':'Preisunterschied Einzel- vs. Grossabnehmer',
     'zahlen.savings_num':'3–5%','zahlen.savings':'Durchschnittliche Nettomarge einer Schweizer Baufirma — jeder Franken beim Einkauf zählt.',
     'zahlen.offer_num':'60%','zahlen.offer':'der Schweizer KMU-Baufirmen ohne professionellen Materialeinkauf.',
@@ -1298,8 +1299,8 @@ var I18N={
     'suppliers.title':'Our partner suppliers',
     'suppliers.note':'More partner suppliers in development. Logos will be added upon contract completion.',
     'zahlen.label':'FACTS & FIGURES','zahlen.title':'The Swiss construction market — in numbers.',
-    'zahlen.vol_num':'CHF 8-10 bn','zahlen.vol':'Annual procurement volume in the Swiss construction market',
-    'zahlen.kmu':'of Swiss construction firms are SMEs','zahlen.costs_num':'15 – 25%',
+    'zahlen.vol_num':'CHF 8–10 bn','zahlen.vol':'Annual procurement volume in the Swiss construction market',
+    'zahlen.kmu':'of Swiss construction firms are SMEs','zahlen.costs_num':'15–25%',
     'zahlen.costs':'Price difference: retail vs. bulk buyer',
     'zahlen.savings_num':'3–5%','zahlen.savings':'Average net margin of a Swiss construction firm — every franc saved on purchasing counts.',
     'zahlen.offer_num':'60%','zahlen.offer':'of Swiss SME construction firms without professional material procurement.',
@@ -1356,8 +1357,8 @@ var I18N={
     'suppliers.title':'Nos fournisseurs partenaires',
     'suppliers.note':'D\'autres fournisseurs partenaires en cours de développement. Les logos seront ajoutés après la signature du contrat.',
     'zahlen.label':'CHIFFRES & FAITS','zahlen.title':'Le marché suisse de la construction — en chiffres.',
-    'zahlen.vol_num':'CHF 8-10 mrd','zahlen.vol':'Volume d\'achat annuel du marché de la construction CH',
-    'zahlen.kmu':'des entreprises de construction CH sont des PME','zahlen.costs_num':'15 – 25%',
+    'zahlen.vol_num':'CHF 8–10 mrd','zahlen.vol':'Volume d\'achat annuel du marché de la construction CH',
+    'zahlen.kmu':'des entreprises de construction CH sont des PME','zahlen.costs_num':'15–25%',
     'zahlen.costs':'Différence de prix particulier vs. gros acheteur',
     'zahlen.savings_num':'3–5%','zahlen.savings':'Marge nette moyenne d\'une entreprise de construction suisse — chaque franc économisé compte.',
     'zahlen.offer_num':'60%','zahlen.offer':'des PME suisses du bâtiment sans achats professionnels de matériaux.',
@@ -1414,8 +1415,8 @@ var I18N={
     'suppliers.title':'I nostri fornitori partner',
     'suppliers.note':'Altri fornitori partner in fase di sviluppo. I loghi saranno aggiunti dopo la firma del contratto.',
     'zahlen.label':'CIFRE & FATTI','zahlen.title':'Il mercato edile svizzero — in cifre.',
-    'zahlen.vol_num':'CHF 8-10 mrd','zahlen.vol':'Volume di acquisto annuale del mercato edile CH',
-    'zahlen.kmu':'delle imprese edili CH sono PMI','zahlen.costs_num':'15 – 25%',
+    'zahlen.vol_num':'CHF 8–10 mrd','zahlen.vol':'Volume di acquisto annuale del mercato edile CH',
+    'zahlen.kmu':'delle imprese edili CH sono PMI','zahlen.costs_num':'15–25%',
     'zahlen.costs':'Differenza di prezzo tra acquirente singolo e grande acquirente',
     'zahlen.savings_num':'3–5%','zahlen.savings':'Margine netto medio di un\'impresa edile svizzera — ogni franco risparmiato conta.',
     'zahlen.offer_num':'60%','zahlen.offer':'delle PMI edili svizzere senza acquisti professionali di materiali.',
