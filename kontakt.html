@@ -31,7 +31,7 @@
 <script src="debug.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Kontakt — SourceOn</title>
+<title>Materialbedarf melden — SourceOn</title>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -804,6 +804,103 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .nav-dd a:hover{background:#111F2E;color:#F1F5F9}
 .nav-ov-sub{display:flex;flex-direction:column;gap:12px;margin-top:-18px;margin-bottom:2px}
 .nav-ov-sub a{font-size:1.05rem!important;color:#94A3B8!important;font-weight:500!important}
+
+/* ===== NEW MINIMAL DESIGN (scoped #lp / #lpfoot) — kontakt ===== */
+:root{--bg:#070F1A;--bg1:#0C1824;--bg2:#111F2E;--lpb:rgba(255,255,255,0.06);--lpbs:rgba(255,255,255,0.12);--t1:#F1F5F9;--t2:#94A3B8;--t3:#4A6080;--golddim:rgba(232,160,32,0.08);--goldbd:rgba(232,160,32,0.15);--green:#22C55E;--greenbg:rgba(34,197,94,0.08)}
+body{background:#070F1A}
+#lp{color:var(--t1);font-family:'Inter',-apple-system,sans-serif}
+#lp .wrap,#lp .container,#lpfoot .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+#lp a{text-decoration:none}
+@media(max-width:768px){#lp .wrap,#lp .container,#lpfoot .wrap{padding:0 20px}}
+#lp #contact{background:transparent;padding:0}
+#lp .contact-layout{display:grid;grid-template-columns:1fr 520px;gap:80px;padding:80px 0 120px;align-items:start}
+@media(max-width:900px){#lp .contact-layout{grid-template-columns:1fr;gap:48px}}
+#lp .ck-eyebrow{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);font-weight:600;margin-bottom:24px}
+#lp .ck-h1{font-size:clamp(32px,5vw,56px);font-weight:800;color:var(--t1);letter-spacing:-.03em;line-height:1.1;margin:0 0 16px}
+#lp .ck-sub{font-size:16px;color:var(--t2);line-height:1.7;margin-bottom:48px;max-width:420px}
+#lp .cksteps .ckstep{display:flex;gap:16px;margin-bottom:24px;align-items:flex-start}
+#lp .ckstep-n{width:28px;height:28px;border-radius:50%;background:var(--golddim);border:1px solid var(--goldbd);color:var(--gold);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+#lp .ckstep-t{font-size:14px;font-weight:600;color:var(--t1)}
+#lp .ckstep-x{font-size:13px;color:var(--t2);margin-top:2px;line-height:1.5}
+#lp .cinfo{margin-top:48px;padding-top:48px;border-top:1px solid var(--lpb);display:flex;flex-direction:column;gap:16px}
+#lp .cinfo-row{display:flex;align-items:center;gap:12px;font-size:14px;color:var(--t2)}
+#lp .cinfo-row svg{width:16px;height:16px;color:var(--t3);flex-shrink:0}
+#lp .cinfo-row a{color:var(--t2);transition:color .15s}#lp .cinfo-row a:hover{color:var(--gold)}
+#lp .tempobox{margin-top:24px;background:var(--bg1);border:1px solid var(--lpb);border-radius:10px;padding:16px 20px}
+#lp .tempobox-t{font-size:13px;font-weight:600;color:var(--t1);margin-bottom:8px}
+#lp .tempobox-r{font-size:12px;color:var(--t2);padding:3px 0}
+#lp .contact-form-card{background:var(--bg1);border:1px solid var(--lpb);border-radius:16px;padding:36px 32px;box-shadow:none}
+@media(max-width:768px){#lp .contact-form-card{padding:24px 20px}}
+#lp .form-title{font-size:18px;font-weight:600;color:var(--t1);margin-bottom:28px}
+#lp .form-group{margin-bottom:20px}
+#lp .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:768px){#lp .form-grid{grid-template-columns:1fr;gap:0}}
+#lp .form-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:6px;font-weight:500}
+#lp .form-label a{color:var(--gold)}
+#lp .form-input,#lp .form-textarea,#lp .form-select,#lp .mat-search,#lp .mat-qty{width:100%;background:var(--bg2);border:1px solid var(--lpbs);border-radius:6px;color:var(--t1);font-size:14px;padding:11px 14px;font-family:'Inter',sans-serif;transition:border-color .15s,background .15s}
+#lp .form-input:focus,#lp .form-textarea:focus,#lp .form-select:focus,#lp .mat-search:focus,#lp .mat-qty:focus{border-color:var(--gold);outline:none;background:rgba(232,160,32,0.03)}
+#lp .form-input::placeholder,#lp .form-textarea::placeholder,#lp .mat-search::placeholder,#lp .mat-qty::placeholder{color:var(--t3)}
+#lp .form-textarea{min-height:80px;resize:vertical}
+#lp input[type=date].form-input{color-scheme:dark}
+#lp .form-error{font-size:12px;color:#EF4444;margin-top:4px}
+#lp .material-row{display:grid;grid-template-columns:1fr 130px 32px;gap:8px;align-items:end;margin-bottom:8px}
+#lp .material-row.first-row{grid-template-columns:1fr 130px}
+@media(max-width:768px){#lp .material-row{grid-template-columns:1fr 90px 32px}#lp .material-row.first-row{grid-template-columns:1fr 90px}}
+#lp .mat-combo{position:relative}
+#lp .mat-qty-wrap{position:relative}
+#lp .mat-unit{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:600;color:var(--gold);pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .2s}
+#lp .mat-unit.visible{opacity:1}
+#lp .mat-dd{display:none;position:absolute;top:calc(100% + 4px);left:0;right:0;max-height:280px;overflow-y:auto;background:var(--bg2);border:1px solid var(--lpbs);border-radius:10px;box-shadow:0 14px 36px rgba(0,0,0,.4);z-index:60}
+#lp .mat-dd.open{display:block}
+#lp .mat-dd-group{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);padding:10px 14px 4px;background:var(--bg2);position:sticky;top:0}
+#lp .mat-dd-item{display:flex;justify-content:space-between;gap:10px;align-items:baseline;padding:9px 14px;font-size:14px;color:var(--t1);cursor:pointer}
+#lp .mat-dd-item:hover,#lp .mat-dd-item.active{background:var(--golddim)}
+#lp .mat-dd-id{font-size:11px;font-weight:600;color:var(--t3);white-space:nowrap;flex-shrink:0}
+#lp .mat-dd-empty{padding:12px 14px;font-size:13px;color:var(--t2)}
+#lp .mat-remove-btn{width:32px;height:32px;border-radius:50%;background:var(--bg2);border:1px solid var(--lpb);color:var(--t3);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s;padding:0}
+#lp .mat-remove-btn:hover{border-color:#EF4444;color:#EF4444}
+#lp .mat-remove-btn svg{width:14px;height:14px}
+#lp .add-material-btn{background:none;border:none;font-size:13px;color:var(--gold);cursor:pointer;margin-top:6px;padding:0;font-family:inherit;display:inline-flex;align-items:center;gap:4px}
+#lp .tempo-indicator{background:var(--bg2);border:1px solid var(--lpb);border-radius:6px;padding:10px 14px;margin-top:4px;font-size:13px;color:var(--t2)}
+#lp .acct-opt-section{margin-top:8px}
+#lp .acct-opt-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:8px}
+#lp .acct-opt-card{background:var(--bg2);border:1px solid var(--lpb);border-radius:6px;padding:16px}
+#lp .acct-opt-check{display:flex;align-items:flex-start;gap:10px;cursor:pointer}
+#lp .acct-opt-check input{accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;margin-top:2px}
+#lp .acct-opt-check-text{font-size:13px;color:var(--t2);line-height:1.5}
+#lp .acct-opt-hint{font-size:12px;color:var(--t3);line-height:1.5;margin-top:8px;display:none}
+#lp .acct-opt-hint.visible{display:block}
+#lp .tier-summary{background:var(--bg2);border:1px solid var(--lpb);border-radius:10px;padding:16px 20px;margin-top:16px}
+#lp .tier-row{display:flex;justify-content:space-between;align-items:center;gap:12px}
+#lp .tier-label{font-size:13px;color:var(--t2)}
+#lp .tier-val{font-size:14px;font-weight:600;color:var(--t1)}
+#lp .tier-note-sub{font-size:11px;color:var(--t3);margin-top:2px}
+#lp .tier-row-hl{margin-top:10px;padding-top:10px;border-top:1px solid var(--lpb)}
+#lp .tier-rate{font-size:18px;font-weight:700;color:var(--gold)}
+#lp .tier-hint{font-size:12px;color:var(--t3);line-height:1.6;margin-top:8px}#lp .tier-hint strong{color:var(--gold)}
+#lp .commit-box{margin-top:20px;background:var(--golddim);border:1px solid var(--goldbd);border-radius:10px;padding:16px 20px}
+#lp .commit-box.commit-error{border-color:#EF4444}
+#lp .commit-check{display:flex;gap:10px;align-items:flex-start;cursor:pointer}
+#lp .commit-check input{accent-color:var(--gold);width:16px;height:16px;flex-shrink:0;margin-top:2px}
+#lp .commit-text{font-size:12px;color:var(--t2);line-height:1.6}#lp .commit-text strong{color:var(--gold);font-weight:600}#lp .commit-text a{color:var(--gold)}
+#lp .contact-form-card button[type=submit]{width:100%;background:var(--gold);color:#070F1A;font-size:15px;font-weight:700;padding:14px;border-radius:6px;border:none;cursor:pointer;margin-top:20px;transition:all .2s;font-family:inherit}
+#lp .contact-form-card button[type=submit]:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 4px 16px rgba(232,160,32,.25)}
+#lp .contact-form-card button[type=submit]:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+#lp .form-success{display:none;flex-direction:column;align-items:center;text-align:center;gap:8px;background:var(--greenbg);border:1px solid rgba(34,197,94,.25);border-radius:16px;padding:48px 32px;color:var(--t1);font-size:15px;line-height:1.6}
+#lp .form-success.show{display:flex}
+#lp .form-success span{display:flex;align-items:center;justify-content:center;width:56px;height:56px;border-radius:50%;background:rgba(34,197,94,.12);margin-bottom:8px}
+#lp .form-success svg{width:28px;height:28px;color:var(--green)}
+#lpfoot{background:var(--bg);border-top:1px solid var(--lpb);padding:48px 0;font-family:'Inter',sans-serif}
+#lpfoot .fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+@media(max-width:768px){#lpfoot .fgrid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:480px){#lpfoot .fgrid{grid-template-columns:1fr}}
+#lpfoot .flogo{font-size:17px;font-weight:700;color:var(--t1)}#lpfoot .flogo span{color:var(--gold)}
+#lpfoot .fbrand p{font-size:13px;color:var(--t3);margin-top:8px;line-height:1.5}
+#lpfoot .fcopy{margin-top:24px;font-size:12px;color:var(--t3)}
+#lpfoot .fcol-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:16px}
+#lpfoot .fcol a{display:block;font-size:13px;color:var(--t3);padding:3px 0;transition:color .15s}#lpfoot .fcol a:hover{color:var(--t1)}
+#lpfoot .fbottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--lpb);padding-top:24px;margin-top:32px;font-size:12px;color:var(--t3)}
+#lpfoot .fbottom a{color:var(--t3)}#lpfoot .fbottom a:hover{color:var(--gold)}
 </style>
 <script>
 (function(){
@@ -898,24 +995,35 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   </div>
 </div>
 
-<!-- CONTACT / UNIFIED FORM -->
-<section id="contact" class="section">
+<main id="lp">
+<!-- CONTACT -->
+<section id="contact">
   <div class="container">
     <div class="contact-layout">
       <div>
-        <div class="label" data-i18n="kontakt_badge">Materialbedarf melden</div>
-        <h2 class="h2" data-i18n="kontakt_title" style="font-size:clamp(24px,3vw,38px)">Jetzt Materialbedarf melden</h2>
-        <p class="contact-desc" data-i18n="kontakt_desc">Du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.</p>
-        <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span data-i18n="kontakt_email">info@SourceOn.ch</span></div>
-        <div class="contact-detail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="kontakt_location">Zürich, Schweiz</span></div>
-        <div style="margin-top:32px;padding:20px;background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:var(--r)">
-          <p style="font-size:.83rem;color:var(--navy);font-weight:600;margin-bottom:4px" data-i18n="kontakt_how_title">Wie es funktioniert</p>
-          <p style="font-size:.8rem;color:var(--body);line-height:1.6" data-i18n-html="kontakt_how_text">Wähle dein Material aus dem Katalog, gib Menge und Lieferzeitraum an — fertig. Du siehst sofort deinen garantierten Netto-Mindestrabatt, bevor du absendest.</p>
+        <span class="ck-eyebrow">Kontakt</span>
+        <h1 class="ck-h1">Materialbedarf melden.</h1>
+        <p class="ck-sub">Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.</p>
+        <div class="cksteps">
+          <div class="ckstep"><div class="ckstep-n">1</div><div><div class="ckstep-t">Material wählen</div><div class="ckstep-x">Aus 58 Katalog-Materialien auswählen, Menge und Lieferzeitraum eingeben.</div></div></div>
+          <div class="ckstep"><div class="ckstep-n">2</div><div><div class="ckstep-t">Mindestrabatt sehen</div><div class="ckstep-x">Du siehst sofort deinen garantierten Netto-Mindestrabatt basierend auf deinem Volumen.</div></div></div>
+          <div class="ckstep"><div class="ckstep-n">3</div><div><div class="ckstep-t">Absenden &amp; verfolgen</div><div class="ckstep-x">Nach dem Absenden verfolgst du den Status jederzeit in deinem Dashboard.</div></div></div>
+        </div>
+        <div class="cinfo">
+          <div class="cinfo-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg><a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
+          <div class="cinfo-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Zürich, Schweiz</span></div>
+        </div>
+        <div class="tempobox">
+          <div class="tempobox-t">Lieferzeitraum gibt das Tempo vor</div>
+          <div class="tempobox-r">🟢 Flexibel (&gt;23 Tage) — Maximale Bündelungszeit</div>
+          <div class="tempobox-r">🟡 Mittel (14–23 Tage) — Schnellere Ausschreibung</div>
+          <div class="tempobox-r">🟠 Knapp (5–13 Tage) — Beschleunigte Abwicklung</div>
         </div>
       </div>
       <div>
         <div class="contact-form-card">
           <form id="form-contact" onsubmit="submitContact(event)" novalidate>
+            <div class="form-title">Jetzt melden</div>
             <div class="form-grid">
               <div class="form-group"><label class="form-label" data-i18n="form_company">Firmenname *</label><input type="text" class="form-input" id="c-company" required/><div class="form-error" data-i18n="form_error_required" id="e-c-company">Pflichtfeld</div></div>
               <div class="form-group"><label class="form-label" data-i18n="form_contact_person">Ansprechperson *</label><input type="text" class="form-input" id="c-name" required/><div class="form-error" data-i18n="form_error_required" id="e-c-name">Pflichtfeld</div></div>
@@ -983,48 +1091,26 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 </section>
 
 
+</main>
+
 <!-- FOOTER -->
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="nav-logo">Source<span>On</span></div>
-        <p data-i18n="footer_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer_services">Leistungen</h4>
-        <ul>
-          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
-          <li><a href="fuerwen.html" data-i18n="nav_for_whom">Für wen</a></li>
-          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
-          <li><a href="kalkulator.html" data-i18n="footer_calculator">Einsparkalkulator</a></li>
-          <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer_company">Unternehmen</h4>
-        <ul>
-          <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
-          <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
-          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer_legal">Rechtliches</h4>
-        <ul>
-          <li><a href="datenschutz.html" data-i18n="footer_privacy" target="_blank" rel="noopener noreferrer">Datenschutz</a></li>
-          <li><a href="impressum.html" data-i18n="footer_imprint" target="_blank" rel="noopener noreferrer">Impressum</a></li>
-          <li><a href="agb.html" data-i18n="footer_terms" target="_blank" rel="noopener noreferrer">AGB</a></li>
-        </ul>
-      </div>
+<footer id="lpfoot"><div class="wrap">
+  <div class="fgrid">
+    <div class="fbrand">
+      <div class="flogo">Source<span>On</span></div>
+      <p>Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
+      <p style="margin-top:4px;font-size:12px">Du zahlst erst, wenn wir dir sparen.</p>
+      <div class="fcopy">© 2026 SourceOn</div>
     </div>
-    <div class="footer-bottom">
-      <span class="footer-copy" data-i18n="footer_copy">&copy; 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
-      <span class="footer-tagline" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</span>
-    </div>
+    <div class="fcol"><div class="fcol-label">Leistungen</div>
+      <a href="index.html">Home</a><a href="prozess.html">Wie es funktioniert</a><a href="fuerwen.html">Für wen</a><a href="lieferant.html">Lieferant werden</a><a href="kalkulator.html">Kalkulator</a><a href="materialien.html">Materialien</a></div>
+    <div class="fcol"><div class="fcol-label">Unternehmen</div>
+      <a href="ueberuns.html">Über uns</a><a href="kontakt.html">Kontakt</a><a href="lieferant.html">Lieferant werden</a></div>
+    <div class="fcol"><div class="fcol-label">Rechtliches</div>
+      <a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a><a href="agb.html">AGB</a></div>
   </div>
-</footer>
+  <div class="fbottom"><div>DE · EN · FR · IT</div><a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
+</div></footer>
 
 <script src="material-i18n.js"></script>
 <script src="tiers.js"></script>
