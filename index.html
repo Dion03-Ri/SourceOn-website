@@ -767,6 +767,102 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:#94A3B8;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}
 .clerk-trust-modal .btn-cancel-trust:hover{border-color:rgba(255,255,255,.2);color:#fff}
 
+
+/* ===== NEW MINIMAL LANDING (scoped under #lp / #lpfoot) ===== */
+:root{--bg:#070F1A;--bg1:#0C1824;--bg2:#111F2E;--lpb:rgba(255,255,255,0.06);--lpbs:rgba(255,255,255,0.12);--t1:#F1F5F9;--t2:#94A3B8;--t3:#4A6080;--golddim:rgba(232,160,32,0.08);--goldbd:rgba(232,160,32,0.15)}
+body{background:#070F1A}
+#lp{color:var(--t1);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+#lp .wrap,#lpfoot .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+#lp a{text-decoration:none}
+@media(max-width:768px){#lp .wrap,#lpfoot .wrap{padding:0 20px}}
+
+/* HERO */
+#lp .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+#lp .hero-glow{position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 800px 600px at 50% 40%,rgba(232,160,32,0.04) 0%,transparent 70%)}
+#lp .hero-content{max-width:820px;margin:0 auto;padding:120px 48px;position:relative;z-index:1}
+#lp .hero-content>*{opacity:0;animation:lpHeroIn .8s cubic-bezier(.2,.7,.2,1) forwards}
+#lp .eyebrow{animation-delay:0s}#lp .h1{animation-delay:.08s}#lp .h1-gold{animation-delay:.14s}#lp .subline{animation-delay:.22s}#lp .cta-row{animation-delay:.3s}
+@keyframes lpHeroIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#lp .eyebrow{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);font-weight:600;margin-bottom:24px}
+#lp .h1{font-size:clamp(40px,6vw,80px);font-weight:800;color:var(--t1);letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}
+#lp .h1-gold{font-size:clamp(36px,5vw,72px);font-weight:800;color:var(--gold);letter-spacing:-.03em;line-height:1.1;margin-bottom:32px}
+#lp .subline{font-size:clamp(16px,2vw,20px);color:var(--t2);font-weight:400;margin-bottom:48px;letter-spacing:-.01em}
+#lp .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+#lp .btn-primary{background:var(--gold);color:#070F1A;font-weight:700;font-size:15px;padding:14px 32px;border-radius:8px;display:inline-flex;align-items:center;transition:all .2s}
+#lp .btn-primary:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 8px 32px rgba(232,160,32,.25);color:#070F1A}
+#lp .btn-ghost{background:transparent;color:var(--t2);font-size:15px;padding:14px 24px;border:1px solid var(--lpbs);border-radius:8px;display:inline-flex;align-items:center;transition:all .2s}
+#lp .btn-ghost:hover{color:var(--t1);border-color:rgba(255,255,255,.2)}
+#lp .scrolldown{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:var(--t3);z-index:1;opacity:0;animation:lpFloat 2s ease-in-out infinite;animation-delay:2s}
+@keyframes lpFloat{0%,100%{transform:translate(-50%,0);opacity:.4}50%{transform:translate(-50%,6px);opacity:.7}}
+
+/* SECTION shared */
+#lp .sec{padding:120px 0}
+#lp .sec.bt{border-top:1px solid var(--lpb)}
+#lp .sec-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:48px}
+#lp .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+#lp .reveal.visible{opacity:1;transform:none}
+
+/* SECTION 2 — cards */
+#lp .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
+@media(max-width:900px){#lp .cards3{grid-template-columns:1fr}}
+#lp .card{background:var(--bg1);padding:40px 36px;display:flex;flex-direction:column;transition:background .2s;color:var(--t1)}
+#lp .card:hover{background:var(--bg2)}
+#lp .card:hover .card-link .arw{transform:translateX(3px)}
+#lp .card-cat{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:600;margin-bottom:20px}
+#lp .card-title{font-size:22px;font-weight:700;color:var(--t1);letter-spacing:-.02em;line-height:1.3;margin-bottom:12px}
+#lp .card-desc{font-size:14px;color:var(--t2);line-height:1.6;flex:1}
+#lp .card-link{margin-top:32px;font-size:13px;font-weight:600;color:var(--t2);display:flex;align-items:center;gap:6px}
+#lp .card:hover .card-link{color:var(--t1)}
+#lp .card-link .arw{transition:transform .2s}
+
+/* SECTION 3 — stat + text */
+#lp .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+@media(max-width:768px){#lp .statgrid{grid-template-columns:1fr;gap:40px}}
+#lp .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:16px}
+#lp .stat-num{font-size:clamp(48px,6vw,80px);font-weight:800;color:var(--gold);letter-spacing:-.04em;line-height:1}
+#lp .stat-sub{font-size:14px;color:var(--t3);margin-top:8px}
+#lp .stat-h{font-size:clamp(20px,2.5vw,28px);font-weight:700;color:var(--t1);letter-spacing:-.02em;line-height:1.3;margin-bottom:16px}
+#lp .stat-body{font-size:15px;color:var(--t2);line-height:1.7}
+#lp .stat-link{font-size:13px;color:var(--gold);margin-top:24px;display:inline-block}
+#lp .stat-link:hover{text-decoration:underline}
+
+/* SECTION 4 — tiles */
+#lp .tiles{display:grid;grid-template-columns:2fr 1fr 1fr;grid-auto-rows:auto;gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
+@media(max-width:900px){#lp .tiles{grid-template-columns:1fr 1fr}#lp .tile-lg{grid-row:auto!important;grid-column:1/-1}}
+@media(max-width:600px){#lp .tiles{grid-template-columns:1fr}}
+#lp .tile{background:var(--bg1);padding:32px 28px;transition:background .2s;display:flex;flex-direction:column;color:var(--t1)}
+#lp .tile:hover{background:var(--bg2)}
+#lp .tile-lg{grid-row:span 2;padding:48px 40px}
+#lp .tile-cat{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:600;margin-bottom:16px}
+#lp .tile-lg .tile-title{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+#lp .tile-title{font-size:20px;font-weight:700;color:var(--t1);letter-spacing:-.01em}
+#lp .tile-desc{font-size:14px;color:var(--t2);margin-top:8px;line-height:1.6;flex:1}
+#lp .tile-lg .tile-desc{font-size:15px;margin-top:16px}
+#lp .tile-link{margin-top:24px;font-size:13px;font-weight:600;color:var(--gold)}
+#lp .tile-lg .tile-link{margin-top:40px;color:var(--t2)}
+#lp .tile-lg:hover .tile-link{color:var(--t1)}
+
+/* SECTION 5 — supplier cta */
+#lp .supcta{padding:100px 0;background:var(--bg1);border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);text-align:center}
+#lp .supcta .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:24px}
+#lp .supcta h2{font-size:clamp(32px,4vw,52px);font-weight:800;color:var(--t1);letter-spacing:-.03em}
+#lp .supcta p{font-size:18px;color:var(--t2);margin-top:12px;margin-bottom:40px}
+
+/* FOOTER */
+#lpfoot{background:var(--bg);border-top:1px solid var(--lpb);padding:48px 0;font-family:'Inter',sans-serif}
+#lpfoot .fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+@media(max-width:768px){#lpfoot .fgrid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:480px){#lpfoot .fgrid{grid-template-columns:1fr}}
+#lpfoot .flogo{font-size:17px;font-weight:700;color:var(--t1)}
+#lpfoot .flogo span{color:var(--gold)}
+#lpfoot .fbrand p{font-size:13px;color:var(--t3);margin-top:8px;line-height:1.5}
+#lpfoot .fcopy{margin-top:24px;font-size:12px;color:var(--t3)}
+#lpfoot .fcol-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:16px}
+#lpfoot .fcol a{display:block;font-size:13px;color:var(--t3);padding:3px 0;transition:color .15s}
+#lpfoot .fcol a:hover{color:var(--t1)}
+#lpfoot .fbottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--lpb);padding-top:24px;margin-top:32px;font-size:12px;color:var(--t3)}
+#lpfoot .fbottom a{color:var(--t3)}#lpfoot .fbottom a:hover{color:var(--gold)}
+
 </style>
 <script>
 (function(){
@@ -851,322 +947,146 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'" data-i18n="nav.cta">Materialbedarf melden</button>
 </div>
 
-<!-- BENTO DETAIL MODAL -->
-<div id="bento-modal" class="bento-modal">
-  <div class="bento-modal-card">
-    <button class="bento-modal-close" onclick="closeBentoModal()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    <h3 id="bento-modal-title"></h3>
-    <p id="bento-modal-text"></p>
-  </div>
-</div>
+<!-- ===== NEW MINIMAL LANDING ===== -->
+<main id="lp">
 
-
-
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-mesh"></div>
-  <div class="hero-dots"></div>
-  <div class="hero-content">
-    <h1 class="hero-h1" id="hero-h1" data-i18n-html="hero.title">Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span></h1>
-    <p class="hero-sub" data-i18n="hero.sub">Baumaterialien günstiger einkaufen — für jede Schweizer Baufirma. Ohne Risiko, ohne Vorauskosten.</p>
-    <div class="hero-btns">
-      <button class="btn btn-gold btn-lg" onclick="window.location.href='kontakt.html'" data-i18n="nav.cta">Materialbedarf melden</button>
-      <a href="prozess.html" class="btn btn-outline-w btn-lg" data-i18n="hero.howit">Wie es funktioniert →</a>
-    </div>
-  </div>
-  <div class="hero-chevron" onclick="smoothScrollToEl(document.getElementById('story'))">↓</div>
-</section>
-
-
-<!-- WORD REVEAL -->
-<section id="story" class="story-section">
-  <div class="container">
-    <p class="story-sentence" id="story-sentence" data-i18n="story.text">Alleine einkaufen heisst durchschnittliche Konditionen. SourceOn bündelt den Bedarf mehrerer Baufirmen zu einem gemeinsamen Auftrag — und gibt den Mengenrabatt an jede einzelne Firma weiter.</p>
-  </div>
-</section>
-
-
-<!-- ZAHLEN & FAKTEN -->
-<section id="zahlen">
-  <div class="container">
-    <div class="text-center"><div class="label label-dark" data-i18n="zahlen.label">ZAHLEN &amp; FAKTEN</div>
-      <h2 class="h2" style="color:#fff" data-i18n="zahlen.title">Der Schweizer Baumarkt — in Zahlen.</h2>
-    </div>
-    <div class="zahlen-grid">
-      <div class="zahlen-card">
-        <div class="zahlen-num" data-i18n="zahlen.vol_num">CHF 8-10 Mrd.</div>
-        <div class="zahlen-label" data-i18n="zahlen.vol">Jährliches Einkaufsvolumen Baumarkt CH</div>
-      </div>
-      <div class="zahlen-card">
-        <div class="zahlen-num" data-count="98" data-suffix="%">0%</div>
-        <div class="zahlen-label" data-i18n="zahlen.kmu">der CH-Baufirmen sind KMU</div>
-      </div>
-      <div class="zahlen-card">
-        <div class="zahlen-num" data-i18n="zahlen.costs_num">15 – 25%</div>
-        <div class="zahlen-label" data-i18n="zahlen.costs">Preisunterschied Einzel- vs. Grossabnehmer</div>
-      </div>
-      <div class="zahlen-card">
-        <div class="zahlen-num" data-i18n="zahlen.savings_num">3–5%</div>
-        <div class="zahlen-label" data-i18n="zahlen.savings">Durchschnittliche Nettomarge einer Schweizer Baufirma — jeder Franken beim Einkauf zählt.</div>
-      </div>
-      <div class="zahlen-card">
-        <div class="zahlen-num" data-i18n="zahlen.offer_num">60%</div>
-        <div class="zahlen-label" data-i18n="zahlen.offer">der Schweizer KMU-Baufirmen ohne professionellen Materialeinkauf.</div>
-      </div>
-      <div class="zahlen-card">
-        <div class="zahlen-num" data-i18n="zahlen.quotes_num">3+</div>
-        <div class="zahlen-label" data-i18n="zahlen.quotes">Offerten — Mindestanzahl Angebote pro Beschaffungsauftrag</div>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <span class="eyebrow">Schweizer Baustoffbeschaffung</span>
+      <h1 class="h1">Baumaterialien günstiger einkaufen.</h1>
+      <div class="h1-gold">Für jede Schweizer Baufirma.</div>
+      <p class="subline">Du zahlst erst, wenn wir dir sparen.</p>
+      <div class="cta-row">
+        <a class="btn-primary" href="kontakt.html">Materialbedarf melden&nbsp;→</a>
+        <a class="btn-ghost" href="prozess.html">Wie es funktioniert&nbsp;→</a>
       </div>
     </div>
-    <p class="zahlen-statement" data-i18n="zahlen.statement">Jede Bestellung die du alleine aufgibst kostet dich mehr als nötig.</p>
-  </div>
-</section>
+    <a class="scrolldown" href="#lp-cards" aria-label="Weiter">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+    </a>
+  </section>
 
-
-<!-- BIG NUMBER -->
-<section id="bignum" class="bignum-section">
-  <div class="container">
-    <div class="bignum-figure">40 – 70%</div>
-    <p class="bignum-caption" data-i18n-html="bignum.caption">So viel der Gesamtkosten einer Baufirma sind reine Materialkosten.<br><a href="kalkulator.html" class="bignum-cta" data-i18n="bignum.cta">Berechne, wie viel du mit SourceOn sparen kannst →</a></p>
-  </div>
-</section>
-
-
-<!-- HOW IT WORKS (4 STEPS, COMPACT) -->
-<section id="home-steps" class="section process-section" style="padding:120px 0">
-  <div class="container">
-    <div class="text-center reveal" style="margin-bottom:8px">
-      <div class="label" data-i18n="home_steps_label">SO FUNKTIONIERT'S</div>
-      <h2 class="h2" data-i18n="home_steps_title">Vier Schritte zu deiner Ersparnis.</h2>
-    </div>
-    <div class="process-grid">
-      <div class="process-card reveal reveal-d1">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-          <div style="width:36px;height:36px;border-radius:10px;background:rgba(232,160,32,.12);border:1px solid rgba(232,160,32,.25);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;flex-shrink:0">1</div>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-        </div>
-        <h3 class="process-title" data-i18n="home_step1_title">Bedarf melden</h3>
-        <p class="process-text" data-i18n="home_step1_text">Material, Menge, Lieferzeitraum — in zwei Minuten gemeldet.</p>
-      </div>
-      <div class="process-card reveal reveal-d2">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-          <div style="width:36px;height:36px;border-radius:10px;background:rgba(232,160,32,.12);border:1px solid rgba(232,160,32,.25);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;flex-shrink:0">2</div>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
-        </div>
-        <h3 class="process-title" data-i18n="home_step2_title">Angebot erhalten</h3>
-        <p class="process-text" data-i18n="home_step2_text">Wir bündeln deinen Bedarf mit anderen Baufirmen und verhandeln beim Lieferanten.</p>
-      </div>
-      <div class="process-card reveal reveal-d3">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-          <div style="width:36px;height:36px;border-radius:10px;background:rgba(232,160,32,.12);border:1px solid rgba(232,160,32,.25);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;flex-shrink:0">3</div>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
-        </div>
-        <h3 class="process-title" data-i18n="home_step3_title">Deine Garantie</h3>
-        <p class="process-text" data-i18n="home_step3_text">Dein Mindestrabatt steht vorher fest — netto, garantiert.</p>
-      </div>
-      <div class="process-card process-card-accent reveal reveal-d4">
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
-          <div style="width:36px;height:36px;border-radius:10px;background:rgba(232,160,32,.16);border:1px solid rgba(232,160,32,.3);color:var(--gold);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.95rem;flex-shrink:0">4</div>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-        </div>
-        <h3 class="process-title" data-i18n="home_step4_title">Du sparst — garantiert</h3>
-        <p class="process-text" data-i18n="home_step4_text">Direktlieferung auf deine Baustelle. Du zahlst nur, wenn du sparst.</p>
-      </div>
-    </div>
-    <div class="text-center reveal" style="margin-top:40px">
-      <a href="prozess.html" class="btn btn-outline-w" data-i18n="home_steps_more">Mehr zum Prozess →</a>
-    </div>
-  </div>
-</section>
-
-
-<!-- TECHNOLOGIE -->
-<section id="technologie" class="section tech-section" style="padding:100px 0">
-  <div class="container">
-    <div style="text-align:center;max-width:700px;margin:0 auto 56px">
-      <div class="label" data-i18n="tech.label">Technologie</div>
-      <h2 class="h2" style="margin-top:0;margin-bottom:16px;color:#fff" data-i18n-html="tech.title">Die Maschine hinter<br>jedem Angebot.</h2>
-      <p class="subtitle" style="color:rgba(255,255,255,.6);margin:0 auto" data-i18n="tech.sub">SourceOn bündelt den Materialbedarf mehrerer Baufirmen zu einem gemeinsamen Auftrag — und verhandelt mit dem gesamten Volumen beim Lieferanten. Je grösser das Bündel, desto höher der Rabatt.</p>
-    </div>
-    <div style="max-width:820px;width:100%;margin:0 auto;padding:0 16px;box-sizing:border-box">
-      <svg class="bundle-anim" viewBox="0 0 800 400" role="img" aria-label="Bündelungsprozess: drei Baufirmen bündeln über SourceOn beim Lieferanten" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <filter id="ba-shadow" x="-30%" y="-30%" width="160%" height="160%">
-            <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#000000" flood-opacity="0.35"/>
-          </filter>
-        </defs>
-        <!-- connection lines: customer -> hub -->
-        <line class="ba-line" x1="205" y1="75"  x2="352" y2="176"/>
-        <line class="ba-line" x1="205" y1="200" x2="348" y2="200"/>
-        <line class="ba-line" x1="205" y1="325" x2="352" y2="224"/>
-        <!-- hub -> supplier line + moving chevron -->
-        <line class="ba-supline" x1="452" y1="200" x2="572" y2="200"/>
-        <polygon class="ba-chevron" points="452,193 465,200 452,207" fill="#E8A020"/>
-        <!-- return flow: chevron back to hub + dots flowing out to each customer -->
-        <polygon class="ba-chevback" points="572,193 559,200 572,207" fill="#E8A020"/>
-        <circle class="ba-dot ba-dot--a" cx="352" cy="176" r="4.5"/>
-        <circle class="ba-dot ba-dot--b" cx="348" cy="200" r="4.5"/>
-        <circle class="ba-dot ba-dot--c" cx="352" cy="224" r="4.5"/>
-        <!-- customer nodes -->
-        <g class="ba-node">
-          <rect class="ba-card" x="30" y="45" width="175" height="60" rx="12"/>
-          <text class="ba-name" x="48" y="72">Firma A</text>
-          <text class="ba-vol"  x="48" y="92">80 m&#179; Beton</text>
-        </g>
-        <g class="ba-node">
-          <rect class="ba-card" x="30" y="170" width="175" height="60" rx="12"/>
-          <text class="ba-name" x="48" y="197">Firma B</text>
-          <text class="ba-vol"  x="48" y="217">60 m&#179; Beton</text>
-        </g>
-        <g class="ba-node">
-          <rect class="ba-card" x="30" y="295" width="175" height="60" rx="12"/>
-          <text class="ba-name" x="48" y="322">Firma C</text>
-          <text class="ba-vol"  x="48" y="342">40 m&#179; Beton</text>
-        </g>
-        <!-- SourceOn hub -->
-        <g class="ba-hub">
-          <circle cx="400" cy="200" r="52" fill="#E8A020" filter="url(#ba-shadow)"/>
-          <text class="ba-hubtext" x="400" y="205" text-anchor="middle">SourceOn</text>
-        </g>
-        <!-- supplier node -->
-        <g class="ba-supplier">
-          <rect class="ba-card ba-supcard" x="572" y="150" width="200" height="100" rx="12"/>
-          <text class="ba-name" x="596" y="192">Lieferant</text>
-          <text class="ba-vol"  x="596" y="216">180 m&#179; &#8212; 12% Rabatt</text>
-        </g>
-        <!-- savings pills -->
-        <g class="ba-save">
-          <rect x="55" y="16" width="150" height="26" rx="13" fill="#E8A020"/>
-          <text class="ba-savetext" x="130" y="33" text-anchor="middle">+CHF 5&#8217;850 &#183; &#8722;12%</text>
-        </g>
-        <g class="ba-save">
-          <rect x="55" y="141" width="150" height="26" rx="13" fill="#E8A020"/>
-          <text class="ba-savetext" x="130" y="158" text-anchor="middle">+CHF 4&#8217;388 &#183; &#8722;12%</text>
-        </g>
-        <g class="ba-save">
-          <rect x="55" y="266" width="150" height="26" rx="13" fill="#E8A020"/>
-          <text class="ba-savetext" x="130" y="283" text-anchor="middle">+CHF 2&#8217;925 &#183; &#8722;12%</text>
-        </g>
-      </svg>
-    </div>
-    <p style="text-align:center;font-size:.8rem;color:rgba(255,255,255,.42);margin:24px auto 0" data-i18n="tech.illus">Illustrativ — vereinfachte Darstellung des Bündelungsprozesses</p>
-    <div style="text-align:center;margin-top:22px">
-      <a href="kontakt.html" style="color:var(--gold);font-weight:600;font-size:.95rem;text-decoration:none" data-i18n="tech.cta">Materialbedarf melden →</a>
-    </div>
-  </div>
-</section>
-
-
-<!-- SUPPLIERS MARQUEE -->
-<section id="suppliers">
-  <div class="container">
-    <div class="mq-header">
-      <div class="label label-green"><svg class="ic-check-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> <span data-i18n="suppliers.badge">Alle Lieferanten persönlich geprüft</span> — SIA/ISO-konform</div>
-      <h2 class="h2" style="color:#fff" data-i18n="suppliers.title">Unsere Partnerlieferanten</h2>
-    </div>
-  </div>
-  <div class="marquee-outer">
-    <div class="marquee-row1"><div class="marquee-track" id="mq1"></div></div>
-  </div>
-  <div class="container">
-    <p class="mq-note" data-i18n="suppliers.note">Weitere Partnerlieferanten in Aufbau. Logos werden nach Vertragsabschluss ergänzt.</p>
-  </div>
-</section>
-
-
-<!-- EXPLORE -->
-<section class="section" style="background:#060D1A;padding:100px 0">
-  <div class="container">
-    <div class="text-center reveal" style="margin-bottom:48px">
-      <div class="label label-dark" data-i18n="explore.label">Entdecken</div>
-      <h2 class="h2" style="color:#fff" data-i18n="explore.title">Alles über SourceOn.</h2>
-    </div>
-    <div class="nav-card-grid reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
-      <a href="prozess.html" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px 28px;text-decoration:none;transition:border-color .3s,background .3s,transform .3s">
-        <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px" data-i18n="explore.process.title">Wie es funktioniert</h3>
-        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px" data-i18n="explore.process.desc">Vier Schritte vom Bedarf bis zur Lieferung — und warum es sich lohnt.</p>
-        <span style="font-size:.82rem;color:var(--gold);font-weight:600" data-i18n="explore.more">Mehr erfahren →</span>
+  <!-- SECTION 2 — THREE CARDS -->
+  <section class="sec" id="lp-cards"><div class="wrap">
+    <span class="sec-label reveal">So funktioniert's</span>
+    <div class="cards3 reveal">
+      <a class="card" href="prozess.html">
+        <div class="card-cat">Prozess</div>
+        <div class="card-title">Vier Schritte vom Bedarf bis zur Lieferung.</div>
+        <div class="card-desc">Bedarf melden, Bündel abwarten, Mindestrabatt bestätigen — fertig. Du zahlst erst, wenn du sparst.</div>
+        <div class="card-link">Wie es funktioniert <span class="arw">→</span></div>
       </a>
-      <a href="materialien.html" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px 28px;text-decoration:none;transition:border-color .3s,background .3s,transform .3s">
-        <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l9-3 9 3v12l-9 3-9-3V6z"/></svg></div>
-        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px" data-i18n="explore.materials.title">Materialien &amp; Lieferanten</h3>
-        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px" data-i18n="explore.materials.desc">50+ Baustoffe, geprüfte Partnerlieferanten in der ganzen Schweiz.</p>
-        <span style="font-size:.82rem;color:var(--gold);font-weight:600">Mehr erfahren →</span>
+      <a class="card" href="kalkulator.html">
+        <div class="card-cat">Kalkulator</div>
+        <div class="card-title">Berechne dein persönliches Einsparpotenzial.</div>
+        <div class="card-desc">Gib dein Jahresvolumen ein und sieh sofort, wie viel du mit SourceOn sparen könntest.</div>
+        <div class="card-link">Jetzt berechnen <span class="arw">→</span></div>
       </a>
-      <a href="fuerwen.html" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px 28px;text-decoration:none;transition:border-color .3s,background .3s,transform .3s">
-        <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px" data-i18n="explore.forwhom.title">Für wen</h3>
-        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px" data-i18n="explore.forwhom.desc">Bauunternehmen, Handwerker, Investoren und Architekten.</p>
-        <span style="font-size:.82rem;color:var(--gold);font-weight:600">Mehr erfahren →</span>
-      </a>
-      <a href="lieferant.html" style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px 28px;text-decoration:none;transition:border-color .3s,background .3s,transform .3s">
-        <div style="width:44px;height:44px;border-radius:50%;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.25);display:flex;align-items:center;justify-content:center;margin-bottom:20px;color:var(--gold)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <h3 style="font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:8px" data-i18n="explore.supplier.title">Lieferant werden</h3>
-        <p style="font-size:.84rem;color:rgba(255,255,255,.5);line-height:1.6;margin-bottom:16px" data-i18n="explore.supplier.desc">Verifizierter SourceOn-Partner werden und Zugang zu gebündelten Aufträgen erhalten.</p>
-        <span style="font-size:.82rem;color:var(--gold);font-weight:600" data-i18n="explore.apply">Jetzt bewerben →</span>
+      <a class="card" href="materialien.html">
+        <div class="card-cat">Materialien</div>
+        <div class="card-title">58 Baustoffe. SIA/ISO-konform. Direkt beschaffbar.</div>
+        <div class="card-desc">Von Transportbeton bis Sanitär — alle Materialien geprüft, normkonform und über einen einzigen Kanal beschaffbar.</div>
+        <div class="card-link">Katalog ansehen <span class="arw">→</span></div>
       </a>
     </div>
-  </div>
-</section>
+  </div></section>
 
-
-<!-- CTA BANNER -->
-<section id="cta-banner">
-  <div class="container" style="position:relative;z-index:1">
-    <h2 class="cta-title" data-i18n="cta.title">Bereit für tiefere Einkaufspreise?</h2>
-    <p class="cta-sub" data-i18n="cta.sub">Melde deinen nächsten Materialbedarf — du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst alles in deinem Dashboard.</p>
-    <div class="cta-btns">
-      <button class="btn btn-gold btn-lg" onclick="window.location.href='kontakt.html'" data-i18n="nav.cta">Materialbedarf melden</button>
-      <a href="mailto:info@SourceOn.ch" class="btn btn-outline-w btn-lg">info@SourceOn.ch</a>
+  <!-- SECTION 3 — STAT + TEXT -->
+  <section class="sec bt"><div class="wrap">
+    <div class="statgrid">
+      <div class="reveal">
+        <div class="stat-label">Der Schweizer Baumarkt</div>
+        <div class="stat-num">CHF 8–10 Mrd.</div>
+        <div class="stat-sub">Jährliches Einkaufsvolumen</div>
+      </div>
+      <div class="reveal">
+        <div class="stat-h">98 % der Schweizer Baufirmen sind KMU — ohne Grossabnehmerkonditionen.</div>
+        <div class="stat-body">Wer alleine einkauft, zahlt Einzelpreise. SourceOn bündelt den Bedarf mehrerer Baufirmen — und verhandelt mit dem gesamten Volumen beim Lieferanten. Je grösser das Bündel, desto höher der Rabatt für alle.</div>
+        <a class="stat-link" href="fuerwen.html">Für wen ist SourceOn? →</a>
+      </div>
     </div>
-  </div>
-</section>
+  </div></section>
 
+  <!-- SECTION 4 — FOR WHOM -->
+  <section class="sec bt"><div class="wrap">
+    <span class="sec-label reveal">Für wen</span>
+    <div class="tiles reveal">
+      <a class="tile tile-lg" href="fuerwen.html">
+        <div class="tile-cat">Bauunternehmen</div>
+        <div class="tile-title">Einkaufsmacht wie ein Grosskonzern — auch als KMU.</div>
+        <div class="tile-desc">SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte beim Lieferanten. Profitabel ab CHF 50'000 Jahresvolumen.</div>
+        <div class="tile-link">Mehr erfahren →</div>
+      </a>
+      <a class="tile" href="fuerwen.html">
+        <div class="tile-cat">Handwerk</div>
+        <div class="tile-title">Für jedes Gewerk.</div>
+        <div class="tile-desc">Schnelle Abwicklung, keine Vorauszahlung.</div>
+        <div class="tile-link">→</div>
+      </a>
+      <a class="tile" href="fuerwen.html">
+        <div class="tile-cat">Investoren</div>
+        <div class="tile-title">Renovation und Neubau.</div>
+        <div class="tile-desc">Geprüfte Qualitätsstandards, SIA-konform.</div>
+        <div class="tile-link">→</div>
+      </a>
+      <a class="tile" href="fuerwen.html">
+        <div class="tile-cat">Architekten &amp; Planer</div>
+        <div class="tile-title">Integration ab der Planungsphase.</div>
+        <div class="tile-desc">Materialbeschaffung früh einplanen.</div>
+        <div class="tile-link">→</div>
+      </a>
+    </div>
+  </div></section>
+
+  <!-- SECTION 5 — SUPPLIER CTA -->
+  <section class="supcta"><div class="wrap">
+    <div class="lbl reveal">Für Lieferanten</div>
+    <h2 class="reveal">Schweizer Baustofflieferant?</h2>
+    <p class="reveal">Zugang zu gebündelten Grossaufträgen ohne eigene Akquise.</p>
+    <a class="btn-ghost reveal" href="lieferant.html">Als Lieferant bewerben&nbsp;→</a>
+  </div></section>
+
+</main>
 
 <!-- FOOTER -->
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="nav-logo">Source<span>On</span></div>
-        <p data-i18n="footer.desc">Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer.services">Leistungen</h4>
-        <ul>
-          <li><a href="index.html" data-i18n="footer.home">Home</a></li>
-      <li><a href="prozess.html" data-i18n="footer.process">Wie es funktioniert</a></li>
-          <li><a href="fuerwen.html" data-i18n="footer.forwhom">Für wen</a></li>
-          <li><a href="lieferant.html" data-i18n="footer.supplier">Lieferant werden</a></li>
-          <li><a href="kalkulator.html" data-i18n="footer.calc">Einsparkalkulator</a></li>
-          <li><a href="materialien.html" data-i18n="footer.materials">Materialien</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer.company">Unternehmen</h4>
-        <ul>
-          <li><a href="ueberuns.html" data-i18n="footer.about">Über uns</a></li>
-          <li><a href="kontakt.html" data-i18n="footer.contact">Kontakt</a></li>
-          <li><a href="lieferant.html" data-i18n="footer.supplier2">Lieferant werden</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer.legal">Rechtliches</h4>
-        <ul>
-          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer" data-i18n="footer.privacy">Datenschutz</a></li>
-          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer" data-i18n="footer.imprint">Impressum</a></li>
-          <li><a href="agb.html" target="_blank" rel="noopener noreferrer" data-i18n="footer.terms">AGB</a></li>
-        </ul>
-      </div>
+
+<footer id="lpfoot"><div class="wrap">
+  <div class="fgrid">
+    <div class="fbrand">
+      <div class="flogo">Source<span>On</span></div>
+      <p>Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
+      <p style="margin-top:4px;font-size:12px">Du zahlst erst, wenn wir dir sparen.</p>
+      <div class="fcopy">© 2026 SourceOn</div>
     </div>
-    <div class="footer-bottom">
-      <span class="footer-copy" data-i18n="footer.copy">© 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
-      <span class="footer-tagline" data-i18n="footer.tagline">Du zahlst erst, wenn wir dir sparen.</span>
+    <div class="fcol">
+      <div class="fcol-label">Leistungen</div>
+      <a href="index.html">Home</a>
+      <a href="prozess.html">Wie es funktioniert</a>
+      <a href="fuerwen.html">Für wen</a>
+      <a href="lieferant.html">Lieferant werden</a>
+      <a href="kalkulator.html">Kalkulator</a>
+      <a href="materialien.html">Materialien</a>
+    </div>
+    <div class="fcol">
+      <div class="fcol-label">Unternehmen</div>
+      <a href="ueberuns.html">Über uns</a>
+      <a href="kontakt.html">Kontakt</a>
+      <a href="lieferant.html">Lieferant werden</a>
+    </div>
+    <div class="fcol">
+      <div class="fcol-label">Rechtliches</div>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="agb.html">AGB</a>
     </div>
   </div>
-</footer>
+  <div class="fbottom">
+    <div>DE · EN · FR · IT</div>
+    <a href="mailto:info@sourceon.ch">info@sourceon.ch</a>
+  </div>
+</div></footer>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
