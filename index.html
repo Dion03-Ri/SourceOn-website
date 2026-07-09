@@ -1134,113 +1134,11 @@ function toggleNav(){
   document.body.style.overflow=o.classList.contains('open')?'hidden':'';
 }
 
-// STORY SENTENCE SCROLL REVEAL
-(function(){
-  const el=document.getElementById('story-sentence');
-  if(!el)return;
-  const text=el.textContent;
-  el.innerHTML=text.split(' ').map(w=>'<span class="word">'+w+'</span>').join(' ');
-  var words=el.querySelectorAll('.word');
-  function update(){
-    var w2=el.querySelectorAll('.word');
-    const rect=el.parentElement.parentElement.getBoundingClientRect();
-    const vh=window.innerHeight;
-    const progress=Math.min(1,Math.max(0,(vh*0.8-rect.top)/(rect.height-vh*0.2)));
-    const litCount=Math.round(progress*w2.length);
-    w2.forEach((w,i)=>w.classList.toggle('lit',i<litCount));
-  }
-  window._storyUpdate=update;
-  window.addEventListener('scroll',function(){if(window._storyUpdate)window._storyUpdate();},{passive:true});
-  update();
-})();
-
-// HERO HEADLINE WORD STAGGER
-(function(){
-  const h=document.getElementById('hero-h1');
-  if(!h)return;
-  function wrapWords(node){
-    if(node.nodeType===3){
-      const words=node.textContent.split(/(\s+)/);
-      const frag=document.createDocumentFragment();
-      words.forEach(w=>{
-        if(/\S/.test(w)){const s=document.createElement('span');s.className='hw';s.textContent=w;frag.appendChild(s);}
-        else if(w){frag.appendChild(document.createTextNode(w));}
-      });
-      node.parentNode.replaceChild(frag,node);
-    } else if(node.nodeType===1&&node.nodeName!=='SCRIPT'){
-      [...node.childNodes].forEach(wrapWords);
-    }
-  }
-  wrapWords(h);
-  const spans=h.querySelectorAll('.hw');
-  spans.forEach((s,i)=>setTimeout(()=>s.classList.add('in'),100+i*150));
-})();
-
 // SCROLL REVEAL
 const ro=new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target);}});
 },{threshold:0.1});
 document.querySelectorAll('.reveal,.slide-left').forEach(el=>ro.observe(el));
-
-// COUNTERS
-function countEl(el,dur){
-  dur=dur||1200;
-  const t0=performance.now();
-  if(el.dataset.count!==undefined){
-    const target=parseFloat(el.dataset.count),suffix=el.dataset.suffix||'',dec=parseInt(el.dataset.dec||0);
-    const iv=setInterval(()=>{
-      const p=Math.min(1,(performance.now()-t0)/dur),v=target*(1-Math.pow(1-p,3));
-      el.textContent=(dec?v.toFixed(dec):Math.round(v))+suffix;
-      if(p>=1)clearInterval(iv);
-    },16);
-  }
-}
-document.querySelectorAll('.hero-stats [data-count]').forEach(el=>countEl(el,2000));
-const co=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){countEl(e.target);co.unobserve(e.target);}});
-},{threshold:0.3});
-document.querySelectorAll('[data-count]').forEach(el=>{
-  if(!el.closest('.hero-stats'))co.observe(el);
-});
-setTimeout(function(){document.querySelectorAll('[data-count]').forEach(function(el){if(el.textContent.indexOf('0')===0&&el.dataset.count!=='0'){countEl(el);}});},3000);
-
-
-// MARQUEE
-const SUPPLIERS=[
-  {name:'Beton Partner Zürich',cat:'Beton & Tiefbau'},
-  {name:'Stahlhandel Schweiz AG',cat:'Armierungsstahl'},
-  {name:'Kies & Baustoffe GmbH',cat:'Schüttgut'},
-  {name:'Mauerwerk Schweiz',cat:'Ziegel & Steine'},
-  {name:'Dämmtechnik AG',cat:'Dämmung & Isolation'},
-  {name:'Holcim Partner CH',cat:'Beton & Zement'},
-  {name:'Schalung & Bau AG',cat:'Schalungssysteme'},
-  {name:'Sanitär Schweiz GmbH',cat:'HLKS & Sanitär'},
-  {name:'Armierung Pro CH',cat:'Bewehrungsstahl'},
-  {name:'Baustoffe Regional AG',cat:'Vollsortiment'},
-];
-function buildMQ(id,items){
-  const t=document.getElementById(id);
-  if(!t)return;
-  [...items,...items].forEach(s=>{
-    const d=document.createElement('div');d.className='mq-card';
-    d.innerHTML='<div class="mq-name">'+s.name+'</div><div class="mq-cat">'+s.cat+'</div>';
-    t.appendChild(d);
-  });
-}
-buildMQ('mq1',SUPPLIERS);
-
-// BUNDLING DIAGRAM ANIMATION
-const bdObs=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting){
-      e.currentTarget.querySelectorAll('.bd-company,.bd-SourceOn-card,.bd-lieferant-card').forEach(el=>el.classList.add('bd-in'));
-      bdObs.unobserve(e.currentTarget);
-    }
-  });
-},{threshold:0.2});
-const bdDiagram=document.getElementById('bd-diagram');
-if(bdDiagram)bdObs.observe(bdDiagram);
-
 
 // FAQ (stub for pages that might have inline FAQ)
 function toggleFaq(btn){}
