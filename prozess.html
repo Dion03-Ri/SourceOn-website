@@ -782,12 +782,13 @@ body{background:#070F1A}
 #lp .phero .sub{font-size:clamp(16px,2vw,20px);color:var(--t2);max-width:600px;margin:0 auto 40px;line-height:1.6}
 @media(max-width:768px){#lp .phero{padding:60px 0 40px}}
 /* steps as numbered rows */
-#lp .psteps .pstep{display:grid;grid-template-columns:80px 1fr;gap:32px;padding:48px 0;border-bottom:1px solid var(--lpb);align-items:start}
-#lp .psteps .pstep-n{font-size:56px;font-weight:800;color:var(--gold);opacity:.25;line-height:1;font-variant-numeric:tabular-nums}
-#lp .psteps .pstep-t{font-size:24px;font-weight:700;color:var(--t1);letter-spacing:-.02em;margin-bottom:12px}
+#lp .psteps .pstep{display:flex;flex-direction:column;gap:0;padding:32px 0 32px 20px;border-bottom:1px solid var(--lpb);position:relative}
+#lp .psteps .pstep::before{content:'';position:absolute;left:0;top:32px;bottom:32px;width:2px;background:var(--gold);border-radius:2px;opacity:.6}
+#lp .psteps .pstep-n{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:600;margin-bottom:8px;line-height:1.2}
+#lp .psteps .pstep-t{font-size:20px;font-weight:700;color:var(--t1);letter-spacing:-.01em;margin-bottom:10px}
 #lp .psteps .pstep-x{font-size:15px;color:var(--t2);line-height:1.7;max-width:640px}
 #lp .ptiming{font-size:14px;color:var(--t3);text-align:center;padding-top:32px;border-top:1px solid var(--lpb)}
-@media(max-width:768px){#lp .psteps .pstep{grid-template-columns:1fr;gap:8px;padding:32px 0}#lp .psteps .pstep-n{font-size:40px}}
+@media(max-width:768px){#lp .psteps .pstep{padding-left:16px}}
 /* comparison (side-by-side) */
 #lp .cmp2{display:grid;grid-template-columns:1fr 80px 1fr;max-width:900px;margin:0 auto}
 #lp .cmp2 .chead,#lp .cmp2 .crow{display:contents}
@@ -852,7 +853,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav_calculator">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html">Immobilien &amp; Wohnbau</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
@@ -925,28 +926,28 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     <span class="sec-label">Der Prozess</span>
     <div class="psteps">
       <div class="pstep reveal">
-        <div class="pstep-n">01</div>
+        <div class="pstep-n">Schritt 1</div>
         <div>
           <div class="pstep-t" data-i18n="proc_step1_title">Bedarf melden</div>
           <div class="pstep-x" data-i18n="proc_step1_text">Du teilst uns deinen Materialbedarf mit — Materialart, Menge und Lieferzeitraum. Du siehst sofort deinen garantierten Ziel-Mindestrabatt. Dauert zwei Minuten.</div>
         </div>
       </div>
       <div class="pstep reveal">
-        <div class="pstep-n">02</div>
+        <div class="pstep-n">Schritt 2</div>
         <div>
           <div class="pstep-t" data-i18n="proc_step2_title">Angebot erhalten</div>
           <div class="pstep-x" data-i18n="proc_step2_text">SourceOn bündelt deinen Bedarf mit anderen Baufirmen und verhandelt Mengenrabatte direkt beim Lieferanten. Dein Lieferzeitraum gibt das Tempo vor — je flexibler dein Termin, desto grösser dein Bündel und desto höher deine Ersparnis. Im Dashboard verfolgst du jederzeit den Status deiner Anfrage.</div>
         </div>
       </div>
       <div class="pstep reveal">
-        <div class="pstep-n">03</div>
+        <div class="pstep-n">Schritt 3</div>
         <div>
           <div class="pstep-t" data-i18n="proc_step3_title">Deine Garantie</div>
           <div class="pstep-x" data-i18n="proc_step3_text">Dein Mindestrabatt steht fest, bevor irgendetwas verbindlich wird. Erreicht das verhandelte Angebot deine Zielmarke, wird dein Auftrag automatisch zu diesen Konditionen ausgeführt. Wird sie verfehlt, entfällt deine Anfrage kostenlos — ganz automatisch.</div>
         </div>
       </div>
       <div class="pstep reveal">
-        <div class="pstep-n">04</div>
+        <div class="pstep-n">Schritt 4</div>
         <div>
           <div class="pstep-t" data-i18n="proc_step4_title">Du sparst — garantiert</div>
           <div class="pstep-x" data-i18n="proc_step4_text">Direktlieferung auf deine Baustelle. Dein garantierter Mindestrabatt kommt vollständig bei dir an — du zahlst SourceOn nie etwas. Unsere Provision trägt der Lieferant, nicht du. Du zahlst nur, wenn du sparst — und zwar nur dem Lieferanten, zum vereinbarten Rabattpreis. Nach Zuschlag werden deine Kontaktdaten an den Lieferanten freigegeben — dieser koordiniert die Lieferung direkt mit dir.</div>

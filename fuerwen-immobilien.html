@@ -803,11 +803,13 @@ body{background:#070F1A}
 #lp .bullets div{font-size:14px;color:var(--t1);padding:14px 2px;border-bottom:1px solid var(--lpb)}
 /* steps */
 #lp .steps{margin-top:8px}
-#lp .step{display:flex;gap:24px;padding:24px 0;border-bottom:1px solid var(--lpb);align-items:baseline}
+#lp .step{display:flex;flex-direction:column;gap:0;padding:32px 0 32px 20px;border-bottom:1px solid var(--lpb);position:relative}
+#lp .step::before{content:'';position:absolute;left:0;top:32px;bottom:32px;width:2px;background:var(--gold);border-radius:2px;opacity:.6}
 #lp .step:last-child{border-bottom:none}
-#lp .step-n{font-size:48px;font-weight:800;color:var(--gold);opacity:.3;line-height:1;min-width:72px;flex-shrink:0}
-#lp .step-t{font-size:18px;font-weight:600;color:var(--t1);margin-bottom:6px}
-#lp .step-x{font-size:14px;color:var(--t2);line-height:1.6}
+#lp .step-n{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:600;margin-bottom:8px;line-height:1.2}
+#lp .step-t{font-size:20px;font-weight:700;color:var(--t1);letter-spacing:-.01em;margin-bottom:10px}
+#lp .step-x{font-size:15px;color:var(--t2);line-height:1.7;max-width:640px}
+@media(max-width:768px){#lp .step{padding-left:16px}}
 /* centered cta */
 #lp .cta-center{text-align:center;padding:100px 0;border-top:1px solid var(--lpb)}
 #lp .cta-center h2{font-size:clamp(28px,4vw,40px);font-weight:800;color:var(--t1);letter-spacing:-.03em}
@@ -859,7 +861,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html">Immobilien &amp; Wohnbau</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
@@ -931,7 +933,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <section class="sec bt"><div class="wrap">
     <span class="sec-label">So funktioniert es für dich</span>
-    <div class="steps"><div class="step"><div class="step-n">01</div><div><div class="step-t">Bedarf melden</div><div class="step-x">Materialien und Mengen für Unterhalt oder Renovation eingeben. Sofort garantierten Mindestrabatt sehen.</div></div></div><div class="step"><div class="step-n">02</div><div><div class="step-t">Automatische Bündelung</div><div class="step-x">SourceOn bündelt deinen Bedarf mit anderen Liegenschaften und schreibt verdeckt bei verifizierten Lieferanten aus.</div></div></div><div class="step"><div class="step-n">03</div><div><div class="step-t">Dauerhaft sparen</div><div class="step-x">Direktlieferung auf die Baustelle. Für jedes Projekt, jedes Jahr — ohne Mehraufwand.</div></div></div></div>
+    <div class="steps"><div class="step"><div class="step-n">Schritt 1</div><div><div class="step-t">Bedarf melden</div><div class="step-x">Materialien und Mengen für Unterhalt oder Renovation eingeben. Sofort garantierten Mindestrabatt sehen.</div></div></div><div class="step"><div class="step-n">Schritt 2</div><div><div class="step-t">Automatische Bündelung</div><div class="step-x">SourceOn bündelt deinen Bedarf mit anderen Liegenschaften und schreibt verdeckt bei verifizierten Lieferanten aus.</div></div></div><div class="step"><div class="step-n">Schritt 3</div><div><div class="step-t">Dauerhaft sparen</div><div class="step-x">Direktlieferung auf die Baustelle. Für jedes Projekt, jedes Jahr — ohne Mehraufwand.</div></div></div></div>
   </div></section>
 
   <section class="cta-center"><div class="wrap"><div class="reveal">

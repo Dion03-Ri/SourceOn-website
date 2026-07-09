@@ -802,7 +802,13 @@ body{background:#070F1A}
 @media(max-width:768px){#lp .pills{gap:8px}}
 #lp .pill{background:var(--bg1);border:1px solid var(--lpb);border-radius:999px;padding:8px 18px;font-size:13px;color:var(--t2);cursor:pointer;transition:border-color .15s,color .15s,background .15s}
 #lp .pill:hover{border-color:var(--gold);color:var(--t1)}
-#lp .pill.active{background:var(--golddim);border-color:var(--goldbd);color:var(--gold)}
+#lp .pill.active{background:var(--gold);border-color:var(--gold);color:#070F1A;font-weight:600}
+#lp .matgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden;margin-top:24px;transition:opacity .2s}
+#lp .matcard{background:var(--bg1);padding:16px 20px;display:flex;flex-direction:column;gap:4px;transition:background .15s}
+#lp .matcard:hover{background:var(--bg2)}
+#lp .matcard .mc-name{font-size:14px;font-weight:500;color:var(--t1)}
+#lp .matcard .mc-id{font-size:11px;color:var(--gold);font-family:'SFMono-Regular',Menlo,Consolas,monospace}
+#lp .matcard .mc-unit{font-size:11px;color:var(--t3)}
 /* stats strip */
 #lp .statstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
 @media(max-width:768px){#lp .statstrip{grid-template-columns:1fr}}
@@ -867,7 +873,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html">Immobilien &amp; Wohnbau</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
@@ -954,17 +960,19 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <section class="sec bt"><div class="wrap">
     <span class="sec-label">Kategorien</span>
     <div class="pills">
-      <span class="pill">Transportbeton &amp; Pumpbeton</span>
-      <span class="pill">Armierung &amp; Bewehrung</span>
-      <span class="pill">Kies, Splitt &amp; Sand</span>
-      <span class="pill">Mauerwerk &amp; Mörtel</span>
-      <span class="pill">Schalung &amp; Stützen</span>
-      <span class="pill">Betonfertigteile</span>
-      <span class="pill">Dämmung</span>
-      <span class="pill">Gipskarton &amp; Ständerwerk</span>
-      <span class="pill">Bedachung &amp; Fassade</span>
-      <span class="pill">Haustechnik &amp; Rohrleitungen</span>
+      <span class="pill active" data-cat="Alle">Alle</span>
+      <span class="pill" data-cat="Transportbeton &amp; Pumpbeton">Transportbeton &amp; Pumpbeton</span>
+      <span class="pill" data-cat="Armierung &amp; Bewehrung">Armierung &amp; Bewehrung</span>
+      <span class="pill" data-cat="Kies, Splitt &amp; Sand">Kies, Splitt &amp; Sand</span>
+      <span class="pill" data-cat="Mauerwerk &amp; Mörtel">Mauerwerk &amp; Mörtel</span>
+      <span class="pill" data-cat="Schalung &amp; Stützen">Schalung &amp; Stützen</span>
+      <span class="pill" data-cat="Betonfertigteile">Betonfertigteile</span>
+      <span class="pill" data-cat="Dämmung">Dämmung</span>
+      <span class="pill" data-cat="Gipskarton &amp; Ständerwerk">Gipskarton &amp; Ständerwerk</span>
+      <span class="pill" data-cat="Bedachung &amp; Fassade">Bedachung &amp; Fassade</span>
+      <span class="pill" data-cat="Haustechnik &amp; Rohrleitungen">Haustechnik &amp; Rohrleitungen</span>
     </div>
+    <div class="matgrid" id="matgrid"></div>
   </div></section>
 
   <!-- ABDECKUNG -->
@@ -1905,6 +1913,63 @@ document.addEventListener('keydown',function(e){
       if(!wasActive)p.classList.add('active');
     });
   });
+  </script>
+  <script>
+  // MATERIAL CATALOG GRID + PILL FILTER
+  (function(){
+    var grid=document.getElementById('matgrid');
+    if(!grid||typeof MATERIAL_DB==='undefined'||typeof MAT_CODE==='undefined')return;
+    function classify(name){
+      var n=name.toLowerCase();
+      if(n.indexOf('betonfertigteil')>-1)return 'Betonfertigteile';
+      if(n.indexOf('transportbeton')>-1||n.indexOf('pumpbeton')>-1)return 'Transportbeton & Pumpbeton';
+      if(n.indexOf('armierung')>-1||n.indexOf('betonstahl')>-1)return 'Armierung & Bewehrung';
+      if(n.indexOf('kies')>-1||n.indexOf('splitt')>-1||n.indexOf('sand')>-1)return 'Kies, Splitt & Sand';
+      if(n.indexOf('dämmplatte')>-1||n.indexOf('mineralwolle')>-1||n.indexOf('dämmung')>-1)return 'Dämmung';
+      if(n.indexOf('gipskarton')>-1||n.indexOf('ständerwerk')>-1||n.indexOf('anschlussprofil')>-1)return 'Gipskarton & Ständerwerk';
+      if(n.indexOf('dachziegel')>-1||n.indexOf('dachabdichtung')>-1||n.indexOf('betonroof')>-1||n.indexOf('fassaden')>-1||n.indexOf('bedachung')>-1)return 'Bedachung & Fassade';
+      if(n.indexOf('schalung')>-1||n.indexOf('träger')>-1||n.indexOf('stütze')>-1)return 'Schalung & Stützen';
+      if(n.indexOf('ziegel')>-1||n.indexOf('kalksandstein')>-1||n.indexOf('porenbeton')>-1||n.indexOf('mörtel')>-1||n.indexOf('putz')>-1||n.indexOf('estrich')>-1)return 'Mauerwerk & Mörtel';
+      if(n.indexOf('rohr')>-1||n.indexOf('heizungsverteiler')>-1)return 'Haustechnik & Rohrleitungen';
+      return 'Sonstige';
+    }
+    function unitFor(name){
+      var n=name.toLowerCase();
+      if(n.indexOf('transportbeton')>-1||n.indexOf('pumpbeton')>-1)return 'm³';
+      if(n.indexOf('kies')>-1||n.indexOf('splitt')>-1||n.indexOf('sand')>-1)return 't';
+      if(n.indexOf('armierungsstahl')>-1)return 't';
+      if(n.indexOf('mörtel')>-1||n.indexOf('putz')>-1||n.indexOf('estrich')>-1)return 't';
+      if(n.indexOf('dämmplatte')>-1||n.indexOf('mineralwolle')>-1||n.indexOf('dachabdichtung')>-1||n.indexOf('fassaden')>-1)return 'm²';
+      if(n.indexOf('rohr')>-1)return 'm';
+      return 'Stk';
+    }
+    var ALL=[];
+    MATERIAL_DB.forEach(function(g){
+      g.items.forEach(function(name,i){
+        ALL.push({name:name,id:'SO-'+MAT_CODE[g.cat]+'-'+String(i+1).padStart(2,'0'),unit:unitFor(name),cat:classify(name)});
+      });
+    });
+    function render(pcat){
+      grid.style.opacity='0';
+      setTimeout(function(){
+        var html='';
+        ALL.forEach(function(m){
+          if(pcat!=='Alle'&&m.cat!==pcat)return;
+          html+='<div class="matcard"><span class="mc-name">'+m.name+'</span><span class="mc-id">'+m.id+'</span><span class="mc-unit">Einheit: '+m.unit+'</span></div>';
+        });
+        grid.innerHTML=html;
+        grid.style.opacity='1';
+      },160);
+    }
+    render('Alle');
+    document.querySelectorAll('#lp .pill').forEach(function(p){
+      p.addEventListener('click',function(){
+        document.querySelectorAll('#lp .pill.active').forEach(function(a){a.classList.remove('active');});
+        p.classList.add('active');
+        render(p.getAttribute('data-cat')||'Alle');
+      });
+    });
+  })();
   </script>
   <script src="mobile-nav.js"></script>
 </body>
