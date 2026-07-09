@@ -779,9 +779,10 @@ body{background:#070F1A}
 #lp .phero .sub{font-size:18px;color:var(--t2);margin-top:16px;max-width:640px;line-height:1.6}
 #lp .cta-row{margin-top:32px;display:flex;gap:16px;flex-wrap:wrap}
 /* tiles (fuerwen) */
-#lp .fwtiles{display:grid;grid-template-columns:2fr 1fr;gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
-#lp .fwtiles .tile-lg{grid-column:1;grid-row:1/span 3;padding:48px 40px}
-@media(max-width:768px){#lp .fwtiles{grid-template-columns:1fr}#lp .fwtiles .tile-lg{grid-column:auto;grid-row:auto;padding:32px 28px}}
+#lp .fwtiles{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
+#lp .fwtiles .tile-lg{grid-column:1;grid-row:1/span 2;padding:48px 40px}
+@media(max-width:900px){#lp .fwtiles{grid-template-columns:1fr 1fr}#lp .fwtiles .tile-lg{grid-column:1/span 2;grid-row:auto;padding:40px 32px}}
+@media(max-width:600px){#lp .fwtiles{grid-template-columns:1fr}#lp .fwtiles .tile-lg{grid-column:auto}}
 #lp .tile{background:var(--bg1);padding:32px 28px;transition:background .2s;display:flex;flex-direction:column;color:var(--t1)}
 #lp .tile:hover{background:var(--bg2)}
 #lp .tile-cat{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:600;margin-bottom:16px}
@@ -924,28 +925,34 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <section class="sec" style="padding-top:24px"><div class="wrap">
     <div class="fwtiles reveal">
       <a class="tile tile-lg" href="fuerwen-bauunternehmen.html">
-        <div class="tile-cat">Bauunternehmen</div>
-        <div class="tile-title">Einkaufsmacht wie ein Grosskonzern — auch als KMU.</div>
-        <div class="tile-desc">SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte beim Lieferanten. Profitabel ab CHF 50'000 Jahresvolumen — skaliert mit deiner Grösse.</div>
+        <div class="tile-cat">Bauunternehmen &amp; Generalunternehmen</div>
+        <div class="tile-title">Bessere Einkaufspreise — für jede Baufirma, jede Grösse.</div>
+        <div class="tile-desc">SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte beim Lieferanten. Ob KMU oder Grosskonzern — jeder profitiert von mehr Volumen und besseren Konditionen.</div>
         <div class="tile-link">Mehr erfahren →</div>
       </a>
       <a class="tile" href="fuerwen-handwerk.html">
         <div class="tile-cat">Handwerk &amp; Subunternehmer</div>
-        <div class="tile-title">Für jedes Gewerk die passenden Konditionen.</div>
+        <div class="tile-title">Für jedes Gewerk.</div>
         <div class="tile-desc">Schnelle Abwicklung, keine Vorauszahlung, vollautomatisch.</div>
         <div class="tile-link">→</div>
       </a>
       <a class="tile" href="fuerwen-generalunternehmer.html">
         <div class="tile-cat">Generalunternehmer &amp; TU</div>
         <div class="tile-title">Grosse Projekte, maximale Einkaufsmacht.</div>
-        <div class="tile-desc">GU und TU beschaffen riesige Materialmengen — SourceOn bündelt und verhandelt für das gesamte Projektvolumen.</div>
+        <div class="tile-desc">Riesige Materialmengen, höchste Rabattstufen.</div>
         <div class="tile-link">→</div>
       </a>
       <a class="tile" href="fuerwen-oeffentlich.html">
         <div class="tile-cat">Öffentliche Auftraggeber</div>
-        <div class="tile-title">Normkonforme Beschaffung für öffentliche Bauprojekte.</div>
-        <div class="tile-desc">Gemeinden, Kantone und staatsnahe Betriebe profitieren von transparenter, SIA/ISO-konformer Beschaffung mit nachvollziehbarer Dokumentation.</div>
+        <div class="tile-title">Transparent, normkonform, dokumentiert.</div>
+        <div class="tile-desc">Gemeinden, Kantone, staatsnahe Betriebe.</div>
         <div class="tile-link">→</div>
+      </a>
+      <a class="tile" href="kontakt.html">
+        <div class="tile-cat">Für alle</div>
+        <div class="tile-title">Du beschaffst Baumaterial in grossen Mengen?</div>
+        <div class="tile-desc">Egal ob Industrie, Spital, Schule oder Wohnbaugenossenschaft — ab CHF 50'000 Jahresvolumen lohnt sich SourceOn.</div>
+        <div class="tile-link">Jetzt anfragen →</div>
       </a>
     </div>
   </div></section>
