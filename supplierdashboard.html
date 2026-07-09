@@ -233,13 +233,13 @@ input,select,textarea{font-family:inherit}
 .fld>select,.fld>textarea{width:100%;background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:10px 12px;color:var(--text-1);font-size:14px;outline:none;transition:border-color .15s;resize:vertical}
 .fld>select:focus,.fld>textarea:focus{border-color:var(--gold)}
 .fld>select option{background:#0F2238}
-.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
-.chk{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-2);padding:9px 12px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:border-color .15s}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px 16px;margin-top:8px}
+.chk{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--text-2);padding:6px 12px;min-height:38px;border:1px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:border-color .15s}
 .chk:hover{border-color:var(--gold-border)}
-.chk input[type=checkbox]{-webkit-appearance:none;appearance:none;width:16px;height:16px;flex:0 0 16px;margin:0;border:1px solid var(--border-strong);border-radius:3px;background:transparent;position:relative;cursor:pointer;transition:all .15s}
+.chk input[type=checkbox]{-webkit-appearance:none;appearance:none;width:16px;height:16px;min-width:16px;flex:0 0 16px;margin:0;border:1px solid var(--border-strong);border-radius:3px;background:transparent;position:relative;cursor:pointer;transition:all .15s}
 .chk input[type=checkbox]:checked{background:var(--gold);border-color:var(--gold)}
 .chk input[type=checkbox]:checked::after{content:'';position:absolute;left:4.5px;top:1px;width:4px;height:8px;border:solid #07111A;border-width:0 2px 2px 0;transform:rotate(45deg)}
-.chk span{flex:1;min-width:0;line-height:1.35}
+.chk span{flex:1;min-width:0;line-height:1.4;cursor:pointer}
 .agree-box{background:var(--bg-1);border-radius:var(--r-md);padding:20px;margin-top:20px}
 .danger-zone{margin-top:32px;padding-top:24px;border-top:1px solid var(--border)}
 .danger-link{font-size:13px;color:var(--red)}
@@ -706,13 +706,32 @@ var CATALOG_MATERIALS=['Beton','Armierungsstahl','Kies & Splitt','Mauerwerk & Zi
 var REGIONS=['Zürich','Bern','Basel','Luzern','Ostschweiz','Zentralschweiz','Aargau','Tessin','Westschweiz','Ganze Schweiz'];
 var CERTS=['ISO 9001','ISO 14001','SIA-konform','SN EN','SUVA-zertifiziert','Minergie'];
 var ACCT_FIELDS=[['company_name','Firmenname'],['contact_person','Ansprechperson'],['email','E-Mail'],['phone','Telefon'],['website','Website']];
-function renderChecks(cid,items,sel){var s=Array.isArray(sel)?sel:[];document.getElementById(cid).innerHTML=items.map(function(it){return '<label class="chk"><input type="checkbox" value="'+esc(it)+'"'+(s.indexOf(it)!==-1?' checked':'')+'/><span>'+esc(it)+'</span></label>';}).join('');}
+function _toArr(sel){
+  if(Array.isArray(sel))return sel;
+  if(typeof sel==='string'){var t=sel.trim();if(!t)return [];try{var j=JSON.parse(t);if(Array.isArray(j))return j;}catch(e){}
+    t=t.replace(/^[\{\[]|[\}\]]$/g,'');return t.split(',').map(function(x){return x.replace(/^["'\s]+|["'\s]+$/g,'');}).filter(Boolean);}
+  return [];
+}
+function _norm(s){return String(s==null?'':s).replace(/’/g,"'").replace(/\s+/g,' ').trim().toLowerCase();}
+function renderChecks(cid,items,sel){
+  var s=_toArr(sel).map(_norm);
+  document.getElementById(cid).innerHTML=items.map(function(it){var on=s.indexOf(_norm(it))!==-1;return '<label class="chk"><input type="checkbox" value="'+esc(it)+'"'+(on?' checked':'')+'/><span>'+esc(it)+'</span></label>';}).join('');
+}
+function setCapacity(val){
+  var sel=document.getElementById('pf-capacity');if(!val){sel.value='';return;}
+  sel.value=val;
+  if(_norm(sel.value)===_norm(val))return;
+  for(var i=0;i<sel.options.length;i++){if(_norm(sel.options[i].value||sel.options[i].text)===_norm(val)){sel.selectedIndex=i;return;}}
+}
 function renderProfil(){
   var p=_profile;
+  console.log('[Supplier] Annual capacity loaded:',p.annual_capacity);
+  console.log('[Supplier] Materials loaded:',p.materials);
+  console.log('[Supplier] Regions loaded:',p.regions,'· Certifications:',p.certifications);
   document.getElementById('pf-avatar').textContent=(p.company_name||'S').charAt(0).toUpperCase();
   document.getElementById('pf-name').textContent=p.company_name||'—';
   document.getElementById('acct-fields').innerHTML=ACCT_FIELDS.map(function(f){var val=p[f[0]]||'';return '<div class="field-row" id="ar-'+f[0]+'"><span class="field-label">'+esc(f[1])+'</span><span class="field-value" id="av-'+f[0]+'">'+(val?esc(val):'<span class="muted">—</span>')+'</span><span class="field-edit" id="ae-'+f[0]+'" onclick="editField(\''+f[0]+'\')">✎</span></div>';}).join('');
-  document.getElementById('pf-capacity').value=p.annual_capacity||'';
+  setCapacity(p.annual_capacity||'');
   document.getElementById('pf-notes').value=p.notes||'';
   renderChecks('pf-materials',CATALOG_MATERIALS,p.materials);
   renderChecks('pf-regions',REGIONS,p.regions);
