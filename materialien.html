@@ -954,16 +954,17 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <section class="sec bt"><div class="wrap">
     <span class="sec-label">Kategorien</span>
     <div class="pills">
-      <span class="pill">Transportbeton &amp; Pumpbeton</span>
-      <span class="pill">Armierung &amp; Bewehrung</span>
-      <span class="pill">Kies, Splitt &amp; Sand</span>
-      <span class="pill">Mauerwerk &amp; Mörtel</span>
-      <span class="pill">Schalung &amp; Stützen</span>
-      <span class="pill">Betonfertigteile</span>
-      <span class="pill">Dämmung</span>
-      <span class="pill">Gipskarton &amp; Ständerwerk</span>
-      <span class="pill">Bedachung &amp; Fassade</span>
-      <span class="pill">Haustechnik &amp; Rohrleitungen</span>
+      <span class="pill active" data-cat="Alle">Alle</span>
+      <span class="pill" data-cat="Transportbeton &amp; Pumpbeton">Transportbeton &amp; Pumpbeton</span>
+      <span class="pill" data-cat="Armierung &amp; Bewehrung">Armierung &amp; Bewehrung</span>
+      <span class="pill" data-cat="Kies, Splitt &amp; Sand">Kies, Splitt &amp; Sand</span>
+      <span class="pill" data-cat="Mauerwerk &amp; Mörtel">Mauerwerk &amp; Mörtel</span>
+      <span class="pill" data-cat="Schalung &amp; Stützen">Schalung &amp; Stützen</span>
+      <span class="pill" data-cat="Betonfertigteile">Betonfertigteile</span>
+      <span class="pill" data-cat="Dämmung">Dämmung</span>
+      <span class="pill" data-cat="Gipskarton &amp; Ständerwerk">Gipskarton &amp; Ständerwerk</span>
+      <span class="pill" data-cat="Bedachung &amp; Fassade">Bedachung &amp; Fassade</span>
+      <span class="pill" data-cat="Haustechnik &amp; Rohrleitungen">Haustechnik &amp; Rohrleitungen</span>
     </div>
   </div></section>
 
@@ -1897,14 +1898,61 @@ document.addEventListener('keydown',function(e){
 </div>
 
   <script>
-  // CATEGORY PILL TOGGLE (visual filter state)
-  document.querySelectorAll('#lp .pill').forEach(function(p){
-    p.addEventListener('click',function(){
-      var wasActive=p.classList.contains('active');
-      document.querySelectorAll('#lp .pill.active').forEach(function(a){a.classList.remove('active');});
-      if(!wasActive)p.classList.add('active');
+  // CATEGORY PILL FILTER — filters the material dropdown by category
+  (function(){
+    var sel=document.getElementById('mat-lookup-select');
+    var result=document.getElementById('mat-lookup-result');
+    if(!sel) return;
+    // classify a material name into one of the 10 pill categories (priority order)
+    function classify(name){
+      var n=name.toLowerCase();
+      if(n.indexOf('betonfertigteil')>-1) return 'Betonfertigteile';
+      if(n.indexOf('transportbeton')>-1||n.indexOf('pumpbeton')>-1) return 'Transportbeton & Pumpbeton';
+      if(n.indexOf('armierung')>-1||n.indexOf('betonstahl')>-1) return 'Armierung & Bewehrung';
+      if(n.indexOf('kies')>-1||n.indexOf('splitt')>-1||n.indexOf('sand')>-1) return 'Kies, Splitt & Sand';
+      if(n.indexOf('dämmplatte')>-1||n.indexOf('mineralwolle')>-1||n.indexOf('dämmung')>-1) return 'Dämmung';
+      if(n.indexOf('gipskarton')>-1||n.indexOf('ständerwerk')>-1||n.indexOf('anschlussprofil')>-1) return 'Gipskarton & Ständerwerk';
+      if(n.indexOf('dachziegel')>-1||n.indexOf('dachabdichtung')>-1||n.indexOf('betonroof')>-1||n.indexOf('fassaden')>-1||n.indexOf('bedachung')>-1) return 'Bedachung & Fassade';
+      if(n.indexOf('schalung')>-1||n.indexOf('träger')>-1||n.indexOf('stütze')>-1) return 'Schalung & Stützen';
+      if(n.indexOf('ziegel')>-1||n.indexOf('kalksandstein')>-1||n.indexOf('porenbeton')>-1||n.indexOf('mörtel')>-1||n.indexOf('putz')>-1||n.indexOf('estrich')>-1) return 'Mauerwerk & Mörtel';
+      if(n.indexOf('rohr')>-1||n.indexOf('heizungsverteiler')>-1) return 'Haustechnik & Rohrleitungen';
+      return 'Sonstige';
+    }
+    function build(pcat){
+      if(typeof MATERIAL_DB==='undefined'||typeof MAT_CODE==='undefined') return;
+      sel.innerHTML='<option value="">Material wählen…</option>';
+      MATERIAL_DB.forEach(function(group){
+        var og=document.createElement('optgroup'); og.label=group.cat; og.dataset.cat=group.cat;
+        var count=0;
+        group.items.forEach(function(name,i){
+          if(pcat!=='Alle' && classify(name)!==pcat) return;
+          var id='SO-'+MAT_CODE[group.cat]+'-'+String(i+1).padStart(2,'0');
+          var opt=document.createElement('option');
+          opt.value=id;opt.textContent=name;opt.dataset.cat=group.cat;opt.dataset.name=name;
+          og.appendChild(opt); count++;
+        });
+        if(count) sel.appendChild(og);
+      });
+      sel.selectedIndex=0;
+      if(result) result.style.display='none';
+    }
+    // toggle result visibility on selection
+    sel.addEventListener('change',function(){
+      var opt=sel.options[sel.selectedIndex];
+      if(result) result.style.display=(opt&&opt.value)?'grid':'none';
     });
-  });
+    // pills
+    var pills=document.querySelectorAll('#lp .pill');
+    pills.forEach(function(p){
+      p.addEventListener('click',function(){
+        pills.forEach(function(a){a.classList.remove('active');});
+        p.classList.add('active');
+        build(p.getAttribute('data-cat')||'Alle');
+      });
+    });
+    // init: hide result until a material is picked (dropdown already fully populated)
+    if(result) result.style.display='none';
+  })();
   </script>
   <script src="mobile-nav.js"></script>
 </body>
