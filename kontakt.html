@@ -901,6 +901,15 @@ body{background:#070F1A}
 #lpfoot .fcol a{display:block;font-size:13px;color:var(--t3);padding:3px 0;transition:color .15s}#lpfoot .fcol a:hover{color:var(--t1)}
 #lpfoot .fbottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--lpb);padding-top:24px;margin-top:32px;font-size:12px;color:var(--t3)}
 #lpfoot .fbottom a{color:var(--t3)}#lpfoot .fbottom a:hover{color:var(--gold)}
+
+/* kontakt form polish — gold accent + section labels */
+#lp .contact-form-card{overflow:visible}
+#lp .fcard-accent{height:3px;background:linear-gradient(90deg,var(--gold) 0%,rgba(232,160,32,.3) 100%);border-radius:16px 16px 0 0;margin:-36px -32px 24px}
+@media(max-width:768px){#lp .fcard-accent{margin:-24px -20px 20px}}
+#lp .form-title{font-size:18px;font-weight:600;color:var(--t1);margin-bottom:4px}
+#lp .form-subtitle{font-size:13px;color:var(--t3);margin-bottom:24px}
+#lp .fsec-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:600;margin:24px 0 12px;padding-top:24px;border-top:1px solid var(--lpb)}
+#lp .fsec-label.first{margin-top:0;padding-top:0;border-top:none}
 </style>
 <script>
 (function(){
@@ -1022,8 +1031,11 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       </div>
       <div>
         <div class="contact-form-card">
+          <div class="fcard-accent"></div>
           <form id="form-contact" onsubmit="submitContact(event)" novalidate>
             <div class="form-title">Jetzt melden</div>
+            <div class="form-subtitle">Du siehst deinen garantierten Mindestrabatt vor dem Absenden.</div>
+            <span class="fsec-label first">Firmendaten</span>
             <div class="form-grid">
               <div class="form-group"><label class="form-label" data-i18n="form_company">Firmenname *</label><input type="text" class="form-input" id="c-company" required/><div class="form-error" data-i18n="form_error_required" id="e-c-company">Pflichtfeld</div></div>
               <div class="form-group"><label class="form-label" data-i18n="form_contact_person">Ansprechperson *</label><input type="text" class="form-input" id="c-name" required/><div class="form-error" data-i18n="form_error_required" id="e-c-name">Pflichtfeld</div></div>
@@ -1032,8 +1044,9 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <div class="form-group"><label class="form-label" data-i18n="form_email">E-Mail *</label><input type="email" class="form-input" id="c-email" required/><div class="form-error" data-i18n="form_error_email" id="e-c-email">Gültige E-Mail</div></div>
               <div class="form-group"><label class="form-label" data-i18n="form_phone">Telefon *</label><input type="tel" class="form-input" id="c-phone" required/><div class="form-error" data-i18n="form_error_required" id="e-c-phone">Pflichtfeld</div></div>
             </div>
+            <span class="fsec-label">Material &amp; Menge</span>
             <div class="form-group">
-              <label class="form-label" data-i18n-html="form_material_qty">Material &amp; Menge *</label>
+              <label class="form-label" data-i18n-html="form_material_qty" style="display:none">Material &amp; Menge *</label>
               <div class="material-rows" id="material-rows">
                 <div class="material-row first-row">
                   <div class="mat-combo"><input type="text" class="form-input mat-search" placeholder="Material suchen oder wählen…" data-i18n-placeholder="form_select_material" autocomplete="off"/><input type="hidden" class="mat-id"/><div class="mat-dd"></div></div>
@@ -1044,6 +1057,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <button type="button" class="add-material-btn" id="add-material-btn" data-i18n-html="form_add_material" onclick="addMaterialRow()">＋ Weiteres Material hinzufügen</button>
               <p style="font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.6" data-i18n-html="form_material_hint">Dein Material ist nicht dabei? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.</p>
             </div>
+            <span class="fsec-label">Lieferzeitraum &amp; Adresse</span>
             <div class="form-grid">
               <div class="form-group"><label class="form-label" data-i18n="form_timing_label">Gewünschter Lieferzeitraum *</label>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">

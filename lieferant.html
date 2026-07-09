@@ -839,6 +839,30 @@ body{background:#070F1A}
 #lp .form-check:has(input:checked) span{color:var(--t1)}
 #lp .sa-submit{display:flex;align-items:center;justify-content:center;gap:8px;padding:15px}
 #lp .sa-submit:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 10px 30px rgba(232,160,32,.28)}
+
+/* ===== lieferant two-col hero redesign ===== */
+#lp .lhero{display:grid;grid-template-columns:1fr 1fr;gap:80px;padding:80px 0;align-items:center}
+@media(max-width:900px){#lp .lhero{grid-template-columns:1fr;gap:48px;padding:60px 0 40px}}
+#lp .lhero h1{font-size:clamp(32px,4vw,52px);font-weight:800;color:var(--t1);letter-spacing:-.03em;line-height:1.1}
+#lp .lhero .lsub{font-size:16px;color:var(--t2);margin-top:12px;line-height:1.6}
+#lp .lbenefits{margin-top:40px}
+#lp .lben{display:flex;gap:14px;align-items:flex-start;padding:14px 0;border-bottom:1px solid var(--lpb)}
+#lp .lben-ic{width:24px;height:24px;border-radius:50%;background:var(--golddim);border:1px solid var(--goldbd);color:var(--gold);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+#lp .lben-t{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:2px}
+#lp .lben-x{font-size:13px;color:var(--t2);line-height:1.5}
+#lp .fcard{background:var(--bg1);border:1px solid var(--lpb);border-radius:16px;overflow:hidden;position:relative}
+#lp .fcard-accent{height:3px;background:linear-gradient(90deg,var(--gold) 0%,rgba(232,160,32,.3) 100%);width:100%}
+#lp .fcard-inner{padding:32px}
+@media(max-width:768px){#lp .fcard-inner{padding:24px 20px}}
+#lp .fcard-title{font-size:18px;font-weight:600;color:var(--t1);margin-bottom:6px}
+#lp .fcard-sub{font-size:13px;color:var(--t3);margin-bottom:28px}
+#lp .fsec-label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:600;margin:24px 0 12px;padding-top:24px;border-top:1px solid var(--lpb)}
+#lp .fsec-label.first{margin-top:0;padding-top:0;border-top:none}
+#lp .fcard .form-checks{gap:6px 16px}
+#lp .fcard .form-checks-3{grid-template-columns:repeat(3,1fr)}
+@media(max-width:600px){#lp .fcard .form-checks,#lp .fcard .form-checks-3{grid-template-columns:1fr}}
+#lp .lvergabe{max-width:720px}
+#lp .lvergabe .howtext{font-size:16px;color:var(--t2);line-height:1.8}
 </style>
 <script>
 (function(){
@@ -922,113 +946,109 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 </div>
 
 <main id="lp">
-  <!-- HERO -->
-  <section class="phero"><div class="wrap">
-    <span class="eyebrow" data-i18n="supplier.label">Partnerlieferanten</span>
-    <h1 data-i18n="supplier.title">SourceOn-Partnerlieferant werden.</h1>
-    <p class="sub" data-i18n="supplier.subtitle">Wir suchen zuverlässige Schweizer Lieferanten für unser wachsendes Netzwerk.</p>
-  </div></section>
-
-  <!-- BENEFITS -->
-  <section class="sec bt"><div class="wrap">
-    <span class="sec-label">Deine Vorteile</span>
-    <div class="svbenefits reveal">
-      <div class="svbenefit"><h4 data-i18n="supplier.b1.title">Garantiertes Volumen</h4><p data-i18n="supplier.b1.desc">Gebündelte Aufträge statt Einzelanfragen</p></div>
-      <div class="svbenefit"><h4 data-i18n="supplier.b2.title">Planungssicherheit</h4><p data-i18n="supplier.b2.desc">Regelmässige Bedarfsmeldungen im Voraus</p></div>
-      <div class="svbenefit"><h4 data-i18n="supplier.b3.title">Neue Kundschaft</h4><p data-i18n="supplier.b3.desc">Zugang zu Schweizer KMU-Baufirmen</p></div>
-      <div class="svbenefit"><h4 data-i18n="supplier.b4.title">Faire Konditionen</h4><p data-i18n="supplier.b4.desc">Transparente Provisionsabrechnung, klar geregelt in der Lieferantenvereinbarung</p></div>
-      <div class="svbenefit"><h4 data-i18n="supplier.b5.title">Qualitätsnetzwerk</h4><p data-i18n="supplier.b5.desc">Nur geprüfte SIA/ISO-konforme Lieferanten</p></div>
-      <div class="svbenefit"><h4 data-i18n="supplier.b6.title">Wachstumspotenzial</h4><p data-i18n="supplier.b6.desc">Marktposition stärken im Schweizer Baumarkt</p></div>
+  <section><div class="wrap">
+    <div class="lhero">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="supplier.label">Partnerlieferanten</span>
+        <h1 data-i18n="supplier.title">SourceOn-Partnerlieferant werden.</h1>
+        <p class="lsub">Zugang zu gebündelten Grossaufträgen ohne eigene Akquise.</p>
+        <div class="lbenefits">
+          <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b1.title">Garantiertes Volumen</div><div class="lben-x" data-i18n="supplier.b1.desc">Gebündelte Aufträge statt Einzelanfragen</div></div></div>
+          <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b2.title">Planungssicherheit</div><div class="lben-x" data-i18n="supplier.b2.desc">Regelmässige Bedarfsmeldungen im Voraus</div></div></div>
+          <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b3.title">Neue Kundschaft</div><div class="lben-x">Zugang zu Schweizer KMU-Baufirmen ohne Akquisekosten</div></div></div>
+          <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b4.title">Faire Konditionen</div><div class="lben-x">Transparente Provisionsabrechnung, klar geregelt</div></div></div>
+          <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b5.title">Qualitätsnetzwerk</div><div class="lben-x" data-i18n="supplier.b5.desc">Nur geprüfte SIA/ISO-konforme Lieferanten</div></div></div>
+          <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b6.title">Wachstumspotenzial</div><div class="lben-x" data-i18n="supplier.b6.desc">Marktposition stärken im Schweizer Baumarkt</div></div></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="fcard">
+          <div class="fcard-accent"></div>
+          <div class="fcard-inner">
+            <div class="fcard-title">Jetzt bewerben</div>
+            <div class="fcard-sub">Wir prüfen dein Profil innerhalb von 48 Stunden.</div>
+            <form id="form-supplier" onsubmit="submitSupplier(event)" novalidate>
+              <span class="fsec-label first">Kontakt</span>
+              <div class="form-grid">
+                <div class="form-group"><label class="form-label" data-i18n="form.company">Firmenname *</label><input type="text" class="form-input" id="sa-company" required/><div class="form-error" id="e-sa-company" data-i18n="form.required">Pflichtfeld</div></div>
+                <div class="form-group"><label class="form-label" data-i18n="form.contact">Ansprechperson *</label><input type="text" class="form-input" id="sa-name" required/><div class="form-error" id="e-sa-name" data-i18n="form.required">Pflichtfeld</div></div>
+              </div>
+              <div class="form-grid">
+                <div class="form-group"><label class="form-label" data-i18n="form.email">E-Mail *</label><input type="email" class="form-input" id="sa-email" required/><div class="form-error" id="e-sa-email" data-i18n="form.emailError">Gültige E-Mail erforderlich</div></div>
+                <div class="form-group"><label class="form-label" data-i18n="form.phone">Telefon *</label><input type="tel" class="form-input" id="sa-phone" required/><div class="form-error" id="e-sa-phone" data-i18n="form.required">Pflichtfeld</div></div>
+              </div>
+              <div class="form-group"><label class="form-label" data-i18n="form.website">Website (optional)</label><input type="url" class="form-input" id="sa-web" placeholder="https://"/></div>
+              <span class="fsec-label">Leistungsprofil</span>
+              <div class="form-group">
+                <label class="form-label">Jahreskapazität *</label>
+                <select class="form-select" id="sa-cap" required>
+                  <option value="">Bitte wählen</option>
+                  <option>Unter CHF 500'000</option>
+                  <option>CHF 500'000 – 2'000'000</option>
+                  <option>CHF 2'000'000 – 10'000'000</option>
+                  <option>CHF 10'000'000 – 50'000'000</option>
+                  <option>Über CHF 50'000'000</option>
+                </select>
+                <div class="form-error" id="e-sa-cap">Bitte wählen</div>
+              </div>
+              <span class="fsec-label">Materialien</span>
+              <div class="form-checks">
+                <label class="form-check"><input type="checkbox"/><span data-i18n="mat.concrete">Beton</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="mat.rebar">Armierungsstahl</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="mat.gravel">Kies &amp; Splitt</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="mat.masonry">Mauerwerk &amp; Ziegel</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="mat.insulation">Dämmung</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="mat.formwork">Schalung</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="mat.mortar">Mörtel</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="mat.plumbing">Sanitär &amp; HLKS</span></label>
+                <label class="form-check"><input type="checkbox" id="mat-full" onchange="if(this.checked){this.closest('.form-checks').querySelectorAll('input[type=checkbox]').forEach(function(cb){cb.checked=true;})}"/><span data-i18n="mat.full">Vollsortiment</span></label>
+              </div>
+              <span class="fsec-label">Regionen</span>
+              <div class="form-checks">
+                <label class="form-check"><input type="checkbox"/><span data-i18n="reg.zurich">Zürich</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="reg.bern">Bern</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="reg.basel">Basel</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="reg.lucerne">Luzern</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="reg.east">Ostschweiz</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="reg.central">Zentralschweiz</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="reg.aargau">Aargau</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="reg.ticino">Tessin</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="reg.west">Westschweiz</span></label>
+                <label class="form-check"><input type="checkbox"/><span data-i18n="reg.all">Ganze Schweiz</span></label>
+              </div>
+              <p class="form-note" data-i18n="form.regionNote">Hinweis: Ausschreibungen enthalten zu Beginn nur Liefergebiete als Zonen, keine genauen Adressen. Diese werden erst nach Zuschlag freigegeben.</p>
+              <span class="fsec-label">Zertifizierungen (optional)</span>
+              <div class="form-checks form-checks-3">
+                <label class="form-check"><input type="checkbox"/><span>ISO 9001</span></label>
+                <label class="form-check"><input type="checkbox"/><span>ISO 14001</span></label>
+                <label class="form-check"><input type="checkbox"/><span>SIA-konform</span></label>
+                <label class="form-check"><input type="checkbox"/><span>SN EN</span></label>
+                <label class="form-check"><input type="checkbox"/><span>SUVA-zertifiziert</span></label>
+                <label class="form-check"><input type="checkbox"/><span>Minergie</span></label>
+              </div>
+              <div class="form-group" style="margin-top:24px"><label class="form-label">Bemerkungen</label><textarea class="form-textarea" id="sa-notes" placeholder="Weitere Informationen zu deinem Angebot…"></textarea></div>
+              <div class="form-group" style="margin-top:8px;margin-bottom:0">
+                <label class="sa-agree">
+                  <input type="checkbox" id="sa-agreement"/>
+                  <span>Ich akzeptiere die <a href="lieferantenvereinbarung.html" target="_blank">Lieferantenvereinbarung</a> von SourceOn und bestätige, dass die gemachten Angaben korrekt sind. *</span>
+                </label>
+                <div class="form-error" id="e-sa-agreement" style="margin-top:6px">Bitte akzeptiere die Lieferantenvereinbarung, um fortzufahren.</div>
+              </div>
+              <button type="submit" class="sa-submit">Jetzt als Partnerlieferant bewerben →</button>
+              <p class="sa-post" data-i18n="supplier.postSubmit">Nach deiner Bewerbung prüfen wir dein Profil und melden uns innerhalb von 48 Stunden. Bei Freigabe erhältst du sofort Zugang zu passenden Ausschreibungen.</p>
+              <div class="form-error" id="error-supplier" style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#EF4444;font-size:14px"></div>
+            </form>
+            <div class="form-success" id="success-supplier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.</span></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div></section>
 
-  <!-- HOW IT WORKS -->
+  <!-- VERGABE -->
   <section class="sec bt"><div class="wrap">
     <span class="sec-label" style="margin-bottom:32px" data-i18n="supplier.how.title">Vergabe</span>
-    <p class="howtext reveal" data-i18n="supplier.how.text">SourceOn bündelt Bedarf von mehreren Baufirmen zu grösseren Materialpaketen. Verifizierte Partnerlieferanten erhalten Zugang zu diesen Ausschreibungen und können ein Angebot einreichen. Den Zuschlag erhält das Angebot mit dem höchsten Rabatt, das den ausgeschriebenen Mindestrabatt erreicht oder übertrifft. Lieferfähigkeit und Zuverlässigkeit werden bereits bei der Lieferantenverifizierung geprüft. Aus Datenschutzgründen werden Lieferadressen erst nach Zuschlag bekannt gegeben — das Ausschreibungspaket enthält Materialart, Menge, Liefergebiet (Zone) und Zeitraum.</p>
-  </div></section>
-
-  <!-- REGISTRATION FORM -->
-  <section class="sec bt"><div class="wrap">
-    <span class="sec-label" style="margin-bottom:32px">Bewerbung</span>
-    <div class="saform">
-      <form id="form-supplier" onsubmit="submitSupplier(event)" novalidate>
-        <div class="form-grid">
-          <div class="form-group"><label class="form-label" data-i18n="form.company">Firmenname *</label><input type="text" class="form-input" id="sa-company" required/><div class="form-error" id="e-sa-company" data-i18n="form.required">Pflichtfeld</div></div>
-          <div class="form-group"><label class="form-label" data-i18n="form.contact">Ansprechperson *</label><input type="text" class="form-input" id="sa-name" required/><div class="form-error" id="e-sa-name" data-i18n="form.required">Pflichtfeld</div></div>
-        </div>
-        <div class="form-grid">
-          <div class="form-group"><label class="form-label" data-i18n="form.email">E-Mail *</label><input type="email" class="form-input" id="sa-email" required/><div class="form-error" id="e-sa-email" data-i18n="form.emailError">Gültige E-Mail erforderlich</div></div>
-          <div class="form-group"><label class="form-label" data-i18n="form.phone">Telefon *</label><input type="tel" class="form-input" id="sa-phone" required/><div class="form-error" id="e-sa-phone" data-i18n="form.required">Pflichtfeld</div></div>
-        </div>
-        <div class="form-group"><label class="form-label" data-i18n="form.website">Website (optional)</label><input type="url" class="form-input" id="sa-web" placeholder="https://"/></div>
-        <div class="form-group">
-          <label class="form-label" data-i18n="form.materials">Materialien (Mehrfachauswahl)</label>
-          <div class="form-checks">
-            <label class="form-check"><input type="checkbox"/><span data-i18n="mat.concrete">Beton</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="mat.rebar">Armierungsstahl</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="mat.gravel">Kies &amp; Splitt</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="mat.masonry">Mauerwerk &amp; Ziegel</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="mat.insulation">Dämmung</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="mat.formwork">Schalung</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="mat.mortar">Mörtel</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="mat.plumbing">Sanitär &amp; HLKS</span></label>
-            <label class="form-check"><input type="checkbox" id="mat-full" onchange="if(this.checked){this.closest('.form-checks').querySelectorAll('input[type=checkbox]').forEach(function(cb){cb.checked=true;})}"/><span data-i18n="mat.full">Vollsortiment</span></label>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label" data-i18n="form.regions">Regionen (Mehrfachauswahl)</label>
-          <div class="form-checks">
-            <label class="form-check"><input type="checkbox"/><span data-i18n="reg.zurich">Zürich</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="reg.bern">Bern</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="reg.basel">Basel</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="reg.lucerne">Luzern</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="reg.east">Ostschweiz</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="reg.central">Zentralschweiz</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="reg.aargau">Aargau</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="reg.ticino">Tessin</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="reg.west">Westschweiz</span></label>
-            <label class="form-check"><input type="checkbox"/><span data-i18n="reg.all">Ganze Schweiz</span></label>
-          </div>
-          <p class="form-note" data-i18n="form.regionNote">Hinweis: Ausschreibungen enthalten zu Beginn nur Liefergebiete als Zonen, keine genauen Adressen. Diese werden erst nach Zuschlag freigegeben.</p>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Jahreskapazität *</label>
-          <select class="form-select" id="sa-cap" required>
-            <option value="">Bitte wählen</option>
-            <option>Unter CHF 500'000</option>
-            <option>CHF 500'000 – 2'000'000</option>
-            <option>CHF 2'000'000 – 10'000'000</option>
-            <option>CHF 10'000'000 – 50'000'000</option>
-            <option>Über CHF 50'000'000</option>
-          </select>
-          <div class="form-error" id="e-sa-cap">Bitte wählen</div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Zertifizierungen</label>
-          <div class="form-checks form-checks-3">
-            <label class="form-check"><input type="checkbox"/><span>ISO 9001</span></label>
-            <label class="form-check"><input type="checkbox"/><span>ISO 14001</span></label>
-            <label class="form-check"><input type="checkbox"/><span>SIA-konform</span></label>
-            <label class="form-check"><input type="checkbox"/><span>SN EN</span></label>
-            <label class="form-check"><input type="checkbox"/><span>SUVA-zertifiziert</span></label>
-            <label class="form-check"><input type="checkbox"/><span>Minergie</span></label>
-          </div>
-        </div>
-        <div class="form-group"><label class="form-label">Bemerkungen</label><textarea class="form-textarea" id="sa-notes" placeholder="Weitere Informationen zu deinem Angebot…"></textarea></div>
-        <div class="form-group" style="margin-top:20px;margin-bottom:8px">
-          <label class="sa-agree">
-            <input type="checkbox" id="sa-agreement"/>
-            <span>Ich akzeptiere die <a href="lieferantenvereinbarung.html" target="_blank">Lieferantenvereinbarung</a> von SourceOn und bestätige, dass die gemachten Angaben korrekt sind. *</span>
-          </label>
-          <div class="form-error" id="e-sa-agreement" style="margin-top:6px">Bitte akzeptiere die Lieferantenvereinbarung, um fortzufahren.</div>
-        </div>
-        <button type="submit" class="sa-submit">Jetzt als Partnerlieferant bewerben →</button>
-        <p class="sa-post" data-i18n="supplier.postSubmit">Nach deiner Bewerbung prüfen wir dein Profil und melden uns innerhalb von 48 Stunden. Bei Freigabe erhältst du sofort Zugang zu passenden Ausschreibungen.</p>
-        <div class="form-error" id="error-supplier" style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#EF4444;font-size:14px"></div>
-      </form>
-      <div class="form-success" id="success-supplier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.</span></div>
-    </div>
+    <div class="lvergabe"><p class="howtext reveal" data-i18n="supplier.how.text">SourceOn bündelt Bedarf von mehreren Baufirmen zu grösseren Materialpaketen. Verifizierte Partnerlieferanten erhalten Zugang zu diesen Ausschreibungen und können ein Angebot einreichen. Den Zuschlag erhält das Angebot mit dem höchsten Rabatt, das den ausgeschriebenen Mindestrabatt erreicht oder übertrifft. Lieferfähigkeit und Zuverlässigkeit werden bereits bei der Lieferantenverifizierung geprüft. Aus Datenschutzgründen werden Lieferadressen erst nach Zuschlag bekannt gegeben — das Ausschreibungspaket enthält Materialart, Menge, Liefergebiet (Zone) und Zeitraum.</p></div>
   </div></section>
 </main>
 
