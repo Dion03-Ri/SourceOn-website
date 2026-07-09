@@ -827,21 +827,7 @@ body{background:#070F1A}
 #lpfoot .fcol a{display:block;font-size:13px;color:var(--t3);padding:3px 0;transition:color .15s}#lpfoot .fcol a:hover{color:var(--t1)}
 #lpfoot .fbottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--lpb);padding-top:24px;margin-top:32px;font-size:12px;color:var(--t3)}
 #lpfoot .fbottom a{color:var(--t3)}#lpfoot .fbottom a:hover{color:var(--gold)}
-/* ===== lieferant cool enhancements ===== */
-#lp .phero{position:relative;overflow:hidden}
-#lp .phero::before{content:"";position:absolute;top:-150px;left:50%;transform:translateX(-50%);width:660px;height:460px;background:radial-gradient(circle,rgba(232,160,32,.13),transparent 68%);pointer-events:none;z-index:0}
-#lp .phero .wrap{position:relative;z-index:1}
-#lp .hero-chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:28px}
-#lp .hero-chip{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--t2);background:var(--bg1);border:1px solid var(--lpb);border-radius:999px;padding:8px 15px}
-#lp .hero-chip::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px rgba(232,160,32,.7)}
-#lp .svbenefit{position:relative;padding:30px 26px}
-#lp .svb-ic{width:38px;height:38px;border-radius:10px;background:var(--golddim);border:1px solid var(--goldbd);display:flex;align-items:center;justify-content:center;margin-bottom:16px;color:var(--gold);transition:background .15s,transform .15s}
-#lp .svb-ic svg{width:19px;height:19px}
-#lp .svbenefit:hover .svb-ic{background:rgba(232,160,32,.16);transform:translateY(-2px)}
-#lp .howbox{background:var(--bg1);border:1px solid var(--lpb);border-radius:16px;padding:34px 40px;max-width:760px;position:relative}
-#lp .howbox::before{content:"";position:absolute;left:0;top:26px;bottom:26px;width:2px;background:linear-gradient(var(--gold),transparent);border-radius:2px}
-#lp .howbox .howtext{margin:0}
-@media(max-width:768px){#lp .howbox{padding:28px 24px}}
+/* ===== lieferant form enhancements ===== */
 #lp .saform{background:var(--bg1);border:1px solid var(--lpb);border-radius:16px;padding:40px}
 @media(max-width:768px){#lp .saform{padding:24px}}
 #lp .form-input,#lp .form-select,#lp .form-textarea{background:#0A131F}
@@ -941,30 +927,25 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     <span class="eyebrow" data-i18n="supplier.label">Partnerlieferanten</span>
     <h1 data-i18n="supplier.title">SourceOn-Partnerlieferant werden.</h1>
     <p class="sub" data-i18n="supplier.subtitle">Wir suchen zuverlässige Schweizer Lieferanten für unser wachsendes Netzwerk.</p>
-    <div class="hero-chips">
-      <span class="hero-chip">Antwort in 48 Stunden</span>
-      <span class="hero-chip">SIA/ISO-geprüftes Netzwerk</span>
-      <span class="hero-chip">CH-weit</span>
-    </div>
   </div></section>
 
   <!-- BENEFITS -->
   <section class="sec bt"><div class="wrap">
     <span class="sec-label">Deine Vorteile</span>
     <div class="svbenefits reveal">
-      <div class="svbenefit"><div class="svb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22,4 12,14.01 9,11.01"/></svg></div><h4 data-i18n="supplier.b1.title">Garantiertes Volumen</h4><p data-i18n="supplier.b1.desc">Gebündelte Aufträge statt Einzelanfragen</p></div>
-      <div class="svbenefit"><div class="svb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12,6 12,12 16,14"/></svg></div><h4 data-i18n="supplier.b2.title">Planungssicherheit</h4><p data-i18n="supplier.b2.desc">Regelmässige Bedarfsmeldungen im Voraus</p></div>
-      <div class="svbenefit"><div class="svb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><h4 data-i18n="supplier.b3.title">Neue Kundschaft</h4><p data-i18n="supplier.b3.desc">Zugang zu Schweizer KMU-Baufirmen</p></div>
-      <div class="svbenefit"><div class="svb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg></div><h4 data-i18n="supplier.b4.title">Faire Konditionen</h4><p data-i18n="supplier.b4.desc">Transparente Provisionsabrechnung, klar geregelt in der Lieferantenvereinbarung</p></div>
-      <div class="svbenefit"><div class="svb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h4 data-i18n="supplier.b5.title">Qualitätsnetzwerk</h4><p data-i18n="supplier.b5.desc">Nur geprüfte SIA/ISO-konforme Lieferanten</p></div>
-      <div class="svbenefit"><div class="svb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><h4 data-i18n="supplier.b6.title">Wachstumspotenzial</h4><p data-i18n="supplier.b6.desc">Marktposition stärken im Schweizer Baumarkt</p></div>
+      <div class="svbenefit"><h4 data-i18n="supplier.b1.title">Garantiertes Volumen</h4><p data-i18n="supplier.b1.desc">Gebündelte Aufträge statt Einzelanfragen</p></div>
+      <div class="svbenefit"><h4 data-i18n="supplier.b2.title">Planungssicherheit</h4><p data-i18n="supplier.b2.desc">Regelmässige Bedarfsmeldungen im Voraus</p></div>
+      <div class="svbenefit"><h4 data-i18n="supplier.b3.title">Neue Kundschaft</h4><p data-i18n="supplier.b3.desc">Zugang zu Schweizer KMU-Baufirmen</p></div>
+      <div class="svbenefit"><h4 data-i18n="supplier.b4.title">Faire Konditionen</h4><p data-i18n="supplier.b4.desc">Transparente Provisionsabrechnung, klar geregelt in der Lieferantenvereinbarung</p></div>
+      <div class="svbenefit"><h4 data-i18n="supplier.b5.title">Qualitätsnetzwerk</h4><p data-i18n="supplier.b5.desc">Nur geprüfte SIA/ISO-konforme Lieferanten</p></div>
+      <div class="svbenefit"><h4 data-i18n="supplier.b6.title">Wachstumspotenzial</h4><p data-i18n="supplier.b6.desc">Marktposition stärken im Schweizer Baumarkt</p></div>
     </div>
   </div></section>
 
   <!-- HOW IT WORKS -->
   <section class="sec bt"><div class="wrap">
     <span class="sec-label" style="margin-bottom:32px" data-i18n="supplier.how.title">Vergabe</span>
-    <div class="howbox reveal"><p class="howtext" data-i18n="supplier.how.text">SourceOn bündelt Bedarf von mehreren Baufirmen zu grösseren Materialpaketen. Verifizierte Partnerlieferanten erhalten Zugang zu diesen Ausschreibungen und können ein Angebot einreichen. Den Zuschlag erhält das Angebot mit dem höchsten Rabatt, das den ausgeschriebenen Mindestrabatt erreicht oder übertrifft. Lieferfähigkeit und Zuverlässigkeit werden bereits bei der Lieferantenverifizierung geprüft. Aus Datenschutzgründen werden Lieferadressen erst nach Zuschlag bekannt gegeben — das Ausschreibungspaket enthält Materialart, Menge, Liefergebiet (Zone) und Zeitraum.</p></div>
+    <p class="howtext reveal" data-i18n="supplier.how.text">SourceOn bündelt Bedarf von mehreren Baufirmen zu grösseren Materialpaketen. Verifizierte Partnerlieferanten erhalten Zugang zu diesen Ausschreibungen und können ein Angebot einreichen. Den Zuschlag erhält das Angebot mit dem höchsten Rabatt, das den ausgeschriebenen Mindestrabatt erreicht oder übertrifft. Lieferfähigkeit und Zuverlässigkeit werden bereits bei der Lieferantenverifizierung geprüft. Aus Datenschutzgründen werden Lieferadressen erst nach Zuschlag bekannt gegeben — das Ausschreibungspaket enthält Materialart, Menge, Liefergebiet (Zone) und Zeitraum.</p>
   </div></section>
 
   <!-- REGISTRATION FORM -->
