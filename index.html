@@ -863,6 +863,14 @@ body{background:#070F1A}
 #lpfoot .fbottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--lpb);padding-top:24px;margin-top:32px;font-size:12px;color:var(--t3)}
 #lpfoot .fbottom a{color:var(--t3)}#lpfoot .fbottom a:hover{color:var(--gold)}
 
+
+.nav-links li.has-dd{position:relative}
+.nav-links li.has-dd>.nav-dd{position:absolute;top:100%;left:50%;transform:translateX(-50%);background:rgba(7,15,26,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px 8px 8px;min-width:230px;opacity:0;visibility:hidden;transition:opacity .15s,visibility .15s;z-index:300}
+.nav-links li.has-dd:hover>.nav-dd{opacity:1;visibility:visible}
+.nav-dd a{display:block;padding:10px 16px;font-size:13px;color:#94A3B8;border-radius:6px;transition:background .15s,color .15s}
+.nav-dd a:hover{background:#111F2E;color:#F1F5F9}
+.nav-ov-sub{display:flex;flex-direction:column;gap:12px;margin-top:-18px;margin-bottom:2px}
+.nav-ov-sub a{font-size:1.05rem!important;color:#94A3B8!important;font-weight:500!important}
 </style>
 <script>
 (function(){
@@ -889,7 +897,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav.process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav.calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav.materials">Materialien</a></li>
-      <li><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-investoren.html">Investoren &amp; Eigentümer</a><a href="fuerwen-architekten.html">Architekten &amp; Planer</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav.supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav.about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav.contact">Kontakt</a></li>
@@ -941,6 +949,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <a href="prozess.html" onclick="toggleNav()" data-i18n="nav.process">Wie es funktioniert</a>
   <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav.calc">Kalkulator</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav.forwhom">Für wen</a>
+  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()">Handwerk</a><a href="fuerwen-investoren.html" onclick="toggleNav()">Investoren</a><a href="fuerwen-architekten.html" onclick="toggleNav()">Architekten &amp; Planer</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav.supplier">Lieferant werden</a>
   <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav.about">Über uns</a>
   <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav.contact">Kontakt</a>
@@ -1013,25 +1022,25 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <section class="sec bt"><div class="wrap">
     <span class="sec-label reveal">Für wen</span>
     <div class="tiles reveal">
-      <a class="tile tile-lg" href="fuerwen.html">
+      <a class="tile tile-lg" href="fuerwen-bauunternehmen.html">
         <div class="tile-cat">Bauunternehmen</div>
         <div class="tile-title">Einkaufsmacht wie ein Grosskonzern — auch als KMU.</div>
         <div class="tile-desc">SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte beim Lieferanten. Profitabel ab CHF 50'000 Jahresvolumen.</div>
         <div class="tile-link">Mehr erfahren →</div>
       </a>
-      <a class="tile" href="fuerwen.html">
+      <a class="tile" href="fuerwen-handwerk.html">
         <div class="tile-cat">Handwerk</div>
         <div class="tile-title">Für jedes Gewerk.</div>
         <div class="tile-desc">Schnelle Abwicklung, keine Vorauszahlung.</div>
         <div class="tile-link">→</div>
       </a>
-      <a class="tile" href="fuerwen.html">
+      <a class="tile" href="fuerwen-investoren.html">
         <div class="tile-cat">Investoren</div>
         <div class="tile-title">Renovation und Neubau.</div>
         <div class="tile-desc">Geprüfte Qualitätsstandards, SIA-konform.</div>
         <div class="tile-link">→</div>
       </a>
-      <a class="tile" href="fuerwen.html">
+      <a class="tile" href="fuerwen-architekten.html">
         <div class="tile-cat">Architekten &amp; Planer</div>
         <div class="tile-title">Integration ab der Planungsphase.</div>
         <div class="tile-desc">Materialbeschaffung früh einplanen.</div>
