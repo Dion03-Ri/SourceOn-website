@@ -806,14 +806,19 @@ body{background:#070F1A}
 #lp .faq-head{font-size:clamp(24px,3vw,36px);font-weight:700;color:var(--t1);letter-spacing:-.02em;margin-bottom:48px}
 #lp .faqwrap{max-width:800px}
 #lp .faq-item{border-bottom:1px solid var(--lpb)}
-#lp .faq-q{width:100%;background:none;border:none;display:flex;justify-content:space-between;align-items:center;padding:20px 0;cursor:pointer;text-align:left;font-family:inherit;font-size:16px;font-weight:500;color:var(--t1);transition:color .15s}
-#lp .faq-q .faq-q-text{flex:1;padding-right:16px}
+#lp .faq-q{width:100%;background:none;border:none;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 0;cursor:pointer;text-align:left;font-family:inherit;font-size:15px;font-weight:500;color:var(--t1);line-height:1.5;transition:color .15s}
+#lp .faq-q .faq-q-text{flex:1;line-height:1.5;transition:color .15s}
 #lp .faq-q:hover .faq-q-text,#lp .faq-q.open .faq-q-text{color:var(--gold)}
-#lp .faq-toggle{flex-shrink:0;font-size:20px;color:var(--t3);line-height:1;transition:color .2s}
-#lp .faq-q.open .faq-toggle{color:var(--gold)}
+#lp .faq-toggle{flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--bg2);border:1px solid var(--lpbs);display:flex;align-items:center;justify-content:center;font-size:16px;line-height:1;color:var(--t3);transition:background .2s,border-color .2s,color .2s}
+#lp .faq-q.open .faq-toggle{background:var(--golddim);border-color:var(--goldbd);color:var(--gold)}
 #lp .faq-a{max-height:0;overflow:hidden;transition:max-height .3s ease}
-#lp .faq-a-inner{padding:0 0 20px;font-size:14px;color:var(--t2);line-height:1.7;max-width:680px}
-@media(max-width:768px){#lp .faq-q{font-size:15px}}
+#lp .faq-a-inner{padding:0 0 22px;font-size:14px;color:var(--t2);line-height:1.75;max-width:680px}
+/* principles */
+#lp .principle{display:grid;grid-template-columns:80px 1fr;gap:32px;padding:32px 0;border-bottom:1px solid var(--lpb);align-items:start}
+#lp .principle .pr-n{font-size:48px;font-weight:800;color:var(--gold);opacity:.2;line-height:1}
+#lp .principle .pr-t{font-size:20px;font-weight:700;color:var(--t1);letter-spacing:-.01em;margin-bottom:8px}
+#lp .principle .pr-x{font-size:15px;color:var(--t2);line-height:1.7;max-width:600px}
+@media(max-width:768px){#lp .principle{grid-template-columns:1fr;gap:8px}#lp .principle .pr-n{font-size:36px;margin-bottom:8px}}
 /* cta */
 #lp .cta-center{text-align:center;padding:100px 0;border-top:1px solid var(--lpb)}
 #lp .cta-center h2{font-size:clamp(28px,4vw,48px);font-weight:800;color:var(--t1);letter-spacing:-.03em}
@@ -937,7 +942,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     </div>
     <div class="badges reveal">
       <span class="badge"><b>✓</b><span data-i18n="about_badge1">Gegründet in der Schweiz</span></span>
-      <span class="badge"><b>✓</b><span data-i18n="about_badge2">Kein Risiko für Kunden</span></span>
+      <span class="badge"><b>✓</b><span>Sealed-Bid-Verfahren</span></span>
     </div>
   </div></section>
 
@@ -947,6 +952,34 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <div class="featcell"><div class="fi">⚡</div><h3 data-i18n="feat1_title">Erfolgsbasiertes Modell</h3><p data-i18n="feat1_desc">Erfolgsprovision aus deiner Ersparnis — du zahlst nur, wenn du sparst.</p></div>
       <div class="featcell"><div class="fi">🇨🇭</div><h3 data-i18n="feat2_title">Schweizer Qualitätsstandards</h3><p data-i18n="feat2_desc">SIA/ISO-konforme Lieferanten, SN EN Normen, persönlich geprüft.</p></div>
       <div class="featcell"><div class="fi">⏱</div><h3 data-i18n="feat3_title">Schnelle Abwicklung</h3><p data-i18n="feat3_desc">Dein Lieferzeitraum gibt das Tempo vor — vollautomatisch.</p></div>
+    </div>
+  </div></section>
+
+  <!-- PRINCIPLES -->
+  <section class="sec bt"><div class="wrap">
+    <span class="sec-label">Unsere Prinzipien</span>
+    <div class="principles">
+      <div class="principle reveal">
+        <div class="pr-n">01</div>
+        <div>
+          <div class="pr-t">Kein Ergebnis — keine Kosten.</div>
+          <div class="pr-x">SourceOn verdient nur, wenn du sparst. Unsere Provision von 2.25% fällt ausschliesslich an, wenn das verhandelte Angebot deinen garantierten Mindestrabatt erreicht oder übertrifft. Kein Deal, keine Rechnung.</div>
+        </div>
+      </div>
+      <div class="principle reveal">
+        <div class="pr-n">02</div>
+        <div>
+          <div class="pr-t">Transparenz vor Schönrednerei.</div>
+          <div class="pr-x">Dein Mindestrabatt steht fest, bevor irgendetwas verbindlich wird. Du siehst die Zahlen — wir machen keine Versprechungen die wir nicht belegen können. Was wir zusagen, hält.</div>
+        </div>
+      </div>
+      <div class="principle reveal">
+        <div class="pr-n">03</div>
+        <div>
+          <div class="pr-t">Vollautomatisch — kein Aufwand für dich.</div>
+          <div class="pr-x">Kein Telefonat, kein Verkaufsgespräch, keine Papierarbeit. Du meldest deinen Bedarf in zwei Minuten, das System übernimmt Ausschreibung, Bündelung und Vergabe vollautomatisch.</div>
+        </div>
+      </div>
     </div>
   </div></section>
 
