@@ -830,16 +830,16 @@ body{background:#070F1A}
 #lp .tiles{display:grid;grid-template-columns:2fr 1fr 1fr;grid-auto-rows:auto;gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
 @media(max-width:900px){#lp .tiles{grid-template-columns:1fr 1fr}#lp .tile-lg{grid-row:auto!important;grid-column:1/-1}}
 @media(max-width:600px){#lp .tiles{grid-template-columns:1fr}}
-#lp .tile{background:var(--bg1);padding:32px 28px;transition:background .2s;display:flex;flex-direction:column;color:var(--t1)}
+#lp .tile{background:var(--bg1);padding:28px 26px;transition:background .2s;display:flex;flex-direction:column;color:var(--t1)}
 #lp .tile:hover{background:var(--bg2)}
-#lp .tile-lg{grid-row:span 2;padding:48px 40px}
+#lp .tile-lg{grid-row:span 2;padding:40px 36px}
 #lp .tile-cat{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:600;margin-bottom:16px}
 #lp .tile-lg .tile-title{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
 #lp .tile-title{font-size:20px;font-weight:700;color:var(--t1);letter-spacing:-.01em}
 #lp .tile-desc{font-size:14px;color:var(--t2);margin-top:8px;line-height:1.6;flex:1}
 #lp .tile-lg .tile-desc{font-size:15px;margin-top:16px}
 #lp .tile-link{margin-top:24px;font-size:13px;font-weight:600;color:var(--gold)}
-#lp .tile-lg .tile-link{margin-top:40px;color:var(--t2)}
+#lp .tile-lg .tile-link{margin-top:24px;color:var(--t2)}
 #lp .tile-lg:hover .tile-link{color:var(--t1)}
 
 /* SECTION 5 — supplier cta */
@@ -898,7 +898,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav.process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav.calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav.materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav.supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav.about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav.contact">Kontakt</a></li>
@@ -950,7 +950,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <a href="prozess.html" onclick="toggleNav()" data-i18n="nav.process">Wie es funktioniert</a>
   <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav.calc">Kalkulator</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav.forwhom">Für wen</a>
-  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()">Öffentliche Auftraggeber</a></div>
+  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()">Immobilien &amp; Wohnbau</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav.supplier">Lieferant werden</a>
   <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav.about">Über uns</a>
   <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav.contact">Kontakt</a>
@@ -1026,7 +1026,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <a class="tile tile-lg" href="fuerwen-bauunternehmen.html">
         <div class="tile-cat">Bauunternehmen &amp; Generalunternehmen</div>
         <div class="tile-title">Bessere Einkaufspreise — für jede Baufirma, jede Grösse.</div>
-        <div class="tile-desc">SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte beim Lieferanten. Ob KMU oder Grosskonzern — jeder profitiert von mehr Volumen und besseren Konditionen.</div>
+        <div class="tile-desc">SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte. Ob KMU oder Grosskonzern — jeder profitiert.</div>
         <div class="tile-link">Mehr erfahren →</div>
       </a>
       <a class="tile" href="fuerwen-handwerk.html">
@@ -1047,11 +1047,11 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="tile-desc">Gemeinden, Kantone, staatsnahe Betriebe.</div>
         <div class="tile-link">→</div>
       </a>
-      <a class="tile" href="kontakt.html">
-        <div class="tile-cat">Für alle</div>
-        <div class="tile-title">Du beschaffst Baumaterial in grossen Mengen?</div>
-        <div class="tile-desc">Egal ob Industrie, Spital, Schule oder Wohnbaugenossenschaft — ab CHF 50'000 Jahresvolumen lohnt sich SourceOn.</div>
-        <div class="tile-link">Jetzt anfragen →</div>
+      <a class="tile" href="fuerwen-immobilien.html">
+        <div class="tile-cat">Immobilien &amp; Wohnbau</div>
+        <div class="tile-title">Regelmässiger Unterhaltsbedarf.</div>
+        <div class="tile-desc">Wohnbaugenossenschaften und Immobilienverwaltungen mit konstantem Bedarf.</div>
+        <div class="tile-link">→</div>
       </a>
     </div>
   </div></section>

@@ -29,10 +29,9 @@
 })();
 </script>
 <script src="debug.js"></script>
-<script src="tiers.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Einsparkalkulator — SourceOn</title>
+<title>Für Immobilien & Wohnbau — SourceOn</title>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -68,7 +67,6 @@ a{color:inherit;text-decoration:none}
 .section{padding:140px 0}
 @media(max-width:900px){.container{padding:0 28px}.section{padding:90px 0}}
 @media(max-width:640px){.container{padding:0 20px}.section{padding:64px 0}}
-/* bundle-tiers responsive handled in section style tag */
 
 /* LABELS */
 .label{display:inline-flex;align-items:center;gap:7px;font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:var(--gold-dim);border:1px solid var(--gold-b);border-radius:100px;padding:5px 14px;margin-bottom:20px}
@@ -756,6 +754,65 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .clerk-trust-modal .btn-cancel-trust:hover{border-color:rgba(255,255,255,.2);color:#fff}
 
 
+/* ===== NEW MINIMAL DESIGN (scoped #lp / #lpfoot) ===== */
+:root{--bg:#070F1A;--bg1:#0C1824;--bg2:#111F2E;--lpb:rgba(255,255,255,0.06);--lpbs:rgba(255,255,255,0.12);--t1:#F1F5F9;--t2:#94A3B8;--t3:#4A6080;--golddim:rgba(232,160,32,0.08);--goldbd:rgba(232,160,32,0.15)}
+body{background:#070F1A}
+#lp{color:var(--t1);font-family:'Inter',-apple-system,sans-serif}
+#lp .wrap,#lpfoot .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+#lp a{text-decoration:none}
+@media(max-width:768px){#lp .wrap,#lpfoot .wrap{padding:0 20px}}
+#lp .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+#lp .reveal.visible{opacity:1;transform:none}
+#lp .btn-primary{background:var(--gold);color:#070F1A;font-weight:700;font-size:15px;padding:14px 32px;border-radius:8px;display:inline-flex;align-items:center;transition:all .2s}
+#lp .btn-primary:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 8px 32px rgba(232,160,32,.25);color:#070F1A}
+#lp .btn-ghost{background:transparent;color:var(--t2);font-size:15px;padding:14px 24px;border:1px solid var(--lpbs);border-radius:8px;display:inline-flex;align-items:center;transition:all .2s}
+#lp .btn-ghost:hover{color:var(--t1);border-color:rgba(255,255,255,.2)}
+#lp .sec{padding:100px 0}
+#lp .sec.bt{border-top:1px solid var(--lpb)}
+#lp .sec-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:48px}
+#lp .eyebrow{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);font-weight:600;margin-bottom:20px}
+/* page hero */
+#lp .phero{padding:120px 0 40px}
+#lp .crumb{font-size:12px;color:var(--t3);margin-bottom:24px}
+#lp .crumb a{color:var(--t3)}#lp .crumb a:hover{color:var(--gold)}
+#lp .phero h1{font-size:clamp(36px,5vw,64px);font-weight:800;color:var(--t1);letter-spacing:-.03em;line-height:1.1}
+#lp .phero .sub{font-size:18px;color:var(--t2);margin-top:16px;max-width:640px;line-height:1.6}
+#lp .cta-row{margin-top:32px;display:flex;gap:16px;flex-wrap:wrap}
+/* tiles (fuerwen) */
+#lp .fwtiles{display:grid;grid-template-columns:2fr 1fr;gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
+#lp .fwtiles .tile-lg{grid-column:1;grid-row:1/span 3;padding:48px 40px}
+@media(max-width:768px){#lp .fwtiles{grid-template-columns:1fr}#lp .fwtiles .tile-lg{grid-column:auto;grid-row:auto;padding:32px 28px}}
+#lp .tile{background:var(--bg1);padding:32px 28px;transition:background .2s;display:flex;flex-direction:column;color:var(--t1)}
+#lp .tile:hover{background:var(--bg2)}
+#lp .tile-cat{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:600;margin-bottom:16px}
+#lp .tile-title{font-size:20px;font-weight:700;color:var(--t1);letter-spacing:-.01em;line-height:1.25}
+#lp .tile-lg .tile-title{font-size:28px;letter-spacing:-.02em;line-height:1.2}
+#lp .tile-desc{font-size:14px;color:var(--t2);margin-top:8px;line-height:1.6;flex:1}
+#lp .tile-lg .tile-desc{font-size:15px;margin-top:16px}
+#lp .tile-link{margin-top:24px;font-size:13px;font-weight:600;color:var(--gold)}
+#lp .tile-lg .tile-link{margin-top:40px;color:var(--t2)}
+#lp .tile-lg:hover .tile-link{color:var(--t1)}
+/* stat + text (subpage section 1) */
+#lp .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+@media(max-width:768px){#lp .statgrid{grid-template-columns:1fr;gap:40px}}
+#lp .prose h2{font-size:clamp(20px,2.5vw,28px);font-weight:700;color:var(--t1);letter-spacing:-.02em;line-height:1.3;margin-bottom:16px}
+#lp .prose p{font-size:15px;color:var(--t2);line-height:1.7;margin-bottom:14px}#lp .prose p:last-child{margin-bottom:0}
+#lp .keynum{font-size:clamp(48px,6vw,72px);font-weight:800;color:var(--gold);letter-spacing:-.04em;line-height:1}
+#lp .keynum-sub{font-size:13px;color:var(--t2);margin-top:8px;max-width:340px;line-height:1.5}
+#lp .bullets{margin-top:32px;border-top:1px solid var(--lpb)}
+#lp .bullets div{font-size:14px;color:var(--t1);padding:14px 2px;border-bottom:1px solid var(--lpb)}
+/* steps */
+#lp .steps{margin-top:8px}
+#lp .step{display:flex;gap:24px;padding:24px 0;border-bottom:1px solid var(--lpb);align-items:baseline}
+#lp .step:last-child{border-bottom:none}
+#lp .step-n{font-size:48px;font-weight:800;color:var(--gold);opacity:.3;line-height:1;min-width:72px;flex-shrink:0}
+#lp .step-t{font-size:18px;font-weight:600;color:var(--t1);margin-bottom:6px}
+#lp .step-x{font-size:14px;color:var(--t2);line-height:1.6}
+/* centered cta */
+#lp .cta-center{text-align:center;padding:100px 0;border-top:1px solid var(--lpb)}
+#lp .cta-center h2{font-size:clamp(28px,4vw,40px);font-weight:800;color:var(--t1);letter-spacing:-.03em}
+#lp .cta-center p{font-size:18px;color:var(--t2);margin-top:12px;margin-bottom:32px}
+/* nav dropdown */
 .nav-links li.has-dd{position:relative}
 .nav-links li.has-dd>.nav-dd{position:absolute;top:100%;left:50%;transform:translateX(-50%);background:rgba(7,15,26,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px 8px 8px;min-width:230px;opacity:0;visibility:hidden;transition:opacity .15s,visibility .15s;z-index:300}
 .nav-links li.has-dd:hover>.nav-dd{opacity:1;visibility:visible}
@@ -763,6 +820,19 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .nav-dd a:hover{background:#111F2E;color:#F1F5F9}
 .nav-ov-sub{display:flex;flex-direction:column;gap:12px;margin-top:-18px;margin-bottom:2px}
 .nav-ov-sub a{font-size:1.05rem!important;color:#94A3B8!important;font-weight:500!important}
+/* FOOTER */
+#lpfoot{background:var(--bg);border-top:1px solid var(--lpb);padding:48px 0;font-family:'Inter',sans-serif}
+#lpfoot .fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+@media(max-width:768px){#lpfoot .fgrid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:480px){#lpfoot .fgrid{grid-template-columns:1fr}}
+#lpfoot .flogo{font-size:17px;font-weight:700;color:var(--t1)}#lpfoot .flogo span{color:var(--gold)}
+#lpfoot .fbrand p{font-size:13px;color:var(--t3);margin-top:8px;line-height:1.5}
+#lpfoot .fcopy{margin-top:24px;font-size:12px;color:var(--t3)}
+#lpfoot .fcol-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:16px}
+#lpfoot .fcol a{display:block;font-size:13px;color:var(--t3);padding:3px 0;transition:color .15s}#lpfoot .fcol a:hover{color:var(--t1)}
+#lpfoot .fbottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--lpb);padding-top:24px;margin-top:32px;font-size:12px;color:var(--t3)}
+#lpfoot .fbottom a{color:var(--t3)}#lpfoot .fbottom a:hover{color:var(--gold)}
+
 </style>
 <script>
 (function(){
@@ -781,7 +851,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 </head>
 <body>
 <!-- NAV -->
-<nav id="nav">
+<nav id="nav" class="scrolled">
   <div class="nav-inner">
     <a class="nav-logo" href="#hero">Source<span>On</span></a>
     <ul class="nav-links">
@@ -826,7 +896,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           </div>
         </div>
       </div>
-      <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
+      <button class="btn btn-gold btn-md" data-i18n="nav_cta" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
       <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
   </div>
@@ -842,135 +912,54 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier">Lieferant werden</a>
   <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav_about">Über uns</a>
   <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav_contact">Kontakt</a>
-  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
+  <button class="btn btn-gold btn-lg" style="margin-top:12px" data-i18n="nav_cta" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
 </div>
 
-<!-- CALCULATOR -->
-<section id="calculator">
-  <div class="container">
-    <div class="text-center reveal" style="margin-bottom:56px">
-      <div class="label label-dark" data-i18n="calc_label">Kalkulator</div>
-      <h2 class="h2" style="color:#fff" data-i18n="calc_title">Wie viel könntest du sparen?</h2>
-      <p class="subtitle subtitle-dark" style="margin-top:14px" data-i18n="calc_subtitle">Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.</p>
-    </div>
-    <div class="calc-layout">
-      <div class="reveal reveal-d1">
-        <div class="calc-vol-display" id="calc-display">CHF 150'000</div>
-        <div class="calc-slider-wrap">
-          <input type="range" id="calc-slider" min="0" max="100" value="18" step="0.1" style="--pct:18%"/>
-        </div>
-        <div class="calc-range-labels"><span>CHF 50'000</span><span>CHF 10'000'000</span></div>
-        <input type="text" class="calc-text-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" data-i18n-placeholder="calc_placeholder" value="150'000"/>
-        <p style="font-size:.75rem;color:var(--muted);font-style:italic;margin-top:8px" data-i18n="calc_manual_note">Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.</p>
-        <div class="calc-tier-label" data-i18n="calc_discount_label">Garantierter Netto-Mindestrabatt: <span class="calc-tier-rate" id="calc-rate">10%</span></div>
-      </div>
-      <div class="reveal reveal-d2">
-        <div class="calc-card">
-          <div class="calc-row-gross">
-            <div class="calc-row-label" data-i18n="calc_gross_label">Verhandelter Rabatt (brutto)</div>
-            <div class="calc-row-val" id="calc-gross">CHF 15'000</div>
-          </div>
-          <div class="calc-divider"></div>
-          <div class="calc-row-net">
-            <div class="calc-row-label" data-i18n="calc_net_label">Deine garantierte Ersparnis (netto, nach SourceOn-Provision)</div>
-            <div class="calc-row-val" id="calc-net">CHF 11'625</div>
-          </div>
-          <div class="calc-cta">
-            <button class="btn btn-gold btn-lg btn-full" onclick="window.location.href='kontakt.html'" data-i18n="calc_cta">Materialbedarf melden →</button>
-          </div>
-          <p class="calc-disclaimer" data-i18n="calc_disclaimer">Unverbindliche Schätzung basierend auf Schweizer Marktdaten. Potenzielle Einsparungen variieren je nach Material, Volumen und Lieferant.</p>
-          <p class="calc-disclaimer" style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px" data-i18n="calc_bundle_note">Die hier angezeigte Ersparnis ist eine Schätzung basierend auf deinem Volumen allein. Bist du Teil eines grösseren Bündels mit anderen Baufirmen, kann deine tatsächliche Ersparnis je nach deinem Anteil am Gesamtbündel höher ausfallen.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<main id="lp">
+  <section class="phero"><div class="wrap">
+    <div class="crumb"><a href="fuerwen.html">Für wen</a> → Immobilien &amp; Wohnbau</div>
+    <span class="eyebrow">Immobilien &amp; Wohnbau</span>
+    <h1>Konstanter Materialbedarf — professionell und günstig beschafft.</h1>
+    <p class="sub">Wohnbaugenossenschaften, Immobilienverwaltungen und Liegenschaftsbetreiber beschaffen regelmässig dieselben Materialien. SourceOn bündelt diesen Bedarf und holt dauerhaft bessere Konditionen raus.</p>
+    <div class="cta-row"><a class="btn-primary" href="kontakt.html">Materialbedarf melden →</a><a class="btn-ghost" href="prozess.html">Wie es funktioniert →</a></div>
+  </div></section>
 
+  <section class="sec bt"><div class="wrap"><div class="statgrid">
+    <div class="prose reveal"><h2>Wer regelmässig kauft, sollte nie Einzelpreise zahlen.</h2><p>Wohnbaugenossenschaften und Immobilienverwaltungen haben einen der konstantesten Materialbedarfe überhaupt — Beton, Kies, Dämmung, Mörtel und Sanitärmaterialien für Unterhalt und Renovation, Jahr für Jahr.</p><p>Trotzdem kaufen die meisten zu Einzelpreisen, weil ihnen eine professionelle Einkaufsabteilung fehlt. SourceOn übernimmt diese Funktion vollautomatisch — ohne Fixkosten, ohne Aufwand, ohne Risiko.</p><p>Dein Materialbedarf wird mit anderen gebündelt, verdeckt ausgeschrieben und zum garantierten Mindestrabatt vergeben. Du zahlst erst, wenn du sparst.</p></div>
+    <div class="reveal"><div class="keynum">50+</div><div class="keynum-sub">Grosse Wohnbaugenossenschaften allein in Zürich — mit regelmässigem Unterhaltsbedarf und ohne professionellen Einkauf</div><div class="bullets"><div>Wohnbaugenossenschaften &amp; Verwaltungen</div><div>Regelmässiger Unterhalt und Renovation</div><div>Kein eigener Einkaufsaufwand nötig</div><div>Dauerhaft bessere Konditionen</div></div></div>
+  </div></div></section>
 
+  <section class="sec bt"><div class="wrap">
+    <span class="sec-label">So funktioniert es für dich</span>
+    <div class="steps"><div class="step"><div class="step-n">01</div><div><div class="step-t">Bedarf melden</div><div class="step-x">Materialien und Mengen für Unterhalt oder Renovation eingeben. Sofort garantierten Mindestrabatt sehen.</div></div></div><div class="step"><div class="step-n">02</div><div><div class="step-t">Automatische Bündelung</div><div class="step-x">SourceOn bündelt deinen Bedarf mit anderen Liegenschaften und schreibt verdeckt bei verifizierten Lieferanten aus.</div></div></div><div class="step"><div class="step-n">03</div><div><div class="step-t">Dauerhaft sparen</div><div class="step-x">Direktlieferung auf die Baustelle. Für jedes Projekt, jedes Jahr — ohne Mehraufwand.</div></div></div></div>
+  </div></section>
 
-<!-- BUNDLE TIER EXPLANATION -->
-<section id="bundle-tiers" style="background:var(--bg);padding:120px 0">
-  <div class="container">
-    <div class="text-center reveal">
-      <div class="label" data-i18n="tier_label">Bündel-Ersparnis</div>
-      <h2 class="h2" data-i18n="tier_title" style="font-size:clamp(28px,4vw,44px)">Wie wird die Ersparnis verteilt?</h2>
-      <p class="subtitle" style="margin-top:28px;max-width:720px" data-i18n="tier_text">Jede Baufirma im Bündel erhält mindestens ihren garantierten Netto-Mindestrabatt — basierend auf ihrem eigenen eingebrachten Volumen. Übertrifft der verhandelte Gesamtrabatt die Summe aller individuellen Garantien, wird die Zusatzersparnis proportional zum Volumenanteil verteilt. Wer mehr einbringt, profitiert mehr — aber jeder gewinnt mindestens sein garantiertes Minimum.</p>
-    </div>
-  </div>
-  <style>
-  
-/* CLERK TRUST VERIFICATION MODAL */
-.clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
-.clerk-trust-overlay.open{opacity:1;pointer-events:auto}
-.clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;font-family:'Inter',-apple-system,sans-serif;color:#fff}
-.clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
-.clerk-trust-modal p{font-size:.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px}
-.clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none;transition:border-color .2s}
-.clerk-trust-modal input:focus{border-color:#E8A020;box-shadow:0 0 0 3px rgba(232,160,32,.12)}
-.clerk-trust-modal .btn-verify{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,#E8A020,#f0b840);color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:14px;transition:transform .15s}
-.clerk-trust-modal .btn-verify:hover{transform:translateY(-1px)}
-.clerk-trust-modal .btn-verify:disabled{opacity:.5;cursor:not-allowed;transform:none}
-.clerk-trust-modal .trust-error{font-size:.8rem;color:#FCA5A5;margin-top:10px;min-height:1.2em}
-.clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:#94A3B8;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}
-.clerk-trust-modal .btn-cancel-trust:hover{border-color:rgba(255,255,255,.2);color:#fff}
-
-</style>
-</section>
-<!-- CTA BANNER -->
-<section id="cta-banner">
-  <div class="container" style="position:relative;z-index:1">
-    <h2 class="cta-title" data-i18n="cta_title">Bereit für tiefere Einkaufspreise?</h2>
-    <p class="cta-sub" data-i18n="cta_sub">Melde deinen nächsten Materialbedarf — du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst alles in deinem Dashboard.</p>
-    <div class="cta-btns">
-      <button class="btn btn-gold btn-lg" onclick="window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
-      <a href="mailto:info@SourceOn.ch" class="btn btn-outline-w btn-lg">info@SourceOn.ch</a>
-    </div>
-  </div>
-</section>
-
+  <section class="cta-center"><div class="wrap"><div class="reveal">
+    <h2>Bereit loszulegen?</h2>
+    <p>Melde deinen Materialbedarf in zwei Minuten — du siehst sofort deinen garantierten Mindestrabatt.</p>
+    <a class="btn-primary" href="kontakt.html">Materialbedarf melden →</a>
+  </div></div></section>
+</main>
 
 <!-- FOOTER -->
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="nav-logo">Source<span>On</span></div>
-        <p data-i18n="footer_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer_services">Leistungen</h4>
-        <ul>
-          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
-          <li><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a></li>
-          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
-          <li><a href="kalkulator.html" data-i18n="footer_calc">Einsparkalkulator</a></li>
-          <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer_company">Unternehmen</h4>
-        <ul>
-          <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
-          <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
-          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer_legal">Rechtliches</h4>
-        <ul>
-          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_privacy">Datenschutz</a></li>
-          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_imprint">Impressum</a></li>
-          <li><a href="agb.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_terms">AGB</a></li>
-        </ul>
-      </div>
+
+<footer id="lpfoot"><div class="wrap">
+  <div class="fgrid">
+    <div class="fbrand">
+      <div class="flogo">Source<span>On</span></div>
+      <p>Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
+      <p style="margin-top:4px;font-size:12px">Du zahlst erst, wenn wir dir sparen.</p>
+      <div class="fcopy">© 2026 SourceOn</div>
     </div>
-    <div class="footer-bottom">
-      <span class="footer-copy" data-i18n="footer_copy">&copy; 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
-      <span class="footer-tagline" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</span>
-    </div>
+    <div class="fcol"><div class="fcol-label">Leistungen</div>
+      <a href="index.html">Home</a><a href="prozess.html">Wie es funktioniert</a><a href="fuerwen.html">Für wen</a><a href="lieferant.html">Lieferant werden</a><a href="kalkulator.html">Kalkulator</a><a href="materialien.html">Materialien</a></div>
+    <div class="fcol"><div class="fcol-label">Unternehmen</div>
+      <a href="ueberuns.html">Über uns</a><a href="kontakt.html">Kontakt</a><a href="lieferant.html">Lieferant werden</a></div>
+    <div class="fcol"><div class="fcol-label">Rechtliches</div>
+      <a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a><a href="agb.html">AGB</a></div>
   </div>
-</footer>
+  <div class="fbottom"><div>DE · EN · FR · IT</div><a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
+</div></footer>
 
 <script>
 // SMOOTH ANCHOR SCROLL
@@ -1004,7 +993,7 @@ let lastScrollY=window.scrollY;
 window.addEventListener('scroll',()=>{
   const nav=document.getElementById('nav');
   const y=window.scrollY;
-  nav.classList.toggle('scrolled',y>40);
+  nav.classList.add('scrolled');
   if(y>140&&y>lastScrollY){nav.classList.add('nav-hidden')}
   else if(y<lastScrollY){nav.classList.remove('nav-hidden')}
   lastScrollY=y;
@@ -1021,50 +1010,40 @@ const ro=new IntersectionObserver(entries=>{
 },{threshold:0.1});
 document.querySelectorAll('.reveal,.slide-left').forEach(el=>ro.observe(el));
 
-// CALCULATOR
-const MIN_V=50000,MAX_V=10000000;
-const TIERS=[
-  {max:150000,rate:.07},{max:300000,rate:.10},{max:600000,rate:.13},
-  {max:1200000,rate:.16},{max:3000000,rate:.20},{max:6000000,rate:.24},{max:Infinity,rate:.28}
-];
-function posToVal(p){return Math.round(MIN_V*Math.pow(MAX_V/MIN_V,p/100)/1000)*1000;}
-function valToPos(v){return Math.log(v/MIN_V)/Math.log(MAX_V/MIN_V)*100;}
-function getTier(v){return TIERS.find(t=>v<=t.max)||TIERS[TIERS.length-1];}
-function fmtChf(n){return'CHF '+Math.round(n).toLocaleString('de-CH');}
-let animTimer=null;
-function animateNum(id,target){
-  if(animTimer)clearInterval(animTimer);
-  const el=document.getElementById(id);const t0=performance.now();
-  animTimer=setInterval(()=>{
-    const p=Math.min(1,(performance.now()-t0)/600);
-    el.textContent=fmtChf(target*(1-Math.pow(1-p,3)));
-    if(p>=1)clearInterval(animTimer);
-  },16);
+// COUNTERS
+function countEl(el,dur){
+  dur=dur||1200;
+  const t0=performance.now();
+  if(el.dataset.count!==undefined){
+    const target=parseFloat(el.dataset.count),suffix=el.dataset.suffix||'',dec=parseInt(el.dataset.dec||0);
+    const iv=setInterval(()=>{
+      const p=Math.min(1,(performance.now()-t0)/dur),v=target*(1-Math.pow(1-p,3));
+      el.textContent=(dec?v.toFixed(dec):Math.round(v))+suffix;
+      if(p>=1)clearInterval(iv);
+    },16);
+  }
 }
-function updateCalc(v,fromSlider){
-  v=Math.max(MIN_V,fromSlider?Math.min(MAX_V,v):v);
-  const tier=(window.SO_TIERS?window.SO_TIERS.tierFor(v):getTier(v));
-  const netRate=(tier.net!=null?tier.net:tier.rate);      // was der Kunde garantiert behält
-  const grossRate=(tier.gross!=null?tier.gross:tier.rate); // im Bündel ausgeschriebener Brutto-Rabatt
-  const gross=v*grossRate,net=v*netRate;
-  document.getElementById('calc-display').textContent=fmtChf(v);
-  if(fromSlider)document.getElementById('calc-input').value=Math.round(v).toLocaleString('de-CH');
-  document.getElementById('calc-rate').textContent=Math.round(netRate*100)+'%';
-  document.getElementById('calc-gross').textContent=fmtChf(gross);
-  animateNum('calc-net',net);
-  const pos=valToPos(Math.min(v,MAX_V));
-  const sl=document.getElementById('calc-slider');
-  sl.value=pos;sl.style.setProperty('--pct',pos+'%');
-}
-document.getElementById('calc-slider').addEventListener('input',function(){
-  this.style.setProperty('--pct',this.value+'%');updateCalc(posToVal(+this.value),true);
-});
-document.getElementById('calc-input').addEventListener('input',function(){
-  const v=parseInt(this.value.replace(/['\s.,]/g,''),10);
-  if(!isNaN(v)&&v>=MIN_V)updateCalc(v,false);
-});
-updateCalc(150000);
+const co=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){countEl(e.target);co.unobserve(e.target);}});
+},{threshold:0.3});
+document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
 
+// FAQ ACCORDION
+function toggleFaq(btn){
+  const item=btn.closest('.faq-item');
+  const ans=item.querySelector('.faq-a');
+  const isOpen=btn.classList.contains('open');
+  document.querySelectorAll('.faq-q.open').forEach(function(q){
+    q.classList.remove('open');
+    const t=q.querySelector('.faq-toggle');if(t)t.textContent='+';
+    q.closest('.faq-item').querySelector('.faq-a').style.maxHeight='0';
+  });
+  if(!isOpen){
+    btn.classList.add('open');
+    ans.style.maxHeight=ans.scrollHeight+'px';
+    const t=btn.querySelector('.faq-toggle');if(t)t.textContent='−';
+  }
+}
 </script>
 
 <!-- CHAT WIDGET -->
@@ -1075,7 +1054,7 @@ updateCalc(150000);
   <div class="chat-head">
     <div class="chat-head-info">
       <div class="chat-avatar">SO</div>
-      <div><div class="chat-head-title">SourceOn Assistent</div><div class="chat-head-sub">Beantwortet alle Fragen zu SourceOn</div></div>
+      <div><div class="chat-head-title" data-i18n="chat_title">SourceOn Assistent</div><div class="chat-head-sub" data-i18n="chat_sub">Beantwortet alle Fragen zu SourceOn</div></div>
     </div>
     <button id="chat-close" onclick="toggleChat()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
@@ -1110,220 +1089,52 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 })();
 </script>
 
+
 <script>
-(function(){
-  const I18N = {
-    de: {
-      nav_home: 'Home',
-      nav_process: 'Wie es funktioniert',
-      nav_calc: 'Kalkulator',
-      nav_materials: 'Materialien',
-      nav_forwhom: 'Für wen',
-      nav_supplier: 'Lieferant werden',
-      nav_about: 'Über uns',
-      nav_contact: 'Kontakt',
-      nav_cta: 'Materialbedarf melden',
-      calc_label: 'Kalkulator',
-      calc_title: 'Wie viel könntest du sparen?',
-      calc_subtitle: 'Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.',
-      calc_placeholder: 'Betrag eingeben z.B. 75000',
-      calc_manual_note: 'Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.',
-      calc_discount_label: 'Garantierter Netto-Mindestrabatt: ',
-      calc_gross_label: 'Verhandelter Rabatt (brutto)',
-      calc_net_label: 'Deine garantierte Ersparnis (netto, nach SourceOn-Provision)',
-      calc_cta: 'Materialbedarf melden →',
-      calc_disclaimer: 'Unverbindliche Schätzung basierend auf Schweizer Marktdaten. Potenzielle Einsparungen variieren je nach Material, Volumen und Lieferant.',
-      calc_bundle_note: 'Die hier angezeigte Ersparnis ist eine Schätzung basierend auf deinem Volumen allein. Bist du Teil eines grösseren Bündels mit anderen Baufirmen, kann deine tatsächliche Ersparnis je nach deinem Anteil am Gesamtbündel höher ausfallen.',
-      tier_label: 'Bündel-Ersparnis',
-      tier_title: 'Wie wird die Ersparnis verteilt?',
-      tier_text: 'Jede Baufirma im Bündel erhält mindestens ihren garantierten Netto-Mindestrabatt — basierend auf ihrem eigenen eingebrachten Volumen. Übertrifft der verhandelte Gesamtrabatt die Summe aller individuellen Garantien, wird die Zusatzersparnis proportional zum Volumenanteil verteilt. Wer mehr einbringt, profitiert mehr — aber jeder gewinnt mindestens sein garantiertes Minimum.',
+var I18N={
+  de:{'nav_home':'Home','nav_process':'Wie es funktioniert','nav_calc':'Kalkulator','nav_materials':'Materialien','nav_forwhom':'Für wen','nav_supplier':'Lieferant werden','nav_about':'Über uns','nav_contact':'Kontakt','nav_cta':'Materialbedarf melden','footer_desc':'Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.','footer_services':'Leistungen','footer_company':'Unternehmen','footer_legal':'Rechtliches','footer_calc':'Einsparkalkulator','footer_privacy':'Datenschutz','footer_imprint':'Impressum','footer_terms':'AGB','footer_copy':'© 2026 SourceOn, Zürich — Alle Rechte vorbehalten','footer_tagline':'Du zahlst erst, wenn wir dir sparen.','chat_title':'SourceOn Assistent','chat_sub':'Beantwortet alle Fragen zu SourceOn','fw_label':'Für wen','fw_title':'Gemacht für Schweizer Baufirmen.','fw_subtitle':'Ob Hochbau, Renovation oder Neubau — SourceOn lohnt sich für jede Grösse.','fw_card1_title':'Bauunternehmen aller Grössen','fw_card1_desc':'Von KMU bis Grosskonzern — SourceOn schafft Einkaufsmacht für jeden der Baumaterial beschafft.','fw_card1_c1':'Einkaufspreise wie Grosskonzerne','fw_card1_c2':'Profitabel ab CHF 50k Jahresvolumen — skaliert mit deiner Grösse','fw_card1_c3':'Kein Mindestumsatz, keine Bindung','fw_card1_c4':'Direktlieferung auf die Baustelle','fw_card1_c5':'Zahlung nur bei echter Ersparnis','fw_card1_c6':'Volle Preistransparenz','fw_card2_title':'Handwerksbetriebe & Subunternehmer','fw_card2_desc':'Für jedes Gewerk die passenden Konditionen — unkompliziert und schnell.','fw_card2_c1':'Alle Gewerke und Materialien','fw_card2_c2':'Schnelle Abwicklung','fw_card2_c3':'Keine Vorauszahlung nötig','fw_card2_c4':'Vollautomatische Abwicklung — kein Aufwand für dich','fw_card3_title':'Immobilieneigentümer & Investoren','fw_card3_desc':'Für Renovations- und Neubauprojekte mit geprüfter Qualität.','fw_card3_c1':'Renovationsprojekte und Neubauten','fw_card3_c2':'Mehrfamilienhäuser','fw_card3_c3':'Geprüfte Qualitätsstandards','fw_card3_c4':'Geprüfte, SIA/ISO-konforme Lieferanten','fw_card4_title':'Architekten & Planer','fw_card4_desc':'Materialbeschaffung schon in der Ausschreibungs- und Planungsphase integriert.','fw_card4_c1':'Integration in frühe Planungsphase','fw_card4_c2':'Materialbeschaffung bereits in der Ausschreibungsphase planbar','fw_card4_c3':'Preisgarantie vor Auftragserteilung','fw_card4_c4':'Lieferantenauswahl ohne eigenen Rechercheaufwand','cta_title':'Für deine Firma dabei?','cta_sub':'Melde deinen nächsten Materialbedarf — du siehst sofort deinen garantierten Mindestrabatt.','cta_btn':'Materialbedarf melden →','cta_note':'Du zahlst erst, wenn wir dir sparen.'},
+  en:{'nav_home':'Home','nav_process':'How it works','nav_calc':'Calculator','nav_materials':'Materials','nav_forwhom':'Who it\'s for','nav_supplier':'Become a supplier','nav_about':'About us','nav_contact':'Contact','nav_cta':'Report material demand','footer_desc':'Swiss B2B procurement broker for the construction industry. You only pay when we save you money.','footer_services':'Services','footer_company':'Company','footer_legal':'Legal','footer_calc':'Savings calculator','footer_privacy':'Privacy policy','footer_imprint':'Imprint','footer_terms':'Terms','footer_copy':'© 2026 SourceOn, Zurich — All rights reserved','footer_tagline':'You only pay when we save you money.','chat_title':'SourceOn Assistant','chat_sub':'Answers all questions about SourceOn','fw_label':'Who it\'s for','fw_title':'Made for Swiss construction firms.','fw_subtitle':'Whether high-rise, renovation or new build — SourceOn pays off for every size.','fw_card1_title':'Construction companies of all sizes','fw_card1_desc':'From SMEs to large corporations — SourceOn creates purchasing power for everyone who procures building materials.','fw_card1_c1':'Purchasing prices like large corporations','fw_card1_c2':'Profitable from CHF 50k annual volume — scales with your size','fw_card1_c3':'No minimum turnover, no commitment','fw_card1_c4':'Direct delivery to construction site','fw_card1_c5':'Payment only on real savings','fw_card1_c6':'Full price transparency','fw_card2_title':'Tradespeople & subcontractors','fw_card2_desc':'The right conditions for every trade — uncomplicated and fast.','fw_card2_c1':'All trades and materials','fw_card2_c2':'Fast processing','fw_card2_c3':'No advance payment required','fw_card2_c4':'Fully automated processing — no effort for you','fw_card3_title':'Property owners & investors','fw_card3_desc':'For renovation and new-build projects with verified quality.','fw_card3_c1':'Renovation and new-build projects','fw_card3_c2':'Multi-family homes','fw_card3_c3':'Verified quality standards','fw_card3_c4':'Verified, SIA/ISO-compliant suppliers','fw_card4_title':'Architects & planners','fw_card4_desc':'Material procurement integrated into the tender and planning phase.','fw_card4_c1':'Integration in early planning phase','fw_card4_c2':'Material procurement plannable already in the tender phase','fw_card4_c3':'Price guarantee before order placement','fw_card4_c4':'Supplier selection without your own research effort','cta_title':'In it for your company?','cta_sub':'Report your next material need — you see your guaranteed minimum discount right away.','cta_btn':'Report material need →','cta_note':'You only pay once we save you money.'},
+  fr:{'nav_home':'Accueil','nav_process':'Comment ça marche','nav_calc':'Calculateur','nav_materials':'Matériaux','nav_forwhom':'Pour qui','nav_supplier':'Devenir fournisseur','nav_about':'À propos','nav_contact':'Contact','nav_cta':'Annoncer un besoin','footer_desc':'Courtier B2B suisse en approvisionnement pour le secteur de la construction.','footer_services':'Services','footer_company':'Entreprise','footer_legal':'Mentions légales','footer_calc':'Calculateur d\u2019économies','footer_privacy':'Protection des données','footer_imprint':'Mentions légales','footer_terms':'CGV','footer_copy':'© 2026 SourceOn, Zurich — Tous droits réservés','footer_tagline':'Tu ne paies que si on te fait économiser.','chat_title':'Assistant SourceOn','chat_sub':'Répond à toutes les questions sur SourceOn','fw_label':'Pour qui','fw_title':'Conçu pour les entreprises de construction suisses.','fw_subtitle':'Que ce soit pour la construction, la rénovation ou le neuf — SourceOn est rentable pour toute taille.','fw_card1_title':'Entreprises de construction de toutes tailles','fw_card1_desc':'Des PME aux grands groupes — SourceOn crée un pouvoir d\u2019achat pour tous.','fw_card1_c1':'Prix d\u2019achat comme les grands groupes','fw_card1_c2':'Rentable dès CHF 50k de volume annuel','fw_card1_c3':'Pas de chiffre d\u2019affaires minimum','fw_card1_c4':'Livraison directe sur le chantier','fw_card1_c5':'Paiement uniquement sur économies réelles','fw_card1_c6':'Transparence totale des prix','fw_card2_title':'Artisans & sous-traitants','fw_card2_desc':'Les bonnes conditions pour chaque corps de métier — simple et rapide.','fw_card2_c1':'Tous les corps de métier','fw_card2_c2':'Traitement rapide','fw_card2_c3':'Pas de paiement anticipé','fw_card2_c4':'Traitement entièrement automatisé — aucun effort pour vous','fw_card3_title':'Propriétaires & investisseurs','fw_card3_desc':'Pour les projets de rénovation et de construction neuve avec qualité vérifiée.','fw_card3_c1':'Projets de rénovation et construction neuve','fw_card3_c2':'Immeubles résidentiels','fw_card3_c3':'Standards de qualité vérifiés','fw_card3_c4':'Fournisseurs vérifiés, conformes SIA/ISO','fw_card4_title':'Architectes & planificateurs','fw_card4_desc':'Approvisionnement intégré dès la phase de soumission et de planification.','fw_card4_c1':'Intégration en phase de planification','fw_card4_c2':'Approvisionnement planifiable dès la phase de soumission','fw_card4_c3':'Garantie de prix avant la commande','fw_card4_c4':'Sélection des fournisseurs sans effort de recherche de votre part','cta_title':'Partant pour votre entreprise ?','cta_sub':'Annoncez votre prochain besoin en matériaux — vous voyez immédiatement votre rabais minimum garanti.','cta_btn':'Annoncer un besoin →','cta_note':'Vous ne payez que lorsque nous vous faisons économiser.'},
+  it:{'nav_home':'Home','nav_process':'Come funziona','nav_calc':'Calcolatore','nav_materials':'Materiali','nav_forwhom':'Per chi','nav_supplier':'Diventa fornitore','nav_about':'Chi siamo','nav_contact':'Contatto','nav_cta':'Segnala fabbisogno materiale','footer_desc':'Broker B2B svizzero per l\u2019approvvigionamento nel settore edile.','footer_services':'Servizi','footer_company':'Azienda','footer_legal':'Note legali','footer_calc':'Calcolatore di risparmio','footer_privacy':'Privacy','footer_imprint':'Impressum','footer_terms':'CGA','footer_copy':'© 2026 SourceOn, Zurigo — Tutti i diritti riservati','footer_tagline':'Paghi solo quando ti facciamo risparmiare.','chat_title':'Assistente SourceOn','chat_sub':'Risponde a tutte le domande su SourceOn','fw_label':'Per chi','fw_title':'Pensato per le imprese edili svizzere.','fw_subtitle':'Che sia costruzione, ristrutturazione o nuova costruzione — SourceOn conviene per ogni dimensione.','fw_card1_title':'Imprese edili di tutte le dimensioni','fw_card1_desc':'Dalle PMI ai grandi gruppi — SourceOn crea potere d\u2019acquisto per tutti.','fw_card1_c1':'Prezzi d\u2019acquisto come i grandi gruppi','fw_card1_c2':'Redditizio da CHF 50k di volume annuale','fw_card1_c3':'Nessun fatturato minimo','fw_card1_c4':'Consegna diretta in cantiere','fw_card1_c5':'Pagamento solo su risparmi reali','fw_card1_c6':'Trasparenza totale dei prezzi','fw_card2_title':'Artigiani & subappaltatori','fw_card2_desc':'Le condizioni giuste per ogni mestiere — semplice e veloce.','fw_card2_c1':'Tutti i mestieri e materiali','fw_card2_c2':'Elaborazione rapida','fw_card2_c3':'Nessun pagamento anticipato','fw_card2_c4':'Gestione completamente automatizzata — nessuno sforzo per te','fw_card3_title':'Proprietari & investitori','fw_card3_desc':'Per progetti di ristrutturazione e nuova costruzione con qualità verificata.','fw_card3_c1':'Progetti di ristrutturazione e nuova costruzione','fw_card3_c2':'Case plurifamiliari','fw_card3_c3':'Standard di qualità verificati','fw_card3_c4':'Fornitori verificati, conformi SIA/ISO','fw_card4_title':'Architetti & pianificatori','fw_card4_desc':'Approvvigionamento integrato dalla fase di gara e pianificazione.','fw_card4_c1':'Integrazione nella fase di pianificazione','fw_card4_c2':'Approvvigionamento pianificabile già in fase di gara','fw_card4_c3':'Garanzia di prezzo prima della commessa','fw_card4_c4':'Selezione dei fornitori senza sforzo di ricerca da parte tua','cta_title':'Ci sei per la tua azienda?','cta_sub':'Segnala il tuo prossimo fabbisogno di materiale — vedi subito il tuo sconto minimo garantito.','cta_btn':'Segnala il fabbisogno →','cta_note':'Paghi solo quando ti facciamo risparmiare.'},
+};
+</script>
 
-      cta_title: 'Bereit für tiefere Einkaufspreise?',
-      cta_sub: 'Melde deinen nächsten Materialbedarf — du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst alles in deinem Dashboard.',
-      footer_desc: 'Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.',
-      footer_services: 'Leistungen',
-      footer_calc: 'Einsparkalkulator',
-      footer_company: 'Unternehmen',
-      footer_legal: 'Rechtliches',
-      footer_privacy: 'Datenschutz',
-      footer_imprint: 'Impressum',
-      footer_terms: 'AGB',
-      footer_copy: '© 2026 SourceOn, Zürich — Alle Rechte vorbehalten',
-      footer_tagline: 'Du zahlst erst, wenn wir dir sparen.'
-    },
-    en: {
-      nav_home: 'Home',
-      nav_process: 'How it works',
-      nav_calc: 'Calculator',
-      nav_materials: 'Materials',
-      nav_forwhom: 'For whom',
-      nav_supplier: 'Become a supplier',
-      nav_about: 'About us',
-      nav_contact: 'Contact',
-      nav_cta: 'Submit material needs',
-      calc_label: 'Calculator',
-      calc_title: 'How much could you save?',
-      calc_subtitle: 'Calculate your personal savings potential — based on your annual volume.',
-      calc_placeholder: 'Enter amount e.g. 75000',
-      calc_manual_note: 'For amounts over CHF 10 million, please enter manually — savings potential is calculated automatically.',
-      calc_discount_label: 'Guaranteed net minimum discount: ',
-      calc_gross_label: 'Negotiated discount (gross)',
-      calc_net_label: 'Your guaranteed saving (net, after SourceOn commission)',
-      calc_cta: 'Submit material needs →',
-      calc_disclaimer: 'Non-binding estimate based on Swiss market data. Potential savings vary depending on material, volume and supplier.',
-      calc_bundle_note: 'The savings shown here are an estimate based on your volume alone. If you are part of a larger bundle with other construction firms, your actual savings may be higher depending on your share of the total bundle.',
-      tier_label: 'Bundle savings',
-      tier_title: 'How are the savings distributed?',
-      tier_text: 'Every construction firm in the bundle receives at least their guaranteed net minimum discount — based on their own contributed volume. If the negotiated total discount exceeds the sum of all individual guarantees, the additional savings are distributed proportionally to volume share. Those who contribute more benefit more — but everyone receives at least their guaranteed minimum.',
-
-      cta_title: 'Ready for lower procurement prices?',
-      cta_sub: 'Submit your next material need — you only pay when we save you money. You see your guaranteed net minimum discount right away and track everything in your dashboard.',
-      footer_desc: 'Swiss B2B procurement intermediary for the construction industry. You only pay when we save you money.',
-      footer_services: 'Services',
-      footer_calc: 'Savings calculator',
-      footer_company: 'Company',
-      footer_legal: 'Legal',
-      footer_privacy: 'Privacy policy',
-      footer_imprint: 'Imprint',
-      footer_terms: 'Terms & conditions',
-      footer_copy: '© 2026 SourceOn, Zurich — All rights reserved',
-      footer_tagline: 'You only pay when we save you money.'
-    },
-    fr: {
-      nav_home: 'Accueil',
-      nav_process: 'Comment ça marche',
-      nav_calc: 'Calculateur',
-      nav_materials: 'Matériaux',
-      nav_forwhom: 'Pour qui',
-      nav_supplier: 'Devenir fournisseur',
-      nav_about: 'À propos',
-      nav_contact: 'Contact',
-      nav_cta: 'Déclarer un besoin matériel',
-      calc_label: 'Calculateur',
-      calc_title: 'Combien pourriez-vous économiser ?',
-      calc_subtitle: 'Calculez votre potentiel d\'économies personnelles — basé sur votre volume annuel.',
-      calc_placeholder: 'Entrez un montant p.ex. 75000',
-      calc_manual_note: 'Pour les montants supérieurs à CHF 10 millions, veuillez saisir manuellement — le potentiel d\'économies est calculé automatiquement.',
-      calc_discount_label: 'Rabais net minimum garanti : ',
-      calc_gross_label: 'Rabais négocié (brut)',
-      calc_net_label: 'Votre économie garantie (nette, après commission SourceOn)',
-      calc_cta: 'Déclarer un besoin matériel →',
-      calc_disclaimer: 'Estimation non contraignante basée sur les données du marché suisse. Les économies potentielles varient selon le matériau, le volume et le fournisseur.',
-      calc_bundle_note: 'Les économies affichées ici sont une estimation basée sur votre seul volume. Si vous faites partie d\'un regroupement plus important avec d\'autres entreprises de construction, vos économies réelles peuvent être plus élevées selon votre part dans le volume total.',
-      tier_label: '\u00c9conomies group\u00e9es',
-      tier_title: 'Comment les économies sont-elles réparties ?',
-      tier_text: 'Chaque entreprise de construction du lot reçoit au moins sa remise minimale nette garantie — basée sur son propre volume apporté. Si la remise totale négociée dépasse la somme de toutes les garanties individuelles, les économies supplémentaires sont réparties proportionnellement à la part de volume. Ceux qui apportent plus bénéficient davantage — mais chacun reçoit au moins son minimum garanti.',
-
-      cta_title: 'Prêt pour des prix d\'achat plus bas ?',
-      cta_sub: 'Déclarez votre prochain besoin matériel — vous ne payez que si nous vous faisons économiser. Vous voyez immédiatement votre rabais minimum net garanti et suivez tout dans votre tableau de bord.',
-      footer_desc: 'Intermédiaire suisse d\'approvisionnement B2B pour le secteur de la construction. Vous ne payez que lorsque nous vous faisons économiser.',
-      footer_services: 'Services',
-      footer_calc: 'Calculateur d\'économies',
-      footer_company: 'Entreprise',
-      footer_legal: 'Mentions légales',
-      footer_privacy: 'Protection des données',
-      footer_imprint: 'Mentions légales',
-      footer_terms: 'CGV',
-      footer_copy: '© 2026 SourceOn, Zurich — Tous droits réservés',
-      footer_tagline: 'Vous ne payez que lorsque nous vous faisons économiser.'
-    },
-    it: {
-      nav_home: 'Home',
-      nav_process: 'Come funziona',
-      nav_calc: 'Calcolatore',
-      nav_materials: 'Materiali',
-      nav_forwhom: 'Per chi',
-      nav_supplier: 'Diventa fornitore',
-      nav_about: 'Chi siamo',
-      nav_contact: 'Contatto',
-      nav_cta: 'Segnala fabbisogno materiale',
-      calc_label: 'Calcolatore',
-      calc_title: 'Quanto potresti risparmiare?',
-      calc_subtitle: 'Calcola il tuo potenziale di risparmio personale — in base al tuo volume annuale.',
-      calc_placeholder: 'Inserisci importo es. 75000',
-      calc_manual_note: 'Per importi superiori a CHF 10 milioni, inserire manualmente — il potenziale di risparmio viene calcolato automaticamente.',
-      calc_discount_label: 'Sconto netto minimo garantito: ',
-      calc_gross_label: 'Sconto negoziato (lordo)',
-      calc_net_label: 'Il tuo risparmio garantito (netto, dopo la provvigione SourceOn)',
-      calc_cta: 'Segnala fabbisogno materiale →',
-      calc_disclaimer: 'Stima non vincolante basata sui dati del mercato svizzero. I risparmi potenziali variano in base a materiale, volume e fornitore.',
-      calc_bundle_note: 'Il risparmio qui indicato è una stima basata solo sul tuo volume. Se fai parte di un raggruppamento più ampio con altre imprese edili, il tuo risparmio effettivo può essere maggiore a seconda della tua quota nel volume totale.',
-      tier_label: 'Risparmio raggruppato',
-      tier_title: 'Come viene distribuito il risparmio?',
-      tier_text: 'Ogni impresa edile nel lotto riceve almeno il suo sconto minimo netto garantito — basato sul proprio volume apportato. Se lo sconto totale negoziato supera la somma di tutte le garanzie individuali, il risparmio aggiuntivo viene distribuito proporzionalmente alla quota di volume. Chi apporta di più beneficia di più — ma tutti ricevono almeno il loro minimo garantito.',
-
-      cta_title: 'Pronti per prezzi d\'acquisto più bassi?',
-      cta_sub: 'Segnala il tuo prossimo fabbisogno materiale — paghi solo se ti facciamo risparmiare. Vedi subito il tuo sconto minimo netto garantito e segui tutto nella tua dashboard.',
-      footer_desc: 'Intermediario svizzero di approvvigionamento B2B per il settore edile. Paghi solo quando ti facciamo risparmiare.',
-      footer_services: 'Servizi',
-      footer_calc: 'Calcolatore di risparmio',
-      footer_company: 'Azienda',
-      footer_legal: 'Note legali',
-      footer_privacy: 'Protezione dei dati',
-      footer_imprint: 'Impressum',
-      footer_terms: 'CGC',
-      footer_copy: '© 2026 SourceOn, Zurigo — Tutti i diritti riservati',
-      footer_tagline: 'Paghi solo quando ti facciamo risparmiare.'
-    }
-  };
-
-  const LANG_LABELS = { de: 'DE', en: 'EN', fr: 'FR', it: 'IT' };
-
-  function setLang(lang) {
-    var dict = I18N[lang];
-    if (!dict) return;
-
-    document.querySelectorAll('[data-i18n]').forEach(function(el) {
-      var key = el.getAttribute('data-i18n');
-      if (dict[key] !== undefined) {
-        if (key === 'calc_discount_label') {
-          var rate = document.getElementById('calc-rate');
-          var rateText = rate ? rate.outerHTML : '';
-          el.innerHTML = dict[key] + rateText;
-        } else {
-          el.textContent = dict[key];
-        }
-      }
-    });
-
-    document.querySelectorAll('[data-i18n-html]').forEach(function(el) {
-      var key = el.getAttribute('data-i18n-html');
-      if (dict[key] !== undefined) el.innerHTML = dict[key];
-    });
-
-    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
-      var key = el.getAttribute('data-i18n-placeholder');
-      if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
-    });
-
-    var langCurrent = document.getElementById('lang-current');
-    if (langCurrent) langCurrent.textContent = LANG_LABELS[lang] || lang.toUpperCase();
-
-    document.querySelectorAll('.lang-opt').forEach(function(btn) {
-      var btnLang = btn.getAttribute('onclick');
-      if (btnLang && btnLang.indexOf("'" + lang + "'") !== -1) {
-        btn.classList.add('active');
-      } else {
-        btn.classList.remove('active');
-      }
-    });
-
-    document.documentElement.setAttribute('lang', lang);
-    localStorage.setItem('sourceon-lang', lang);
+<script>
+var LANG_NAMES={de:'DE',en:'EN',fr:'FR',it:'IT'};
+function setLang(lang){
+  if(!I18N[lang])return;
+  var dict=I18N[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var key=el.getAttribute('data-i18n');
+    if(dict[key]!=null) el.textContent=dict[key];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+    var key=el.getAttribute('data-i18n-html');
+    if(dict[key]!=null) el.innerHTML=dict[key];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+    var key=el.getAttribute('data-i18n-placeholder');
+    if(dict[key]!=null) el.placeholder=dict[key];
+  });
+  document.getElementById('lang-current').textContent=LANG_NAMES[lang];
+  document.querySelectorAll('.lang-opt').forEach(function(b){b.classList.remove('active');});
+  var activeBtn=document.querySelector('.lang-opt[onclick*="\''+lang+'\'"]');
+  if(activeBtn)activeBtn.classList.add('active');
+  document.getElementById('lang-switch').classList.remove('open');
+  localStorage.setItem('sourceon-lang',lang);
+  document.documentElement.lang=lang;
   document.body.classList.add('lang-ready');var _lh=document.getElementById('_lh');if(_lh){setTimeout(function(){_lh.remove();},200);}
-
-    var sw = document.getElementById('lang-switch');
-    if (sw) sw.classList.remove('open');
-  }
-
-  window.setLang = setLang;
-
-  var saved = localStorage.getItem('sourceon-lang');
-  if (saved && saved !== 'de') {
-    setLang(saved);
-  }
+}
+(function(){
+  var saved=localStorage.getItem('sourceon-lang');
+  if(saved&&saved!=='de'){setLang(saved);}
+  document.addEventListener('click',function(e){
+    var sw=document.getElementById('lang-switch');
+    if(sw&&!sw.contains(e.target)) sw.classList.remove('open');
+  });
 })();
 </script>
+
 <script>
 // CLERK AUTH
 soLog('[SourceOn] PAGE LOAD — cookies:', document.cookie);
