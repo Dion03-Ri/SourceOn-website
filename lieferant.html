@@ -884,6 +884,29 @@ body{background:#070F1A}
 #lp .form-success{background:#F0FDF4;border-color:#BBF7D0;color:#166534}
 #lp .form-success span{background:rgba(34,197,94,.14)}
 #lp .form-success svg{color:#16A34A}
+
+/* ===== lieferant two-column hero (FIX) ===== */
+#lp .lieferant-hero{display:grid;grid-template-columns:1fr 480px;gap:64px;padding:80px 0;align-items:start}
+@media(max-width:900px){#lp .lieferant-hero{grid-template-columns:1fr;gap:48px;padding:60px 0 40px}}
+#lp .lieferant-hero .eyebrow{margin-bottom:16px}
+#lp .lieferant-hero h1{font-size:clamp(32px,4vw,52px);font-weight:800;color:var(--t1);letter-spacing:-.03em;line-height:1.1}
+#lp .lieferant-hero .lsub{font-size:16px;color:var(--t2);margin-top:12px;line-height:1.6;max-width:440px}
+#lp .lieferant-hero .saform{max-width:none;margin:0;width:100%}
+#lp .lbenefits{margin-top:40px}
+#lp .lben{display:flex;gap:14px;align-items:flex-start;padding:16px 0;border-bottom:1px solid var(--lpb)}
+#lp .lben-ic{width:24px;height:24px;border-radius:50%;background:var(--golddim);border:1px solid var(--goldbd);color:var(--gold);font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+#lp .lben-t{font-size:14px;font-weight:600;color:var(--t1);margin-bottom:2px}
+#lp .lben-x{font-size:13px;color:var(--t2);line-height:1.5}
+#lp .vergabe-sec{border-top:1px solid var(--lpb);padding:64px 0}
+#lp .lvergabe{max-width:720px}
+#lp .lvergabe .howtext{font-size:16px;color:var(--t2);line-height:1.8}
+/* remove unwanted form effects (FIX) */
+#lp .form-check{transition:none}
+#lp .form-check:hover{background:none}
+#lp .form-check input:checked+span{color:#334155}
+#lp .form-input:focus,#lp .form-select:focus,#lp .form-textarea:focus{border-color:var(--gold);background:#F8FAFC;box-shadow:none;outline:none}
+#lp .sa-submit{transition:filter .15s}
+#lp .sa-submit:hover{filter:brightness(1.08);transform:none;box-shadow:none}
 </style>
 <script>
 (function(){
@@ -967,36 +990,23 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 </div>
 
 <main id="lp">
-  <!-- HERO -->
-  <section class="phero"><div class="wrap">
-    <span class="eyebrow" data-i18n="supplier.label">Partnerlieferanten</span>
-    <h1 data-i18n="supplier.title">SourceOn-Partnerlieferant werden.</h1>
-    <p class="sub" data-i18n="supplier.subtitle">Wir suchen zuverlässige Schweizer Lieferanten für unser wachsendes Netzwerk.</p>
-  </div></section>
-
-  <!-- BENEFITS -->
-  <section class="sec bt"><div class="wrap">
-    <span class="sec-label">Deine Vorteile</span>
-    <div class="svbenefits reveal">
-      <div class="svbenefit"><h4 data-i18n="supplier.b1.title">Garantiertes Volumen</h4><p data-i18n="supplier.b1.desc">Gebündelte Aufträge statt Einzelanfragen</p></div>
-      <div class="svbenefit"><h4 data-i18n="supplier.b2.title">Planungssicherheit</h4><p data-i18n="supplier.b2.desc">Regelmässige Bedarfsmeldungen im Voraus</p></div>
-      <div class="svbenefit"><h4 data-i18n="supplier.b3.title">Neue Kundschaft</h4><p data-i18n="supplier.b3.desc">Zugang zu Schweizer KMU-Baufirmen</p></div>
-      <div class="svbenefit"><h4 data-i18n="supplier.b4.title">Faire Konditionen</h4><p data-i18n="supplier.b4.desc">Transparente Provisionsabrechnung, klar geregelt in der Lieferantenvereinbarung</p></div>
-      <div class="svbenefit"><h4 data-i18n="supplier.b5.title">Qualitätsnetzwerk</h4><p data-i18n="supplier.b5.desc">Nur geprüfte SIA/ISO-konforme Lieferanten</p></div>
-      <div class="svbenefit"><h4 data-i18n="supplier.b6.title">Wachstumspotenzial</h4><p data-i18n="supplier.b6.desc">Marktposition stärken im Schweizer Baumarkt</p></div>
-    </div>
-  </div></section>
-
-  <!-- HOW IT WORKS -->
-  <section class="sec bt"><div class="wrap">
-    <span class="sec-label" style="margin-bottom:32px" data-i18n="supplier.how.title">Vergabe</span>
-    <p class="howtext reveal" data-i18n="supplier.how.text">SourceOn bündelt Bedarf von mehreren Baufirmen zu grösseren Materialpaketen. Verifizierte Partnerlieferanten erhalten Zugang zu diesen Ausschreibungen und können ein Angebot einreichen. Den Zuschlag erhält das Angebot mit dem höchsten Rabatt, das den ausgeschriebenen Mindestrabatt erreicht oder übertrifft. Lieferfähigkeit und Zuverlässigkeit werden bereits bei der Lieferantenverifizierung geprüft. Aus Datenschutzgründen werden Lieferadressen erst nach Zuschlag bekannt gegeben — das Ausschreibungspaket enthält Materialart, Menge, Liefergebiet (Zone) und Zeitraum.</p>
-  </div></section>
-
-  <!-- REGISTRATION FORM -->
-  <section class="sec bt"><div class="wrap">
-    <span class="sec-label" style="margin-bottom:32px">Bewerbung</span>
-    <div class="saform">
+  <section class="lhero-sec"><div class="wrap">
+    <div class="lieferant-hero">
+      <div class="reveal">
+        <span class="eyebrow" data-i18n="supplier.label">Partnerlieferanten</span>
+        <h1 data-i18n="supplier.title">SourceOn-Partnerlieferant werden.</h1>
+        <p class="lsub">Zugang zu gebündelten Grossaufträgen ohne eigene Akquise.</p>
+        <div class="lbenefits">
+          <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b1.title">Garantiertes Volumen</div><div class="lben-x" data-i18n="supplier.b1.desc">Gebündelte Aufträge statt Einzelanfragen</div></div></div>
+          <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b2.title">Planungssicherheit</div><div class="lben-x" data-i18n="supplier.b2.desc">Regelmässige Bedarfsmeldungen im Voraus</div></div></div>
+          <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b3.title">Neue Kundschaft</div><div class="lben-x">Zugang zu Schweizer KMU-Baufirmen ohne Akquisekosten</div></div></div>
+          <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b4.title">Faire Konditionen</div><div class="lben-x">Transparente Provisionsabrechnung, klar geregelt</div></div></div>
+          <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b5.title">Qualitätsnetzwerk</div><div class="lben-x" data-i18n="supplier.b5.desc">Nur geprüfte SIA/ISO-konforme Lieferanten</div></div></div>
+          <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b6.title">Wachstumspotenzial</div><div class="lben-x" data-i18n="supplier.b6.desc">Marktposition stärken im Schweizer Baumarkt</div></div></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="saform">
       <div class="fcard-accent"></div>
       <div class="saform-inner">
       <div class="fcard-title">Jetzt bewerben</div>
@@ -1080,6 +1090,15 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       </form>
       <div class="form-success" id="success-supplier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.</span></div>
       </div>
+    </div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="vergabe-sec"><div class="wrap">
+    <div class="lvergabe">
+      <span class="sec-label" style="margin-bottom:24px" data-i18n="supplier.how.title">Vergabe</span>
+      <p class="howtext reveal" data-i18n="supplier.how.text">SourceOn bündelt Bedarf von mehreren Baufirmen zu grösseren Materialpaketen. Verifizierte Partnerlieferanten erhalten Zugang zu diesen Ausschreibungen und können ein Angebot einreichen. Den Zuschlag erhält das Angebot mit dem höchsten Rabatt, das den ausgeschriebenen Mindestrabatt erreicht oder übertrifft. Lieferfähigkeit und Zuverlässigkeit werden bereits bei der Lieferantenverifizierung geprüft. Aus Datenschutzgründen werden Lieferadressen erst nach Zuschlag bekannt gegeben — das Ausschreibungspaket enthält Materialart, Menge, Liefergebiet (Zone) und Zeitraum.</p>
     </div>
   </div></section>
 </main>
