@@ -763,6 +763,83 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .nav-dd a:hover{background:#111F2E;color:#F1F5F9}
 .nav-ov-sub{display:flex;flex-direction:column;gap:12px;margin-top:-18px;margin-bottom:2px}
 .nav-ov-sub a{font-size:1.05rem!important;color:#94A3B8!important;font-weight:500!important}
+
+/* ===== NEW MINIMAL DESIGN (scoped #lp / #lpfoot) — kalkulator ===== */
+:root{--bg:#070F1A;--bg1:#0C1824;--bg2:#111F2E;--lpb:rgba(255,255,255,0.06);--lpbs:rgba(255,255,255,0.12);--t1:#F1F5F9;--t2:#94A3B8;--t3:#4A6080;--golddim:rgba(232,160,32,0.08);--goldbd:rgba(232,160,32,0.15)}
+body{background:#070F1A}
+#lp{color:var(--t1);font-family:'Inter',-apple-system,sans-serif}
+#lp .wrap,#lpfoot .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+#lp a{text-decoration:none}
+@media(max-width:768px){#lp .wrap,#lpfoot .wrap{padding:0 20px}}
+#lp .btn-primary{background:var(--gold);color:#070F1A;font-weight:700;font-size:15px;padding:14px 32px;border-radius:8px;display:inline-flex;align-items:center;transition:all .2s}
+#lp .btn-primary:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 8px 32px rgba(232,160,32,.25);color:#070F1A}
+#lp .btn-ghost{background:transparent;color:var(--t2);font-size:15px;padding:14px 28px;border:1px solid var(--lpbs);border-radius:8px;display:inline-flex;align-items:center;transition:all .2s}
+#lp .btn-ghost:hover{color:var(--t1);border-color:rgba(255,255,255,.2)}
+#lp .sec-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:48px}
+#lp .eyebrow{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);font-weight:600;margin-bottom:24px}
+#lp .phero{padding:100px 0 60px;text-align:center}
+#lp .phero h1{font-size:clamp(36px,5vw,64px);font-weight:800;color:var(--t1);letter-spacing:-.03em;line-height:1.1;margin-bottom:16px}
+#lp .phero .sub{font-size:clamp(15px,2vw,18px);color:var(--t2);max-width:520px;margin:0 auto;line-height:1.6}
+@media(max-width:768px){#lp .phero{padding:60px 0 40px}}
+/* calculator grid */
+#lp .calcsec{padding:60px 0}
+#lp .calcgrid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;max-width:1000px;margin:0 auto}
+@media(max-width:768px){#lp .calcgrid{grid-template-columns:1fr;gap:40px}}
+#lp .calccard{background:var(--bg1);border:1px solid var(--lpb);border-radius:16px;padding:36px;position:relative;overflow:hidden}
+@media(max-width:768px){#lp .calccard{padding:24px 20px}}
+#lp .calc-accent{height:3px;background:linear-gradient(90deg,var(--gold) 0%,rgba(232,160,32,.2) 100%);margin:-36px -36px 32px}
+@media(max-width:768px){#lp .calc-accent{margin:-24px -20px 32px}}
+#lp .calc-vlabel{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:8px}
+#lp #calc-display{font-size:36px;font-weight:800;color:var(--t1);letter-spacing:-.02em;margin-bottom:20px}
+#lp #calc-slider{width:100%;-webkit-appearance:none;appearance:none;height:3px;background:linear-gradient(90deg,var(--gold) var(--pct,18%),var(--bg2) var(--pct,18%));border-radius:999px;outline:none;cursor:pointer;margin:4px 0}
+#lp #calc-slider::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;background:var(--gold);border:3px solid var(--bg);box-shadow:0 0 0 3px var(--goldbd);cursor:grab}
+#lp #calc-slider::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:var(--gold);border:3px solid var(--bg);box-shadow:0 0 0 3px var(--goldbd);cursor:grab}
+#lp .calc-range{display:flex;justify-content:space-between;font-size:11px;color:var(--t3);margin-top:8px}
+#lp .calc-input{width:100%;background:var(--bg2);border:1px solid var(--lpbs);border-radius:6px;color:var(--t1);font-size:14px;padding:10px 14px;margin-top:14px;font-family:inherit}
+#lp .calc-input:focus{border-color:var(--gold);outline:none}
+#lp .calc-mnote{font-size:11px;color:var(--t3);text-align:center;margin-top:6px}
+#lp .calc-results{margin-top:28px;padding-top:28px;border-top:1px solid var(--lpb)}
+#lp .calc-tierrow{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+#lp .calc-tierrow .l{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);max-width:60%}
+#lp .calc-tierrow .r{font-size:24px;font-weight:700;color:var(--gold)}
+#lp .calc-rrow{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid var(--lpb);gap:12px}
+#lp .calc-rrow .l{font-size:13px;color:var(--t2)}
+#lp .calc-rrow .r{font-size:18px;font-weight:600;color:var(--t1);white-space:nowrap}
+#lp .calc-rrow.net .r{font-size:22px;color:var(--gold)}
+#lp .calc-cta-btn{width:100%;background:var(--gold);color:#070F1A;font-size:15px;font-weight:700;padding:14px;border-radius:8px;border:none;cursor:pointer;margin-top:24px;transition:all .2s;font-family:inherit}
+#lp .calc-cta-btn:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 4px 16px rgba(232,160,32,.25)}
+#lp .calc-disc{font-size:11px;color:var(--t3);text-align:center;margin-top:12px;line-height:1.5}
+/* tier table */
+#lp .tiertable{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden}
+#lp .tiertable th{background:var(--bg2);font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);padding:10px 16px;text-align:left;font-weight:600}
+#lp .tiertable th:last-child{text-align:right}
+#lp .tiertable td{padding:12px 16px;border-bottom:1px solid var(--lpb);font-size:13px}
+#lp .tiertable td.vol{color:var(--t2)}
+#lp .tiertable td.pct{color:var(--t1);font-weight:500;text-align:right}
+#lp .tiertable tr.active td{background:var(--golddim)}
+#lp .tiertable tr.active td.vol{color:var(--t1);font-weight:500;border-left:2px solid var(--gold)}
+#lp .tiertable tr.active td.pct{color:var(--gold);font-weight:700}
+#lp .tiernote{font-size:11px;color:var(--t3);margin-top:8px}
+#lp .bundlebox{margin-top:32px;padding-top:32px;border-top:1px solid var(--lpb)}
+#lp .bundlebox p{font-size:14px;color:var(--t2);line-height:1.7}
+/* cta */
+#lp .cta-center{text-align:center;padding:100px 0;border-top:1px solid var(--lpb)}
+#lp .cta-center h2{font-size:clamp(28px,4vw,48px);font-weight:800;color:var(--t1);letter-spacing:-.03em}
+#lp .cta-center p{font-size:18px;color:var(--t2);max-width:480px;margin:16px auto 40px;line-height:1.6}
+#lp .cta-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+@media(max-width:768px){#lp .cta-center{padding:60px 0}#lp .cta-btns{flex-direction:column}#lp .cta-btns a,#lp .cta-btns button{justify-content:center}}
+/* footer */
+#lpfoot{background:var(--bg);border-top:1px solid var(--lpb);padding:48px 0;font-family:'Inter',sans-serif}
+#lpfoot .fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+@media(max-width:768px){#lpfoot .fgrid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:480px){#lpfoot .fgrid{grid-template-columns:1fr}}
+#lpfoot .flogo{font-size:17px;font-weight:700;color:var(--t1)}#lpfoot .flogo span{color:var(--gold)}
+#lpfoot .fbrand p{font-size:13px;color:var(--t3);margin-top:8px;line-height:1.5}
+#lpfoot .fcopy{margin-top:24px;font-size:12px;color:var(--t3)}
+#lpfoot .fcol-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:16px}
+#lpfoot .fcol a{display:block;font-size:13px;color:var(--t3);padding:3px 0;transition:color .15s}#lpfoot .fcol a:hover{color:var(--t1)}
+#lpfoot .fbottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--lpb);padding-top:24px;margin-top:32px;font-size:12px;color:var(--t3)}
+#lpfoot .fbottom a{color:var(--t3)}#lpfoot .fbottom a:hover{color:var(--gold)}
 </style>
 <script>
 (function(){
@@ -845,61 +922,64 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
 </div>
 
-<!-- CALCULATOR -->
-<section id="calculator">
-  <div class="container">
-    <div class="text-center reveal" style="margin-bottom:56px">
-      <div class="label label-dark" data-i18n="calc_label">Kalkulator</div>
-      <h2 class="h2" style="color:#fff" data-i18n="calc_title">Wie viel könntest du sparen?</h2>
-      <p class="subtitle subtitle-dark" style="margin-top:14px" data-i18n="calc_subtitle">Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.</p>
-    </div>
-    <div class="calc-layout">
-      <div class="reveal reveal-d1">
-        <div class="calc-vol-display" id="calc-display">CHF 150'000</div>
-        <div class="calc-slider-wrap">
-          <input type="range" id="calc-slider" min="0" max="100" value="18" step="0.1" style="--pct:18%"/>
-        </div>
-        <div class="calc-range-labels"><span>CHF 50'000</span><span>CHF 10'000'000</span></div>
-        <input type="text" class="calc-text-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" data-i18n-placeholder="calc_placeholder" value="150'000"/>
-        <p style="font-size:.75rem;color:var(--muted);font-style:italic;margin-top:8px" data-i18n="calc_manual_note">Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.</p>
-        <div class="calc-tier-label" data-i18n="calc_discount_label">Garantierter Netto-Mindestrabatt: <span class="calc-tier-rate" id="calc-rate">10%</span></div>
-      </div>
-      <div class="reveal reveal-d2">
-        <div class="calc-card">
-          <div class="calc-row-gross">
-            <div class="calc-row-label" data-i18n="calc_gross_label">Verhandelter Rabatt (brutto)</div>
-            <div class="calc-row-val" id="calc-gross">CHF 15'000</div>
-          </div>
-          <div class="calc-divider"></div>
-          <div class="calc-row-net">
-            <div class="calc-row-label" data-i18n="calc_net_label">Deine garantierte Ersparnis (netto, nach SourceOn-Provision)</div>
-            <div class="calc-row-val" id="calc-net">CHF 11'625</div>
-          </div>
-          <div class="calc-cta">
-            <button class="btn btn-gold btn-lg btn-full" onclick="window.location.href='kontakt.html'" data-i18n="calc_cta">Materialbedarf melden →</button>
-          </div>
-          <p class="calc-disclaimer" data-i18n="calc_disclaimer">Unverbindliche Schätzung basierend auf Schweizer Marktdaten. Potenzielle Einsparungen variieren je nach Material, Volumen und Lieferant.</p>
-          <p class="calc-disclaimer" style="margin-top:12px;border-top:1px solid var(--border);padding-top:12px" data-i18n="calc_bundle_note">Die hier angezeigte Ersparnis ist eine Schätzung basierend auf deinem Volumen allein. Bist du Teil eines grösseren Bündels mit anderen Baufirmen, kann deine tatsächliche Ersparnis je nach deinem Anteil am Gesamtbündel höher ausfallen.</p>
+<main id="lp">
+  <section class="phero"><div class="wrap">
+    <span class="eyebrow">Einsparkalkulator</span>
+    <h1 data-i18n="calc_title">Wie viel könntest du sparen?</h1>
+    <p class="sub" data-i18n="calc_subtitle">Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.</p>
+  </div></section>
+
+  <section class="calcsec"><div class="wrap">
+    <div class="calcgrid">
+      <div class="calccard reveal">
+        <div class="calc-accent"></div>
+        <span class="calc-vlabel">Jahresvolumen</span>
+        <div id="calc-display">CHF 150'000</div>
+        <input type="range" id="calc-slider" min="0" max="100" value="18" step="0.1" style="--pct:18%"/>
+        <div class="calc-range"><span>CHF 50'000</span><span>CHF 10'000'000</span></div>
+        <input type="text" class="calc-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" data-i18n-placeholder="calc_placeholder" value="150'000"/>
+        <p class="calc-mnote">Beträge über CHF 10 Mio. bitte manuell eingeben.</p>
+        <div class="calc-results">
+          <div class="calc-tierrow"><span class="l">Garantierter Netto-Mindestrabatt</span><span class="r" id="calc-rate">10%</span></div>
+          <div class="calc-rrow"><span class="l">Verhandelter Rabatt (brutto)</span><span class="r" id="calc-gross">CHF 15'000</span></div>
+          <div class="calc-rrow net"><span class="l">Deine garantierte Ersparnis (netto)</span><span class="r" id="calc-net">CHF 11'625</span></div>
+          <button class="calc-cta-btn" onclick="window.location.href='kontakt.html'" data-i18n="calc_cta">Materialbedarf melden →</button>
+          <p class="calc-disc">Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen. Durch Bündelung mit anderen Baufirmen kann deine tatsächliche Ersparnis höher ausfallen.</p>
         </div>
       </div>
+      <div class="reveal">
+        <span class="sec-label" style="margin-bottom:16px">Rabattstaffel</span>
+        <table class="tiertable">
+          <thead><tr><th>Jahresvolumen</th><th>Netto-Mindestrabatt</th></tr></thead>
+          <tbody>
+            <tr data-tier="0"><td class="vol">CHF 50'000 – 150'000</td><td class="pct">7%</td></tr>
+            <tr data-tier="1"><td class="vol">CHF 150'000 – 300'000</td><td class="pct">10%</td></tr>
+            <tr data-tier="2"><td class="vol">CHF 300'000 – 600'000</td><td class="pct">13%</td></tr>
+            <tr data-tier="3"><td class="vol">CHF 600'000 – 1.2 Mio.</td><td class="pct">16%</td></tr>
+            <tr data-tier="4"><td class="vol">CHF 1.2 – 3 Mio.</td><td class="pct">20%</td></tr>
+            <tr data-tier="5"><td class="vol">CHF 3 – 6 Mio.</td><td class="pct">24%</td></tr>
+            <tr data-tier="6"><td class="vol">Über CHF 6 Mio.</td><td class="pct">28%</td></tr>
+          </tbody>
+        </table>
+        <p class="tiernote">Netto-Mindestrabatt nach SourceOn-Provision (2.25%). Durch Bündelung oft höher.</p>
+        <div class="bundlebox">
+          <span class="sec-label" style="margin-bottom:12px">Bündelungseffekt</span>
+          <p data-i18n="tier_text">Jede Baufirma im Bündel erhält mindestens ihren garantierten Netto-Mindestrabatt — basierend auf ihrem eigenen eingebrachten Volumen. Übertrifft der verhandelte Gesamtrabatt die Summe aller individuellen Garantien, wird die Zusatzersparnis proportional zum Volumenanteil verteilt. Wer mehr einbringt, profitiert mehr — aber jeder gewinnt mindestens sein garantiertes Minimum.</p>
+        </div>
+      </div>
     </div>
-  </div>
-</section>
+  </div></section>
 
-
-
-<!-- BUNDLE TIER EXPLANATION -->
-<section id="bundle-tiers" style="background:var(--bg);padding:120px 0">
-  <div class="container">
-    <div class="text-center reveal">
-      <div class="label" data-i18n="tier_label">Bündel-Ersparnis</div>
-      <h2 class="h2" data-i18n="tier_title" style="font-size:clamp(28px,4vw,44px)">Wie wird die Ersparnis verteilt?</h2>
-      <p class="subtitle" style="margin-top:28px;max-width:720px" data-i18n="tier_text">Jede Baufirma im Bündel erhält mindestens ihren garantierten Netto-Mindestrabatt — basierend auf ihrem eigenen eingebrachten Volumen. Übertrifft der verhandelte Gesamtrabatt die Summe aller individuellen Garantien, wird die Zusatzersparnis proportional zum Volumenanteil verteilt. Wer mehr einbringt, profitiert mehr — aber jeder gewinnt mindestens sein garantiertes Minimum.</p>
+  <section class="cta-center"><div class="wrap">
+    <h2>Einsparpotenzial berechnet?</h2>
+    <p>Jetzt den ersten Schritt machen — du siehst sofort deinen garantierten Mindestrabatt.</p>
+    <div class="cta-btns">
+      <a class="btn-primary" href="kontakt.html">Materialbedarf melden →</a>
+      <a class="btn-ghost" href="mailto:info@sourceon.ch">info@sourceon.ch</a>
     </div>
-  </div>
-  <style>
-  
-/* CLERK TRUST VERIFICATION MODAL */
+  </div></section>
+</main>
+<style>
 .clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
 .clerk-trust-overlay.open{opacity:1;pointer-events:auto}
 .clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;font-family:'Inter',-apple-system,sans-serif;color:#fff}
@@ -913,64 +993,26 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 .clerk-trust-modal .trust-error{font-size:.8rem;color:#FCA5A5;margin-top:10px;min-height:1.2em}
 .clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:#94A3B8;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}
 .clerk-trust-modal .btn-cancel-trust:hover{border-color:rgba(255,255,255,.2);color:#fff}
-
 </style>
-</section>
-<!-- CTA BANNER -->
-<section id="cta-banner">
-  <div class="container" style="position:relative;z-index:1">
-    <h2 class="cta-title" data-i18n="cta_title">Bereit für tiefere Einkaufspreise?</h2>
-    <p class="cta-sub" data-i18n="cta_sub">Melde deinen nächsten Materialbedarf — du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst alles in deinem Dashboard.</p>
-    <div class="cta-btns">
-      <button class="btn btn-gold btn-lg" onclick="window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
-      <a href="mailto:info@SourceOn.ch" class="btn btn-outline-w btn-lg">info@SourceOn.ch</a>
-    </div>
-  </div>
-</section>
-
 
 <!-- FOOTER -->
-<footer>
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="nav-logo">Source<span>On</span></div>
-        <p data-i18n="footer_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.</p>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer_services">Leistungen</h4>
-        <ul>
-          <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
-          <li><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a></li>
-          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
-          <li><a href="kalkulator.html" data-i18n="footer_calc">Einsparkalkulator</a></li>
-          <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer_company">Unternehmen</h4>
-        <ul>
-          <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
-          <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
-          <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h4 data-i18n="footer_legal">Rechtliches</h4>
-        <ul>
-          <li><a href="datenschutz.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_privacy">Datenschutz</a></li>
-          <li><a href="impressum.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_imprint">Impressum</a></li>
-          <li><a href="agb.html" target="_blank" rel="noopener noreferrer" data-i18n="footer_terms">AGB</a></li>
-        </ul>
-      </div>
+<footer id="lpfoot"><div class="wrap">
+  <div class="fgrid">
+    <div class="fbrand">
+      <div class="flogo">Source<span>On</span></div>
+      <p>Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
+      <p style="margin-top:4px;font-size:12px">Du zahlst erst, wenn wir dir sparen.</p>
+      <div class="fcopy">© 2026 SourceOn</div>
     </div>
-    <div class="footer-bottom">
-      <span class="footer-copy" data-i18n="footer_copy">&copy; 2026 SourceOn, Zürich — Alle Rechte vorbehalten</span>
-      <span class="footer-tagline" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</span>
-    </div>
+    <div class="fcol"><div class="fcol-label">Leistungen</div>
+      <a href="index.html">Home</a><a href="prozess.html">Wie es funktioniert</a><a href="fuerwen.html">Für wen</a><a href="lieferant.html">Lieferant werden</a><a href="kalkulator.html">Kalkulator</a><a href="materialien.html">Materialien</a></div>
+    <div class="fcol"><div class="fcol-label">Unternehmen</div>
+      <a href="ueberuns.html">Über uns</a><a href="kontakt.html">Kontakt</a><a href="lieferant.html">Lieferant werden</a></div>
+    <div class="fcol"><div class="fcol-label">Rechtliches</div>
+      <a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a><a href="agb.html">AGB</a></div>
   </div>
-</footer>
+  <div class="fbottom"><div>DE · EN · FR · IT</div><a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
+</div></footer>
 
 <script>
 // SMOOTH ANCHOR SCROLL
@@ -1065,6 +1107,19 @@ document.getElementById('calc-input').addEventListener('input',function(){
 });
 updateCalc(150000);
 
+</script>
+<script>
+// TIER TABLE HIGHLIGHT (new — does not modify existing calc logic)
+(function(){
+  function tierIdx(v){var t=[150000,300000,600000,1200000,3000000,6000000];for(var i=0;i<t.length;i++){if(v<t[i])return i;}return 6;}
+  window.highlightActiveTier=function(idx){document.querySelectorAll('.tiertable tr[data-tier]').forEach(function(r){r.classList.toggle('active',+r.getAttribute('data-tier')===idx);});};
+  function currentV(){var d=document.getElementById('calc-display');var v=d?parseInt(d.textContent.replace(/[^0-9]/g,''),10):NaN;if(isNaN(v)||!v){var inp=document.getElementById('calc-input');v=inp?parseInt((inp.value||'').replace(/[^0-9]/g,''),10):150000;}return v||150000;}
+  function upd(){highlightActiveTier(tierIdx(currentV()));}
+  var sl=document.getElementById('calc-slider'),inp=document.getElementById('calc-input');
+  if(sl)sl.addEventListener('input',function(){setTimeout(upd,0);});
+  if(inp)inp.addEventListener('input',function(){setTimeout(upd,0);});
+  upd();
+})();
 </script>
 
 <!-- CHAT WIDGET -->
