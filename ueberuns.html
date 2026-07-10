@@ -837,6 +837,24 @@ body{background:#070F1A}
 #lpfoot .fcol a{display:block;font-size:13px;color:var(--t3);padding:3px 0;transition:color .15s}#lpfoot .fcol a:hover{color:var(--t1)}
 #lpfoot .fbottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--lpb);padding-top:24px;margin-top:32px;font-size:12px;color:var(--t3)}
 #lpfoot .fbottom a{color:var(--t3)}#lpfoot .fbottom a:hover{color:var(--gold)}
+
+#lp .ideagrid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+@media(max-width:768px){#lp .ideagrid{grid-template-columns:1fr;gap:40px}}
+#lp .idea-l p{font-size:16px;color:var(--t2);line-height:1.85;max-width:480px}
+#lp .idea-stmt{font-size:clamp(28px,3.5vw,42px);font-weight:800;color:var(--t1);letter-spacing:-.03em;line-height:1.2}
+#lp .idea-stmt .gold{color:var(--gold)}
+#lp .idea-foot{font-size:14px;color:var(--t3);line-height:1.6;margin-top:24px}
+
+#lp .faq2{display:grid;grid-template-columns:280px 1fr;gap:0;border:1px solid var(--lpb);border-radius:16px;overflow:hidden;max-width:900px}
+@media(max-width:768px){#lp .faq2{grid-template-columns:1fr}}
+#lp .faq-questions{background:var(--bg1);border-right:1px solid var(--lpb);padding:8px}
+@media(max-width:768px){#lp .faq-questions{border-right:none;border-bottom:1px solid var(--lpb)}}
+#lp .faq-q-item{padding:12px 16px;font-size:13px;color:var(--t2);cursor:pointer;border-radius:6px;transition:all .15s;line-height:1.4}
+#lp .faq-q-item:hover{background:var(--bg2);color:var(--t1)}
+#lp .faq-q-item.active{background:var(--golddim);color:var(--gold);font-weight:500;border-left:2px solid var(--gold);padding-left:14px}
+#lp .faq-answer-panel{background:var(--bg);padding:32px 36px;min-height:300px;transition:opacity .15s}
+#lp .faq-answer-title{font-size:17px;font-weight:700;color:var(--t1);letter-spacing:-.01em;margin-bottom:16px}
+#lp .faq-answer-text{font-size:14px;color:var(--t2);line-height:1.8;max-width:520px}
 </style>
 <script>
 (function(){
@@ -949,36 +967,23 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <!-- FEATURES -->
   <section class="sec bt"><div class="wrap">
     <div class="featstrip reveal">
-      <div class="featcell"><div class="fi">⚡</div><h3 data-i18n="feat1_title">Erfolgsbasiertes Modell</h3><p data-i18n="feat1_desc">Erfolgsprovision aus deiner Ersparnis — du zahlst nur, wenn du sparst.</p></div>
+      <div class="featcell"><div class="fi">⚡</div><h3 data-i18n="feat1_title">Erfolgsbasiertes Modell</h3><p>Mengenrabatte waren bisher nur für Grossabnehmer. Das haben wir geändert.</p></div>
       <div class="featcell"><div class="fi">🇨🇭</div><h3 data-i18n="feat2_title">Schweizer Qualitätsstandards</h3><p data-i18n="feat2_desc">SIA/ISO-konforme Lieferanten, SN EN Normen, persönlich geprüft.</p></div>
       <div class="featcell"><div class="fi">⏱</div><h3 data-i18n="feat3_title">Schnelle Abwicklung</h3><p data-i18n="feat3_desc">Dein Lieferzeitraum gibt das Tempo vor — vollautomatisch.</p></div>
     </div>
   </div></section>
 
-  <!-- PRINCIPLES -->
+  <!-- DIE IDEE -->
   <section class="sec bt"><div class="wrap">
-    <span class="sec-label">Unsere Prinzipien</span>
-    <div class="principles">
-      <div class="principle reveal">
-        <div class="pr-n">01</div>
-        <div>
-          <div class="pr-t">Kein Ergebnis — keine Kosten.</div>
-          <div class="pr-x">SourceOn verdient nur, wenn du sparst. Unsere Provision von 2.25% fällt ausschliesslich an, wenn das verhandelte Angebot deinen garantierten Mindestrabatt erreicht oder übertrifft. Kein Deal, keine Rechnung.</div>
-        </div>
+    <span class="sec-label">Die Idee</span>
+    <div class="ideagrid">
+      <div class="idea-l reveal">
+        <p>Drei Baufirmen bestellen je 60 m³ Beton. Jede zahlt Einzelpreis. Dabei brauchen alle dasselbe Material, beim selben Lieferanten, in derselben Woche.</p>
+        <p style="margin-top:24px">SourceOn bündelt diese drei Aufträge — und verhandelt als wäre es einer. Was Grossabnehmer seit jeher selbstverständlich nutzen, wird damit für jede Baufirma zugänglich. Nicht durch persönliche Beziehungen oder Verhandlungsgeschick. Durch ein System.</p>
       </div>
-      <div class="principle reveal">
-        <div class="pr-n">02</div>
-        <div>
-          <div class="pr-t">Transparenz vor Schönrednerei.</div>
-          <div class="pr-x">Dein Mindestrabatt steht fest, bevor irgendetwas verbindlich wird. Du siehst die Zahlen — wir machen keine Versprechungen die wir nicht belegen können. Was wir zusagen, hält.</div>
-        </div>
-      </div>
-      <div class="principle reveal">
-        <div class="pr-n">03</div>
-        <div>
-          <div class="pr-t">Vollautomatisch — kein Aufwand für dich.</div>
-          <div class="pr-x">Kein Telefonat, kein Verkaufsgespräch, keine Papierarbeit. Du meldest deinen Bedarf in zwei Minuten, das System übernimmt Ausschreibung, Bündelung und Vergabe vollautomatisch.</div>
-        </div>
+      <div class="idea-r reveal">
+        <div class="idea-stmt">Kollektive Einkaufsmacht.<br><span class="gold">Für jeden zugänglich.</span></div>
+        <div class="idea-foot">Gegründet in Zürich, 2026.</div>
       </div>
     </div>
   </div></section>
@@ -987,50 +992,23 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <section class="sec bt"><div class="wrap">
     <span class="sec-label" style="margin-bottom:12px" data-i18n="faq_label">FAQ</span>
     <h2 class="faq-head" data-i18n="faq_h2">Häufig gestellte Fragen.</h2>
-    <div class="faqwrap">
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text" data-i18n="faq_q1">Was kostet mich SourceOn wenn ich nichts spare?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq_a1">Gar nichts. SourceOn verlangt ausschliesslich eine Provision von 2.25% auf den Materialwert — und das nur dann, wenn der verhandelte Rabatt deinen garantierten Mindestrabatt erreicht oder übertrifft. Sparst du nichts, zahlst du nichts. Kein Abo, keine Fixgebühr, kein Risiko.</div></div>
+    <div class="faq2">
+      <div class="faq-questions" id="faq-questions">
+        <div class="faq-q-item active" data-i="0">Was kostet mich SourceOn wenn ich nichts spare?</div>
+        <div class="faq-q-item" data-i="1">Wie lange dauert es bis ich ein Angebot bekomme?</div>
+        <div class="faq-q-item" data-i="2">Muss ich einen Vertrag unterschreiben?</div>
+        <div class="faq-q-item" data-i="3">Was passiert wenn die Lieferung fehlerhaft ist?</div>
+        <div class="faq-q-item" data-i="4">Für welche Materialien ist SourceOn geeignet?</div>
+        <div class="faq-q-item" data-i="5">Ab welchem Bestellvolumen lohnt sich SourceOn?</div>
+        <div class="faq-q-item" data-i="6">Wird das Material direkt auf meine Baustelle geliefert?</div>
+        <div class="faq-q-item" data-i="7">Wie funktioniert die Vergabe an Lieferanten?</div>
+        <div class="faq-q-item" data-i="8">Sind meine Standortdaten und Kundendaten geschützt?</div>
+        <div class="faq-q-item" data-i="9">Kann ich SourceOn auch als Grossunternehmen nutzen?</div>
+        <div class="faq-q-item" data-i="10">Bekommen alle Firmen im selben Bündel die gleiche Ersparnis?</div>
       </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text" data-i18n="faq_q2">Wie lange dauert es bis ich ein Angebot bekomme?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq_a2">Das hängt von deinem Lieferzeitraum ab: Je flexibler dein Termin, desto länger sammelt deine Anfrage Bündelungspartner — und desto grösser deine Ersparnis. Grossaufträge werden oft innerhalb einer Woche ausgeschrieben, kleinere Mengen dauern 1–3 Wochen. Den spätesten Ausschreibungstermin siehst du jederzeit in deinem Dashboard.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text" data-i18n="faq_q3">Muss ich einen Vertrag unterschreiben?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq_a3">Nein. Es gibt keinen separaten Vertrag zu unterschreiben. Mit der verbindlichen Bestätigung im Bestellformular (Pflicht-Checkbox mit deinem garantierten Netto-Mindestrabatt) gilt deine Anfrage als bedingt verbindlich — ausschliesslich wenn der Mindestrabatt erreicht wird. Die rechtliche Grundlage ist unsere Kundenvereinbarung, die du beim ersten Auftrag einmalig akzeptierst.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text" data-i18n="faq_q4">Was passiert wenn die Lieferung fehlerhaft ist?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq_a4">SourceOn ist Vermittler, kein Händler. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Bei Mängeln haftet der Lieferant direkt dir gegenüber gemäss Schweizer OR.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Für welche Materialien ist SourceOn geeignet?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">SourceOn deckt alle wichtigen Baustoffe ab: Beton, Armierungsstahl, Kies &amp; Splitt, Mauerwerk, Dämmung, Schalung, Mörtel, Sanitär &amp; HLKS und weitere. Auch Sondermaterialien können auf Anfrage beschafft werden.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Ab welchem Bestellvolumen lohnt sich SourceOn?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">SourceOn ist ab einem Jahresvolumen von rund CHF 50'000 sinnvoll. Je höher dein Volumen, desto grösser der Bündelungseffekt und desto mehr kannst du sparen. Nutze unseren Rechner um dein persönliches Einsparpotenzial zu berechnen.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Wird das Material direkt auf meine Baustelle geliefert?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Ja — immer. Der Lieferant liefert direkt auf deine Baustelle. Es gibt keine Zwischenlagerung bei SourceOn. Nach Zuschlag koordinierst du den Lieferzeitpunkt direkt mit dem Lieferanten.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Wie funktioniert die Vergabe an Lieferanten?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">SourceOn veröffentlicht gebündelte Materialpakete für verifizierte Partnerlieferanten. Diese reichen ein verdecktes Angebot ein — sie sehen die Angebote anderer Lieferanten nicht. Nur Angebote die den ausgeschriebenen Mindestrabatt erreichen oder übertreffen kommen für den Zuschlag in Frage. Die Vergabe berücksichtigt Preis, Lieferfähigkeit und Zuverlässigkeit. Exakte Lieferadressen werden erst nach Zuschlag freigegeben, um die Identität der beteiligten Baufirmen während der Ausschreibung zu schützen.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Sind meine Standortdaten und Kundendaten geschützt?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Ja. Während einer Ausschreibung sehen Lieferanten nur das Liefergebiet als Zone, nicht die genaue Adresse. Konkrete Lieferadressen und Kundendaten werden erst nach verbindlichem Zuschlag freigegeben. So bleibt die Identität der beteiligten Baufirmen geschützt, bis der Auftrag fix vereinbart ist.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text">Kann ich SourceOn auch als Grossunternehmen nutzen?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Absolut. Obwohl unsere Kernzielgruppe KMU-Baufirmen sind, profitieren auch Generalunternehmer und Grosskonzerne von unserem Netzwerk und unserer Verhandlungsmacht.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)"><span class="faq-q-text" data-i18n="faq_q_bundle">Bekommen alle Firmen im selben Bündel die gleiche Ersparnis?</span><span class="faq-toggle">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner" data-i18n="faq_a_bundle">Nein. SourceOn verhandelt für das gesamte Bündel einen garantierten Mindestrabatt beim Lieferanten. Innerhalb des Bündels wird die Ersparnis nach Volumenanteil gestaffelt — wer mehr Material über SourceOn bezieht, profitiert von einer höheren individuellen Ersparnis. So bleibt das System fair und gleichzeitig wachstumsfördernd: je mehr du bündelst, desto mehr sparst du.</div></div>
+      <div class="faq-answer-panel">
+        <div class="faq-answer-title">Was kostet mich SourceOn wenn ich nichts spare?</div>
+        <div class="faq-answer-text">Gar nichts. SourceOn verlangt ausschliesslich eine Provision von 2.25% auf den Materialwert — und das nur dann, wenn der verhandelte Rabatt deinen garantierten Mindestrabatt erreicht oder übertrifft. Sparst du nichts, zahlst du nichts. Kein Abo, keine Fixgebühr, kein Risiko.</div>
       </div>
     </div>
   </div></section>
@@ -1795,5 +1773,26 @@ document.addEventListener('keydown',function(e){
 </div>
 
   <script src="mobile-nav.js"></script>
+<script>
+(function(){
+  var faqData=[{"question": "Was kostet mich SourceOn wenn ich nichts spare?", "answer": "Gar nichts. SourceOn verlangt ausschliesslich eine Provision von 2.25% auf den Materialwert — und das nur dann, wenn der verhandelte Rabatt deinen garantierten Mindestrabatt erreicht oder übertrifft. Sparst du nichts, zahlst du nichts. Kein Abo, keine Fixgebühr, kein Risiko."}, {"question": "Wie lange dauert es bis ich ein Angebot bekomme?", "answer": "Das hängt von deinem Lieferzeitraum ab: Je flexibler dein Termin, desto länger sammelt deine Anfrage Bündelungspartner — und desto grösser deine Ersparnis. Grossaufträge werden oft innerhalb einer Woche ausgeschrieben, kleinere Mengen dauern 1–3 Wochen. Den spätesten Ausschreibungstermin siehst du jederzeit in deinem Dashboard."}, {"question": "Muss ich einen Vertrag unterschreiben?", "answer": "Nein. Es gibt keinen separaten Vertrag zu unterschreiben. Mit der verbindlichen Bestätigung im Bestellformular (Pflicht-Checkbox mit deinem garantierten Netto-Mindestrabatt) gilt deine Anfrage als bedingt verbindlich — ausschliesslich wenn der Mindestrabatt erreicht wird. Die rechtliche Grundlage ist unsere Kundenvereinbarung, die du beim ersten Auftrag einmalig akzeptierst."}, {"question": "Was passiert wenn die Lieferung fehlerhaft ist?", "answer": "SourceOn ist Vermittler, kein Händler. Der Kaufvertrag läuft direkt zwischen dir und dem Lieferanten. Bei Mängeln haftet der Lieferant direkt dir gegenüber gemäss Schweizer OR."}, {"question": "Für welche Materialien ist SourceOn geeignet?", "answer": "SourceOn deckt alle wichtigen Baustoffe ab: Beton, Armierungsstahl, Kies & Splitt, Mauerwerk, Dämmung, Schalung, Mörtel, Sanitär & HLKS und weitere. Auch Sondermaterialien können auf Anfrage beschafft werden."}, {"question": "Ab welchem Bestellvolumen lohnt sich SourceOn?", "answer": "SourceOn ist ab einem Jahresvolumen von rund CHF 50'000 sinnvoll. Je höher dein Volumen, desto grösser der Bündelungseffekt und desto mehr kannst du sparen. Nutze unseren Rechner um dein persönliches Einsparpotenzial zu berechnen."}, {"question": "Wird das Material direkt auf meine Baustelle geliefert?", "answer": "Ja — immer. Der Lieferant liefert direkt auf deine Baustelle. Es gibt keine Zwischenlagerung bei SourceOn. Nach Zuschlag koordinierst du den Lieferzeitpunkt direkt mit dem Lieferanten."}, {"question": "Wie funktioniert die Vergabe an Lieferanten?", "answer": "SourceOn veröffentlicht gebündelte Materialpakete für verifizierte Partnerlieferanten. Diese reichen ein verdecktes Angebot ein — sie sehen die Angebote anderer Lieferanten nicht. Nur Angebote die den ausgeschriebenen Mindestrabatt erreichen oder übertreffen kommen für den Zuschlag in Frage. Die Vergabe berücksichtigt Preis, Lieferfähigkeit und Zuverlässigkeit. Exakte Lieferadressen werden erst nach Zuschlag freigegeben, um die Identität der beteiligten Baufirmen während der Ausschreibung zu schützen."}, {"question": "Sind meine Standortdaten und Kundendaten geschützt?", "answer": "Ja. Während einer Ausschreibung sehen Lieferanten nur das Liefergebiet als Zone, nicht die genaue Adresse. Konkrete Lieferadressen und Kundendaten werden erst nach verbindlichem Zuschlag freigegeben. So bleibt die Identität der beteiligten Baufirmen geschützt, bis der Auftrag fix vereinbart ist."}, {"question": "Kann ich SourceOn auch als Grossunternehmen nutzen?", "answer": "Absolut. Obwohl unsere Kernzielgruppe KMU-Baufirmen sind, profitieren auch Generalunternehmer und Grosskonzerne von unserem Netzwerk und unserer Verhandlungsmacht."}, {"question": "Bekommen alle Firmen im selben Bündel die gleiche Ersparnis?", "answer": "Nein. SourceOn verhandelt für das gesamte Bündel einen garantierten Mindestrabatt beim Lieferanten. Innerhalb des Bündels wird die Ersparnis nach Volumenanteil gestaffelt — wer mehr Material über SourceOn bezieht, profitiert von einer höheren individuellen Ersparnis. So bleibt das System fair und gleichzeitig wachstumsfördernd: je mehr du bündelst, desto mehr sparst du."}];
+  var questions=document.querySelectorAll('.faq-q-item');
+  var answerPanel=document.querySelector('.faq-answer-panel');
+  if(!answerPanel||!questions.length)return;
+  answerPanel.style.transition='opacity 0.15s';
+  questions.forEach(function(q,i){
+    q.addEventListener('click',function(){
+      questions.forEach(function(x){x.classList.remove('active');});
+      q.classList.add('active');
+      answerPanel.style.opacity='0';
+      setTimeout(function(){
+        answerPanel.querySelector('.faq-answer-title').textContent=faqData[i].question;
+        answerPanel.querySelector('.faq-answer-text').textContent=faqData[i].answer;
+        answerPanel.style.opacity='1';
+      },150);
+    });
+  });
+})();
+</script>
 </body>
 </html>

@@ -798,18 +798,6 @@ body{background:#070F1A}
 #lp #mat-lookup-cat{color:var(--t2);font-weight:400}
 #lp .matsel-field .fv.norm{color:var(--t2);font-weight:400}
 /* category pills */
-#lp .cattiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
-@media(max-width:768px){#lp .cattiles{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){#lp .cattiles{grid-template-columns:1fr}}
-#lp .cat-tile{background:var(--bg1);padding:28px 24px;cursor:pointer;transition:background .15s;position:relative;text-decoration:none;display:flex;flex-direction:column;gap:8px}
-@media(max-width:768px){#lp .cat-tile{padding:20px 16px}}
-#lp .cat-tile:hover{background:var(--bg2)}
-#lp .cat-tile.active{background:var(--golddim);box-shadow:inset 3px 0 0 var(--gold)}
-#lp .cat-tile .ct-name{font-size:15px;font-weight:600;color:var(--t1)}
-#lp .cat-tile .ct-count{font-size:12px;color:var(--t3)}
-#lp .cat-tile .ct-desc{font-size:12px;color:var(--t2);line-height:1.4;margin-top:4px}
-#lp .cat-tile .ct-arrow{font-size:14px;color:var(--t3);margin-top:auto;padding-top:12px;transition:color .15s,transform .15s}
-#lp .cat-tile:hover .ct-arrow{color:var(--gold);transform:translateX(3px)}
 /* stats strip */
 #lp .statstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
 @media(max-width:768px){#lp .statstrip{grid-template-columns:1fr}}
@@ -957,22 +945,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     </div>
   </div></section>
 
-  <!-- KATALOG -->
-  <section class="sec bt"><div class="wrap">
-    <span class="sec-label">Katalog</span>
-    <div class="cattiles">
-      <a class="cat-tile" data-cat="Transportbeton &amp; Pumpbeton"><div class="ct-name">Transportbeton &amp; Pumpbeton</div><div class="ct-count">5 Materialien</div><div class="ct-desc">C20/25 bis XC4 druckwasserdicht — für Fundamente, Decken und Spezialanwendungen.</div><div class="ct-arrow">→</div></a>
-      <a class="cat-tile" data-cat="Armierung &amp; Bewehrung"><div class="ct-name">Armierung &amp; Bewehrung</div><div class="ct-count">9 Materialien</div><div class="ct-desc">Stäbe Ø 8–20mm, Matten Q188–Q335, Betonstahlkörbe — SIA 262-konform.</div><div class="ct-arrow">→</div></a>
-      <a class="cat-tile" data-cat="Kies, Splitt &amp; Sand"><div class="ct-name">Kies, Splitt &amp; Sand</div><div class="ct-count">5 Materialien</div><div class="ct-desc">Kies 0–32mm, Splitt und Sand für Planie, Filterschichten und Mischungen.</div><div class="ct-arrow">→</div></a>
-      <a class="cat-tile" data-cat="Mauerwerk &amp; Mörtel"><div class="ct-name">Mauerwerk &amp; Mörtel</div><div class="ct-count">10 Materialien</div><div class="ct-desc">Hochlochziegel, Kalksandstein, Porenbeton — plus Mauer-, Putz- und Estrichmörtel.</div><div class="ct-arrow">→</div></a>
-      <a class="cat-tile" data-cat="Schalung &amp; Stützen"><div class="ct-name">Schalung &amp; Stützen</div><div class="ct-count">5 Materialien</div><div class="ct-desc">Schalungsplatten, Systemschalung Wand (Miet), H20-Träger und Stahlstützen.</div><div class="ct-arrow">→</div></a>
-      <a class="cat-tile" data-cat="Betonfertigteile"><div class="ct-name">Betonfertigteile</div><div class="ct-count">3 Materialien</div><div class="ct-desc">Vorgefertigte Treppen, Deckenplatten Spannbeton und Stützen.</div><div class="ct-arrow">→</div></a>
-      <a class="cat-tile" data-cat="Dämmung"><div class="ct-name">Dämmung</div><div class="ct-count">6 Materialien</div><div class="ct-desc">EPS Perimeter/Fassade/Flachdach, Mineralwolle Trennwand/Steildach, XPS Bodenplatte.</div><div class="ct-arrow">→</div></a>
-      <a class="cat-tile" data-cat="Gipskarton &amp; Ständerwerk"><div class="ct-name">Gipskarton &amp; Ständerwerk</div><div class="ct-count">5 Materialien</div><div class="ct-desc">GKB Standard, GKBI Feuchtraum, GKF Brandschutz — plus CW-Profile und UA-Anschlüsse.</div><div class="ct-arrow">→</div></a>
-      <a class="cat-tile" data-cat="Bedachung &amp; Fassade"><div class="ct-name">Bedachung &amp; Fassade</div><div class="ct-count">4 Materialien</div><div class="ct-desc">Tondach- und Betonroofziegel, EPDM-Abdichtung, Faserzement-Fassadenplatten.</div><div class="ct-arrow">→</div></a>
-      <a class="cat-tile" data-cat="Haustechnik &amp; Rohrleitungen"><div class="ct-name">Haustechnik &amp; Rohrleitungen</div><div class="ct-count">5 Materialien</div><div class="ct-desc">PVC/PP-Rohre, Kupfer- und Verbundrohre, Heizungsverteiler Fussbodenheizung.</div><div class="ct-arrow">→</div></a>
-    </div>
-  </div></section>
 
   <!-- ABDECKUNG -->
   <section class="sec bt"><div class="wrap">
@@ -1912,46 +1884,6 @@ document.addEventListener('keydown',function(e){
       if(!wasActive)p.classList.add('active');
     });
   });
-  </script>
-  <script>
-  // CATEGORY TILES — scroll to selector and pick the category's first material
-  (function(){
-    function classify(name){
-      var n=name.toLowerCase();
-      if(n.indexOf('betonfertigteil')>-1)return 'Betonfertigteile';
-      if(n.indexOf('transportbeton')>-1||n.indexOf('pumpbeton')>-1)return 'Transportbeton & Pumpbeton';
-      if(n.indexOf('armierung')>-1||n.indexOf('betonstahl')>-1)return 'Armierung & Bewehrung';
-      if(n.indexOf('kies')>-1||n.indexOf('splitt')>-1||n.indexOf('sand')>-1)return 'Kies, Splitt & Sand';
-      if(n.indexOf('dämmplatte')>-1||n.indexOf('mineralwolle')>-1||n.indexOf('dämmung')>-1)return 'Dämmung';
-      if(n.indexOf('gipskarton')>-1||n.indexOf('ständerwerk')>-1||n.indexOf('anschlussprofil')>-1)return 'Gipskarton & Ständerwerk';
-      if(n.indexOf('dachziegel')>-1||n.indexOf('dachabdichtung')>-1||n.indexOf('betonroof')>-1||n.indexOf('fassaden')>-1||n.indexOf('bedachung')>-1)return 'Bedachung & Fassade';
-      if(n.indexOf('schalung')>-1||n.indexOf('träger')>-1||n.indexOf('stütze')>-1)return 'Schalung & Stützen';
-      if(n.indexOf('ziegel')>-1||n.indexOf('kalksandstein')>-1||n.indexOf('porenbeton')>-1||n.indexOf('mörtel')>-1||n.indexOf('putz')>-1||n.indexOf('estrich')>-1)return 'Mauerwerk & Mörtel';
-      if(n.indexOf('rohr')>-1||n.indexOf('heizungsverteiler')>-1)return 'Haustechnik & Rohrleitungen';
-      return 'Sonstige';
-    }
-    var sel=document.getElementById('mat-lookup-select');
-    var tmp=document.createElement('div');
-    function decode(s){tmp.innerHTML=s;return tmp.textContent;}
-    document.querySelectorAll('.cat-tile').forEach(function(tile){
-      tile.addEventListener('click',function(e){
-        e.preventDefault();
-        document.querySelectorAll('.cat-tile.active').forEach(function(t){t.classList.remove('active');});
-        tile.classList.add('active');
-        var cat=decode(tile.getAttribute('data-cat'));
-        // pick first matching option in the dropdown
-        if(sel){
-          var opts=sel.querySelectorAll('option[value]');
-          for(var i=0;i<opts.length;i++){
-            var o=opts[i];
-            if(o.value&&classify(o.dataset.name||o.textContent)===cat){sel.value=o.value;sel.dispatchEvent(new Event('change'));break;}
-          }
-          var top=document.querySelector('.matsel')||sel;
-          top.scrollIntoView({behavior:'smooth',block:'center'});
-        }
-      });
-    });
-  })();
   </script>
   <script src="mobile-nav.js"></script>
 </body>
