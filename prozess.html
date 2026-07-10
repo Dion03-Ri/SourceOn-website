@@ -31,7 +31,7 @@
 <script src="debug.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Wie es funktioniert — SourceOn</title>
+<title data-i18n="page_title">Wie es funktioniert — SourceOn</title>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -853,7 +853,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav_calculator">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html">Immobilien &amp; Wohnbau</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="fw_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="fw_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html" data-i18n="fw_gu">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html" data-i18n="fw_oeffentlich">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="fw_immobilien">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
@@ -872,16 +872,16 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         </div>
       </div>
       <div id="acct-wrap" style="position:relative">
-        <button id="acct-btn" onclick="toggleAcctDD()" aria-label="Konto">
+        <button id="acct-btn" onclick="toggleAcctDD()" aria-label="Konto" data-i18n-aria="acct_aria">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </button>
         <div id="acct-dd">
           <div id="acct-signed-out">
-            <div class="acct-group-label">Kunden</div>
+            <div class="acct-group-label" data-i18n="acct_group_customers">Kunden</div>
             <a href="#" onclick="clerkCustomerLogin();return false" data-i18n="acct_customer_login">Kunden-Login</a>
             <a href="#" onclick="clerkCustomerSignUp();return false" data-i18n="acct_customer_register" class="acct-customer-reg">Als Kunde registrieren</a>
             <div class="acct-divider"></div>
-            <div class="acct-group-label">Lieferanten</div>
+            <div class="acct-group-label" data-i18n="acct_group_suppliers">Lieferanten</div>
             <a href="#" onclick="clerkSupplierLogin();return false" data-i18n="acct_login">Lieferanten-Login</a>
             <a href="lieferant.html" data-i18n="acct_register">Als Lieferant registrieren</a>
           </div>
@@ -905,7 +905,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <a href="prozess.html" onclick="toggleNav()" data-i18n="nav_process_m">Wie es funktioniert</a>
   <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calculator_m">Kalkulator</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom_m">Für wen</a>
-  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()">Immobilien &amp; Wohnbau</a></div>
+  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="fw_bau_m">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="fw_handwerk_m">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()" data-i18n="fw_gu_m">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()" data-i18n="fw_oeffentlich_m">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()" data-i18n="fw_immobilien_m">Immobilien &amp; Wohnbau</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier_m">Lieferant werden</a>
   <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav_about_m">Über uns</a>
   <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav_contact_m">Kontakt</a>
@@ -923,31 +923,31 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <!-- 4 STEPS -->
   <section class="sec"><div class="wrap">
-    <span class="sec-label">Der Prozess</span>
+    <span class="sec-label" data-i18n="proc_seclabel">Der Prozess</span>
     <div class="psteps">
       <div class="pstep reveal">
-        <div class="pstep-n">Schritt 1</div>
+        <div class="pstep-n" data-i18n="proc_step1_n">Schritt 1</div>
         <div>
           <div class="pstep-t" data-i18n="proc_step1_title">Bedarf melden</div>
           <div class="pstep-x" data-i18n="proc_step1_text">Du teilst uns deinen Materialbedarf mit — Materialart, Menge und Lieferzeitraum. Du siehst sofort deinen garantierten Ziel-Mindestrabatt. Dauert zwei Minuten.</div>
         </div>
       </div>
       <div class="pstep reveal">
-        <div class="pstep-n">Schritt 2</div>
+        <div class="pstep-n" data-i18n="proc_step2_n">Schritt 2</div>
         <div>
           <div class="pstep-t" data-i18n="proc_step2_title">Angebot erhalten</div>
           <div class="pstep-x" data-i18n="proc_step2_text">SourceOn bündelt deinen Bedarf mit anderen Baufirmen und verhandelt Mengenrabatte direkt beim Lieferanten. Dein Lieferzeitraum gibt das Tempo vor — je flexibler dein Termin, desto grösser dein Bündel und desto höher deine Ersparnis. Im Dashboard verfolgst du jederzeit den Status deiner Anfrage.</div>
         </div>
       </div>
       <div class="pstep reveal">
-        <div class="pstep-n">Schritt 3</div>
+        <div class="pstep-n" data-i18n="proc_step3_n">Schritt 3</div>
         <div>
           <div class="pstep-t" data-i18n="proc_step3_title">Deine Garantie</div>
           <div class="pstep-x" data-i18n="proc_step3_text">Dein Mindestrabatt steht fest, bevor irgendetwas verbindlich wird. Erreicht das verhandelte Angebot deine Zielmarke, wird dein Auftrag automatisch zu diesen Konditionen ausgeführt. Wird sie verfehlt, entfällt deine Anfrage kostenlos — ganz automatisch.</div>
         </div>
       </div>
       <div class="pstep reveal">
-        <div class="pstep-n">Schritt 4</div>
+        <div class="pstep-n" data-i18n="proc_step4_n">Schritt 4</div>
         <div>
           <div class="pstep-t" data-i18n="proc_step4_title">Du sparst — garantiert</div>
           <div class="pstep-x" data-i18n="proc_step4_text">Direktlieferung auf deine Baustelle. Dein garantierter Mindestrabatt kommt vollständig bei dir an — du zahlst SourceOn nie etwas. Unsere Provision trägt der Lieferant, nicht du. Du zahlst nur, wenn du sparst — und zwar nur dem Lieferanten, zum vereinbarten Rabattpreis. Nach Zuschlag werden deine Kontaktdaten an den Lieferanten freigegeben — dieser koordiniert die Lieferung direkt mit dir.</div>
@@ -959,19 +959,19 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <!-- COMPARISON -->
   <section class="sec bt"><div class="wrap">
-    <span class="sec-label">Der Unterschied</span>
+    <span class="sec-label" data-i18n="cmp_seclabel">Der Unterschied</span>
     <div class="cmp2 reveal">
       <div class="chead">
-        <div class="ch-l">Alleine einkaufen</div>
+        <div class="ch-l" data-i18n="cmpx_l">Alleine einkaufen</div>
         <div class="ch-c"></div>
-        <div class="ch-r">Mit SourceOn</div>
+        <div class="ch-r" data-i18n="cmpx_r">Mit SourceOn</div>
       </div>
-      <div class="crow"><div class="cl">Einzelpreis</div><div class="cc">Preis</div><div class="cr"><span class="dot">●</span>Bündelrabatt</div></div>
-      <div class="crow"><div class="cl">Einzelvolumen</div><div class="cc">Verhandlung</div><div class="cr"><span class="dot">●</span>Gebündeltes Volumen</div></div>
-      <div class="crow"><div class="cl">Begrenzt</div><div class="cc">Transparenz</div><div class="cr"><span class="dot">●</span>Vollständig</div></div>
-      <div class="crow"><div class="cl">Eigenrecherche</div><div class="cc">Lieferanten</div><div class="cr"><span class="dot">●</span>SIA/ISO-geprüft</div></div>
-      <div class="crow"><div class="cl">Identität sofort bekannt</div><div class="cc">Datenschutz</div><div class="cr"><span class="dot">●</span>Geschützt bis Zuschlag</div></div>
-      <div class="crow"><div class="cl">Volle Kosten ohne Garantie</div><div class="cc">Risiko</div><div class="cr"><span class="dot">●</span>Null — nur Provision bei Ersparnis</div></div>
+      <div class="crow"><div class="cl" data-i18n="cmpx_1l">Einzelpreis</div><div class="cc" data-i18n="cmpx_1c">Preis</div><div class="cr"><span class="dot">●</span><span data-i18n="cmpx_1r">Bündelrabatt</span></div></div>
+      <div class="crow"><div class="cl" data-i18n="cmpx_2l">Einzelvolumen</div><div class="cc" data-i18n="cmpx_2c">Verhandlung</div><div class="cr"><span class="dot">●</span><span data-i18n="cmpx_2r">Gebündeltes Volumen</span></div></div>
+      <div class="crow"><div class="cl" data-i18n="cmpx_3l">Begrenzt</div><div class="cc" data-i18n="cmpx_3c">Transparenz</div><div class="cr"><span class="dot">●</span><span data-i18n="cmpx_3r">Vollständig</span></div></div>
+      <div class="crow"><div class="cl" data-i18n="cmpx_4l">Eigenrecherche</div><div class="cc" data-i18n="cmpx_4c">Lieferanten</div><div class="cr"><span class="dot">●</span><span data-i18n="cmpx_4r">SIA/ISO-geprüft</span></div></div>
+      <div class="crow"><div class="cl" data-i18n="cmpx_5l">Identität sofort bekannt</div><div class="cc" data-i18n="cmpx_5c">Datenschutz</div><div class="cr"><span class="dot">●</span><span data-i18n="cmpx_5r">Geschützt bis Zuschlag</span></div></div>
+      <div class="crow"><div class="cl" data-i18n="cmpx_6l">Volle Kosten ohne Garantie</div><div class="cc" data-i18n="cmpx_6c">Risiko</div><div class="cr"><span class="dot">●</span><span data-i18n="cmpx_6r">Null — nur Provision bei Ersparnis</span></div></div>
     </div>
   </div></section>
 
@@ -989,7 +989,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     <div class="fbrand">
       <div class="flogo">Source<span>On</span></div>
       <p data-i18n="footer_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
-      <p style="margin-top:4px;font-size:12px">Du zahlst erst, wenn wir dir sparen.</p>
+      <p style="margin-top:4px;font-size:12px" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</p>
       <div class="fcopy">© 2026 SourceOn</div>
     </div>
     <div class="fcol"><div class="fcol-label" data-i18n="footer_h_services">Leistungen</div>
@@ -1088,7 +1088,7 @@ function toggleFaq(btn){
 </script>
 
 <!-- CHAT WIDGET -->
-<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen">
+<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen" data-i18n-aria="chat_aria">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
 </button>
 <div id="chat-win">
@@ -1116,8 +1116,15 @@ function toggleFaq(btn){
 (function(){
 const APIKEY='ANTHROPIC_API_KEY_HERE';
 const SYSTEM="Du bist der offizielle SourceOn Assistent. SourceOn ist ein Schweizer B2B Beschaffungsvermittler für die Baubranche. Provision: 2.25% auf Materialwert, nur bei nachgewiesener Ersparnis. Antworte immer auf Deutsch, kurz und präzise, maximal 3 Sätze.";
+const CHATL={
+de:{greet:'Hallo! Ich bin der SourceOn Assistent. Wie kann ich dir helfen?',soon:'Assistent wird bald verfügbar. Kontaktiere uns direkt: info@sourceon.ch',err:'Verbindungsfehler. Kontaktiere uns: info@sourceon.ch',sorry:'Entschuldigung. Kontaktiere uns: info@sourceon.ch'},
+en:{greet:"Hi! I'm the SourceOn Assistant. How can I help you?",soon:'Assistant coming soon. Contact us directly: info@sourceon.ch',err:'Connection error. Contact us: info@sourceon.ch',sorry:'Sorry. Contact us: info@sourceon.ch'},
+fr:{greet:"Bonjour ! Je suis l'assistant SourceOn. Comment puis-je t'aider ?",soon:'Assistant bientôt disponible. Contacte-nous directement : info@sourceon.ch',err:'Erreur de connexion. Contacte-nous : info@sourceon.ch',sorry:'Désolé. Contacte-nous : info@sourceon.ch'},
+it:{greet:"Ciao! Sono l'assistente SourceOn. Come posso aiutarti?",soon:'Assistente presto disponibile. Contattaci direttamente: info@sourceon.ch',err:'Errore di connessione. Contattaci: info@sourceon.ch',sorry:'Spiacenti. Contattaci: info@sourceon.ch'}
+};
+function _clang(){var l=localStorage.getItem('sourceon-lang')||'de';return CHATL[l]?l:'de';}
 let history=[];let chatOpen=false;
-window.toggleChat=function(){chatOpen=!chatOpen;document.getElementById('chat-win').classList.toggle('open',chatOpen);if(chatOpen&&document.getElementById('chat-msgs').children.length===0)addBotMsg('Hallo! Ich bin der SourceOn Assistent. Wie kann ich dir helfen?');};
+window.toggleChat=function(){chatOpen=!chatOpen;document.getElementById('chat-win').classList.toggle('open',chatOpen);if(chatOpen&&document.getElementById('chat-msgs').children.length===0)addBotMsg(CHATL[_clang()].greet);};
 window.sendChip=function(el){document.getElementById('chat-chips').style.display='none';handleSend(el.textContent);};
 window.chatSend=function(){const inp=document.getElementById('chat-input');const txt=inp.value.trim();if(!txt)return;inp.value='';handleSend(txt);};
 function addUserMsg(txt){const el=document.createElement('div');el.className='chat-msg chat-msg-user';el.textContent=txt;document.getElementById('chat-msgs').appendChild(el);scrollBottom();}
@@ -1125,7 +1132,7 @@ function addBotMsg(txt){const wrap=document.createElement('div');const lbl=docum
 function showTyping(){const el=document.createElement('div');el.className='chat-typing';el.id='chat-typing';el.innerHTML='<span></span><span></span><span></span>';document.getElementById('chat-msgs').appendChild(el);scrollBottom();}
 function hideTyping(){const el=document.getElementById('chat-typing');if(el)el.remove();}
 function scrollBottom(){const m=document.getElementById('chat-msgs');m.scrollTop=m.scrollHeight;}
-async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content:txt});if(history.length>20)history=history.slice(-20);if(APIKEY==='ANTHROPIC_API_KEY_HERE'){addBotMsg('Assistent wird bald verfügbar. Kontaktiere uns direkt: info@sourceon.ch');return;}showTyping();try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':APIKEY,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,system:SYSTEM,messages:history})});const d=await r.json();const reply=d.content&&d.content[0]?d.content[0].text:'Entschuldigung. Kontaktiere uns: info@sourceon.ch';hideTyping();history.push({role:'assistant',content:reply});if(history.length>20)history=history.slice(-20);addBotMsg(reply);}catch(e){hideTyping();addBotMsg('Verbindungsfehler. Kontaktiere uns: info@sourceon.ch');}
+async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content:txt});if(history.length>20)history=history.slice(-20);if(APIKEY==='ANTHROPIC_API_KEY_HERE'){addBotMsg(CHATL[_clang()].soon);return;}showTyping();try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':APIKEY,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,system:SYSTEM,messages:history})});const d=await r.json();const reply=d.content&&d.content[0]?d.content[0].text:CHATL[_clang()].sorry;hideTyping();history.push({role:'assistant',content:reply});if(history.length>20)history=history.slice(-20);addBotMsg(reply);}catch(e){hideTyping();addBotMsg(CHATL[_clang()].err);}
 }
 })();
 </script>
@@ -1164,7 +1171,21 @@ footer_h_company:"Unternehmen",footer_about:"Über uns",footer_contact:"Kontakt"
 footer_h_legal:"Rechtliches",footer_privacy:"Datenschutz",footer_imprint:"Impressum",footer_terms:"AGB",
 footer_copy:"© 2026 SourceOn, Zürich — Alle Rechte vorbehalten",footer_tagline:"Du zahlst erst, wenn wir dir sparen.",
 chat_title:"SourceOn Assistent",chat_sub:"Beantwortet alle Fragen zu SourceOn",
-chat_chip1:"Wie funktioniert SourceOn?",chat_chip2:"Was kostet es?",chat_chip3:"Materialbedarf melden",chat_placeholder:"Frage stellen…"
+chat_chip1:"Wie funktioniert SourceOn?",chat_chip2:"Was kostet es?",chat_chip3:"Materialbedarf melden",chat_placeholder:"Frage stellen…",chat_aria:"SourceOn Assistent öffnen",
+page_title:"Wie es funktioniert — SourceOn",
+acct_group_customers:"Kunden",acct_group_suppliers:"Lieferanten",acct_aria:"Konto",
+fw_bau:"Bauunternehmen & GU",fw_handwerk:"Handwerk & Subunternehmer",fw_gu:"Generalunternehmer & TU",fw_oeffentlich:"Öffentliche Auftraggeber",fw_immobilien:"Immobilien & Wohnbau",
+fw_bau_m:"Bauunternehmen",fw_handwerk_m:"Handwerk",fw_gu_m:"Generalunternehmer",fw_oeffentlich_m:"Öffentliche Auftraggeber",fw_immobilien_m:"Immobilien & Wohnbau",
+proc_seclabel:"Der Prozess",proc_step1_n:"Schritt 1",proc_step2_n:"Schritt 2",proc_step3_n:"Schritt 3",proc_step4_n:"Schritt 4",
+cmp_seclabel:"Der Unterschied",cmpx_l:"Alleine einkaufen",cmpx_r:"Mit SourceOn",
+cmpx_1c:"Preis",cmpx_1l:"Einzelpreis",cmpx_1r:"Bündelrabatt",
+cmpx_2c:"Verhandlung",cmpx_2l:"Einzelvolumen",cmpx_2r:"Gebündeltes Volumen",
+cmpx_3c:"Transparenz",cmpx_3l:"Begrenzt",cmpx_3r:"Vollständig",
+cmpx_4c:"Lieferanten",cmpx_4l:"Eigenrecherche",cmpx_4r:"SIA/ISO-geprüft",
+cmpx_5c:"Datenschutz",cmpx_5l:"Identität sofort bekannt",cmpx_5r:"Geschützt bis Zuschlag",
+cmpx_6c:"Risiko",cmpx_6l:"Volle Kosten ohne Garantie",cmpx_6r:"Null — nur Provision bei Ersparnis",
+footer_calc:"Kalkulator",
+trust_title:"Verifizierung erforderlich",trust_msg:"Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.",trust_submit:"Bestätigen",trust_noresend:"Keinen Code erhalten?",trust_resend:"Code erneut senden",trust_cancel:"Abbrechen"
 },
 en:{
 nav_home:"Home",nav_process:"How it works",nav_calculator:"Calculator",nav_materials:"Materials",nav_forwhom:"For whom",nav_supplier:"Become a supplier",nav_about:"About us",nav_contact:"Contact",nav_cta:"Report material need",
@@ -1197,7 +1218,21 @@ footer_h_company:"Company",footer_about:"About us",footer_contact:"Contact",foot
 footer_h_legal:"Legal",footer_privacy:"Privacy policy",footer_imprint:"Imprint",footer_terms:"Terms",
 footer_copy:"© 2026 SourceOn, Zurich — All rights reserved",footer_tagline:"You only pay when we save you money.",
 chat_title:"SourceOn Assistant",chat_sub:"Answers all questions about SourceOn",
-chat_chip1:"How does SourceOn work?",chat_chip2:"What does it cost?",chat_chip3:"Report material need",chat_placeholder:"Ask a question…"
+chat_chip1:"How does SourceOn work?",chat_chip2:"What does it cost?",chat_chip3:"Report material need",chat_placeholder:"Ask a question…",chat_aria:"Open SourceOn Assistant",
+page_title:"How it works — SourceOn",
+acct_group_customers:"Customers",acct_group_suppliers:"Suppliers",acct_aria:"Account",
+fw_bau:"Construction firms & GC",fw_handwerk:"Trades & subcontractors",fw_gu:"General contractors & TC",fw_oeffentlich:"Public clients",fw_immobilien:"Real estate & housing",
+fw_bau_m:"Construction firms",fw_handwerk_m:"Trades",fw_gu_m:"General contractors",fw_oeffentlich_m:"Public clients",fw_immobilien_m:"Real estate & housing",
+proc_seclabel:"The process",proc_step1_n:"Step 1",proc_step2_n:"Step 2",proc_step3_n:"Step 3",proc_step4_n:"Step 4",
+cmp_seclabel:"The difference",cmpx_l:"Buying alone",cmpx_r:"With SourceOn",
+cmpx_1c:"Price",cmpx_1l:"Individual price",cmpx_1r:"Bundle discount",
+cmpx_2c:"Negotiation",cmpx_2l:"Single volume",cmpx_2r:"Bundled volume",
+cmpx_3c:"Transparency",cmpx_3l:"Limited",cmpx_3r:"Complete",
+cmpx_4c:"Suppliers",cmpx_4l:"Own research",cmpx_4r:"SIA/ISO-verified",
+cmpx_5c:"Data protection",cmpx_5l:"Identity known immediately",cmpx_5r:"Protected until award",
+cmpx_6c:"Risk",cmpx_6l:"Full cost with no guarantee",cmpx_6r:"Zero — commission only on savings",
+footer_calc:"Calculator",
+trust_title:"Verification required",trust_msg:"A confirmation code has been sent to your email. Please enter it below.",trust_submit:"Confirm",trust_noresend:"Didn't receive a code?",trust_resend:"Resend code",trust_cancel:"Cancel"
 },
 fr:{
 nav_home:"Accueil",nav_process:"Comment ça marche",nav_calculator:"Calculateur",nav_materials:"Matériaux",nav_forwhom:"Pour qui",nav_supplier:"Devenir fournisseur",nav_about:"À propos",nav_contact:"Contact",nav_cta:"Annoncer un besoin",
@@ -1230,7 +1265,21 @@ footer_h_company:"Entreprise",footer_about:"À propos",footer_contact:"Contact",
 footer_h_legal:"Mentions légales",footer_privacy:"Protection des données",footer_imprint:"Mentions légales",footer_terms:"CGV",
 footer_copy:"© 2026 SourceOn, Zurich — Tous droits réservés",footer_tagline:"Vous ne payez que lorsque nous vous faisons économiser.",
 chat_title:"Assistant SourceOn",chat_sub:"Répond à toutes vos questions sur SourceOn",
-chat_chip1:"Comment fonctionne SourceOn ?",chat_chip2:"Combien ça coûte ?",chat_chip3:"Annoncer un besoin",chat_placeholder:"Poser une question…"
+chat_chip1:"Comment fonctionne SourceOn ?",chat_chip2:"Combien ça coûte ?",chat_chip3:"Annoncer un besoin",chat_placeholder:"Poser une question…",chat_aria:"Ouvrir l'assistant SourceOn",
+page_title:"Comment ça marche — SourceOn",
+acct_group_customers:"Clients",acct_group_suppliers:"Fournisseurs",acct_aria:"Compte",
+fw_bau:"Entreprises de construction & EG",fw_handwerk:"Artisanat & sous-traitants",fw_gu:"Entreprises générales & ET",fw_oeffentlich:"Maîtres d'ouvrage publics",fw_immobilien:"Immobilier & logement",
+fw_bau_m:"Entreprises de construction",fw_handwerk_m:"Artisanat",fw_gu_m:"Entreprises générales",fw_oeffentlich_m:"Maîtres d'ouvrage publics",fw_immobilien_m:"Immobilier & logement",
+proc_seclabel:"Le processus",proc_step1_n:"Étape 1",proc_step2_n:"Étape 2",proc_step3_n:"Étape 3",proc_step4_n:"Étape 4",
+cmp_seclabel:"La différence",cmpx_l:"Acheter seul",cmpx_r:"Avec SourceOn",
+cmpx_1c:"Prix",cmpx_1l:"Prix individuel",cmpx_1r:"Rabais de volume",
+cmpx_2c:"Négociation",cmpx_2l:"Volume individuel",cmpx_2r:"Volume regroupé",
+cmpx_3c:"Transparence",cmpx_3l:"Limitée",cmpx_3r:"Complète",
+cmpx_4c:"Fournisseurs",cmpx_4l:"Recherche propre",cmpx_4r:"Vérifié SIA/ISO",
+cmpx_5c:"Protection des données",cmpx_5l:"Identité connue immédiatement",cmpx_5r:"Protégée jusqu'à l'attribution",
+cmpx_6c:"Risque",cmpx_6l:"Coûts complets sans garantie",cmpx_6r:"Nul — commission uniquement sur économies",
+footer_calc:"Calculateur",
+trust_title:"Vérification requise",trust_msg:"Un code de confirmation a été envoyé à ton e-mail. Merci de le saisir ci-dessous.",trust_submit:"Confirmer",trust_noresend:"Tu n'as pas reçu de code ?",trust_resend:"Renvoyer le code",trust_cancel:"Annuler"
 },
 it:{
 nav_home:"Home",nav_process:"Come funziona",nav_calculator:"Calcolatore",nav_materials:"Materiali",nav_forwhom:"Per chi",nav_supplier:"Diventa fornitore",nav_about:"Chi siamo",nav_contact:"Contatto",nav_cta:"Segnala fabbisogno",
@@ -1263,7 +1312,21 @@ footer_h_company:"Azienda",footer_about:"Chi siamo",footer_contact:"Contatto",fo
 footer_h_legal:"Note legali",footer_privacy:"Protezione dati",footer_imprint:"Impressum",footer_terms:"CGC",
 footer_copy:"© 2026 SourceOn, Zurigo — Tutti i diritti riservati",footer_tagline:"Paghi solo quando ti facciamo risparmiare.",
 chat_title:"Assistente SourceOn",chat_sub:"Risponde a tutte le domande su SourceOn",
-chat_chip1:"Come funziona SourceOn?",chat_chip2:"Quanto costa?",chat_chip3:"Segnala fabbisogno",chat_placeholder:"Fai una domanda…"
+chat_chip1:"Come funziona SourceOn?",chat_chip2:"Quanto costa?",chat_chip3:"Segnala fabbisogno",chat_placeholder:"Fai una domanda…",chat_aria:"Apri l'assistente SourceOn",
+page_title:"Come funziona — SourceOn",
+acct_group_customers:"Clienti",acct_group_suppliers:"Fornitori",acct_aria:"Account",
+fw_bau:"Imprese edili & GC",fw_handwerk:"Artigianato & subappaltatori",fw_gu:"Imprese generali & TC",fw_oeffentlich:"Committenti pubblici",fw_immobilien:"Immobiliare & edilizia abitativa",
+fw_bau_m:"Imprese edili",fw_handwerk_m:"Artigianato",fw_gu_m:"Imprese generali",fw_oeffentlich_m:"Committenti pubblici",fw_immobilien_m:"Immobiliare & abitativo",
+proc_seclabel:"Il processo",proc_step1_n:"Passo 1",proc_step2_n:"Passo 2",proc_step3_n:"Passo 3",proc_step4_n:"Passo 4",
+cmp_seclabel:"La differenza",cmpx_l:"Acquistare da soli",cmpx_r:"Con SourceOn",
+cmpx_1c:"Prezzo",cmpx_1l:"Prezzo singolo",cmpx_1r:"Sconto volume",
+cmpx_2c:"Trattativa",cmpx_2l:"Volume singolo",cmpx_2r:"Volume raggruppato",
+cmpx_3c:"Trasparenza",cmpx_3l:"Limitata",cmpx_3r:"Completa",
+cmpx_4c:"Fornitori",cmpx_4l:"Ricerca propria",cmpx_4r:"Verificato SIA/ISO",
+cmpx_5c:"Protezione dati",cmpx_5l:"Identità nota subito",cmpx_5r:"Protetta fino all'aggiudicazione",
+cmpx_6c:"Rischio",cmpx_6l:"Costi pieni senza garanzia",cmpx_6r:"Zero — provvigione solo sul risparmio",
+footer_calc:"Calcolatore",
+trust_title:"Verifica richiesta",trust_msg:"Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.",trust_submit:"Conferma",trust_noresend:"Non hai ricevuto un codice?",trust_resend:"Invia di nuovo il codice",trust_cancel:"Annulla"
 }
 };
 window.setLang=function(lang){
@@ -1280,6 +1343,10 @@ window.setLang=function(lang){
   document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
     var k=el.getAttribute('data-i18n-placeholder');
     if(d[k]!==undefined)el.placeholder=d[k];
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
+    var k=el.getAttribute('data-i18n-aria');
+    if(d[k]!==undefined)el.setAttribute('aria-label',d[k]);
   });
   var cur=document.getElementById('lang-current');
   if(cur)cur.textContent=lang.toUpperCase();
@@ -1298,6 +1365,14 @@ setLang(saved);
 </script>
 <script>
 // CLERK AUTH
+function _soLang(){var l=localStorage.getItem('sourceon-lang')||'de';return ['de','en','fr','it'].indexOf(l)>=0?l:'de';}
+var STATUSL={de:{pending:'Wird geprüft',verified:'Verifiziert',rejected:'Abgelehnt'},en:{pending:'Under review',verified:'Verified',rejected:'Rejected'},fr:{pending:'En cours de vérification',verified:'Vérifié',rejected:'Refusé'},it:{pending:'In verifica',verified:'Verificato',rejected:'Rifiutato'}};
+var LOGINL={
+de:{sup_msg:'Du bist noch nicht als Lieferant registriert. Möchtest du dich als Lieferant bewerben?',sup_link:'Als Lieferant bewerben',cus_msg:'Du hast noch kein Kundenkonto. Möchtest du Materialbedarf melden?',cus_link:'Materialbedarf melden',close:'Schliessen'},
+en:{sup_msg:'You are not yet registered as a supplier. Would you like to apply as a supplier?',sup_link:'Apply as a supplier',cus_msg:"You don't have a customer account yet. Would you like to report a material need?",cus_link:'Report material need',close:'Close'},
+fr:{sup_msg:"Tu n'es pas encore enregistré comme fournisseur. Souhaites-tu postuler comme fournisseur ?",sup_link:'Postuler comme fournisseur',cus_msg:"Tu n'as pas encore de compte client. Souhaites-tu annoncer un besoin en matériaux ?",cus_link:'Annoncer un besoin',close:'Fermer'},
+it:{sup_msg:'Non sei ancora registrato come fornitore. Vuoi candidarti come fornitore?',sup_link:'Candidati come fornitore',cus_msg:'Non hai ancora un account cliente. Vuoi segnalare un fabbisogno di materiale?',cus_link:'Segnala fabbisogno',close:'Chiudi'}
+};
 soLog('[SourceOn] PAGE LOAD — cookies:', document.cookie);
 soLog('[SourceOn] PAGE LOAD — localStorage keys:', Object.keys(localStorage));
 soLog('[SourceOn] PAGE LOAD — sessionStorage keys:', Object.keys(sessionStorage));
@@ -1343,7 +1418,7 @@ async function _soCheckSupplierLogin(clerkId){
   }catch(e){console.error('[SourceOn] Supplier login check error:',e);}
   console.log('[SourceOn] Supplier login check: found='+found);
   if(found){window.open('supplierdashboard.html','_blank');}
-  else{_soShowLoginMessage('Du bist noch nicht als Lieferant registriert. M\u00f6chtest du dich als Lieferant bewerben?','Als Lieferant bewerben','lieferant.html');}
+  else{var _l=LOGINL[_soLang()];_soShowLoginMessage(_l.sup_msg,_l.sup_link,'lieferant.html');}
 }
 async function _soCheckCustomerLogin(clerkId){
   var found=false;
@@ -1354,7 +1429,7 @@ async function _soCheckCustomerLogin(clerkId){
   }catch(e){console.error('[SourceOn] Customer login check error:',e);}
   console.log('[SourceOn] Customer login check: found='+found);
   if(found){window.open('kundendashboard.html','_blank');}
-  else{_soShowLoginMessage('Du hast noch kein Kundenkonto. M\u00f6chtest du Materialbedarf melden?','Materialbedarf melden','kontakt.html');}
+  else{var _l=LOGINL[_soLang()];_soShowLoginMessage(_l.cus_msg,_l.cus_link,'kontakt.html');}
 }
 function _soShowLoginMessage(msg,linkText,linkHref){
   var ex=document.getElementById('so-login-msg-overlay');if(ex&&ex.parentNode)ex.parentNode.removeChild(ex);
@@ -1364,7 +1439,7 @@ function _soShowLoginMessage(msg,linkText,linkHref){
   box.style.cssText='background:#0F2238;border:1px solid rgba(232,160,32,.35);border-radius:16px;max-width:420px;width:100%;padding:32px;text-align:center;font-family:Inter,-apple-system,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.5)';
   var d=document.createElement('div');d.style.cssText='font-size:1.02rem;font-weight:700;color:#fff;line-height:1.5;margin-bottom:24px';d.textContent=msg;
   var a=document.createElement('a');a.href=linkHref;a.textContent=linkText+' \u2192';a.style.cssText='display:block;width:100%;padding:13px;border-radius:10px;background:#E8A020;color:#08111E;font-size:.9rem;font-weight:700;text-decoration:none;margin-bottom:10px';
-  var b=document.createElement('button');b.type='button';b.textContent='Schliessen';b.style.cssText='width:100%;padding:11px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit';
+  var b=document.createElement('button');b.type='button';b.textContent=LOGINL[_soLang()].close;b.style.cssText='width:100%;padding:11px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit';
   b.addEventListener('click',function(){if(ov.parentNode)ov.parentNode.removeChild(ov);});
   box.appendChild(d);box.appendChild(a);box.appendChild(b);ov.appendChild(box);
   ov.addEventListener('click',function(e){if(e.target===ov&&ov.parentNode)ov.parentNode.removeChild(ov);});
@@ -1478,9 +1553,10 @@ async function _createCustomerIfNeeded(){
       if(statusWrap){
         if(supplierRows&&supplierRows.length>0){
           var s=supplierRows[0].status;
-          if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">Wird geprüft</span>';}
-          else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';}
-          else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';}
+          var _sl=STATUSL[_soLang()];
+          if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">'+_sl.pending+'</span>';}
+          else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">'+_sl.verified+'</span>';}
+          else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">'+_sl.rejected+'</span>';}
           else{statusWrap.innerHTML='';}
         }else{statusWrap.innerHTML='';}
       }
@@ -1587,6 +1663,13 @@ var ACCT_I18N={en:{acct_login:'Supplier Login',acct_register:'Register as Suppli
 
 
 // CLERK needs_client_trust HANDLER (global, registered once)
+var TRUSTL={
+de:{sent_email:'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',sent_phone:'Ein Bestätigungscode wurde an deine Telefonnummer gesendet.',cantstart:'Verifizierung konnte nicht gestartet werden: ',checking:'Wird geprüft…',confirm:'Bestätigen',unexpected:'Unerwarteter Status: ',invalid:'Ungültiger Code'},
+en:{sent_email:'A confirmation code has been sent to your email. Please enter it below.',sent_phone:'A confirmation code has been sent to your phone number.',cantstart:'Verification could not be started: ',checking:'Checking…',confirm:'Confirm',unexpected:'Unexpected status: ',invalid:'Invalid code'},
+fr:{sent_email:'Un code de confirmation a été envoyé à ton e-mail. Merci de le saisir ci-dessous.',sent_phone:'Un code de confirmation a été envoyé à ton numéro de téléphone.',cantstart:"La vérification n'a pas pu être lancée : ",checking:'Vérification…',confirm:'Confirmer',unexpected:'Statut inattendu : ',invalid:'Code invalide'},
+it:{sent_email:'Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.',sent_phone:'Un codice di conferma è stato inviato al tuo numero di telefono.',cantstart:'Impossibile avviare la verifica: ',checking:'Verifica…',confirm:'Conferma',unexpected:'Stato imprevisto: ',invalid:'Codice non valido'}
+};
+function _trustL(){var l=localStorage.getItem('sourceon-lang')||'de';return TRUSTL[l]||TRUSTL.de;}
 var _clerkSignInResource=null;
 var _clerkTrustActive=false;
 var _clerkTrustStrategy='email_code';
@@ -1598,19 +1681,19 @@ async function _clerkSendVerificationCode(){
     var si=_clerkSignInResource;
     if(!si)return;
     await si.prepareSecondFactor({strategy:'email_code'});
-    document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';
+    document.getElementById('clerk-trust-msg').textContent=_trustL().sent_email;
     _clerkShowTrustModal();
   }catch(e){
     console.error('[Clerk] prepareSecondFactor email_code failed:',e);
     try{
       await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});
       _clerkTrustStrategy='phone_code';
-      document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';
+      document.getElementById('clerk-trust-msg').textContent=_trustL().sent_phone;
       _clerkShowTrustModal();
     }catch(e2){
       console.error('[Clerk] prepareSecondFactor phone_code also failed:',e2);
       _clerkTrustActive=false;
-      alert('Verifizierung konnte nicht gestartet werden: '+(e2.errors?e2.errors[0].longMessage:e2.message));
+      alert(_trustL().cantstart+(e2.errors?e2.errors[0].longMessage:e2.message));
     }
   }
 }
@@ -1626,7 +1709,7 @@ async function clerkTrustVerify(){
   var code=document.getElementById('clerk-trust-code').value.trim();
   if(!code||!_clerkSignInResource){return;}
   var btn=document.getElementById('clerk-trust-submit');
-  btn.disabled=true;btn.textContent='Wird geprüft…';
+  btn.disabled=true;btn.textContent=_trustL().checking;
   document.getElementById('clerk-trust-error').textContent='';
   soLog('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
   try{
@@ -1638,14 +1721,14 @@ async function clerkTrustVerify(){
       _clerkTrustActive=false;
       return;
     }else{
-      document.getElementById('clerk-trust-error').textContent='Unerwarteter Status: '+result.status;
+      document.getElementById('clerk-trust-error').textContent=_trustL().unexpected+result.status;
     }
   }catch(e){
-    var msg=e.errors?e.errors[0].longMessage:(e.message||'Ungültiger Code');
+    var msg=e.errors?e.errors[0].longMessage:(e.message||_trustL().invalid);
     console.error('[Clerk] attemptSecondFactor failed:',msg);
     document.getElementById('clerk-trust-error').textContent=msg;
   }
-  btn.disabled=false;btn.textContent='Bestätigen';
+  btn.disabled=false;btn.textContent=_trustL().confirm;
 }
 
 async function clerkTrustResend(){
@@ -1669,13 +1752,13 @@ document.addEventListener('keydown',function(e){
 
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
   <div class="clerk-trust-modal">
-    <h3>Verifizierung erforderlich</h3>
-    <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
+    <h3 data-i18n="trust_title">Verifizierung erforderlich</h3>
+    <p id="clerk-trust-msg" data-i18n="trust_msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
-    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
+    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()" data-i18n="trust_submit">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
-    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
-    <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
+    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8"><span data-i18n="trust_noresend">Keinen Code erhalten?</span> <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer" data-i18n="trust_resend">Code erneut senden</a></div>
+    <button class="btn-cancel-trust" onclick="clerkTrustCancel()" data-i18n="trust_cancel">Abbrechen</button>
   </div>
 </div>
 

@@ -898,7 +898,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav.process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav.calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav.materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html">Immobilien &amp; Wohnbau</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html" data-i18n="nav_dd_gu">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav.supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav.about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav.contact">Kontakt</a></li>
@@ -917,16 +917,16 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         </div>
       </div>
       <div id="acct-wrap" style="position:relative">
-        <button id="acct-btn" onclick="toggleAcctDD()" aria-label="Konto">
+        <button id="acct-btn" onclick="toggleAcctDD()" aria-label="Konto" data-i18n-aria="lp_aria_account">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </button>
         <div id="acct-dd">
           <div id="acct-signed-out">
-            <div class="acct-group-label">Kunden</div>
+            <div class="acct-group-label" data-i18n="acct_group_customers">Kunden</div>
             <a href="#" onclick="clerkCustomerLogin();return false" data-i18n="acct_customer_login">Kunden-Login</a>
             <a href="#" onclick="clerkCustomerSignUp();return false" data-i18n="acct_customer_register" class="acct-customer-reg">Als Kunde registrieren</a>
             <div class="acct-divider"></div>
-            <div class="acct-group-label">Lieferanten</div>
+            <div class="acct-group-label" data-i18n="acct_group_suppliers">Lieferanten</div>
             <a href="#" onclick="clerkSupplierLogin();return false" data-i18n="acct_login">Lieferanten-Login</a>
             <a href="lieferant.html" data-i18n="acct_register">Als Lieferant registrieren</a>
           </div>
@@ -950,7 +950,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <a href="prozess.html" onclick="toggleNav()" data-i18n="nav.process">Wie es funktioniert</a>
   <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav.calc">Kalkulator</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav.forwhom">Für wen</a>
-  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()">Immobilien &amp; Wohnbau</a></div>
+  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_ov_bau">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="nav_ov_handwerk">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()" data-i18n="nav_ov_gu">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav.supplier">Lieferant werden</a>
   <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav.about">Über uns</a>
   <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav.contact">Kontakt</a>
@@ -964,41 +964,41 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <section class="hero">
     <div class="hero-glow"></div>
     <div class="hero-content">
-      <span class="eyebrow">Schweizer Baustoffbeschaffung</span>
-      <h1 class="h1">Baumaterialien günstiger einkaufen.</h1>
-      <div class="h1-gold">Für jede Schweizer Baufirma.</div>
-      <p class="subline">Du zahlst erst, wenn wir dir sparen.</p>
+      <span class="eyebrow" data-i18n="lp_hero_eyebrow">Schweizer Baustoffbeschaffung</span>
+      <h1 class="h1" data-i18n="lp_hero_h1">Baumaterialien günstiger einkaufen.</h1>
+      <div class="h1-gold" data-i18n="lp_hero_h1gold">Für jede Schweizer Baufirma.</div>
+      <p class="subline" data-i18n="lp_hero_sub">Du zahlst erst, wenn wir dir sparen.</p>
       <div class="cta-row">
-        <a class="btn-primary" href="kontakt.html">Materialbedarf melden&nbsp;→</a>
-        <a class="btn-ghost" href="prozess.html">Wie es funktioniert&nbsp;→</a>
+        <a class="btn-primary" href="kontakt.html" data-i18n="lp_hero_cta1">Materialbedarf melden&nbsp;→</a>
+        <a class="btn-ghost" href="prozess.html" data-i18n="lp_hero_cta2">Wie es funktioniert&nbsp;→</a>
       </div>
     </div>
-    <a class="scrolldown" href="#lp-cards" aria-label="Weiter">
+    <a class="scrolldown" href="#lp-cards" aria-label="Weiter" data-i18n-aria="lp_aria_scroll">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
     </a>
   </section>
 
   <!-- SECTION 2 — THREE CARDS -->
   <section class="sec" id="lp-cards"><div class="wrap">
-    <span class="sec-label reveal">So funktioniert's</span>
+    <span class="sec-label reveal" data-i18n="lp_s2_label">So funktioniert's</span>
     <div class="cards3 reveal">
       <a class="card" href="prozess.html">
-        <div class="card-cat">Prozess</div>
-        <div class="card-title">Vier Schritte vom Bedarf bis zur Lieferung.</div>
-        <div class="card-desc">Bedarf melden, Bündel abwarten, Mindestrabatt bestätigen — fertig. Du zahlst erst, wenn du sparst.</div>
-        <div class="card-link">Wie es funktioniert <span class="arw">→</span></div>
+        <div class="card-cat" data-i18n="lp_c1_cat">Prozess</div>
+        <div class="card-title" data-i18n="lp_c1_title">Vier Schritte vom Bedarf bis zur Lieferung.</div>
+        <div class="card-desc" data-i18n="lp_c1_desc">Bedarf melden, Bündel abwarten, Mindestrabatt bestätigen — fertig. Du zahlst erst, wenn du sparst.</div>
+        <div class="card-link"><span data-i18n="lp_c1_link">Wie es funktioniert</span> <span class="arw">→</span></div>
       </a>
       <a class="card" href="kalkulator.html">
-        <div class="card-cat">Kalkulator</div>
-        <div class="card-title">Berechne dein persönliches Einsparpotenzial.</div>
-        <div class="card-desc">Gib dein Jahresvolumen ein und sieh sofort, wie viel du mit SourceOn sparen könntest.</div>
-        <div class="card-link">Jetzt berechnen <span class="arw">→</span></div>
+        <div class="card-cat" data-i18n="lp_c2_cat">Kalkulator</div>
+        <div class="card-title" data-i18n="lp_c2_title">Berechne dein persönliches Einsparpotenzial.</div>
+        <div class="card-desc" data-i18n="lp_c2_desc">Gib dein Jahresvolumen ein und sieh sofort, wie viel du mit SourceOn sparen könntest.</div>
+        <div class="card-link"><span data-i18n="lp_c2_link">Jetzt berechnen</span> <span class="arw">→</span></div>
       </a>
       <a class="card" href="materialien.html">
-        <div class="card-cat">Materialien</div>
-        <div class="card-title">58 Baustoffe. SIA/ISO-konform. Direkt beschaffbar.</div>
-        <div class="card-desc">Von Transportbeton bis Sanitär — alle Materialien geprüft, normkonform und über einen einzigen Kanal beschaffbar.</div>
-        <div class="card-link">Katalog ansehen <span class="arw">→</span></div>
+        <div class="card-cat" data-i18n="lp_c3_cat">Materialien</div>
+        <div class="card-title" data-i18n="lp_c3_title">58 Baustoffe. SIA/ISO-konform. Direkt beschaffbar.</div>
+        <div class="card-desc" data-i18n="lp_c3_desc">Von Transportbeton bis Sanitär — alle Materialien geprüft, normkonform und über einen einzigen Kanal beschaffbar.</div>
+        <div class="card-link"><span data-i18n="lp_c3_link">Katalog ansehen</span> <span class="arw">→</span></div>
       </a>
     </div>
   </div></section>
@@ -1007,49 +1007,49 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <section class="sec bt"><div class="wrap">
     <div class="statgrid">
       <div class="reveal">
-        <div class="stat-label">Der Schweizer Baumarkt</div>
-        <div class="stat-num"><span class="num-range" style="letter-spacing:-0.03em">CHF 8–10 Mrd.</span></div>
-        <div class="stat-sub">Jährliches Einkaufsvolumen</div>
+        <div class="stat-label" data-i18n="lp_stat_label">Der Schweizer Baumarkt</div>
+        <div class="stat-num"><span class="num-range" style="letter-spacing:-0.03em" data-i18n="lp_stat_num">CHF 8–10 Mrd.</span></div>
+        <div class="stat-sub" data-i18n="lp_stat_sub">Jährliches Einkaufsvolumen</div>
       </div>
       <div class="reveal">
-        <div class="stat-h">98 % der Schweizer Baufirmen sind KMU — ohne Grossabnehmerkonditionen.</div>
-        <div class="stat-body">Wer alleine einkauft, zahlt Einzelpreise. SourceOn bündelt den Bedarf mehrerer Baufirmen — und verhandelt mit dem gesamten Volumen beim Lieferanten. Je grösser das Bündel, desto höher der Rabatt für alle.</div>
+        <div class="stat-h" data-i18n="lp_stat_h">98 % der Schweizer Baufirmen sind KMU — ohne Grossabnehmerkonditionen.</div>
+        <div class="stat-body" data-i18n="lp_stat_body">Wer alleine einkauft, zahlt Einzelpreise. SourceOn bündelt den Bedarf mehrerer Baufirmen — und verhandelt mit dem gesamten Volumen beim Lieferanten. Je grösser das Bündel, desto höher der Rabatt für alle.</div>
       </div>
     </div>
   </div></section>
 
   <!-- SECTION 4 — FOR WHOM -->
   <section class="sec bt"><div class="wrap">
-    <span class="sec-label reveal">Für wen</span>
+    <span class="sec-label reveal" data-i18n="lp_s4_label">Für wen</span>
     <div class="tiles reveal">
       <a class="tile tile-lg" href="fuerwen-bauunternehmen.html">
-        <div class="tile-cat">Bauunternehmen &amp; Generalunternehmen</div>
-        <div class="tile-title">Bessere Einkaufspreise — für jede Baufirma, jede Grösse.</div>
-        <div class="tile-desc">SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte. Ob KMU oder Grosskonzern — jeder profitiert.</div>
-        <div class="tile-link">Mehr erfahren →</div>
+        <div class="tile-cat" data-i18n="lp_t1_cat">Bauunternehmen &amp; Generalunternehmen</div>
+        <div class="tile-title" data-i18n="lp_t1_title">Bessere Einkaufspreise — für jede Baufirma, jede Grösse.</div>
+        <div class="tile-desc" data-i18n="lp_t1_desc">SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte. Ob KMU oder Grosskonzern — jeder profitiert.</div>
+        <div class="tile-link" data-i18n="lp_t1_link">Mehr erfahren →</div>
       </a>
       <a class="tile" href="fuerwen-handwerk.html">
-        <div class="tile-cat">Handwerk &amp; Subunternehmer</div>
-        <div class="tile-title">Für jedes Gewerk.</div>
-        <div class="tile-desc">Schnelle Abwicklung, keine Vorauszahlung, vollautomatisch.</div>
+        <div class="tile-cat" data-i18n="lp_t2_cat">Handwerk &amp; Subunternehmer</div>
+        <div class="tile-title" data-i18n="lp_t2_title">Für jedes Gewerk.</div>
+        <div class="tile-desc" data-i18n="lp_t2_desc">Schnelle Abwicklung, keine Vorauszahlung, vollautomatisch.</div>
         <div class="tile-link">→</div>
       </a>
       <a class="tile" href="fuerwen-generalunternehmer.html">
-        <div class="tile-cat">Generalunternehmer &amp; TU</div>
-        <div class="tile-title">Grosse Projekte, maximale Einkaufsmacht.</div>
-        <div class="tile-desc">Riesige Materialmengen, höchste Rabattstufen.</div>
+        <div class="tile-cat" data-i18n="lp_t3_cat">Generalunternehmer &amp; TU</div>
+        <div class="tile-title" data-i18n="lp_t3_title">Grosse Projekte, maximale Einkaufsmacht.</div>
+        <div class="tile-desc" data-i18n="lp_t3_desc">Riesige Materialmengen, höchste Rabattstufen.</div>
         <div class="tile-link">→</div>
       </a>
       <a class="tile" href="fuerwen-oeffentlich.html">
-        <div class="tile-cat">Öffentliche Auftraggeber</div>
-        <div class="tile-title">Transparent, normkonform, dokumentiert.</div>
-        <div class="tile-desc">Gemeinden, Kantone, staatsnahe Betriebe.</div>
+        <div class="tile-cat" data-i18n="lp_t4_cat">Öffentliche Auftraggeber</div>
+        <div class="tile-title" data-i18n="lp_t4_title">Transparent, normkonform, dokumentiert.</div>
+        <div class="tile-desc" data-i18n="lp_t4_desc">Gemeinden, Kantone, staatsnahe Betriebe.</div>
         <div class="tile-link">→</div>
       </a>
       <a class="tile" href="fuerwen-immobilien.html">
-        <div class="tile-cat">Immobilien &amp; Wohnbau</div>
-        <div class="tile-title">Regelmässiger Unterhaltsbedarf.</div>
-        <div class="tile-desc">Wohnbaugenossenschaften und Immobilienverwaltungen mit konstantem Bedarf.</div>
+        <div class="tile-cat" data-i18n="lp_t5_cat">Immobilien &amp; Wohnbau</div>
+        <div class="tile-title" data-i18n="lp_t5_title">Regelmässiger Unterhaltsbedarf.</div>
+        <div class="tile-desc" data-i18n="lp_t5_desc">Wohnbaugenossenschaften und Immobilienverwaltungen mit konstantem Bedarf.</div>
         <div class="tile-link">→</div>
       </a>
     </div>
@@ -1057,10 +1057,10 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <!-- SECTION 5 — SUPPLIER CTA -->
   <section class="supcta"><div class="wrap">
-    <div class="lbl reveal">Für Lieferanten</div>
-    <h2 class="reveal">Schweizer Baustofflieferant?</h2>
-    <p class="reveal">Zugang zu gebündelten Grossaufträgen ohne eigene Akquise.</p>
-    <a class="btn-ghost reveal" href="lieferant.html">Als Lieferant bewerben&nbsp;→</a>
+    <div class="lbl reveal" data-i18n="lp_s5_lbl">Für Lieferanten</div>
+    <h2 class="reveal" data-i18n="lp_s5_h2">Schweizer Baustofflieferant?</h2>
+    <p class="reveal" data-i18n="lp_s5_p">Zugang zu gebündelten Grossaufträgen ohne eigene Akquise.</p>
+    <a class="btn-ghost reveal" href="lieferant.html" data-i18n="lp_s5_cta">Als Lieferant bewerben&nbsp;→</a>
   </div></section>
 
 </main>
@@ -1071,30 +1071,30 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <div class="fgrid">
     <div class="fbrand">
       <div class="flogo">Source<span>On</span></div>
-      <p>Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
-      <p style="margin-top:4px;font-size:12px">Du zahlst erst, wenn wir dir sparen.</p>
+      <p data-i18n="lpf_brand_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
+      <p style="margin-top:4px;font-size:12px" data-i18n="lpf_brand_tag">Du zahlst erst, wenn wir dir sparen.</p>
       <div class="fcopy">© 2026 SourceOn</div>
     </div>
     <div class="fcol">
-      <div class="fcol-label">Leistungen</div>
-      <a href="index.html">Home</a>
-      <a href="prozess.html">Wie es funktioniert</a>
-      <a href="fuerwen.html">Für wen</a>
-      <a href="lieferant.html">Lieferant werden</a>
-      <a href="kalkulator.html">Kalkulator</a>
-      <a href="materialien.html">Materialien</a>
+      <div class="fcol-label" data-i18n="lpf_col1">Leistungen</div>
+      <a href="index.html" data-i18n="lpf_link_home">Home</a>
+      <a href="prozess.html" data-i18n="lpf_link_process">Wie es funktioniert</a>
+      <a href="fuerwen.html" data-i18n="lpf_link_forwhom">Für wen</a>
+      <a href="lieferant.html" data-i18n="lpf_link_supplier">Lieferant werden</a>
+      <a href="kalkulator.html" data-i18n="lpf_link_calc">Kalkulator</a>
+      <a href="materialien.html" data-i18n="lpf_link_materials">Materialien</a>
     </div>
     <div class="fcol">
-      <div class="fcol-label">Unternehmen</div>
-      <a href="ueberuns.html">Über uns</a>
-      <a href="kontakt.html">Kontakt</a>
-      <a href="lieferant.html">Lieferant werden</a>
+      <div class="fcol-label" data-i18n="lpf_col2">Unternehmen</div>
+      <a href="ueberuns.html" data-i18n="lpf_link_about">Über uns</a>
+      <a href="kontakt.html" data-i18n="lpf_link_contact">Kontakt</a>
+      <a href="lieferant.html" data-i18n="lpf_link_supplier2">Lieferant werden</a>
     </div>
     <div class="fcol">
-      <div class="fcol-label">Rechtliches</div>
-      <a href="datenschutz.html">Datenschutz</a>
-      <a href="impressum.html">Impressum</a>
-      <a href="agb.html">AGB</a>
+      <div class="fcol-label" data-i18n="lpf_col3">Rechtliches</div>
+      <a href="datenschutz.html" data-i18n="lpf_link_privacy">Datenschutz</a>
+      <a href="impressum.html" data-i18n="lpf_link_imprint">Impressum</a>
+      <a href="agb.html" data-i18n="lpf_link_terms">AGB</a>
     </div>
   </div>
   <div class="fbottom">
@@ -1169,7 +1169,7 @@ function toggleFaq(btn){}
 </script>
 
 <!-- CHAT WIDGET -->
-<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen">
+<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen" data-i18n-aria="lp_aria_chat">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
 </button>
 <div id="chat-win">
@@ -1207,17 +1207,57 @@ function addBotMsg(txt){const wrap=document.createElement('div');const lbl=docum
 function showTyping(){const el=document.createElement('div');el.className='chat-typing';el.id='chat-typing';el.innerHTML='<span></span><span></span><span></span>';document.getElementById('chat-msgs').appendChild(el);scrollBottom();}
 function hideTyping(){const el=document.getElementById('chat-typing');if(el)el.remove();}
 function scrollBottom(){const m=document.getElementById('chat-msgs');m.scrollTop=m.scrollHeight;}
-async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content:txt});if(history.length>20)history=history.slice(-20);if(APIKEY==='ANTHROPIC_API_KEY_HERE'){addBotMsg('Assistent wird bald verfügbar. Kontaktiere uns direkt: info@sourceon.ch');return;}showTyping();try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':APIKEY,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,system:SYSTEM,messages:history})});const d=await r.json();const reply=d.content&&d.content[0]?d.content[0].text:'Entschuldigung. Kontaktiere uns: info@sourceon.ch';hideTyping();history.push({role:'assistant',content:reply});if(history.length>20)history=history.slice(-20);addBotMsg(reply);}catch(e){hideTyping();addBotMsg('Verbindungsfehler. Kontaktiere uns: info@sourceon.ch');}
+async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content:txt});if(history.length>20)history=history.slice(-20);if(APIKEY==='ANTHROPIC_API_KEY_HERE'){addBotMsg(window.soT({de:'Assistent wird bald verfügbar. Kontaktiere uns direkt: info@sourceon.ch',en:'Assistant coming soon. Contact us directly: info@sourceon.ch',fr:'Assistant bientôt disponible. Contacte-nous directement: info@sourceon.ch',it:'Assistente presto disponibile. Contattaci direttamente: info@sourceon.ch'}));return;}showTyping();try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':APIKEY,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,system:SYSTEM,messages:history})});const d=await r.json();const reply=d.content&&d.content[0]?d.content[0].text:window.soT({de:'Entschuldigung. Kontaktiere uns: info@sourceon.ch',en:'Sorry. Contact us: info@sourceon.ch',fr:'Désolé. Contacte-nous: info@sourceon.ch',it:'Spiacenti. Contattaci: info@sourceon.ch'});hideTyping();history.push({role:'assistant',content:reply});if(history.length>20)history=history.slice(-20);addBotMsg(reply);}catch(e){hideTyping();addBotMsg(window.soT({de:'Verbindungsfehler. Kontaktiere uns: info@sourceon.ch',en:'Connection error. Contact us: info@sourceon.ch',fr:'Erreur de connexion. Contacte-nous: info@sourceon.ch',it:'Errore di connessione. Contattaci: info@sourceon.ch'}));}
 }
 })();
 </script>
 
 <script>
+window.soLangNow=function(){return localStorage.getItem('sourceon-lang')||'de';};
+window.soT=function(map){var l=window.soLangNow();return (map&&(map[l]!=null?map[l]:map.de))||'';};
 var I18N={
   de:{
     'nav.home':'Home','nav.process':'Wie es funktioniert','nav.calc':'Kalkulator','nav.materials':'Materialien',
     'nav.forwhom':'Für wen','nav.supplier':'Lieferant werden','nav.about':'Über uns','nav.contact':'Kontakt',
     'nav.cta':'Materialbedarf melden',
+    nav_dd_bau:'Bauunternehmen & GU',nav_dd_handwerk:'Handwerk & Subunternehmer',nav_dd_gu:'Generalunternehmer & TU',nav_dd_oeff:'Öffentliche Auftraggeber',nav_dd_immo:'Immobilien & Wohnbau',
+    nav_ov_bau:'Bauunternehmen',nav_ov_handwerk:'Handwerk',nav_ov_gu:'Generalunternehmer',
+    acct_group_customers:'Kunden',acct_group_suppliers:'Lieferanten',
+    lp_aria_account:'Konto',lp_aria_chat:'SourceOn Assistent öffnen',lp_aria_scroll:'Weiter',
+    meta_title:'SourceOn — Du zahlst erst, wenn wir dir sparen.',
+    meta_desc:'SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme.',
+    lp_hero_eyebrow:'Schweizer Baustoffbeschaffung',
+    lp_hero_h1:'Baumaterialien günstiger einkaufen.',
+    lp_hero_h1gold:'Für jede Schweizer Baufirma.',
+    lp_hero_sub:'Du zahlst erst, wenn wir dir sparen.',
+    lp_hero_cta1:'Materialbedarf melden →',lp_hero_cta2:'Wie es funktioniert →',
+    lp_s2_label:"So funktioniert's",
+    lp_c1_cat:'Prozess',lp_c1_title:'Vier Schritte vom Bedarf bis zur Lieferung.',
+    lp_c1_desc:'Bedarf melden, Bündel abwarten, Mindestrabatt bestätigen — fertig. Du zahlst erst, wenn du sparst.',
+    lp_c1_link:'Wie es funktioniert',
+    lp_c2_cat:'Kalkulator',lp_c2_title:'Berechne dein persönliches Einsparpotenzial.',
+    lp_c2_desc:'Gib dein Jahresvolumen ein und sieh sofort, wie viel du mit SourceOn sparen könntest.',
+    lp_c2_link:'Jetzt berechnen',
+    lp_c3_cat:'Materialien',lp_c3_title:'58 Baustoffe. SIA/ISO-konform. Direkt beschaffbar.',
+    lp_c3_desc:'Von Transportbeton bis Sanitär — alle Materialien geprüft, normkonform und über einen einzigen Kanal beschaffbar.',
+    lp_c3_link:'Katalog ansehen',
+    lp_stat_label:'Der Schweizer Baumarkt',lp_stat_num:'CHF 8–10 Mrd.',lp_stat_sub:'Jährliches Einkaufsvolumen',
+    lp_stat_h:'98 % der Schweizer Baufirmen sind KMU — ohne Grossabnehmerkonditionen.',
+    lp_stat_body:'Wer alleine einkauft, zahlt Einzelpreise. SourceOn bündelt den Bedarf mehrerer Baufirmen — und verhandelt mit dem gesamten Volumen beim Lieferanten. Je grösser das Bündel, desto höher der Rabatt für alle.',
+    lp_s4_label:'Für wen',
+    lp_t1_cat:'Bauunternehmen & Generalunternehmen',lp_t1_title:'Bessere Einkaufspreise — für jede Baufirma, jede Grösse.',
+    lp_t1_desc:'SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte. Ob KMU oder Grosskonzern — jeder profitiert.',
+    lp_t1_link:'Mehr erfahren →',
+    lp_t2_cat:'Handwerk & Subunternehmer',lp_t2_title:'Für jedes Gewerk.',lp_t2_desc:'Schnelle Abwicklung, keine Vorauszahlung, vollautomatisch.',
+    lp_t3_cat:'Generalunternehmer & TU',lp_t3_title:'Grosse Projekte, maximale Einkaufsmacht.',lp_t3_desc:'Riesige Materialmengen, höchste Rabattstufen.',
+    lp_t4_cat:'Öffentliche Auftraggeber',lp_t4_title:'Transparent, normkonform, dokumentiert.',lp_t4_desc:'Gemeinden, Kantone, staatsnahe Betriebe.',
+    lp_t5_cat:'Immobilien & Wohnbau',lp_t5_title:'Regelmässiger Unterhaltsbedarf.',lp_t5_desc:'Wohnbaugenossenschaften und Immobilienverwaltungen mit konstantem Bedarf.',
+    lp_s5_lbl:'Für Lieferanten',lp_s5_h2:'Schweizer Baustofflieferant?',lp_s5_p:'Zugang zu gebündelten Grossaufträgen ohne eigene Akquise.',lp_s5_cta:'Als Lieferant bewerben →',
+    lpf_brand_desc:'Schweizer B2B Beschaffungsvermittler für die Baubranche.',lpf_brand_tag:'Du zahlst erst, wenn wir dir sparen.',
+    lpf_col1:'Leistungen',lpf_link_home:'Home',lpf_link_process:'Wie es funktioniert',lpf_link_forwhom:'Für wen',lpf_link_supplier:'Lieferant werden',lpf_link_calc:'Kalkulator',lpf_link_materials:'Materialien',
+    lpf_col2:'Unternehmen',lpf_link_about:'Über uns',lpf_link_contact:'Kontakt',lpf_link_supplier2:'Lieferant werden',
+    lpf_col3:'Rechtliches',lpf_link_privacy:'Datenschutz',lpf_link_imprint:'Impressum',lpf_link_terms:'AGB',
+    trust_h3:'Verifizierung erforderlich',trust_msg:'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',trust_submit:'Bestätigen',trust_nocode:'Keinen Code erhalten?',trust_resend:'Code erneut senden',trust_cancel:'Abbrechen',
     'hero.title':'Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span>',
     'hero.sub':'Baumaterialien günstiger einkaufen — für jede Schweizer Baufirma. Ohne Risiko, ohne Vorauskosten.',
     'hero.howit':'Wie es funktioniert →',
@@ -1276,6 +1316,44 @@ var I18N={
     'nav.home':'Home','nav.process':'How it works','nav.calc':'Calculator','nav.materials':'Materials',
     'nav.forwhom':'Who it\'s for','nav.supplier':'Become a supplier','nav.about':'About us','nav.contact':'Contact',
     'nav.cta':'Report material demand',
+    nav_dd_bau:'Construction firms & GC',nav_dd_handwerk:'Trades & subcontractors',nav_dd_gu:'General & total contractors',nav_dd_oeff:'Public sector clients',nav_dd_immo:'Real estate & housing',
+    nav_ov_bau:'Construction firms',nav_ov_handwerk:'Trades',nav_ov_gu:'General contractors',
+    acct_group_customers:'Customers',acct_group_suppliers:'Suppliers',
+    lp_aria_account:'Account',lp_aria_chat:'Open SourceOn Assistant',lp_aria_scroll:'Next',
+    meta_title:'SourceOn — You only pay when we save you money.',
+    meta_desc:'SourceOn bundles the material purchasing of Swiss SME construction firms and achieves volume discounts that no single customer could obtain alone.',
+    lp_hero_eyebrow:'Swiss building material procurement',
+    lp_hero_h1:'Buy building materials at lower prices.',
+    lp_hero_h1gold:'For every Swiss construction firm.',
+    lp_hero_sub:'You only pay when we save you money.',
+    lp_hero_cta1:'Report material demand →',lp_hero_cta2:'How it works →',
+    lp_s2_label:'How it works',
+    lp_c1_cat:'Process',lp_c1_title:'Four steps from demand to delivery.',
+    lp_c1_desc:'Report your demand, wait for the bundle, confirm your minimum discount — done. You only pay when you save.',
+    lp_c1_link:'How it works',
+    lp_c2_cat:'Calculator',lp_c2_title:'Calculate your personal savings potential.',
+    lp_c2_desc:'Enter your annual volume and instantly see how much you could save with SourceOn.',
+    lp_c2_link:'Calculate now',
+    lp_c3_cat:'Materials',lp_c3_title:'58 building materials. SIA/ISO-compliant. Directly procurable.',
+    lp_c3_desc:'From ready-mix concrete to sanitary — all materials tested, standard-compliant and procurable through a single channel.',
+    lp_c3_link:'View catalogue',
+    lp_stat_label:'The Swiss construction market',lp_stat_num:'CHF 8–10 bn',lp_stat_sub:'Annual procurement volume',
+    lp_stat_h:'98% of Swiss construction firms are SMEs — without bulk-buyer conditions.',
+    lp_stat_body:'Whoever buys alone pays single-unit prices. SourceOn bundles the demand of several construction firms — and negotiates with the entire volume at the supplier. The bigger the bundle, the higher the discount for everyone.',
+    lp_s4_label:"Who it's for",
+    lp_t1_cat:'Construction firms & general contractors',lp_t1_title:'Better purchasing prices — for every construction firm, every size.',
+    lp_t1_desc:'SourceOn bundles your material demand with other construction firms and negotiates volume discounts. Whether SME or large corporation — everyone benefits.',
+    lp_t1_link:'Learn more →',
+    lp_t2_cat:'Trades & subcontractors',lp_t2_title:'For every trade.',lp_t2_desc:'Fast processing, no upfront payment, fully automated.',
+    lp_t3_cat:'General & total contractors',lp_t3_title:'Large projects, maximum purchasing power.',lp_t3_desc:'Huge material quantities, highest discount tiers.',
+    lp_t4_cat:'Public sector clients',lp_t4_title:'Transparent, standard-compliant, documented.',lp_t4_desc:'Municipalities, cantons, public-sector entities.',
+    lp_t5_cat:'Real estate & housing',lp_t5_title:'Regular maintenance needs.',lp_t5_desc:'Housing cooperatives and property managers with constant demand.',
+    lp_s5_lbl:'For suppliers',lp_s5_h2:'Swiss building material supplier?',lp_s5_p:'Access to bundled large orders without your own acquisition.',lp_s5_cta:'Apply as a supplier →',
+    lpf_brand_desc:'Swiss B2B procurement broker for the construction industry.',lpf_brand_tag:'You only pay when we save you money.',
+    lpf_col1:'Services',lpf_link_home:'Home',lpf_link_process:'How it works',lpf_link_forwhom:"Who it's for",lpf_link_supplier:'Become a supplier',lpf_link_calc:'Calculator',lpf_link_materials:'Materials',
+    lpf_col2:'Company',lpf_link_about:'About us',lpf_link_contact:'Contact',lpf_link_supplier2:'Become a supplier',
+    lpf_col3:'Legal',lpf_link_privacy:'Privacy policy',lpf_link_imprint:'Imprint',lpf_link_terms:'Terms & conditions',
+    trust_h3:'Verification required',trust_msg:'A verification code has been sent to your email. Please enter it below.',trust_submit:'Confirm',trust_nocode:"Didn't receive a code?",trust_resend:'Resend code',trust_cancel:'Cancel',
     'hero.title':'You only pay<br><span class="gold">when we save you money.</span>',
     'hero.sub':'Buy building materials at lower prices — for every Swiss construction firm. No risk, no upfront costs.',
     'hero.howit':'How it works →',
@@ -1334,6 +1412,44 @@ var I18N={
     'nav.home':'Accueil','nav.process':'Comment ça marche','nav.calc':'Calculateur','nav.materials':'Matériaux',
     'nav.forwhom':'Pour qui','nav.supplier':'Devenir fournisseur','nav.about':'À propos','nav.contact':'Contact',
     'nav.cta':'Annoncer un besoin',
+    nav_dd_bau:'Entreprises de construction & EG',nav_dd_handwerk:'Artisanat & sous-traitants',nav_dd_gu:'Entreprises générales & totales',nav_dd_oeff:'Maîtres d\'ouvrage publics',nav_dd_immo:'Immobilier & logement',
+    nav_ov_bau:'Entreprises de construction',nav_ov_handwerk:'Artisanat',nav_ov_gu:'Entreprises générales',
+    acct_group_customers:'Clients',acct_group_suppliers:'Fournisseurs',
+    lp_aria_account:'Compte',lp_aria_chat:'Ouvrir l\'assistant SourceOn',lp_aria_scroll:'Suivant',
+    meta_title:'SourceOn — Tu ne paies que si on te fait économiser.',
+    meta_desc:'SourceOn regroupe les achats de matériaux des PME de construction suisses et obtient des remises de volume qu\'aucun client seul ne pourrait obtenir.',
+    lp_hero_eyebrow:'Approvisionnement suisse en matériaux',
+    lp_hero_h1:'Achète tes matériaux de construction moins cher.',
+    lp_hero_h1gold:'Pour chaque entreprise de construction suisse.',
+    lp_hero_sub:'Tu ne paies que si on te fait économiser.',
+    lp_hero_cta1:'Annoncer un besoin →',lp_hero_cta2:'Comment ça marche →',
+    lp_s2_label:'Comment ça marche',
+    lp_c1_cat:'Processus',lp_c1_title:'Quatre étapes du besoin à la livraison.',
+    lp_c1_desc:'Annonce ton besoin, attends le regroupement, confirme ton rabais minimum — c\'est fait. Tu ne paies que si tu économises.',
+    lp_c1_link:'Comment ça marche',
+    lp_c2_cat:'Calculateur',lp_c2_title:'Calcule ton potentiel d\'économies personnel.',
+    lp_c2_desc:'Saisis ton volume annuel et vois immédiatement combien tu pourrais économiser avec SourceOn.',
+    lp_c2_link:'Calculer maintenant',
+    lp_c3_cat:'Matériaux',lp_c3_title:'58 matériaux. Conformes SIA/ISO. Directement disponibles.',
+    lp_c3_desc:'Du béton prêt à l\'emploi au sanitaire — tous les matériaux testés, conformes aux normes et disponibles via un seul canal.',
+    lp_c3_link:'Voir le catalogue',
+    lp_stat_label:'Le marché suisse de la construction',lp_stat_num:'CHF 8–10 mrd',lp_stat_sub:'Volume d\'achat annuel',
+    lp_stat_h:'98 % des entreprises de construction suisses sont des PME — sans conditions de gros acheteur.',
+    lp_stat_body:'Celui qui achète seul paie les prix unitaires. SourceOn regroupe les besoins de plusieurs entreprises de construction — et négocie avec le volume total auprès du fournisseur. Plus le regroupement est grand, plus le rabais est élevé pour tous.',
+    lp_s4_label:'Pour qui',
+    lp_t1_cat:'Entreprises de construction & entreprises générales',lp_t1_title:'De meilleurs prix d\'achat — pour chaque entreprise de construction, quelle que soit sa taille.',
+    lp_t1_desc:'SourceOn regroupe ton besoin en matériaux avec d\'autres entreprises de construction et négocie des remises de volume. Que tu sois une PME ou un grand groupe — tout le monde en profite.',
+    lp_t1_link:'En savoir plus →',
+    lp_t2_cat:'Artisanat & sous-traitants',lp_t2_title:'Pour chaque corps de métier.',lp_t2_desc:'Traitement rapide, aucun paiement anticipé, entièrement automatisé.',
+    lp_t3_cat:'Entreprises générales & totales',lp_t3_title:'Grands projets, pouvoir d\'achat maximal.',lp_t3_desc:'D\'énormes quantités de matériaux, les niveaux de rabais les plus élevés.',
+    lp_t4_cat:'Maîtres d\'ouvrage publics',lp_t4_title:'Transparent, conforme aux normes, documenté.',lp_t4_desc:'Communes, cantons, entreprises paraétatiques.',
+    lp_t5_cat:'Immobilier & logement',lp_t5_title:'Besoins d\'entretien réguliers.',lp_t5_desc:'Coopératives d\'habitation et gérances immobilières avec un besoin constant.',
+    lp_s5_lbl:'Pour les fournisseurs',lp_s5_h2:'Fournisseur suisse de matériaux de construction?',lp_s5_p:'Accès à des commandes groupées importantes sans prospection.',lp_s5_cta:'Postuler comme fournisseur →',
+    lpf_brand_desc:'Courtier B2B suisse en approvisionnement pour le secteur de la construction.',lpf_brand_tag:'Tu ne paies que si on te fait économiser.',
+    lpf_col1:'Services',lpf_link_home:'Accueil',lpf_link_process:'Comment ça marche',lpf_link_forwhom:'Pour qui',lpf_link_supplier:'Devenir fournisseur',lpf_link_calc:'Calculateur',lpf_link_materials:'Matériaux',
+    lpf_col2:'Entreprise',lpf_link_about:'À propos',lpf_link_contact:'Contact',lpf_link_supplier2:'Devenir fournisseur',
+    lpf_col3:'Mentions légales',lpf_link_privacy:'Protection des données',lpf_link_imprint:'Mentions légales',lpf_link_terms:'CGV',
+    trust_h3:'Vérification requise',trust_msg:'Un code de vérification a été envoyé à ton e-mail. Merci de le saisir ci-dessous.',trust_submit:'Confirmer',trust_nocode:'Tu n\'as pas reçu de code?',trust_resend:'Renvoyer le code',trust_cancel:'Annuler',
     'hero.title':'Tu ne paies<br><span class="gold">que si on te fait économiser.</span>',
     'hero.sub':'Achetez vos matériaux de construction moins cher — pour chaque entreprise de construction suisse. Sans risque, sans frais initiaux.',
     'hero.howit':'Comment ça marche →',
@@ -1392,6 +1508,44 @@ var I18N={
     'nav.home':'Home','nav.process':'Come funziona','nav.calc':'Calcolatore','nav.materials':'Materiali',
     'nav.forwhom':'Per chi','nav.supplier':'Diventa fornitore','nav.about':'Chi siamo','nav.contact':'Contatto',
     'nav.cta':'Segnala fabbisogno materiale',
+    nav_dd_bau:'Imprese edili & IG',nav_dd_handwerk:'Artigianato & subappaltatori',nav_dd_gu:'Imprese generali & totali',nav_dd_oeff:'Committenti pubblici',nav_dd_immo:'Immobili & edilizia abitativa',
+    nav_ov_bau:'Imprese edili',nav_ov_handwerk:'Artigianato',nav_ov_gu:'Imprese generali',
+    acct_group_customers:'Clienti',acct_group_suppliers:'Fornitori',
+    lp_aria_account:'Account',lp_aria_chat:'Apri l\'assistente SourceOn',lp_aria_scroll:'Avanti',
+    meta_title:'SourceOn — Paghi solo quando ti facciamo risparmiare.',
+    meta_desc:'SourceOn raggruppa gli acquisti di materiale delle PMI edili svizzere e ottiene sconti sul volume che nessun singolo cliente potrebbe ottenere da solo.',
+    lp_hero_eyebrow:'Approvvigionamento svizzero di materiali',
+    lp_hero_h1:'Acquista materiali da costruzione a prezzi più bassi.',
+    lp_hero_h1gold:'Per ogni impresa edile svizzera.',
+    lp_hero_sub:'Paghi solo quando ti facciamo risparmiare.',
+    lp_hero_cta1:'Segnala il fabbisogno →',lp_hero_cta2:'Come funziona →',
+    lp_s2_label:'Come funziona',
+    lp_c1_cat:'Processo',lp_c1_title:'Quattro passi dal fabbisogno alla consegna.',
+    lp_c1_desc:'Segnala il fabbisogno, attendi il raggruppamento, conferma lo sconto minimo — fatto. Paghi solo se risparmi.',
+    lp_c1_link:'Come funziona',
+    lp_c2_cat:'Calcolatore',lp_c2_title:'Calcola il tuo potenziale di risparmio personale.',
+    lp_c2_desc:'Inserisci il tuo volume annuo e vedi subito quanto potresti risparmiare con SourceOn.',
+    lp_c2_link:'Calcola ora',
+    lp_c3_cat:'Materiali',lp_c3_title:'58 materiali. Conformi SIA/ISO. Direttamente disponibili.',
+    lp_c3_desc:'Dal calcestruzzo preconfezionato al sanitario — tutti i materiali testati, conformi alle norme e disponibili tramite un unico canale.',
+    lp_c3_link:'Vedi il catalogo',
+    lp_stat_label:'Il mercato edile svizzero',lp_stat_num:'CHF 8–10 mld',lp_stat_sub:'Volume di acquisto annuo',
+    lp_stat_h:'Il 98% delle imprese edili svizzere sono PMI — senza condizioni da grande acquirente.',
+    lp_stat_body:'Chi acquista da solo paga i prezzi al singolo. SourceOn raggruppa il fabbisogno di più imprese edili — e negozia con l\'intero volume presso il fornitore. Più grande è il raggruppamento, maggiore è lo sconto per tutti.',
+    lp_s4_label:'Per chi',
+    lp_t1_cat:'Imprese edili & imprese generali',lp_t1_title:'Migliori prezzi d\'acquisto — per ogni impresa edile, di ogni dimensione.',
+    lp_t1_desc:'SourceOn raggruppa il tuo fabbisogno di materiale con altre imprese edili e negozia sconti sul volume. Che tu sia una PMI o una grande azienda — ne beneficiano tutti.',
+    lp_t1_link:'Scopri di più →',
+    lp_t2_cat:'Artigianato & subappaltatori',lp_t2_title:'Per ogni mestiere.',lp_t2_desc:'Elaborazione rapida, nessun pagamento anticipato, completamente automatizzato.',
+    lp_t3_cat:'Imprese generali & totali',lp_t3_title:'Grandi progetti, massimo potere d\'acquisto.',lp_t3_desc:'Enormi quantità di materiale, i livelli di sconto più alti.',
+    lp_t4_cat:'Committenti pubblici',lp_t4_title:'Trasparente, conforme alle norme, documentato.',lp_t4_desc:'Comuni, cantoni, aziende parastatali.',
+    lp_t5_cat:'Immobili & edilizia abitativa',lp_t5_title:'Fabbisogno di manutenzione regolare.',lp_t5_desc:'Cooperative di abitazione e amministrazioni immobiliari con fabbisogno costante.',
+    lp_s5_lbl:'Per i fornitori',lp_s5_h2:'Fornitore svizzero di materiali da costruzione?',lp_s5_p:'Accesso a grandi ordini raggruppati senza acquisizione propria.',lp_s5_cta:'Candidati come fornitore →',
+    lpf_brand_desc:'Broker B2B svizzero per l\'approvvigionamento nel settore edile.',lpf_brand_tag:'Paghi solo quando ti facciamo risparmiare.',
+    lpf_col1:'Servizi',lpf_link_home:'Home',lpf_link_process:'Come funziona',lpf_link_forwhom:'Per chi',lpf_link_supplier:'Diventa fornitore',lpf_link_calc:'Calcolatore',lpf_link_materials:'Materiali',
+    lpf_col2:'Azienda',lpf_link_about:'Chi siamo',lpf_link_contact:'Contatto',lpf_link_supplier2:'Diventa fornitore',
+    lpf_col3:'Note legali',lpf_link_privacy:'Privacy',lpf_link_imprint:'Impressum',lpf_link_terms:'CGC',
+    trust_h3:'Verifica richiesta',trust_msg:'Un codice di verifica è stato inviato alla tua e-mail. Inseriscilo qui sotto.',trust_submit:'Conferma',trust_nocode:'Non hai ricevuto il codice?',trust_resend:'Invia di nuovo il codice',trust_cancel:'Annulla',
     'hero.title':'Paghi solo<br><span class="gold">quando ti facciamo risparmiare.</span>',
     'hero.sub':'Acquista materiali da costruzione a prezzi più bassi — per ogni impresa edile svizzera. Senza rischi, senza costi anticipati.',
     'hero.howit':'Come funziona →',
@@ -1468,6 +1622,14 @@ function setLang(lang){
     var key=el.getAttribute('data-i18n-placeholder');
     if(dict[key]!=null) el.placeholder=dict[key];
   });
+  // aria-labels
+  document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
+    var key=el.getAttribute('data-i18n-aria');
+    if(dict[key]!=null) el.setAttribute('aria-label',dict[key]);
+  });
+  // Document title + meta description
+  if(dict['meta_title']!=null) document.title=dict['meta_title'];
+  if(dict['meta_desc']!=null){var _md=document.querySelector('meta[name="description"]');if(_md)_md.setAttribute('content',dict['meta_desc']);}
 
   // Re-init story sentence word reveal
   var storyEl=document.getElementById('story-sentence');
@@ -1596,7 +1758,7 @@ async function _soCheckSupplierLogin(clerkId){
   }catch(e){console.error('[SourceOn] Supplier login check error:',e);}
   console.log('[SourceOn] Supplier login check: found='+found);
   if(found){window.open('supplierdashboard.html','_blank');}
-  else{_soShowLoginMessage('Du bist noch nicht als Lieferant registriert. M\u00f6chtest du dich als Lieferant bewerben?','Als Lieferant bewerben','lieferant.html');}
+  else{_soShowLoginMessage(window.soT({de:'Du bist noch nicht als Lieferant registriert. M\u00f6chtest du dich als Lieferant bewerben?',en:'You are not registered as a supplier yet. Would you like to apply as a supplier?',fr:'Tu n\'es pas encore enregistr\u00e9 comme fournisseur. Souhaites-tu postuler comme fournisseur?',it:'Non sei ancora registrato come fornitore. Vuoi candidarti come fornitore?'}),window.soT({de:'Als Lieferant bewerben',en:'Apply as a supplier',fr:'Postuler comme fournisseur',it:'Candidati come fornitore'}),'lieferant.html');}
 }
 async function _soCheckCustomerLogin(clerkId){
   var found=false;
@@ -1607,7 +1769,7 @@ async function _soCheckCustomerLogin(clerkId){
   }catch(e){console.error('[SourceOn] Customer login check error:',e);}
   console.log('[SourceOn] Customer login check: found='+found);
   if(found){window.open('kundendashboard.html','_blank');}
-  else{_soShowLoginMessage('Du hast noch kein Kundenkonto. M\u00f6chtest du Materialbedarf melden?','Materialbedarf melden','kontakt.html');}
+  else{_soShowLoginMessage(window.soT({de:'Du hast noch kein Kundenkonto. M\u00f6chtest du Materialbedarf melden?',en:'You don\'t have a customer account yet. Would you like to report material demand?',fr:'Tu n\'as pas encore de compte client. Souhaites-tu annoncer un besoin en mat\u00e9riaux?',it:'Non hai ancora un account cliente. Vuoi segnalare un fabbisogno di materiale?'}),window.soT({de:'Materialbedarf melden',en:'Report material demand',fr:'Annoncer un besoin',it:'Segnala il fabbisogno'}),'kontakt.html');}
 }
 function _soShowLoginMessage(msg,linkText,linkHref){
   var ex=document.getElementById('so-login-msg-overlay');if(ex&&ex.parentNode)ex.parentNode.removeChild(ex);
@@ -1617,7 +1779,7 @@ function _soShowLoginMessage(msg,linkText,linkHref){
   box.style.cssText='background:#0F2238;border:1px solid rgba(232,160,32,.35);border-radius:16px;max-width:420px;width:100%;padding:32px;text-align:center;font-family:Inter,-apple-system,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.5)';
   var d=document.createElement('div');d.style.cssText='font-size:1.02rem;font-weight:700;color:#fff;line-height:1.5;margin-bottom:24px';d.textContent=msg;
   var a=document.createElement('a');a.href=linkHref;a.textContent=linkText+' \u2192';a.style.cssText='display:block;width:100%;padding:13px;border-radius:10px;background:#E8A020;color:#08111E;font-size:.9rem;font-weight:700;text-decoration:none;margin-bottom:10px';
-  var b=document.createElement('button');b.type='button';b.textContent='Schliessen';b.style.cssText='width:100%;padding:11px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit';
+  var b=document.createElement('button');b.type='button';b.textContent=window.soT({de:'Schliessen',en:'Close',fr:'Fermer',it:'Chiudi'});b.style.cssText='width:100%;padding:11px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit';
   b.addEventListener('click',function(){if(ov.parentNode)ov.parentNode.removeChild(ov);});
   box.appendChild(d);box.appendChild(a);box.appendChild(b);ov.appendChild(box);
   ov.addEventListener('click',function(e){if(e.target===ov&&ov.parentNode)ov.parentNode.removeChild(ov);});
@@ -1735,9 +1897,9 @@ async function _createCustomerIfNeeded(){
       if(statusWrap){
         if(supplierRows&&supplierRows.length>0){
           var s=supplierRows[0].status;
-          if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">Wird geprüft</span>';}
-          else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';}
-          else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';}
+          if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">'+window.soT({de:'Wird geprüft',en:'Under review',fr:'En cours de vérification',it:'In verifica'})+'</span>';}
+          else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">'+window.soT({de:'Verifiziert',en:'Verified',fr:'Vérifié',it:'Verificato'})+'</span>';}
+          else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">'+window.soT({de:'Abgelehnt',en:'Rejected',fr:'Refusé',it:'Rifiutato'})+'</span>';}
           else{statusWrap.innerHTML='';}
         }else{statusWrap.innerHTML='';}
       }
@@ -1854,19 +2016,19 @@ async function _clerkSendVerificationCode(){
     var si=_clerkSignInResource;
     if(!si)return;
     await si.prepareSecondFactor({strategy:'email_code'});
-    document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';
+    document.getElementById('clerk-trust-msg').textContent=window.soT({de:'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',en:'A verification code has been sent to your email. Please enter it below.',fr:'Un code de vérification a été envoyé à ton e-mail. Merci de le saisir ci-dessous.',it:'Un codice di verifica è stato inviato alla tua e-mail. Inseriscilo qui sotto.'});
     _clerkShowTrustModal();
   }catch(e){
     console.error('[Clerk] prepareSecondFactor email_code failed:',e);
     try{
       await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});
       _clerkTrustStrategy='phone_code';
-      document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';
+      document.getElementById('clerk-trust-msg').textContent=window.soT({de:'Ein Bestätigungscode wurde an deine Telefonnummer gesendet.',en:'A verification code has been sent to your phone number.',fr:'Un code de vérification a été envoyé à ton numéro de téléphone.',it:'Un codice di verifica è stato inviato al tuo numero di telefono.'});
       _clerkShowTrustModal();
     }catch(e2){
       console.error('[Clerk] prepareSecondFactor phone_code also failed:',e2);
       _clerkTrustActive=false;
-      alert('Verifizierung konnte nicht gestartet werden: '+(e2.errors?e2.errors[0].longMessage:e2.message));
+      alert(window.soT({de:'Verifizierung konnte nicht gestartet werden: ',en:'Verification could not be started: ',fr:'La vérification n\'a pas pu être démarrée: ',it:'Impossibile avviare la verifica: '})+(e2.errors?e2.errors[0].longMessage:e2.message));
     }
   }
 }
@@ -1882,7 +2044,7 @@ async function clerkTrustVerify(){
   var code=document.getElementById('clerk-trust-code').value.trim();
   if(!code||!_clerkSignInResource){return;}
   var btn=document.getElementById('clerk-trust-submit');
-  btn.disabled=true;btn.textContent='Wird geprüft…';
+  btn.disabled=true;btn.textContent=window.soT({de:'Wird geprüft…',en:'Verifying…',fr:'Vérification…',it:'Verifica in corso…'});
   document.getElementById('clerk-trust-error').textContent='';
   soLog('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
   try{
@@ -1894,14 +2056,14 @@ async function clerkTrustVerify(){
       _clerkTrustActive=false;
       return;
     }else{
-      document.getElementById('clerk-trust-error').textContent='Unerwarteter Status: '+result.status;
+      document.getElementById('clerk-trust-error').textContent=window.soT({de:'Unerwarteter Status: ',en:'Unexpected status: ',fr:'Statut inattendu: ',it:'Stato imprevisto: '})+result.status;
     }
   }catch(e){
-    var msg=e.errors?e.errors[0].longMessage:(e.message||'Ungültiger Code');
+    var msg=e.errors?e.errors[0].longMessage:(e.message||window.soT({de:'Ungültiger Code',en:'Invalid code',fr:'Code invalide',it:'Codice non valido'}));
     console.error('[Clerk] attemptSecondFactor failed:',msg);
     document.getElementById('clerk-trust-error').textContent=msg;
   }
-  btn.disabled=false;btn.textContent='Bestätigen';
+  btn.disabled=false;btn.textContent=window.soT({de:'Bestätigen',en:'Confirm',fr:'Confirmer',it:'Conferma'});
 }
 
 async function clerkTrustResend(){
@@ -1925,13 +2087,13 @@ document.addEventListener('keydown',function(e){
 
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
   <div class="clerk-trust-modal">
-    <h3>Verifizierung erforderlich</h3>
-    <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
+    <h3 data-i18n="trust_h3">Verifizierung erforderlich</h3>
+    <p id="clerk-trust-msg" data-i18n="trust_msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
-    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
+    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()" data-i18n="trust_submit">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
-    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
-    <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
+    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8"><span data-i18n="trust_nocode">Keinen Code erhalten?</span> <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer" data-i18n="trust_resend">Code erneut senden</a></div>
+    <button class="btn-cancel-trust" onclick="clerkTrustCancel()" data-i18n="trust_cancel">Abbrechen</button>
   </div>
 </div>
 
