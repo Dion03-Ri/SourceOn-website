@@ -31,7 +31,7 @@
 <script src="debug.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Materialbedarf melden — SourceOn</title>
+<title data-i18n="meta_title">Materialbedarf melden — SourceOn</title>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -972,7 +972,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav_calculator">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_for_whom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html">Immobilien &amp; Wohnbau</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_for_whom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html" data-i18n="nav_dd_gu">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
@@ -1024,7 +1024,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <a href="prozess.html" data-i18n="nav_process" onclick="toggleNav()">Wie es funktioniert</a>
   <a href="kalkulator.html" data-i18n="nav_calculator" onclick="toggleNav()">Kalkulator</a>
   <a href="fuerwen.html" data-i18n="nav_for_whom" onclick="toggleNav()">Für wen</a>
-  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()">Immobilien &amp; Wohnbau</a></div>
+  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_ov_bau" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" data-i18n="nav_ov_handwerk" onclick="toggleNav()">Handwerk</a><a href="fuerwen-generalunternehmer.html" data-i18n="nav_ov_gu" onclick="toggleNav()">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_dd_oeff" onclick="toggleNav()">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_dd_immo" onclick="toggleNav()">Immobilien &amp; Wohnbau</a></div>
   <a href="lieferant.html" data-i18n="nav_supplier" onclick="toggleNav()">Lieferant werden</a>
   <a href="ueberuns.html" data-i18n="nav_about" onclick="toggleNav()">Über uns</a>
   <a href="kontakt.html" data-i18n="nav_contact" onclick="toggleNav()">Kontakt</a>
@@ -1046,23 +1046,23 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <div class="container">
     <div class="contact-layout">
       <div>
-        <span class="ck-eyebrow">Kontakt</span>
-        <h1 class="ck-h1">Materialbedarf melden.</h1>
-        <p class="ck-sub">Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.</p>
+        <span class="ck-eyebrow" data-i18n="ck_eyebrow">Kontakt</span>
+        <h1 class="ck-h1" data-i18n="ck_h1">Materialbedarf melden.</h1>
+        <p class="ck-sub" data-i18n="ck_sub">Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.</p>
         <div class="cksteps">
-          <div class="ckstep"><div class="ckstep-n">1</div><div><div class="ckstep-t">Material wählen</div><div class="ckstep-x">Aus 58 Katalog-Materialien auswählen, Menge und Lieferzeitraum eingeben.</div></div></div>
-          <div class="ckstep"><div class="ckstep-n">2</div><div><div class="ckstep-t">Mindestrabatt sehen</div><div class="ckstep-x">Du siehst sofort deinen garantierten Netto-Mindestrabatt basierend auf deinem Volumen.</div></div></div>
-          <div class="ckstep"><div class="ckstep-n">3</div><div><div class="ckstep-t">Absenden &amp; verfolgen</div><div class="ckstep-x">Nach dem Absenden verfolgst du den Status jederzeit in deinem Dashboard.</div></div></div>
+          <div class="ckstep"><div class="ckstep-n">1</div><div><div class="ckstep-t" data-i18n="ckstep1_t">Material wählen</div><div class="ckstep-x" data-i18n="ckstep1_x">Aus 58 Katalog-Materialien auswählen, Menge und Lieferzeitraum eingeben.</div></div></div>
+          <div class="ckstep"><div class="ckstep-n">2</div><div><div class="ckstep-t" data-i18n="ckstep2_t">Mindestrabatt sehen</div><div class="ckstep-x" data-i18n="ckstep2_x">Du siehst sofort deinen garantierten Netto-Mindestrabatt basierend auf deinem Volumen.</div></div></div>
+          <div class="ckstep"><div class="ckstep-n">3</div><div><div class="ckstep-t" data-i18n="ckstep3_t">Absenden &amp; verfolgen</div><div class="ckstep-x" data-i18n="ckstep3_x">Nach dem Absenden verfolgst du den Status jederzeit in deinem Dashboard.</div></div></div>
         </div>
         <div class="cinfo">
           <div class="cinfo-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg><a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
-          <div class="cinfo-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Zürich, Schweiz</span></div>
+          <div class="cinfo-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="ck_location">Zürich, Schweiz</span></div>
         </div>
         <div class="tempobox">
-          <div class="tempobox-t">Lieferzeitraum gibt das Tempo vor</div>
-          <div class="tempobox-r">🟢 Flexibel (&gt;23 Tage) — Maximale Bündelungszeit</div>
-          <div class="tempobox-r">🟡 Mittel (14–23 Tage) — Schnellere Ausschreibung</div>
-          <div class="tempobox-r">🟠 Knapp (5–13 Tage) — Beschleunigte Abwicklung</div>
+          <div class="tempobox-t" data-i18n="tempobox_t">Lieferzeitraum gibt das Tempo vor</div>
+          <div class="tempobox-r" data-i18n="tempobox_r1">🟢 Flexibel (&gt;23 Tage) — Maximale Bündelungszeit</div>
+          <div class="tempobox-r" data-i18n="tempobox_r2">🟡 Mittel (14–23 Tage) — Schnellere Ausschreibung</div>
+          <div class="tempobox-r" data-i18n="tempobox_r3">🟠 Knapp (5–13 Tage) — Beschleunigte Abwicklung</div>
         </div>
       </div>
       <div>
@@ -1070,9 +1070,9 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           <div class="form-gold-bar"></div>
           <div class="ck-cardpad">
           <form id="form-contact" onsubmit="submitContact(event)" novalidate>
-            <div class="form-title">Jetzt melden</div>
-            <div class="form-subtitle">Du siehst deinen garantierten Mindestrabatt vor dem Absenden.</div>
-            <span class="fsec-label first">Firmendaten</span>
+            <div class="form-title" data-i18n="form_title">Jetzt melden</div>
+            <div class="form-subtitle" data-i18n="form_subtitle">Du siehst deinen garantierten Mindestrabatt vor dem Absenden.</div>
+            <span class="fsec-label first" data-i18n="fsec_company">Firmendaten</span>
             <div class="form-grid">
               <div class="form-group"><label class="form-label" data-i18n="form_company">Firmenname *</label><input type="text" class="form-input" id="c-company" required/><div class="form-error" data-i18n="form_error_required" id="e-c-company">Pflichtfeld</div></div>
               <div class="form-group"><label class="form-label" data-i18n="form_contact_person">Ansprechperson *</label><input type="text" class="form-input" id="c-name" required/><div class="form-error" data-i18n="form_error_required" id="e-c-name">Pflichtfeld</div></div>
@@ -1081,7 +1081,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <div class="form-group"><label class="form-label" data-i18n="form_email">E-Mail *</label><input type="email" class="form-input" id="c-email" required/><div class="form-error" data-i18n="form_error_email" id="e-c-email">Gültige E-Mail</div></div>
               <div class="form-group"><label class="form-label" data-i18n="form_phone">Telefon *</label><input type="tel" class="form-input" id="c-phone" required/><div class="form-error" data-i18n="form_error_required" id="e-c-phone">Pflichtfeld</div></div>
             </div>
-            <span class="fsec-label">Material &amp; Menge</span>
+            <span class="fsec-label" data-i18n="fsec_material">Material &amp; Menge</span>
             <div class="form-group">
               <label class="form-label" data-i18n-html="form_material_qty" style="display:none">Material &amp; Menge *</label>
               <div class="material-rows" id="material-rows">
@@ -1094,41 +1094,41 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <button type="button" class="add-material-btn" id="add-material-btn" data-i18n-html="form_add_material" onclick="addMaterialRow()">＋ Weiteres Material hinzufügen</button>
               <p style="font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.6" data-i18n-html="form_material_hint">Dein Material ist nicht dabei? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.</p>
             </div>
-            <span class="fsec-label">Lieferzeitraum &amp; Adresse</span>
+            <span class="fsec-label" data-i18n="fsec_timing">Lieferzeitraum &amp; Adresse</span>
             <div class="form-grid">
               <div class="form-group"><label class="form-label" data-i18n="form_timing_label">Gewünschter Lieferzeitraum *</label>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
                   <div><span style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:4px" data-i18n="form_date_from">Frühestens</span><input type="date" class="form-input" id="c-date-von" oninput="_onDateChange()" required/></div>
                   <div><span style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:4px" data-i18n="form_date_to">Spätestens</span><input type="date" class="form-input" id="c-date-bis" oninput="_onDateChange()" required/></div>
                 </div>
-                <div class="form-error" id="e-c-timing">Bitte gültigen Lieferzeitraum wählen</div>
+                <div class="form-error" id="e-c-timing" data-i18n="err_timing">Bitte gültigen Lieferzeitraum wählen</div>
               </div>
               <div class="form-group"><label class="form-label" data-i18n="form_address_label">Lieferadresse / Kanton *</label><input type="text" class="form-input" id="c-canton" placeholder="z.B. Zürich, Baustelle Hauptstr. 5" data-i18n-placeholder="form_placeholder_address" required/><div class="form-error" data-i18n="form_error_required" id="e-c-canton">Pflichtfeld</div></div>
             </div>
             <div id="tempo-indicator" class="tempo-indicator" style="display:none"></div>
             <div class="form-group"><label class="form-label" data-i18n-html="form_project_label">Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span></label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und weitere Anforderungen…" data-i18n-placeholder="form_placeholder_project"></textarea></div>
             <div id="acct-opt-section" class="acct-opt-section">
-              <span class="acct-opt-label">Anfragen jederzeit verfolgen</span>
+              <span class="acct-opt-label" data-i18n="acct_opt_label">Anfragen jederzeit verfolgen</span>
               <div class="acct-opt-card">
                 <label class="acct-opt-check">
                   <input type="checkbox" id="c-create-account" onchange="document.getElementById('acct-opt-hint').classList.toggle('visible',this.checked)"/>
-                  <span class="acct-opt-check-text">Konto erstellen, um meine Anfragen und Ersparnisse jederzeit einzusehen</span>
+                  <span class="acct-opt-check-text" data-i18n="acct_opt_check">Konto erstellen, um meine Anfragen und Ersparnisse jederzeit einzusehen</span>
                 </label>
-                <p class="acct-opt-hint" id="acct-opt-hint">Nach dem Absenden wirst du aufgefordert, ein Passwort festzulegen. Du kannst dich danach jederzeit einloggen, um den Status deiner Anfragen zu verfolgen.</p>
+                <p class="acct-opt-hint" id="acct-opt-hint" data-i18n="acct_opt_hint">Nach dem Absenden wirst du aufgefordert, ein Passwort festzulegen. Du kannst dich danach jederzeit einloggen, um den Status deiner Anfragen zu verfolgen.</p>
               </div>
             </div>
             <div id="tier-summary" class="tier-summary" style="display:none">
-              <div class="tier-row"><span class="tier-label">Geschätzter Auftragswert</span><span class="tier-val" id="tier-value">CHF 0</span></div>
-              <div class="tier-note-sub">basierend auf SourceOn-Richtpreisen</div>
-              <div class="tier-row tier-row-hl"><span class="tier-label">Dein garantierter Netto-Mindestrabatt</span><span class="tier-rate" id="tier-rate">7%</span></div>
-              <p class="tier-hint">Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">7%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.</p>
+              <div class="tier-row"><span class="tier-label" data-i18n="tier_label_value">Geschätzter Auftragswert</span><span class="tier-val" id="tier-value">CHF 0</span></div>
+              <div class="tier-note-sub" data-i18n="tier_note_sub">basierend auf SourceOn-Richtpreisen</div>
+              <div class="tier-row tier-row-hl"><span class="tier-label" data-i18n="tier_label_rate">Dein garantierter Netto-Mindestrabatt</span><span class="tier-rate" id="tier-rate">7%</span></div>
+              <p class="tier-hint" data-i18n-html="tier_hint">Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">7%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.</p>
             </div>
             <div class="commit-box" id="commit-box">
               <label class="commit-check">
                 <input type="checkbox" id="c-commitment" onchange="if(this.checked){var b=document.getElementById('commit-box');b&&b.classList.remove('commit-error');var e=document.getElementById('e-c-commitment');e&&(e.style.display='none');}"/>
-                <span class="commit-text">Ich bestätige verbindlich: Erreicht das verhandelte Angebot meinen garantierten Netto-Mindestrabatt von <strong id="commit-rate">7%</strong>, gilt mein Auftrag als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt — <strong id="commit-rate2">7%</strong> kommen vollständig bei mir an. Wird die Zielmarke verfehlt, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a></span>
+                <span class="commit-text" data-i18n-html="commit_text">Ich bestätige verbindlich: Erreicht das verhandelte Angebot meinen garantierten Netto-Mindestrabatt von <strong id="commit-rate">7%</strong>, gilt mein Auftrag als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt — <strong id="commit-rate2">7%</strong> kommen vollständig bei mir an. Wird die Zielmarke verfehlt, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a></span>
               </label>
-              <div class="form-error" id="e-c-commitment">Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.</div>
+              <div class="form-error" id="e-c-commitment" data-i18n="err_commit">Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.</div>
             </div>
             <button type="submit" class="btn btn-gold btn-lg btn-full" data-i18n="form_submit">Materialbedarf jetzt melden →</button>
             <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;text-align:center;font-style:italic" data-i18n="form_post_submit">Nach dem Absenden siehst du sofort deinen garantierten Mindestrabatt und kannst den Status deiner Anfrage jederzeit in deinem Dashboard verfolgen.</p>
@@ -1150,16 +1150,16 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <div class="fgrid">
     <div class="fbrand">
       <div class="flogo">Source<span>On</span></div>
-      <p>Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
-      <p style="margin-top:4px;font-size:12px">Du zahlst erst, wenn wir dir sparen.</p>
+      <p data-i18n="footer_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
+      <p style="margin-top:4px;font-size:12px" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</p>
       <div class="fcopy">© 2026 SourceOn</div>
     </div>
-    <div class="fcol"><div class="fcol-label">Leistungen</div>
-      <a href="index.html">Home</a><a href="prozess.html">Wie es funktioniert</a><a href="fuerwen.html">Für wen</a><a href="lieferant.html">Lieferant werden</a><a href="kalkulator.html">Kalkulator</a><a href="materialien.html">Materialien</a></div>
-    <div class="fcol"><div class="fcol-label">Unternehmen</div>
-      <a href="ueberuns.html">Über uns</a><a href="kontakt.html">Kontakt</a><a href="lieferant.html">Lieferant werden</a></div>
-    <div class="fcol"><div class="fcol-label">Rechtliches</div>
-      <a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a><a href="agb.html">AGB</a></div>
+    <div class="fcol"><div class="fcol-label" data-i18n="footer_services">Leistungen</div>
+      <a href="index.html" data-i18n="nav_home">Home</a><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a><a href="fuerwen.html" data-i18n="nav_for_whom">Für wen</a><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a><a href="kalkulator.html" data-i18n="nav_calculator">Kalkulator</a><a href="materialien.html" data-i18n="nav_materials">Materialien</a></div>
+    <div class="fcol"><div class="fcol-label" data-i18n="footer_company">Unternehmen</div>
+      <a href="ueberuns.html" data-i18n="nav_about">Über uns</a><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></div>
+    <div class="fcol"><div class="fcol-label" data-i18n="footer_legal">Rechtliches</div>
+      <a href="datenschutz.html" data-i18n="footer_privacy">Datenschutz</a><a href="impressum.html" data-i18n="footer_imprint">Impressum</a><a href="agb.html" data-i18n="footer_terms">AGB</a></div>
   </div>
   <div class="fbottom"><div>DE · EN · FR · IT</div><a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
 </div></footer>
@@ -1301,10 +1301,11 @@ function _onDateChange(){
   var box=document.getElementById('tempo-indicator');
   if(!von||!bis){if(box)box.style.display='none';return;}
   var avail=_isoDays(von);
+  var _tl=(typeof I18N!=='undefined'&&I18N[window._currentLang||localStorage.getItem('sourceon-lang')||'de'])||{};
   if(box){
-    if(avail>23){box.textContent='🟢 Flexibler Zeitraum — deine Anfrage sammelt bis zu 14 Tage Bündelungspartner für maximale Ersparnis.';box.style.display='block';}
-    else if(avail>=14){box.textContent='🟡 Mittlerer Zeitraum — deine Anfrage sammelt einige Tage Partner und wird dann ausgeschrieben.';box.style.display='block';}
-    else if(avail>=5){box.textContent='🟠 Knapper Zeitraum — deine Anfrage wird beschleunigt ausgeschrieben (verkürzte Gebotsfrist für Lieferanten).';box.style.display='block';}
+    if(avail>23){box.textContent=_tl.tempo_msg_flex||'🟢 Flexibler Zeitraum — deine Anfrage sammelt bis zu 14 Tage Bündelungspartner für maximale Ersparnis.';box.style.display='block';}
+    else if(avail>=14){box.textContent=_tl.tempo_msg_med||'🟡 Mittlerer Zeitraum — deine Anfrage sammelt einige Tage Partner und wird dann ausgeschrieben.';box.style.display='block';}
+    else if(avail>=5){box.textContent=_tl.tempo_msg_tight||'🟠 Knapper Zeitraum — deine Anfrage wird beschleunigt ausgeschrieben (verkürzte Gebotsfrist für Lieferanten).';box.style.display='block';}
     else{box.style.display='none';} // <5 Tage: Validierung greift beim Absenden
   }
 }
@@ -1313,10 +1314,11 @@ function _validateDates(){
   var bis=document.getElementById('c-date-bis').value;
   var err=document.getElementById('e-c-timing');
   var minLead=(window.SO_TIMING&&window.SO_TIMING.MIN_LEAD_DAYS)||5;
+  var _tl=(typeof I18N!=='undefined'&&I18N[window._currentLang||localStorage.getItem('sourceon-lang')||'de'])||{};
   function fail(msg){if(err){err.textContent=msg;err.style.display='block';}return false;}
-  if(!von||!bis)return fail('Bitte frühestes und spätestes Lieferdatum angeben.');
-  if(_isoDays(von)<minLead)return fail('Für Lieferungen innerhalb von 5 Tagen kontaktiere uns bitte direkt: info@sourceon.ch');
-  if(bis<von)return fail('Das späteste Datum darf nicht vor dem frühesten liegen.');
+  if(!von||!bis)return fail(_tl.err_dates_required||'Bitte frühestes und spätestes Lieferdatum angeben.');
+  if(_isoDays(von)<minLead)return fail(_tl.err_dates_lead||'Für Lieferungen innerhalb von 5 Tagen kontaktiere uns bitte direkt: info@sourceon.ch');
+  if(bis<von)return fail(_tl.err_dates_order||'Das späteste Datum darf nicht vor dem frühesten liegen.');
   if(err)err.style.display='none';
   return true;
 }
@@ -1851,7 +1853,32 @@ window.I18N={
     footer_calculator:"Einsparkalkulator",footer_privacy:"Datenschutz",footer_imprint:"Impressum",footer_terms:"AGB",
     footer_copy:"© 2026 SourceOn, Zürich — Alle Rechte vorbehalten",footer_tagline:"Du zahlst erst, wenn wir dir sparen.",
     chat_title:"SourceOn Assistent",chat_subtitle:"Beantwortet alle Fragen zu SourceOn",
-    chat_chip_how:"Wie funktioniert SourceOn?",chat_chip_cost:"Was kostet es?",chat_chip_report:"Materialbedarf melden",chat_placeholder:"Frage stellen…"
+    chat_chip_how:"Wie funktioniert SourceOn?",chat_chip_cost:"Was kostet es?",chat_chip_report:"Materialbedarf melden",chat_placeholder:"Frage stellen…",
+    meta_title:"Materialbedarf melden — SourceOn",
+    nav_dd_bau:"Bauunternehmen & GU",nav_dd_handwerk:"Handwerk & Subunternehmer",nav_dd_gu:"Generalunternehmer & TU",nav_dd_oeff:"Öffentliche Auftraggeber",nav_dd_immo:"Immobilien & Wohnbau",
+    nav_ov_bau:"Bauunternehmen",nav_ov_handwerk:"Handwerk",nav_ov_gu:"Generalunternehmer",
+    ck_eyebrow:"Kontakt",ck_h1:"Materialbedarf melden.",ck_sub:"Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.",
+    ckstep1_t:"Material wählen",ckstep1_x:"Aus 58 Katalog-Materialien auswählen, Menge und Lieferzeitraum eingeben.",
+    ckstep2_t:"Mindestrabatt sehen",ckstep2_x:"Du siehst sofort deinen garantierten Netto-Mindestrabatt basierend auf deinem Volumen.",
+    ckstep3_t:"Absenden & verfolgen",ckstep3_x:"Nach dem Absenden verfolgst du den Status jederzeit in deinem Dashboard.",
+    ck_location:"Zürich, Schweiz",
+    tempobox_t:"Lieferzeitraum gibt das Tempo vor",
+    tempobox_r1:"🟢 Flexibel (>23 Tage) — Maximale Bündelungszeit",tempobox_r2:"🟡 Mittel (14–23 Tage) — Schnellere Ausschreibung",tempobox_r3:"🟠 Knapp (5–13 Tage) — Beschleunigte Abwicklung",
+    form_title:"Jetzt melden",form_subtitle:"Du siehst deinen garantierten Mindestrabatt vor dem Absenden.",
+    fsec_company:"Firmendaten",fsec_material:"Material & Menge",fsec_timing:"Lieferzeitraum & Adresse",
+    form_date_from:"Frühestens",form_date_to:"Spätestens",err_timing:"Bitte gültigen Lieferzeitraum wählen",
+    acct_opt_label:"Anfragen jederzeit verfolgen",acct_opt_check:"Konto erstellen, um meine Anfragen und Ersparnisse jederzeit einzusehen",acct_opt_hint:"Nach dem Absenden wirst du aufgefordert, ein Passwort festzulegen. Du kannst dich danach jederzeit einloggen, um den Status deiner Anfragen zu verfolgen.",
+    tier_label_value:"Geschätzter Auftragswert",tier_note_sub:"basierend auf SourceOn-Richtpreisen",tier_label_rate:"Dein garantierter Netto-Mindestrabatt",
+    tier_hint:'Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">7%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.',
+    commit_text:'Ich bestätige verbindlich: Erreicht das verhandelte Angebot meinen garantierten Netto-Mindestrabatt von <strong id="commit-rate">7%</strong>, gilt mein Auftrag als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt — <strong id="commit-rate2">7%</strong> kommen vollständig bei mir an. Wird die Zielmarke verfehlt, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a>',
+    err_commit:"Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.",
+    tempo_msg_flex:"🟢 Flexibler Zeitraum — deine Anfrage sammelt bis zu 14 Tage Bündelungspartner für maximale Ersparnis.",
+    tempo_msg_med:"🟡 Mittlerer Zeitraum — deine Anfrage sammelt einige Tage Partner und wird dann ausgeschrieben.",
+    tempo_msg_tight:"🟠 Knapper Zeitraum — deine Anfrage wird beschleunigt ausgeschrieben (verkürzte Gebotsfrist für Lieferanten).",
+    err_dates_required:"Bitte frühestes und spätestes Lieferdatum angeben.",
+    err_dates_lead:"Für Lieferungen innerhalb von 5 Tagen kontaktiere uns bitte direkt: info@sourceon.ch",
+    err_dates_order:"Das späteste Datum darf nicht vor dem frühesten liegen.",
+    trust_h3:"Verifizierung erforderlich",trust_msg:"Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.",trust_msg_phone:"Ein Bestätigungscode wurde an deine Telefonnummer gesendet.",trust_submit:"Bestätigen",trust_nocode:"Keinen Code erhalten?",trust_resend:"Code erneut senden",trust_cancel:"Abbrechen",trust_checking:"Wird geprüft…",trust_unexpected:"Unerwarteter Status: ",trust_invalid:"Ungültiger Code",trust_start_failed:"Verifizierung konnte nicht gestartet werden: "
   },
   en:{
     nav_home:"Home",nav_process:"How it works",nav_calculator:"Calculator",nav_materials:"Materials",nav_for_whom:"For whom",nav_supplier:"Become a supplier",nav_about:"About us",nav_contact:"Contact",nav_cta:"Report material needs",
@@ -1880,7 +1907,32 @@ window.I18N={
     footer_calculator:"Savings calculator",footer_privacy:"Privacy policy",footer_imprint:"Legal notice",footer_terms:"Terms & conditions",
     footer_copy:"© 2026 SourceOn, Zurich — All rights reserved",footer_tagline:"You only pay when we save you money.",
     chat_title:"SourceOn Assistant",chat_subtitle:"Answers all questions about SourceOn",
-    chat_chip_how:"How does SourceOn work?",chat_chip_cost:"What does it cost?",chat_chip_report:"Report material needs",chat_placeholder:"Ask a question…"
+    chat_chip_how:"How does SourceOn work?",chat_chip_cost:"What does it cost?",chat_chip_report:"Report material needs",chat_placeholder:"Ask a question…",
+    meta_title:"Report material needs — SourceOn",
+    nav_dd_bau:"Construction firms & GC",nav_dd_handwerk:"Trades & subcontractors",nav_dd_gu:"General contractors & TC",nav_dd_oeff:"Public clients",nav_dd_immo:"Real estate & housing",
+    nav_ov_bau:"Construction firms",nav_ov_handwerk:"Trades",nav_ov_gu:"General contractors",
+    ck_eyebrow:"Contact",ck_h1:"Report material needs.",ck_sub:"Free for you. You immediately see your guaranteed target minimum discount and track the status anytime in your dashboard.",
+    ckstep1_t:"Select material",ckstep1_x:"Choose from 58 catalog materials, enter quantity and delivery period.",
+    ckstep2_t:"See minimum discount",ckstep2_x:"You immediately see your guaranteed net minimum discount based on your volume.",
+    ckstep3_t:"Submit & track",ckstep3_x:"After submitting, you track the status anytime in your dashboard.",
+    ck_location:"Zurich, Switzerland",
+    tempobox_t:"Delivery period sets the pace",
+    tempobox_r1:"🟢 Flexible (>23 days) — Maximum bundling time",tempobox_r2:"🟡 Medium (14–23 days) — Faster tender",tempobox_r3:"🟠 Tight (5–13 days) — Accelerated processing",
+    form_title:"Report now",form_subtitle:"You see your guaranteed minimum discount before submitting.",
+    fsec_company:"Company details",fsec_material:"Material & quantity",fsec_timing:"Delivery period & address",
+    form_date_from:"Earliest",form_date_to:"Latest",err_timing:"Please select a valid delivery period",
+    acct_opt_label:"Track requests anytime",acct_opt_check:"Create an account to view my requests and savings anytime",acct_opt_hint:"After submitting, you'll be prompted to set a password. You can then log in anytime to track the status of your requests.",
+    tier_label_value:"Estimated order value",tier_note_sub:"based on SourceOn reference prices",tier_label_rate:"Your guaranteed net minimum discount",
+    tier_hint:'Net, after SourceOn commission — <strong id="tier-rate-inline">7%</strong> reach you in full. Through bundling with other construction firms, your savings are often higher.',
+    commit_text:'I confirm bindingly: If the negotiated offer reaches my guaranteed net minimum discount of <strong id="commit-rate">7%</strong>, my order is deemed placed. The SourceOn success commission is already accounted for — <strong id="commit-rate2">7%</strong> reach me in full. If the target is missed, my request lapses automatically and free of charge. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Read customer agreement</a>',
+    err_commit:"Please confirm the binding order placement to continue.",
+    tempo_msg_flex:"🟢 Flexible period — your request collects bundling partners for up to 14 days for maximum savings.",
+    tempo_msg_med:"🟡 Medium period — your request collects partners for a few days and is then put out to tender.",
+    tempo_msg_tight:"🟠 Tight period — your request is put out to tender on an accelerated basis (shortened bid deadline for suppliers).",
+    err_dates_required:"Please specify the earliest and latest delivery date.",
+    err_dates_lead:"For deliveries within 5 days, please contact us directly: info@sourceon.ch",
+    err_dates_order:"The latest date must not be before the earliest.",
+    trust_h3:"Verification required",trust_msg:"A verification code has been sent to your email. Please enter it below.",trust_msg_phone:"A verification code has been sent to your phone number.",trust_submit:"Confirm",trust_nocode:"Didn't receive a code?",trust_resend:"Resend code",trust_cancel:"Cancel",trust_checking:"Verifying…",trust_unexpected:"Unexpected status: ",trust_invalid:"Invalid code",trust_start_failed:"Verification could not be started: "
   },
   fr:{
     nav_home:"Accueil",nav_process:"Comment ça marche",nav_calculator:"Calculateur",nav_materials:"Matériaux",nav_for_whom:"Pour qui",nav_supplier:"Devenir fournisseur",nav_about:"À propos",nav_contact:"Contact",nav_cta:"Déclarer un besoin",
@@ -1908,7 +1960,32 @@ window.I18N={
     footer_calculator:"Calculateur d'économies",footer_privacy:"Protection des données",footer_imprint:"Mentions légales",footer_terms:"CGV",
     footer_copy:"© 2026 SourceOn, Zurich — Tous droits réservés",footer_tagline:"Vous ne payez que lorsque nous vous faisons économiser.",
     chat_title:"Assistant SourceOn",chat_subtitle:"Répond à toutes les questions sur SourceOn",
-    chat_chip_how:"Comment fonctionne SourceOn ?",chat_chip_cost:"Combien ça coûte ?",chat_chip_report:"Déclarer un besoin",chat_placeholder:"Poser une question…"
+    chat_chip_how:"Comment fonctionne SourceOn ?",chat_chip_cost:"Combien ça coûte ?",chat_chip_report:"Déclarer un besoin",chat_placeholder:"Poser une question…",
+    meta_title:"Déclarer un besoin — SourceOn",
+    nav_dd_bau:"Entreprises de construction & EG",nav_dd_handwerk:"Artisans & sous-traitants",nav_dd_gu:"Entreprises générales & ET",nav_dd_oeff:"Maîtres d'ouvrage publics",nav_dd_immo:"Immobilier & logement",
+    nav_ov_bau:"Entreprises de construction",nav_ov_handwerk:"Artisans",nav_ov_gu:"Entreprises générales",
+    ck_eyebrow:"Contact",ck_h1:"Déclare ton besoin en matériaux.",ck_sub:"Gratuit pour toi. Tu vois immédiatement ta remise minimale cible garantie et tu suis le statut à tout moment dans ton tableau de bord.",
+    ckstep1_t:"Choisir le matériau",ckstep1_x:"Choisis parmi 58 matériaux du catalogue, indique la quantité et le délai de livraison.",
+    ckstep2_t:"Voir la remise minimale",ckstep2_x:"Tu vois immédiatement ta remise minimale nette garantie selon ton volume.",
+    ckstep3_t:"Envoyer & suivre",ckstep3_x:"Après l'envoi, tu suis le statut à tout moment dans ton tableau de bord.",
+    ck_location:"Zurich, Suisse",
+    tempobox_t:"Le délai de livraison donne le rythme",
+    tempobox_r1:"🟢 Flexible (>23 jours) — Temps de regroupement maximal",tempobox_r2:"🟡 Moyen (14–23 jours) — Appel d'offres plus rapide",tempobox_r3:"🟠 Serré (5–13 jours) — Traitement accéléré",
+    form_title:"Déclarer maintenant",form_subtitle:"Tu vois ta remise minimale garantie avant d'envoyer.",
+    fsec_company:"Données de l'entreprise",fsec_material:"Matériau & quantité",fsec_timing:"Délai de livraison & adresse",
+    form_date_from:"Au plus tôt",form_date_to:"Au plus tard",err_timing:"Choisis un délai de livraison valide",
+    acct_opt_label:"Suivre les demandes à tout moment",acct_opt_check:"Créer un compte pour consulter mes demandes et économies à tout moment",acct_opt_hint:"Après l'envoi, on te demandera de définir un mot de passe. Tu pourras ensuite te connecter à tout moment pour suivre le statut de tes demandes.",
+    tier_label_value:"Valeur estimée de la commande",tier_note_sub:"basé sur les prix indicatifs SourceOn",tier_label_rate:"Ta remise minimale nette garantie",
+    tier_hint:'Net, après commission SourceOn — <strong id="tier-rate-inline">7%</strong> te reviennent intégralement. Grâce au regroupement avec d\'autres entreprises de construction, tes économies sont souvent plus élevées.',
+    commit_text:'Je confirme de manière ferme : si l\'offre négociée atteint ma remise minimale nette garantie de <strong id="commit-rate">7%</strong>, ma commande est considérée comme passée. La commission de succès SourceOn y est déjà intégrée — <strong id="commit-rate2">7%</strong> me reviennent intégralement. Si l\'objectif n\'est pas atteint, ma demande est annulée automatiquement et gratuitement. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Lire l\'accord client</a>',
+    err_commit:"Confirme la passation de commande ferme pour continuer.",
+    tempo_msg_flex:"🟢 Délai flexible — ta demande rassemble des partenaires de regroupement jusqu'à 14 jours pour un maximum d'économies.",
+    tempo_msg_med:"🟡 Délai moyen — ta demande rassemble des partenaires pendant quelques jours puis est mise en appel d'offres.",
+    tempo_msg_tight:"🟠 Délai serré — ta demande est mise en appel d'offres de manière accélérée (délai de soumission raccourci pour les fournisseurs).",
+    err_dates_required:"Indique la date de livraison la plus tôt et la plus tard.",
+    err_dates_lead:"Pour les livraisons sous 5 jours, contacte-nous directement : info@sourceon.ch",
+    err_dates_order:"La date la plus tardive ne peut pas être antérieure à la plus précoce.",
+    trust_h3:"Vérification requise",trust_msg:"Un code de vérification a été envoyé à ton e-mail. Merci de le saisir ci-dessous.",trust_msg_phone:"Un code de vérification a été envoyé à ton numéro de téléphone.",trust_submit:"Confirmer",trust_nocode:"Tu n'as pas reçu de code?",trust_resend:"Renvoyer le code",trust_cancel:"Annuler",trust_checking:"Vérification…",trust_unexpected:"Statut inattendu: ",trust_invalid:"Code invalide",trust_start_failed:"La vérification n'a pas pu être démarrée: "
   },
   it:{
     nav_home:"Home",nav_process:"Come funziona",nav_calculator:"Calcolatore",nav_materials:"Materiali",nav_for_whom:"Per chi",nav_supplier:"Diventare fornitore",nav_about:"Chi siamo",nav_contact:"Contatto",nav_cta:"Segnalare fabbisogno",
@@ -1936,10 +2013,37 @@ window.I18N={
     footer_calculator:"Calcolatore di risparmio",footer_privacy:"Protezione dei dati",footer_imprint:"Impressum",footer_terms:"CGC",
     footer_copy:"© 2026 SourceOn, Zurigo — Tutti i diritti riservati",footer_tagline:"Paghi solo quando ti facciamo risparmiare.",
     chat_title:"Assistente SourceOn",chat_subtitle:"Risponde a tutte le domande su SourceOn",
-    chat_chip_how:"Come funziona SourceOn?",chat_chip_cost:"Quanto costa?",chat_chip_report:"Segnalare fabbisogno",chat_placeholder:"Fai una domanda…"
+    chat_chip_how:"Come funziona SourceOn?",chat_chip_cost:"Quanto costa?",chat_chip_report:"Segnalare fabbisogno",chat_placeholder:"Fai una domanda…",
+    meta_title:"Segnalare fabbisogno — SourceOn",
+    nav_dd_bau:"Imprese di costruzione & GC",nav_dd_handwerk:"Artigiani & subappaltatori",nav_dd_gu:"Imprese generali & IT",nav_dd_oeff:"Committenti pubblici",nav_dd_immo:"Immobiliare & edilizia abitativa",
+    nav_ov_bau:"Imprese di costruzione",nav_ov_handwerk:"Artigiani",nav_ov_gu:"Imprese generali",
+    ck_eyebrow:"Contatto",ck_h1:"Segnala il tuo fabbisogno di materiali.",ck_sub:"Gratuito per te. Vedi subito il tuo sconto minimo obiettivo garantito e segui lo stato in qualsiasi momento nella tua dashboard.",
+    ckstep1_t:"Scegliere il materiale",ckstep1_x:"Scegli tra 58 materiali a catalogo, inserisci quantità e periodo di consegna.",
+    ckstep2_t:"Vedere lo sconto minimo",ckstep2_x:"Vedi subito il tuo sconto minimo netto garantito in base al tuo volume.",
+    ckstep3_t:"Inviare & seguire",ckstep3_x:"Dopo l'invio, segui lo stato in qualsiasi momento nella tua dashboard.",
+    ck_location:"Zurigo, Svizzera",
+    tempobox_t:"Il periodo di consegna detta il ritmo",
+    tempobox_r1:"🟢 Flessibile (>23 giorni) — Tempo di raggruppamento massimo",tempobox_r2:"🟡 Medio (14–23 giorni) — Gara più rapida",tempobox_r3:"🟠 Stretto (5–13 giorni) — Elaborazione accelerata",
+    form_title:"Segnala ora",form_subtitle:"Vedi il tuo sconto minimo garantito prima di inviare.",
+    fsec_company:"Dati aziendali",fsec_material:"Materiale & quantità",fsec_timing:"Periodo di consegna & indirizzo",
+    form_date_from:"Al più presto",form_date_to:"Al più tardi",err_timing:"Seleziona un periodo di consegna valido",
+    acct_opt_label:"Segui le richieste in qualsiasi momento",acct_opt_check:"Crea un account per consultare le mie richieste e i miei risparmi in qualsiasi momento",acct_opt_hint:"Dopo l'invio ti verrà chiesto di impostare una password. Potrai poi accedere in qualsiasi momento per seguire lo stato delle tue richieste.",
+    tier_label_value:"Valore stimato dell'ordine",tier_note_sub:"basato sui prezzi indicativi SourceOn",tier_label_rate:"Il tuo sconto minimo netto garantito",
+    tier_hint:'Netto, dopo la commissione SourceOn — <strong id="tier-rate-inline">7%</strong> ti spettano interamente. Grazie al raggruppamento con altre imprese edili, il tuo risparmio è spesso più elevato.',
+    commit_text:'Confermo in modo vincolante: se l\'offerta negoziata raggiunge il mio sconto minimo netto garantito del <strong id="commit-rate">7%</strong>, il mio ordine si considera conferito. La commissione di successo SourceOn è già inclusa — <strong id="commit-rate2">7%</strong> mi spettano interamente. Se l\'obiettivo non viene raggiunto, la mia richiesta decade automaticamente e gratuitamente. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Leggi l\'accordo cliente</a>',
+    err_commit:"Conferma il conferimento vincolante dell'ordine per continuare.",
+    tempo_msg_flex:"🟢 Periodo flessibile — la tua richiesta raccoglie partner di raggruppamento fino a 14 giorni per il massimo risparmio.",
+    tempo_msg_med:"🟡 Periodo medio — la tua richiesta raccoglie partner per alcuni giorni e viene poi messa a gara.",
+    tempo_msg_tight:"🟠 Periodo stretto — la tua richiesta viene messa a gara in modo accelerato (termine di offerta ridotto per i fornitori).",
+    err_dates_required:"Indica la data di consegna più prossima e quella più lontana.",
+    err_dates_lead:"Per consegne entro 5 giorni contattaci direttamente: info@sourceon.ch",
+    err_dates_order:"La data più tardiva non può precedere quella più prossima.",
+    trust_h3:"Verifica richiesta",trust_msg:"Un codice di verifica è stato inviato alla tua e-mail. Inseriscilo qui sotto.",trust_msg_phone:"Un codice di verifica è stato inviato al tuo numero di telefono.",trust_submit:"Conferma",trust_nocode:"Non hai ricevuto il codice?",trust_resend:"Invia di nuovo il codice",trust_cancel:"Annulla",trust_checking:"Verifica in corso…",trust_unexpected:"Stato imprevisto: ",trust_invalid:"Codice non valido",trust_start_failed:"Impossibile avviare la verifica: "
   }
 };
 const LANG_LABELS={de:"DE",en:"EN",fr:"FR",it:"IT"};
+// Runtime translation helper for JS-generated strings (falls back to given default).
+window._t=function(key,def){var l=window._currentLang||localStorage.getItem('sourceon-lang')||'de';var t=window.I18N&&window.I18N[l];return (t&&t[key]!=null)?t[key]:def;};
 
 // MAT_NAMES entfernt — Materialübersetzungen liegen jetzt in material-i18n.js (window.MAT_I18N)
 
@@ -1975,7 +2079,9 @@ window.setLang=function(lang){
   document.documentElement.lang=lang;
   window._currentLang=lang;
   document.body.classList.add('lang-ready');var _lh=document.getElementById('_lh');if(_lh){setTimeout(function(){_lh.remove();},200);}
-  
+  // Re-apply dynamic rate values into re-rendered tier/commit HTML, and refresh the tempo indicator in the new language.
+  if(typeof _recalcTier==='function')_recalcTier();
+  if(typeof _onDateChange==='function')_onDateChange();
 };
 (function(){var l=localStorage.getItem('sourceon-lang');if(l&&I18N[l])setLang(l);})();
 document.addEventListener('click',function(e){var sw=document.getElementById('lang-switch');if(sw&&!sw.contains(e.target))sw.classList.remove('open');});
@@ -2287,19 +2393,19 @@ async function _clerkSendVerificationCode(){
     var si=_clerkSignInResource;
     if(!si)return;
     await si.prepareSecondFactor({strategy:'email_code'});
-    document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';
+    document.getElementById('clerk-trust-msg').textContent=_t('trust_msg','Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.');
     _clerkShowTrustModal();
   }catch(e){
     console.error('[Clerk] prepareSecondFactor email_code failed:',e);
     try{
       await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});
       _clerkTrustStrategy='phone_code';
-      document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';
+      document.getElementById('clerk-trust-msg').textContent=_t('trust_msg_phone','Ein Bestätigungscode wurde an deine Telefonnummer gesendet.');
       _clerkShowTrustModal();
     }catch(e2){
       console.error('[Clerk] prepareSecondFactor phone_code also failed:',e2);
       _clerkTrustActive=false;
-      alert('Verifizierung konnte nicht gestartet werden: '+(e2.errors?e2.errors[0].longMessage:e2.message));
+      alert(_t('trust_start_failed','Verifizierung konnte nicht gestartet werden: ')+(e2.errors?e2.errors[0].longMessage:e2.message));
     }
   }
 }
@@ -2315,7 +2421,7 @@ async function clerkTrustVerify(){
   var code=document.getElementById('clerk-trust-code').value.trim();
   if(!code||!_clerkSignInResource){return;}
   var btn=document.getElementById('clerk-trust-submit');
-  btn.disabled=true;btn.textContent='Wird geprüft…';
+  btn.disabled=true;btn.textContent=_t('trust_checking','Wird geprüft…');
   document.getElementById('clerk-trust-error').textContent='';
   soLog('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
   try{
@@ -2327,14 +2433,14 @@ async function clerkTrustVerify(){
       _clerkTrustActive=false;
       return;
     }else{
-      document.getElementById('clerk-trust-error').textContent='Unerwarteter Status: '+result.status;
+      document.getElementById('clerk-trust-error').textContent=_t('trust_unexpected','Unerwarteter Status: ')+result.status;
     }
   }catch(e){
-    var msg=e.errors?e.errors[0].longMessage:(e.message||'Ungültiger Code');
+    var msg=e.errors?e.errors[0].longMessage:(e.message||_t('trust_invalid','Ungültiger Code'));
     console.error('[Clerk] attemptSecondFactor failed:',msg);
     document.getElementById('clerk-trust-error').textContent=msg;
   }
-  btn.disabled=false;btn.textContent='Bestätigen';
+  btn.disabled=false;btn.textContent=_t('trust_submit','Bestätigen');
 }
 
 async function clerkTrustResend(){
@@ -2358,13 +2464,13 @@ document.addEventListener('keydown',function(e){
 
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
   <div class="clerk-trust-modal">
-    <h3>Verifizierung erforderlich</h3>
-    <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
+    <h3 data-i18n="trust_h3">Verifizierung erforderlich</h3>
+    <p id="clerk-trust-msg" data-i18n="trust_msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
-    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
+    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()" data-i18n="trust_submit">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
-    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
-    <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
+    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8"><span data-i18n="trust_nocode">Keinen Code erhalten?</span> <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer" data-i18n="trust_resend">Code erneut senden</a></div>
+    <button class="btn-cancel-trust" onclick="clerkTrustCancel()" data-i18n="trust_cancel">Abbrechen</button>
   </div>
 </div>
 
