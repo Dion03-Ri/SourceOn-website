@@ -31,7 +31,7 @@
 <script src="debug.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Materialien — SourceOn</title>
+<title data-i18n="page_title">Materialien — SourceOn</title>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -862,7 +862,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html">Immobilien &amp; Wohnbau</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html" data-i18n="nav_dd_gu">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
@@ -914,7 +914,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <a href="prozess.html" onclick="toggleNav()" data-i18n="nav_process">Wie es funktioniert</a>
   <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calc">Kalkulator</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom">Für wen</a>
-  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()">Immobilien &amp; Wohnbau</a></div>
+  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_ov_bau">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="nav_ov_handwerk">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()" data-i18n="nav_ov_gu">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier">Lieferant werden</a>
   <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav_about">Über uns</a>
   <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav_contact">Kontakt</a>
@@ -925,22 +925,22 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <!-- HERO -->
   <section class="phero"><div class="wrap">
     <span class="eyebrow" data-i18n="mat_label">Material &amp; Norm</span>
-    <h1 data-i18n-html="mat_heading">Jedes Material. Eine Norm.</h1>
+    <h1 data-i18n="mat_heading">Jedes Material. Eine Norm.</h1>
     <p class="sub" data-i18n="mat_sub">Alle Materialien die SourceOn vermittelt erfüllen Schweizer Normen — SN EN und SIA-konform, lückenlos dokumentiert.</p>
   </div></section>
 
   <!-- MATERIAL SELECTOR -->
   <section class="matselsec"><div class="wrap">
     <div class="matsel reveal">
-      <span class="matsel-label">Material wählen, um SourceOn-ID zu sehen</span>
+      <span class="matsel-label" data-i18n="mat_select_label">Material wählen, um SourceOn-ID zu sehen</span>
       <select id="mat-lookup-select">
-        <option value="">Material wählen…</option>
+        <option value="" data-i18n="mat_select_option">Material wählen…</option>
       </select>
       <div class="matsel-result" id="mat-lookup-result">
-        <div class="matsel-field"><span class="fl">SourceOn-ID</span><span class="fv" id="mat-lookup-id">SO–000</span></div>
-        <div class="matsel-field"><span class="fl">Material</span><span class="fv" id="mat-lookup-name">Noch kein Material ausgewählt</span></div>
-        <div class="matsel-field"><span class="fl">Kategorie</span><span class="fv" id="mat-lookup-cat">—</span></div>
-        <div class="matsel-field"><span class="fl">Norm</span><span class="fv norm">SN EN / SIA</span></div>
+        <div class="matsel-field"><span class="fl" data-i18n="mat_field_id">SourceOn-ID</span><span class="fv" id="mat-lookup-id">SO–000</span></div>
+        <div class="matsel-field"><span class="fl" data-i18n="mat_field_name">Material</span><span class="fv" id="mat-lookup-name" data-i18n="mat_no_selection">Noch kein Material ausgewählt</span></div>
+        <div class="matsel-field"><span class="fl" data-i18n="mat_field_cat">Kategorie</span><span class="fv" id="mat-lookup-cat">—</span></div>
+        <div class="matsel-field"><span class="fl" data-i18n="mat_field_norm">Norm</span><span class="fv norm">SN EN / SIA</span></div>
       </div>
     </div>
   </div></section>
@@ -948,11 +948,11 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <!-- ABDECKUNG -->
   <section class="sec bt"><div class="wrap">
-    <span class="sec-label">Abdeckung</span>
+    <span class="sec-label" data-i18n="coverage_label">Abdeckung</span>
     <div class="statstrip reveal">
-      <div class="statcell"><div class="sn">3</div><span class="sl">Bereiche</span><div class="ss">Rohbau, Ausbau und Haustechnik</div></div>
-      <div class="statcell"><div class="sn">58+</div><span class="sl">Materialien</span><div class="ss">Alle geprüft und normkonform</div></div>
-      <div class="statcell"><div class="sn">CH-weit</div><span class="sl">Lieferung</span><div class="ss">Von Genf bis St. Gallen</div></div>
+      <div class="statcell"><div class="sn">3</div><span class="sl" data-i18n="stat_label_areas">Bereiche</span><div class="ss" data-i18n="stat_sub_areas">Rohbau, Ausbau und Haustechnik</div></div>
+      <div class="statcell"><div class="sn">58+</div><span class="sl" data-i18n="stat_label_materials">Materialien</span><div class="ss" data-i18n="stat_sub_materials">Alle geprüft und normkonform</div></div>
+      <div class="statcell"><div class="sn">CH-weit</div><span class="sl" data-i18n="stat_label_delivery">Lieferung</span><div class="ss" data-i18n="stat_sub_delivery">Von Genf bis St. Gallen</div></div>
     </div>
   </div></section>
 
@@ -960,13 +960,13 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <section class="sec bt"><div class="wrap">
     <div class="normgrid">
       <div class="norm-l reveal">
-        <span class="nlabel">Qualitätsstandard</span>
+        <span class="nlabel" data-i18n="norm_label">Qualitätsstandard</span>
         <div class="nnum">SN EN</div>
-        <div class="nsub">Schweizer Norm — europäisch harmonisiert</div>
+        <div class="nsub" data-i18n="norm_sub">Schweizer Norm — europäisch harmonisiert</div>
       </div>
       <div class="norm-r reveal">
-        <h2>Jedes Material entspricht Schweizer Normen — lückenlos dokumentiert.</h2>
-        <p>SN EN und SIA-konforme Materialien, persönlich geprüfte Lieferanten. Alle Dokumente verfügbar — für interne Prüfungen, öffentliche Ausschreibungen und Bauabnahmen.</p>
+        <h2 data-i18n="norm_heading">Jedes Material entspricht Schweizer Normen — lückenlos dokumentiert.</h2>
+        <p data-i18n="norm_body">SN EN und SIA-konforme Materialien, persönlich geprüfte Lieferanten. Alle Dokumente verfügbar — für interne Prüfungen, öffentliche Ausschreibungen und Bauabnahmen.</p>
       </div>
     </div>
   </div></section>
@@ -974,9 +974,9 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <!-- SONDERFALL -->
   <section class="sec bt p60"><div class="wrap">
     <div class="sonder reveal">
-      <h3>Material nicht in der Liste?</h3>
-      <p>Wir erweitern unser Lieferantennetz gezielt für deinen Bedarf — auf Anfrage.</p>
-      <a href="kontakt.html">Anfrage stellen →</a>
+      <h3 data-i18n="special_heading">Material nicht in der Liste?</h3>
+      <p data-i18n="special_body">Wir erweitern unser Lieferantennetz gezielt für deinen Bedarf — auf Anfrage.</p>
+      <a href="kontakt.html" data-i18n="special_link">Anfrage stellen →</a>
     </div>
   </div></section>
 
@@ -993,16 +993,16 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <div class="fgrid">
     <div class="fbrand">
       <div class="flogo">Source<span>On</span></div>
-      <p>Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
-      <p style="margin-top:4px;font-size:12px">Du zahlst erst, wenn wir dir sparen.</p>
+      <p data-i18n="footer_brand_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
+      <p style="margin-top:4px;font-size:12px" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</p>
       <div class="fcopy">© 2026 SourceOn</div>
     </div>
-    <div class="fcol"><div class="fcol-label">Leistungen</div>
-      <a href="index.html">Home</a><a href="prozess.html">Wie es funktioniert</a><a href="fuerwen.html">Für wen</a><a href="lieferant.html">Lieferant werden</a><a href="kalkulator.html">Kalkulator</a><a href="materialien.html">Materialien</a></div>
-    <div class="fcol"><div class="fcol-label">Unternehmen</div>
-      <a href="ueberuns.html">Über uns</a><a href="kontakt.html">Kontakt</a><a href="lieferant.html">Lieferant werden</a></div>
-    <div class="fcol"><div class="fcol-label">Rechtliches</div>
-      <a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a><a href="agb.html">AGB</a></div>
+    <div class="fcol"><div class="fcol-label" data-i18n="footer_services">Leistungen</div>
+      <a href="index.html" data-i18n="nav_home">Home</a><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a><a href="materialien.html" data-i18n="nav_materials">Materialien</a></div>
+    <div class="fcol"><div class="fcol-label" data-i18n="footer_company">Unternehmen</div>
+      <a href="ueberuns.html" data-i18n="nav_about">Über uns</a><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></div>
+    <div class="fcol"><div class="fcol-label" data-i18n="footer_legal">Rechtliches</div>
+      <a href="datenschutz.html" data-i18n="footer_privacy">Datenschutz</a><a href="impressum.html" data-i18n="footer_imprint">Impressum</a><a href="agb.html" data-i18n="footer_terms">AGB</a></div>
   </div>
   <div class="fbottom"><div>DE · EN · FR · IT</div><a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
 </div></footer>
@@ -1194,6 +1194,21 @@ const T={
     nav_home:'Home',nav_process:'Wie es funktioniert',nav_calc:'Kalkulator',nav_materials:'Materialien',
     nav_forwhom:'Für wen',nav_supplier:'Lieferant werden',nav_about:'Über uns',nav_contact:'Kontakt',
     nav_cta:'Materialbedarf melden',
+    nav_dd_bau:'Bauunternehmen & GU',nav_dd_handwerk:'Handwerk & Subunternehmer',nav_dd_gu:'Generalunternehmer & TU',nav_dd_oeff:'Öffentliche Auftraggeber',nav_dd_immo:'Immobilien & Wohnbau',
+    nav_ov_bau:'Bauunternehmen',nav_ov_handwerk:'Handwerk',nav_ov_gu:'Generalunternehmer',
+    mat_select_label:'Material wählen, um SourceOn-ID zu sehen',
+    mat_select_option:'Material wählen…',
+    mat_field_id:'SourceOn-ID',mat_field_name:'Material',mat_field_cat:'Kategorie',mat_field_norm:'Norm',
+    stat_label_areas:'Bereiche',stat_sub_areas:'Rohbau, Ausbau und Haustechnik',
+    stat_label_materials:'Materialien',stat_sub_materials:'Alle geprüft und normkonform',
+    stat_label_delivery:'Lieferung',stat_sub_delivery:'Von Genf bis St. Gallen',
+    norm_label:'Qualitätsstandard',norm_sub:'Schweizer Norm — europäisch harmonisiert',
+    norm_heading:'Jedes Material entspricht Schweizer Normen — lückenlos dokumentiert.',
+    norm_body:'SN EN und SIA-konforme Materialien, persönlich geprüfte Lieferanten. Alle Dokumente verfügbar — für interne Prüfungen, öffentliche Ausschreibungen und Bauabnahmen.',
+    special_heading:'Material nicht in der Liste?',
+    special_body:'Wir erweitern unser Lieferantennetz gezielt für deinen Bedarf — auf Anfrage.',
+    special_link:'Anfrage stellen →',
+    footer_brand_desc:'Schweizer B2B Beschaffungsvermittler für die Baubranche.',
     mat_label:'Material & Norm',
     mat_heading:'Jedes Material.<br>Eine Norm.',
     mat_sub:'Alle Materialien, die SourceOn vermittelt, erfüllen die SourceOn-Prüfkriterien — SN EN und SIA-konform, lückenlos dokumentiert.',
@@ -1230,6 +1245,21 @@ const T={
     nav_home:'Home',nav_process:'How it works',nav_calc:'Calculator',nav_materials:'Materials',
     nav_forwhom:'For whom',nav_supplier:'Become a supplier',nav_about:'About us',nav_contact:'Contact',
     nav_cta:'Report material needs',
+    nav_dd_bau:'Construction firms & GC',nav_dd_handwerk:'Trades & subcontractors',nav_dd_gu:'General & total contractors',nav_dd_oeff:'Public clients',nav_dd_immo:'Real estate & housing',
+    nav_ov_bau:'Construction firms',nav_ov_handwerk:'Trades',nav_ov_gu:'General contractors',
+    mat_select_label:'Choose a material to see its SourceOn ID',
+    mat_select_option:'Choose a material…',
+    mat_field_id:'SourceOn ID',mat_field_name:'Material',mat_field_cat:'Category',mat_field_norm:'Standard',
+    stat_label_areas:'Areas',stat_sub_areas:'Structural shell, finishing and building services',
+    stat_label_materials:'Materials',stat_sub_materials:'All inspected and standard-compliant',
+    stat_label_delivery:'Delivery',stat_sub_delivery:'From Geneva to St. Gallen',
+    norm_label:'Quality standard',norm_sub:'Swiss standard — harmonized across Europe',
+    norm_heading:'Every material meets Swiss standards — fully documented.',
+    norm_body:'SN EN and SIA compliant materials, personally vetted suppliers. All documents available — for internal audits, public tenders and construction acceptance.',
+    special_heading:'Material not on the list?',
+    special_body:'We expand our supplier network specifically for your needs — on request.',
+    special_link:'Send a request →',
+    footer_brand_desc:'Swiss B2B procurement broker for the construction industry.',
     mat_label:'Material & Standard',
     mat_heading:'Every Material.<br>One Standard.',
     mat_sub:'All materials sourced by SourceOn meet our inspection criteria — SN EN and SIA compliant, fully documented.',
@@ -1266,6 +1296,21 @@ const T={
     nav_home:'Accueil',nav_process:'Comment ça marche',nav_calc:'Calculateur',nav_materials:'Matériaux',
     nav_forwhom:'Pour qui',nav_supplier:'Devenir fournisseur',nav_about:'À propos',nav_contact:'Contact',
     nav_cta:'Signaler un besoin',
+    nav_dd_bau:'Entreprises de construction & EG',nav_dd_handwerk:'Artisans & sous-traitants',nav_dd_gu:'Entreprises générales & totales',nav_dd_oeff:'Maîtres d\'ouvrage publics',nav_dd_immo:'Immobilier & logement',
+    nav_ov_bau:'Entreprises de construction',nav_ov_handwerk:'Artisans',nav_ov_gu:'Entreprises générales',
+    mat_select_label:'Choisis un matériau pour voir son ID SourceOn',
+    mat_select_option:'Choisir un matériau…',
+    mat_field_id:'ID SourceOn',mat_field_name:'Matériau',mat_field_cat:'Catégorie',mat_field_norm:'Norme',
+    stat_label_areas:'Domaines',stat_sub_areas:'Gros œuvre, aménagement et technique du bâtiment',
+    stat_label_materials:'Matériaux',stat_sub_materials:'Tous vérifiés et conformes aux normes',
+    stat_label_delivery:'Livraison',stat_sub_delivery:'De Genève à Saint-Gall',
+    norm_label:'Standard de qualité',norm_sub:'Norme suisse — harmonisée au niveau européen',
+    norm_heading:'Chaque matériau est conforme aux normes suisses — entièrement documenté.',
+    norm_body:'Matériaux conformes SN EN et SIA, fournisseurs vérifiés personnellement. Tous les documents disponibles — pour les audits internes, les appels d\'offres publics et les réceptions de chantier.',
+    special_heading:'Matériau pas dans la liste ?',
+    special_body:'Nous élargissons notre réseau de fournisseurs pour ton besoin précis — sur demande.',
+    special_link:'Envoyer une demande →',
+    footer_brand_desc:'Courtier B2B suisse en approvisionnement pour le secteur de la construction.',
     mat_label:'Matériau & Norme',
     mat_heading:'Chaque matériau.<br>Une norme.',
     mat_sub:'Tous les matériaux fournis par SourceOn répondent à nos critères — conformes SN EN et SIA, entièrement documentés.',
@@ -1303,6 +1348,21 @@ const T={
     nav_home:'Home',nav_process:'Come funziona',nav_calc:'Calcolatore',nav_materials:'Materiali',
     nav_forwhom:'Per chi',nav_supplier:'Diventa fornitore',nav_about:'Chi siamo',nav_contact:'Contatto',
     nav_cta:'Segnala fabbisogno',
+    nav_dd_bau:'Imprese di costruzione & GC',nav_dd_handwerk:'Artigiani & subappaltatori',nav_dd_gu:'Imprese generali & totali',nav_dd_oeff:'Committenti pubblici',nav_dd_immo:'Immobiliare & abitativo',
+    nav_ov_bau:'Imprese di costruzione',nav_ov_handwerk:'Artigiani',nav_ov_gu:'Imprese generali',
+    mat_select_label:'Scegli un materiale per vedere il suo ID SourceOn',
+    mat_select_option:'Scegli un materiale…',
+    mat_field_id:'ID SourceOn',mat_field_name:'Materiale',mat_field_cat:'Categoria',mat_field_norm:'Norma',
+    stat_label_areas:'Aree',stat_sub_areas:'Opera grezza, finitura e impiantistica',
+    stat_label_materials:'Materiali',stat_sub_materials:'Tutti verificati e conformi alle norme',
+    stat_label_delivery:'Consegna',stat_sub_delivery:'Da Ginevra a San Gallo',
+    norm_label:'Standard di qualità',norm_sub:'Norma svizzera — armonizzata a livello europeo',
+    norm_heading:'Ogni materiale è conforme alle norme svizzere — completamente documentato.',
+    norm_body:'Materiali conformi SN EN e SIA, fornitori verificati personalmente. Tutti i documenti disponibili — per audit interni, gare d\'appalto pubbliche e collaudi.',
+    special_heading:'Materiale non nella lista?',
+    special_body:'Ampliamo la nostra rete di fornitori appositamente per il tuo fabbisogno — su richiesta.',
+    special_link:'Invia una richiesta →',
+    footer_brand_desc:'Broker B2B svizzero per l\'approvvigionamento nel settore edile.',
     mat_label:'Materiale & Norma',
     mat_heading:'Ogni materiale.<br>Una norma.',
     mat_sub:'Tutti i materiali forniti da SourceOn soddisfano i nostri criteri — conformi SN EN e SIA, completamente documentati.',
