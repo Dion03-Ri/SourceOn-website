@@ -779,8 +779,8 @@ body{background:#070F1A}
 #lp .phero .sub{font-size:18px;color:var(--t2);margin-top:16px;max-width:640px;line-height:1.6}
 #lp .cta-row{margin-top:32px;display:flex;gap:16px;flex-wrap:wrap}
 /* tiles (fuerwen) */
-#lp .fwtiles{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
-#lp .fwtiles .tile-lg{grid-column:1;grid-row:1/span 2;padding:40px 36px}
+#lp .fwtiles{display:grid;grid-template-columns:2fr 1fr;grid-auto-rows:auto;gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
+#lp .fwtiles .tile-lg{grid-column:1;grid-row:1/span 3;padding:40px 36px}
 @media(max-width:900px){#lp .fwtiles{grid-template-columns:1fr 1fr}#lp .fwtiles .tile-lg{grid-column:1/span 2;grid-row:auto;padding:40px 32px}}
 @media(max-width:600px){#lp .fwtiles{grid-template-columns:1fr}#lp .fwtiles .tile-lg{grid-column:auto}}
 #lp .tile{background:var(--bg1);padding:28px 26px;transition:background .2s;display:flex;flex-direction:column;color:var(--t1)}
@@ -860,7 +860,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html" data-i18n="nav_dd_gu">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
@@ -909,7 +909,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <a href="prozess.html" onclick="toggleNav()" data-i18n="nav_process">Wie es funktioniert</a>
   <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calc">Kalkulator</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom">Für wen</a>
-  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_ov_bau">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="nav_ov_handwerk">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()" data-i18n="nav_ov_gu">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div>
+  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_ov_bau">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="nav_ov_handwerk">Handwerk</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier">Lieferant werden</a>
   <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav_about">Über uns</a>
   <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav_contact">Kontakt</a>
@@ -934,12 +934,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="tile-cat" data-i18n="tile_hw_cat">Handwerk &amp; Subunternehmer</div>
         <div class="tile-title" data-i18n="tile_hw_title">Für jedes Gewerk.</div>
         <div class="tile-desc" data-i18n="tile_hw_desc">Schnelle Abwicklung, keine Vorauszahlung, vollautomatisch.</div>
-        <div class="tile-link">→</div>
-      </a>
-      <a class="tile" href="fuerwen-generalunternehmer.html">
-        <div class="tile-cat" data-i18n="tile_gu_cat">Generalunternehmer &amp; TU</div>
-        <div class="tile-title" data-i18n="tile_gu_title">Grosse Projekte, maximale Einkaufsmacht.</div>
-        <div class="tile-desc" data-i18n="tile_gu_desc">Riesige Materialmengen, höchste Rabattstufen.</div>
         <div class="tile-link">→</div>
       </a>
       <a class="tile" href="fuerwen-oeffentlich.html">
