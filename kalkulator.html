@@ -32,7 +32,7 @@
 <script src="tiers.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Einsparkalkulator — SourceOn</title>
+<title data-i18n="meta_title">Einsparkalkulator — SourceOn</title>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -866,7 +866,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
       <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html">Immobilien &amp; Wohnbau</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_fw_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_fw_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-generalunternehmer.html" data-i18n="nav_fw_gu">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_fw_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_fw_immo">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
@@ -915,7 +915,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <a href="prozess.html" onclick="toggleNav()" data-i18n="nav_process">Wie es funktioniert</a>
   <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calc">Kalkulator</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom">Für wen</a>
-  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()">Immobilien &amp; Wohnbau</a></div>
+  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_fw_bau_short">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="nav_fw_handwerk_short">Handwerk</a><a href="fuerwen-generalunternehmer.html" onclick="toggleNav()" data-i18n="nav_fw_gu_short">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()" data-i18n="nav_fw_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()" data-i18n="nav_fw_immo">Immobilien &amp; Wohnbau</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier">Lieferant werden</a>
   <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav_about">Über uns</a>
   <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav_contact">Kontakt</a>
@@ -924,7 +924,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
 <main id="lp">
   <section class="phero"><div class="wrap">
-    <span class="eyebrow">Einsparkalkulator</span>
+    <span class="eyebrow" data-i18n="calc_eyebrow">Einsparkalkulator</span>
     <h1 data-i18n="calc_title">Wie viel könntest du sparen?</h1>
     <p class="sub" data-i18n="calc_subtitle">Berechne dein persönliches Einsparpotenzial — basierend auf deinem Jahresvolumen.</p>
   </div></section>
@@ -933,24 +933,24 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     <div class="calcgrid">
       <div class="calccard reveal">
         <div class="calc-accent"></div>
-        <span class="calc-vlabel">Jahresvolumen</span>
+        <span class="calc-vlabel" data-i18n="calc_vlabel">Jahresvolumen</span>
         <div id="calc-display">CHF 150'000</div>
         <input type="range" id="calc-slider" min="0" max="100" value="18" step="0.1" style="--pct:18%"/>
         <div class="calc-range"><span>CHF 50'000</span><span>CHF 10'000'000</span></div>
         <input type="text" class="calc-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" data-i18n-placeholder="calc_placeholder" value="150'000"/>
-        <p class="calc-mnote">Beträge über CHF 10 Mio. bitte manuell eingeben.</p>
+        <p class="calc-mnote" data-i18n="calc_mnote">Beträge über CHF 10 Mio. bitte manuell eingeben.</p>
         <div class="calc-results">
-          <div class="calc-tierrow"><span class="l">Garantierter Netto-Mindestrabatt</span><span class="r" id="calc-rate">10%</span></div>
-          <div class="calc-rrow"><span class="l">Verhandelter Rabatt (brutto)</span><span class="r" id="calc-gross">CHF 15'000</span></div>
-          <div class="calc-rrow net"><span class="l">Deine garantierte Ersparnis (netto)</span><span class="r" id="calc-net">CHF 11'625</span></div>
+          <div class="calc-tierrow"><span class="l" data-i18n="calc_rate_label">Garantierter Netto-Mindestrabatt</span><span class="r" id="calc-rate">10%</span></div>
+          <div class="calc-rrow"><span class="l" data-i18n="calc_gross_label">Verhandelter Rabatt (brutto)</span><span class="r" id="calc-gross">CHF 15'000</span></div>
+          <div class="calc-rrow net"><span class="l" data-i18n="calc_net_short">Deine garantierte Ersparnis (netto)</span><span class="r" id="calc-net">CHF 11'625</span></div>
           <button class="calc-cta-btn" onclick="window.location.href='kontakt.html'" data-i18n="calc_cta">Materialbedarf melden →</button>
-          <p class="calc-disc">Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen. Durch Bündelung mit anderen Baufirmen kann deine tatsächliche Ersparnis höher ausfallen.</p>
+          <p class="calc-disc" data-i18n="calc_disc">Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen. Durch Bündelung mit anderen Baufirmen kann deine tatsächliche Ersparnis höher ausfallen.</p>
         </div>
       </div>
       <div class="reveal">
-        <span class="sec-label" style="margin-bottom:16px">Rabattstaffel</span>
+        <span class="sec-label" style="margin-bottom:16px" data-i18n="tier_scale_label">Rabattstaffel</span>
         <table class="tiertable">
-          <thead><tr><th>Jahresvolumen</th><th>Netto-Mindestrabatt</th></tr></thead>
+          <thead><tr><th data-i18n="tier_col_vol">Jahresvolumen</th><th data-i18n="tier_col_disc">Netto-Mindestrabatt</th></tr></thead>
           <tbody>
             <tr data-tier="0"><td class="vol">CHF 50'000 – 150'000</td><td class="pct">7%</td></tr>
             <tr data-tier="1"><td class="vol">CHF 150'000 – 300'000</td><td class="pct">10%</td></tr>
@@ -958,12 +958,12 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             <tr data-tier="3"><td class="vol">CHF 600'000 – 1.2 Mio.</td><td class="pct">16%</td></tr>
             <tr data-tier="4"><td class="vol">CHF 1.2 – 3 Mio.</td><td class="pct">20%</td></tr>
             <tr data-tier="5"><td class="vol">CHF 3 – 6 Mio.</td><td class="pct">24%</td></tr>
-            <tr data-tier="6"><td class="vol">Über CHF 6 Mio.</td><td class="pct">28%</td></tr>
+            <tr data-tier="6"><td class="vol" data-i18n="tier_over6">Über CHF 6 Mio.</td><td class="pct">28%</td></tr>
           </tbody>
         </table>
-        <p class="tiernote">Netto-Mindestrabatt nach SourceOn-Provision (2.25%). Durch Bündelung oft höher.</p>
+        <p class="tiernote" data-i18n="tier_note">Netto-Mindestrabatt nach SourceOn-Provision (2.25%). Durch Bündelung oft höher.</p>
         <div class="bundlebox">
-          <span class="sec-label" style="margin-bottom:12px">Bündelungseffekt</span>
+          <span class="sec-label" style="margin-bottom:12px" data-i18n="tier_bundle_label">Bündelungseffekt</span>
           <p data-i18n="tier_text">Jede Baufirma im Bündel erhält mindestens ihren garantierten Netto-Mindestrabatt — basierend auf ihrem eigenen eingebrachten Volumen. Übertrifft der verhandelte Gesamtrabatt die Summe aller individuellen Garantien, wird die Zusatzersparnis proportional zum Volumenanteil verteilt. Wer mehr einbringt, profitiert mehr — aber jeder gewinnt mindestens sein garantiertes Minimum.</p>
         </div>
       </div>
@@ -971,10 +971,10 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   </div></section>
 
   <section class="cta-center"><div class="wrap">
-    <h2>Einsparpotenzial berechnet?</h2>
-    <p>Jetzt den ersten Schritt machen — du siehst sofort deinen garantierten Mindestrabatt.</p>
+    <h2 data-i18n="cta_center_title">Einsparpotenzial berechnet?</h2>
+    <p data-i18n="cta_center_sub">Jetzt den ersten Schritt machen — du siehst sofort deinen garantierten Mindestrabatt.</p>
     <div class="cta-btns">
-      <a class="btn-primary" href="kontakt.html">Materialbedarf melden →</a>
+      <a class="btn-primary" href="kontakt.html" data-i18n="calc_cta">Materialbedarf melden →</a>
       <a class="btn-ghost" href="mailto:info@sourceon.ch">info@sourceon.ch</a>
     </div>
   </div></section>
@@ -1000,16 +1000,16 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <div class="fgrid">
     <div class="fbrand">
       <div class="flogo">Source<span>On</span></div>
-      <p>Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
-      <p style="margin-top:4px;font-size:12px">Du zahlst erst, wenn wir dir sparen.</p>
+      <p data-i18n="footer_brand_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
+      <p style="margin-top:4px;font-size:12px" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</p>
       <div class="fcopy">© 2026 SourceOn</div>
     </div>
-    <div class="fcol"><div class="fcol-label">Leistungen</div>
-      <a href="index.html">Home</a><a href="prozess.html">Wie es funktioniert</a><a href="fuerwen.html">Für wen</a><a href="lieferant.html">Lieferant werden</a><a href="kalkulator.html">Kalkulator</a><a href="materialien.html">Materialien</a></div>
-    <div class="fcol"><div class="fcol-label">Unternehmen</div>
-      <a href="ueberuns.html">Über uns</a><a href="kontakt.html">Kontakt</a><a href="lieferant.html">Lieferant werden</a></div>
-    <div class="fcol"><div class="fcol-label">Rechtliches</div>
-      <a href="datenschutz.html">Datenschutz</a><a href="impressum.html">Impressum</a><a href="agb.html">AGB</a></div>
+    <div class="fcol"><div class="fcol-label" data-i18n="footer_services">Leistungen</div>
+      <a href="index.html" data-i18n="nav_home">Home</a><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a><a href="materialien.html" data-i18n="nav_materials">Materialien</a></div>
+    <div class="fcol"><div class="fcol-label" data-i18n="footer_company">Unternehmen</div>
+      <a href="ueberuns.html" data-i18n="nav_about">Über uns</a><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></div>
+    <div class="fcol"><div class="fcol-label" data-i18n="footer_legal">Rechtliches</div>
+      <a href="datenschutz.html" data-i18n="footer_privacy">Datenschutz</a><a href="impressum.html" data-i18n="footer_imprint">Impressum</a><a href="agb.html" data-i18n="footer_terms">AGB</a></div>
   </div>
   <div class="fbottom"><div>DE · EN · FR · IT</div><a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
 </div></footer>
@@ -1193,6 +1193,39 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier_title: 'Wie wird die Ersparnis verteilt?',
       tier_text: 'Jede Baufirma im Bündel erhält mindestens ihren garantierten Netto-Mindestrabatt — basierend auf ihrem eigenen eingebrachten Volumen. Übertrifft der verhandelte Gesamtrabatt die Summe aller individuellen Garantien, wird die Zusatzersparnis proportional zum Volumenanteil verteilt. Wer mehr einbringt, profitiert mehr — aber jeder gewinnt mindestens sein garantiertes Minimum.',
 
+      meta_title: 'Einsparkalkulator — SourceOn',
+      calc_eyebrow: 'Einsparkalkulator',
+      calc_vlabel: 'Jahresvolumen',
+      calc_mnote: 'Beträge über CHF 10 Mio. bitte manuell eingeben.',
+      calc_rate_label: 'Garantierter Netto-Mindestrabatt',
+      calc_net_short: 'Deine garantierte Ersparnis (netto)',
+      calc_disc: 'Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen. Durch Bündelung mit anderen Baufirmen kann deine tatsächliche Ersparnis höher ausfallen.',
+      tier_scale_label: 'Rabattstaffel',
+      tier_col_vol: 'Jahresvolumen',
+      tier_col_disc: 'Netto-Mindestrabatt',
+      tier_over6: 'Über CHF 6 Mio.',
+      tier_note: 'Netto-Mindestrabatt nach SourceOn-Provision (2.25%). Durch Bündelung oft höher.',
+      tier_bundle_label: 'Bündelungseffekt',
+      cta_center_title: 'Einsparpotenzial berechnet?',
+      cta_center_sub: 'Jetzt den ersten Schritt machen — du siehst sofort deinen garantierten Mindestrabatt.',
+      footer_brand_desc: 'Schweizer B2B Beschaffungsvermittler für die Baubranche.',
+      nav_fw_bau: 'Bauunternehmen & GU',
+      nav_fw_handwerk: 'Handwerk & Subunternehmer',
+      nav_fw_gu: 'Generalunternehmer & TU',
+      nav_fw_oeff: 'Öffentliche Auftraggeber',
+      nav_fw_immo: 'Immobilien & Wohnbau',
+      nav_fw_bau_short: 'Bauunternehmen',
+      nav_fw_handwerk_short: 'Handwerk',
+      nav_fw_gu_short: 'Generalunternehmer',
+      trust_h3: 'Verifizierung erforderlich',
+      trust_msg: 'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',
+      trust_msg_phone: 'Ein Bestätigungscode wurde an deine Telefonnummer gesendet.',
+      trust_submit: 'Bestätigen',
+      trust_checking: 'Wird geprüft…',
+      trust_nocode: 'Keinen Code erhalten?',
+      trust_resend: 'Code erneut senden',
+      trust_cancel: 'Abbrechen',
+
       cta_title: 'Bereit für tiefere Einkaufspreise?',
       cta_sub: 'Melde deinen nächsten Materialbedarf — du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst alles in deinem Dashboard.',
       footer_desc: 'Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.',
@@ -1230,6 +1263,39 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier_label: 'Bundle savings',
       tier_title: 'How are the savings distributed?',
       tier_text: 'Every construction firm in the bundle receives at least their guaranteed net minimum discount — based on their own contributed volume. If the negotiated total discount exceeds the sum of all individual guarantees, the additional savings are distributed proportionally to volume share. Those who contribute more benefit more — but everyone receives at least their guaranteed minimum.',
+
+      meta_title: 'Savings calculator — SourceOn',
+      calc_eyebrow: 'Savings calculator',
+      calc_vlabel: 'Annual volume',
+      calc_mnote: 'For amounts over CHF 10 million, please enter manually.',
+      calc_rate_label: 'Guaranteed net minimum discount',
+      calc_net_short: 'Your guaranteed saving (net)',
+      calc_disc: 'Non-binding estimate based on SourceOn reference prices. Through bundling with other construction firms, your actual saving may be higher.',
+      tier_scale_label: 'Discount tiers',
+      tier_col_vol: 'Annual volume',
+      tier_col_disc: 'Net minimum discount',
+      tier_over6: 'Over CHF 6 Mio.',
+      tier_note: 'Net minimum discount after SourceOn commission (2.25%). Often higher through bundling.',
+      tier_bundle_label: 'Bundling effect',
+      cta_center_title: 'Savings potential calculated?',
+      cta_center_sub: 'Take the first step now — you see your guaranteed minimum discount right away.',
+      footer_brand_desc: 'Swiss B2B procurement intermediary for the construction industry.',
+      nav_fw_bau: 'Construction firms & GC',
+      nav_fw_handwerk: 'Trades & subcontractors',
+      nav_fw_gu: 'General & total contractors',
+      nav_fw_oeff: 'Public clients',
+      nav_fw_immo: 'Real estate & housing',
+      nav_fw_bau_short: 'Construction firms',
+      nav_fw_handwerk_short: 'Trades',
+      nav_fw_gu_short: 'General contractors',
+      trust_h3: 'Verification required',
+      trust_msg: 'A verification code has been sent to your email. Please enter it below.',
+      trust_msg_phone: 'A verification code has been sent to your phone number.',
+      trust_submit: 'Confirm',
+      trust_checking: 'Checking…',
+      trust_nocode: 'Didn\'t receive a code?',
+      trust_resend: 'Resend code',
+      trust_cancel: 'Cancel',
 
       cta_title: 'Ready for lower procurement prices?',
       cta_sub: 'Submit your next material need — you only pay when we save you money. You see your guaranteed net minimum discount right away and track everything in your dashboard.',
@@ -1269,6 +1335,39 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier_title: 'Comment les économies sont-elles réparties ?',
       tier_text: 'Chaque entreprise de construction du lot reçoit au moins sa remise minimale nette garantie — basée sur son propre volume apporté. Si la remise totale négociée dépasse la somme de toutes les garanties individuelles, les économies supplémentaires sont réparties proportionnellement à la part de volume. Ceux qui apportent plus bénéficient davantage — mais chacun reçoit au moins son minimum garanti.',
 
+      meta_title: 'Calculateur d\'économies — SourceOn',
+      calc_eyebrow: 'Calculateur d\'économies',
+      calc_vlabel: 'Volume annuel',
+      calc_mnote: 'Pour les montants supérieurs à CHF 10 Mio., saisis-les manuellement.',
+      calc_rate_label: 'Rabais net minimum garanti',
+      calc_net_short: 'Ton économie garantie (nette)',
+      calc_disc: 'Estimation non contraignante basée sur les prix de référence SourceOn. Grâce au regroupement avec d\'autres entreprises de construction, ton économie réelle peut être plus élevée.',
+      tier_scale_label: 'Paliers de rabais',
+      tier_col_vol: 'Volume annuel',
+      tier_col_disc: 'Rabais net minimum',
+      tier_over6: 'Plus de CHF 6 Mio.',
+      tier_note: 'Rabais net minimum après commission SourceOn (2.25%). Souvent plus élevé grâce au regroupement.',
+      tier_bundle_label: 'Effet de regroupement',
+      cta_center_title: 'Potentiel d\'économies calculé ?',
+      cta_center_sub: 'Fais le premier pas maintenant — tu vois immédiatement ton rabais minimum garanti.',
+      footer_brand_desc: 'Intermédiaire suisse d\'approvisionnement B2B pour le secteur de la construction.',
+      nav_fw_bau: 'Entreprises de construction & EG',
+      nav_fw_handwerk: 'Artisanat & sous-traitants',
+      nav_fw_gu: 'Entreprises générales & totales',
+      nav_fw_oeff: 'Maîtres d\'ouvrage publics',
+      nav_fw_immo: 'Immobilier & logement',
+      nav_fw_bau_short: 'Entreprises de construction',
+      nav_fw_handwerk_short: 'Artisanat',
+      nav_fw_gu_short: 'Entreprises générales',
+      trust_h3: 'Vérification requise',
+      trust_msg: 'Un code de vérification a été envoyé à ton e-mail. Merci de le saisir ci-dessous.',
+      trust_msg_phone: 'Un code de vérification a été envoyé à ton numéro de téléphone.',
+      trust_submit: 'Confirmer',
+      trust_checking: 'Vérification…',
+      trust_nocode: 'Tu n\'as pas reçu de code ?',
+      trust_resend: 'Renvoyer le code',
+      trust_cancel: 'Annuler',
+
       cta_title: 'Prêt pour des prix d\'achat plus bas ?',
       cta_sub: 'Déclarez votre prochain besoin matériel — vous ne payez que si nous vous faisons économiser. Vous voyez immédiatement votre rabais minimum net garanti et suivez tout dans votre tableau de bord.',
       footer_desc: 'Intermédiaire suisse d\'approvisionnement B2B pour le secteur de la construction. Vous ne payez que lorsque nous vous faisons économiser.',
@@ -1307,6 +1406,39 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier_title: 'Come viene distribuito il risparmio?',
       tier_text: 'Ogni impresa edile nel lotto riceve almeno il suo sconto minimo netto garantito — basato sul proprio volume apportato. Se lo sconto totale negoziato supera la somma di tutte le garanzie individuali, il risparmio aggiuntivo viene distribuito proporzionalmente alla quota di volume. Chi apporta di più beneficia di più — ma tutti ricevono almeno il loro minimo garantito.',
 
+      meta_title: 'Calcolatore di risparmio — SourceOn',
+      calc_eyebrow: 'Calcolatore di risparmio',
+      calc_vlabel: 'Volume annuale',
+      calc_mnote: 'Per importi superiori a CHF 10 Mio. inserisci manualmente.',
+      calc_rate_label: 'Sconto netto minimo garantito',
+      calc_net_short: 'Il tuo risparmio garantito (netto)',
+      calc_disc: 'Stima non vincolante basata sui prezzi di riferimento SourceOn. Grazie al raggruppamento con altre imprese edili, il tuo risparmio effettivo può essere maggiore.',
+      tier_scale_label: 'Fasce di sconto',
+      tier_col_vol: 'Volume annuale',
+      tier_col_disc: 'Sconto netto minimo',
+      tier_over6: 'Oltre CHF 6 Mio.',
+      tier_note: 'Sconto netto minimo dopo la provvigione SourceOn (2.25%). Spesso maggiore grazie al raggruppamento.',
+      tier_bundle_label: 'Effetto di raggruppamento',
+      cta_center_title: 'Potenziale di risparmio calcolato?',
+      cta_center_sub: 'Fai subito il primo passo — vedi immediatamente il tuo sconto minimo garantito.',
+      footer_brand_desc: 'Intermediario svizzero di approvvigionamento B2B per il settore edile.',
+      nav_fw_bau: 'Imprese edili & IG',
+      nav_fw_handwerk: 'Artigianato & subappaltatori',
+      nav_fw_gu: 'Imprese generali & totali',
+      nav_fw_oeff: 'Committenti pubblici',
+      nav_fw_immo: 'Immobiliare & edilizia abitativa',
+      nav_fw_bau_short: 'Imprese edili',
+      nav_fw_handwerk_short: 'Artigianato',
+      nav_fw_gu_short: 'Imprese generali',
+      trust_h3: 'Verifica richiesta',
+      trust_msg: 'Un codice di verifica è stato inviato alla tua e-mail. Inseriscilo qui sotto.',
+      trust_msg_phone: 'Un codice di verifica è stato inviato al tuo numero di telefono.',
+      trust_submit: 'Conferma',
+      trust_checking: 'Verifica in corso…',
+      trust_nocode: 'Non hai ricevuto il codice?',
+      trust_resend: 'Invia di nuovo il codice',
+      trust_cancel: 'Annulla',
+
       cta_title: 'Pronti per prezzi d\'acquisto più bassi?',
       cta_sub: 'Segnala il tuo prossimo fabbisogno materiale — paghi solo se ti facciamo risparmiare. Vedi subito il tuo sconto minimo netto garantito e segui tutto nella tua dashboard.',
       footer_desc: 'Intermediario svizzero di approvvigionamento B2B per il settore edile. Paghi solo quando ti facciamo risparmiare.',
@@ -1327,6 +1459,8 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
   function setLang(lang) {
     var dict = I18N[lang];
     if (!dict) return;
+
+    if (dict['meta_title'] != null) document.title = dict['meta_title'];
 
     document.querySelectorAll('[data-i18n]').forEach(function(el) {
       var key = el.getAttribute('data-i18n');
@@ -1372,6 +1506,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
   }
 
   window.setLang = setLang;
+  window.soTrust = function(key){var l=localStorage.getItem('sourceon-lang')||'de';var d=I18N[l]||I18N.de;return (d&&d[key]!=null)?d[key]:I18N.de[key];};
 
   var saved = localStorage.getItem('sourceon-lang');
   if (saved && saved !== 'de') {
@@ -1681,14 +1816,14 @@ async function _clerkSendVerificationCode(){
     var si=_clerkSignInResource;
     if(!si)return;
     await si.prepareSecondFactor({strategy:'email_code'});
-    document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';
+    document.getElementById('clerk-trust-msg').textContent=(window.soTrust?window.soTrust('trust_msg'):'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.');
     _clerkShowTrustModal();
   }catch(e){
     console.error('[Clerk] prepareSecondFactor email_code failed:',e);
     try{
       await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});
       _clerkTrustStrategy='phone_code';
-      document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';
+      document.getElementById('clerk-trust-msg').textContent=(window.soTrust?window.soTrust('trust_msg_phone'):'Ein Bestätigungscode wurde an deine Telefonnummer gesendet.');
       _clerkShowTrustModal();
     }catch(e2){
       console.error('[Clerk] prepareSecondFactor phone_code also failed:',e2);
@@ -1709,7 +1844,7 @@ async function clerkTrustVerify(){
   var code=document.getElementById('clerk-trust-code').value.trim();
   if(!code||!_clerkSignInResource){return;}
   var btn=document.getElementById('clerk-trust-submit');
-  btn.disabled=true;btn.textContent='Wird geprüft…';
+  btn.disabled=true;btn.textContent=(window.soTrust?window.soTrust('trust_checking'):'Wird geprüft…');
   document.getElementById('clerk-trust-error').textContent='';
   soLog('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
   try{
@@ -1728,7 +1863,7 @@ async function clerkTrustVerify(){
     console.error('[Clerk] attemptSecondFactor failed:',msg);
     document.getElementById('clerk-trust-error').textContent=msg;
   }
-  btn.disabled=false;btn.textContent='Bestätigen';
+  btn.disabled=false;btn.textContent=(window.soTrust?window.soTrust('trust_submit'):'Bestätigen');
 }
 
 async function clerkTrustResend(){
@@ -1752,13 +1887,13 @@ document.addEventListener('keydown',function(e){
 
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
   <div class="clerk-trust-modal">
-    <h3>Verifizierung erforderlich</h3>
-    <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
+    <h3 data-i18n="trust_h3">Verifizierung erforderlich</h3>
+    <p id="clerk-trust-msg" data-i18n="trust_msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
-    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
+    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()" data-i18n="trust_submit">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
-    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
-    <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
+    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8"><span data-i18n="trust_nocode">Keinen Code erhalten?</span> <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer" data-i18n="trust_resend">Code erneut senden</a></div>
+    <button class="btn-cancel-trust" onclick="clerkTrustCancel()" data-i18n="trust_cancel">Abbrechen</button>
   </div>
 </div>
 
