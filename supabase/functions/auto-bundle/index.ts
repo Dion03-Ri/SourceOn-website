@@ -5,23 +5,25 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 // ⚠️ MUSS synchron bleiben mit /tiers.js (window.SO_TIERS).
 // gross = ceil_to_0.25%( (net + 0.0225) / 1.0225 ) — aufgerundet, damit die
 // Netto-Garantie nach Abzug der Provision (2.25% des Bestellwerts) zuverlässig erreicht wird.
+// Ab CHF 6 Mio. gelten individuelle Konditionen (manuell) — automatisch wird für
+// alles ab 3 Mio. der höchste definierte GROSS-Wert (36.25%) ausgeschrieben.
 const SUPPLIER_TIERS = [
-  { min: 6_000_000, net: 0.28, gross: 0.2975 }, // über 6M
-  { min: 3_000_000, net: 0.24, gross: 0.2575 }, // 3M–6M
-  { min: 1_200_000, net: 0.20, gross: 0.22 },   // 1.2M–3M
-  { min: 600_000,   net: 0.16, gross: 0.18 },   // 600k–1.2M
-  { min: 300_000,   net: 0.13, gross: 0.15 },   // 300k–600k
-  { min: 150_000,   net: 0.10, gross: 0.12 },   // 150k–300k
-  { min: 50_000,    net: 0.07, gross: 0.0925 }, // 50k–150k
+  { min: 3_000_000, net: 0.35, gross: 0.3625 }, // 3M+ (>6M individuell, manuell)
+  { min: 1_200_000, net: 0.30, gross: 0.3125 }, // 1.2M–3M
+  { min: 600_000,   net: 0.25, gross: 0.2625 }, // 600k–1.2M
+  { min: 300_000,   net: 0.20, gross: 0.2175 }, // 300k–600k
+  { min: 150_000,   net: 0.16, gross: 0.1775 }, // 150k–300k
+  { min: 50_000,    net: 0.12, gross: 0.1375 }, // 50k–150k
+  { min: 20_000,    net: 0.08, gross: 0.095 },  // 20k–50k
 ];
-const FALLBACK_GROSS = 0.0925; // unter 50k (Fallback-Bündel) → Kunde netto 7%
+const FALLBACK_GROSS = 0.095; // unter 20k (Fallback-Bündel) → Kunde netto 8%
 
-// Liefert den auszuschreibenden GROSS-Mindestrabatt (oder null, wenn < 50k → Fallback).
+// Liefert den auszuschreibenden GROSS-Mindestrabatt (oder null, wenn < 20k → Fallback).
 function getGrossTarget(estimatedValueCHF: number): number | null {
   for (const tier of SUPPLIER_TIERS) {
     if (estimatedValueCHF >= tier.min) return tier.gross;
   }
-  return null; // below 50k — fallback bundle
+  return null; // below 20k — fallback bundle
 }
 
 // ---------------------------------------------------------------------------

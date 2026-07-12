@@ -1124,14 +1124,14 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             <div id="tier-summary" class="tier-summary" style="display:none">
               <div class="tier-row"><span class="tier-label" data-i18n="tier_label_value">Geschätzter Auftragswert</span><span class="tier-val" id="tier-value">CHF 0</span></div>
               <div class="tier-note-sub" data-i18n="tier_note_sub">basierend auf SourceOn-Richtpreisen</div>
-              <div class="tier-row tier-row-hl"><span class="tier-label" data-i18n="tier_label_rate">Dein garantierter Netto-Mindestrabatt</span><span class="tier-rate" id="tier-rate">7%</span></div>
-              <p class="tier-hint" data-i18n-html="tier_hint">Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">7%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.</p>
+              <div class="tier-row tier-row-hl"><span class="tier-label" data-i18n="tier_label_rate">Dein garantierter Netto-Mindestrabatt</span><span class="tier-rate" id="tier-rate">8%</span></div>
+              <p class="tier-hint" data-i18n-html="tier_hint">Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">8%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.</p>
             </div>
             <div class="commit-box" id="commit-box">
               <div data-i18n="commit_note" style="font-size:12px;color:var(--t2);line-height:1.6;padding:10px 14px;background:rgba(232,160,32,0.05);border-radius:8px;border-left:2px solid var(--gold);margin-top:12px;margin-bottom:16px">Hinweis: Erreicht das verhandelte Angebot deinen Mindestrabatt, wird dein Auftrag automatisch ausgeführt. Du kannst ihn danach nicht mehr zurückziehen.</div>
               <label class="commit-check">
                 <input type="checkbox" id="c-commitment" onchange="if(this.checked){var b=document.getElementById('commit-box');b&&b.classList.remove('commit-error');var e=document.getElementById('e-c-commitment');e&&(e.style.display='none');}"/>
-                <span class="commit-text" data-i18n-html="commit_text">Ich bestätige verbindlich: Erreicht das verhandelte Angebot meinen garantierten Netto-Mindestrabatt von <strong id="commit-rate">7%</strong>, gilt mein Auftrag als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt — <strong id="commit-rate2">7%</strong> kommen vollständig bei mir an. Wird die Zielmarke verfehlt, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a></span>
+                <span class="commit-text" data-i18n-html="commit_text">Ich bestätige verbindlich: Erreicht das verhandelte Angebot meinen garantierten Netto-Mindestrabatt von <strong id="commit-rate">8%</strong>, gilt mein Auftrag als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt — <strong id="commit-rate2">8%</strong> kommen vollständig bei mir an. Wird die Zielmarke verfehlt, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a></span>
               </label>
               <div class="form-error" id="e-c-commitment" data-i18n="err_commit">Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.</div>
             </div>
@@ -1265,9 +1265,10 @@ function _matCatLabel(cat,lang){lang=lang||_matLang();if(lang==='de')return cat;
 // Quelle: tiers.js (window.SO_TIERS). Kunde sieht/bestätigt immer den NETTO-Wert.
 var COMMITMENT_VERSION='v1.1-2026-07-05';
 // Fallback (falls tiers.js nicht geladen) — NETTO-Werte, synchron mit tiers.js:
-var _DISCOUNT_TIERS=[[6000000,0.28],[3000000,0.24],[1200000,0.20],[600000,0.16],[300000,0.13],[150000,0.10],[50000,0.07]];
-function _tierRate(v){if(window.SO_TIERS)return window.SO_TIERS.netRate(v);for(var i=0;i<_DISCOUNT_TIERS.length;i++){if(v>=_DISCOUNT_TIERS[i][0])return _DISCOUNT_TIERS[i][1];}return 0.07;}
-window._orderValue=0;window._committedRate=0.07;
+var _DISCOUNT_TIERS=[[6000000,null],[3000000,0.35],[1200000,0.30],[600000,0.25],[300000,0.20],[150000,0.16],[50000,0.12],[20000,0.08]];
+function _tierRate(v){if(window.SO_TIERS)return window.SO_TIERS.netRate(v);for(var i=0;i<_DISCOUNT_TIERS.length;i++){if(v>=_DISCOUNT_TIERS[i][0])return _DISCOUNT_TIERS[i][1];}return 0.08;}
+function _soIndividualLabel(){return ({de:'Individuell',en:'Individual',fr:'Individuel',it:'Individuale'})[_matLang()]||'Individuell';}
+window._orderValue=0;window._committedRate=0.08;
 function _parseQty(s){var n=parseFloat(String(s||'').replace(/'/g,'').replace(',','.').replace(/[^0-9.]/g,''));return isNaN(n)?0:n;}
 function _recalcTier(){
   var total=0;
@@ -1281,13 +1282,13 @@ function _recalcTier(){
   });
   window._orderValue=total;
   var rate=_tierRate(total);window._committedRate=rate;
-  var pct=Math.round(rate*100);
+  var label=(rate==null)?_soIndividualLabel():(Math.round(rate*100)+'%');
   var box=document.getElementById('tier-summary');
   if(box){
     if(total>0){box.style.display='block';var tv=document.getElementById('tier-value');if(tv)tv.textContent='CHF '+Math.round(total).toLocaleString('de-CH');}
     else{box.style.display='none';}
   }
-  ['tier-rate','tier-rate-inline','commit-rate','commit-rate2'].forEach(function(idn){var el=document.getElementById(idn);if(el)el.textContent=pct+'%';});
+  ['tier-rate','tier-rate-inline','commit-rate','commit-rate2'].forEach(function(idn){var el=document.getElementById(idn);if(el)el.textContent=label;});
 }
 
 // ============ Lieferzeitraum: Tempo-Indikator + Validierung (nutzt timing.js) ============
@@ -1874,8 +1875,8 @@ window.I18N={
     form_date_from:"Frühestens",form_date_to:"Spätestens",err_timing:"Bitte gültigen Lieferzeitraum wählen",
     acct_opt_label:"Anfragen jederzeit verfolgen",acct_opt_check:"Konto erstellen, um meine Anfragen und Ersparnisse jederzeit einzusehen",acct_opt_hint:"Nach dem Absenden wirst du aufgefordert, ein Passwort festzulegen. Du kannst dich danach jederzeit einloggen, um den Status deiner Anfragen zu verfolgen.",
     tier_label_value:"Geschätzter Auftragswert",tier_note_sub:"basierend auf SourceOn-Richtpreisen",tier_label_rate:"Dein garantierter Netto-Mindestrabatt",
-    tier_hint:'Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">7%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.',
-    commit_text:'Ich bestätige verbindlich: Erreicht das verhandelte Angebot meinen garantierten Netto-Mindestrabatt von <strong id="commit-rate">7%</strong>, gilt mein Auftrag als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt — <strong id="commit-rate2">7%</strong> kommen vollständig bei mir an. Wird die Zielmarke verfehlt, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a>',
+    tier_hint:'Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">8%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.',
+    commit_text:'Ich bestätige verbindlich: Erreicht das verhandelte Angebot meinen garantierten Netto-Mindestrabatt von <strong id="commit-rate">8%</strong>, gilt mein Auftrag als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt — <strong id="commit-rate2">8%</strong> kommen vollständig bei mir an. Wird die Zielmarke verfehlt, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a>',
     err_commit:"Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.",
     commit_note:'Hinweis: Erreicht das verhandelte Angebot deinen Mindestrabatt, wird dein Auftrag automatisch ausgeführt. Du kannst ihn danach nicht mehr zurückziehen.',
     tempo_msg_flex:"🟢 Flexibler Zeitraum — deine Anfrage sammelt bis zu 14 Tage Bündelungspartner für maximale Ersparnis.",
@@ -1929,8 +1930,8 @@ window.I18N={
     form_date_from:"Earliest",form_date_to:"Latest",err_timing:"Please select a valid delivery period",
     acct_opt_label:"Track requests anytime",acct_opt_check:"Create an account to view my requests and savings anytime",acct_opt_hint:"After submitting, you'll be prompted to set a password. You can then log in anytime to track the status of your requests.",
     tier_label_value:"Estimated order value",tier_note_sub:"based on SourceOn reference prices",tier_label_rate:"Your guaranteed net minimum discount",
-    tier_hint:'Net, after SourceOn commission — <strong id="tier-rate-inline">7%</strong> reach you in full. Through bundling with other construction firms, your savings are often higher.',
-    commit_text:'I confirm bindingly: If the negotiated offer reaches my guaranteed net minimum discount of <strong id="commit-rate">7%</strong>, my order is deemed placed. The SourceOn success commission is already accounted for — <strong id="commit-rate2">7%</strong> reach me in full. If the target is missed, my request lapses automatically and free of charge. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Read customer agreement</a>',
+    tier_hint:'Net, after SourceOn commission — <strong id="tier-rate-inline">8%</strong> reach you in full. Through bundling with other construction firms, your savings are often higher.',
+    commit_text:'I confirm bindingly: If the negotiated offer reaches my guaranteed net minimum discount of <strong id="commit-rate">8%</strong>, my order is deemed placed. The SourceOn success commission is already accounted for — <strong id="commit-rate2">8%</strong> reach me in full. If the target is missed, my request lapses automatically and free of charge. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Read customer agreement</a>',
     err_commit:"Please confirm the binding order placement to continue.",
     commit_note:'Note: If the negotiated offer reaches your minimum discount, your order is automatically executed. You cannot withdraw it afterwards.',
     tempo_msg_flex:"🟢 Flexible period — your request collects bundling partners for up to 14 days for maximum savings.",
@@ -1983,8 +1984,8 @@ window.I18N={
     form_date_from:"Au plus tôt",form_date_to:"Au plus tard",err_timing:"Choisis un délai de livraison valide",
     acct_opt_label:"Suivre les demandes à tout moment",acct_opt_check:"Créer un compte pour consulter mes demandes et économies à tout moment",acct_opt_hint:"Après l'envoi, on te demandera de définir un mot de passe. Tu pourras ensuite te connecter à tout moment pour suivre le statut de tes demandes.",
     tier_label_value:"Valeur estimée de la commande",tier_note_sub:"basé sur les prix indicatifs SourceOn",tier_label_rate:"Ta remise minimale nette garantie",
-    tier_hint:'Net, après commission SourceOn — <strong id="tier-rate-inline">7%</strong> te reviennent intégralement. Grâce au regroupement avec d\'autres entreprises de construction, tes économies sont souvent plus élevées.',
-    commit_text:'Je confirme de manière ferme : si l\'offre négociée atteint ma remise minimale nette garantie de <strong id="commit-rate">7%</strong>, ma commande est considérée comme passée. La commission de succès SourceOn y est déjà intégrée — <strong id="commit-rate2">7%</strong> me reviennent intégralement. Si l\'objectif n\'est pas atteint, ma demande est annulée automatiquement et gratuitement. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Lire l\'accord client</a>',
+    tier_hint:'Net, après commission SourceOn — <strong id="tier-rate-inline">8%</strong> te reviennent intégralement. Grâce au regroupement avec d\'autres entreprises de construction, tes économies sont souvent plus élevées.',
+    commit_text:'Je confirme de manière ferme : si l\'offre négociée atteint ma remise minimale nette garantie de <strong id="commit-rate">8%</strong>, ma commande est considérée comme passée. La commission de succès SourceOn y est déjà intégrée — <strong id="commit-rate2">8%</strong> me reviennent intégralement. Si l\'objectif n\'est pas atteint, ma demande est annulée automatiquement et gratuitement. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Lire l\'accord client</a>',
     err_commit:"Confirme la passation de commande ferme pour continuer.",
     commit_note:'Remarque: Si l\'offre négociée atteint ta remise minimale, ta commande est automatiquement exécutée. Tu ne peux plus la retirer ensuite.',
     tempo_msg_flex:"🟢 Délai flexible — ta demande rassemble des partenaires de regroupement jusqu'à 14 jours pour un maximum d'économies.",
@@ -2037,8 +2038,8 @@ window.I18N={
     form_date_from:"Al più presto",form_date_to:"Al più tardi",err_timing:"Seleziona un periodo di consegna valido",
     acct_opt_label:"Segui le richieste in qualsiasi momento",acct_opt_check:"Crea un account per consultare le mie richieste e i miei risparmi in qualsiasi momento",acct_opt_hint:"Dopo l'invio ti verrà chiesto di impostare una password. Potrai poi accedere in qualsiasi momento per seguire lo stato delle tue richieste.",
     tier_label_value:"Valore stimato dell'ordine",tier_note_sub:"basato sui prezzi indicativi SourceOn",tier_label_rate:"Il tuo sconto minimo netto garantito",
-    tier_hint:'Netto, dopo la commissione SourceOn — <strong id="tier-rate-inline">7%</strong> ti spettano interamente. Grazie al raggruppamento con altre imprese edili, il tuo risparmio è spesso più elevato.',
-    commit_text:'Confermo in modo vincolante: se l\'offerta negoziata raggiunge il mio sconto minimo netto garantito del <strong id="commit-rate">7%</strong>, il mio ordine si considera conferito. La commissione di successo SourceOn è già inclusa — <strong id="commit-rate2">7%</strong> mi spettano interamente. Se l\'obiettivo non viene raggiunto, la mia richiesta decade automaticamente e gratuitamente. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Leggi l\'accordo cliente</a>',
+    tier_hint:'Netto, dopo la commissione SourceOn — <strong id="tier-rate-inline">8%</strong> ti spettano interamente. Grazie al raggruppamento con altre imprese edili, il tuo risparmio è spesso più elevato.',
+    commit_text:'Confermo in modo vincolante: se l\'offerta negoziata raggiunge il mio sconto minimo netto garantito del <strong id="commit-rate">8%</strong>, il mio ordine si considera conferito. La commissione di successo SourceOn è già inclusa — <strong id="commit-rate2">8%</strong> mi spettano interamente. Se l\'obiettivo non viene raggiunto, la mia richiesta decade automaticamente e gratuitamente. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Leggi l\'accordo cliente</a>',
     err_commit:"Conferma il conferimento vincolante dell'ordine per continuare.",
     commit_note:'Nota: Se l\'offerta negoziata raggiunge il tuo sconto minimo, il tuo ordine viene eseguito automaticamente. Non puoi più ritirarlo in seguito.',
     tempo_msg_flex:"🟢 Periodo flessibile — la tua richiesta raccoglie partner di raggruppamento fino a 14 giorni per il massimo risparmio.",

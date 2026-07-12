@@ -21,18 +21,20 @@
 (function () {
   var COMMISSION_RATE = 0.0225;
 
-  // Absteigend nach Mindestvolumen (CHF, geschätzter Auftragswert).
+  // Absteigend nach Mindestvolumen (CHF, geschätzter Bestellwert).
+  // Ab CHF 6 Mio.: individuelle Konditionen (net/gross = null).
   var TIERS = [
-    { min: 6000000, net: 0.28, gross: 0.2975 }, // über 6M
-    { min: 3000000, net: 0.24, gross: 0.2575 }, // 3M–6M
-    { min: 1200000, net: 0.20, gross: 0.22 },   // 1.2M–3M
-    { min: 600000,  net: 0.16, gross: 0.18 },   // 600k–1.2M
-    { min: 300000,  net: 0.13, gross: 0.15 },   // 300k–600k
-    { min: 150000,  net: 0.10, gross: 0.12 },   // 150k–300k
-    { min: 50000,   net: 0.07, gross: 0.0925 }, // 50k–150k
+    { min: 6000000, net: null, gross: null, individual: true }, // über 6M → Individuell
+    { min: 3000000, net: 0.35, gross: 0.3625 }, // 3M–6M
+    { min: 1200000, net: 0.30, gross: 0.3125 }, // 1.2M–3M
+    { min: 600000,  net: 0.25, gross: 0.2625 }, // 600k–1.2M
+    { min: 300000,  net: 0.20, gross: 0.2175 }, // 300k–600k
+    { min: 150000,  net: 0.16, gross: 0.1775 }, // 150k–300k
+    { min: 50000,   net: 0.12, gross: 0.1375 }, // 50k–150k
+    { min: 20000,   net: 0.08, gross: 0.095 },  // 20k–50k
   ];
-  // Unter 50k (Fallback-Bündel):
-  var FALLBACK = { min: 0, net: 0.07, gross: 0.0925 };
+  // Unter 20k (Fallback-Bündel):
+  var FALLBACK = { min: 0, net: 0.08, gross: 0.095 };
 
   function tierFor(valueCHF) {
     for (var i = 0; i < TIERS.length; i++) {
@@ -46,6 +48,7 @@
     TIERS: TIERS,
     FALLBACK: FALLBACK,
     tierFor: tierFor,
+    isIndividual: function (v) { return !!tierFor(v).individual; },
     netRate: function (v) { return tierFor(v).net; },
     grossRate: function (v) { return tierFor(v).gross; },
   };
