@@ -106,10 +106,13 @@ a{color:inherit;text-decoration:none}
 #acct-btn:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.3)}
 #acct-btn svg{width:18px;height:18px;color:rgba(255,255,255,.7)}
 #acct-btn:hover svg{color:#fff}
-#acct-dd{display:none;position:absolute;top:calc(100% + 8px);right:0;background:#0F2238;border:1px solid rgba(255,255,255,.1);border-radius:12px;min-width:220px;padding:6px;box-shadow:0 12px 40px rgba(0,0,0,.5);z-index:999}
+#acct-dd{display:none;position:absolute;top:calc(100% + 8px);right:0;background:rgba(7,15,26,0.96);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.12);border-radius:10px;min-width:200px;max-width:240px;width:max-content;padding:6px;box-shadow:0 12px 40px rgba(0,0,0,.5);z-index:200}
 #acct-dd.open{display:block}
-#acct-dd a,#acct-dd button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;font-family:inherit;font-size:.84rem;font-weight:500;color:rgba(255,255,255,.8);background:none;border:none;border-radius:8px;cursor:pointer;text-decoration:none;text-align:left;transition:background .15s,color .15s}
-#acct-dd a:hover,#acct-dd button:hover{background:rgba(255,255,255,.08);color:#fff}
+#acct-dd a,#acct-dd button{display:flex;align-items:center;gap:10px;width:100%;padding:10px 14px;font-family:inherit;font-size:13px;font-weight:500;color:#94A3B8;background:none;border:none;border-radius:6px;cursor:pointer;text-decoration:none;text-align:left;white-space:nowrap;transition:background .1s,color .1s}
+#acct-dd a:hover,#acct-dd button:hover{background:rgba(255,255,255,0.06);color:#F1F5F9}
+#acct-signed-in>button{color:#4A6080}
+#acct-signed-in>button:hover{background:rgba(255,255,255,0.06);color:#EF4444}
+#acct-dd .acct-user span{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px;font-size:11px;color:#4A6080;padding:2px 0 0}
 #acct-dashboard-link{color:#E8A020;font-weight:600;background:rgba(232,160,32,.06);border:1px solid rgba(232,160,32,.12)}
 #acct-dashboard-link:hover{background:rgba(232,160,32,.14);color:#f0b840}
 #acct-customer-link{color:#34D399;font-weight:600;background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.12)}
@@ -1391,6 +1394,7 @@ function clerkSupplierLogin(){_soStartLogin('supplier');}
 function clerkCustomerLogin(){_soStartLogin('customer');}
 function _soStartLogin(kind){
   if(!window.Clerk)return;
+  try{localStorage.setItem('sourceon_redirect_after_login',window.location.href);}catch(e){}
   if(window.Clerk.user){_soProcessLogin(kind);return;}
   var done=false,unsub=window.Clerk.addListener(function(){
     if(done||!window.Clerk.user)return;
@@ -1417,7 +1421,7 @@ async function _soCheckSupplierLogin(clerkId){
     var rows=r.ok?await r.json():[];found=!!(rows&&rows.length>0);
   }catch(e){console.error('[SourceOn] Supplier login check error:',e);}
   console.log('[SourceOn] Supplier login check: found='+found);
-  if(found){window.open('supplierdashboard.html','_blank');}
+  if(found){_soHandlePostLogin();}
   else{var _l=LOGINL[_soLang()];_soShowLoginMessage(_l.sup_msg,_l.sup_link,'lieferant.html');}
 }
 async function _soCheckCustomerLogin(clerkId){
@@ -1428,7 +1432,7 @@ async function _soCheckCustomerLogin(clerkId){
     var rows=r.ok?await r.json():[];found=!!(rows&&rows.length>0);
   }catch(e){console.error('[SourceOn] Customer login check error:',e);}
   console.log('[SourceOn] Customer login check: found='+found);
-  if(found){window.open('kundendashboard.html','_blank');}
+  if(found){_soHandlePostLogin();}
   else{var _l=LOGINL[_soLang()];_soShowLoginMessage(_l.cus_msg,_l.cus_link,'kontakt.html');}
 }
 function _soShowLoginMessage(msg,linkText,linkHref){
@@ -1445,6 +1449,13 @@ function _soShowLoginMessage(msg,linkText,linkHref){
   ov.addEventListener('click',function(e){if(e.target===ov&&ov.parentNode)ov.parentNode.removeChild(ov);});
   document.body.appendChild(ov);
 }
+function _soHandlePostLogin(){
+  var t=null;try{t=localStorage.getItem('sourceon_redirect_after_login');}catch(e){}
+  if(t){try{localStorage.removeItem('sourceon_redirect_after_login');}catch(e){}
+    if(t!==window.location.href){window.location.href=t;return;}
+  }
+  try{var dd=document.getElementById('acct-dd');if(dd)dd.classList.remove('open');}catch(e){}
+}
 function clerkSignOut(){
   if(!window.Clerk)return;
   soLog('[SourceOn] BEFORE signOut — cookies:', document.cookie);
@@ -1460,6 +1471,7 @@ function clerkSignOut(){
 function clerkCustomerSignUp(){
   if(!window.Clerk)return;
   sessionStorage.setItem('sourceon_customer_signup','1');
+  try{localStorage.setItem('sourceon_redirect_after_login',window.location.href);}catch(e){}
   if(window.Clerk.user){
     _createCustomerIfNeeded().then(function(){updateAcctUI();});
     return;
@@ -1547,6 +1559,7 @@ async function _createCustomerIfNeeded(){
       soLog('[SourceOn] Profile check — Supplier rows found:',supplierRows.length,'Customer rows found:',customerRows.length);
       var isVerifiedSupplier=supplierRows&&supplierRows.length>0&&supplierRows[0].status==='verified';
       var isLinkedCustomer=customerRows&&customerRows.length>0;
+      console.log('[SourceOn] Auth roles \u2014 customer:', isLinkedCustomer, 'supplier:', isVerifiedSupplier);
       soLog('[SourceOn] Final decision — Show supplier link:',isVerifiedSupplier,'Show customer link:',isLinkedCustomer);
       if(dashLink)dashLink.style.display=isVerifiedSupplier?'flex':'none';
       if(custLink)custLink.style.display=isLinkedCustomer?'flex':'none';
