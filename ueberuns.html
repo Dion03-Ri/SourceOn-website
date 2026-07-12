@@ -121,12 +121,13 @@ a{color:inherit;text-decoration:none}
 .acct-customer-reg:hover{color:#34D399!important;background:rgba(16,185,129,.06)!important}
 .acct-group-label{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:#64748B;padding:8px 14px 4px;pointer-events:none}
 #acct-dd .acct-divider{height:1px;background:rgba(255,255,255,.08);margin:4px 0}
-#acct-dd .acct-user{padding:12px 14px;font-size:.78rem;color:var(--muted);border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:4px}
-#acct-dd .acct-user strong{display:block;color:#fff;font-size:.86rem;font-weight:600;margin-bottom:2px}
-#acct-dd .acct-status{display:inline-block;font-size:.68rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:2px 8px;border-radius:100px;margin-top:4px}
-#acct-dd .acct-status.pending{background:rgba(232,160,32,.15);color:var(--gold)}
-#acct-dd .acct-status.verified{background:rgba(22,163,74,.12);color:#16a34a}
-#acct-dd .acct-status.rejected{background:rgba(239,68,68,.12);color:#ef4444}
+#acct-dd .acct-user{padding:12px 14px 12px;border-bottom:1px solid rgba(255,255,255,0.06);margin-bottom:4px}
+#acct-dd .acct-user strong{display:block;color:#F1F5F9;font-size:13px;font-weight:600;margin-bottom:1px;letter-spacing:-.01em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:220px}
+#acct-dd .acct-status{display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;padding:4px 10px;border-radius:100px;margin-top:8px;border:1px solid transparent;line-height:1}
+#acct-dd .acct-status::before{content:'';width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+#acct-dd .acct-status.pending{background:rgba(232,160,32,0.10);color:#E8A020;border-color:rgba(232,160,32,0.25)}
+#acct-dd .acct-status.verified{background:rgba(52,211,153,0.10);color:#34D399;border-color:rgba(52,211,153,0.28)}
+#acct-dd .acct-status.rejected{background:rgba(239,68,68,0.10);color:#EF4444;border-color:rgba(239,68,68,0.28)}
 
 /* NAV */
 #nav{position:fixed;top:0;left:0;right:0;z-index:900;transition:transform .4s var(--ease),background .3s var(--ease);box-shadow:none;background:transparent}
@@ -1794,9 +1795,7 @@ async function _createCustomerIfNeeded(){
       if(statusWrap){
         if(supplierRows&&supplierRows.length>0){
           var s=supplierRows[0].status;
-          if(s==='pending'){statusWrap.innerHTML='<span class="acct-status pending">Wird geprüft</span>';}
-          else if(s==='verified'){statusWrap.innerHTML='<span class="acct-status verified">Verifiziert</span>';}
-          else if(s==='rejected'){statusWrap.innerHTML='<span class="acct-status rejected">Abgelehnt</span>';}
+          if(s==='pending'||s==='verified'||s==='rejected'){statusWrap.innerHTML='<span class="acct-status '+s+'" data-status="'+s+'"></span>';if(typeof _soApplyAcctI18n==='function')_soApplyAcctI18n(localStorage.getItem('sourceon-lang')||'de');}
           else{statusWrap.innerHTML='';}
         }else{statusWrap.innerHTML='';}
       }
@@ -1887,14 +1886,19 @@ async function _createCustomerIfNeeded(){
 <script>
 // Account dropdown i18n
 var ACCT_I18N={de:{acct_group_customers:'Kunden',acct_group_suppliers:'Lieferanten',acct_login:'Lieferanten-Login',acct_register:'Als Lieferant registrieren',acct_dashboard:'Zum Lieferanten-Dashboard',acct_customer_login:'Kunden-Login',acct_customer_register:'Als Kunde registrieren',acct_customer_dash:'Zum Kunden-Dashboard',acct_signout:'Abmelden'},en:{acct_group_customers:'Customers',acct_group_suppliers:'Suppliers',acct_login:'Supplier Login',acct_register:'Register as Supplier',acct_dashboard:'Go to Supplier Dashboard',acct_customer_login:'Customer Login',acct_customer_register:'Register as Customer',acct_customer_dash:'Go to Customer Dashboard',acct_signout:'Sign Out'},fr:{acct_group_customers:'Clients',acct_group_suppliers:'Fournisseurs',acct_login:'Connexion fournisseur',acct_register:"S'inscrire comme fournisseur",acct_dashboard:'Tableau de bord fournisseur',acct_customer_login:'Connexion client',acct_customer_register:"S'inscrire comme client",acct_customer_dash:'Tableau de bord client',acct_signout:'Se d\u00e9connecter'},it:{acct_group_customers:'Clienti',acct_group_suppliers:'Fornitori',acct_login:'Login fornitore',acct_register:'Registrati come fornitore',acct_dashboard:'Dashboard fornitore',acct_customer_login:'Login cliente',acct_customer_register:'Registrati come cliente',acct_customer_dash:'Dashboard cliente',acct_signout:'Disconnetti'}};
+var ACCT_STATUS_I18N={de:{pending:'Wird gepr\u00fcft',verified:'Verifiziert',rejected:'Abgelehnt'},en:{pending:'Under review',verified:'Verified',rejected:'Rejected'},fr:{pending:'En v\u00e9rification',verified:'V\u00e9rifi\u00e9',rejected:'Refus\u00e9'},it:{pending:'In verifica',verified:'Verificato',rejected:'Rifiutato'}};
 function _soApplyAcctI18n(lang){
-  var t=ACCT_I18N[lang]||ACCT_I18N.de;if(!t)return;
-  document.querySelectorAll('#acct-dd [data-i18n]').forEach(function(el){
+  var t=ACCT_I18N[lang]||ACCT_I18N.de;
+  if(t){document.querySelectorAll('#acct-dd [data-i18n]').forEach(function(el){
     var k=el.dataset.i18n;if(!t[k])return;
     if(el.querySelector('svg')){
       for(var i=el.childNodes.length-1;i>=0;i--){if(el.childNodes[i].nodeType===3)el.removeChild(el.childNodes[i]);}
       el.appendChild(document.createTextNode(t[k]));
     }else{el.textContent=t[k];}
+  });}
+  var st=ACCT_STATUS_I18N[lang]||ACCT_STATUS_I18N.de;
+  document.querySelectorAll('#acct-dd .acct-status[data-status]').forEach(function(el){
+    var s=el.getAttribute('data-status');if(st[s])el.textContent=st[s];
   });
 }
 (function(){
