@@ -827,12 +827,12 @@ body{background:#070F1A}
 #lp .stat-link:hover{text-decoration:underline}
 
 /* SECTION 4 — tiles */
-#lp .tiles{display:grid;grid-template-columns:2fr 1fr;grid-auto-rows:auto;gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
+#lp .tiles{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
 @media(max-width:900px){#lp .tiles{grid-template-columns:1fr 1fr}#lp .tile-lg{grid-row:auto!important;grid-column:1/-1}}
 @media(max-width:600px){#lp .tiles{grid-template-columns:1fr}}
-#lp .tile{background:var(--bg1);padding:28px 26px;transition:background .2s;display:flex;flex-direction:column;color:var(--t1)}
+#lp .tile{background:var(--bg1);padding:28px 24px;transition:background .2s;display:flex;flex-direction:column;color:var(--t1)}
 #lp .tile:hover{background:var(--bg2)}
-#lp .tile-lg{grid-row:span 3;padding:40px 36px}
+#lp .tile-lg{grid-row:1/span 2;padding:48px 40px}
 #lp .tile-cat{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:600;margin-bottom:16px}
 #lp .tile-lg .tile-title{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
 #lp .tile-title{font-size:20px;font-weight:700;color:var(--t1);letter-spacing:-.01em}
@@ -1046,6 +1046,12 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="tile-desc" data-i18n="lp_t5_desc">Wohnbaugenossenschaften und Immobilienverwaltungen mit konstantem Bedarf.</div>
         <div class="tile-link">→</div>
       </a>
+      <a class="tile" href="kontakt.html">
+        <div class="tile-cat" data-i18n="lp_t6_cat">Und mehr</div>
+        <div class="tile-title" data-i18n="lp_t6_title">Nicht dabei?</div>
+        <div class="tile-desc" data-i18n="lp_t6_desc">Meld dich — wir prüfen ob SourceOn für deinen Bedarf passt.</div>
+        <div class="tile-link" data-i18n="lp_t6_link">Anfragen →</div>
+      </a>
     </div>
   </div></section>
 
@@ -1210,7 +1216,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 window.soLangNow=function(){return localStorage.getItem('sourceon-lang')||'de';};
 window.soT=function(map){var l=window.soLangNow();return (map&&(map[l]!=null?map[l]:map.de))||'';};
 var I18N={
-  de:{
+  de:{lp_t6_cat:'Und mehr',lp_t6_title:'Nicht dabei?',lp_t6_desc:'Meld dich — wir prüfen ob SourceOn für deinen Bedarf passt.',lp_t6_link:'Anfragen →',
     'nav.home':'Home','nav.process':'Wie es funktioniert','nav.calc':'Kalkulator','nav.materials':'Materialien',
     'nav.forwhom':'Für wen','nav.supplier':'Lieferant werden','nav.about':'Über uns','nav.contact':'Kontakt',
     'nav.cta':'Materialbedarf melden',
@@ -1306,7 +1312,7 @@ var I18N={
     'chat.chip1':'Wie funktioniert SourceOn?','chat.chip2':'Was kostet es?','chat.chip3':'Materialbedarf melden',
     'chat.placeholder':'Frage stellen…'
   },
-  en:{
+  en:{lp_t6_cat:'And more',lp_t6_title:'Not listed?',lp_t6_desc:'Get in touch — we\'ll check if SourceOn works for your needs.',lp_t6_link:'Enquire →',
     'nav.home':'Home','nav.process':'How it works','nav.calc':'Calculator','nav.materials':'Materials',
     'nav.forwhom':'Who it\'s for','nav.supplier':'Become a supplier','nav.about':'About us','nav.contact':'Contact',
     'nav.cta':'Report material demand',
@@ -1402,7 +1408,7 @@ var I18N={
     'chat.chip1':'How does SourceOn work?','chat.chip2':'What does it cost?','chat.chip3':'Report material demand',
     'chat.placeholder':'Ask a question…'
   },
-  fr:{
+  fr:{lp_t6_cat:'Et plus',lp_t6_title:'Pas concerné?',lp_t6_desc:'Contactez-nous — nous vérifions si SourceOn correspond à vos besoins.',lp_t6_link:'Demander →',
     'nav.home':'Accueil','nav.process':'Comment ça marche','nav.calc':'Calculateur','nav.materials':'Matériaux',
     'nav.forwhom':'Pour qui','nav.supplier':'Devenir fournisseur','nav.about':'À propos','nav.contact':'Contact',
     'nav.cta':'Annoncer un besoin',
@@ -1498,7 +1504,7 @@ var I18N={
     'chat.chip1':'Comment fonctionne SourceOn?','chat.chip2':'Combien ça coûte?','chat.chip3':'Annoncer un besoin',
     'chat.placeholder':'Poser une question…'
   },
-  it:{
+  it:{lp_t6_cat:'E altro',lp_t6_title:'Non ti ritrovi?',lp_t6_desc:'Contattaci — verifichiamo se SourceOn è adatto alle tue esigenze.',lp_t6_link:'Richiedi →',
     'nav.home':'Home','nav.process':'Come funziona','nav.calc':'Calcolatore','nav.materials':'Materiali',
     'nav.forwhom':'Per chi','nav.supplier':'Diventa fornitore','nav.about':'Chi siamo','nav.contact':'Contatto',
     'nav.cta':'Segnala fabbisogno materiale',
