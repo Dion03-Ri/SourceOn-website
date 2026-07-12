@@ -947,6 +947,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           <div class="calc-tierrow"><span class="l" data-i18n="calc_rate_label">Garantierter Netto-Mindestrabatt</span><span class="r" id="calc-rate">10%</span></div>
           <div class="calc-rrow"><span class="l" data-i18n="calc_gross_label">Verhandelter Rabatt (brutto)</span><span class="r" id="calc-gross">CHF 15'000</span></div>
           <div class="calc-rrow net"><span class="l" data-i18n="calc_net_short">Deine garantierte Ersparnis (netto)</span><span class="r" id="calc-net">CHF 11'625</span></div>
+          <span data-i18n="calc_bundle_bonus" style="font-size:12px;color:var(--green);margin-top:8px;display:block;line-height:1.5">↑ Durch Bündelung mit anderen Baufirmen fällt deine tatsächliche Ersparnis oft deutlich höher aus als dieser garantierte Mindestwert.</span>
           <button class="calc-cta-btn" onclick="window.location.href='kontakt.html'" data-i18n="calc_cta">Materialbedarf melden →</button>
           <p class="calc-disc" data-i18n="calc_disc">Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen. Durch Bündelung mit anderen Baufirmen kann deine tatsächliche Ersparnis höher ausfallen.</p>
         </div>
@@ -1203,6 +1204,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_mnote: 'Beträge über CHF 10 Mio. bitte manuell eingeben.',
       calc_rate_label: 'Garantierter Netto-Mindestrabatt',
       calc_net_short: 'Deine garantierte Ersparnis (netto)',
+      calc_bundle_bonus: '↑ Durch Bündelung mit anderen Baufirmen fällt deine tatsächliche Ersparnis oft deutlich höher aus als dieser garantierte Mindestwert.',
       calc_disc: 'Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen. Durch Bündelung mit anderen Baufirmen kann deine tatsächliche Ersparnis höher ausfallen.',
       tier_scale_label: 'Rabattstaffel',
       tier_col_vol: 'Jahresvolumen',
@@ -1274,6 +1276,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_mnote: 'For amounts over CHF 10 million, please enter manually.',
       calc_rate_label: 'Guaranteed net minimum discount',
       calc_net_short: 'Your guaranteed saving (net)',
+      calc_bundle_bonus: '↑ Through bundling with other construction firms, your actual savings are often significantly higher than this guaranteed minimum.',
       calc_disc: 'Non-binding estimate based on SourceOn reference prices. Through bundling with other construction firms, your actual saving may be higher.',
       tier_scale_label: 'Discount tiers',
       tier_col_vol: 'Annual volume',
@@ -1345,6 +1348,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_mnote: 'Pour les montants supérieurs à CHF 10 Mio., saisis-les manuellement.',
       calc_rate_label: 'Rabais net minimum garanti',
       calc_net_short: 'Ton économie garantie (nette)',
+      calc_bundle_bonus: '↑ Grâce au regroupement avec d\'autres entreprises de construction, tes économies réelles sont souvent nettement supérieures à cette valeur minimale garantie.',
       calc_disc: 'Estimation non contraignante basée sur les prix de référence SourceOn. Grâce au regroupement avec d\'autres entreprises de construction, ton économie réelle peut être plus élevée.',
       tier_scale_label: 'Paliers de rabais',
       tier_col_vol: 'Volume annuel',
@@ -1416,6 +1420,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_mnote: 'Per importi superiori a CHF 10 Mio. inserisci manualmente.',
       calc_rate_label: 'Sconto netto minimo garantito',
       calc_net_short: 'Il tuo risparmio garantito (netto)',
+      calc_bundle_bonus: '↑ Grazie al raggruppamento con altre imprese edili, il tuo risparmio effettivo è spesso significativamente superiore a questo valore minimo garantito.',
       calc_disc: 'Stima non vincolante basata sui prezzi di riferimento SourceOn. Grazie al raggruppamento con altre imprese edili, il tuo risparmio effettivo può essere maggiore.',
       tier_scale_label: 'Fasce di sconto',
       tier_col_vol: 'Volume annuale',

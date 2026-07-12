@@ -1128,6 +1128,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <p class="tier-hint" data-i18n-html="tier_hint">Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">7%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.</p>
             </div>
             <div class="commit-box" id="commit-box">
+              <div data-i18n="commit_note" style="font-size:12px;color:var(--t2);line-height:1.6;padding:10px 14px;background:rgba(232,160,32,0.05);border-radius:8px;border-left:2px solid var(--gold);margin-top:12px;margin-bottom:16px">Hinweis: Erreicht das verhandelte Angebot deinen Mindestrabatt, wird dein Auftrag automatisch ausgeführt. Du kannst ihn danach nicht mehr zurückziehen.</div>
               <label class="commit-check">
                 <input type="checkbox" id="c-commitment" onchange="if(this.checked){var b=document.getElementById('commit-box');b&&b.classList.remove('commit-error');var e=document.getElementById('e-c-commitment');e&&(e.style.display='none');}"/>
                 <span class="commit-text" data-i18n-html="commit_text">Ich bestätige verbindlich: Erreicht das verhandelte Angebot meinen garantierten Netto-Mindestrabatt von <strong id="commit-rate">7%</strong>, gilt mein Auftrag als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt — <strong id="commit-rate2">7%</strong> kommen vollständig bei mir an. Wird die Zielmarke verfehlt, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a></span>
@@ -1876,6 +1877,7 @@ window.I18N={
     tier_hint:'Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">7%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.',
     commit_text:'Ich bestätige verbindlich: Erreicht das verhandelte Angebot meinen garantierten Netto-Mindestrabatt von <strong id="commit-rate">7%</strong>, gilt mein Auftrag als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt — <strong id="commit-rate2">7%</strong> kommen vollständig bei mir an. Wird die Zielmarke verfehlt, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a>',
     err_commit:"Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.",
+    commit_note:'Hinweis: Erreicht das verhandelte Angebot deinen Mindestrabatt, wird dein Auftrag automatisch ausgeführt. Du kannst ihn danach nicht mehr zurückziehen.',
     tempo_msg_flex:"🟢 Flexibler Zeitraum — deine Anfrage sammelt bis zu 14 Tage Bündelungspartner für maximale Ersparnis.",
     tempo_msg_med:"🟡 Mittlerer Zeitraum — deine Anfrage sammelt einige Tage Partner und wird dann ausgeschrieben.",
     tempo_msg_tight:"🟠 Knapper Zeitraum — deine Anfrage wird beschleunigt ausgeschrieben (verkürzte Gebotsfrist für Lieferanten).",
@@ -1930,6 +1932,7 @@ window.I18N={
     tier_hint:'Net, after SourceOn commission — <strong id="tier-rate-inline">7%</strong> reach you in full. Through bundling with other construction firms, your savings are often higher.',
     commit_text:'I confirm bindingly: If the negotiated offer reaches my guaranteed net minimum discount of <strong id="commit-rate">7%</strong>, my order is deemed placed. The SourceOn success commission is already accounted for — <strong id="commit-rate2">7%</strong> reach me in full. If the target is missed, my request lapses automatically and free of charge. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Read customer agreement</a>',
     err_commit:"Please confirm the binding order placement to continue.",
+    commit_note:'Note: If the negotiated offer reaches your minimum discount, your order is automatically executed. You cannot withdraw it afterwards.',
     tempo_msg_flex:"🟢 Flexible period — your request collects bundling partners for up to 14 days for maximum savings.",
     tempo_msg_med:"🟡 Medium period — your request collects partners for a few days and is then put out to tender.",
     tempo_msg_tight:"🟠 Tight period — your request is put out to tender on an accelerated basis (shortened bid deadline for suppliers).",
@@ -1983,6 +1986,7 @@ window.I18N={
     tier_hint:'Net, après commission SourceOn — <strong id="tier-rate-inline">7%</strong> te reviennent intégralement. Grâce au regroupement avec d\'autres entreprises de construction, tes économies sont souvent plus élevées.',
     commit_text:'Je confirme de manière ferme : si l\'offre négociée atteint ma remise minimale nette garantie de <strong id="commit-rate">7%</strong>, ma commande est considérée comme passée. La commission de succès SourceOn y est déjà intégrée — <strong id="commit-rate2">7%</strong> me reviennent intégralement. Si l\'objectif n\'est pas atteint, ma demande est annulée automatiquement et gratuitement. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Lire l\'accord client</a>',
     err_commit:"Confirme la passation de commande ferme pour continuer.",
+    commit_note:'Remarque: Si l\'offre négociée atteint ta remise minimale, ta commande est automatiquement exécutée. Tu ne peux plus la retirer ensuite.',
     tempo_msg_flex:"🟢 Délai flexible — ta demande rassemble des partenaires de regroupement jusqu'à 14 jours pour un maximum d'économies.",
     tempo_msg_med:"🟡 Délai moyen — ta demande rassemble des partenaires pendant quelques jours puis est mise en appel d'offres.",
     tempo_msg_tight:"🟠 Délai serré — ta demande est mise en appel d'offres de manière accélérée (délai de soumission raccourci pour les fournisseurs).",
@@ -2036,6 +2040,7 @@ window.I18N={
     tier_hint:'Netto, dopo la commissione SourceOn — <strong id="tier-rate-inline">7%</strong> ti spettano interamente. Grazie al raggruppamento con altre imprese edili, il tuo risparmio è spesso più elevato.',
     commit_text:'Confermo in modo vincolante: se l\'offerta negoziata raggiunge il mio sconto minimo netto garantito del <strong id="commit-rate">7%</strong>, il mio ordine si considera conferito. La commissione di successo SourceOn è già inclusa — <strong id="commit-rate2">7%</strong> mi spettano interamente. Se l\'obiettivo non viene raggiunto, la mia richiesta decade automaticamente e gratuitamente. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Leggi l\'accordo cliente</a>',
     err_commit:"Conferma il conferimento vincolante dell'ordine per continuare.",
+    commit_note:'Nota: Se l\'offerta negoziata raggiunge il tuo sconto minimo, il tuo ordine viene eseguito automaticamente. Non puoi più ritirarlo in seguito.',
     tempo_msg_flex:"🟢 Periodo flessibile — la tua richiesta raccoglie partner di raggruppamento fino a 14 giorni per il massimo risparmio.",
     tempo_msg_med:"🟡 Periodo medio — la tua richiesta raccoglie partner per alcuni giorni e viene poi messa a gara.",
     tempo_msg_tight:"🟠 Periodo stretto — la tua richiesta viene messa a gara in modo accelerato (termine di offerta ridotto per i fornitori).",
