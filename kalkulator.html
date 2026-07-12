@@ -953,6 +953,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           <a href="kontakt.html" id="calc-individual" data-i18n="calc_individual" style="display:none;font-size:14px;color:var(--gold);font-weight:600;margin-top:12px;line-height:1.5;text-decoration:none">Individuelle Konditionen — kontaktiere uns direkt →</a>
           <button class="calc-cta-btn" onclick="window.location.href='kontakt.html'" data-i18n="calc_cta">Materialbedarf melden →</button>
           <p class="calc-disc" data-i18n="calc_disc">Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen. Durch Bündelung mit anderen Baufirmen kann deine tatsächliche Ersparnis höher ausfallen.</p>
+          <span data-i18n="calc_transport" style="font-size:11px;color:var(--t3);margin-top:8px;line-height:1.5;display:block">Transportkosten (z.B. bei Beton) werden separat zwischen Kunde und Lieferant vereinbart und sind im Einsparpotenzial nicht enthalten.</span>
         </div>
       </div>
       <div class="reveal">
@@ -1224,6 +1225,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_net_short: 'Deine garantierte Ersparnis (netto)',
       calc_bundle_bonus: '↑ Durch Bündelung mit anderen Baufirmen fällt deine tatsächliche Ersparnis oft deutlich höher aus als dieser garantierte Mindestwert.',
       calc_disc: 'Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen. Durch Bündelung mit anderen Baufirmen kann deine tatsächliche Ersparnis höher ausfallen.',
+      calc_transport: 'Transportkosten (z.B. bei Beton) werden separat zwischen Kunde und Lieferant vereinbart und sind im Einsparpotenzial nicht enthalten.',
       tier_scale_label: 'Rabattstaffel',
       tier_col_vol: 'Bestellvolumen',
       tier_col_disc: 'Netto-Mindestrabatt',
@@ -1299,6 +1301,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_net_short: 'Your guaranteed saving (net)',
       calc_bundle_bonus: '↑ Through bundling with other construction firms, your actual savings are often significantly higher than this guaranteed minimum.',
       calc_disc: 'Non-binding estimate based on SourceOn reference prices. Through bundling with other construction firms, your actual saving may be higher.',
+      calc_transport: 'Transport costs (e.g. for concrete) are agreed separately between customer and supplier and are not included in the savings potential.',
       tier_scale_label: 'Discount tiers',
       tier_col_vol: 'Order volume',
       tier_col_disc: 'Net minimum discount',
@@ -1374,6 +1377,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_net_short: 'Ton économie garantie (nette)',
       calc_bundle_bonus: '↑ Grâce au regroupement avec d\'autres entreprises de construction, tes économies réelles sont souvent nettement supérieures à cette valeur minimale garantie.',
       calc_disc: 'Estimation non contraignante basée sur les prix de référence SourceOn. Grâce au regroupement avec d\'autres entreprises de construction, ton économie réelle peut être plus élevée.',
+      calc_transport: 'Les frais de transport (p.ex. pour le béton) sont convenus séparément entre le client et le fournisseur et ne sont pas inclus dans le potentiel d\'économies.',
       tier_scale_label: 'Paliers de rabais',
       tier_col_vol: 'Volume de commande',
       tier_col_disc: 'Rabais net minimum',
@@ -1449,6 +1453,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       calc_net_short: 'Il tuo risparmio garantito (netto)',
       calc_bundle_bonus: '↑ Grazie al raggruppamento con altre imprese edili, il tuo risparmio effettivo è spesso significativamente superiore a questo valore minimo garantito.',
       calc_disc: 'Stima non vincolante basata sui prezzi di riferimento SourceOn. Grazie al raggruppamento con altre imprese edili, il tuo risparmio effettivo può essere maggiore.',
+      calc_transport: 'I costi di trasporto (es. per il calcestruzzo) vengono concordati separatamente tra cliente e fornitore e non sono inclusi nel potenziale di risparmio.',
       tier_scale_label: 'Fasce di sconto',
       tier_col_vol: 'Volume ordini',
       tier_col_disc: 'Sconto netto minimo',

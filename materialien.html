@@ -946,6 +946,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="matsel-field"><span class="fl" data-i18n="mat_field_cat">Kategorie</span><span class="fv" id="mat-lookup-cat">—</span></div>
         <div class="matsel-field"><span class="fl" data-i18n="mat_field_norm">Norm</span><span class="fv norm">SN EN / SIA</span></div>
       </div>
+      <div id="mat-transport-note" data-i18n="mat_transport_note" style="display:none;font-size:12px;color:var(--t3);background:var(--bg2);border-radius:6px;padding:10px 14px;margin-top:12px;border-left:2px solid var(--lpbs)">Hinweis: Transportkosten werden separat zwischen dir und dem Lieferanten vereinbart und sind nicht Bestandteil der SourceOn-Vermittlung. Bei grossen Mengen lohnt es sich, auch hier nachzufragen.</div>
     </div>
   </div></section>
 
@@ -1102,7 +1103,9 @@ const MAT_CODE={'Rohbau Kern':'RB','Ausbau':'AB','Haustechnik':'HT'};
   });
   sel.addEventListener('change',()=>{
     const opt=sel.options[sel.selectedIndex];
-    if(!opt.value){document.getElementById('mat-lookup-id').textContent='SO–000';var nk='Noch kein Material ausgewählt';var cl2=localStorage.getItem('sourceon-lang')||'de';if(cl2!=='de'&&window._matDbTrans&&window._matDbTrans[cl2]&&window._matDbTrans[cl2][nk])nk=window._matDbTrans[cl2][nk];document.getElementById('mat-lookup-name').textContent=nk;document.getElementById('mat-lookup-cat').textContent='—';return;}
+    var _tn=document.getElementById('mat-transport-note');
+    if(!opt.value){document.getElementById('mat-lookup-id').textContent='SO–000';var nk='Noch kein Material ausgewählt';var cl2=localStorage.getItem('sourceon-lang')||'de';if(cl2!=='de'&&window._matDbTrans&&window._matDbTrans[cl2]&&window._matDbTrans[cl2][nk])nk=window._matDbTrans[cl2][nk];document.getElementById('mat-lookup-name').textContent=nk;document.getElementById('mat-lookup-cat').textContent='—';if(_tn)_tn.style.display='none';return;}
+    if(_tn)_tn.style.display=/^(Transportbeton|Pumpbeton)/i.test(opt.dataset.name||'')?'block':'none';
     document.getElementById('mat-lookup-id').textContent=opt.value;
     var nEl=document.getElementById('mat-lookup-name');nEl.textContent=opt.dataset.name;nEl.dataset.deName=opt.dataset.name;
     var cEl=document.getElementById('mat-lookup-cat');cEl.textContent=opt.dataset.cat;cEl.dataset.deCat=opt.dataset.cat;
@@ -1202,7 +1205,7 @@ const T={
     nav_ov_bau:'Bauunternehmen',nav_ov_handwerk:'Handwerk',nav_ov_gu:'Generalunternehmer',
     mat_select_label:'Material wählen, um SourceOn-ID zu sehen',
     mat_select_option:'Material wählen…',
-    mat_field_id:'SourceOn-ID',mat_field_name:'Material',mat_field_cat:'Kategorie',mat_field_norm:'Norm',
+    mat_field_id:'SourceOn-ID',mat_field_name:'Material',mat_field_cat:'Kategorie',mat_field_norm:'Norm',mat_transport_note:'Hinweis: Transportkosten werden separat zwischen dir und dem Lieferanten vereinbart und sind nicht Bestandteil der SourceOn-Vermittlung. Bei grossen Mengen lohnt es sich, auch hier nachzufragen.',
     stat_label_areas:'Bereiche',stat_sub_areas:'Rohbau, Ausbau und Haustechnik',
     stat_label_materials:'Materialien',stat_sub_materials:'Alle geprüft und normkonform',
     stat_label_delivery:'Lieferung',stat_sub_delivery:'Von Genf bis St. Gallen',
@@ -1253,7 +1256,7 @@ const T={
     nav_ov_bau:'Construction firms',nav_ov_handwerk:'Trades',nav_ov_gu:'General contractors',
     mat_select_label:'Choose a material to see its SourceOn ID',
     mat_select_option:'Choose a material…',
-    mat_field_id:'SourceOn ID',mat_field_name:'Material',mat_field_cat:'Category',mat_field_norm:'Standard',
+    mat_field_id:'SourceOn ID',mat_field_name:'Material',mat_field_cat:'Category',mat_field_norm:'Standard',mat_transport_note:'Note: Transport costs are agreed directly between you and the supplier and are not part of the SourceOn arrangement. For large quantities, it is worth enquiring about these separately.',
     stat_label_areas:'Areas',stat_sub_areas:'Structural shell, finishing and building services',
     stat_label_materials:'Materials',stat_sub_materials:'All inspected and standard-compliant',
     stat_label_delivery:'Delivery',stat_sub_delivery:'From Geneva to St. Gallen',
@@ -1304,7 +1307,7 @@ const T={
     nav_ov_bau:'Entreprises de construction',nav_ov_handwerk:'Artisans',nav_ov_gu:'Entreprises générales',
     mat_select_label:'Choisis un matériau pour voir son ID SourceOn',
     mat_select_option:'Choisir un matériau…',
-    mat_field_id:'ID SourceOn',mat_field_name:'Matériau',mat_field_cat:'Catégorie',mat_field_norm:'Norme',
+    mat_field_id:'ID SourceOn',mat_field_name:'Matériau',mat_field_cat:'Catégorie',mat_field_norm:'Norme',mat_transport_note:'Remarque: Les frais de transport sont convenus directement entre toi et le fournisseur et ne font pas partie de l\'arrangement SourceOn. Pour de grandes quantités, il vaut la peine de se renseigner à ce sujet.',
     stat_label_areas:'Domaines',stat_sub_areas:'Gros œuvre, aménagement et technique du bâtiment',
     stat_label_materials:'Matériaux',stat_sub_materials:'Tous vérifiés et conformes aux normes',
     stat_label_delivery:'Livraison',stat_sub_delivery:'De Genève à Saint-Gall',
@@ -1356,7 +1359,7 @@ const T={
     nav_ov_bau:'Imprese di costruzione',nav_ov_handwerk:'Artigiani',nav_ov_gu:'Imprese generali',
     mat_select_label:'Scegli un materiale per vedere il suo ID SourceOn',
     mat_select_option:'Scegli un materiale…',
-    mat_field_id:'ID SourceOn',mat_field_name:'Materiale',mat_field_cat:'Categoria',mat_field_norm:'Norma',
+    mat_field_id:'ID SourceOn',mat_field_name:'Materiale',mat_field_cat:'Categoria',mat_field_norm:'Norma',mat_transport_note:'Nota: I costi di trasporto vengono concordati direttamente tra te e il fornitore e non fanno parte dell\'accordo SourceOn. Per grandi quantità, vale la pena informarsi anche su questi.',
     stat_label_areas:'Aree',stat_sub_areas:'Opera grezza, finitura e impiantistica',
     stat_label_materials:'Materiali',stat_sub_materials:'Tutti verificati e conformi alle norme',
     stat_label_delivery:'Consegna',stat_sub_delivery:'Da Ginevra a San Gallo',

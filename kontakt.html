@@ -1094,6 +1094,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
                   <div class="mat-qty-wrap"><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><span class="mat-unit"></span></div>
                 </div>
               </div>
+              <div id="kontakt-transport-note" data-i18n="mat_transport_note" style="display:none;font-size:12px;color:var(--t3);background:var(--bg2);border-radius:6px;padding:10px 14px;margin-top:12px;border-left:2px solid var(--lpbs)">Hinweis: Transportkosten werden separat zwischen dir und dem Lieferanten vereinbart und sind nicht Bestandteil der SourceOn-Vermittlung. Bei grossen Mengen lohnt es sich, auch hier nachzufragen.</div>
               <div class="form-error" data-i18n="form_error_material" id="e-c-material">Bitte mindestens ein Material mit Menge angeben</div>
               <button type="button" class="add-material-btn" id="add-material-btn" data-i18n-html="form_add_material" onclick="addMaterialRow()">＋ Weiteres Material hinzufügen</button>
               <p style="font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.6" data-i18n-html="form_material_hint">Dein Material ist nicht dabei? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.</p>
@@ -1272,14 +1273,19 @@ window._orderValue=0;window._committedRate=0.08;
 function _parseQty(s){var n=parseFloat(String(s||'').replace(/'/g,'').replace(',','.').replace(/[^0-9.]/g,''));return isNaN(n)?0:n;}
 function _recalcTier(){
   var total=0;
+  var _hasBeton=false;
   document.querySelectorAll('#material-rows .material-row').forEach(function(r){
     var idEl=r.querySelector('.mat-id');var id=idEl?idEl.value:'';
     var qtyEl=r.querySelector('.mat-qty');var qty=qtyEl?_parseQty(qtyEl.value):0;
-    if(id&&_matById[id]&&qty>0){
-      var rp=_matById[id].richtpreis_chf;
-      if(rp!=null&&!isNaN(parseFloat(rp)))total+=qty*parseFloat(rp);
+    if(id&&_matById[id]){
+      if(_matById[id].kategorie==='Beton')_hasBeton=true;
+      if(qty>0){
+        var rp=_matById[id].richtpreis_chf;
+        if(rp!=null&&!isNaN(parseFloat(rp)))total+=qty*parseFloat(rp);
+      }
     }
   });
+  var _tn=document.getElementById('kontakt-transport-note');if(_tn)_tn.style.display=_hasBeton?'block':'none';
   window._orderValue=total;
   var rate=_tierRate(total);window._committedRate=rate;
   var label=(rate==null)?_soIndividualLabel():(Math.round(rate*100)+'%');
@@ -1840,7 +1846,8 @@ window.I18N={
     kontakt_how_title:"Wie es funktioniert",kontakt_how_text:"Wähle dein Material aus dem Katalog, gib Menge und Lieferzeitraum an — fertig. Du siehst sofort deinen garantierten Netto-Mindestrabatt, bevor du absendest.",
     form_company:"Firmenname *",form_contact_person:"Ansprechperson *",form_email:"E-Mail *",form_phone:"Telefon *",
     form_material_qty:"Material &amp; Menge *",
-    form_error_required:"Pflichtfeld",form_error_email:"Gültige E-Mail",form_error_material:"Bitte mindestens ein Material mit Menge angeben",form_error_select:"Bitte wählen",
+    form_error_required:"Pflichtfeld",form_error_email:"Gültige E-Mail",form_error_material:"Bitte mindestens ein Material mit Menge angeben",
+    mat_transport_note:"Hinweis: Transportkosten werden separat zwischen dir und dem Lieferanten vereinbart und sind nicht Bestandteil der SourceOn-Vermittlung. Bei grossen Mengen lohnt es sich, auch hier nachzufragen.",form_error_select:"Bitte wählen",
     form_select_material:"Material wählen",form_select_please:"Bitte wählen",
     optgroup_rohbau:"Rohbau Kern",optgroup_ausbau:"Ausbau",optgroup_haustechnik:"Haustechnik",
     form_placeholder_qty:"z.B. 200 m³",
@@ -1894,7 +1901,8 @@ window.I18N={
     kontakt_how_title:"How it works",kontakt_how_text:"Select your material from the catalog, enter quantity and delivery timeframe — done. You immediately see your guaranteed net minimum discount before submitting.",
     form_company:"Company name *",form_contact_person:"Contact person *",form_email:"Email *",form_phone:"Phone *",
     form_material_qty:"Material &amp; quantity *",
-    form_error_required:"Required field",form_error_email:"Valid email required",form_error_material:"Please specify at least one material with quantity",form_error_select:"Please select",
+    form_error_required:"Required field",form_error_email:"Valid email required",form_error_material:"Please specify at least one material with quantity",
+    mat_transport_note:"Note: Transport costs are agreed directly between you and the supplier and are not part of the SourceOn arrangement. For large quantities, it is worth enquiring about these separately.",form_error_select:"Please select",
     form_select_material:"Select material",form_select_please:"Please select",
     optgroup_rohbau:"Structural core",optgroup_ausbau:"Interior finishing",optgroup_haustechnik:"Building services",
     form_placeholder_qty:"e.g. 200 m³",
@@ -1949,7 +1957,8 @@ window.I18N={
     kontakt_how_title:"Comment ça marche",kontakt_how_text:"Sélectionnez votre matériau dans le catalogue, indiquez la quantité et le délai de livraison — c'est tout. Vous voyez immédiatement votre remise minimale nette garantie avant d'envoyer.",
     form_company:"Nom de l'entreprise *",form_contact_person:"Personne de contact *",form_email:"E-mail *",form_phone:"Téléphone *",
     form_material_qty:"Matériau &amp; quantité *",
-    form_error_required:"Champ obligatoire",form_error_email:"E-mail valide requis",form_error_material:"Veuillez indiquer au moins un matériau avec quantité",form_error_select:"Veuillez sélectionner",
+    form_error_required:"Champ obligatoire",form_error_email:"E-mail valide requis",form_error_material:"Veuillez indiquer au moins un matériau avec quantité",
+    mat_transport_note:"Remarque: Les frais de transport sont convenus directement entre toi et le fournisseur et ne font pas partie de l'arrangement SourceOn. Pour de grandes quantités, il vaut la peine de se renseigner à ce sujet.",form_error_select:"Veuillez sélectionner",
     form_select_material:"Choisir un matériau",form_select_please:"Veuillez sélectionner",
     optgroup_rohbau:"Gros œuvre",optgroup_ausbau:"Aménagement intérieur",optgroup_haustechnik:"Technique du bâtiment",
     form_placeholder_qty:"p.ex. 200 m³",
@@ -2003,7 +2012,8 @@ window.I18N={
     kontakt_how_title:"Come funziona",kontakt_how_text:"Seleziona il tuo materiale dal catalogo, inserisci quantità e tempistica di consegna — fatto. Vedi immediatamente il tuo sconto minimo netto garantito prima di inviare.",
     form_company:"Nome azienda *",form_contact_person:"Persona di contatto *",form_email:"E-mail *",form_phone:"Telefono *",
     form_material_qty:"Materiale &amp; quantità *",
-    form_error_required:"Campo obbligatorio",form_error_email:"E-mail valida richiesta",form_error_material:"Indicare almeno un materiale con quantità",form_error_select:"Selezionare",
+    form_error_required:"Campo obbligatorio",form_error_email:"E-mail valida richiesta",form_error_material:"Indicare almeno un materiale con quantità",
+    mat_transport_note:"Nota: I costi di trasporto vengono concordati direttamente tra te e il fornitore e non fanno parte dell'accordo SourceOn. Per grandi quantità, vale la pena informarsi anche su questi.",form_error_select:"Selezionare",
     form_select_material:"Selezionare materiale",form_select_please:"Selezionare",
     optgroup_rohbau:"Opera grezza",optgroup_ausbau:"Finitura interna",optgroup_haustechnik:"Impiantistica",
     form_placeholder_qty:"es. 200 m³",
