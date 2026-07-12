@@ -855,6 +855,26 @@ body{background:#070F1A}
 #lp .faq-answer-panel{background:var(--bg);padding:32px 36px;min-height:300px;transition:opacity .15s}
 #lp .faq-answer-title{font-size:17px;font-weight:700;color:var(--t1);letter-spacing:-.01em;margin-bottom:16px}
 #lp .faq-answer-text{font-size:14px;color:var(--t2);line-height:1.8;max-width:520px}
+
+/* VISION section */
+#lp .vision-sec{padding:100px 0;border-top:1px solid var(--lpb);position:relative;overflow:hidden}
+@media(max-width:768px){#lp .vision-sec{padding:60px 0}}
+#lp .vision-glow{position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 600px 400px at 30% 50%,rgba(232,160,32,0.04) 0%,transparent 70%)}
+#lp .vision-inner{position:relative;z-index:1}
+#lp .vision-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+@media(max-width:768px){#lp .vision-grid{grid-template-columns:1fr;gap:48px}}
+#lp .vision-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);font-weight:600;margin-bottom:32px}
+#lp .vision-h{font-size:clamp(28px,3.5vw,42px);font-weight:800;color:var(--t1);letter-spacing:-.03em;line-height:1.2;margin-bottom:32px}
+#lp .vision-p{font-size:15px;color:var(--t2);line-height:1.8}
+#lp .vision-p-strong{color:var(--t1);font-weight:500}
+#lp .vis-word{font-size:clamp(36px,5vw,64px);font-weight:800;letter-spacing:-.04em;line-height:1}
+#lp .vis-w1{color:var(--t1)}
+#lp .vis-w2{color:var(--t2)}
+#lp .vis-w3{color:var(--gold)}
+#lp .vis-rule{width:60px;height:1px;background:var(--lpb);margin-top:32px;margin-bottom:20px}
+#lp .vis-stats{display:flex;gap:32px;flex-wrap:wrap}
+#lp .vis-num{font-size:20px;font-weight:700;color:var(--t1)}
+#lp .vis-lbl{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-top:2px}
 </style>
 <script>
 (function(){
@@ -987,6 +1007,35 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       </div>
     </div>
   </div></section>
+
+  <!-- VISION -->
+  <section class="vision-sec">
+    <div class="vision-glow"></div>
+    <div class="wrap vision-inner">
+      <div class="vision-grid">
+        <div class="vision-l reveal">
+          <span class="vision-label" data-i18n="vision_label">Vision</span>
+          <h2 class="vision-h" data-i18n="vision_h">Der erste automatisierte Beschaffungsmarktplatz für die Baubranche.</h2>
+          <p class="vision-p" data-i18n="vision_p1">Die Baubranche ist eine der grössten Industrien der Welt — und eine der am wenigsten digitalisierten. Beschaffung läuft noch immer über Telefon, Handschlag und persönliche Kontakte.</p>
+          <p class="vision-p" style="margin-top:16px" data-i18n="vision_p2">SourceOn bringt das erste automatisierte Bündelungssystem in diesen Markt. Kein Mittelsmann. Kein Verhandlungspoker. Nur das beste Angebot — automatisch, transparent, für jeden zugänglich.</p>
+          <p class="vision-p vision-p-strong" style="margin-top:16px" data-i18n="vision_p3">Das ist keine Utopie. Das ist ein System. Und es funktioniert bereits.</p>
+        </div>
+        <div class="vision-r">
+          <div class="vis-words">
+            <div class="vis-word vis-w1 reveal" data-i18n="vision_w1">Automatisch.</div>
+            <div class="vis-word vis-w2 reveal" style="transition-delay:.1s" data-i18n="vision_w2">Transparent.</div>
+            <div class="vis-word vis-w3 reveal" style="transition-delay:.2s" data-i18n="vision_w3">Für jeden.</div>
+          </div>
+          <div class="vis-rule reveal" style="transition-delay:.25s"></div>
+          <div class="vis-stats reveal" style="transition-delay:.3s">
+            <div class="vis-stat"><div class="vis-num">58</div><span class="vis-lbl" data-i18n="vision_lbl_mat">Materialien</span></div>
+            <div class="vis-stat"><div class="vis-num">100%</div><span class="vis-lbl" data-i18n="vision_lbl_auto">Automatisiert</span></div>
+            <div class="vis-stat"><div class="vis-num">2026</div><span class="vis-lbl" data-i18n="vision_lbl_found">Gegründet</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- FAQ -->
   <section class="sec bt"><div class="wrap">
@@ -1175,6 +1224,17 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 (function(){
   var T = {
     de: {
+      vision_label: 'Vision',
+      vision_h: 'Der erste automatisierte Beschaffungsmarktplatz für die Baubranche.',
+      vision_p1: 'Die Baubranche ist eine der grössten Industrien der Welt — und eine der am wenigsten digitalisierten. Beschaffung läuft noch immer über Telefon, Handschlag und persönliche Kontakte.',
+      vision_p2: 'SourceOn bringt das erste automatisierte Bündelungssystem in diesen Markt. Kein Mittelsmann. Kein Verhandlungspoker. Nur das beste Angebot — automatisch, transparent, für jeden zugänglich.',
+      vision_p3: 'Das ist keine Utopie. Das ist ein System. Und es funktioniert bereits.',
+      vision_w1: 'Automatisch.',
+      vision_w2: 'Transparent.',
+      vision_w3: 'Für jeden.',
+      vision_lbl_mat: 'Materialien',
+      vision_lbl_auto: 'Automatisiert',
+      vision_lbl_found: 'Gegründet',
       hero_sub: 'SourceOn wurde mit einer einfachen Überzeugung gegründet: Zu viele Baufirmen zahlen mehr als nötig für Baumaterial — nicht weil es keine günstigeren Preise gibt, sondern weil sie alleine zu wenig Volumen haben.',
       mission_label: 'Gegründet in der Schweiz',
       mission_sub: 'Zürich, Schweiz',
@@ -1236,6 +1296,17 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_a_bundle: 'Nein. SourceOn verhandelt für das gesamte Bündel einen garantierten Mindestrabatt beim Lieferanten. Innerhalb des Bündels wird die Ersparnis nach Volumenanteil gestaffelt \u2014 wer mehr Material über SourceOn bezieht, profitiert von einer höheren individuellen Ersparnis. So bleibt das System fair und gleichzeitig wachstumsfördernd: je mehr du bündelst, desto mehr sparst du.'
     },
     en: {
+      vision_label: 'Vision',
+      vision_h: 'The first automated procurement marketplace for the construction industry.',
+      vision_p1: 'Construction is one of the largest industries in the world — and one of the least digitalised. Procurement still runs on phone calls, handshakes and personal contacts.',
+      vision_p2: 'SourceOn brings the first automated bundling system to this market. No middleman. No negotiation poker. Just the best offer — automatic, transparent, accessible to everyone.',
+      vision_p3: 'This is not a utopia. This is a system. And it is already working.',
+      vision_w1: 'Automated.',
+      vision_w2: 'Transparent.',
+      vision_w3: 'For everyone.',
+      vision_lbl_mat: 'Materials',
+      vision_lbl_auto: 'Automated',
+      vision_lbl_found: 'Founded',
       hero_sub: 'SourceOn was founded on a simple conviction: too many construction firms pay more than necessary for building materials — not because cheaper prices don\'t exist, but because on their own they lack the volume to get them.',
       mission_label: 'Founded in Switzerland',
       mission_sub: 'Zurich, Switzerland',
@@ -1297,6 +1368,17 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_a_bundle: 'No. SourceOn negotiates a guaranteed minimum discount with the supplier for the entire bundle. Within the bundle, savings are tiered by volume share \u2014 those who source more material through SourceOn benefit from higher individual savings. This keeps the system fair while rewarding growth: the more you bundle, the more you save.'
     },
     fr: {
+      vision_label: 'Vision',
+      vision_h: 'Le premier marché d\'approvisionnement automatisé pour le secteur de la construction.',
+      vision_p1: 'La construction est l\'une des plus grandes industries du monde — et l\'une des moins numérisées. L\'approvisionnement fonctionne encore par téléphone, poignée de main et contacts personnels.',
+      vision_p2: 'SourceOn introduit le premier système de regroupement automatisé dans ce marché. Pas d\'intermédiaire. Pas de négociation. Juste la meilleure offre — automatique, transparente, accessible à tous.',
+      vision_p3: 'Ce n\'est pas une utopie. C\'est un système. Et il fonctionne déjà.',
+      vision_w1: 'Automatique.',
+      vision_w2: 'Transparent.',
+      vision_w3: 'Pour tous.',
+      vision_lbl_mat: 'Matériaux',
+      vision_lbl_auto: 'Automatisé',
+      vision_lbl_found: 'Fondé',
       hero_sub: 'SourceOn est né d\'une conviction simple : trop d\'entreprises de construction paient leurs matériaux plus cher que nécessaire — non pas parce que des prix plus bas n\'existent pas, mais parce qu\'à elles seules, elles n\'ont pas le volume pour les obtenir.',
       mission_label: 'Fondé en Suisse',
       mission_sub: 'Zurich, Suisse',
@@ -1358,6 +1440,17 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_a_bundle: 'Non. SourceOn négocie un rabais minimum garanti auprès du fournisseur pour l\'ensemble du regroupement. Au sein du regroupement, les économies sont échelonnées selon la part de volume \u2014 ceux qui approvisionnent plus de matériaux via SourceOn bénéficient d\'économies individuelles plus élevées.'
     },
     it: {
+      vision_label: 'Visione',
+      vision_h: 'Il primo marketplace di approvvigionamento automatizzato per il settore delle costruzioni.',
+      vision_p1: 'L\'edilizia è uno dei settori più grandi al mondo — e uno dei meno digitalizzati. L\'approvvigionamento avviene ancora tramite telefono, strette di mano e contatti personali.',
+      vision_p2: 'SourceOn introduce il primo sistema di raggruppamento automatizzato in questo mercato. Nessun intermediario. Nessuna trattativa. Solo la migliore offerta — automatica, trasparente, accessibile a tutti.',
+      vision_p3: 'Non è un\'utopia. È un sistema. E funziona già.',
+      vision_w1: 'Automatico.',
+      vision_w2: 'Trasparente.',
+      vision_w3: 'Per tutti.',
+      vision_lbl_mat: 'Materiali',
+      vision_lbl_auto: 'Automatizzato',
+      vision_lbl_found: 'Fondato',
       hero_sub: 'SourceOn nasce da una convinzione semplice: troppe imprese edili pagano i materiali più del necessario — non perché non esistano prezzi più bassi, ma perché da sole non hanno il volume per ottenerli.',
       mission_label: 'Fondata in Svizzera',
       mission_sub: 'Zurigo, Svizzera',
