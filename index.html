@@ -2001,19 +2001,25 @@ async function _createCustomerIfNeeded(){
 
 <script>
 // Account dropdown i18n
-var ACCT_I18N={en:{acct_login:'Supplier Login',acct_register:'Register as Supplier',acct_dashboard:'Go to Supplier Dashboard',acct_customer_login:'Customer Login',acct_customer_register:'Register as Customer',acct_customer_dash:'Go to Customer Dashboard',acct_signout:'Sign Out'},fr:{acct_login:'Connexion fournisseur',acct_register:"S'inscrire comme fournisseur",acct_dashboard:'Tableau de bord fournisseur',acct_customer_login:'Connexion client',acct_customer_register:"S'inscrire comme client",acct_customer_dash:'Tableau de bord client',acct_signout:'Se d\u00e9connecter'},it:{acct_login:'Login fornitore',acct_register:'Registrati come fornitore',acct_dashboard:'Dashboard fornitore',acct_customer_login:'Login cliente',acct_customer_register:'Registrati come cliente',acct_customer_dash:'Dashboard cliente',acct_signout:'Disconnetti'}};
+var ACCT_I18N={de:{acct_group_customers:'Kunden',acct_group_suppliers:'Lieferanten',acct_login:'Lieferanten-Login',acct_register:'Als Lieferant registrieren',acct_dashboard:'Zum Lieferanten-Dashboard',acct_customer_login:'Kunden-Login',acct_customer_register:'Als Kunde registrieren',acct_customer_dash:'Zum Kunden-Dashboard',acct_signout:'Abmelden'},en:{acct_group_customers:'Customers',acct_group_suppliers:'Suppliers',acct_login:'Supplier Login',acct_register:'Register as Supplier',acct_dashboard:'Go to Supplier Dashboard',acct_customer_login:'Customer Login',acct_customer_register:'Register as Customer',acct_customer_dash:'Go to Customer Dashboard',acct_signout:'Sign Out'},fr:{acct_group_customers:'Clients',acct_group_suppliers:'Fournisseurs',acct_login:'Connexion fournisseur',acct_register:"S'inscrire comme fournisseur",acct_dashboard:'Tableau de bord fournisseur',acct_customer_login:'Connexion client',acct_customer_register:"S'inscrire comme client",acct_customer_dash:'Tableau de bord client',acct_signout:'Se d\u00e9connecter'},it:{acct_group_customers:'Clienti',acct_group_suppliers:'Fornitori',acct_login:'Login fornitore',acct_register:'Registrati come fornitore',acct_dashboard:'Dashboard fornitore',acct_customer_login:'Login cliente',acct_customer_register:'Registrati come cliente',acct_customer_dash:'Dashboard cliente',acct_signout:'Disconnetti'}};
+function _soApplyAcctI18n(lang){
+  var t=ACCT_I18N[lang]||ACCT_I18N.de;if(!t)return;
+  document.querySelectorAll('#acct-dd [data-i18n]').forEach(function(el){
+    var k=el.dataset.i18n;if(!t[k])return;
+    if(el.querySelector('svg')){
+      for(var i=el.childNodes.length-1;i>=0;i--){if(el.childNodes[i].nodeType===3)el.removeChild(el.childNodes[i]);}
+      el.appendChild(document.createTextNode(t[k]));
+    }else{el.textContent=t[k];}
+  });
+}
 (function(){
   var origSetLang=window.setLang;
   if(!origSetLang)return;
   window.setLang=function(lang){
     origSetLang(lang);
-    var t=ACCT_I18N[lang];
-    if(!t)return;
-    document.querySelectorAll('[data-i18n]').forEach(function(el){
-      var k=el.dataset.i18n;
-      if(t[k])el.textContent=t[k];
-    });
+    _soApplyAcctI18n(lang);
   };
+  _soApplyAcctI18n(localStorage.getItem('sourceon-lang')||'de');
 })();
 
 
