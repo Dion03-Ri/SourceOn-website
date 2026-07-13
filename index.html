@@ -1944,8 +1944,13 @@ async function _createCustomerIfNeeded(){
     if(_clerkTrustActive)return;
     if(!window.Clerk.client||!window.Clerk.client.signIn)return;
     var si=window.Clerk.client.signIn;
-    // Custom 2FA modal disabled — Clerk's native sign-in modal handles the second factor.
-    return;
+    if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){
+      soLog('[Clerk] Detected needs_client_trust / needs_second_factor, opening verification modal');
+      _clerkTrustActive=true;
+      _clerkSignInResource=si;
+      try{window.Clerk.closeSignIn();}catch(e){}
+      _clerkSendVerificationCode();
+    }
   });
 
   // Link pending customer row to Clerk user (runs on every page load after Clerk resolves)
@@ -2052,6 +2057,8 @@ async function _clerkSendVerificationCode(){
 }
 
 function _clerkShowTrustModal(){
+  document.body.classList.add('so-2fa');
+  try{window.Clerk.closeSignIn();}catch(e){}
   document.getElementById('clerk-trust-overlay').classList.add('open');
   document.getElementById('clerk-trust-code').value='';
   document.getElementById('clerk-trust-error').textContent='';
@@ -2070,6 +2077,7 @@ async function clerkTrustVerify(){
     if(result.status==='complete'){
       soLog('[Clerk] Second factor complete, activating session');
       await window.Clerk.setActive({session:result.createdSessionId});
+      document.body.classList.remove('so-2fa');
       document.getElementById('clerk-trust-overlay').classList.remove('open');
       _clerkTrustActive=false;
       return;
@@ -2091,6 +2099,7 @@ async function clerkTrustResend(){
 }
 
 function clerkTrustCancel(){
+  document.body.classList.remove('so-2fa');
   document.getElementById('clerk-trust-overlay').classList.remove('open');
   _clerkSignInResource=null;
   _clerkTrustActive=false;
@@ -2103,6 +2112,7 @@ document.addEventListener('keydown',function(e){
 
 </script>
 
+<style>.so-2fa [class*="cl-modal"]{display:none!important}</style>
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
   <div class="clerk-trust-modal">
     <h3 data-i18n="trust_h3">Verifizierung erforderlich</h3>
