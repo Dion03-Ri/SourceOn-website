@@ -943,6 +943,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     #lp .sr-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:6px}
     #lp .sr-input{width:100%;background:var(--bg2);border:1px solid var(--lpbs);border-radius:6px;color:var(--t1);font-family:inherit;font-size:14px;padding:11px 14px;outline:none;transition:border-color .15s;color-scheme:dark}
     #lp .sr-input:focus{border-color:var(--gold)}
+    #lp .sr-textarea{min-height:88px;resize:vertical;line-height:1.5}
     #lp .sr-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
     @media(max-width:560px){#lp .sr-grid{grid-template-columns:1fr}}
     #lp .sr-btn{width:100%;margin-top:8px;background:var(--gold);color:#070F1A;font-family:inherit;font-size:14px;font-weight:700;padding:13px;border:none;border-radius:6px;cursor:pointer;transition:filter .15s}
@@ -979,6 +980,10 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           <input type="text" class="sr-input" id="sr-firm" data-i18n-placeholder="sr_ph_firm" placeholder="Firmenname"/>
           <input type="email" class="sr-input" id="sr-email" data-i18n-placeholder="sr_ph_email" placeholder="E-Mail"/>
         </div>
+      </div>
+      <div class="sr-field">
+        <label class="sr-label" data-i18n="sr_l_remarks">BEMERKUNGEN (optional)</label>
+        <textarea class="sr-input sr-textarea" id="sr-remarks" rows="3" data-i18n-placeholder="sr_ph_remarks" placeholder="Zusätzliche Infos, Spezifikationen, Fragen…"></textarea>
       </div>
       <button type="submit" class="sr-btn" id="sr-btn" data-i18n="sr_btn">Anfrage senden →</button>
       <div class="sr-error" id="sr-error"></div>
@@ -1213,7 +1218,7 @@ const T={
     special_heading:'Material nicht in der Liste?',
     special_body:'Wir erweitern unser Lieferantennetz gezielt für deinen Bedarf — auf Anfrage.',
     special_link:'Anfrage stellen →',
-    sr_title:'Material anfragen',sr_sub:'Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden.',sr_l_material:'MATERIAL / PRODUKTBEZEICHNUNG *',sr_ph_material:'z.B. Glaswolle 100mm, Stahlträger HEA 200...',sr_l_menge:'GESCHÄTZTE MENGE *',sr_ph_menge:'z.B. 500 m², 20 Stück, 5 Tonnen',sr_l_date:'LIEFERZEITRAUM *',sr_l_purpose:'VERWENDUNGSZWECK (optional)',sr_ph_purpose:'z.B. Fassadendämmung Neubau',sr_l_contact:'IHRE KONTAKTDATEN *',sr_ph_firm:'Firmenname',sr_ph_email:'E-Mail',sr_btn:'Anfrage senden →',sr_success_title:'✓ Anfrage eingegangen',sr_success_body:'Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden.',
+    sr_title:'Material anfragen',sr_sub:'Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden.',sr_l_material:'MATERIAL / PRODUKTBEZEICHNUNG *',sr_ph_material:'z.B. Glaswolle 100mm, Stahlträger HEA 200...',sr_l_menge:'GESCHÄTZTE MENGE *',sr_ph_menge:'z.B. 500 m², 20 Stück, 5 Tonnen',sr_l_date:'LIEFERZEITRAUM *',sr_l_purpose:'VERWENDUNGSZWECK (optional)',sr_ph_purpose:'z.B. Fassadendämmung Neubau',sr_l_contact:'IHRE KONTAKTDATEN *',sr_l_remarks:'BEMERKUNGEN (optional)',sr_ph_remarks:'Zusätzliche Infos, Spezifikationen, Fragen…',sr_ph_firm:'Firmenname',sr_ph_email:'E-Mail',sr_btn:'Anfrage senden →',sr_success_title:'✓ Anfrage eingegangen',sr_success_body:'Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden.',
     footer_brand_desc:'Schweizer B2B Beschaffungsvermittler für die Baubranche.',
     mat_label:'Material & Norm',
     mat_heading:'Jedes Material.<br>Eine Norm.',
@@ -1265,7 +1270,7 @@ const T={
     special_heading:'Material not on the list?',
     special_body:'We expand our supplier network specifically for your needs — on request.',
     special_link:'Send a request →',
-    sr_title:'Request a material',sr_sub:'We will review your request and get back to you within 48 hours.',sr_l_material:'MATERIAL / PRODUCT DESCRIPTION *',sr_ph_material:'e.g. Glass wool 100mm, Steel beam HEA 200...',sr_l_menge:'ESTIMATED QUANTITY *',sr_ph_menge:'e.g. 500 m², 20 pieces, 5 tonnes',sr_l_date:'DELIVERY TIMEFRAME *',sr_l_purpose:'PURPOSE (optional)',sr_ph_purpose:'e.g. Facade insulation new build',sr_l_contact:'YOUR CONTACT DETAILS *',sr_ph_firm:'Company name',sr_ph_email:'Email',sr_btn:'Send request →',sr_success_title:'✓ Request received',sr_success_body:'We will review your request and get back to you within 48 hours.',
+    sr_title:'Request a material',sr_sub:'We will review your request and get back to you within 48 hours.',sr_l_material:'MATERIAL / PRODUCT DESCRIPTION *',sr_ph_material:'e.g. Glass wool 100mm, Steel beam HEA 200...',sr_l_menge:'ESTIMATED QUANTITY *',sr_ph_menge:'e.g. 500 m², 20 pieces, 5 tonnes',sr_l_date:'DELIVERY TIMEFRAME *',sr_l_purpose:'PURPOSE (optional)',sr_ph_purpose:'e.g. Facade insulation new build',sr_l_contact:'YOUR CONTACT DETAILS *',sr_l_remarks:'REMARKS (optional)',sr_ph_remarks:'Additional info, specifications, questions…',sr_ph_firm:'Company name',sr_ph_email:'Email',sr_btn:'Send request →',sr_success_title:'✓ Request received',sr_success_body:'We will review your request and get back to you within 48 hours.',
     footer_brand_desc:'Swiss B2B procurement broker for the construction industry.',
     mat_label:'Material & Standard',
     mat_heading:'Every Material.<br>One Standard.',
@@ -1317,7 +1322,7 @@ const T={
     special_heading:'Matériau pas dans la liste ?',
     special_body:'Nous élargissons notre réseau de fournisseurs pour ton besoin précis — sur demande.',
     special_link:'Envoyer une demande →',
-    sr_title:'Demander un matériau',sr_sub:'Nous examinerons ta demande et te répondrons dans les 48 heures.',sr_l_material:'MATÉRIAU / DÉSIGNATION DU PRODUIT *',sr_ph_material:'p.ex. Laine de verre 100mm, Poutre acier HEA 200...',sr_l_menge:'QUANTITÉ ESTIMÉE *',sr_ph_menge:'p.ex. 500 m², 20 pièces, 5 tonnes',sr_l_date:'DÉLAI DE LIVRAISON *',sr_l_purpose:'UTILISATION (optionnel)',sr_ph_purpose:'p.ex. Isolation façade construction neuve',sr_l_contact:'VOS COORDONNÉES *',sr_ph_firm:'Nom de l\'entreprise',sr_ph_email:'E-mail',sr_btn:'Envoyer la demande →',sr_success_title:'✓ Demande reçue',sr_success_body:'Nous examinerons ta demande et te répondrons dans les 48 heures.',
+    sr_title:'Demander un matériau',sr_sub:'Nous examinerons ta demande et te répondrons dans les 48 heures.',sr_l_material:'MATÉRIAU / DÉSIGNATION DU PRODUIT *',sr_ph_material:'p.ex. Laine de verre 100mm, Poutre acier HEA 200...',sr_l_menge:'QUANTITÉ ESTIMÉE *',sr_ph_menge:'p.ex. 500 m², 20 pièces, 5 tonnes',sr_l_date:'DÉLAI DE LIVRAISON *',sr_l_purpose:'UTILISATION (optionnel)',sr_ph_purpose:'p.ex. Isolation façade construction neuve',sr_l_contact:'VOS COORDONNÉES *',sr_l_remarks:'REMARQUES (optionnel)',sr_ph_remarks:'Infos supplémentaires, spécifications, questions…',sr_ph_firm:'Nom de l\'entreprise',sr_ph_email:'E-mail',sr_btn:'Envoyer la demande →',sr_success_title:'✓ Demande reçue',sr_success_body:'Nous examinerons ta demande et te répondrons dans les 48 heures.',
     footer_brand_desc:'Courtier B2B suisse en approvisionnement pour le secteur de la construction.',
     mat_label:'Matériau & Norme',
     mat_heading:'Chaque matériau.<br>Une norme.',
@@ -1370,7 +1375,7 @@ const T={
     special_heading:'Materiale non nella lista?',
     special_body:'Ampliamo la nostra rete di fornitori appositamente per il tuo fabbisogno — su richiesta.',
     special_link:'Invia una richiesta →',
-    sr_title:'Richiedere un materiale',sr_sub:'Esamineremo la tua richiesta e ti risponderemo entro 48 ore.',sr_l_material:'MATERIALE / DESCRIZIONE PRODOTTO *',sr_ph_material:'es. Lana di vetro 100mm, Trave acciaio HEA 200...',sr_l_menge:'QUANTITÀ STIMATA *',sr_ph_menge:'es. 500 m², 20 pezzi, 5 tonnellate',sr_l_date:'TEMPI DI CONSEGNA *',sr_l_purpose:'SCOPO (opzionale)',sr_ph_purpose:'es. Isolamento facciata nuova costruzione',sr_l_contact:'I TUOI DATI DI CONTATTO *',sr_ph_firm:'Nome azienda',sr_ph_email:'E-mail',sr_btn:'Invia richiesta →',sr_success_title:'✓ Richiesta ricevuta',sr_success_body:'Esamineremo la tua richiesta e ti risponderemo entro 48 ore.',
+    sr_title:'Richiedere un materiale',sr_sub:'Esamineremo la tua richiesta e ti risponderemo entro 48 ore.',sr_l_material:'MATERIALE / DESCRIZIONE PRODOTTO *',sr_ph_material:'es. Lana di vetro 100mm, Trave acciaio HEA 200...',sr_l_menge:'QUANTITÀ STIMATA *',sr_ph_menge:'es. 500 m², 20 pezzi, 5 tonnellate',sr_l_date:'TEMPI DI CONSEGNA *',sr_l_purpose:'SCOPO (opzionale)',sr_ph_purpose:'es. Isolamento facciata nuova costruzione',sr_l_contact:'I TUOI DATI DI CONTATTO *',sr_l_remarks:'OSSERVAZIONI (opzionale)',sr_ph_remarks:'Info aggiuntive, specifiche, domande…',sr_ph_firm:'Nome azienda',sr_ph_email:'E-mail',sr_btn:'Invia richiesta →',sr_success_title:'✓ Richiesta ricevuta',sr_success_body:'Esamineremo la tua richiesta e ti risponderemo entro 48 ore.',
     footer_brand_desc:'Broker B2B svizzero per l\'approvvigionamento nel settore edile.',
     mat_label:'Materiale & Norma',
     mat_heading:'Ogni materiale.<br>Una norma.',
@@ -1441,7 +1446,7 @@ async function submitSpecialRequest(ev){
   var err=document.getElementById('sr-error');
   var g=function(id){return (document.getElementById(id).value||'').trim();};
   var material=g('sr-material'),menge=g('sr-menge'),date=document.getElementById('sr-date').value,
-      purpose=g('sr-purpose'),firm=g('sr-firm'),email=g('sr-email');
+      purpose=g('sr-purpose'),firm=g('sr-firm'),email=g('sr-email'),remarks=g('sr-remarks');
   if(!material||!menge||!date||!firm||!email||email.indexOf('@')<1){
     err.textContent=(_SR_VALERR[lang]||_SR_VALERR.de);err.style.display='block';return false;
   }
@@ -1450,7 +1455,7 @@ async function submitSpecialRequest(ev){
   try{
     var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
     var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
-    var resp=await fetch(sbUrl+'/rest/v1/special_requests',{method:'POST',headers:{'apikey':sbKey,'Authorization':'Bearer '+sbKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({firmenname:firm,email:email,material_bezeichnung:material,menge:menge,liefer_zeitraum_von:date||null,verwendungszweck:purpose||null})});
+    var resp=await fetch(sbUrl+'/rest/v1/special_requests',{method:'POST',headers:{'apikey':sbKey,'Authorization':'Bearer '+sbKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({firmenname:firm,email:email,material_bezeichnung:material,menge:menge,liefer_zeitraum_von:date||null,verwendungszweck:purpose||null,bemerkungen:remarks||null})});
     if(!resp.ok)throw new Error('http '+resp.status);
     document.getElementById('sr-form').style.display='none';
     document.getElementById('sr-success').style.display='block';

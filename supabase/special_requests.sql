@@ -8,9 +8,13 @@ CREATE TABLE IF NOT EXISTS special_requests (
   menge TEXT NOT NULL,
   liefer_zeitraum_von DATE,
   verwendungszweck TEXT,
+  bemerkungen TEXT,
   status TEXT DEFAULT 'offen',
   created_at TIMESTAMPTZ DEFAULT now()
 );
+
+-- If the table already exists from an earlier run, add the new column:
+ALTER TABLE special_requests ADD COLUMN IF NOT EXISTS bemerkungen TEXT;
 
 ALTER TABLE special_requests ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "special_requests_insert_public" ON special_requests FOR INSERT WITH CHECK (true);
