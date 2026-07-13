@@ -1742,7 +1742,7 @@ function _soStartLogin(kind){
     done=true;try{if(typeof unsub==='function')unsub();}catch(e){}
     _soProcessLogin(kind);
   });
-  window.Clerk.openSignIn({appearance:{variables:{colorPrimary:kind==='supplier'?'#E8A020':'#34D399',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});
+  window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});
 }
 function _soProcessLogin(kind){
   if(!(window.Clerk&&window.Clerk.user))return;
@@ -1818,7 +1818,7 @@ function clerkCustomerSignUp(){
     return;
   }
   window.Clerk.openSignIn({
-    appearance:{variables:{colorPrimary:'#34D399',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}
+    appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}
   });
 }
 async function _createCustomerIfNeeded(){
@@ -1944,13 +1944,8 @@ async function _createCustomerIfNeeded(){
     if(_clerkTrustActive)return;
     if(!window.Clerk.client||!window.Clerk.client.signIn)return;
     var si=window.Clerk.client.signIn;
-    if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){
-      soLog('[Clerk] Detected needs_client_trust / needs_second_factor, opening verification modal');
-      _clerkTrustActive=true;
-      _clerkSignInResource=si;
-      try{window.Clerk.closeSignIn();}catch(e){}
-      _clerkSendVerificationCode();
-    }
+    // Custom 2FA modal disabled — Clerk's native sign-in modal handles the second factor.
+    return;
   });
 
   // Link pending customer row to Clerk user (runs on every page load after Clerk resolves)
