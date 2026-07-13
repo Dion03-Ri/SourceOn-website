@@ -31,7 +31,7 @@
 <script src="debug.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title data-i18n="page_title">Materialien — SourceOn</title>
+<title data-i18n="page_title">Sondermaterial anfragen — SourceOn</title>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -928,69 +928,67 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 <main id="lp">
   <!-- HERO -->
   <section class="phero"><div class="wrap">
-    <span class="eyebrow" data-i18n="mat_label">Material &amp; Norm</span>
-    <h1 data-i18n="mat_heading">Jedes Material. Eine Norm.</h1>
-    <p class="sub" data-i18n="mat_sub">Alle Materialien die SourceOn vermittelt erfüllen Schweizer Normen — SN EN und SIA-konform, lückenlos dokumentiert.</p>
+    <span class="eyebrow" data-i18n="sm_eyebrow">Sondermaterial</span>
+    <h1 data-i18n="sm_heading">Material nicht im Katalog?</h1>
+    <p class="sub" data-i18n="sr_sub">Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden.</p>
   </div></section>
 
-  <!-- MATERIAL SELECTOR -->
-  <section class="matselsec"><div class="wrap">
-    <div class="matsel reveal">
-      <span class="matsel-label" data-i18n="mat_select_label">Material wählen, um SourceOn-ID zu sehen</span>
-      <select id="mat-lookup-select">
-        <option value="" data-i18n="mat_select_option">Material wählen…</option>
-      </select>
-      <div class="matsel-result" id="mat-lookup-result">
-        <div class="matsel-field"><span class="fl" data-i18n="mat_field_id">SourceOn-ID</span><span class="fv" id="mat-lookup-id">SO–000</span></div>
-        <div class="matsel-field"><span class="fl" data-i18n="mat_field_name">Material</span><span class="fv" id="mat-lookup-name" data-i18n="mat_no_selection">Noch kein Material ausgewählt</span></div>
-        <div class="matsel-field"><span class="fl" data-i18n="mat_field_cat">Kategorie</span><span class="fv" id="mat-lookup-cat">—</span></div>
-        <div class="matsel-field"><span class="fl" data-i18n="mat_field_norm">Norm</span><span class="fv norm">SN EN / SIA</span></div>
-      </div>
-      <div id="mat-transport-note" data-i18n="mat_transport_note" style="display:none;font-size:12px;color:var(--t3);background:var(--bg2);border-radius:6px;padding:10px 14px;margin-top:12px;border-left:2px solid var(--lpbs)">Hinweis: Transportkosten werden separat zwischen dir und dem Lieferanten vereinbart und sind nicht Bestandteil der SourceOn-Vermittlung. Bei grossen Mengen lohnt es sich, auch hier nachzufragen.</div>
-    </div>
-  </div></section>
-
-
-  <!-- ABDECKUNG -->
+  <!-- SPECIAL MATERIAL REQUEST FORM -->
   <section class="sec bt"><div class="wrap">
-    <span class="sec-label" data-i18n="coverage_label">Abdeckung</span>
-    <div class="statstrip reveal">
-      <div class="statcell"><div class="sn">3</div><span class="sl" data-i18n="stat_label_areas">Bereiche</span><div class="ss" data-i18n="stat_sub_areas">Rohbau, Ausbau und Haustechnik</div></div>
-      <div class="statcell"><div class="sn">58+</div><span class="sl" data-i18n="stat_label_materials">Materialien</span><div class="ss" data-i18n="stat_sub_materials">Alle geprüft und normkonform</div></div>
-      <div class="statcell"><div class="sn">CH-weit</div><span class="sl" data-i18n="stat_label_delivery">Lieferung</span><div class="ss" data-i18n="stat_sub_delivery">Von Genf bis St. Gallen</div></div>
-    </div>
-  </div></section>
-
-  <!-- NORM -->
-  <section class="sec bt"><div class="wrap">
-    <div class="normgrid">
-      <div class="norm-l reveal">
-        <span class="nlabel" data-i18n="norm_label">Qualitätsstandard</span>
-        <div class="nnum">SN EN</div>
-        <div class="nsub" data-i18n="norm_sub">Schweizer Norm — europäisch harmonisiert</div>
+    <style>
+    #lp .sr-form{background:var(--bg1);border:1px solid var(--lpb);border-radius:16px;padding:28px 32px;max-width:600px;margin:8px auto 0;overflow:hidden}
+    #lp .sr-accent{height:3px;background:linear-gradient(90deg,#E8A020 0%,rgba(232,160,32,0.15) 100%);margin:-28px -32px 24px -32px;border-radius:16px 16px 0 0}
+    #lp .sr-title{font-size:16px;font-weight:600;color:var(--t1);margin-bottom:20px}
+    #lp .sr-field{margin-bottom:16px}
+    #lp .sr-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:6px}
+    #lp .sr-input{width:100%;background:var(--bg2);border:1px solid var(--lpbs);border-radius:6px;color:var(--t1);font-family:inherit;font-size:14px;padding:11px 14px;outline:none;transition:border-color .15s;color-scheme:dark}
+    #lp .sr-input:focus{border-color:var(--gold)}
+    #lp .sr-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:560px){#lp .sr-grid{grid-template-columns:1fr}}
+    #lp .sr-btn{width:100%;margin-top:8px;background:var(--gold);color:#070F1A;font-family:inherit;font-size:14px;font-weight:700;padding:13px;border:none;border-radius:6px;cursor:pointer;transition:filter .15s}
+    #lp .sr-btn:hover{filter:brightness(1.08)}
+    #lp .sr-btn:disabled{opacity:.6;cursor:default}
+    #lp .sr-error{display:none;color:#EF4444;font-size:13px;margin-top:10px}
+    #lp .sr-success-title{font-size:16px;font-weight:600;color:#22C55E;margin-bottom:6px}
+    #lp .sr-success-body{font-size:14px;color:var(--t2)}
+    </style>
+    <form class="sr-form" id="sr-form" onsubmit="return submitSpecialRequest(event)" novalidate>
+      <div class="sr-accent"></div>
+      <div class="sr-title" data-i18n="sr_title">Material anfragen</div>
+      <div class="sr-field">
+        <label class="sr-label" data-i18n="sr_l_material">MATERIAL / PRODUKTBEZEICHNUNG *</label>
+        <input type="text" class="sr-input" id="sr-material" data-i18n-placeholder="sr_ph_material" placeholder="z.B. Glaswolle 100mm, Stahlträger HEA 200..."/>
       </div>
-      <div class="norm-r reveal">
-        <h2 data-i18n="norm_heading">Jedes Material entspricht Schweizer Normen — lückenlos dokumentiert.</h2>
-        <p data-i18n="norm_body">SN EN und SIA-konforme Materialien, persönlich geprüfte Lieferanten. Alle Dokumente verfügbar — für interne Prüfungen, öffentliche Ausschreibungen und Bauabnahmen.</p>
+      <div class="sr-field">
+        <label class="sr-label" data-i18n="sr_l_menge">GESCHÄTZTE MENGE *</label>
+        <input type="text" class="sr-input" id="sr-menge" data-i18n-placeholder="sr_ph_menge" placeholder="z.B. 500 m², 20 Stück, 5 Tonnen"/>
       </div>
+      <div class="sr-field sr-grid">
+        <div>
+          <label class="sr-label" data-i18n="sr_l_date">LIEFERZEITRAUM *</label>
+          <input type="date" class="sr-input" id="sr-date"/>
+        </div>
+        <div>
+          <label class="sr-label" data-i18n="sr_l_purpose">VERWENDUNGSZWECK (optional)</label>
+          <input type="text" class="sr-input" id="sr-purpose" data-i18n-placeholder="sr_ph_purpose" placeholder="z.B. Fassadendämmung Neubau"/>
+        </div>
+      </div>
+      <div class="sr-field">
+        <label class="sr-label" data-i18n="sr_l_contact">IHRE KONTAKTDATEN *</label>
+        <div class="sr-grid">
+          <input type="text" class="sr-input" id="sr-firm" data-i18n-placeholder="sr_ph_firm" placeholder="Firmenname"/>
+          <input type="email" class="sr-input" id="sr-email" data-i18n-placeholder="sr_ph_email" placeholder="E-Mail"/>
+        </div>
+      </div>
+      <button type="submit" class="sr-btn" id="sr-btn" data-i18n="sr_btn">Anfrage senden →</button>
+      <div class="sr-error" id="sr-error"></div>
+    </form>
+    <div class="sr-form" id="sr-success" style="display:none">
+      <div class="sr-accent"></div>
+      <div class="sr-success-title" data-i18n="sr_success_title">✓ Anfrage eingegangen</div>
+      <div class="sr-success-body" data-i18n="sr_success_body">Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden.</div>
     </div>
   </div></section>
-
-  <!-- SONDERFALL -->
-  <section class="sec bt p60"><div class="wrap">
-    <div class="sonder reveal">
-      <h3 data-i18n="special_heading">Material nicht in der Liste?</h3>
-      <p data-i18n="special_body">Wir erweitern unser Lieferantennetz gezielt für deinen Bedarf — auf Anfrage.</p>
-      <a href="sondermaterial.html" data-i18n="special_link">Anfrage stellen →</a>
-    </div>
-  </div></section>
-
-  <!-- CTA -->
-  <section class="cta-center"><div class="wrap"><div class="reveal">
-    <h2 data-i18n="cta_title">Material gefunden?</h2>
-    <p data-i18n="cta_sub">Melde deinen Bedarf in zwei Minuten — du siehst sofort deinen garantierten Mindestrabatt.</p>
-    <a class="btn-primary" href="kontakt.html" data-i18n="cta_btn">Materialbedarf melden →</a>
-  </div></div></section>
 </main>
 
 <!-- FOOTER -->
@@ -1197,7 +1195,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 (function(){
 const T={
   de:{
-    page_title:'Materialien & Lieferanten — SourceOn',
+    page_title:'Sondermaterial anfragen — SourceOn',sm_eyebrow:'Sondermaterial',sm_heading:'Material nicht im Katalog?',
     nav_home:'Home',nav_process:'Wie es funktioniert',nav_calc:'Kalkulator',nav_materials:'Materialien',
     nav_forwhom:'Für wen',nav_supplier:'Lieferant werden',nav_about:'Über uns',nav_contact:'Kontakt',
     nav_cta:'Materialbedarf melden',
@@ -1249,7 +1247,7 @@ const T={
     footer_tagline:'Du zahlst erst, wenn wir dir sparen.'
   },
   en:{
-    page_title:'Materials & Suppliers — SourceOn',
+    page_title:'Request special material — SourceOn',sm_eyebrow:'Special material',sm_heading:'Material not in the catalogue?',
     nav_home:'Home',nav_process:'How it works',nav_calc:'Calculator',nav_materials:'Materials',
     nav_forwhom:'For whom',nav_supplier:'Become a supplier',nav_about:'About us',nav_contact:'Contact',
     nav_cta:'Report material needs',
@@ -1301,7 +1299,7 @@ const T={
     footer_tagline:'You only pay when we save you money.'
   },
   fr:{
-    page_title:'Matériaux & Fournisseurs — SourceOn',
+    page_title:'Demander un matériau spécial — SourceOn',sm_eyebrow:'Matériau spécial',sm_heading:'Matériau pas dans le catalogue ?',
     nav_home:'Accueil',nav_process:'Comment ça marche',nav_calc:'Calculateur',nav_materials:'Matériaux',
     nav_forwhom:'Pour qui',nav_supplier:'Devenir fournisseur',nav_about:'À propos',nav_contact:'Contact',
     nav_cta:'Signaler un besoin',
@@ -1354,7 +1352,7 @@ const T={
     footer_tagline:'Vous ne payez que lorsque nous vous faisons économiser.'
   },
   it:{
-    page_title:'Materiali & Fornitori — SourceOn',
+    page_title:'Richiedere materiale speciale — SourceOn',sm_eyebrow:'Materiale speciale',sm_heading:'Materiale non nel catalogo?',
     nav_home:'Home',nav_process:'Come funziona',nav_calc:'Calcolatore',nav_materials:'Materiali',
     nav_forwhom:'Per chi',nav_supplier:'Diventa fornitore',nav_about:'Chi siamo',nav_contact:'Contatto',
     nav_cta:'Segnala fabbisogno',
@@ -1433,6 +1431,35 @@ function applyLang(lang){
   }catch(e){}
 }
 window.setLang=applyLang;
+
+// ===== Special material request form =====
+var _SR_VALERR={de:'Bitte fülle alle Pflichtfelder aus.',en:'Please fill in all required fields.',fr:'Veuillez remplir tous les champs obligatoires.',it:'Compila tutti i campi obbligatori.'};
+var _SR_NETERR={de:'Etwas ist schiefgelaufen. Bitte versuche es erneut oder kontaktiere info@sourceon.ch.',en:'Something went wrong. Please try again or contact info@sourceon.ch.',fr:'Une erreur est survenue. Réessaie ou contacte info@sourceon.ch.',it:'Qualcosa è andato storto. Riprova o contatta info@sourceon.ch.'};
+async function submitSpecialRequest(ev){
+  ev.preventDefault();
+  var lang=localStorage.getItem('sourceon-lang')||'de';
+  var err=document.getElementById('sr-error');
+  var g=function(id){return (document.getElementById(id).value||'').trim();};
+  var material=g('sr-material'),menge=g('sr-menge'),date=document.getElementById('sr-date').value,
+      purpose=g('sr-purpose'),firm=g('sr-firm'),email=g('sr-email');
+  if(!material||!menge||!date||!firm||!email||email.indexOf('@')<1){
+    err.textContent=(_SR_VALERR[lang]||_SR_VALERR.de);err.style.display='block';return false;
+  }
+  err.style.display='none';
+  var btn=document.getElementById('sr-btn');btn.disabled=true;
+  try{
+    var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
+    var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
+    var resp=await fetch(sbUrl+'/rest/v1/special_requests',{method:'POST',headers:{'apikey':sbKey,'Authorization':'Bearer '+sbKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({firmenname:firm,email:email,material_bezeichnung:material,menge:menge,liefer_zeitraum_von:date||null,verwendungszweck:purpose||null})});
+    if(!resp.ok)throw new Error('http '+resp.status);
+    document.getElementById('sr-form').style.display='none';
+    document.getElementById('sr-success').style.display='block';
+  }catch(e){
+    err.textContent=(_SR_NETERR[lang]||_SR_NETERR.de);err.style.display='block';btn.disabled=false;
+  }
+  return false;
+}
+window.submitSpecialRequest=submitSpecialRequest;
 
 
 // close dropdown on outside click
