@@ -32,6 +32,35 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>SourceOn — Du zahlst erst, wenn wir dir sparen.</title>
+<!-- icons / theme -->
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<meta name="theme-color" content="#070F1A"/>
+<!-- meta basics -->
+<meta name="robots" content="index, follow"/>
+<meta name="author" content="SourceOn"/>
+<meta name="copyright" content="© 2026 SourceOn"/>
+<meta name="description" content="Mengenrabatte für jede Schweizer Baufirma. Du zahlst erst, wenn wir dir sparen."/>
+<!-- performance hints -->
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="dns-prefetch" href="https://mttzsqtuaisdjisjxrey.supabase.co"/>
+<link rel="dns-prefetch" href="https://tolerant-skink-62.clerk.accounts.dev"/>
+<!-- Open Graph -->
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="SourceOn"/>
+<meta property="og:title" content="SourceOn — Baumaterialien günstiger einkaufen"/>
+<meta property="og:description" content="Mengenrabatte für jede Schweizer Baufirma. Du zahlst erst, wenn wir dir sparen."/>
+<meta property="og:url" content="https://www.sourceon.ch"/>
+<meta property="og:image" content="https://www.sourceon.ch/og-image.svg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:locale" content="de_CH"/>
+<!-- Twitter/X Card -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="SourceOn — Baumaterialien günstiger einkaufen"/>
+<meta name="twitter:description" content="Mengenrabatte für jede Schweizer Baufirma. Du zahlst erst, wenn wir dir sparen."/>
+<meta name="twitter:image" content="https://www.sourceon.ch/og-image.svg"/>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -876,6 +905,19 @@ body{background:#070F1A}
 .nav-ov-sub{display:flex;flex-direction:column;gap:12px;margin-top:-18px;margin-bottom:2px}
 .nav-ov-sub a{font-size:1.05rem!important;color:#94A3B8!important;font-weight:500!important}
 .num-range{font-variant-numeric:tabular-nums;letter-spacing:-0.01em;white-space:nowrap}
+/* global-polish */
+a:not(.no-hover){transition:color .15s ease,opacity .15s ease}
+.nav-link:hover{color:#F1F5F9}
+.card,[class*="tile"],[class*="card"]{transition:background-color .15s ease,box-shadow .15s ease}
+.card:hover,[class*="tile"]:hover,[class*="card"]:hover{background-color:#111F2E}
+footer a:hover,#lpfoot a:hover{color:#E8A020}
+.content a:not(.btn):hover{color:#E8A020;text-decoration:underline;text-decoration-color:rgba(232,160,32,0.4);text-underline-offset:3px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #E8A020;outline-offset:3px;border-radius:6px}
+h1,h2,h3{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+.hero-headline,[class*="headline"]{letter-spacing:-0.03em}
+p,li,td{font-variant-numeric:tabular-nums;hanging-punctuation:first last}
+p{text-wrap:pretty}
+.num-range{letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
 </style>
 <script>
 (function(){

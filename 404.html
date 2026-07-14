@@ -31,16 +31,16 @@
 <script src="debug.js"></script>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title data-i18n="page_title">Sondermaterial anfragen — SourceOn</title>
+<title>Seite nicht gefunden — SourceOn</title>
 <!-- icons / theme -->
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="icon" href="/favicon.ico" sizes="any"/>
 <meta name="theme-color" content="#070F1A"/>
 <!-- meta basics -->
-<meta name="robots" content="index, follow"/>
+<meta name="robots" content="noindex, nofollow"/>
 <meta name="author" content="SourceOn"/>
 <meta name="copyright" content="© 2026 SourceOn"/>
-<meta name="description" content="Material nicht im Katalog? Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden."/>
+<meta name="description" content="Die gesuchte Seite wurde nicht gefunden — aber SourceOn schon."/>
 <!-- performance hints -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -49,17 +49,17 @@
 <!-- Open Graph -->
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="SourceOn"/>
-<meta property="og:title" content="Sondermaterial anfragen — SourceOn"/>
-<meta property="og:description" content="Material nicht im Katalog? Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden."/>
-<meta property="og:url" content="https://www.sourceon.ch/sondermaterial.html"/>
+<meta property="og:title" content="Seite nicht gefunden — SourceOn"/>
+<meta property="og:description" content="Die gesuchte Seite wurde nicht gefunden — aber SourceOn schon."/>
+<meta property="og:url" content="https://www.sourceon.ch/404.html"/>
 <meta property="og:image" content="https://www.sourceon.ch/og-image.svg"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <meta property="og:locale" content="de_CH"/>
 <!-- Twitter/X Card -->
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="Sondermaterial anfragen — SourceOn"/>
-<meta name="twitter:description" content="Material nicht im Katalog? Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden."/>
+<meta name="twitter:title" content="Seite nicht gefunden — SourceOn"/>
+<meta name="twitter:description" content="Die gesuchte Seite wurde nicht gefunden — aber SourceOn schon."/>
 <meta name="twitter:image" content="https://www.sourceon.ch/og-image.svg"/>
 <meta name="description" content="SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -632,55 +632,68 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 /* TECHNOLOGIE */
 .tech-section{background:var(--dark3);position:relative;overflow:hidden}
+/* ===== SVG Buendelungs-Animation (Apple-Style, 9s Loop mit Rueckfluss) ===== */
+.bundle-anim{display:block;width:100%;height:auto;margin:0 auto;overflow:visible;font-family:'Inter',-apple-system,sans-serif}
+.bundle-anim .ba-card{fill:#0F2238;stroke:#E8A020;stroke-width:1.5;filter:url(#ba-shadow)}
+.bundle-anim .ba-name{fill:#fff;font-size:13px;font-weight:500}
+.bundle-anim .ba-vol{fill:#E8A020;font-size:12px;font-weight:500}
+.bundle-anim .ba-hubtext{fill:#0F2238;font-size:14px;font-weight:600}
+.bundle-anim .ba-savetext{fill:#0F2238;font-size:11px;font-weight:600}
+.bundle-anim .ba-node{opacity:0;animation:ba-fade 9s ease-in-out infinite}
+.bundle-anim .ba-supplier{opacity:0;animation:ba-fade 9s ease-in-out infinite}
+.bundle-anim .ba-supcard{animation:ba-suphi 9s ease-in-out infinite}
+.bundle-anim .ba-hub{opacity:0;transform-box:fill-box;transform-origin:center;animation:ba-fadeop 9s ease-in-out infinite, ba-pulse 9s ease-in-out infinite}
+.bundle-anim .ba-line{stroke:#E8A020;stroke-width:1.5;opacity:0;stroke-dasharray:6 8;animation:ba-linein 9s ease-in-out infinite, ba-flow 1.4s linear infinite}
+.bundle-anim .ba-supline{stroke:#E8A020;stroke-width:2;fill:none;stroke-dasharray:130;stroke-dashoffset:130;animation:ba-supdraw 9s ease-in-out infinite}
+.bundle-anim .ba-chevron{opacity:0;animation:ba-chevron 9s ease-in-out infinite}
+.bundle-anim .ba-chevback{opacity:0;animation:ba-chevback 9s ease-in-out infinite}
+.bundle-anim .ba-dot{opacity:0;fill:#E8A020}
+.bundle-anim .ba-dot--a{animation:ba-dot-a 9s ease-in-out infinite}
+.bundle-anim .ba-dot--b{animation:ba-dot-b 9s ease-in-out infinite}
+.bundle-anim .ba-dot--c{animation:ba-dot-c 9s ease-in-out infinite}
+.bundle-anim .ba-save{opacity:0;transform-box:fill-box;transform-origin:center;animation:ba-save 9s ease-in-out infinite}
+@keyframes ba-fade{0%{opacity:0;transform:translateY(10px)}10%{opacity:1;transform:translateY(0)}94%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-6px)}}
+@keyframes ba-fadeop{0%{opacity:0}10%{opacity:1}94%{opacity:1}100%{opacity:0}}
+@keyframes ba-pulse{0%,30%{transform:scale(1)}36%{transform:scale(1.06)}43%,100%{transform:scale(1)}}
+@keyframes ba-linein{0%,10%{opacity:0}18%{opacity:.5}94%{opacity:.5}100%{opacity:0}}
+@keyframes ba-flow{to{stroke-dashoffset:-28}}
+@keyframes ba-supdraw{0%,38%{stroke-dashoffset:130;opacity:0}40%{opacity:1}50%{stroke-dashoffset:0}94%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes ba-chevron{0%,40%{opacity:0;transform:translateX(0)}44%{opacity:1}50%{transform:translateX(108px)}55%{opacity:0;transform:translateX(108px)}100%{opacity:0}}
+@keyframes ba-suphi{0%,40%{stroke-opacity:.55}46%{stroke-opacity:1}54%{stroke-opacity:.55}100%{stroke-opacity:.55}}
+@keyframes ba-chevback{0%,54%{opacity:0;transform:translateX(0)}58%{opacity:1}68%{opacity:1;transform:translateX(-108px)}72%{opacity:0;transform:translateX(-108px)}100%{opacity:0}}
+@keyframes ba-dot-a{0%,55%{opacity:0;transform:translate(0,0)}59%{opacity:1}70%{opacity:1;transform:translate(-147px,-101px)}74%{opacity:0;transform:translate(-147px,-101px)}100%{opacity:0}}
+@keyframes ba-dot-b{0%,55%{opacity:0;transform:translate(0,0)}59%{opacity:1}70%{opacity:1;transform:translate(-143px,0)}74%{opacity:0;transform:translate(-143px,0)}100%{opacity:0}}
+@keyframes ba-dot-c{0%,55%{opacity:0;transform:translate(0,0)}59%{opacity:1}70%{opacity:1;transform:translate(-147px,101px)}74%{opacity:0;transform:translate(-147px,101px)}100%{opacity:0}}
+@keyframes ba-save{0%,70%{opacity:0;transform:scale(.85)}78%{opacity:1;transform:scale(1)}94%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.bundle-anim *{animation:none!important;opacity:1!important}.bundle-anim .ba-supline{stroke-dashoffset:0!important}.bundle-anim .ba-dot{opacity:0!important}}
 .tech-section::before{content:'';position:absolute;top:20%;right:-15%;width:600px;height:600px;background:radial-gradient(circle,rgba(232,160,32,.08) 0%,transparent 65%);pointer-events:none}
 .tech-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative;z-index:1}
 
-/* ENGINE VISUAL — processor / circuit-board chip, "der Motor des Geschäfts" */
-.engine-stage{position:relative;background:#000;width:100%;height:500px;overflow:hidden}
-.engine-svg{position:absolute;inset:0;width:100%;height:100%}
-
-.chip-ring{fill:none;stroke:rgba(232,160,32,.12);stroke-width:1;opacity:0;transition:opacity .8s ease-out}
-.chip-ring-2{stroke:rgba(232,160,32,.06);stroke-dasharray:4 8}
-.engine-stage.is-visible .chip-ring{opacity:1}
-.engine-stage.is-visible .chip-ring-1{transform-origin:300px 200px;animation:chipRingSpin 18s linear infinite}
-.engine-stage.is-visible .chip-ring-2{transform-origin:300px 200px;animation:chipRingSpin 28s linear infinite reverse}
-@keyframes chipRingSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-
-.chip-trace{fill:none;stroke-width:1.5;stroke-dasharray:240;stroke-dashoffset:240;transition:stroke-dashoffset .7s ease-out}
-.chip-trace.gold{stroke:rgba(232,160,32,.35)}
-.chip-trace.green{stroke:rgba(16,185,129,.4)}
-.engine-stage.is-visible .chip-trace{stroke-dashoffset:0}
-.engine-stage.is-visible .chip-trace:nth-of-type(2){transition-delay:.05s}
-.engine-stage.is-visible .chip-trace:nth-of-type(3){transition-delay:.1s}
-
-.chip-pulse{opacity:0}
-.chip-pulse.gold{fill:#FFD27A}
-.chip-pulse.green{fill:#34D399}
-.engine-stage.is-visible .chip-pulse{opacity:0;animation:chipPulseFade 1.8s ease-in-out infinite}
-@keyframes chipPulseFade{0%,100%{opacity:0}10%,80%{opacity:1}}
-
-.chip-underglow{opacity:0;transition:opacity 1s ease-out .3s}
-.engine-stage.is-visible .chip-underglow{opacity:1;animation:chipUnderglowPulse 3s ease-in-out infinite}
-@keyframes chipUnderglowPulse{0%,100%{opacity:.6}50%{opacity:1}}
-
-.chip-body{fill:#0A1626;stroke:#E8A020;stroke-width:1.5;opacity:0;transform:scale(.85);transform-origin:300px 200px;transition:opacity .6s ease-out,transform .6s ease-out}
-.engine-stage.is-visible .chip-body{opacity:1;transform:scale(1)}
-.chip-die{opacity:0;transition:opacity .6s ease-out .2s}
-.engine-stage.is-visible .chip-die{opacity:.5}
-.chip-scan{opacity:0}
-.engine-stage.is-visible .chip-scan{opacity:1;animation:chipScanSweep 2.4s linear infinite .6s}
-@keyframes chipScanSweep{0%{transform:translateY(0)}100%{transform:translateY(112px)}}
-
-.chip-core{fill:#E8A020;opacity:0;filter:url(#glowBlur);transform-origin:300px 200px;transition:opacity .5s ease-out .4s}
-.engine-stage.is-visible .chip-core{opacity:1;animation:chipCorePulse 1.6s ease-in-out infinite .6s}
-@keyframes chipCorePulse{0%,100%{transform:scale(1);filter:url(#glowBlur) brightness(1)}50%{transform:scale(1.18);filter:url(#glowBlur) brightness(1.4)}}
-
-.chip-led{fill:#10B981;opacity:0}
-.engine-stage.is-visible .chip-led{animation:chipLedBlink 2.6s ease-in-out infinite}
-@keyframes chipLedBlink{0%,85%,100%{opacity:.15}90%,95%{opacity:1}}
-
+/* ENGINE VISUAL */
+.engine-stage{position:relative;background:#060D1A;width:100%;height:480px;overflow:hidden;border-radius:16px;border:1px solid rgba(232,160,32,.2)}
+#engine-canvas{display:block;width:100%;height:100%}
+.engine-overlay{position:absolute;inset:0;pointer-events:none;z-index:1}
+.engine-node{position:absolute;background:rgba(10,21,37,.85);border:1px solid rgba(232,160,32,.3);border-radius:8px;padding:8px 12px;pointer-events:none;backdrop-filter:blur(6px)}
+.engine-node-title{font-size:10px;font-weight:700;color:#E8A020;margin-bottom:2px;font-family:Inter,sans-serif}
+.engine-node-sub{font-size:8.5px;color:rgba(255,255,255,.5);font-family:Inter,sans-serif}
+.engine-node.green{border-color:rgba(16,185,129,.4)}
+.engine-node.green .engine-node-title{color:#10B981}
+.engine-node-saving{position:absolute;font-size:12px;font-weight:700;color:#10B981;font-family:Inter,sans-serif;opacity:0;animation:savPop 6s ease-in-out infinite}
+.engine-node-saving:nth-child(2){animation-delay:2s}
+.engine-node-saving:nth-child(3){animation-delay:4s}
+@keyframes savPop{0%,75%,100%{opacity:0;transform:translateY(0)}80%{opacity:1;transform:translateY(-6px)}95%{opacity:1;transform:translateY(-6px)}}
+.engine-flow-label{position:absolute;font-size:9px;color:rgba(232,160,32,.5);font-family:Inter,sans-serif;font-weight:600;letter-spacing:.03em}
+.engine-flow-label.green{color:rgba(16,185,129,.5)}
+.engine-compare{position:absolute;background:rgba(15,34,56,.9);border:1px solid rgba(232,160,32,.35);border-radius:6px;padding:5px 10px;font-size:9px;font-weight:600;color:#fff;font-family:Inter,sans-serif;display:flex;align-items:center;gap:5px}
+.engine-compare span{color:#E8A020}
+.engine-badge{position:absolute;z-index:2;background:rgba(15,34,56,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(232,160,32,.3);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px}
+.engine-badge-gold{color:#E8A020}
+.engine-dot{width:8px;height:8px;border-radius:50%;background:#10B981;flex-shrink:0;animation:eDot 2s ease-in-out infinite}
+@keyframes eDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.3);opacity:.6}}
 @media(max-width:900px){.tech-layout{grid-template-columns:1fr;gap:40px}}
-@media(max-width:640px){.engine-stage{height:340px}}
+.engine-visual{width:100%;border-radius:16px;overflow:hidden}
+.engine-visual svg{border-radius:16px}
+@media(max-width:900px){.tech-layout{grid-template-columns:1fr;gap:40px}}
 
 /* BUNDLING DIAGRAM SECTION */
 #bundling{background:var(--bg);padding:100px 0}
@@ -759,6 +772,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 @media(max-width:900px){.nav-card-grid{grid-template-columns:1fr 1fr!important}}
 @media(max-width:640px){.nav-card-grid{grid-template-columns:1fr!important}}
 
+/* LANGUAGE SWITCHER */
 .lang-switch{position:relative;margin-right:8px}
 .lang-btn{display:flex;align-items:center;gap:5px;font-size:.82rem;font-weight:600;color:rgba(255,255,255,.75);background:none;border:1px solid rgba(255,255,255,.12);border-radius:100px;padding:6px 14px;cursor:pointer;transition:all .2s}
 .lang-btn:hover{color:#fff;border-color:rgba(255,255,255,.3)}
@@ -787,6 +801,102 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .clerk-trust-modal .btn-cancel-trust:hover{border-color:rgba(255,255,255,.2);color:#fff}
 
 
+/* ===== NEW MINIMAL LANDING (scoped under #lp / #lpfoot) ===== */
+:root{--bg:#070F1A;--bg1:#0C1824;--bg2:#111F2E;--lpb:rgba(255,255,255,0.06);--lpbs:rgba(255,255,255,0.12);--t1:#F1F5F9;--t2:#94A3B8;--t3:#6B7C99;--golddim:rgba(232,160,32,0.08);--goldbd:rgba(232,160,32,0.15)}
+body{background:#070F1A}
+#lp{color:var(--t1);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+#lp .wrap,#lpfoot .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
+#lp a{text-decoration:none}
+@media(max-width:768px){#lp .wrap,#lpfoot .wrap{padding:0 20px}}
+
+/* HERO */
+#lp .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+#lp .hero-glow{position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 800px 600px at 50% 40%,rgba(232,160,32,0.04) 0%,transparent 70%)}
+#lp .hero-content{max-width:820px;margin:0 auto;padding:120px 48px;position:relative;z-index:1}
+#lp .hero-content>*{opacity:0;animation:lpHeroIn .8s cubic-bezier(.2,.7,.2,1) forwards}
+#lp .eyebrow{animation-delay:0s}#lp .h1{animation-delay:.08s}#lp .h1-gold{animation-delay:.14s}#lp .subline{animation-delay:.22s}#lp .cta-row{animation-delay:.3s}
+@keyframes lpHeroIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+#lp .eyebrow{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);font-weight:600;margin-bottom:24px}
+#lp .h1{font-size:clamp(40px,6vw,80px);font-weight:800;color:var(--t1);letter-spacing:-.03em;line-height:1.1;margin-bottom:8px}
+#lp .h1-gold{font-size:clamp(36px,5vw,72px);font-weight:800;color:var(--gold);letter-spacing:-.03em;line-height:1.1;margin-bottom:32px}
+#lp .subline{font-size:clamp(16px,2vw,20px);color:var(--t2);font-weight:400;margin-bottom:48px;letter-spacing:-.01em}
+#lp .cta-row{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+#lp .btn-primary{background:var(--gold);color:#070F1A;font-weight:700;font-size:15px;padding:14px 32px;border-radius:8px;display:inline-flex;align-items:center;transition:all .2s}
+#lp .btn-primary:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 8px 32px rgba(232,160,32,.25);color:#070F1A}
+#lp .btn-ghost{background:transparent;color:var(--t2);font-size:15px;padding:14px 24px;border:1px solid var(--lpbs);border-radius:8px;display:inline-flex;align-items:center;transition:all .2s}
+#lp .btn-ghost:hover{color:var(--t1);border-color:rgba(255,255,255,.2)}
+#lp .scrolldown{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:var(--t3);z-index:1;opacity:0;animation:lpFloat 2s ease-in-out infinite;animation-delay:2s}
+@keyframes lpFloat{0%,100%{transform:translate(-50%,0);opacity:.4}50%{transform:translate(-50%,6px);opacity:.7}}
+
+/* SECTION shared */
+#lp .sec{padding:120px 0}
+#lp .sec.bt{border-top:1px solid var(--lpb)}
+#lp .sec-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:48px}
+#lp .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
+#lp .reveal.visible{opacity:1;transform:none}
+
+/* SECTION 2 — cards */
+#lp .cards3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
+@media(max-width:900px){#lp .cards3{grid-template-columns:1fr}}
+#lp .card{background:var(--bg1);padding:40px 36px;display:flex;flex-direction:column;transition:background .2s;color:var(--t1)}
+#lp .card:hover{background:var(--bg2)}
+#lp .card:hover .card-link .arw{transform:translateX(3px)}
+#lp .card-cat{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:600;margin-bottom:20px}
+#lp .card-title{font-size:22px;font-weight:700;color:var(--t1);letter-spacing:-.02em;line-height:1.3;margin-bottom:12px}
+#lp .card-desc{font-size:14px;color:var(--t2);line-height:1.6;flex:1}
+#lp .card-link{margin-top:32px;font-size:13px;font-weight:600;color:var(--t2);display:flex;align-items:center;gap:6px}
+#lp .card:hover .card-link{color:var(--t1)}
+#lp .card-link .arw{transition:transform .2s}
+
+/* SECTION 3 — stat + text */
+#lp .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+@media(max-width:768px){#lp .statgrid{grid-template-columns:1fr;gap:40px}}
+#lp .stat-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:16px}
+#lp .stat-num{font-size:clamp(48px,6vw,80px);font-weight:800;color:var(--gold);letter-spacing:-.04em;line-height:1}
+#lp .stat-sub{font-size:14px;color:var(--t3);margin-top:8px}
+#lp .stat-h{font-size:clamp(20px,2.5vw,28px);font-weight:700;color:var(--t1);letter-spacing:-.02em;line-height:1.3;margin-bottom:16px}
+#lp .stat-body{font-size:15px;color:var(--t2);line-height:1.7}
+#lp .stat-link{font-size:13px;color:var(--gold);margin-top:24px;display:inline-block}
+#lp .stat-link:hover{text-decoration:underline}
+
+/* SECTION 4 — tiles */
+#lp .tiles{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
+@media(max-width:900px){#lp .tiles{grid-template-columns:1fr 1fr}#lp .tile-lg{grid-row:auto!important;grid-column:1/-1}}
+@media(max-width:600px){#lp .tiles{grid-template-columns:1fr}}
+#lp .tile{background:var(--bg1);padding:28px 24px;transition:background .2s;display:flex;flex-direction:column;color:var(--t1)}
+#lp .tile:hover{background:var(--bg2)}
+#lp .tile-lg{grid-row:1/span 2;padding:48px 40px}
+#lp .tile-cat{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:600;margin-bottom:16px}
+#lp .tile-lg .tile-title{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
+#lp .tile-title{font-size:20px;font-weight:700;color:var(--t1);letter-spacing:-.01em}
+#lp .tile-desc{font-size:14px;color:var(--t2);margin-top:8px;line-height:1.6;flex:1}
+#lp .tile-lg .tile-desc{font-size:15px;margin-top:16px}
+#lp .tile-link{margin-top:24px;font-size:13px;font-weight:600;color:var(--gold)}
+#lp .tile-lg .tile-link{margin-top:24px;color:var(--t2)}
+#lp .tile-lg:hover .tile-link{color:var(--t1)}
+
+/* SECTION 5 — supplier cta */
+#lp .supcta{padding:100px 0;background:var(--bg1);border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);text-align:center}
+#lp .supcta .lbl{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);margin-bottom:24px}
+#lp .supcta h2{font-size:clamp(32px,4vw,52px);font-weight:800;color:var(--t1);letter-spacing:-.03em}
+#lp .supcta p{font-size:18px;color:var(--t2);margin-top:12px;margin-bottom:40px}
+
+/* FOOTER */
+#lpfoot{background:var(--bg);border-top:1px solid var(--lpb);padding:48px 0;font-family:'Inter',sans-serif}
+#lpfoot .fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
+@media(max-width:768px){#lpfoot .fgrid{grid-template-columns:1fr 1fr;gap:32px}}
+@media(max-width:480px){#lpfoot .fgrid{grid-template-columns:1fr}}
+#lpfoot .flogo{font-size:17px;font-weight:700;color:var(--t1)}
+#lpfoot .flogo span{color:var(--gold)}
+#lpfoot .fbrand p{font-size:13px;color:var(--t3);margin-top:8px;line-height:1.5}
+#lpfoot .fcopy{margin-top:24px;font-size:12px;color:var(--t3)}
+#lpfoot .fcol-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:16px}
+#lpfoot .fcol a{display:block;font-size:13px;color:var(--t3);padding:3px 0;transition:color .15s}
+#lpfoot .fcol a:hover{color:var(--t1)}
+#lpfoot .fbottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--lpb);padding-top:24px;margin-top:32px;font-size:12px;color:var(--t3)}
+#lpfoot .fbottom a{color:var(--t3)}#lpfoot .fbottom a:hover{color:var(--gold)}
+
+
 .nav-links li.has-dd{position:relative}
 .nav-links li.has-dd>.nav-dd{position:absolute;top:100%;left:50%;transform:translateX(-50%);background:rgba(7,15,26,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px 8px 8px;min-width:230px;opacity:0;visibility:hidden;transition:opacity .15s,visibility .15s;z-index:300}
 .nav-links li.has-dd:hover>.nav-dd{opacity:1;visibility:visible}
@@ -794,81 +904,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .nav-dd a:hover{background:#111F2E;color:#F1F5F9}
 .nav-ov-sub{display:flex;flex-direction:column;gap:12px;margin-top:-18px;margin-bottom:2px}
 .nav-ov-sub a{font-size:1.05rem!important;color:#94A3B8!important;font-weight:500!important}
-
-/* ===== NEW MINIMAL DESIGN (scoped #lp / #lpfoot) — materialien ===== */
-:root{--bg:#070F1A;--bg1:#0C1824;--bg2:#111F2E;--lpb:rgba(255,255,255,0.06);--lpbs:rgba(255,255,255,0.12);--t1:#F1F5F9;--t2:#94A3B8;--t3:#6B7C99;--golddim:rgba(232,160,32,0.08);--goldbd:rgba(232,160,32,0.15)}
-body{background:#070F1A}
-#lp{color:var(--t1);font-family:'Inter',-apple-system,sans-serif}
-#lp .wrap,#lpfoot .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
-#lp a{text-decoration:none}
-@media(max-width:768px){#lp .wrap,#lpfoot .wrap{padding:0 20px}}
-#lp .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
-#lp .reveal.visible{opacity:1;transform:none}
-#lp .btn-primary{background:var(--gold);color:#070F1A;font-weight:700;font-size:15px;padding:14px 32px;border-radius:8px;display:inline-flex;align-items:center;transition:all .2s}
-#lp .btn-primary:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 8px 32px rgba(232,160,32,.25);color:#070F1A}
-#lp .sec{padding:80px 0}
-#lp .sec.bt{border-top:1px solid var(--lpb)}
-#lp .sec-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:48px}
-#lp .eyebrow{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--gold);font-weight:600;margin-bottom:24px}
-/* hero */
-#lp .phero{padding:100px 0 80px;text-align:center}
-#lp .phero h1{font-size:clamp(36px,5vw,64px);font-weight:800;color:var(--t1);letter-spacing:-.03em;line-height:1.1;margin-bottom:16px}
-#lp .phero .sub{font-size:clamp(16px,2vw,18px);color:var(--t2);max-width:600px;margin:0 auto 40px;line-height:1.6}
-@media(max-width:768px){#lp .phero{padding:60px 0 40px}}
-/* material selector */
-#lp .matselsec{padding:0 0 80px}
-#lp .matsel{background:var(--bg1);border-radius:16px;border:1px solid var(--lpb);padding:32px;max-width:800px;margin:0 auto}
-@media(max-width:768px){#lp .matsel{padding:20px}}
-#lp .matsel-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:12px}
-#lp .matsel select{width:100%;background:var(--bg2);border:1px solid var(--lpbs);border-radius:6px;color:var(--t1);font-size:14px;padding:12px 16px;font-family:inherit;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E8A020' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 16px center;background-size:16px}
-#lp .matsel select:focus{border-color:var(--gold);outline:none}
-#lp .matsel select option,#lp .matsel select optgroup{background:var(--bg2);color:var(--t1)}
-#lp .matsel-result{margin-top:20px;padding-top:20px;border-top:1px solid var(--lpb);display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:480px){#lp .matsel-result{grid-template-columns:1fr}}
-#lp .matsel-field .fl{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:4px}
-#lp .matsel-field .fv{font-size:14px;font-weight:500;color:var(--t1)}
-#lp #mat-lookup-id{color:var(--gold);font-family:'SFMono-Regular',Menlo,Consolas,monospace;font-size:13px}
-#lp #mat-lookup-cat{color:var(--t2);font-weight:400}
-#lp .matsel-field .fv.norm{color:var(--t2);font-weight:400}
-/* category pills */
-/* stats strip */
-#lp .statstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
-@media(max-width:768px){#lp .statstrip{grid-template-columns:1fr}}
-#lp .statcell{background:var(--bg1);padding:36px 32px}
-#lp .statcell .sn{font-size:44px;font-weight:700;color:var(--gold);letter-spacing:-.03em;line-height:1}
-#lp .statcell .sl{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-top:8px}
-#lp .statcell .ss{font-size:13px;color:var(--t2);margin-top:4px}
-/* norm section */
-#lp .normgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-@media(max-width:768px){#lp .normgrid{grid-template-columns:1fr;gap:32px}}
-#lp .norm-l .nlabel{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:16px}
-#lp .norm-l .nnum{font-size:clamp(48px,6vw,72px);font-weight:800;color:var(--gold);letter-spacing:-.04em;line-height:1}
-#lp .norm-l .nsub{font-size:14px;color:var(--t3);margin-top:8px}
-#lp .norm-r h2{font-size:clamp(20px,2.5vw,26px);font-weight:700;color:var(--t1);letter-spacing:-.02em;line-height:1.3;margin-bottom:16px}
-#lp .norm-r p{font-size:15px;color:var(--t2);line-height:1.7}
-/* sonderfall */
-#lp .sonder{text-align:center}
-#lp .sonder h3{font-size:22px;font-weight:700;color:var(--t1)}
-#lp .sonder p{font-size:15px;color:var(--t2);max-width:480px;margin:12px auto 28px;line-height:1.6}
-#lp .sonder a{font-size:14px;color:var(--gold)}#lp .sonder a:hover{text-decoration:underline}
-#lp .sec.p60{padding:60px 0}
-/* centered cta */
-#lp .cta-center{text-align:center;padding:100px 0;border-top:1px solid var(--lpb)}
-#lp .cta-center h2{font-size:clamp(28px,4vw,48px);font-weight:800;color:var(--t1);letter-spacing:-.03em}
-#lp .cta-center p{font-size:18px;color:var(--t2);max-width:500px;margin:16px auto 40px;line-height:1.6}
-@media(max-width:768px){#lp .cta-center{padding:60px 0}}
-/* footer */
-#lpfoot{background:var(--bg);border-top:1px solid var(--lpb);padding:48px 0;font-family:'Inter',sans-serif}
-#lpfoot .fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
-@media(max-width:768px){#lpfoot .fgrid{grid-template-columns:1fr 1fr;gap:32px}}
-@media(max-width:480px){#lpfoot .fgrid{grid-template-columns:1fr}}
-#lpfoot .flogo{font-size:17px;font-weight:700;color:var(--t1)}#lpfoot .flogo span{color:var(--gold)}
-#lpfoot .fbrand p{font-size:13px;color:var(--t3);margin-top:8px;line-height:1.5}
-#lpfoot .fcopy{margin-top:24px;font-size:12px;color:var(--t3)}
-#lpfoot .fcol-label{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:16px}
-#lpfoot .fcol a{display:block;font-size:13px;color:var(--t3);padding:3px 0;transition:color .15s}#lpfoot .fcol a:hover{color:var(--t1)}
-#lpfoot .fbottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;border-top:1px solid var(--lpb);padding-top:24px;margin-top:32px;font-size:12px;color:var(--t3)}
-#lpfoot .fbottom a{color:var(--t3)}#lpfoot .fbottom a:hover{color:var(--gold)}
+.num-range{font-variant-numeric:tabular-nums;letter-spacing:-0.01em;white-space:nowrap}
 /* global-polish */
 a:not(.no-hover){transition:color .15s ease,opacity .15s ease}
 .nav-link:hover{color:#F1F5F9}
@@ -904,14 +940,14 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <div class="nav-inner">
     <a class="nav-logo" href="#hero">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="index.html" data-i18n="nav_home">Home</a></li>
-      <li><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a></li>
-      <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
-      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div></li>
-      <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
-      <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
-      <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
+      <li><a href="index.html" data-i18n="nav.home">Home</a></li>
+      <li><a href="prozess.html" data-i18n="nav.process">Wie es funktioniert</a></li>
+      <li><a href="kalkulator.html" data-i18n="nav.calc">Kalkulator</a></li>
+      <li><a href="materialien.html" data-i18n="nav.materials">Materialien</a></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div></li>
+      <li><a href="lieferant.html" data-i18n="nav.supplier">Lieferant werden</a></li>
+      <li><a href="ueberuns.html" data-i18n="nav.about">Über uns</a></li>
+      <li><a href="kontakt.html" data-i18n="nav.contact">Kontakt</a></li>
     </ul>
     <div class="nav-right">
       <div class="lang-switch" id="lang-switch">
@@ -927,16 +963,16 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         </div>
       </div>
       <div id="acct-wrap" style="position:relative">
-        <button id="acct-btn" onclick="toggleAcctDD()" aria-label="Konto">
+        <button id="acct-btn" onclick="toggleAcctDD()" aria-label="Konto" data-i18n-aria="lp_aria_account">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </button>
         <div id="acct-dd">
           <div id="acct-signed-out">
-            <div class="acct-group-label">Kunden</div>
+            <div class="acct-group-label" data-i18n="acct_group_customers">Kunden</div>
             <a href="#" onclick="clerkCustomerLogin();return false" data-i18n="acct_customer_login">Kunden-Login</a>
             <a href="#" onclick="clerkCustomerSignUp();return false" data-i18n="acct_customer_register" class="acct-customer-reg">Als Kunde registrieren</a>
             <div class="acct-divider"></div>
-            <div class="acct-group-label">Lieferanten</div>
+            <div class="acct-group-label" data-i18n="acct_group_suppliers">Lieferanten</div>
             <a href="#" onclick="clerkSupplierLogin();return false" data-i18n="acct_login">Lieferanten-Login</a>
             <a href="lieferant.html" data-i18n="acct_register">Als Lieferant registrieren</a>
           </div>
@@ -948,7 +984,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           </div>
         </div>
       </div>
-      <button class="btn btn-gold btn-md" data-i18n="nav_cta" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
+      <button class="btn btn-gold btn-md" onclick="window.location.href='kontakt.html'" data-i18n="nav.cta">Materialbedarf melden</button>
       <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
     </div>
   </div>
@@ -956,110 +992,73 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <a href="index.html" onclick="toggleNav()" data-i18n="nav_home">Home</a>
-  <a href="prozess.html" onclick="toggleNav()" data-i18n="nav_process">Wie es funktioniert</a>
-  <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calc">Kalkulator</a>
-  <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom">Für wen</a>
+  <a href="index.html" onclick="toggleNav()" data-i18n="nav.home">Home</a>
+  <a href="prozess.html" onclick="toggleNav()" data-i18n="nav.process">Wie es funktioniert</a>
+  <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav.calc">Kalkulator</a>
+  <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav.forwhom">Für wen</a>
   <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_ov_bau">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="nav_ov_handwerk">Handwerk</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div>
-  <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier">Lieferant werden</a>
-  <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav_about">Über uns</a>
-  <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav_contact">Kontakt</a>
-  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'" data-i18n="nav_cta">Materialbedarf melden</button>
+  <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav.supplier">Lieferant werden</a>
+  <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav.about">Über uns</a>
+  <a href="kontakt.html" onclick="toggleNav()" data-i18n="nav.contact">Kontakt</a>
+  <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'" data-i18n="nav.cta">Materialbedarf melden</button>
 </div>
 
+<!-- ===== NEW MINIMAL LANDING ===== -->
 <main id="lp">
-  <!-- HERO -->
-  <section class="phero"><div class="wrap">
-    <span class="eyebrow" data-i18n="sm_eyebrow">Sondermaterial</span>
-    <h1 data-i18n="sm_heading">Material nicht im Katalog?</h1>
-    <p class="sub" data-i18n="sr_sub">Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden.</p>
-  </div></section>
-
-  <!-- SPECIAL MATERIAL REQUEST FORM -->
-  <section class="sec bt"><div class="wrap">
-    <style>
-    #lp .sr-form{background:var(--bg1);border:1px solid var(--lpb);border-radius:16px;padding:28px 32px;max-width:600px;margin:8px auto 0;overflow:hidden}
-    #lp .sr-accent{height:3px;background:linear-gradient(90deg,#E8A020 0%,rgba(232,160,32,0.15) 100%);margin:-28px -32px 24px -32px;border-radius:16px 16px 0 0}
-    #lp .sr-title{font-size:16px;font-weight:600;color:var(--t1);margin-bottom:20px}
-    #lp .sr-field{margin-bottom:16px}
-    #lp .sr-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:6px}
-    #lp .sr-input{width:100%;background:var(--bg2);border:1px solid var(--lpbs);border-radius:6px;color:var(--t1);font-family:inherit;font-size:14px;padding:11px 14px;outline:none;transition:border-color .15s;color-scheme:dark}
-    #lp .sr-input:focus{border-color:var(--gold)}
-    #lp .sr-textarea{min-height:88px;resize:vertical;line-height:1.5}
-    #lp .sr-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-    @media(max-width:560px){#lp .sr-grid{grid-template-columns:1fr}}
-    #lp .sr-btn{width:100%;margin-top:8px;background:var(--gold);color:#070F1A;font-family:inherit;font-size:14px;font-weight:700;padding:13px;border:none;border-radius:6px;cursor:pointer;transition:filter .15s}
-    #lp .sr-btn:hover{filter:brightness(1.08)}
-    #lp .sr-btn:disabled{opacity:.6;cursor:default}
-    #lp .sr-error{display:none;color:#EF4444;font-size:13px;margin-top:10px}
-    #lp .sr-success-title{font-size:16px;font-weight:600;color:#22C55E;margin-bottom:6px}
-    #lp .sr-success-body{font-size:14px;color:var(--t2)}
-    </style>
-    <form class="sr-form" id="sr-form" onsubmit="return submitSpecialRequest(event)" novalidate>
-      <div class="sr-accent"></div>
-      <div class="sr-title" data-i18n="sr_title">Material anfragen</div>
-      <div class="sr-field">
-        <label class="sr-label" data-i18n="sr_l_material">MATERIAL / PRODUKTBEZEICHNUNG *</label>
-        <input type="text" class="sr-input" id="sr-material" data-i18n-placeholder="sr_ph_material" placeholder="z.B. Glaswolle 100mm, Stahlträger HEA 200..."/>
+  <section class="hero" style="min-height:70vh;display:flex;align-items:center">
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+      <span class="eyebrow" style="color:var(--gold)">404</span>
+      <h1 class="h1" style="font-weight:800">Diese Seite gibt es nicht.</h1>
+      <p style="font-size:18px;color:var(--t2);max-width:560px;margin:20px auto 0;line-height:1.6">Die gesuchte Seite wurde nicht gefunden — aber SourceOn schon.</p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:32px">
+        <a class="btn btn-gold btn-lg" href="/index.html">Zur Startseite →</a>
+        <a class="btn btn-ghost btn-lg" href="/kontakt.html" style="align-self:center;color:var(--gold);text-decoration:none;font-weight:600">Materialbedarf melden →</a>
       </div>
-      <div class="sr-field">
-        <label class="sr-label" data-i18n="sr_l_menge">GESCHÄTZTE MENGE *</label>
-        <input type="text" class="sr-input" id="sr-menge" data-i18n-placeholder="sr_ph_menge" placeholder="z.B. 500 m², 20 Stück, 5 Tonnen"/>
-      </div>
-      <div class="sr-field sr-grid">
-        <div>
-          <label class="sr-label" data-i18n="sr_l_earliest">FRÜHESTENS *</label>
-          <input type="date" class="sr-input" id="sr-date-von" name="liefer_von"/>
-        </div>
-        <div>
-          <label class="sr-label" data-i18n="sr_l_latest">SPÄTESTENS *</label>
-          <input type="date" class="sr-input" id="sr-date-bis" name="liefer_bis"/>
-        </div>
-      </div>
-      <div class="sr-field">
-        <label class="sr-label" data-i18n="sr_l_purpose">VERWENDUNGSZWECK (optional)</label>
-        <input type="text" class="sr-input" id="sr-purpose" data-i18n-placeholder="sr_ph_purpose" placeholder="z.B. Fassadendämmung Neubau"/>
-      </div>
-      <div class="sr-field">
-        <label class="sr-label" data-i18n="sr_l_contact">IHRE KONTAKTDATEN *</label>
-        <div class="sr-grid">
-          <input type="text" class="sr-input" id="sr-firm" data-i18n-placeholder="sr_ph_firm" placeholder="Firmenname"/>
-          <input type="email" class="sr-input" id="sr-email" data-i18n-placeholder="sr_ph_email" placeholder="E-Mail"/>
-        </div>
-      </div>
-      <div class="sr-field">
-        <label class="sr-label" data-i18n="sr_l_remarks">BEMERKUNGEN (optional)</label>
-        <textarea class="sr-input sr-textarea" id="sr-remarks" rows="3" data-i18n-placeholder="sr_ph_remarks" placeholder="Zusätzliche Infos, Spezifikationen, Fragen…"></textarea>
-      </div>
-      <button type="submit" class="sr-btn" id="sr-btn" data-i18n="sr_btn">Anfrage senden →</button>
-      <div class="sr-error" id="sr-error"></div>
-    </form>
-    <div class="sr-form" id="sr-success" style="display:none">
-      <div class="sr-accent"></div>
-      <div class="sr-success-title" data-i18n="sr_success_title">✓ Anfrage eingegangen</div>
-      <div class="sr-success-body" data-i18n="sr_success_body">Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden.</div>
     </div>
-  </div></section>
+  </section>
 </main>
 
 <!-- FOOTER -->
+
 <footer id="lpfoot"><div class="wrap">
   <div class="fgrid">
     <div class="fbrand">
       <div class="flogo">Source<span>On</span></div>
-      <p data-i18n="footer_brand_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
-      <p style="margin-top:4px;font-size:12px" data-i18n="footer_tagline">Du zahlst erst, wenn wir dir sparen.</p>
+      <p data-i18n="lpf_brand_desc">Schweizer B2B Beschaffungsvermittler für die Baubranche.</p>
+      <p style="margin-top:4px;font-size:12px" data-i18n="lpf_brand_tag">Du zahlst erst, wenn wir dir sparen.</p>
       <div class="fcopy">© 2026 SourceOn</div>
     </div>
-    <div class="fcol"><div class="fcol-label" data-i18n="footer_services">Leistungen</div>
-      <a href="index.html" data-i18n="nav_home">Home</a><a href="prozess.html" data-i18n="nav_process">Wie es funktioniert</a><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a><a href="materialien.html" data-i18n="nav_materials">Materialien</a></div>
-    <div class="fcol"><div class="fcol-label" data-i18n="footer_company">Unternehmen</div>
-      <a href="ueberuns.html" data-i18n="nav_about">Über uns</a><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></div>
-    <div class="fcol"><div class="fcol-label" data-i18n="footer_legal">Rechtliches</div>
-      <a href="datenschutz.html" data-i18n="footer_privacy">Datenschutz</a><a href="impressum.html" data-i18n="footer_imprint">Impressum</a><a href="agb.html" data-i18n="footer_terms">AGB</a></div>
+    <div class="fcol">
+      <div class="fcol-label" data-i18n="lpf_col1">Leistungen</div>
+      <a href="index.html" data-i18n="lpf_link_home">Home</a>
+      <a href="prozess.html" data-i18n="lpf_link_process">Wie es funktioniert</a>
+      <a href="fuerwen.html" data-i18n="lpf_link_forwhom">Für wen</a>
+      <a href="lieferant.html" data-i18n="lpf_link_supplier">Lieferant werden</a>
+      <a href="kalkulator.html" data-i18n="lpf_link_calc">Kalkulator</a>
+      <a href="materialien.html" data-i18n="lpf_link_materials">Materialien</a>
+    </div>
+    <div class="fcol">
+      <div class="fcol-label" data-i18n="lpf_col2">Unternehmen</div>
+      <a href="ueberuns.html" data-i18n="lpf_link_about">Über uns</a>
+      <a href="kontakt.html" data-i18n="lpf_link_contact">Kontakt</a>
+      <a href="lieferant.html" data-i18n="lpf_link_supplier2">Lieferant werden</a>
+    </div>
+    <div class="fcol">
+      <div class="fcol-label" data-i18n="lpf_col3">Rechtliches</div>
+      <a href="datenschutz.html" data-i18n="lpf_link_privacy">Datenschutz</a>
+      <a href="impressum.html" data-i18n="lpf_link_imprint">Impressum</a>
+      <a href="agb.html" data-i18n="lpf_link_terms">AGB</a>
+    </div>
   </div>
-  <div class="fbottom"><div>DE · EN · FR · IT</div><a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
+  <div class="fbottom">
+    <div>DE · EN · FR · IT</div>
+    <a href="mailto:info@sourceon.ch">info@sourceon.ch</a>
+  </div>
 </div></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
 
 <script>
 // SMOOTH ANCHOR SCROLL
@@ -1110,116 +1109,40 @@ const ro=new IntersectionObserver(entries=>{
 },{threshold:0.1});
 document.querySelectorAll('.reveal,.slide-left').forEach(el=>ro.observe(el));
 
-// COUNTERS
-function countEl(el,dur){
-  dur=dur||1200;
-  const t0=performance.now();
-  if(el.dataset.count!==undefined){
-    const target=parseFloat(el.dataset.count),suffix=el.dataset.suffix||'',dec=parseInt(el.dataset.dec||0);
-    const iv=setInterval(()=>{
-      const p=Math.min(1,(performance.now()-t0)/dur),v=target*(1-Math.pow(1-p,3));
-      el.textContent=(dec?v.toFixed(dec):Math.round(v))+suffix;
-      if(p>=1)clearInterval(iv);
-    },16);
-  }
-}
-const co=new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting){countEl(e.target);co.unobserve(e.target);}});
-},{threshold:0.3});
-document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
+// FAQ (stub for pages that might have inline FAQ)
+function toggleFaq(btn){}
 
-
-// MATERIAL LOOKUP
-const MATERIAL_DB=[
-  {cat:'Rohbau Kern',items:['Transportbeton C20/25','Transportbeton C25/30','Transportbeton C30/37','Transportbeton C35/45','Pumpbeton XC4 druckwasserdicht','Armierungsstahl Ø 8mm','Armierungsstahl Ø 10mm','Armierungsstahl Ø 12mm','Armierungsstahl Ø 16mm','Armierungsstahl Ø 20mm','Armierungsmatte Q188','Armierungsmatte Q257','Armierungsmatte Q335','Betonstahlkörbe vorgefertigt','Kies 0–32mm','Kies 0–16mm','Splitt 8–16mm','Splitt 16–32mm','Sand 0–4mm','Hochlochziegel 15cm','Hochlochziegel 20cm','Hochlochziegel 25cm','Kalksandstein 15cm','Porenbetonstein 20cm','Mauermörtel MG II','Mauermörtel MG III','Putzmörtel Innen GP','Putzmörtel Aussen R','Estrichmörtel CT-C25','Klebemörtel C1 Fliesen','Schalungsplatte 21mm','Schalungsplatte 27mm','Systemschalung Wand Miet','Träger H20 Holzträger','Stahlstützen ausziehbar','Betonfertigteil Treppe','Betonfertigteil Deckenplatte Spannbeton','Betonfertigteil Stütze']},
-  {cat:'Ausbau',items:['EPS-Dämmplatte 100mm Perimeter','EPS-Dämmplatte 140mm Fassade WDVS','EPS-Dämmplatte 200mm Flachdach','Mineralwolle 80mm Trennwand','Mineralwolle 120mm Steildach','XPS-Dämmplatte 80mm Bodenplatte','Gipskartonplatte GKB 12.5mm Standard','Gipskartonplatte GKBI 12.5mm Feuchtraum','Gipskartonplatte GKF 12.5mm Brandschutz','Metallständerwerk CW 75mm','Metallanschlussprofil UA 75mm','Tondachziegel Standard','Betonroofziegel','Dachabdichtungsbahn EPDM 1.5mm','Fassadenplatte Faserzement hinterlüftet']},
-  {cat:'Haustechnik',items:['Kunststoffrohr PVC-U DN 110 Abwasser','Kunststoffrohr PP DN 50 Entwässerung','Kupferrohr 22mm Trinkwasser','Verbundrohr PE-RT/Al 16mm Heizung','Heizungsverteiler Fussbodenheizung']},
-];
-const MAT_CODE={'Rohbau Kern':'RB','Ausbau':'AB','Haustechnik':'HT'};
+// ENGINE 3D (disabled - using static SVG)
 (function(){
-  const sel=document.getElementById('mat-lookup-select');
-  if(!sel)return;
-  MATERIAL_DB.forEach(group=>{
-    const og=document.createElement('optgroup');
-    og.label=group.cat;og.dataset.cat=group.cat;
-    group.items.forEach((name,i)=>{
-      const id='SO-'+MAT_CODE[group.cat]+'-'+String(i+1).padStart(2,'0');
-      const opt=document.createElement('option');
-      opt.value=id;opt.textContent=name;opt.dataset.cat=group.cat;opt.dataset.name=name;
-      og.appendChild(opt);
-    });
-    sel.appendChild(og);
-  });
-  sel.addEventListener('change',()=>{
-    const opt=sel.options[sel.selectedIndex];
-    var _tn=document.getElementById('mat-transport-note');
-    if(!opt.value){document.getElementById('mat-lookup-id').textContent='SO–000';var nk='Noch kein Material ausgewählt';var cl2=localStorage.getItem('sourceon-lang')||'de';if(cl2!=='de'&&window._matDbTrans&&window._matDbTrans[cl2]&&window._matDbTrans[cl2][nk])nk=window._matDbTrans[cl2][nk];document.getElementById('mat-lookup-name').textContent=nk;document.getElementById('mat-lookup-cat').textContent='—';if(_tn)_tn.style.display='none';return;}
-    if(_tn)_tn.style.display=/^(Transportbeton|Pumpbeton)/i.test(opt.dataset.name||'')?'block':'none';
-    document.getElementById('mat-lookup-id').textContent=opt.value;
-    var nEl=document.getElementById('mat-lookup-name');nEl.textContent=opt.dataset.name;nEl.dataset.deName=opt.dataset.name;
-    var cEl=document.getElementById('mat-lookup-cat');cEl.textContent=opt.dataset.cat;cEl.dataset.deCat=opt.dataset.cat;
-    var cl=localStorage.getItem('sourceon-lang')||'de';
-    if(cl!=='de'&&window._matDbTrans&&window._matDbTrans[cl]){
-      var mt=window._matDbTrans[cl];
-      if(mt[opt.dataset.name])nEl.textContent=mt[opt.dataset.name];
-      if(mt[opt.dataset.cat])cEl.textContent=mt[opt.dataset.cat];
-    }
-  });
 })();
-(function(){const track=document.getElementById('mat-strip-track');if(track)track.innerHTML+=track.innerHTML;})();
-
-// BENTO TILE DETAIL MODAL
-function closeBentoModal(){document.getElementById('bento-modal').classList.remove('open');}
-document.querySelectorAll('.bento-tile[data-detail-title]').forEach(tile=>{
-  tile.addEventListener('click',()=>{
-    document.getElementById('bento-modal-title').textContent=tile.getAttribute('data-detail-title');
-    document.getElementById('bento-modal-text').textContent=tile.getAttribute('data-detail-text');
-    document.getElementById('bento-modal').classList.add('open');
-  });
-});
-var bentoModal=document.getElementById('bento-modal');
-if(bentoModal)bentoModal.addEventListener('click',e=>{if(e.target.id==='bento-modal')closeBentoModal();});
 
 
-// FAQ ACCORDION
-function toggleFaq(btn){
-  const item=btn.closest('.faq-item');
-  const ans=item.querySelector('.faq-a');
-  const isOpen=btn.classList.contains('open');
-  document.querySelectorAll('.faq-q.open').forEach(function(q){
-    q.classList.remove('open');
-    const t=q.querySelector('.faq-toggle');if(t)t.textContent='+';
-    q.closest('.faq-item').querySelector('.faq-a').style.maxHeight='0';
-  });
-  if(!isOpen){
-    btn.classList.add('open');
-    ans.style.maxHeight=ans.scrollHeight+'px';
-    const t=btn.querySelector('.faq-toggle');if(t)t.textContent='−';
-  }
-}
+
+
+
 </script>
 
 <!-- CHAT WIDGET -->
-<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen">
+<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen" data-i18n-aria="lp_aria_chat">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
 </button>
 <div id="chat-win">
   <div class="chat-head">
     <div class="chat-head-info">
       <div class="chat-avatar">SO</div>
-      <div><div class="chat-head-title">SourceOn Assistent</div><div class="chat-head-sub">Beantwortet alle Fragen zu SourceOn</div></div>
+      <div><div class="chat-head-title" data-i18n="chat.title">SourceOn Assistent</div><div class="chat-head-sub" data-i18n="chat.sub">Beantwortet alle Fragen zu SourceOn</div></div>
     </div>
     <button id="chat-close" onclick="toggleChat()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="chat-msgs" id="chat-msgs"></div>
   <div class="chat-footer">
     <div class="chat-chips" id="chat-chips">
-      <button class="chat-chip" onclick="sendChip(this)">Wie funktioniert SourceOn?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Was kostet es?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Materialbedarf melden</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat.chip1">Wie funktioniert SourceOn?</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat.chip2">Was kostet es?</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat.chip3">Materialbedarf melden</button>
     </div>
     <div class="chat-input-row">
-      <input type="text" id="chat-input" placeholder="Frage stellen…" onkeydown="if(event.key==='Enter')chatSend()"/>
+      <input type="text" id="chat-input" data-i18n-placeholder="chat.placeholder" placeholder="Frage stellen…" onkeydown="if(event.key==='Enter')chatSend()"/>
       <button id="chat-send" onclick="chatSend()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg></button>
     </div>
   </div>
@@ -1229,7 +1152,8 @@ function toggleFaq(btn){
 const APIKEY='ANTHROPIC_API_KEY_HERE';
 const SYSTEM="Du bist der offizielle SourceOn Assistent. SourceOn ist ein Schweizer B2B Beschaffungsvermittler für die Baubranche. Provision: 2.25% auf Materialwert, nur bei nachgewiesener Ersparnis. Antworte immer auf Deutsch, kurz und präzise, maximal 3 Sätze.";
 let history=[];let chatOpen=false;
-window.toggleChat=function(){chatOpen=!chatOpen;document.getElementById('chat-win').classList.toggle('open',chatOpen);if(chatOpen&&document.getElementById('chat-msgs').children.length===0)addBotMsg('Hallo! Ich bin der SourceOn Assistent. Wie kann ich dir helfen?');};
+var _chatGreetings={de:'Hallo! Ich bin der SourceOn Assistent. Wie kann ich dir helfen?',en:'Hello! I\'m the SourceOn Assistant. How can I help you?',fr:'Bonjour! Je suis l\'assistant SourceOn. Comment puis-je vous aider?',it:'Ciao! Sono l\'assistente SourceOn. Come posso aiutarti?'};
+window.toggleChat=function(){chatOpen=!chatOpen;document.getElementById('chat-win').classList.toggle('open',chatOpen);if(chatOpen&&document.getElementById('chat-msgs').children.length===0){var cl=localStorage.getItem('sourceon-lang')||'de';addBotMsg(_chatGreetings[cl]||_chatGreetings.de);}};
 window.sendChip=function(el){document.getElementById('chat-chips').style.display='none';handleSend(el.textContent);};
 window.chatSend=function(){const inp=document.getElementById('chat-input');const txt=inp.value.trim();if(!txt)return;inp.value='';handleSend(txt);};
 function addUserMsg(txt){const el=document.createElement('div');el.className='chat-msg chat-msg-user';el.textContent=txt;document.getElementById('chat-msgs').appendChild(el);scrollBottom();}
@@ -1237,414 +1161,508 @@ function addBotMsg(txt){const wrap=document.createElement('div');const lbl=docum
 function showTyping(){const el=document.createElement('div');el.className='chat-typing';el.id='chat-typing';el.innerHTML='<span></span><span></span><span></span>';document.getElementById('chat-msgs').appendChild(el);scrollBottom();}
 function hideTyping(){const el=document.getElementById('chat-typing');if(el)el.remove();}
 function scrollBottom(){const m=document.getElementById('chat-msgs');m.scrollTop=m.scrollHeight;}
-async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content:txt});if(history.length>20)history=history.slice(-20);if(APIKEY==='ANTHROPIC_API_KEY_HERE'){addBotMsg('Assistent wird bald verfügbar. Kontaktiere uns direkt: info@sourceon.ch');return;}showTyping();try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':APIKEY,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,system:SYSTEM,messages:history})});const d=await r.json();const reply=d.content&&d.content[0]?d.content[0].text:'Entschuldigung. Kontaktiere uns: info@sourceon.ch';hideTyping();history.push({role:'assistant',content:reply});if(history.length>20)history=history.slice(-20);addBotMsg(reply);}catch(e){hideTyping();addBotMsg('Verbindungsfehler. Kontaktiere uns: info@sourceon.ch');}
+async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content:txt});if(history.length>20)history=history.slice(-20);if(APIKEY==='ANTHROPIC_API_KEY_HERE'){addBotMsg(window.soT({de:'Assistent wird bald verfügbar. Kontaktiere uns direkt: info@sourceon.ch',en:'Assistant coming soon. Contact us directly: info@sourceon.ch',fr:'Assistant bientôt disponible. Contacte-nous directement: info@sourceon.ch',it:'Assistente presto disponibile. Contattaci direttamente: info@sourceon.ch'}));return;}showTyping();try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':APIKEY,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,system:SYSTEM,messages:history})});const d=await r.json();const reply=d.content&&d.content[0]?d.content[0].text:window.soT({de:'Entschuldigung. Kontaktiere uns: info@sourceon.ch',en:'Sorry. Contact us: info@sourceon.ch',fr:'Désolé. Contacte-nous: info@sourceon.ch',it:'Spiacenti. Contattaci: info@sourceon.ch'});hideTyping();history.push({role:'assistant',content:reply});if(history.length>20)history=history.slice(-20);addBotMsg(reply);}catch(e){hideTyping();addBotMsg(window.soT({de:'Verbindungsfehler. Kontaktiere uns: info@sourceon.ch',en:'Connection error. Contact us: info@sourceon.ch',fr:'Erreur de connexion. Contacte-nous: info@sourceon.ch',it:'Errore di connessione. Contattaci: info@sourceon.ch'}));}
 }
 })();
 </script>
 
 <script>
-(function(){
-const T={
-  de:{
-    page_title:'Sondermaterial anfragen — SourceOn',sm_eyebrow:'Sondermaterial',sm_heading:'Material nicht im Katalog?',
-    nav_home:'Home',nav_process:'Wie es funktioniert',nav_calc:'Kalkulator',nav_materials:'Materialien',
-    nav_forwhom:'Für wen',nav_supplier:'Lieferant werden',nav_about:'Über uns',nav_contact:'Kontakt',
-    nav_cta:'Materialbedarf melden',
+window.soLangNow=function(){return localStorage.getItem('sourceon-lang')||'de';};
+window.soT=function(map){var l=window.soLangNow();return (map&&(map[l]!=null?map[l]:map.de))||'';};
+var I18N={
+  de:{lp_t6_cat:'Und mehr',lp_t6_title:'Nicht dabei?',lp_t6_desc:'Meld dich — wir prüfen ob SourceOn für deinen Bedarf passt.',lp_t6_link:'Anfragen →',
+    'nav.home':'Home','nav.process':'Wie es funktioniert','nav.calc':'Kalkulator','nav.materials':'Materialien',
+    'nav.forwhom':'Für wen','nav.supplier':'Lieferant werden','nav.about':'Über uns','nav.contact':'Kontakt',
+    'nav.cta':'Materialbedarf melden',
     nav_dd_bau:'Bauunternehmen & GU',nav_dd_handwerk:'Handwerk & Subunternehmer',nav_dd_gu:'Generalunternehmer & TU',nav_dd_oeff:'Öffentliche Auftraggeber',nav_dd_immo:'Immobilien & Wohnbau',
     nav_ov_bau:'Bauunternehmen',nav_ov_handwerk:'Handwerk',nav_ov_gu:'Generalunternehmer',
-    mat_select_label:'Material wählen, um SourceOn-ID zu sehen',
-    mat_select_option:'Material wählen…',
-    mat_field_id:'SourceOn-ID',mat_field_name:'Material',mat_field_cat:'Kategorie',mat_field_norm:'Norm',mat_transport_note:'Hinweis: Transportkosten werden separat zwischen dir und dem Lieferanten vereinbart und sind nicht Bestandteil der SourceOn-Vermittlung. Bei grossen Mengen lohnt es sich, auch hier nachzufragen.',
-    stat_label_areas:'Bereiche',stat_sub_areas:'Rohbau, Ausbau und Haustechnik',
-    stat_label_materials:'Materialien',stat_sub_materials:'Alle geprüft und normkonform',
-    stat_label_delivery:'Lieferung',stat_sub_delivery:'Von Genf bis St. Gallen',
-    norm_label:'Qualitätsstandard',norm_sub:'Schweizer Norm — europäisch harmonisiert',
-    norm_heading:'Jedes Material entspricht Schweizer Normen — lückenlos dokumentiert.',
-    norm_body:'SN EN und SIA-konforme Materialien, persönlich geprüfte Lieferanten. Alle Dokumente verfügbar — für interne Prüfungen, öffentliche Ausschreibungen und Bauabnahmen.',
-    special_heading:'Material nicht in der Liste?',
-    special_body:'Wir erweitern unser Lieferantennetz gezielt für deinen Bedarf — auf Anfrage.',
-    special_link:'Anfrage stellen →',
-    sr_title:'Material anfragen',sr_sub:'Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden.',sr_l_material:'MATERIAL / PRODUKTBEZEICHNUNG *',sr_ph_material:'z.B. Glaswolle 100mm, Stahlträger HEA 200...',sr_l_menge:'GESCHÄTZTE MENGE *',sr_ph_menge:'z.B. 500 m², 20 Stück, 5 Tonnen',sr_l_date:'LIEFERZEITRAUM *',sr_l_purpose:'VERWENDUNGSZWECK (optional)',sr_ph_purpose:'z.B. Fassadendämmung Neubau',sr_l_contact:'IHRE KONTAKTDATEN *',sr_l_earliest:'FRÜHESTENS *',sr_l_latest:'SPÄTESTENS *',sr_l_remarks:'BEMERKUNGEN (optional)',sr_ph_remarks:'Zusätzliche Infos, Spezifikationen, Fragen…',sr_ph_firm:'Firmenname',sr_ph_email:'E-Mail',sr_btn:'Anfrage senden →',sr_success_title:'✓ Anfrage eingegangen',sr_success_body:'Wir prüfen deinen Bedarf und melden uns innerhalb von 48 Stunden.',
-    footer_brand_desc:'Schweizer B2B Beschaffungsvermittler für die Baubranche.',
-    mat_label:'Material & Norm',
-    mat_heading:'Jedes Material.<br>Eine Norm.',
-    mat_sub:'Alle Materialien, die SourceOn vermittelt, erfüllen die SourceOn-Prüfkriterien — SN EN und SIA-konform, lückenlos dokumentiert.',
-    mat_select_placeholder:'Material wählen, um SourceOn-ID zu sehen…','strip_concrete':'Transportbeton & Pumpbeton','strip_rebar':'Armierung & Bewehrung','strip_gravel':'Kies, Splitt & Sand','strip_masonry':'Mauerwerk & Moertel','strip_formwork':'Schalung & Stuetzen','strip_precast':'Betonfertigteile','strip_insulation':'Daemmung','strip_drywall':'Gipskarton & Staenderwerk','strip_roofing':'Bedachung & Fassade','strip_plumbing':'Haustechnik & Rohrleitungen',
-    mat_no_selection:'Noch kein Material ausgewählt',
-    coverage_label:'Abdeckung',
-    coverage_heading:'Ein Ansprechpartner.<br>Alle Materialien.',
-    coverage_sub:'Klicke auf ein Feld für Details.',
-    bento_tag_areas:'3 Bereiche, 50+ Materialien',
-    bento_big_shell:'Vom Rohbau<br>bis zur Haustechnik.',
-    bento_text_shell:'Rohbau Kern, Ausbau und Haustechnik — jedes einzelne Material dokumentiert, geprüft und über einen einzigen Ansprechpartner beschafft.',
-    bento_text_norm:'Jedes Material entspricht Schweizer Normen — lückenlos dokumentiert.',
-    bento_num_partners:'Schweizweit',
-    bento_text_partners:'geprüfte Partnerlieferanten.',
-    bento_num_direct:'Direkt',
-    bento_text_direct:'Direktlieferung auf deine Baustelle — ohne Umwege.',
-    bento_num_chwide:'CH-weit',
-    bento_text_chwide:'Von Genf bis St. Gallen — Logistik organisiert, ohne dass du dich kümmern musst.',
-    bento_num_special:'Sonderfall? Kein Problem.',
-    bento_text_special:'Material nicht in der Liste? Wir erweitern unser Lieferantennetz gezielt für deinen Bedarf — auf Anfrage.',
-    cta_title:'Material gefunden?',
-    cta_sub:'Melde deinen Bedarf in zwei Minuten — du siehst sofort deinen garantierten Mindestrabatt.',
-    cta_btn:'Materialbedarf melden →',
-    cta_note:'Du zahlst erst, wenn wir dir sparen.',
-    footer_desc:'Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.',
-    footer_services:'Leistungen',footer_company:'Unternehmen',footer_legal:'Rechtliches',
-    footer_calc:'Einsparkalkulator',
-    footer_privacy:'Datenschutz',footer_imprint:'Impressum',footer_terms:'AGB',
-    footer_copy:'© 2026 SourceOn, Zürich — Alle Rechte vorbehalten',
-    footer_tagline:'Du zahlst erst, wenn wir dir sparen.'
+    acct_group_customers:'Kunden',acct_group_suppliers:'Lieferanten',
+    lp_aria_account:'Konto',lp_aria_chat:'SourceOn Assistent öffnen',lp_aria_scroll:'Weiter',
+    meta_title:'SourceOn — Du zahlst erst, wenn wir dir sparen.',
+    meta_desc:'SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme.',
+    lp_hero_eyebrow:'Schweizer Baustoffbeschaffung',
+    lp_hero_h1:'Baumaterialien günstiger einkaufen.',
+    lp_hero_h1gold:'Für jede Schweizer Baufirma.',
+    lp_hero_sub:'Du zahlst erst, wenn wir dir sparen.',
+    lp_hero_cta1:'Materialbedarf melden →',lp_hero_cta2:'Wie es funktioniert →',
+    lp_s2_label:"So funktioniert's",
+    lp_c1_cat:'Prozess',lp_c1_title:'Vier Schritte vom Bedarf bis zur Lieferung.',
+    lp_c1_desc:'Bedarf melden, Bündel abwarten, Mindestrabatt bestätigen — fertig. Du zahlst erst, wenn du sparst.',
+    lp_c1_link:'Wie es funktioniert',
+    lp_c2_cat:'Kalkulator',lp_c2_title:'Berechne dein persönliches Einsparpotenzial.',
+    lp_c2_desc:'Gib dein Bestellvolumen ein und sieh sofort, wie viel du mit SourceOn sparen könntest.',
+    lp_c2_link:'Jetzt berechnen',
+    lp_c3_cat:'Materialien',lp_c3_title:'58 Baustoffe. SIA/ISO-konform. Direkt beschaffbar.',
+    lp_c3_desc:'Von Transportbeton bis Sanitär — alle Materialien geprüft, normkonform und über einen einzigen Kanal beschaffbar.',
+    lp_c3_link:'Katalog ansehen',
+    lp_stat_label:'Der Schweizer Baumarkt',lp_stat_num:'CHF 8–10 Mrd.',lp_stat_sub:'Jährliches Einkaufsvolumen',
+    lp_stat_h:'98 % der Schweizer Baufirmen sind KMU — ohne Grossabnehmerkonditionen.',
+    lp_stat_body:'Wer alleine einkauft, zahlt Einzelpreise. SourceOn bündelt den Bedarf mehrerer Baufirmen — und verhandelt mit dem gesamten Volumen beim Lieferanten. Je grösser das Bündel, desto höher der Rabatt für alle.',
+    lp_s4_label:'Für wen',
+    lp_t1_cat:'Bauunternehmen & Generalunternehmen',lp_t1_title:'Bessere Einkaufspreise — für jede Baufirma, jede Grösse.',
+    lp_t1_desc:'SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte. Ob KMU oder Grosskonzern — jeder profitiert.',
+    lp_t1_link:'Mehr erfahren →',
+    lp_t2_cat:'Handwerk & Subunternehmer',lp_t2_title:'Für jedes Gewerk.',lp_t2_desc:'Schnelle Abwicklung, keine Vorauszahlung, vollautomatisch.',
+    lp_t3_cat:'Generalunternehmer & TU',lp_t3_title:'Grosse Projekte, maximale Einkaufsmacht.',lp_t3_desc:'Riesige Materialmengen, höchste Rabattstufen.',
+    lp_t4_cat:'Öffentliche Auftraggeber',lp_t4_title:'Transparent, normkonform, dokumentiert.',lp_t4_desc:'Gemeinden, Kantone, staatsnahe Betriebe.',
+    lp_t5_cat:'Immobilien & Wohnbau',lp_t5_title:'Regelmässiger Unterhaltsbedarf.',lp_t5_desc:'Wohnbaugenossenschaften und Immobilienverwaltungen mit konstantem Bedarf.',
+    lp_s5_lbl:'Für Lieferanten',lp_s5_h2:'Schweizer Baustofflieferant?',lp_s5_p:'Zugang zu gebündelten Grossaufträgen ohne eigene Akquise.',lp_s5_cta:'Als Lieferant bewerben →',
+    lpf_brand_desc:'Schweizer B2B Beschaffungsvermittler für die Baubranche.',lpf_brand_tag:'Du zahlst erst, wenn wir dir sparen.',
+    lpf_col1:'Leistungen',lpf_link_home:'Home',lpf_link_process:'Wie es funktioniert',lpf_link_forwhom:'Für wen',lpf_link_supplier:'Lieferant werden',lpf_link_calc:'Kalkulator',lpf_link_materials:'Materialien',
+    lpf_col2:'Unternehmen',lpf_link_about:'Über uns',lpf_link_contact:'Kontakt',lpf_link_supplier2:'Lieferant werden',
+    lpf_col3:'Rechtliches',lpf_link_privacy:'Datenschutz',lpf_link_imprint:'Impressum',lpf_link_terms:'AGB',
+    trust_h3:'Verifizierung erforderlich',trust_msg:'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',trust_submit:'Bestätigen',trust_nocode:'Keinen Code erhalten?',trust_resend:'Code erneut senden',trust_cancel:'Abbrechen',
+    'hero.title':'Du zahlst erst,<br><span class="gold">wenn wir dir sparen.</span>',
+    'hero.sub':'Baumaterialien günstiger einkaufen — für jede Schweizer Baufirma. Ohne Risiko, ohne Vorauskosten.',
+    'hero.howit':'Wie es funktioniert →',
+    home_steps_label:"SO FUNKTIONIERT'S",home_steps_title:"Vier Schritte zu deiner Ersparnis.",home_step1_title:"Bedarf melden",home_step1_text:"Material, Menge, Lieferzeitraum — in zwei Minuten gemeldet.",home_step2_title:"Angebot erhalten",home_step2_text:"Wir bündeln deinen Bedarf mit anderen Baufirmen und verhandeln beim Lieferanten.",home_step3_title:"Deine Garantie",home_step3_text:"Dein Mindestrabatt steht vorher fest — netto, garantiert.",home_step4_title:"Du sparst — garantiert",home_step4_text:"Direktlieferung auf deine Baustelle. Du zahlst nur, wenn du sparst.",home_steps_more:"Mehr zum Prozess →",
+    'story.text':'Alleine einkaufen heisst durchschnittliche Konditionen. SourceOn bündelt den Bedarf mehrerer Baufirmen zu einem gemeinsamen Auftrag — und gibt den Mengenrabatt an jede einzelne Firma weiter.',
+    'bignum.caption':'So viel der Gesamtkosten einer Baufirma sind reine Materialkosten.<br><a href="kalkulator.html" class="bignum-cta" data-i18n="bignum.cta">Berechne, wie viel du mit SourceOn sparen kannst →</a>',
+    'bignum.cta':'Berechne, wie viel du mit SourceOn sparen kannst →',
+    'tech.label':'Technologie','tech.title':'Die Maschine hinter<br>jedem Angebot.',
+    'tech.sub':'SourceOn bündelt den Materialbedarf mehrerer Baufirmen zu einem gemeinsamen Auftrag — und verhandelt mit dem gesamten Volumen beim Lieferanten. Je grösser das Bündel, desto höher der Rabatt.',
+    'tech.detail':'Über 340 Lieferantendatenpunkte werden täglich aktualisiert. Ihre Anfragen werden mit historischen Preisen abgeglichen, um die bestmöglichen Konditionen zu identifizieren.',
+    'tech.cta':'Materialbedarf melden →','tech.illus':'Illustrativ — vereinfachte Darstellung des Bündelungsprozesses',
+    'bundling.label':'BÜNDELUNG VISUALISIERT','bundling.title':'Beschaffung auf dem nächsten Level.',
+    'bundling.sub':'Sieh wie SourceOn Materialbedarf bündelt und Mengenrabatte erzielt.',
+    'bundling.note':'SourceOn verbindet Baufirmen mit Lieferanten.',
+    'explore.label':'Entdecken','explore.title':'Alles über SourceOn.',
+    'explore.process.title':'Wie es funktioniert',
+    'explore.process.desc':'Vier Schritte vom Bedarf bis zur Lieferung — und warum es sich lohnt.',
+    'explore.materials.title':'Materialien & Lieferanten',
+    'explore.materials.desc':'50+ Baustoffe, geprüfte Partnerlieferanten in der ganzen Schweiz.',
+    'explore.forwhom.title':'Für wen',
+    'explore.forwhom.desc':'Bauunternehmen, Handwerker, Investoren und Architekten.',
+    'explore.supplier.title':'Lieferant werden',
+    'explore.supplier.desc':'Verifizierter SourceOn-Partner werden und Zugang zu gebündelten Aufträgen erhalten.',
+    'explore.more':'Mehr erfahren →','explore.apply':'Jetzt bewerben →',
+    'suppliers.badge':'Alle Lieferanten persönlich geprüft — SIA/ISO-konform',
+    'suppliers.title':'Unsere Partnerlieferanten',
+    'suppliers.note':'Weitere Partnerlieferanten in Aufbau. Logos werden nach Vertragsabschluss ergänzt.',
+    'zahlen.label':'ZAHLEN & FAKTEN','zahlen.title':'Der Schweizer Baumarkt — in Zahlen.',
+    'zahlen.vol_num':'CHF 8–10 Mrd.','zahlen.vol':'Jährliches Einkaufsvolumen Baumarkt CH',
+    'zahlen.kmu':'der CH-Baufirmen sind KMU','zahlen.costs_num':'15–25%',
+    'zahlen.costs':'Preisunterschied Einzel- vs. Grossabnehmer',
+    'zahlen.savings_num':'3–5%','zahlen.savings':'Durchschnittliche Nettomarge einer Schweizer Baufirma — jeder Franken beim Einkauf zählt.',
+    'zahlen.offer_num':'60%','zahlen.offer':'der Schweizer KMU-Baufirmen ohne professionellen Materialeinkauf.',
+    'zahlen.quotes_num':'3+','zahlen.quotes':'Offerten — Mindestanzahl Angebote pro Beschaffungsauftrag',
+    'zahlen.statement':'Jede Bestellung die du alleine aufgibst kostet dich mehr als nötig.',
+    'cta.title':'Bereit für tiefere Einkaufspreise?',
+    'cta.sub':'Melde deinen nächsten Materialbedarf — du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst alles in deinem Dashboard.',
+    'footer.desc':'Schweizer B2B Beschaffungsvermittler für die Baubranche. Du zahlst erst, wenn wir dir sparen.',
+    'footer.services':'Leistungen','footer.company':'Unternehmen','footer.legal':'Rechtliches',
+    'footer.home':'Home','footer.process':'Wie es funktioniert','footer.forwhom':'Für wen',
+    'footer.supplier':'Lieferant werden','footer.calc':'Einsparkalkulator','footer.materials':'Materialien',
+    'footer.about':'Über uns','footer.contact':'Kontakt','footer.supplier2':'Lieferant werden',
+    'footer.privacy':'Datenschutz','footer.imprint':'Impressum','footer.terms':'AGB',
+    'footer.copy':'© 2026 SourceOn, Zürich — Alle Rechte vorbehalten',
+    'footer.tagline':'Du zahlst erst, wenn wir dir sparen.',
+    'svg.market':'Marktpreise','svg.purchase':'Einkaufsdaten','svg.supplier':'Lieferantendaten',
+    'svg.hist':'Hist. Preise','svg.requests':'Anfragen','svg.demands':'Materialbedarfe',
+    'svg.optimized':'Optimiertes Angebot','svg.bestcond':'Beste Konditionen',
+    'svg.compared':'3 Angebote verglichen','svg.savings':'-12% Einsparung',
+    'svg.auto':'automatisch verhandelt','svg.ai':'KI aktiv','svg.realtime':'Echtzeit-Marktanalyse',
+    'chat.title':'SourceOn Assistent','chat.sub':'Beantwortet alle Fragen zu SourceOn',
+    'chat.chip1':'Wie funktioniert SourceOn?','chat.chip2':'Was kostet es?','chat.chip3':'Materialbedarf melden',
+    'chat.placeholder':'Frage stellen…'
   },
-  en:{
-    page_title:'Request special material — SourceOn',sm_eyebrow:'Special material',sm_heading:'Material not in the catalogue?',
-    nav_home:'Home',nav_process:'How it works',nav_calc:'Calculator',nav_materials:'Materials',
-    nav_forwhom:'For whom',nav_supplier:'Become a supplier',nav_about:'About us',nav_contact:'Contact',
-    nav_cta:'Report material needs',
-    nav_dd_bau:'Construction firms & GC',nav_dd_handwerk:'Trades & subcontractors',nav_dd_gu:'General & total contractors',nav_dd_oeff:'Public clients',nav_dd_immo:'Real estate & housing',
+  en:{lp_t6_cat:'And more',lp_t6_title:'Not listed?',lp_t6_desc:'Get in touch — we\'ll check if SourceOn works for your needs.',lp_t6_link:'Enquire →',
+    'nav.home':'Home','nav.process':'How it works','nav.calc':'Calculator','nav.materials':'Materials',
+    'nav.forwhom':'Who it\'s for','nav.supplier':'Become a supplier','nav.about':'About us','nav.contact':'Contact',
+    'nav.cta':'Report material demand',
+    nav_dd_bau:'Construction firms & GC',nav_dd_handwerk:'Trades & subcontractors',nav_dd_gu:'General & total contractors',nav_dd_oeff:'Public sector clients',nav_dd_immo:'Real estate & housing',
     nav_ov_bau:'Construction firms',nav_ov_handwerk:'Trades',nav_ov_gu:'General contractors',
-    mat_select_label:'Choose a material to see its SourceOn ID',
-    mat_select_option:'Choose a material…',
-    mat_field_id:'SourceOn ID',mat_field_name:'Material',mat_field_cat:'Category',mat_field_norm:'Standard',mat_transport_note:'Note: Transport costs are agreed directly between you and the supplier and are not part of the SourceOn arrangement. For large quantities, it is worth enquiring about these separately.',
-    stat_label_areas:'Areas',stat_sub_areas:'Structural shell, finishing and building services',
-    stat_label_materials:'Materials',stat_sub_materials:'All inspected and standard-compliant',
-    stat_label_delivery:'Delivery',stat_sub_delivery:'From Geneva to St. Gallen',
-    norm_label:'Quality standard',norm_sub:'Swiss standard — harmonized across Europe',
-    norm_heading:'Every material meets Swiss standards — fully documented.',
-    norm_body:'SN EN and SIA compliant materials, personally vetted suppliers. All documents available — for internal audits, public tenders and construction acceptance.',
-    special_heading:'Material not on the list?',
-    special_body:'We expand our supplier network specifically for your needs — on request.',
-    special_link:'Send a request →',
-    sr_title:'Request a material',sr_sub:'We will review your request and get back to you within 48 hours.',sr_l_material:'MATERIAL / PRODUCT DESCRIPTION *',sr_ph_material:'e.g. Glass wool 100mm, Steel beam HEA 200...',sr_l_menge:'ESTIMATED QUANTITY *',sr_ph_menge:'e.g. 500 m², 20 pieces, 5 tonnes',sr_l_date:'DELIVERY TIMEFRAME *',sr_l_purpose:'PURPOSE (optional)',sr_ph_purpose:'e.g. Facade insulation new build',sr_l_contact:'YOUR CONTACT DETAILS *',sr_l_earliest:'EARLIEST *',sr_l_latest:'LATEST *',sr_l_remarks:'REMARKS (optional)',sr_ph_remarks:'Additional info, specifications, questions…',sr_ph_firm:'Company name',sr_ph_email:'Email',sr_btn:'Send request →',sr_success_title:'✓ Request received',sr_success_body:'We will review your request and get back to you within 48 hours.',
-    footer_brand_desc:'Swiss B2B procurement broker for the construction industry.',
-    mat_label:'Material & Standard',
-    mat_heading:'Every Material.<br>One Standard.',
-    mat_sub:'All materials sourced by SourceOn meet our inspection criteria — SN EN and SIA compliant, fully documented.',
-    mat_select_placeholder:'Choose a material to see SourceOn ID…','strip_concrete':'Ready-mix & pump concrete','strip_rebar':'Reinforcement & rebar','strip_gravel':'Gravel, chippings & sand','strip_masonry':'Masonry & mortar','strip_formwork':'Formwork & props','strip_precast':'Precast concrete','strip_insulation':'Insulation','strip_drywall':'Drywall & metal studs','strip_roofing':'Roofing & facade','strip_plumbing':'Building services & piping','mat_no_selection':'No material selected',
-    mat_no_selection:'No material selected yet',
-    coverage_label:'Coverage',
-    coverage_heading:'One Contact.<br>All Materials.',
-    coverage_sub:'Click a tile for details.',
-    bento_tag_areas:'3 Areas, 50+ Materials',
-    bento_big_shell:'From structural shell<br>to building services.',
-    bento_text_shell:'Structural core, finishing and building services — every single material documented, inspected and sourced through a single point of contact.',
-    bento_text_norm:'Every material meets Swiss standards — fully documented.',
-    bento_num_partners:'Nationwide',
-    bento_text_partners:'certified partner suppliers.',
-    bento_num_direct:'Direct',
-    bento_text_direct:'Direct delivery to your construction site — no detours.',
-    bento_num_chwide:'CH-wide',
-    bento_text_chwide:'From Geneva to St. Gallen — logistics organized, without you having to worry.',
-    bento_num_special:'Special case? No problem.',
-    bento_text_special:'Material not on the list? We expand our supplier network specifically for your needs — on request.',
-    cta_title:'Found your material?',
-    cta_sub:'Report your need in two minutes — you see your guaranteed minimum discount right away.',
-    cta_btn:'Report material need →',
-    cta_note:'You only pay once we save you money.',
-    footer_desc:'Swiss B2B procurement broker for the construction industry. You only pay when we save you money.',
-    footer_services:'Services',footer_company:'Company',footer_legal:'Legal',
-    footer_calc:'Savings calculator',
-    footer_privacy:'Privacy policy',footer_imprint:'Imprint',footer_terms:'Terms',
-    footer_copy:'© 2026 SourceOn, Zurich — All rights reserved',
-    footer_tagline:'You only pay when we save you money.'
+    acct_group_customers:'Customers',acct_group_suppliers:'Suppliers',
+    lp_aria_account:'Account',lp_aria_chat:'Open SourceOn Assistant',lp_aria_scroll:'Next',
+    meta_title:'SourceOn — You only pay when we save you money.',
+    meta_desc:'SourceOn bundles the material purchasing of Swiss SME construction firms and achieves volume discounts that no single customer could obtain alone.',
+    lp_hero_eyebrow:'Swiss building material procurement',
+    lp_hero_h1:'Buy building materials at lower prices.',
+    lp_hero_h1gold:'For every Swiss construction firm.',
+    lp_hero_sub:'You only pay when we save you money.',
+    lp_hero_cta1:'Report material demand →',lp_hero_cta2:'How it works →',
+    lp_s2_label:'How it works',
+    lp_c1_cat:'Process',lp_c1_title:'Four steps from demand to delivery.',
+    lp_c1_desc:'Report your demand, wait for the bundle, confirm your minimum discount — done. You only pay when you save.',
+    lp_c1_link:'How it works',
+    lp_c2_cat:'Calculator',lp_c2_title:'Calculate your personal savings potential.',
+    lp_c2_desc:'Enter your order volume and instantly see how much you could save with SourceOn.',
+    lp_c2_link:'Calculate now',
+    lp_c3_cat:'Materials',lp_c3_title:'58 building materials. SIA/ISO-compliant. Directly procurable.',
+    lp_c3_desc:'From ready-mix concrete to sanitary — all materials tested, standard-compliant and procurable through a single channel.',
+    lp_c3_link:'View catalogue',
+    lp_stat_label:'The Swiss construction market',lp_stat_num:'CHF 8–10 bn',lp_stat_sub:'Annual procurement volume',
+    lp_stat_h:'98% of Swiss construction firms are SMEs — without bulk-buyer conditions.',
+    lp_stat_body:'Whoever buys alone pays single-unit prices. SourceOn bundles the demand of several construction firms — and negotiates with the entire volume at the supplier. The bigger the bundle, the higher the discount for everyone.',
+    lp_s4_label:"Who it's for",
+    lp_t1_cat:'Construction firms & general contractors',lp_t1_title:'Better purchasing prices — for every construction firm, every size.',
+    lp_t1_desc:'SourceOn bundles your material demand with other construction firms and negotiates volume discounts. Whether SME or large corporation — everyone benefits.',
+    lp_t1_link:'Learn more →',
+    lp_t2_cat:'Trades & subcontractors',lp_t2_title:'For every trade.',lp_t2_desc:'Fast processing, no upfront payment, fully automated.',
+    lp_t3_cat:'General & total contractors',lp_t3_title:'Large projects, maximum purchasing power.',lp_t3_desc:'Huge material quantities, highest discount tiers.',
+    lp_t4_cat:'Public sector clients',lp_t4_title:'Transparent, standard-compliant, documented.',lp_t4_desc:'Municipalities, cantons, public-sector entities.',
+    lp_t5_cat:'Real estate & housing',lp_t5_title:'Regular maintenance needs.',lp_t5_desc:'Housing cooperatives and property managers with constant demand.',
+    lp_s5_lbl:'For suppliers',lp_s5_h2:'Swiss building material supplier?',lp_s5_p:'Access to bundled large orders without your own acquisition.',lp_s5_cta:'Apply as a supplier →',
+    lpf_brand_desc:'Swiss B2B procurement broker for the construction industry.',lpf_brand_tag:'You only pay when we save you money.',
+    lpf_col1:'Services',lpf_link_home:'Home',lpf_link_process:'How it works',lpf_link_forwhom:"Who it's for",lpf_link_supplier:'Become a supplier',lpf_link_calc:'Calculator',lpf_link_materials:'Materials',
+    lpf_col2:'Company',lpf_link_about:'About us',lpf_link_contact:'Contact',lpf_link_supplier2:'Become a supplier',
+    lpf_col3:'Legal',lpf_link_privacy:'Privacy policy',lpf_link_imprint:'Imprint',lpf_link_terms:'Terms & conditions',
+    trust_h3:'Verification required',trust_msg:'A verification code has been sent to your email. Please enter it below.',trust_submit:'Confirm',trust_nocode:"Didn't receive a code?",trust_resend:'Resend code',trust_cancel:'Cancel',
+    'hero.title':'You only pay<br><span class="gold">when we save you money.</span>',
+    'hero.sub':'Buy building materials at lower prices — for every Swiss construction firm. No risk, no upfront costs.',
+    'hero.howit':'How it works →',
+    home_steps_label:"HOW IT WORKS",home_steps_title:"Four steps to your savings.",home_step1_title:"Report your need",home_step1_text:"Material, quantity, timeframe — reported in two minutes.",home_step2_title:"Receive an offer",home_step2_text:"We bundle your demand with other firms and negotiate with the supplier.",home_step3_title:"Your guarantee",home_step3_text:"Your minimum discount is fixed upfront — net, guaranteed.",home_step4_title:"You save — guaranteed",home_step4_text:"Direct delivery to your site. You only pay when you save.",home_steps_more:"More about the process →",
+    'story.text':'Buying alone means average conditions. SourceOn bundles the demand of multiple construction firms into a single order — and passes the volume discount on to each individual company.',
+    'bignum.caption':'This much of a construction firm\'s total costs are pure material costs.<br><a href="kalkulator.html" class="bignum-cta" data-i18n="bignum.cta">Calculate how much you can save with SourceOn →</a>',
+    'bignum.cta':'Calculate how much you can save with SourceOn →',
+    'tech.label':'Technology','tech.title':'The engine behind<br>every quote.',
+    'tech.sub':'SourceOn bundles the material demand of several construction firms into one joint order — and negotiates with the entire volume at the supplier. The bigger the bundle, the higher the discount.',
+    'tech.detail':'Over 340 supplier data points are updated daily. Your enquiries are compared with historical prices to identify the best possible conditions.',
+    'tech.cta':'Report material needs →','tech.illus':'Illustrative — simplified depiction of the bundling process',
+    'bundling.label':'BUNDLING VISUALISED','bundling.title':'Procurement on the next level.',
+    'bundling.sub':'See how SourceOn bundles material demand and achieves volume discounts.',
+    'bundling.note':'SourceOn connects construction firms with suppliers.',
+    'explore.label':'Explore','explore.title':'Everything about SourceOn.',
+    'explore.process.title':'How it works',
+    'explore.process.desc':'Four steps from demand to delivery — and why it pays off.',
+    'explore.materials.title':'Materials & Suppliers',
+    'explore.materials.desc':'50+ building materials, verified partner suppliers across Switzerland.',
+    'explore.forwhom.title':'Who it\'s for',
+    'explore.forwhom.desc':'Construction companies, tradespeople, investors and architects.',
+    'explore.supplier.title':'Become a supplier',
+    'explore.supplier.desc':'Become a verified SourceOn partner and gain access to bundled orders.',
+    'explore.more':'Learn more →','explore.apply':'Apply now →',
+    'suppliers.badge':'All suppliers personally verified — SIA/ISO compliant',
+    'suppliers.title':'Our partner suppliers',
+    'suppliers.note':'More partner suppliers in development. Logos will be added upon contract completion.',
+    'zahlen.label':'FACTS & FIGURES','zahlen.title':'The Swiss construction market — in numbers.',
+    'zahlen.vol_num':'CHF 8–10 bn','zahlen.vol':'Annual procurement volume in the Swiss construction market',
+    'zahlen.kmu':'of Swiss construction firms are SMEs','zahlen.costs_num':'15–25%',
+    'zahlen.costs':'Price difference: retail vs. bulk buyer',
+    'zahlen.savings_num':'3–5%','zahlen.savings':'Average net margin of a Swiss construction firm — every franc saved on purchasing counts.',
+    'zahlen.offer_num':'60%','zahlen.offer':'of Swiss SME construction firms without professional material procurement.',
+    'zahlen.quotes_num':'3+','zahlen.quotes':'Quotes — minimum number of offers per procurement order',
+    'zahlen.statement':'Every order you place alone costs you more than necessary.',
+    'cta.title':'Ready for lower purchasing prices?',
+    'cta.sub':'Report your next material demand — you only pay when we save you money. You see your guaranteed net minimum discount right away and track everything in your dashboard.',
+    'footer.desc':'Swiss B2B procurement broker for the construction industry. You only pay when we save you money.',
+    'footer.services':'Services','footer.company':'Company','footer.legal':'Legal',
+    'footer.home':'Home','footer.process':'How it works','footer.forwhom':'For whom',
+    'footer.supplier':'Become a supplier','footer.calc':'Savings calculator','footer.materials':'Materials',
+    'footer.about':'About us','footer.contact':'Contact','footer.supplier2':'Become a supplier',
+    'footer.privacy':'Privacy policy','footer.imprint':'Imprint','footer.terms':'Terms & conditions',
+    'footer.copy':'© 2026 SourceOn, Zurich — All rights reserved',
+    'footer.tagline':'You only pay when we save you money.',
+    'svg.market':'Market prices','svg.purchase':'Purchasing data','svg.supplier':'Supplier data',
+    'svg.hist':'Hist. prices','svg.requests':'Enquiries','svg.demands':'Material demands',
+    'svg.optimized':'Optimised offer','svg.bestcond':'Best conditions',
+    'svg.compared':'3 offers compared','svg.savings':'-12% savings',
+    'svg.auto':'automatically negotiated','svg.ai':'AI active','svg.realtime':'Real-time market analysis',
+    'chat.title':'SourceOn Assistant','chat.sub':'Answers all questions about SourceOn',
+    'chat.chip1':'How does SourceOn work?','chat.chip2':'What does it cost?','chat.chip3':'Report material demand',
+    'chat.placeholder':'Ask a question…'
   },
-  fr:{
-    page_title:'Demander un matériau spécial — SourceOn',sm_eyebrow:'Matériau spécial',sm_heading:'Matériau pas dans le catalogue ?',
-    nav_home:'Accueil',nav_process:'Comment ça marche',nav_calc:'Calculateur',nav_materials:'Matériaux',
-    nav_forwhom:'Pour qui',nav_supplier:'Devenir fournisseur',nav_about:'À propos',nav_contact:'Contact',
-    nav_cta:'Signaler un besoin',
-    nav_dd_bau:'Entreprises de construction & EG',nav_dd_handwerk:'Artisans & sous-traitants',nav_dd_gu:'Entreprises générales & totales',nav_dd_oeff:'Maîtres d\'ouvrage publics',nav_dd_immo:'Immobilier & logement',
-    nav_ov_bau:'Entreprises de construction',nav_ov_handwerk:'Artisans',nav_ov_gu:'Entreprises générales',
-    mat_select_label:'Choisis un matériau pour voir son ID SourceOn',
-    mat_select_option:'Choisir un matériau…',
-    mat_field_id:'ID SourceOn',mat_field_name:'Matériau',mat_field_cat:'Catégorie',mat_field_norm:'Norme',mat_transport_note:'Remarque: Les frais de transport sont convenus directement entre toi et le fournisseur et ne font pas partie de l\'arrangement SourceOn. Pour de grandes quantités, il vaut la peine de se renseigner à ce sujet.',
-    stat_label_areas:'Domaines',stat_sub_areas:'Gros œuvre, aménagement et technique du bâtiment',
-    stat_label_materials:'Matériaux',stat_sub_materials:'Tous vérifiés et conformes aux normes',
-    stat_label_delivery:'Livraison',stat_sub_delivery:'De Genève à Saint-Gall',
-    norm_label:'Standard de qualité',norm_sub:'Norme suisse — harmonisée au niveau européen',
-    norm_heading:'Chaque matériau est conforme aux normes suisses — entièrement documenté.',
-    norm_body:'Matériaux conformes SN EN et SIA, fournisseurs vérifiés personnellement. Tous les documents disponibles — pour les audits internes, les appels d\'offres publics et les réceptions de chantier.',
-    special_heading:'Matériau pas dans la liste ?',
-    special_body:'Nous élargissons notre réseau de fournisseurs pour ton besoin précis — sur demande.',
-    special_link:'Envoyer une demande →',
-    sr_title:'Demander un matériau',sr_sub:'Nous examinerons ta demande et te répondrons dans les 48 heures.',sr_l_material:'MATÉRIAU / DÉSIGNATION DU PRODUIT *',sr_ph_material:'p.ex. Laine de verre 100mm, Poutre acier HEA 200...',sr_l_menge:'QUANTITÉ ESTIMÉE *',sr_ph_menge:'p.ex. 500 m², 20 pièces, 5 tonnes',sr_l_date:'DÉLAI DE LIVRAISON *',sr_l_purpose:'UTILISATION (optionnel)',sr_ph_purpose:'p.ex. Isolation façade construction neuve',sr_l_contact:'VOS COORDONNÉES *',sr_l_earliest:'AU PLUS TÔT *',sr_l_latest:'AU PLUS TARD *',sr_l_remarks:'REMARQUES (optionnel)',sr_ph_remarks:'Infos supplémentaires, spécifications, questions…',sr_ph_firm:'Nom de l\'entreprise',sr_ph_email:'E-mail',sr_btn:'Envoyer la demande →',sr_success_title:'✓ Demande reçue',sr_success_body:'Nous examinerons ta demande et te répondrons dans les 48 heures.',
-    footer_brand_desc:'Courtier B2B suisse en approvisionnement pour le secteur de la construction.',
-    mat_label:'Matériau & Norme',
-    mat_heading:'Chaque matériau.<br>Une norme.',
-    mat_sub:'Tous les matériaux fournis par SourceOn répondent à nos critères — conformes SN EN et SIA, entièrement documentés.',
-    mat_select_placeholder:'Choisir un matériau pour voir l\'ID SourceOn…',
-    strip_concrete:'Béton & béton pompé',strip_rebar:'Armature & ferraillage',strip_gravel:'Gravier, gravillons & sable',strip_masonry:'Maçonnerie & mortier',strip_formwork:'Coffrage & étais',strip_precast:'Préfabriqués béton',strip_insulation:'Isolation',strip_drywall:'Plaques & ossature',strip_roofing:'Toiture & façade',strip_plumbing:'Technique & tuyauterie',
-    mat_no_selection:'Aucun matériau sélectionné',
-    coverage_label:'Couverture',
-    coverage_heading:'Un seul interlocuteur.<br>Tous les matériaux.',
-    coverage_sub:'Cliquez sur une tuile pour les détails.',
-    bento_tag_areas:'3 domaines, 50+ matériaux',
-    bento_big_shell:'Du gros œuvre<br>à la technique du bâtiment.',
-    bento_text_shell:'Gros œuvre, aménagement et technique du bâtiment — chaque matériau documenté, vérifié et approvisionné via un seul interlocuteur.',
-    bento_text_norm:'Chaque matériau est conforme aux normes suisses — entièrement documenté.',
-    bento_num_partners:'Partout en Suisse',
-    bento_text_partners:'fournisseurs partenaires certifiés.',
-    bento_num_direct:'Direct',
-    bento_text_direct:'Livraison directe sur votre chantier — sans détour.',
-    bento_num_chwide:'Toute la Suisse',
-    bento_text_chwide:'De Genève à St-Gall — logistique organisée, sans que vous ayez à vous en soucier.',
-    bento_num_special:'Cas particulier ? Pas de problème.',
-    bento_text_special:'Matériau pas dans la liste ? Nous élargissons notre réseau de fournisseurs pour vos besoins — sur demande.',
-    cta_title:'Matériau trouvé ?',
-    cta_sub:'Annoncez votre besoin en deux minutes — vous voyez immédiatement votre rabais minimum garanti.',
-    cta_btn:'Annoncer un besoin →',
-    cta_note:'Vous ne payez que lorsque nous vous faisons économiser.',
-    footer_desc:'Courtier B2B suisse en approvisionnement pour le secteur de la construction. Vous ne payez que lorsque nous vous faisons économiser.',
-    footer_services:'Services',footer_company:'Entreprise',footer_legal:'Mentions légales',
-    footer_calc:'Calculateur d\'économies',
-    footer_privacy:'Protection des données',footer_imprint:'Mentions légales',footer_terms:'CGV',
-    footer_copy:'© 2026 SourceOn, Zurich — Tous droits réservés',
-    footer_tagline:'Vous ne payez que lorsque nous vous faisons économiser.'
+  fr:{lp_t6_cat:'Et plus',lp_t6_title:'Pas concerné?',lp_t6_desc:'Contactez-nous — nous vérifions si SourceOn correspond à vos besoins.',lp_t6_link:'Demander →',
+    'nav.home':'Accueil','nav.process':'Comment ça marche','nav.calc':'Calculateur','nav.materials':'Matériaux',
+    'nav.forwhom':'Pour qui','nav.supplier':'Devenir fournisseur','nav.about':'À propos','nav.contact':'Contact',
+    'nav.cta':'Annoncer un besoin',
+    nav_dd_bau:'Entreprises de construction & EG',nav_dd_handwerk:'Artisanat & sous-traitants',nav_dd_gu:'Entreprises générales & totales',nav_dd_oeff:'Maîtres d\'ouvrage publics',nav_dd_immo:'Immobilier & logement',
+    nav_ov_bau:'Entreprises de construction',nav_ov_handwerk:'Artisanat',nav_ov_gu:'Entreprises générales',
+    acct_group_customers:'Clients',acct_group_suppliers:'Fournisseurs',
+    lp_aria_account:'Compte',lp_aria_chat:'Ouvrir l\'assistant SourceOn',lp_aria_scroll:'Suivant',
+    meta_title:'SourceOn — Tu ne paies que si on te fait économiser.',
+    meta_desc:'SourceOn regroupe les achats de matériaux des PME de construction suisses et obtient des remises de volume qu\'aucun client seul ne pourrait obtenir.',
+    lp_hero_eyebrow:'Approvisionnement suisse en matériaux',
+    lp_hero_h1:'Achète tes matériaux de construction moins cher.',
+    lp_hero_h1gold:'Pour chaque entreprise de construction suisse.',
+    lp_hero_sub:'Tu ne paies que si on te fait économiser.',
+    lp_hero_cta1:'Annoncer un besoin →',lp_hero_cta2:'Comment ça marche →',
+    lp_s2_label:'Comment ça marche',
+    lp_c1_cat:'Processus',lp_c1_title:'Quatre étapes du besoin à la livraison.',
+    lp_c1_desc:'Annonce ton besoin, attends le regroupement, confirme ton rabais minimum — c\'est fait. Tu ne paies que si tu économises.',
+    lp_c1_link:'Comment ça marche',
+    lp_c2_cat:'Calculateur',lp_c2_title:'Calcule ton potentiel d\'économies personnel.',
+    lp_c2_desc:'Saisis ton volume de commande et vois immédiatement combien tu pourrais économiser avec SourceOn.',
+    lp_c2_link:'Calculer maintenant',
+    lp_c3_cat:'Matériaux',lp_c3_title:'58 matériaux. Conformes SIA/ISO. Directement disponibles.',
+    lp_c3_desc:'Du béton prêt à l\'emploi au sanitaire — tous les matériaux testés, conformes aux normes et disponibles via un seul canal.',
+    lp_c3_link:'Voir le catalogue',
+    lp_stat_label:'Le marché suisse de la construction',lp_stat_num:'CHF 8–10 mrd',lp_stat_sub:'Volume d\'achat annuel',
+    lp_stat_h:'98 % des entreprises de construction suisses sont des PME — sans conditions de gros acheteur.',
+    lp_stat_body:'Celui qui achète seul paie les prix unitaires. SourceOn regroupe les besoins de plusieurs entreprises de construction — et négocie avec le volume total auprès du fournisseur. Plus le regroupement est grand, plus le rabais est élevé pour tous.',
+    lp_s4_label:'Pour qui',
+    lp_t1_cat:'Entreprises de construction & entreprises générales',lp_t1_title:'De meilleurs prix d\'achat — pour chaque entreprise de construction, quelle que soit sa taille.',
+    lp_t1_desc:'SourceOn regroupe ton besoin en matériaux avec d\'autres entreprises de construction et négocie des remises de volume. Que tu sois une PME ou un grand groupe — tout le monde en profite.',
+    lp_t1_link:'En savoir plus →',
+    lp_t2_cat:'Artisanat & sous-traitants',lp_t2_title:'Pour chaque corps de métier.',lp_t2_desc:'Traitement rapide, aucun paiement anticipé, entièrement automatisé.',
+    lp_t3_cat:'Entreprises générales & totales',lp_t3_title:'Grands projets, pouvoir d\'achat maximal.',lp_t3_desc:'D\'énormes quantités de matériaux, les niveaux de rabais les plus élevés.',
+    lp_t4_cat:'Maîtres d\'ouvrage publics',lp_t4_title:'Transparent, conforme aux normes, documenté.',lp_t4_desc:'Communes, cantons, entreprises paraétatiques.',
+    lp_t5_cat:'Immobilier & logement',lp_t5_title:'Besoins d\'entretien réguliers.',lp_t5_desc:'Coopératives d\'habitation et gérances immobilières avec un besoin constant.',
+    lp_s5_lbl:'Pour les fournisseurs',lp_s5_h2:'Fournisseur suisse de matériaux de construction?',lp_s5_p:'Accès à des commandes groupées importantes sans prospection.',lp_s5_cta:'Postuler comme fournisseur →',
+    lpf_brand_desc:'Courtier B2B suisse en approvisionnement pour le secteur de la construction.',lpf_brand_tag:'Tu ne paies que si on te fait économiser.',
+    lpf_col1:'Services',lpf_link_home:'Accueil',lpf_link_process:'Comment ça marche',lpf_link_forwhom:'Pour qui',lpf_link_supplier:'Devenir fournisseur',lpf_link_calc:'Calculateur',lpf_link_materials:'Matériaux',
+    lpf_col2:'Entreprise',lpf_link_about:'À propos',lpf_link_contact:'Contact',lpf_link_supplier2:'Devenir fournisseur',
+    lpf_col3:'Mentions légales',lpf_link_privacy:'Protection des données',lpf_link_imprint:'Mentions légales',lpf_link_terms:'CGV',
+    trust_h3:'Vérification requise',trust_msg:'Un code de vérification a été envoyé à ton e-mail. Merci de le saisir ci-dessous.',trust_submit:'Confirmer',trust_nocode:'Tu n\'as pas reçu de code?',trust_resend:'Renvoyer le code',trust_cancel:'Annuler',
+    'hero.title':'Tu ne paies<br><span class="gold">que si on te fait économiser.</span>',
+    'hero.sub':'Achetez vos matériaux de construction moins cher — pour chaque entreprise de construction suisse. Sans risque, sans frais initiaux.',
+    'hero.howit':'Comment ça marche →',
+    home_steps_label:"COMMENT ÇA MARCHE",home_steps_title:"Quatre étapes vers votre économie.",home_step1_title:"Annoncer le besoin",home_step1_text:"Matériau, quantité, délai — annoncé en deux minutes.",home_step2_title:"Recevoir une offre",home_step2_text:"Nous regroupons votre besoin avec d'autres entreprises et négocions avec le fournisseur.",home_step3_title:"Votre garantie",home_step3_text:"Votre rabais minimum est fixé à l'avance — net, garanti.",home_step4_title:"Vous économisez — garanti",home_step4_text:"Livraison directe sur votre chantier. Vous ne payez que si vous économisez.",home_steps_more:"En savoir plus sur le processus →",
+    'story.text':'Acheter seul signifie des conditions moyennes. SourceOn regroupe les besoins de plusieurs entreprises de construction en une seule commande — et redistribue la remise de volume à chaque entreprise.',
+    'bignum.caption':'C\'est la part des coûts totaux d\'une entreprise de construction qui sont de purs coûts de matériaux.<br><a href="kalkulator.html" class="bignum-cta" data-i18n="bignum.cta">Calcule combien tu peux économiser avec SourceOn →</a>',
+    'bignum.cta':'Calcule combien tu peux économiser avec SourceOn →',
+    'tech.label':'Technologie','tech.title':'Le moteur derrière<br>chaque offre.',
+    'tech.sub':'SourceOn regroupe les besoins en matériaux de plusieurs entreprises de construction en une commande commune — et négocie avec le volume total auprès du fournisseur. Plus le regroupement est important, plus le rabais est élevé.',
+    'tech.detail':'Plus de 340 points de données fournisseurs sont mis à jour quotidiennement. Vos demandes sont comparées aux prix historiques pour identifier les meilleures conditions possibles.',
+    'tech.cta':'Déclarer un besoin →','tech.illus':'Illustratif — représentation simplifiée du processus de regroupement',
+    'bundling.label':'REGROUPEMENT VISUALISÉ','bundling.title':'L\'approvisionnement au niveau supérieur.',
+    'bundling.sub':'Découvre comment SourceOn regroupe les besoins en matériaux et obtient des remises de volume.',
+    'bundling.note':'SourceOn connecte les entreprises de construction avec les fournisseurs.',
+    'explore.label':'Découvrir','explore.title':'Tout sur SourceOn.',
+    'explore.process.title':'Comment ça marche',
+    'explore.process.desc':'Quatre étapes du besoin à la livraison — et pourquoi ça vaut le coup.',
+    'explore.materials.title':'Matériaux & Fournisseurs',
+    'explore.materials.desc':'50+ matériaux de construction, fournisseurs partenaires vérifiés dans toute la Suisse.',
+    'explore.forwhom.title':'Pour qui',
+    'explore.forwhom.desc':'Entreprises de construction, artisans, investisseurs et architectes.',
+    'explore.supplier.title':'Devenir fournisseur',
+    'explore.supplier.desc':'Devenir un partenaire SourceOn vérifié et accéder aux commandes groupées.',
+    'explore.more':'En savoir plus →','explore.apply':'Postuler maintenant →',
+    'suppliers.badge':'Tous les fournisseurs vérifiés personnellement — conformes SIA/ISO',
+    'suppliers.title':'Nos fournisseurs partenaires',
+    'suppliers.note':'D\'autres fournisseurs partenaires en cours de développement. Les logos seront ajoutés après la signature du contrat.',
+    'zahlen.label':'CHIFFRES & FAITS','zahlen.title':'Le marché suisse de la construction — en chiffres.',
+    'zahlen.vol_num':'CHF 8–10 mrd','zahlen.vol':'Volume d\'achat annuel du marché de la construction CH',
+    'zahlen.kmu':'des entreprises de construction CH sont des PME','zahlen.costs_num':'15–25%',
+    'zahlen.costs':'Différence de prix particulier vs. gros acheteur',
+    'zahlen.savings_num':'3–5%','zahlen.savings':'Marge nette moyenne d\'une entreprise de construction suisse — chaque franc économisé compte.',
+    'zahlen.offer_num':'60%','zahlen.offer':'des PME suisses du bâtiment sans achats professionnels de matériaux.',
+    'zahlen.quotes_num':'3+','zahlen.quotes':'Offres — nombre minimum d\'offres par commande',
+    'zahlen.statement':'Chaque commande que tu passes seul te coûte plus que nécessaire.',
+    'cta.title':'Prêt pour des prix d\'achat plus bas?',
+    'cta.sub':'Annonce ton prochain besoin en matériaux — tu ne paies que si nous te faisons économiser. Tu vois immédiatement ton rabais minimum net garanti et tu suis tout dans ton tableau de bord.',
+    'footer.desc':'Courtier B2B suisse en approvisionnement pour le secteur de la construction. Tu ne paies que si on te fait économiser.',
+    'footer.services':'Services','footer.company':'Entreprise','footer.legal':'Mentions légales',
+    'footer.home':'Accueil','footer.process':'Comment ça fonctionne','footer.forwhom':'Pour qui',
+    'footer.supplier':'Devenir fournisseur','footer.materials':'Matériaux',
+    'footer.about':'À propos','footer.contact':'Contact','footer.supplier2':'Devenir fournisseur',
+    'footer.privacy':'Protection des données','footer.imprint':'Mentions légales','footer.terms':'CGV',
+    'footer.copy':'© 2026 SourceOn, Zurich — Tous droits réservés',
+    'footer.calc':'Calculateur d\'économies','footer.tagline':'Tu ne paies que si on te fait économiser.',
+    'svg.market':'Prix du marché','svg.purchase':'Données d\'achat','svg.supplier':'Données fournisseurs',
+    'svg.hist':'Prix hist.','svg.requests':'Demandes','svg.demands':'Besoins matériaux',
+    'svg.optimized':'Offre optimisée','svg.bestcond':'Meilleures conditions',
+    'svg.compared':'3 offres comparées','svg.savings':'-12% d\'économie',
+    'svg.auto':'négocié automatiquement','svg.ai':'IA active','svg.realtime':'Analyse de marché en temps réel',
+    'chat.title':'Assistant SourceOn','chat.sub':'Répond à toutes les questions sur SourceOn',
+    'chat.chip1':'Comment fonctionne SourceOn?','chat.chip2':'Combien ça coûte?','chat.chip3':'Annoncer un besoin',
+    'chat.placeholder':'Poser une question…'
   },
-  it:{
-    page_title:'Richiedere materiale speciale — SourceOn',sm_eyebrow:'Materiale speciale',sm_heading:'Materiale non nel catalogo?',
-    nav_home:'Home',nav_process:'Come funziona',nav_calc:'Calcolatore',nav_materials:'Materiali',
-    nav_forwhom:'Per chi',nav_supplier:'Diventa fornitore',nav_about:'Chi siamo',nav_contact:'Contatto',
-    nav_cta:'Segnala fabbisogno',
-    nav_dd_bau:'Imprese di costruzione & GC',nav_dd_handwerk:'Artigiani & subappaltatori',nav_dd_gu:'Imprese generali & totali',nav_dd_oeff:'Committenti pubblici',nav_dd_immo:'Immobiliare & abitativo',
-    nav_ov_bau:'Imprese di costruzione',nav_ov_handwerk:'Artigiani',nav_ov_gu:'Imprese generali',
-    mat_select_label:'Scegli un materiale per vedere il suo ID SourceOn',
-    mat_select_option:'Scegli un materiale…',
-    mat_field_id:'ID SourceOn',mat_field_name:'Materiale',mat_field_cat:'Categoria',mat_field_norm:'Norma',mat_transport_note:'Nota: I costi di trasporto vengono concordati direttamente tra te e il fornitore e non fanno parte dell\'accordo SourceOn. Per grandi quantità, vale la pena informarsi anche su questi.',
-    stat_label_areas:'Aree',stat_sub_areas:'Opera grezza, finitura e impiantistica',
-    stat_label_materials:'Materiali',stat_sub_materials:'Tutti verificati e conformi alle norme',
-    stat_label_delivery:'Consegna',stat_sub_delivery:'Da Ginevra a San Gallo',
-    norm_label:'Standard di qualità',norm_sub:'Norma svizzera — armonizzata a livello europeo',
-    norm_heading:'Ogni materiale è conforme alle norme svizzere — completamente documentato.',
-    norm_body:'Materiali conformi SN EN e SIA, fornitori verificati personalmente. Tutti i documenti disponibili — per audit interni, gare d\'appalto pubbliche e collaudi.',
-    special_heading:'Materiale non nella lista?',
-    special_body:'Ampliamo la nostra rete di fornitori appositamente per il tuo fabbisogno — su richiesta.',
-    special_link:'Invia una richiesta →',
-    sr_title:'Richiedere un materiale',sr_sub:'Esamineremo la tua richiesta e ti risponderemo entro 48 ore.',sr_l_material:'MATERIALE / DESCRIZIONE PRODOTTO *',sr_ph_material:'es. Lana di vetro 100mm, Trave acciaio HEA 200...',sr_l_menge:'QUANTITÀ STIMATA *',sr_ph_menge:'es. 500 m², 20 pezzi, 5 tonnellate',sr_l_date:'TEMPI DI CONSEGNA *',sr_l_purpose:'SCOPO (opzionale)',sr_ph_purpose:'es. Isolamento facciata nuova costruzione',sr_l_contact:'I TUOI DATI DI CONTATTO *',sr_l_earliest:'PRIMA DATA *',sr_l_latest:'ULTIMA DATA *',sr_l_remarks:'OSSERVAZIONI (opzionale)',sr_ph_remarks:'Info aggiuntive, specifiche, domande…',sr_ph_firm:'Nome azienda',sr_ph_email:'E-mail',sr_btn:'Invia richiesta →',sr_success_title:'✓ Richiesta ricevuta',sr_success_body:'Esamineremo la tua richiesta e ti risponderemo entro 48 ore.',
-    footer_brand_desc:'Broker B2B svizzero per l\'approvvigionamento nel settore edile.',
-    mat_label:'Materiale & Norma',
-    mat_heading:'Ogni materiale.<br>Una norma.',
-    mat_sub:'Tutti i materiali forniti da SourceOn soddisfano i nostri criteri — conformi SN EN e SIA, completamente documentati.',
-    mat_select_placeholder:'Scegli un materiale per vedere l\'ID SourceOn…',
-    strip_concrete:'Calcestruzzo & pompabile',strip_rebar:'Armatura & rinforzo',strip_gravel:'Ghiaia, pietrisco & sabbia',strip_masonry:'Muratura & malta',strip_formwork:'Casseforme & puntelli',strip_precast:'Prefabbricati cls',strip_insulation:'Isolamento',strip_drywall:'Cartongesso & montanti',strip_roofing:'Copertura & facciata',strip_plumbing:'Impiantistica & tubazioni',
-    mat_no_selection:'Nessun materiale selezionato',
-    coverage_label:'Copertura',
-    coverage_heading:'Un unico referente.<br>Tutti i materiali.',
-    coverage_sub:'Clicca su un riquadro per i dettagli.',
-    bento_tag_areas:'3 aree, 50+ materiali',
-    bento_big_shell:'Dalla struttura grezza<br>all\'impiantistica.',
-    bento_text_shell:'Struttura, finiture e impiantistica — ogni singolo materiale documentato, verificato e acquistato tramite un unico referente.',
-    bento_text_norm:'Ogni materiale è conforme alle norme svizzere — completamente documentato.',
-    bento_num_partners:'In tutta la Svizzera',
-    bento_text_partners:'fornitori partner certificati.',
-    bento_num_direct:'Diretto',
-    bento_text_direct:'Consegna diretta al tuo cantiere — senza deviazioni.',
-    bento_num_chwide:'Tutta la Svizzera',
-    bento_text_chwide:'Da Ginevra a San Gallo — logistica organizzata, senza che dobbiate preoccuparvene.',
-    bento_num_special:'Caso speciale? Nessun problema.',
-    bento_text_special:'Materiale non nella lista? Espandiamo la nostra rete di fornitori per le vostre esigenze — su richiesta.',
-    cta_title:'Materiale trovato?',
-    cta_sub:'Segnala il tuo fabbisogno in due minuti — vedi subito il tuo sconto minimo garantito.',
-    cta_btn:'Segnala il fabbisogno →',
-    cta_note:'Paghi solo quando ti facciamo risparmiare.',
-    footer_desc:'Broker B2B svizzero per l\'approvvigionamento nel settore edile. Paghi solo quando ti facciamo risparmiare.',
-    footer_services:'Servizi',footer_company:'Azienda',footer_legal:'Note legali',
-    footer_calc:'Calcolatore di risparmio',
-    footer_privacy:'Privacy',footer_imprint:'Impressum',footer_terms:'CGC',
-    footer_copy:'© 2026 SourceOn, Zurigo — Tutti i diritti riservati',
-    footer_tagline:'Paghi solo quando ti facciamo risparmiare.'
+  it:{lp_t6_cat:'E altro',lp_t6_title:'Non ti ritrovi?',lp_t6_desc:'Contattaci — verifichiamo se SourceOn è adatto alle tue esigenze.',lp_t6_link:'Richiedi →',
+    'nav.home':'Home','nav.process':'Come funziona','nav.calc':'Calcolatore','nav.materials':'Materiali',
+    'nav.forwhom':'Per chi','nav.supplier':'Diventa fornitore','nav.about':'Chi siamo','nav.contact':'Contatto',
+    'nav.cta':'Segnala fabbisogno materiale',
+    nav_dd_bau:'Imprese edili & IG',nav_dd_handwerk:'Artigianato & subappaltatori',nav_dd_gu:'Imprese generali & totali',nav_dd_oeff:'Committenti pubblici',nav_dd_immo:'Immobili & edilizia abitativa',
+    nav_ov_bau:'Imprese edili',nav_ov_handwerk:'Artigianato',nav_ov_gu:'Imprese generali',
+    acct_group_customers:'Clienti',acct_group_suppliers:'Fornitori',
+    lp_aria_account:'Account',lp_aria_chat:'Apri l\'assistente SourceOn',lp_aria_scroll:'Avanti',
+    meta_title:'SourceOn — Paghi solo quando ti facciamo risparmiare.',
+    meta_desc:'SourceOn raggruppa gli acquisti di materiale delle PMI edili svizzere e ottiene sconti sul volume che nessun singolo cliente potrebbe ottenere da solo.',
+    lp_hero_eyebrow:'Approvvigionamento svizzero di materiali',
+    lp_hero_h1:'Acquista materiali da costruzione a prezzi più bassi.',
+    lp_hero_h1gold:'Per ogni impresa edile svizzera.',
+    lp_hero_sub:'Paghi solo quando ti facciamo risparmiare.',
+    lp_hero_cta1:'Segnala il fabbisogno →',lp_hero_cta2:'Come funziona →',
+    lp_s2_label:'Come funziona',
+    lp_c1_cat:'Processo',lp_c1_title:'Quattro passi dal fabbisogno alla consegna.',
+    lp_c1_desc:'Segnala il fabbisogno, attendi il raggruppamento, conferma lo sconto minimo — fatto. Paghi solo se risparmi.',
+    lp_c1_link:'Come funziona',
+    lp_c2_cat:'Calcolatore',lp_c2_title:'Calcola il tuo potenziale di risparmio personale.',
+    lp_c2_desc:'Inserisci il tuo volume ordini e vedi subito quanto potresti risparmiare con SourceOn.',
+    lp_c2_link:'Calcola ora',
+    lp_c3_cat:'Materiali',lp_c3_title:'58 materiali. Conformi SIA/ISO. Direttamente disponibili.',
+    lp_c3_desc:'Dal calcestruzzo preconfezionato al sanitario — tutti i materiali testati, conformi alle norme e disponibili tramite un unico canale.',
+    lp_c3_link:'Vedi il catalogo',
+    lp_stat_label:'Il mercato edile svizzero',lp_stat_num:'CHF 8–10 mld',lp_stat_sub:'Volume di acquisto annuo',
+    lp_stat_h:'Il 98% delle imprese edili svizzere sono PMI — senza condizioni da grande acquirente.',
+    lp_stat_body:'Chi acquista da solo paga i prezzi al singolo. SourceOn raggruppa il fabbisogno di più imprese edili — e negozia con l\'intero volume presso il fornitore. Più grande è il raggruppamento, maggiore è lo sconto per tutti.',
+    lp_s4_label:'Per chi',
+    lp_t1_cat:'Imprese edili & imprese generali',lp_t1_title:'Migliori prezzi d\'acquisto — per ogni impresa edile, di ogni dimensione.',
+    lp_t1_desc:'SourceOn raggruppa il tuo fabbisogno di materiale con altre imprese edili e negozia sconti sul volume. Che tu sia una PMI o una grande azienda — ne beneficiano tutti.',
+    lp_t1_link:'Scopri di più →',
+    lp_t2_cat:'Artigianato & subappaltatori',lp_t2_title:'Per ogni mestiere.',lp_t2_desc:'Elaborazione rapida, nessun pagamento anticipato, completamente automatizzato.',
+    lp_t3_cat:'Imprese generali & totali',lp_t3_title:'Grandi progetti, massimo potere d\'acquisto.',lp_t3_desc:'Enormi quantità di materiale, i livelli di sconto più alti.',
+    lp_t4_cat:'Committenti pubblici',lp_t4_title:'Trasparente, conforme alle norme, documentato.',lp_t4_desc:'Comuni, cantoni, aziende parastatali.',
+    lp_t5_cat:'Immobili & edilizia abitativa',lp_t5_title:'Fabbisogno di manutenzione regolare.',lp_t5_desc:'Cooperative di abitazione e amministrazioni immobiliari con fabbisogno costante.',
+    lp_s5_lbl:'Per i fornitori',lp_s5_h2:'Fornitore svizzero di materiali da costruzione?',lp_s5_p:'Accesso a grandi ordini raggruppati senza acquisizione propria.',lp_s5_cta:'Candidati come fornitore →',
+    lpf_brand_desc:'Broker B2B svizzero per l\'approvvigionamento nel settore edile.',lpf_brand_tag:'Paghi solo quando ti facciamo risparmiare.',
+    lpf_col1:'Servizi',lpf_link_home:'Home',lpf_link_process:'Come funziona',lpf_link_forwhom:'Per chi',lpf_link_supplier:'Diventa fornitore',lpf_link_calc:'Calcolatore',lpf_link_materials:'Materiali',
+    lpf_col2:'Azienda',lpf_link_about:'Chi siamo',lpf_link_contact:'Contatto',lpf_link_supplier2:'Diventa fornitore',
+    lpf_col3:'Note legali',lpf_link_privacy:'Privacy',lpf_link_imprint:'Impressum',lpf_link_terms:'CGC',
+    trust_h3:'Verifica richiesta',trust_msg:'Un codice di verifica è stato inviato alla tua e-mail. Inseriscilo qui sotto.',trust_submit:'Conferma',trust_nocode:'Non hai ricevuto il codice?',trust_resend:'Invia di nuovo il codice',trust_cancel:'Annulla',
+    'hero.title':'Paghi solo<br><span class="gold">quando ti facciamo risparmiare.</span>',
+    'hero.sub':'Acquista materiali da costruzione a prezzi più bassi — per ogni impresa edile svizzera. Senza rischi, senza costi anticipati.',
+    'hero.howit':'Come funziona →',
+    home_steps_label:"COME FUNZIONA",home_steps_title:"Quattro passi verso il tuo risparmio.",home_step1_title:"Segnala il fabbisogno",home_step1_text:"Materiale, quantità, periodo — segnalato in due minuti.",home_step2_title:"Ricevi un'offerta",home_step2_text:"Raggruppiamo il tuo fabbisogno con altre imprese e negoziamo con il fornitore.",home_step3_title:"La tua garanzia",home_step3_text:"Il tuo sconto minimo è fissato in anticipo — netto, garantito.",home_step4_title:"Risparmi — garantito",home_step4_text:"Consegna diretta al tuo cantiere. Paghi solo se risparmi.",home_steps_more:"Scopri di più sul processo →",
+    'story.text':'Acquistare da soli significa condizioni nella media. SourceOn raggruppa il fabbisogno di più imprese edili in un unico ordine — e trasferisce lo sconto volume a ogni singola azienda.',
+    'bignum.caption':'Questa è la quota dei costi totali di un\'impresa edile che sono puri costi di materiale.<br><a href="kalkulator.html" class="bignum-cta" data-i18n="bignum.cta">Calcola quanto puoi risparmiare con SourceOn →</a>',
+    'bignum.cta':'Calcola quanto puoi risparmiare con SourceOn →',
+    'tech.label':'Tecnologia','tech.title':'Il motore dietro<br>ogni offerta.',
+    'tech.sub':'SourceOn raggruppa il fabbisogno di materiale di più imprese edili in un unico ordine comune — e negozia con l\'intero volume presso il fornitore. Più grande è il raggruppamento, maggiore è lo sconto.',
+    'tech.detail':'Oltre 340 punti dati fornitori vengono aggiornati quotidianamente. Le tue richieste vengono confrontate con i prezzi storici per identificare le migliori condizioni possibili.',
+    'tech.cta':'Segnala il fabbisogno →','tech.illus':'Illustrativo — rappresentazione semplificata del processo di raggruppamento',
+    'bundling.label':'RAGGRUPPAMENTO VISUALIZZATO','bundling.title':'Approvvigionamento al livello successivo.',
+    'bundling.sub':'Scopri come SourceOn raggruppa il fabbisogno di materiali e ottiene sconti volume.',
+    'bundling.note':'SourceOn connette le imprese edili con i fornitori.',
+    'explore.label':'Scopri','explore.title':'Tutto su SourceOn.',
+    'explore.process.title':'Come funziona',
+    'explore.process.desc':'Quattro passi dal fabbisogno alla consegna — e perché conviene.',
+    'explore.materials.title':'Materiali & Fornitori',
+    'explore.materials.desc':'50+ materiali da costruzione, fornitori partner verificati in tutta la Svizzera.',
+    'explore.forwhom.title':'Per chi',
+    'explore.forwhom.desc':'Imprese edili, artigiani, investitori e architetti.',
+    'explore.supplier.title':'Diventa fornitore',
+    'explore.supplier.desc':'Diventa partner verificato SourceOn e accedi agli ordini raggruppati.',
+    'explore.more':'Scopri di più →','explore.apply':'Candidati ora →',
+    'suppliers.badge':'Tutti i fornitori verificati personalmente — conformi SIA/ISO',
+    'suppliers.title':'I nostri fornitori partner',
+    'suppliers.note':'Altri fornitori partner in fase di sviluppo. I loghi saranno aggiunti dopo la firma del contratto.',
+    'zahlen.label':'CIFRE & FATTI','zahlen.title':'Il mercato edile svizzero — in cifre.',
+    'zahlen.vol_num':'CHF 8–10 mrd','zahlen.vol':'Volume di acquisto annuale del mercato edile CH',
+    'zahlen.kmu':'delle imprese edili CH sono PMI','zahlen.costs_num':'15–25%',
+    'zahlen.costs':'Differenza di prezzo tra acquirente singolo e grande acquirente',
+    'zahlen.savings_num':'3–5%','zahlen.savings':'Margine netto medio di un\'impresa edile svizzera — ogni franco risparmiato conta.',
+    'zahlen.offer_num':'60%','zahlen.offer':'delle PMI edili svizzere senza acquisti professionali di materiali.',
+    'zahlen.quotes_num':'3+','zahlen.quotes':'Offerte — numero minimo di offerte per ordine di approvvigionamento',
+    'zahlen.statement':'Ogni ordine che fai da solo ti costa più del necessario.',
+    'cta.title':'Pronto per prezzi d\'acquisto più bassi?',
+    'cta.sub':'Segnala il tuo prossimo fabbisogno di materiale — paghi solo se ti facciamo risparmiare. Vedi subito il tuo sconto minimo netto garantito e segui tutto nella tua dashboard.',
+    'footer.desc':'Broker B2B svizzero per l\'approvvigionamento nel settore edile. Paghi solo quando ti facciamo risparmiare.',
+    'footer.services':'Servizi','footer.company':'Azienda','footer.legal':'Note legali',
+    'footer.home':'Home','footer.process':'Come funziona','footer.forwhom':'Per chi',
+    'footer.supplier':'Diventa fornitore','footer.calc':'Calcolatore di risparmio','footer.materials':'Materiali',
+    'footer.about':'Chi siamo','footer.contact':'Contatto','footer.supplier2':'Diventa fornitore',
+    'footer.privacy':'Privacy','footer.imprint':'Impressum','footer.terms':'CGC',
+    'footer.copy':'© 2026 SourceOn, Zurigo — Tutti i diritti riservati',
+    'footer.tagline':'Paghi solo quando ti facciamo risparmiare.',
+    'svg.market':'Prezzi di mercato','svg.purchase':'Dati di acquisto','svg.supplier':'Dati fornitori',
+    'svg.hist':'Prezzi stor.','svg.requests':'Richieste','svg.demands':'Fabbisogno materiali',
+    'svg.optimized':'Offerta ottimizzata','svg.bestcond':'Migliori condizioni',
+    'svg.compared':'3 offerte confrontate','svg.savings':'-12% risparmio',
+    'svg.auto':'negoziato automaticamente','svg.ai':'IA attiva','svg.realtime':'Analisi di mercato in tempo reale',
+    'chat.title':'Assistente SourceOn','chat.sub':'Risponde a tutte le domande su SourceOn',
+    'chat.chip1':'Come funziona SourceOn?','chat.chip2':'Quanto costa?','chat.chip3':'Segnala fabbisogno',
+    'chat.placeholder':'Fai una domanda…'
   }
 };
 
-function applyLang(lang){
-  const dict=T[lang]||T.de;
+var LANG_NAMES={de:'DE',en:'EN',fr:'FR',it:'IT'};
+
+function setLang(lang){
+  if(!I18N[lang])return;
+  var dict=I18N[lang];
+  // Text content
   document.querySelectorAll('[data-i18n]').forEach(function(el){
-    const key=el.getAttribute('data-i18n');
-    if(dict[key]!==undefined){
-      if(el.tagName==='OPTION'){el.textContent=dict[key];}
-      else if(el.tagName==='TITLE'){document.title=dict[key];}
-      else{el.innerHTML=dict[key];}
-    }
+    var key=el.getAttribute('data-i18n');
+    if(dict[key]!=null) el.textContent=dict[key];
   });
+  // HTML content (hero title, bignum caption etc.)
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+    var key=el.getAttribute('data-i18n-html');
+    if(dict[key]!=null) el.innerHTML=dict[key];
+  });
+  // Placeholders
   document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
-    var pk=el.getAttribute('data-i18n-placeholder');
-    if(dict[pk]!==undefined)el.placeholder=dict[pk];
+    var key=el.getAttribute('data-i18n-placeholder');
+    if(dict[key]!=null) el.placeholder=dict[key];
   });
-  document.getElementById('lang-current').textContent=lang.toUpperCase();
-  document.querySelectorAll('.lang-opt').forEach(function(btn){
-    btn.classList.toggle('active',btn.getAttribute('onclick').indexOf("'"+lang+"'")!==-1);
+  // aria-labels
+  document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
+    var key=el.getAttribute('data-i18n-aria');
+    if(dict[key]!=null) el.setAttribute('aria-label',dict[key]);
   });
-  document.documentElement.lang=lang;
+  // Document title + meta description
+  if(dict['meta_title']!=null) document.title=dict['meta_title'];
+  if(dict['meta_desc']!=null){var _md=document.querySelector('meta[name="description"]');if(_md)_md.setAttribute('content',dict['meta_desc']);}
+
+  // Re-init story sentence word reveal
+  var storyEl=document.getElementById('story-sentence');
+  if(storyEl&&dict['story.text']){
+    storyEl.innerHTML=dict['story.text'].split(' ').map(function(w){return '<span class="word">'+w+'</span>';}).join(' ');
+    var words=storyEl.querySelectorAll('.word');
+    function updateStory(){
+      var rect=storyEl.parentElement.parentElement.getBoundingClientRect();
+      var vh=window.innerHeight;
+      var progress=Math.min(1,Math.max(0,(vh*0.8-rect.top)/(rect.height-vh*0.2)));
+      var litCount=Math.round(progress*words.length);
+      words.forEach(function(w,i){w.classList.toggle('lit',i<litCount);});
+    }
+    window._storyUpdate=updateStory;
+    updateStory();
+  }
+
+  // Re-init hero headline word stagger
+  var heroH=document.getElementById('hero-h1');
+  if(heroH&&dict['hero.title']){
+    heroH.innerHTML=dict['hero.title'];
+    function wrapHeroWords(node){
+      if(node.nodeType===3){
+        var ws=node.textContent.split(/(\s+)/);
+        var frag=document.createDocumentFragment();
+        ws.forEach(function(w){
+          if(/\S/.test(w)){var s=document.createElement('span');s.className='hw in';s.textContent=w;frag.appendChild(s);}
+          else if(w){frag.appendChild(document.createTextNode(w));}
+        });
+        node.parentNode.replaceChild(frag,node);
+      } else if(node.nodeType===1&&node.nodeName!=='SCRIPT'){
+        Array.prototype.slice.call(node.childNodes).forEach(wrapHeroWords);
+      }
+    }
+    wrapHeroWords(heroH);
+  }
+
+  // Update 3D hologram labels
+  if(window._holoSprites){
+    var hs=window._holoSprites;
+    var bl=hs.BLABELS_I18N[lang]||hs.BLABELS_I18N.de;
+    var bn=hs.BNAMES_I18N[lang]||hs.BNAMES_I18N.de;
+    for(var i=0;i<3;i++){
+      updateSpriteTex(hs.boxLabels[i],bl[i],'#E8A020',22);
+      updateSpriteTex(hs.boxNames[i],bn[i],'#ffffff',20);
+    }
+    updateSpriteTex(hs.gLbl,hs.GLBL_I18N[lang]||hs.GLBL_I18N.de,'#E8A020',20);
+    updateSpriteTex(hs.gName,hs.GNAME_I18N[lang]||hs.GNAME_I18N.de,'#ffffff',20);
+    var savPct=hs.SAVPCT_I18N[lang]||hs.SAVPCT_I18N.de;
+    for(var i=0;i<hs.savPctSprites.length;i++){
+      updateSpriteTex(hs.savPctSprites[i],savPct,'#E8A020',22);
+    }
+  }
+
+  document.getElementById('lang-current').textContent=LANG_NAMES[lang];
+  document.querySelectorAll('.lang-opt').forEach(function(b){b.classList.remove('active');});
+  document.querySelector('.lang-opt[onclick*="\''+lang+'\'"]').classList.add('active');
   document.getElementById('lang-switch').classList.remove('open');
-  try{localStorage.setItem('sourceon-lang',lang);
+  localStorage.setItem('sourceon-lang',lang);
+  document.documentElement.lang=lang;
   document.body.classList.add('lang-ready');var _lh=document.getElementById('_lh');if(_lh){setTimeout(function(){_lh.remove();},200);}
-  }catch(e){}
+  
 }
-window.setLang=applyLang;
 
-// ===== Special material request form =====
-var _SR_VALERR={de:'Bitte fülle alle Pflichtfelder aus.',en:'Please fill in all required fields.',fr:'Veuillez remplir tous les champs obligatoires.',it:'Compila tutti i campi obbligatori.'};
-var _SR_NETERR={de:'Etwas ist schiefgelaufen. Bitte versuche es erneut oder kontaktiere info@sourceon.ch.',en:'Something went wrong. Please try again or contact info@sourceon.ch.',fr:'Une erreur est survenue. Réessaie ou contacte info@sourceon.ch.',it:'Qualcosa è andato storto. Riprova o contatta info@sourceon.ch.'};
-async function submitSpecialRequest(ev){
-  ev.preventDefault();
-  var lang=localStorage.getItem('sourceon-lang')||'de';
-  var err=document.getElementById('sr-error');
-  var g=function(id){return (document.getElementById(id).value||'').trim();};
-  var material=g('sr-material'),menge=g('sr-menge'),
-      dateVon=document.getElementById('sr-date-von').value,dateBis=document.getElementById('sr-date-bis').value,
-      purpose=g('sr-purpose'),firm=g('sr-firm'),email=g('sr-email'),remarks=g('sr-remarks');
-  if(!material||!menge||!dateVon||!dateBis||!firm||!email||email.indexOf('@')<1){
-    err.textContent=(_SR_VALERR[lang]||_SR_VALERR.de);err.style.display='block';return false;
-  }
-  err.style.display='none';
-  var btn=document.getElementById('sr-btn');btn.disabled=true;
-  try{
-    var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
-    var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
-    var resp=await fetch(sbUrl+'/rest/v1/special_requests',{method:'POST',headers:{'apikey':sbKey,'Authorization':'Bearer '+sbKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({firmenname:firm,email:email,material_bezeichnung:material,menge:menge,liefer_zeitraum_von:dateVon||null,liefer_zeitraum_bis:dateBis||null,verwendungszweck:purpose||null,bemerkungen:remarks||null})});
-    if(!resp.ok)throw new Error('http '+resp.status);
-    document.getElementById('sr-form').style.display='none';
-    document.getElementById('sr-success').style.display='block';
-  }catch(e){
-    err.textContent=(_SR_NETERR[lang]||_SR_NETERR.de);err.style.display='block';btn.disabled=false;
-  }
-  return false;
+function updateSpriteTex(sprite,txt,col,sz){
+  if(!sprite||!sprite.material||!sprite.material.map)return;
+  var c=sprite.material.map.image;
+  if(!c||!c.getContext||!window._holoDrawLabel)return;
+  window._holoDrawLabel(c,txt,col,sz); // gleicher Apple-Pill-Zeichner wie im Setup
+  sprite.material.map.needsUpdate=true;
 }
-window.submitSpecialRequest=submitSpecialRequest;
 
-
-// close dropdown on outside click
-document.addEventListener('click',function(e){
-  var sw=document.getElementById('lang-switch');
-  if(sw&&!sw.contains(e.target))sw.classList.remove('open');
-});
-
-// restore saved language
-try{var saved=localStorage.getItem('sourceon-lang');if(saved&&T[saved]){applyLang(saved);}}catch(e){}
-})();
-</script>
-
-<script>
 (function(){
-var MAT_DB_TRANS={
-  en:{
-    'Rohbau Kern':'Structural core','Ausbau':'Interior finishing','Haustechnik':'Building services',
-    'Transportbeton C20/25':'Ready-mix concrete C20/25','Transportbeton C25/30':'Ready-mix concrete C25/30','Transportbeton C30/37':'Ready-mix concrete C30/37','Transportbeton C35/45':'Ready-mix concrete C35/45','Pumpbeton XC4 druckwasserdicht':'Pump concrete XC4 waterproof',
-    'Armierungsstahl \u00d8 8mm':'Rebar 8mm','Armierungsstahl \u00d8 10mm':'Rebar 10mm','Armierungsstahl \u00d8 12mm':'Rebar 12mm','Armierungsstahl \u00d8 16mm':'Rebar 16mm','Armierungsstahl \u00d8 20mm':'Rebar 20mm',
-    'Armierungsmatte Q188':'Reinforcement mesh Q188','Armierungsmatte Q257':'Reinforcement mesh Q257','Armierungsmatte Q335':'Reinforcement mesh Q335',
-    'Betonstahlk\u00f6rbe vorgefertigt':'Prefab rebar cages',
-    'Kies 0\u201332mm':'Gravel 0-32mm','Kies 0\u201316mm':'Gravel 0-16mm','Splitt 8\u201316mm':'Chippings 8-16mm','Splitt 16\u201332mm':'Chippings 16-32mm','Sand 0\u20134mm':'Sand 0-4mm',
-    'Hochlochziegel 15cm':'Perforated brick 15cm','Hochlochziegel 20cm':'Perforated brick 20cm','Hochlochziegel 25cm':'Perforated brick 25cm',
-    'Kalksandstein 15cm':'Sand-lime brick 15cm','Porenbetonstein 20cm':'Aerated concrete block 20cm',
-    'Mauerm\u00f6rtel MG II':'Masonry mortar MG II','Mauerm\u00f6rtel MG III':'Masonry mortar MG III',
-    'Putzm\u00f6rtel Innen GP':'Interior plaster GP','Putzm\u00f6rtel Aussen R':'Exterior render R',
-    'Estrichm\u00f6rtel CT-C25':'Screed mortar CT-C25','Klebem\u00f6rtel C1 Fliesen':'Tile adhesive C1',
-    'Schalungsplatte 21mm':'Formwork board 21mm','Schalungsplatte 27mm':'Formwork board 27mm',
-    'Systemschalung Wand Miet':'Wall formwork (rental)','Tr\u00e4ger H20 Holztr\u00e4ger':'H20 timber beam','Stahlst\u00fctzen ausziehbar':'Telescopic steel props',
-    'Betonfertigteil Treppe':'Precast stairs','Betonfertigteil Deckenplatte Spannbeton':'Precast prestressed slab','Betonfertigteil St\u00fctze':'Precast column',
-    'EPS-D\u00e4mmplatte 100mm Perimeter':'EPS insulation 100mm perimeter','EPS-D\u00e4mmplatte 140mm Fassade WDVS':'EPS insulation 140mm facade ETICS','EPS-D\u00e4mmplatte 200mm Flachdach':'EPS insulation 200mm flat roof',
-    'Mineralwolle 80mm Trennwand':'Mineral wool 80mm partition','Mineralwolle 120mm Steildach':'Mineral wool 120mm pitched roof',
-    'XPS-D\u00e4mmplatte 80mm Bodenplatte':'XPS insulation 80mm base slab',
-    'Gipskartonplatte GKB 12.5mm Standard':'Plasterboard GKB 12.5mm standard','Gipskartonplatte GKBI 12.5mm Feuchtraum':'Plasterboard GKBI moisture-resistant','Gipskartonplatte GKF 12.5mm Brandschutz':'Plasterboard GKF fire-rated',
-    'Metallst\u00e4nderwerk CW 75mm':'Metal stud CW 75mm','Metallanschlussprofil UA 75mm':'Metal channel UA 75mm',
-    'Tondachziegel Standard':'Clay roof tile','Betonroofziegel':'Concrete roof tile',
-    'Dachabdichtungsbahn EPDM 1.5mm':'Roof membrane EPDM 1.5mm','Fassadenplatte Faserzement hinterl\u00fcftet':'Fibre cement facade ventilated',
-    'Kunststoffrohr PVC-U DN 110 Abwasser':'PVC-U pipe DN 110 drainage','Kunststoffrohr PP DN 50 Entw\u00e4sserung':'PP pipe DN 50 drainage',
-    'Kupferrohr 22mm Trinkwasser':'Copper pipe 22mm drinking water','Verbundrohr PE-RT/Al 16mm Heizung':'Composite pipe PE-RT/Al 16mm heating',
-    'Heizungsverteiler Fussbodenheizung':'Underfloor heating manifold',
-    'Noch kein Material ausgew\u00e4hlt':'No material selected'
-  },
-  fr:{
-    'Rohbau Kern':'Gros oeuvre','Ausbau':'Amenagement interieur','Haustechnik':'Technique du batiment',
-    'Transportbeton C20/25':'Beton C20/25','Transportbeton C25/30':'Beton C25/30','Transportbeton C30/37':'Beton C30/37','Transportbeton C35/45':'Beton C35/45','Pumpbeton XC4 druckwasserdicht':'Beton pompe XC4 etanche',
-    'Armierungsstahl \u00d8 8mm':'Acier 8mm','Armierungsstahl \u00d8 10mm':'Acier 10mm','Armierungsstahl \u00d8 12mm':'Acier 12mm','Armierungsstahl \u00d8 16mm':'Acier 16mm','Armierungsstahl \u00d8 20mm':'Acier 20mm',
-    'Armierungsmatte Q188':'Treillis Q188','Armierungsmatte Q257':'Treillis Q257','Armierungsmatte Q335':'Treillis Q335',
-    'Betonstahlk\u00f6rbe vorgefertigt':'Cages prefabriquees',
-    'Kies 0\u201332mm':'Gravier 0-32mm','Kies 0\u201316mm':'Gravier 0-16mm','Splitt 8\u201316mm':'Gravillons 8-16mm','Splitt 16\u201332mm':'Gravillons 16-32mm','Sand 0\u20134mm':'Sable 0-4mm',
-    'Hochlochziegel 15cm':'Brique 15cm','Hochlochziegel 20cm':'Brique 20cm','Hochlochziegel 25cm':'Brique 25cm',
-    'Kalksandstein 15cm':'Silico-calcaire 15cm','Porenbetonstein 20cm':'Beton cellulaire 20cm',
-    'Mauerm\u00f6rtel MG II':'Mortier MG II','Mauerm\u00f6rtel MG III':'Mortier MG III',
-    'Putzm\u00f6rtel Innen GP':'Enduit interieur GP','Putzm\u00f6rtel Aussen R':'Enduit exterieur R',
-    'Estrichm\u00f6rtel CT-C25':'Chape CT-C25','Klebem\u00f6rtel C1 Fliesen':'Colle carrelage C1',
-    'Schalungsplatte 21mm':'Coffrage 21mm','Schalungsplatte 27mm':'Coffrage 27mm',
-    'Systemschalung Wand Miet':'Coffrage mural (location)','Tr\u00e4ger H20 Holztr\u00e4ger':'Poutre H20','Stahlst\u00fctzen ausziehbar':'Etais telescopiques',
-    'Betonfertigteil Treppe':'Escalier prefabrique','Betonfertigteil Deckenplatte Spannbeton':'Dalle precontrainte','Betonfertigteil St\u00fctze':'Colonne prefabriquee',
-    'EPS-D\u00e4mmplatte 100mm Perimeter':'Isolation EPS 100mm','EPS-D\u00e4mmplatte 140mm Fassade WDVS':'Isolation EPS 140mm facade','EPS-D\u00e4mmplatte 200mm Flachdach':'Isolation EPS 200mm toit plat',
-    'Mineralwolle 80mm Trennwand':'Laine minerale 80mm','Mineralwolle 120mm Steildach':'Laine minerale 120mm',
-    'XPS-D\u00e4mmplatte 80mm Bodenplatte':'Isolation XPS 80mm',
-    'Gipskartonplatte GKB 12.5mm Standard':'Plaque platre 12.5mm','Gipskartonplatte GKBI 12.5mm Feuchtraum':'Plaque hydrofuge','Gipskartonplatte GKF 12.5mm Brandschutz':'Plaque coupe-feu',
-    'Metallst\u00e4nderwerk CW 75mm':'Montant CW 75mm','Metallanschlussprofil UA 75mm':'Rail UA 75mm',
-    'Tondachziegel Standard':'Tuile terre cuite','Betonroofziegel':'Tuile beton',
-    'Dachabdichtungsbahn EPDM 1.5mm':'Membrane EPDM 1.5mm','Fassadenplatte Faserzement hinterl\u00fcftet':'Panneau fibrociment ventile',
-    'Kunststoffrohr PVC-U DN 110 Abwasser':'Tuyau PVC-U DN 110','Kunststoffrohr PP DN 50 Entw\u00e4sserung':'Tuyau PP DN 50',
-    'Kupferrohr 22mm Trinkwasser':'Tuyau cuivre 22mm','Verbundrohr PE-RT/Al 16mm Heizung':'Tuyau multicouche 16mm',
-    'Heizungsverteiler Fussbodenheizung':'Collecteur chauffage au sol',
-    'Noch kein Material ausgew\u00e4hlt':'Aucun materiau selectionne'
-  },
-  it:{
-    'Rohbau Kern':'Opera grezza','Ausbau':'Finitura interna','Haustechnik':'Impiantistica',
-    'Transportbeton C20/25':'Calcestruzzo C20/25','Transportbeton C25/30':'Calcestruzzo C25/30','Transportbeton C30/37':'Calcestruzzo C30/37','Transportbeton C35/45':'Calcestruzzo C35/45','Pumpbeton XC4 druckwasserdicht':'Calcestruzzo pompabile XC4',
-    'Armierungsstahl \u00d8 8mm':'Acciaio 8mm','Armierungsstahl \u00d8 10mm':'Acciaio 10mm','Armierungsstahl \u00d8 12mm':'Acciaio 12mm','Armierungsstahl \u00d8 16mm':'Acciaio 16mm','Armierungsstahl \u00d8 20mm':'Acciaio 20mm',
-    'Armierungsmatte Q188':'Rete Q188','Armierungsmatte Q257':'Rete Q257','Armierungsmatte Q335':'Rete Q335',
-    'Betonstahlk\u00f6rbe vorgefertigt':'Gabbie prefabbricate',
-    'Kies 0\u201332mm':'Ghiaia 0-32mm','Kies 0\u201316mm':'Ghiaia 0-16mm','Splitt 8\u201316mm':'Pietrisco 8-16mm','Splitt 16\u201332mm':'Pietrisco 16-32mm','Sand 0\u20134mm':'Sabbia 0-4mm',
-    'Hochlochziegel 15cm':'Mattone forato 15cm','Hochlochziegel 20cm':'Mattone forato 20cm','Hochlochziegel 25cm':'Mattone forato 25cm',
-    'Kalksandstein 15cm':'Silico-calcareo 15cm','Porenbetonstein 20cm':'Blocco cellulare 20cm',
-    'Mauerm\u00f6rtel MG II':'Malta MG II','Mauerm\u00f6rtel MG III':'Malta MG III',
-    'Putzm\u00f6rtel Innen GP':'Intonaco interno GP','Putzm\u00f6rtel Aussen R':'Intonaco esterno R',
-    'Estrichm\u00f6rtel CT-C25':'Massetto CT-C25','Klebem\u00f6rtel C1 Fliesen':'Colla piastrelle C1',
-    'Schalungsplatte 21mm':'Cassero 21mm','Schalungsplatte 27mm':'Cassero 27mm',
-    'Systemschalung Wand Miet':'Casseforme (noleggio)','Tr\u00e4ger H20 Holztr\u00e4ger':'Trave H20','Stahlst\u00fctzen ausziehbar':'Puntelli telescopici',
-    'Betonfertigteil Treppe':'Scala prefabbricata','Betonfertigteil Deckenplatte Spannbeton':'Solaio precompresso','Betonfertigteil St\u00fctze':'Colonna prefabbricata',
-    'EPS-D\u00e4mmplatte 100mm Perimeter':'Isolamento EPS 100mm','EPS-D\u00e4mmplatte 140mm Fassade WDVS':'Isolamento EPS 140mm facciata','EPS-D\u00e4mmplatte 200mm Flachdach':'Isolamento EPS 200mm tetto piano',
-    'Mineralwolle 80mm Trennwand':'Lana minerale 80mm','Mineralwolle 120mm Steildach':'Lana minerale 120mm',
-    'XPS-D\u00e4mmplatte 80mm Bodenplatte':'Isolamento XPS 80mm',
-    'Gipskartonplatte GKB 12.5mm Standard':'Cartongesso 12.5mm','Gipskartonplatte GKBI 12.5mm Feuchtraum':'Cartongesso idrorepellente','Gipskartonplatte GKF 12.5mm Brandschutz':'Cartongesso antincendio',
-    'Metallst\u00e4nderwerk CW 75mm':'Montante CW 75mm','Metallanschlussprofil UA 75mm':'Guida UA 75mm',
-    'Tondachziegel Standard':'Tegola argilla','Betonroofziegel':'Tegola calcestruzzo',
-    'Dachabdichtungsbahn EPDM 1.5mm':'Membrana EPDM 1.5mm','Fassadenplatte Faserzement hinterl\u00fcftet':'Pannello fibrocemento ventilato',
-    'Kunststoffrohr PVC-U DN 110 Abwasser':'Tubo PVC-U DN 110','Kunststoffrohr PP DN 50 Entw\u00e4sserung':'Tubo PP DN 50',
-    'Kupferrohr 22mm Trinkwasser':'Tubo rame 22mm','Verbundrohr PE-RT/Al 16mm Heizung':'Tubo multistrato 16mm',
-    'Heizungsverteiler Fussbodenheizung':'Collettore riscaldamento',
-    'Noch kein Material ausgew\u00e4hlt':'Nessun materiale selezionato'
-  }
-};
-window._matDbTrans=MAT_DB_TRANS;
-
-var origApplyLang=window.applyLang||window.setLang;
-var newSetLang=function(lang){
-  origApplyLang(lang);
-  var mt=MAT_DB_TRANS[lang];
-  if(!mt)return;
-  var sel=document.getElementById('mat-lookup-select');
-  if(sel){
-    sel.querySelectorAll('optgroup').forEach(function(og){
-      var de=og.dataset.cat||og.label;
-      if(!og.dataset.cat)og.dataset.cat=de;
-      if(mt[de])og.label=mt[de]; else og.label=de;
-    });
-    sel.querySelectorAll('option').forEach(function(opt){
-      if(!opt.value)return;
-      var de=opt.dataset.name;
-      if(de&&mt[de])opt.textContent=mt[de];
-      else if(de)opt.textContent=de;
-    });
-  }
-  var nameEl=document.getElementById('mat-lookup-name');
-  if(nameEl&&nameEl.dataset.deName){
-    var de=nameEl.dataset.deName;
-    nameEl.textContent=mt[de]||de;
-  }
-  var catEl=document.getElementById('mat-lookup-cat');
-  if(catEl&&catEl.dataset.deCat){
-    var de=catEl.dataset.deCat;
-    catEl.textContent=mt[de]||de;
-  }
-};
-window.setLang=newSetLang;
-window.applyLang=newSetLang;
-try{var sl=localStorage.getItem('sourceon-lang');if(sl&&sl!=='de')newSetLang(sl);}catch(e){}
+  var saved=localStorage.getItem('sourceon-lang');
+  if(saved&&saved!=='de'){setLang(saved);}
+  document.addEventListener('click',function(e){
+    var sw=document.getElementById('lang-switch');
+    if(sw&&!sw.contains(e.target)) sw.classList.remove('open');
+  });
 })();
 </script>
 <script>
@@ -1695,7 +1713,7 @@ async function _soCheckSupplierLogin(clerkId){
   }catch(e){console.error('[SourceOn] Supplier login check error:',e);}
   console.log('[SourceOn] Supplier login check: found='+found);
   if(found){_soHandlePostLogin();}
-  else{_soShowLoginMessage('Du bist noch nicht als Lieferant registriert. M\u00f6chtest du dich als Lieferant bewerben?','Als Lieferant bewerben','lieferant.html');}
+  else{_soShowLoginMessage(window.soT({de:'Du bist noch nicht als Lieferant registriert. M\u00f6chtest du dich als Lieferant bewerben?',en:'You are not registered as a supplier yet. Would you like to apply as a supplier?',fr:'Tu n\'es pas encore enregistr\u00e9 comme fournisseur. Souhaites-tu postuler comme fournisseur?',it:'Non sei ancora registrato come fornitore. Vuoi candidarti come fornitore?'}),window.soT({de:'Als Lieferant bewerben',en:'Apply as a supplier',fr:'Postuler comme fournisseur',it:'Candidati come fornitore'}),'lieferant.html');}
 }
 async function _soCheckCustomerLogin(clerkId){
   var found=false;
@@ -1706,7 +1724,7 @@ async function _soCheckCustomerLogin(clerkId){
   }catch(e){console.error('[SourceOn] Customer login check error:',e);}
   console.log('[SourceOn] Customer login check: found='+found);
   if(found){_soHandlePostLogin();}
-  else{_soShowLoginMessage('Du hast noch kein Kundenkonto. M\u00f6chtest du Materialbedarf melden?','Materialbedarf melden','kontakt.html');}
+  else{_soShowLoginMessage(window.soT({de:'Du hast noch kein Kundenkonto. M\u00f6chtest du Materialbedarf melden?',en:'You don\'t have a customer account yet. Would you like to report material demand?',fr:'Tu n\'as pas encore de compte client. Souhaites-tu annoncer un besoin en mat\u00e9riaux?',it:'Non hai ancora un account cliente. Vuoi segnalare un fabbisogno di materiale?'}),window.soT({de:'Materialbedarf melden',en:'Report material demand',fr:'Annoncer un besoin',it:'Segnala il fabbisogno'}),'kontakt.html');}
 }
 function _soShowLoginMessage(msg,linkText,linkHref){
   var ex=document.getElementById('so-login-msg-overlay');if(ex&&ex.parentNode)ex.parentNode.removeChild(ex);
@@ -1716,7 +1734,7 @@ function _soShowLoginMessage(msg,linkText,linkHref){
   box.style.cssText='background:#0F2238;border:1px solid rgba(232,160,32,.35);border-radius:16px;max-width:420px;width:100%;padding:32px;text-align:center;font-family:Inter,-apple-system,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.5)';
   var d=document.createElement('div');d.style.cssText='font-size:1.02rem;font-weight:700;color:#fff;line-height:1.5;margin-bottom:24px';d.textContent=msg;
   var a=document.createElement('a');a.href=linkHref;a.textContent=linkText+' \u2192';a.style.cssText='display:block;width:100%;padding:13px;border-radius:10px;background:#E8A020;color:#08111E;font-size:.9rem;font-weight:700;text-decoration:none;margin-bottom:10px';
-  var b=document.createElement('button');b.type='button';b.textContent='Schliessen';b.style.cssText='width:100%;padding:11px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit';
+  var b=document.createElement('button');b.type='button';b.textContent=window.soT({de:'Schliessen',en:'Close',fr:'Fermer',it:'Chiudi'});b.style.cssText='width:100%;padding:11px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit';
   b.addEventListener('click',function(){if(ov.parentNode)ov.parentNode.removeChild(ov);});
   box.appendChild(d);box.appendChild(a);box.appendChild(b);ov.appendChild(box);
   ov.addEventListener('click',function(e){if(e.target===ov&&ov.parentNode)ov.parentNode.removeChild(ov);});
@@ -1755,6 +1773,10 @@ function clerkCustomerSignUp(){
 }
 async function _createCustomerIfNeeded(){
   try{
+    if(localStorage.getItem('sourceon_pending_customer_link')){
+      soLog('[SourceOn] _createCustomerIfNeeded skipped — pending customer link exists');
+      return;
+    }
     var u=window.Clerk.user;if(!u)return;
     var email=u.primaryEmailAddress?u.primaryEmailAddress.emailAddress:'';
     var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
@@ -1881,8 +1903,6 @@ async function _createCustomerIfNeeded(){
     }
   });
 
-  // Handle customer signup: create customer row if needed (no redirect)
-
   // Link pending customer row to Clerk user (runs on every page load after Clerk resolves)
   soLog('[SourceOn] localStorage keys on load — sourceon_pending_customer_link:',localStorage.getItem('sourceon_pending_customer_link'));
   var _pendingCustId=localStorage.getItem('sourceon_pending_customer_link');
@@ -1910,6 +1930,7 @@ async function _createCustomerIfNeeded(){
     })();
   }
 
+  // Handle customer signup: create customer row if needed (no redirect)
   if(sessionStorage.getItem('sourceon_customer_signup')&&window.Clerk.user){
     sessionStorage.removeItem('sourceon_customer_signup');
     _createCustomerIfNeeded().then(function(){updateAcctUI();});
@@ -1968,19 +1989,19 @@ async function _clerkSendVerificationCode(){
     var si=_clerkSignInResource;
     if(!si)return;
     await si.prepareSecondFactor({strategy:'email_code'});
-    document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';
+    document.getElementById('clerk-trust-msg').textContent=window.soT({de:'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',en:'A verification code has been sent to your email. Please enter it below.',fr:'Un code de vérification a été envoyé à ton e-mail. Merci de le saisir ci-dessous.',it:'Un codice di verifica è stato inviato alla tua e-mail. Inseriscilo qui sotto.'});
     _clerkShowTrustModal();
   }catch(e){
     console.error('[Clerk] prepareSecondFactor email_code failed:',e);
     try{
       await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});
       _clerkTrustStrategy='phone_code';
-      document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';
+      document.getElementById('clerk-trust-msg').textContent=window.soT({de:'Ein Bestätigungscode wurde an deine Telefonnummer gesendet.',en:'A verification code has been sent to your phone number.',fr:'Un code de vérification a été envoyé à ton numéro de téléphone.',it:'Un codice di verifica è stato inviato al tuo numero di telefono.'});
       _clerkShowTrustModal();
     }catch(e2){
       console.error('[Clerk] prepareSecondFactor phone_code also failed:',e2);
       _clerkTrustActive=false;
-      alert('Verifizierung konnte nicht gestartet werden: '+(e2.errors?e2.errors[0].longMessage:e2.message));
+      alert(window.soT({de:'Verifizierung konnte nicht gestartet werden: ',en:'Verification could not be started: ',fr:'La vérification n\'a pas pu être démarrée: ',it:'Impossibile avviare la verifica: '})+(e2.errors?e2.errors[0].longMessage:e2.message));
     }
   }
 }
@@ -1998,7 +2019,7 @@ async function clerkTrustVerify(){
   var code=document.getElementById('clerk-trust-code').value.trim();
   if(!code||!_clerkSignInResource){return;}
   var btn=document.getElementById('clerk-trust-submit');
-  btn.disabled=true;btn.textContent='Wird geprüft…';
+  btn.disabled=true;btn.textContent=window.soT({de:'Wird geprüft…',en:'Verifying…',fr:'Vérification…',it:'Verifica in corso…'});
   document.getElementById('clerk-trust-error').textContent='';
   soLog('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
   try{
@@ -2011,14 +2032,14 @@ async function clerkTrustVerify(){
       _clerkTrustActive=false;
       return;
     }else{
-      document.getElementById('clerk-trust-error').textContent='Unerwarteter Status: '+result.status;
+      document.getElementById('clerk-trust-error').textContent=window.soT({de:'Unerwarteter Status: ',en:'Unexpected status: ',fr:'Statut inattendu: ',it:'Stato imprevisto: '})+result.status;
     }
   }catch(e){
-    var msg=e.errors?e.errors[0].longMessage:(e.message||'Ungültiger Code');
+    var msg=e.errors?e.errors[0].longMessage:(e.message||window.soT({de:'Ungültiger Code',en:'Invalid code',fr:'Code invalide',it:'Codice non valido'}));
     console.error('[Clerk] attemptSecondFactor failed:',msg);
     document.getElementById('clerk-trust-error').textContent=msg;
   }
-  btn.disabled=false;btn.textContent='Bestätigen';
+  btn.disabled=false;btn.textContent=window.soT({de:'Bestätigen',en:'Confirm',fr:'Confirmer',it:'Conferma'});
 }
 
 async function clerkTrustResend(){
@@ -2044,26 +2065,16 @@ document.addEventListener('keydown',function(e){
 <style>.so-2fa [class*="cl-modal"]{display:none!important}</style>
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
   <div class="clerk-trust-modal">
-    <h3>Verifizierung erforderlich</h3>
-    <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
+    <h3 data-i18n="trust_h3">Verifizierung erforderlich</h3>
+    <p id="clerk-trust-msg" data-i18n="trust_msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
-    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
+    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()" data-i18n="trust_submit">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
-    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
-    <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
+    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8"><span data-i18n="trust_nocode">Keinen Code erhalten?</span> <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer" data-i18n="trust_resend">Code erneut senden</a></div>
+    <button class="btn-cancel-trust" onclick="clerkTrustCancel()" data-i18n="trust_cancel">Abbrechen</button>
   </div>
 </div>
 
-  <script>
-  // CATEGORY PILL TOGGLE (visual filter state)
-  document.querySelectorAll('#lp .pill').forEach(function(p){
-    p.addEventListener('click',function(){
-      var wasActive=p.classList.contains('active');
-      document.querySelectorAll('#lp .pill.active').forEach(function(a){a.classList.remove('active');});
-      if(!wasActive)p.classList.add('active');
-    });
-  });
-  </script>
   <script src="mobile-nav.js"></script>
 </body>
 </html>
