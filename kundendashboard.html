@@ -198,6 +198,27 @@ input,select,textarea{font-family:inherit}
 .req-item-bot{display:flex;justify-content:space-between;align-items:center;margin-top:6px}
 .req-item-chf{font-size:13px;font-weight:600;color:var(--gold)}
 .req-detail{background:var(--bg);padding:32px;min-height:600px;transition:opacity .15s ease}
+/* Urgency warning */
+.warn-banner{background:var(--amber-bg);border:1px solid rgba(245,158,11,0.3);border-radius:var(--r-md);padding:16px 20px;margin-bottom:16px}
+.warn-banner.crit{background:var(--red-bg);border-color:rgba(239,68,68,0.3)}
+.warn-head{font-size:14px;font-weight:600;color:var(--amber);margin-bottom:8px}
+.warn-banner.crit .warn-head{color:var(--red)}
+.warn-sub{font-size:13px;color:var(--text-2);line-height:1.5}
+.warn-info{font-size:13px;color:var(--gold);margin-top:8px}
+.warn-actions{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.warn-act{display:flex;flex-direction:column;gap:4px}
+.warn-btn-gold{background:var(--gold);color:#070F1A;font-weight:600;font-size:13px;padding:10px 16px;border-radius:var(--r-sm);border:none;cursor:pointer;text-align:left;font-family:inherit}
+.warn-btn-ghost{background:transparent;border:1px solid var(--border-strong);color:var(--text-2);font-size:13px;padding:10px 16px;border-radius:var(--r-sm);cursor:pointer;text-align:left;font-family:inherit}
+.warn-btn-plain{background:transparent;color:var(--text-3);font-size:13px;padding:10px 16px;border:none;cursor:pointer;text-align:left;font-family:inherit}
+.warn-note{font-size:11px;color:var(--text-3);line-height:1.45}
+.warn-confirm{font-size:12px;color:var(--text-2);margin-top:6px;display:flex;flex-wrap:wrap;gap:8px;align-items:center;line-height:1.4}
+.warn-confirm button{font-size:12px;padding:6px 12px;border-radius:var(--r-sm);border:none;cursor:pointer;font-family:inherit;font-weight:600}
+.warn-confirm .wc-yes{background:var(--gold);color:#070F1A}
+.warn-confirm .wc-no{background:transparent;border:1px solid var(--border-strong);color:var(--text-2)}
+.warn-success{font-size:13px;color:#22C55E;font-weight:600;line-height:1.5}
+.warn-pill{font-size:11px;background:var(--amber-bg);color:var(--amber);padding:2px 8px;border-radius:999px;white-space:nowrap;margin-left:6px}
+.warn-pill.crit{background:var(--red-bg);color:var(--red)}
+.warn-ov-bar{background:var(--amber-bg);border:1px solid rgba(245,158,11,0.3);border-radius:var(--r-sm);padding:10px 14px;margin-bottom:12px;font-size:13px;color:var(--amber);font-weight:600;cursor:pointer}
 .req-empty{display:flex;align-items:center;justify-content:center;height:520px;color:var(--text-3);font-size:14px}
 .rd-mat{font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
 .rd-id{font-size:12px;color:var(--gold);font-weight:500}
@@ -625,7 +646,9 @@ function renderUebersicht(){
   var now=new Date(),events=[];
   _requests.forEach(function(r){var dl=reqDeadline(r);if(dl&&dl.date>now){events.push({date:dl.date,desc:(r.status==='offen'?'Ausschreibung spätestens':'Angebotsfrist endet')+' — '+matNameFor(r),pill:badgeFor(r.status)});}});
   events.sort(function(a,b){return a.date-b.date;});events=events.slice(0,5);
-  document.getElementById('ov-agenda').innerHTML=events.length?events.map(function( e2){return '<div class="ev-row"><span class="ev-dot"></span><span class="ev-date">'+esc(fmtAgenda(e2.date))+'</span><span class="ev-desc">'+esc(e2.desc)+'</span><span class="status-pill '+e2.pill.c+'">'+esc(e2.pill.t)+'</span></div>';}).join(''):'<div class="empty-line">Keine bevorstehenden Ereignisse</div>';
+  var _urgentN=_requests.filter(function(r){var u=_urgency(r);return u&&u.isUrgent&&(r.status==='offen'||r.status==='gebuendelt');}).length;
+  var _ovBar=_urgentN>0?'<div class="warn-ov-bar" onclick="showTab(\'anfragen\')">⚠️ '+_wt('ov_notice').replace('{N}',_urgentN)+'</div>':'';
+  document.getElementById('ov-agenda').innerHTML=_ovBar+(events.length?events.map(function( e2){return '<div class="ev-row"><span class="ev-dot"></span><span class="ev-date">'+esc(fmtAgenda(e2.date))+'</span><span class="ev-desc">'+esc(e2.desc)+'</span><span class="status-pill '+e2.pill.c+'">'+esc(e2.pill.t)+'</span></div>';}).join(''):'<div class="empty-line">Keine bevorstehenden Ereignisse</div>');
   document.getElementById('ov-preview').innerHTML=_requests.length?_requests.slice(0,3).map(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);return '<div class="prev-row" onclick="showTab(\'anfragen\')"><span class="prev-mat">'+esc(matNameFor(r))+'</span><span class="prev-qty">'+mengeStr(r)+'</span><span class="status-pill '+b.c+'">'+esc(b.t)+'</span><span class="prev-sav">'+(gs!=null?fmtCHF(gs):'--')+'</span></div>';}).join(''):'<div class="empty-line">Noch keine Anfragen</div>';
   // FIX8 — Verlauf (all requests, if >=3)
   var vw=document.getElementById('ov-verlauf-wrap');
@@ -652,7 +675,7 @@ function renderReqItems(){
   var el=document.getElementById('req-items');
   var rows=_requests.filter(function(r){return _filter==='alle'||r.status===_filter;});
   if(rows.length===0){el.innerHTML='<div class="empty-line" style="padding:16px">Keine Anfragen.</div>';return;}
-  el.innerHTML=rows.map(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);var d=r.created_at?fmtShort(new Date(r.created_at)):'';return '<div class="req-item'+(r.id===_selId?' active':'')+'" data-id="'+esc(r.id)+'" onclick="selectReq(\''+esc(r.id)+'\')"><div class="req-item-top"><span class="req-item-mat">'+esc(matNameFor(r))+'</span><span class="req-item-date">'+esc(d)+'</span></div><div class="req-item-bot"><span class="status-pill '+b.c+'">'+esc(b.t)+'</span><span class="req-item-chf">'+(gs!=null?fmtCHF(gs):'--')+'</span></div></div>';}).join('');
+  el.innerHTML=rows.map(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);var d=r.created_at?fmtShort(new Date(r.created_at)):'';return '<div class="req-item'+(r.id===_selId?' active':'')+'" data-id="'+esc(r.id)+'" onclick="selectReq(\''+esc(r.id)+'\')"><div class="req-item-top"><span class="req-item-mat">'+esc(matNameFor(r))+'</span><span class="req-item-date">'+esc(d)+'</span></div><div class="req-item-bot"><span><span class="status-pill '+b.c+'">'+esc(b.t)+'</span>'+_warnPill(r)+'</span><span class="req-item-chf">'+(gs!=null?fmtCHF(gs):'--')+'</span></div></div>';}).join('');
   if(_selId&&!rows.some(function(r){return r.id===_selId;}))_selId=null;
 }
 function selectReq(id){
@@ -697,9 +720,76 @@ function selectReq(id){
   det.innerHTML=
     '<div class="rd-head-row"><div><div class="rd-mat">'+esc(matNameFor(r))+'</div>'+(r.sourceon_id?'<div class="rd-id">'+esc(r.sourceon_id)+'</div>':'')+'</div><div class="rd-head-meta"><span class="status-pill '+b.c+'">'+esc(b.t)+'</span><div class="rd-date">'+esc(d)+'</div></div></div>'
     +'<div class="rd-key"><div><div class="k-num">'+mengeStr(r)+'</div><div class="k-lbl">Menge</div></div><div><div class="k-num">'+esc(zeitraumStr(r))+'</div><div class="k-lbl">Lieferzeitraum</div></div><div><div class="k-num gold">'+(gs!=null?fmtCHF(gs):'--')+'</div><div class="k-lbl">Min. Ersparnis</div></div></div>'
-    +mid+actions;
+    +warnBanner(r)+mid+actions;
   requestAnimationFrame(function(){det.style.opacity='1';});
 }
+
+// ── Urgency warning system ──
+var WARN_I18N={
+  de:{head:"Lieferzeitraum rückt näher",sub_offen:"Noch keine Bündelungspartner gefunden. Du hast {X} Tage bis zu deinem Lieferzeitraum.",sub_geb:"Deine Anfrage ist bereits gebündelt — du hast Bündelpartner. Ein Zurückziehen ist jetzt nicht mehr möglich.",info_tender:"Die Ausschreibung läuft automatisch bis {date}.",btn_pub:"Jetzt trotzdem ausschreiben →",note_pub:"Auch ohne Bündelpartner — Achtung: Ersparnis könnte unter 8% liegen.",btn_wd:"Ausschreibung zurückziehen",note_wd:"Du findest selbst einen Lieferanten. Nur möglich solange noch kein Bündelpartner vorhanden ist.",btn_wait:"Weiter warten",note_wait:"⚠️ Sobald ein Bündelpartner dazukommt, kannst du nicht mehr zurückziehen.",days:"{X} Tage",confirm_pub:"Wirklich jetzt ausschreiben? Das Bündel geht mit deinem aktuellen Volumen live.",yes_pub:"Ja, ausschreiben",cancel:"Abbrechen",success_pub:"✓ Ausschreibung wird beim nächsten automatischen Lauf gestartet (innerhalb 1 Stunde).",confirm_wd:"Anfrage wirklich zurückziehen? Sie wird aus dem Bündelungspool entfernt.",yes_wd:"Ja, zurückziehen",success_wd:"Anfrage zurückgezogen.",ov_notice:"{N} Anfrage(n) mit nahendem Lieferzeitraum — Aktion erforderlich"},
+  en:{head:"Delivery timeframe approaching",sub_offen:"No bundling partners found yet. You have {X} days until your delivery timeframe.",sub_geb:"Your request is already bundled — you have bundling partners. Withdrawing is no longer possible.",info_tender:"The tender runs automatically until {date}.",btn_pub:"Publish now anyway →",note_pub:"Even without bundling partners — note: savings may be below 8%.",btn_wd:"Withdraw request",note_wd:"You find your own supplier. Only possible as long as no bundling partner has joined.",btn_wait:"Keep waiting",note_wait:"⚠️ Once a bundling partner joins, you can no longer withdraw.",days:"{X} days",confirm_pub:"Really publish now? The bundle goes live with your current volume.",yes_pub:"Yes, publish",cancel:"Cancel",success_pub:"✓ The tender will start on the next automatic run (within 1 hour).",confirm_wd:"Really withdraw the request? It will be removed from the bundling pool.",yes_wd:"Yes, withdraw",success_wd:"Request withdrawn.",ov_notice:"{N} request(s) with an approaching delivery timeframe — action required"},
+  fr:{head:"Délai de livraison approche",sub_offen:"Aucun partenaire de groupement trouvé. Il vous reste {X} jours avant votre délai de livraison.",sub_geb:"Votre demande est déjà groupée — vous avez des partenaires. Un retrait n'est plus possible.",info_tender:"L'appel d'offres se déroule automatiquement jusqu'au {date}.",btn_pub:"Publier maintenant quand même →",note_pub:"Même sans partenaires — attention: les économies pourraient être inférieures à 8%.",btn_wd:"Retirer la demande",note_wd:"Vous trouvez vous-même un fournisseur. Uniquement possible tant qu'aucun partenaire n'a rejoint.",btn_wait:"Continuer à attendre",note_wait:"⚠️ Dès qu'un partenaire rejoint, vous ne pouvez plus retirer.",days:"{X} jours",confirm_pub:"Vraiment publier maintenant ? Le groupement passe en ligne avec votre volume actuel.",yes_pub:"Oui, publier",cancel:"Annuler",success_pub:"✓ L'appel d'offres démarrera lors de la prochaine exécution automatique (dans l'heure).",confirm_wd:"Vraiment retirer la demande ? Elle sera retirée du pool de groupement.",yes_wd:"Oui, retirer",success_wd:"Demande retirée.",ov_notice:"{N} demande(s) avec un délai de livraison proche — action requise"},
+  it:{head:"Periodo di consegna si avvicina",sub_offen:"Nessun partner di raggruppamento trovato. Hai {X} giorni fino al tuo periodo di consegna.",sub_geb:"La tua richiesta è già raggruppata — hai partner. Un ritiro non è più possibile.",info_tender:"L'offerta si svolge automaticamente fino al {date}.",btn_pub:"Pubblica ora comunque →",note_pub:"Anche senza partner — attenzione: il risparmio potrebbe essere inferiore all'8%.",btn_wd:"Ritira la richiesta",note_wd:"Trovi tu stesso un fornitore. Possibile solo finché nessun partner si è unito.",btn_wait:"Continua ad aspettare",note_wait:"⚠️ Una volta che un partner si unisce, non puoi più ritirare.",days:"{X} giorni",confirm_pub:"Pubblicare davvero ora? Il raggruppamento va in linea con il tuo volume attuale.",yes_pub:"Sì, pubblica",cancel:"Annulla",success_pub:"✓ L'offerta partirà alla prossima esecuzione automatica (entro 1 ora).",confirm_wd:"Ritirare davvero la richiesta? Sarà rimossa dal pool di raggruppamento.",yes_wd:"Sì, ritira",success_wd:"Richiesta ritirata.",ov_notice:"{N} richiesta/e con periodo di consegna imminente — azione richiesta"}
+};
+function _wlang(){var l=localStorage.getItem('sourceon-lang')||'de';return WARN_I18N[l]?l:'de';}
+function _wt(k){var d=WARN_I18N[_wlang()];return (d&&d[k])||WARN_I18N.de[k]||k;}
+function _daysUntil(r){
+  if(!r||!r.liefer_zeitraum_von)return null;
+  var dd=new Date(r.liefer_zeitraum_von);if(isNaN(dd))return null;
+  var today=new Date();today.setHours(0,0,0,0);dd.setHours(0,0,0,0);
+  return Math.ceil((dd-today)/(1000*60*60*24));
+}
+function _urgency(r){var d=_daysUntil(r);if(d==null)return null;return {days:d,isUrgent:d<=10&&d>0,isCritical:d<=5&&d>0};}
+function _warnPill(r){
+  var u=_urgency(r);if(!u||!u.isUrgent)return '';
+  return '<span class="warn-pill'+(u.isCritical?' crit':'')+'">'+esc(_wt('days').replace('{X}',u.days))+'</span>';
+}
+function _warnDismissed(id){try{return localStorage.getItem('sourceon_dismissed_warning_'+id)==='1';}catch(e){return false;}}
+function warnBanner(r){
+  var u=_urgency(r);if(!u||!u.isUrgent)return '';
+  var icon=u.isCritical?'🚨':'⚠️';var crit=u.isCritical?' crit':'';var id=r.id;
+  if(r.status==='gebuendelt'){
+    var bundle=r.bundle_id?_bundleMap[r.bundle_id]:null;
+    var dtxt=(bundle&&bundle.bid_deadline)?fmtDMY(new Date(bundle.bid_deadline)):'--';
+    return '<div class="warn-banner'+crit+'"><div class="warn-head">'+icon+' '+esc(_wt('head'))+'</div>'
+      +'<div class="warn-sub">'+esc(_wt('sub_geb'))+'</div>'
+      +'<div class="warn-info">'+esc(_wt('info_tender').replace('{date}',dtxt))+'</div></div>';
+  }
+  if(r.status==='offen'){
+    if(_warnDismissed(id))return '';
+    return '<div class="warn-banner'+crit+'" id="warn-'+esc(id)+'"><div class="warn-head">'+icon+' '+esc(_wt('head'))+'</div>'
+      +'<div class="warn-sub">'+esc(_wt('sub_offen').replace('{X}',u.days))+'</div>'
+      +'<div class="warn-actions">'
+        +'<div class="warn-act"><button class="warn-btn-gold" onclick="warnAsk(\'pub\',\''+esc(id)+'\')">'+esc(_wt('btn_pub'))+'</button><div class="warn-note">'+esc(_wt('note_pub'))+'</div>'
+          +'<div class="warn-confirm" id="wc-pub-'+esc(id)+'" style="display:none">'+esc(_wt('confirm_pub'))+' <button class="wc-yes" onclick="warnPublish(\''+esc(id)+'\')">'+esc(_wt('yes_pub'))+'</button><button class="wc-no" onclick="warnHide(\'pub\',\''+esc(id)+'\')">'+esc(_wt('cancel'))+'</button></div></div>'
+        +'<div class="warn-act"><button class="warn-btn-ghost" onclick="warnAsk(\'wd\',\''+esc(id)+'\')">'+esc(_wt('btn_wd'))+'</button><div class="warn-note">'+esc(_wt('note_wd'))+'</div>'
+          +'<div class="warn-confirm" id="wc-wd-'+esc(id)+'" style="display:none">'+esc(_wt('confirm_wd'))+' <button class="wc-yes" onclick="warnWithdraw(\''+esc(id)+'\')">'+esc(_wt('yes_wd'))+'</button><button class="wc-no" onclick="warnHide(\'wd\',\''+esc(id)+'\')">'+esc(_wt('cancel'))+'</button></div></div>'
+        +'<div class="warn-act"><button class="warn-btn-plain" onclick="warnDismiss(\''+esc(id)+'\')">'+esc(_wt('btn_wait'))+'</button><div class="warn-note">'+esc(_wt('note_wait'))+'</div></div>'
+      +'</div></div>';
+  }
+  return '';
+}
+function warnAsk(kind,id){var el=document.getElementById('wc-'+kind+'-'+id);if(el)el.style.display='flex';var oe=document.getElementById('wc-'+(kind==='pub'?'wd':'pub')+'-'+id);if(oe)oe.style.display='none';}
+function warnHide(kind,id){var el=document.getElementById('wc-'+kind+'-'+id);if(el)el.style.display='none';}
+async function warnPublish(id){
+  try{
+    var res=await sb.from('material_requests').update({fallback_deadline:new Date().toISOString()}).eq('id',id);
+    if(res.error){alert('Fehler: '+res.error.message);return;}
+    for(var i=0;i<_requests.length;i++){if(_requests[i].id===id)_requests[i].fallback_deadline=new Date().toISOString();}
+    var w=document.getElementById('warn-'+id);if(w)w.innerHTML='<div class="warn-success">'+esc(_wt('success_pub'))+'</div>';
+  }catch(e){alert('Fehler.');}
+}
+async function warnWithdraw(id){
+  try{
+    var res=await sb.from('material_requests').update({status:'storniert'}).eq('id',id).eq('status','offen');
+    if(res.error){alert('Fehler: '+res.error.message);return;}
+    for(var i=0;i<_requests.length;i++){if(_requests[i].id===id)_requests[i].status='storniert';}
+    renderUebersicht();renderReqItems();
+    var det=document.getElementById('req-detail');if(det)det.innerHTML='<div class="warn-success" style="padding:8px 0">'+esc(_wt('success_wd'))+'</div>';
+    _selId=null;
+  }catch(e){alert('Fehler.');}
+}
+function warnDismiss(id){try{localStorage.setItem('sourceon_dismissed_warning_'+id,'1');}catch(e){}selectReq(id);}
 
 // ── FINANZEN ──
 function renderFinanzen(){
