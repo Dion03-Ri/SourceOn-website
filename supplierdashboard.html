@@ -518,6 +518,13 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   if(catRes.data){catRes.data.forEach(function(m){_catalog[m.sourceon_id]=m;});}
   var bRes=await sb.from('bundles').select('*').eq('status','ausgeschrieben').order('bid_deadline',{ascending:true});
   _bundles=(bRes.data&&!bRes.error)?bRes.data:[];
+  // Nur Ausschreibungen in den vom Lieferanten gewählten Regionen anzeigen.
+  // 'Ganze Schweiz' → alle Bündel, unabhängig von der Zone.
+  var _supRegions=(_profile&&_profile.regions)||[];
+  var _seesAll=_supRegions.indexOf('Ganze Schweiz')!==-1;
+  if(!_seesAll){
+    _bundles=_bundles.filter(function(b){return _supRegions.indexOf(b.liefer_zone||b.delivery_zone)!==-1;});
+  }
   var myRes=await sb.from('bids').select('*,bundles(*)').eq('supplier_id',currentUserId).order('created_at',{ascending:false});
   _bids=(myRes.data&&!myRes.error)?myRes.data:[];
   _bids.forEach(function(b){_myBids[b.bundle_id]=b;});

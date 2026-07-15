@@ -1579,6 +1579,20 @@ function _parseTiming(sel){
   return{von:null,bis:null};
 }
 
+// Kanton → eine der 10 Bündelungs-Regionen (liefer_zone)
+var kantonToRegion={
+  'ZH':'Zürich',
+  'BE':'Bern',
+  'BS':'Basel','BL':'Basel',
+  'LU':'Luzern',
+  'SG':'Ostschweiz','AR':'Ostschweiz','AI':'Ostschweiz','TG':'Ostschweiz','GR':'Ostschweiz','GL':'Ostschweiz','SH':'Ostschweiz',
+  'UR':'Zentralschweiz','SZ':'Zentralschweiz','OW':'Zentralschweiz','NW':'Zentralschweiz','ZG':'Zentralschweiz',
+  'AG':'Aargau',
+  'TI':'Tessin',
+  'VD':'Westschweiz','GE':'Westschweiz','NE':'Westschweiz','VS':'Westschweiz','FR':'Westschweiz','JU':'Westschweiz',
+  'SO':'Aargau'
+};
+function _regionForKanton(kanton){return kantonToRegion[kanton]||'Zürich';}
 function _extractZone(addr){
   var plz=addr.match(/\b(\d{4})\b/);
   if(plz)return plz[1].substring(0,2);
@@ -1659,7 +1673,7 @@ async function submitContact(e){
     }
 
     var timing={von:document.getElementById('c-date-von').value,bis:document.getElementById('c-date-bis').value};
-    var zone=_extractZone(addrVal);
+    var zone=_regionForKanton(_extractKanton(addrVal));
     var rows=document.querySelectorAll('#material-rows .material-row');
     var inserts=[];
     var unmatched=[];
