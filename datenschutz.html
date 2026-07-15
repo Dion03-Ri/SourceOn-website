@@ -166,6 +166,7 @@ p{text-wrap:pretty}
       <li data-i18n-html="s6_li4"><strong>Datenübertragbarkeit:</strong> Herausgabe Ihrer Daten in einem gängigen Format verlangen.</li>
       <li data-i18n-html="s6_li5"><strong>Widerspruchsrecht:</strong> Der Bearbeitung Ihrer Daten zu Marketingzwecken jederzeit widersprechen.</li>
     </ul>
+    <p data-i18n-html="s6_deletion"><strong>Datenlöschung:</strong> Eingeloggte Kunden können ihr Konto und alle gespeicherten Daten jederzeit direkt im Kunden-Dashboard unter „Konto → Konto löschen" vollständig löschen. Lieferanten können ihr Profil unter „Profil → Profil deaktivieren" deaktivieren. Für manuelle Löschanfragen: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a></p>
 
     <h2 data-i18n="s7_h">7. Kontakt</h2>
     <p data-i18n-html="s7_p">
@@ -208,6 +209,7 @@ p{text-wrap:pretty}
       s6_li3:"<strong>Right to erasure:</strong> Request the deletion of your data, insofar as no statutory retention obligations conflict with this.",
       s6_li4:"<strong>Data portability:</strong> Request the release of your data in a common format.",
       s6_li5:"<strong>Right to object:</strong> Object at any time to the processing of your data for marketing purposes.",
+      s6_deletion:"<strong>Data deletion:</strong> Logged-in customers can delete their account and all stored data at any time directly in the customer dashboard under 'Account → Delete account'. Suppliers can deactivate their profile under 'Profile → Deactivate profile'. For manual deletion requests: <a href='mailto:info@sourceon.ch'>info@sourceon.ch</a>",
       s7_h:"7. Contact",
       s7_p:"For questions about data protection: <a href=\"mailto:info@sourceon.ch\">info@sourceon.ch</a><br>You may also lodge a complaint with the Federal Data Protection and Information Commissioner (EDÖB): <a href=\"https://www.edoeb.admin.ch\" target=\"_blank\" rel=\"noopener\">www.edoeb.admin.ch</a>"
     },
@@ -240,6 +242,7 @@ p{text-wrap:pretty}
       s6_li3:"<strong>Droit à l'effacement :</strong> Demander la suppression de vos données, dans la mesure où aucune obligation légale de conservation ne s'y oppose.",
       s6_li4:"<strong>Portabilité des données :</strong> Demander la remise de vos données dans un format courant.",
       s6_li5:"<strong>Droit d'opposition :</strong> Vous opposer à tout moment au traitement de vos données à des fins de marketing.",
+      s6_deletion:"<strong>Suppression des données :</strong> Les clients connectés peuvent supprimer leur compte et toutes les données stockées à tout moment directement dans le tableau de bord client sous 'Compte → Supprimer le compte'. Les fournisseurs peuvent désactiver leur profil sous 'Profil → Désactiver le profil'. Pour les demandes de suppression manuelle : <a href='mailto:info@sourceon.ch'>info@sourceon.ch</a>",
       s7_h:"7. Contact",
       s7_p:"Pour toute question relative à la protection des données : <a href=\"mailto:info@sourceon.ch\">info@sourceon.ch</a><br>Vous pouvez également déposer une réclamation auprès du Préposé fédéral à la protection des données et à la transparence (EDÖB) : <a href=\"https://www.edoeb.admin.ch\" target=\"_blank\" rel=\"noopener\">www.edoeb.admin.ch</a>"
     },
@@ -272,6 +275,7 @@ p{text-wrap:pretty}
       s6_li3:"<strong>Diritto alla cancellazione:</strong> Richiedere la cancellazione dei Suoi dati, qualora non vi si oppongano obblighi legali di conservazione.",
       s6_li4:"<strong>Portabilità dei dati:</strong> Richiedere la consegna dei Suoi dati in un formato comune.",
       s6_li5:"<strong>Diritto di opposizione:</strong> Opporsi in qualsiasi momento al trattamento dei Suoi dati per finalità di marketing.",
+      s6_deletion:"<strong>Cancellazione dei dati:</strong> I clienti registrati possono eliminare il proprio account e tutti i dati memorizzati in qualsiasi momento direttamente nella dashboard cliente sotto 'Account → Elimina account'. I fornitori possono disattivare il proprio profilo sotto 'Profilo → Disattiva profilo'. Per richieste di cancellazione manuale: <a href='mailto:info@sourceon.ch'>info@sourceon.ch</a>",
       s7_h:"7. Contatto",
       s7_p:"Per domande sulla protezione dei dati: <a href=\"mailto:info@sourceon.ch\">info@sourceon.ch</a><br>Può inoltre presentare reclamo all'Incaricato federale della protezione dei dati e della trasparenza (EDÖB): <a href=\"https://www.edoeb.admin.ch\" target=\"_blank\" rel=\"noopener\">www.edoeb.admin.ch</a>"
     }
@@ -300,5 +304,34 @@ p{text-wrap:pretty}
     if(saved&&saved!=='de'){setLang(saved);}
   })();
   </script>
+<div id="cookie-banner" style="display:none">
+  <div class="cookie-inner">
+    <p class="cookie-text"></p>
+    <button class="cookie-btn" onclick="acceptCookies()"></button>
+  </div>
+</div>
+<style>
+#cookie-banner{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9998;width:calc(100% - 48px);max-width:680px;background:var(--bg1,#0C1824);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+#cookie-banner .cookie-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%}
+#cookie-banner .cookie-text{font-size:13px;color:#94A3B8;margin:0;line-height:1.5}
+#cookie-banner .cookie-btn{background:#E8A020;color:#070F1A;border:none;border-radius:6px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
+@media(max-width:520px){#cookie-banner,#cookie-banner .cookie-inner{flex-direction:column;align-items:stretch}#cookie-banner .cookie-btn{width:100%}}
+</style>
+<script>
+(function(){
+  var COOKIE_I18N={
+    de:{t:'Wir verwenden technisch notwendige Cookies f\u00fcr Login und Sicherheit. Keine Tracking- oder Werbe-Cookies.',b:'Verstanden'},
+    en:{t:'We use technically necessary cookies for login and security. No tracking or advertising cookies.',b:'Got it'},
+    fr:{t:'Nous utilisons des cookies techniquement n\u00e9cessaires pour la connexion et la s\u00e9curit\u00e9. Pas de cookies de suivi ou publicitaires.',b:'Compris'},
+    it:{t:"Utilizziamo cookie tecnicamente necessari per l'accesso e la sicurezza. Nessun cookie di tracciamento o pubblicitario.",b:'Capito'}
+  };
+  function lang(){var l=localStorage.getItem('sourceon-lang')||'de';return COOKIE_I18N[l]?l:'de';}
+  function paint(){var d=COOKIE_I18N[lang()];var tx=document.querySelector('#cookie-banner .cookie-text');var bt=document.querySelector('#cookie-banner .cookie-btn');if(tx)tx.textContent=d.t;if(bt)bt.textContent=d.b;}
+  window.acceptCookies=function(){try{localStorage.setItem('sourceon_cookie_accepted','1');}catch(e){}var b=document.getElementById('cookie-banner');if(b)b.style.display='none';};
+  function initCookieBanner(){paint();try{if(!localStorage.getItem('sourceon_cookie_accepted')){var b=document.getElementById('cookie-banner');if(b)b.style.display='flex';}}catch(e){}}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initCookieBanner);else initCookieBanner();
+  var _o=window.setLang;if(typeof _o==='function'){window.setLang=function(l){_o(l);paint();};}
+})();
+</script>
 </body>
 </html>

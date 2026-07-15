@@ -2028,5 +2028,34 @@ document.addEventListener('keydown',function(e){
   });
   </script>
   <script src="mobile-nav.js"></script>
+<div id="cookie-banner" style="display:none">
+  <div class="cookie-inner">
+    <p class="cookie-text"></p>
+    <button class="cookie-btn" onclick="acceptCookies()"></button>
+  </div>
+</div>
+<style>
+#cookie-banner{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9998;width:calc(100% - 48px);max-width:680px;background:var(--bg1,#0C1824);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
+#cookie-banner .cookie-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%}
+#cookie-banner .cookie-text{font-size:13px;color:#94A3B8;margin:0;line-height:1.5}
+#cookie-banner .cookie-btn{background:#E8A020;color:#070F1A;border:none;border-radius:6px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
+@media(max-width:520px){#cookie-banner,#cookie-banner .cookie-inner{flex-direction:column;align-items:stretch}#cookie-banner .cookie-btn{width:100%}}
+</style>
+<script>
+(function(){
+  var COOKIE_I18N={
+    de:{t:'Wir verwenden technisch notwendige Cookies f\u00fcr Login und Sicherheit. Keine Tracking- oder Werbe-Cookies.',b:'Verstanden'},
+    en:{t:'We use technically necessary cookies for login and security. No tracking or advertising cookies.',b:'Got it'},
+    fr:{t:'Nous utilisons des cookies techniquement n\u00e9cessaires pour la connexion et la s\u00e9curit\u00e9. Pas de cookies de suivi ou publicitaires.',b:'Compris'},
+    it:{t:"Utilizziamo cookie tecnicamente necessari per l'accesso e la sicurezza. Nessun cookie di tracciamento o pubblicitario.",b:'Capito'}
+  };
+  function lang(){var l=localStorage.getItem('sourceon-lang')||'de';return COOKIE_I18N[l]?l:'de';}
+  function paint(){var d=COOKIE_I18N[lang()];var tx=document.querySelector('#cookie-banner .cookie-text');var bt=document.querySelector('#cookie-banner .cookie-btn');if(tx)tx.textContent=d.t;if(bt)bt.textContent=d.b;}
+  window.acceptCookies=function(){try{localStorage.setItem('sourceon_cookie_accepted','1');}catch(e){}var b=document.getElementById('cookie-banner');if(b)b.style.display='none';};
+  function initCookieBanner(){paint();try{if(!localStorage.getItem('sourceon_cookie_accepted')){var b=document.getElementById('cookie-banner');if(b)b.style.display='flex';}}catch(e){}}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initCookieBanner);else initCookieBanner();
+  var _o=window.setLang;if(typeof _o==='function'){window.setLang=function(l){_o(l);paint();};}
+})();
+</script>
 </body>
 </html>
