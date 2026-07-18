@@ -1039,6 +1039,10 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
 <main id="lp">
   <section class="lhero-sec"><div class="wrap">
+    <div id="sa-verified-banner" style="display:none;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.2);border-radius:10px;padding:14px 20px;margin-bottom:32px">
+      <span data-i18n="sa.verified.text" style="font-size:14px;color:#22C55E;font-weight:600">✓ Du bist bereits verifizierter SourceOn-Partnerlieferant.</span>
+      <a href="/supplierdashboard.html" data-i18n="sa.verified.dash" style="color:var(--gold);font-weight:600;font-size:14px;text-decoration:none;white-space:nowrap">Zum Dashboard →</a>
+    </div>
     <div class="lieferant-hero">
       <div class="reveal">
         <span class="eyebrow" data-i18n="supplier.label">Partnerlieferanten</span>
@@ -1077,10 +1081,15 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         </div>
       </div>
       <!-- ALREADY APPLIED (supplier row exists) -->
-      <div id="sa-applied" style="display:none;text-align:center;padding:48px 32px;max-width:480px;margin:0 auto">
-        <div data-i18n="sa.applied.title" style="font-size:16px;font-weight:600;color:#22C55E;margin-bottom:8px">✓ Bewerbung eingegangen</div>
-        <div data-i18n="sa.applied.sub" style="font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:24px">Deine Bewerbung wird geprüft. Du wirst benachrichtigt sobald dein Profil freigegeben wird.</div>
-        <a href="/supplierdashboard.html" data-i18n="sa.applied.dash" style="display:inline-block;background:var(--gold);color:#070F1A;padding:11px 20px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none">Zum Dashboard →</a>
+      <!-- PENDING (status=pending) -->
+      <div id="sa-pending" style="display:none;text-align:center;padding:48px 32px;max-width:480px;margin:0 auto">
+        <div data-i18n="sa.pending.title" style="font-size:16px;font-weight:600;color:#22C55E;margin-bottom:8px">✓ Deine Bewerbung wird geprüft.</div>
+        <div data-i18n="sa.pending.sub" style="font-size:14px;color:var(--t2);line-height:1.6">Wir melden uns innerhalb von 48 Stunden bei dir.</div>
+      </div>
+      <!-- REJECTED (status=rejected) -->
+      <div id="sa-rejected" style="display:none;text-align:center;padding:48px 32px;max-width:480px;margin:0 auto">
+        <div data-i18n="sa.rejected.title" style="font-size:16px;font-weight:600;color:var(--t1);margin-bottom:8px">Deine Bewerbung wurde leider nicht genehmigt.</div>
+        <div data-i18n-html="sa.rejected.sub" style="font-size:14px;color:var(--t2);line-height:1.6">Bei Fragen melde dich unter <a href="mailto:info@sourceon.ch" style="color:var(--gold)">info@sourceon.ch</a></div>
       </div>
       <div id="sa-formwrap" style="display:none">
       <div class="fcard-title" data-i18n="form.applyTitle">Jetzt bewerben</div>
@@ -1162,7 +1171,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <p class="sa-post" data-i18n="supplier.postSubmit">Nach deiner Bewerbung prüfen wir dein Profil und melden uns innerhalb von 48 Stunden. Bei Freigabe erhältst du sofort Zugang zu passenden Ausschreibungen.</p>
         <div class="form-error" id="error-supplier" style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#EF4444;font-size:14px"></div>
       </form>
-      <div class="form-success" id="success-supplier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="form.success">Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.</span></div>
+      <div class="form-success" id="success-supplier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span><strong data-i18n="sa.success.title">✓ Vielen Dank! Deine Bewerbung ist eingegangen.</strong><br><span data-i18n="sa.success.sub" style="font-weight:400;opacity:.85">Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.</span></span></div>
       </div><!-- /sa-formwrap -->
       </div>
     </div>
@@ -1390,25 +1399,30 @@ function _saT(k){var l=localStorage.getItem('sourceon-lang')||'de';return (windo
 function supplierRegister(){if(!window.Clerk)return;try{localStorage.setItem('sourceon_redirect_after_login',window.location.href);}catch(e){}window.Clerk.openSignUp({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});}
 function supplierLogin(){if(!window.Clerk)return;window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});}
 function _saShow(which){
-  var g=document.getElementById('sa-authgate'),a=document.getElementById('sa-applied'),w=document.getElementById('sa-formwrap'),lr=document.getElementById('lben-register');
-  if(g)g.style.display=which==='gate'?'block':'none';
-  if(a)a.style.display=which==='applied'?'block':'none';
-  if(w)w.style.display=which==='form'?'block':'none';
-  if(lr)lr.style.display=which==='gate'?'inline':'none';
+  var map={gate:'sa-authgate',form:'sa-formwrap',pending:'sa-pending',rejected:'sa-rejected'};
+  Object.keys(map).forEach(function(k){var el=document.getElementById(map[k]);if(el)el.style.display=(k===which)?'block':'none';});
+  var lr=document.getElementById('lben-register');if(lr)lr.style.display=(which==='gate')?'inline':'none';
 }
-async function _gateSupplier(){
-  var user=(window.Clerk&&window.Clerk.user)?window.Clerk.user:null;
-  if(!user){_saShow('gate');return;}
-  var exists=false;
-  try{if(_sbClient){var r=await _sbClient.from('suppliers').select('id').eq('id',user.id).maybeSingle();exists=!!(r&&r.data);}}catch(e){}
-  if(exists){_saShow('applied');return;}
-  _saShow('form');
+function _saPrefillEmail(user){
   var emailEl=document.getElementById('sa-email');
   if(emailEl){
     var em=user.primaryEmailAddress?user.primaryEmailAddress.emailAddress:'';
     if(em){emailEl.value=em;emailEl.readOnly=true;emailEl.style.background='var(--bg)';emailEl.style.color='var(--t3)';emailEl.style.cursor='not-allowed';}
     var note=document.getElementById('sa-email-note');if(note)note.style.display='block';
   }
+}
+async function _gateSupplier(){
+  var banner=document.getElementById('sa-verified-banner');
+  if(banner)banner.style.display='none';
+  var user=(window.Clerk&&window.Clerk.user)?window.Clerk.user:null;
+  if(!user){_saShow('gate');return;}           // CASE 1
+  var row=null;
+  try{if(_sbClient){var r=await _sbClient.from('suppliers').select('id,status').eq('id',user.id).maybeSingle();row=r&&r.data;}}catch(e){}
+  if(!row){ _saShow('form'); _saPrefillEmail(user); return; }   // CASE 2: no row → form
+  var st=(row.status||'').toLowerCase();
+  if(st==='verified'){ _saShow('form'); _saPrefillEmail(user); if(banner)banner.style.display='flex'; return; } // CASE 5
+  if(st==='rejected'){ _saShow('rejected'); return; }          // CASE 6
+  _saShow('pending');                                          // CASE 4 (pending / any other)
 }
 (function _initSupplierGate(){
   function onClerk(){
@@ -1561,6 +1575,14 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 (function(){
 var i18n = {
   de: {
+    'sa.success.title': '✓ Vielen Dank! Deine Bewerbung ist eingegangen.',
+    'sa.success.sub': 'Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.',
+    'sa.pending.title': '✓ Deine Bewerbung wird geprüft.',
+    'sa.pending.sub': 'Wir melden uns innerhalb von 48 Stunden bei dir.',
+    'sa.verified.text': '✓ Du bist bereits verifizierter SourceOn-Partnerlieferant.',
+    'sa.verified.dash': 'Zum Dashboard →',
+    'sa.rejected.title': 'Deine Bewerbung wurde leider nicht genehmigt.',
+    'sa.rejected.sub': 'Bei Fragen melde dich unter <a href="mailto:info@sourceon.ch" style="color:var(--gold)">info@sourceon.ch</a>',
     'sa.gate.title': 'Zuerst Konto erstellen',
     'sa.gate.sub': 'Um dich als Partnerlieferant zu bewerben, benötigst du ein SourceOn-Konto. Die Registrierung ist kostenlos und dauert eine Minute.',
     'sa.gate.register': 'Jetzt registrieren →',
@@ -1664,6 +1686,14 @@ var i18n = {
     'reg.all': 'Ganze Schweiz'
   },
   en: {
+    'sa.success.title': '✓ Thank you! Your application has been received.',
+    'sa.success.sub': 'We will review your profile and get back to you within 48 hours.',
+    'sa.pending.title': '✓ Your application is being reviewed.',
+    'sa.pending.sub': 'We will get back to you within 48 hours.',
+    'sa.verified.text': '✓ You are already a verified SourceOn partner supplier.',
+    'sa.verified.dash': 'To Dashboard →',
+    'sa.rejected.title': 'Your application was unfortunately not approved.',
+    'sa.rejected.sub': 'For questions contact <a href="mailto:info@sourceon.ch" style="color:var(--gold)">info@sourceon.ch</a>',
     'sa.gate.title': 'Create account first',
     'sa.gate.sub': 'To apply as a partner supplier, you need a SourceOn account. Registration is free and takes one minute.',
     'sa.gate.register': 'Register now →',
@@ -1767,6 +1797,14 @@ var i18n = {
     'reg.all': 'All of Switzerland'
   },
   fr: {
+    'sa.success.title': '✓ Merci! Ta candidature a été reçue.',
+    'sa.success.sub': 'Nous examinerons ton profil et te répondrons dans les 48 heures.',
+    'sa.pending.title': '✓ Ta candidature est en cours d\'examen.',
+    'sa.pending.sub': 'Nous te répondrons dans les 48 heures.',
+    'sa.verified.text': '✓ Tu es déjà un fournisseur partenaire SourceOn vérifié.',
+    'sa.verified.dash': 'Vers le tableau de bord →',
+    'sa.rejected.title': 'Ta candidature n\'a malheureusement pas été approuvée.',
+    'sa.rejected.sub': 'Pour toute question, contacte <a href="mailto:info@sourceon.ch" style="color:var(--gold)">info@sourceon.ch</a>',
     'sa.gate.title': 'Créer un compte d\'abord',
     'sa.gate.sub': 'Pour vous inscrire comme fournisseur partenaire, vous avez besoin d\'un compte SourceOn. L\'inscription est gratuite et prend une minute.',
     'sa.gate.register': 'S\'inscrire maintenant →',
@@ -1870,6 +1908,14 @@ var i18n = {
     'reg.all': 'Toute la Suisse'
   },
   it: {
+    'sa.success.title': '✓ Grazie! La tua candidatura è stata ricevuta.',
+    'sa.success.sub': 'Esamineremo il tuo profilo e ti risponderemo entro 48 ore.',
+    'sa.pending.title': '✓ La tua candidatura è in fase di revisione.',
+    'sa.pending.sub': 'Ti risponderemo entro 48 ore.',
+    'sa.verified.text': '✓ Sei già un fornitore partner SourceOn verificato.',
+    'sa.verified.dash': 'Alla dashboard →',
+    'sa.rejected.title': 'La tua candidatura non è stata approvata.',
+    'sa.rejected.sub': 'Per domande contatta <a href="mailto:info@sourceon.ch" style="color:var(--gold)">info@sourceon.ch</a>',
     'sa.gate.title': 'Prima crea un account',
     'sa.gate.sub': 'Per iscriverti come fornitore partner, hai bisogno di un account SourceOn. La registrazione è gratuita e richiede un minuto.',
     'sa.gate.register': 'Registrati ora →',
