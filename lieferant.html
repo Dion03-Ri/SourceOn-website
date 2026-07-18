@@ -1054,6 +1054,11 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b5.title">Qualitätsnetzwerk</div><div class="lben-x" data-i18n="supplier.b5.desc">Nur geprüfte SIA/ISO-konforme Lieferanten</div></div></div>
           <div class="lben"><div class="lben-ic">✓</div><div><div class="lben-t" data-i18n="supplier.b6.title">Wachstumspotenzial</div><div class="lben-x" data-i18n="supplier.b6.desc">Marktposition stärken im Schweizer Baumarkt</div></div></div>
         </div>
+        <div style="height:1px;background:var(--lpb);margin:24px 0"></div>
+        <div style="background:var(--golddim);border:1px solid var(--goldbd);border-radius:6px;padding:12px 16px">
+          <span data-i18n="sa.acctNote" style="font-size:13px;color:var(--t2)">SourceOn-Konto erforderlich — die Registrierung ist kostenlos.</span>
+          <a href="#" id="lben-register" onclick="supplierRegister();return false" data-i18n="sa.acctRegLink" style="color:var(--gold);font-size:13px;font-weight:600;text-decoration:none;white-space:nowrap">→ Jetzt registrieren</a>
+        </div>
         <div class="lvergabe-inline">
           <span class="vg-label" data-i18n="supplier.how.label">Vergabe</span>
           <p class="vg-text" data-i18n="supplier.how.text">SourceOn bündelt Bedarf von mehreren Baufirmen zu grösseren Materialpaketen. Verifizierte Partnerlieferanten erhalten Zugang zu diesen Ausschreibungen und können ein Angebot einreichen. Den Zuschlag erhält das Angebot mit dem höchsten Rabatt, das den ausgeschriebenen Mindestrabatt erreicht oder übertrifft. Lieferfähigkeit und Zuverlässigkeit werden bereits bei der Lieferantenverifizierung geprüft. Aus Datenschutzgründen werden Lieferadressen erst nach Zuschlag bekannt gegeben — das Ausschreibungspaket enthält Materialart, Menge, Liefergebiet (Zone) und Zeitraum.</p>
@@ -1063,6 +1068,23 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="saform">
       <div class="fcard-accent"></div>
       <div class="saform-inner">
+      <!-- AUTH GATE (shown when not logged in) -->
+      <div id="sa-authgate" style="display:none;text-align:center;padding:48px 32px;max-width:480px;margin:0 auto">
+        <div style="font-size:32px;margin-bottom:16px">🔐</div>
+        <div data-i18n="sa.gate.title" style="font-size:20px;font-weight:700;color:var(--t1);margin-bottom:8px">Zuerst Konto erstellen</div>
+        <div data-i18n="sa.gate.sub" style="font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:28px">Um dich als Partnerlieferant zu bewerben, benötigst du ein SourceOn-Konto. Die Registrierung ist kostenlos und dauert eine Minute.</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <button type="button" onclick="supplierRegister()" data-i18n="sa.gate.register" style="width:100%;background:var(--gold);color:#070F1A;border:none;padding:13px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer">Jetzt registrieren →</button>
+          <button type="button" onclick="supplierLogin()" data-i18n="sa.gate.login" style="width:100%;background:transparent;border:1px solid var(--lpbs);color:var(--t2);padding:12px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer">Bereits ein Konto? Einloggen</button>
+        </div>
+      </div>
+      <!-- ALREADY APPLIED (supplier row exists) -->
+      <div id="sa-applied" style="display:none;text-align:center;padding:48px 32px;max-width:480px;margin:0 auto">
+        <div data-i18n="sa.applied.title" style="font-size:16px;font-weight:600;color:#22C55E;margin-bottom:8px">✓ Bewerbung eingegangen</div>
+        <div data-i18n="sa.applied.sub" style="font-size:14px;color:var(--t2);line-height:1.6;margin-bottom:24px">Deine Bewerbung wird geprüft. Du wirst benachrichtigt sobald dein Profil freigegeben wird.</div>
+        <a href="/supplierdashboard.html" data-i18n="sa.applied.dash" style="display:inline-block;background:var(--gold);color:#070F1A;padding:11px 20px;border-radius:6px;font-size:14px;font-weight:700;text-decoration:none">Zum Dashboard →</a>
+      </div>
+      <div id="sa-formwrap" style="display:none">
       <div class="fcard-title" data-i18n="form.applyTitle">Jetzt bewerben</div>
       <div class="fcard-sub" data-i18n="form.applySub">Wir prüfen dein Profil innerhalb von 48 Stunden.</div>
       <form id="form-supplier" onsubmit="submitSupplier(event)" novalidate>
@@ -1072,7 +1094,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           <div class="form-group"><label class="form-label" data-i18n="form.contact">Ansprechperson *</label><input type="text" class="form-input" id="sa-name" required/><div class="form-error" id="e-sa-name" data-i18n="form.required">Pflichtfeld</div></div>
         </div>
         <div class="form-grid">
-          <div class="form-group"><label class="form-label" data-i18n="form.email">E-Mail *</label><input type="email" class="form-input" id="sa-email" required/><div class="form-error" id="e-sa-email" data-i18n="form.emailError">Gültige E-Mail erforderlich</div></div>
+          <div class="form-group"><label class="form-label" data-i18n="form.email">E-Mail *</label><input type="email" class="form-input" id="sa-email" required/><div class="form-error" id="e-sa-email" data-i18n="form.emailError">Gültige E-Mail erforderlich</div><div id="sa-email-note" data-i18n="sa.emailNote" style="display:none;font-size:11px;color:var(--t3);margin-top:4px">Verknüpft mit deinem SourceOn-Konto</div></div>
           <div class="form-group"><label class="form-label" data-i18n="form.phone">Telefon *</label><input type="tel" class="form-input" id="sa-phone" required/><div class="form-error" id="e-sa-phone" data-i18n="form.required">Pflichtfeld</div></div>
         </div>
         <div class="form-group"><label class="form-label" data-i18n="form.website">Website (optional)</label><input type="url" class="form-input" id="sa-web" placeholder="https://"/></div>
@@ -1143,6 +1165,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="form-error" id="error-supplier" style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#EF4444;font-size:14px"></div>
       </form>
       <div class="form-success" id="success-supplier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span data-i18n="form.success">Vielen Dank für deine Bewerbung. Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.</span></div>
+      </div><!-- /sa-formwrap -->
       </div>
     </div>
       </div>
@@ -1359,32 +1382,53 @@ async function submitSupplier(e){
     return;
   }
 
-  sessionStorage.setItem(PENDING_KEY,JSON.stringify(formData));
-  soLog('[Supplier] Form data saved to sessionStorage, opening Clerk sign-up');
-
-  window.Clerk.openSignUp({
-    appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}},
-    initialValues:{emailAddress:formData.email},
-    fallbackRedirectUrl:window.location.href,
-    afterSignUpUrl:window.location.href
-  });
-
-  window.Clerk.addListener(async function onAuthChange(ev){
-    if(!window.Clerk.user)return;
-    var pending=sessionStorage.getItem(PENDING_KEY);
-    if(!pending)return;
-    soLog('[Supplier] Clerk user detected after sign-up (same page), completing insert...');
-    try{
-      var data=JSON.parse(pending);
-      await _insertSupplier(data,window.Clerk.user.id);
-      _showSuccess();
-    }catch(err){
-      console.error('[Supplier] post-signup insert error:',err);
-      errEl.textContent='Profil konnte nicht gespeichert werden: '+(err.message||err);errEl.style.display='block';
-    }
-    btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';
-  });
+  // Safety: the form is only shown when logged in (auth gate). If we somehow reach here without a user:
+  errEl.textContent=_saT('sa.err.login');errEl.style.display='block';
+  btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';
 }
+
+// ── Supplier auth gate ──
+function _saT(k){var l=localStorage.getItem('sourceon-lang')||'de';return (window.i18n&&i18n[l]&&i18n[l][k])||(window.i18n&&i18n.de&&i18n.de[k])||k;}
+function supplierRegister(){if(!window.Clerk)return;try{localStorage.setItem('sourceon_redirect_after_login',window.location.href);}catch(e){}window.Clerk.openSignUp({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});}
+function supplierLogin(){if(!window.Clerk)return;window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});}
+function _saShow(which){
+  var g=document.getElementById('sa-authgate'),a=document.getElementById('sa-applied'),w=document.getElementById('sa-formwrap'),lr=document.getElementById('lben-register');
+  if(g)g.style.display=which==='gate'?'block':'none';
+  if(a)a.style.display=which==='applied'?'block':'none';
+  if(w)w.style.display=which==='form'?'block':'none';
+  if(lr)lr.style.display=which==='gate'?'inline':'none';
+}
+async function _gateSupplier(){
+  var user=(window.Clerk&&window.Clerk.user)?window.Clerk.user:null;
+  if(!user){_saShow('gate');return;}
+  var exists=false;
+  try{if(_sbClient){var r=await _sbClient.from('suppliers').select('id').eq('id',user.id).maybeSingle();exists=!!(r&&r.data);}}catch(e){}
+  if(exists){_saShow('applied');return;}
+  _saShow('form');
+  var emailEl=document.getElementById('sa-email');
+  if(emailEl){
+    var em=user.primaryEmailAddress?user.primaryEmailAddress.emailAddress:'';
+    if(em){emailEl.value=em;emailEl.readOnly=true;emailEl.style.background='var(--bg)';emailEl.style.color='var(--t3)';emailEl.style.cursor='not-allowed';}
+    var note=document.getElementById('sa-email-note');if(note)note.style.display='block';
+  }
+}
+(function _initSupplierGate(){
+  function onClerk(){
+    _gateSupplier();
+    if(window.Clerk&&window.Clerk.addListener){
+      window.Clerk.addListener(function(){
+        _gateSupplier().then(function(){
+          if(window.Clerk.user){var w=document.getElementById('sa-formwrap');if(w&&w.style.display!=='none'){try{w.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){}}}
+        });
+      });
+    }
+  }
+  var n=0,iv=setInterval(function(){
+    n+=150;
+    if(window.Clerk){clearInterval(iv);if(typeof window.Clerk.load==='function'){window.Clerk.load().then(onClerk).catch(onClerk);}else{onClerk();}}
+    else if(n>=12000){clearInterval(iv);}
+  },150);
+})();
 
 // On page load: check for pending supplier data after OAuth redirect
 (async function _checkPendingSupplier(){
@@ -1519,6 +1563,17 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 (function(){
 var i18n = {
   de: {
+    'sa.gate.title': 'Zuerst Konto erstellen',
+    'sa.gate.sub': 'Um dich als Partnerlieferant zu bewerben, benötigst du ein SourceOn-Konto. Die Registrierung ist kostenlos und dauert eine Minute.',
+    'sa.gate.register': 'Jetzt registrieren →',
+    'sa.gate.login': 'Bereits ein Konto? Einloggen',
+    'sa.applied.title': '✓ Bewerbung eingegangen',
+    'sa.applied.sub': 'Deine Bewerbung wird geprüft. Du wirst benachrichtigt sobald dein Profil freigegeben wird.',
+    'sa.applied.dash': 'Zum Dashboard →',
+    'sa.emailNote': 'Verknüpft mit deinem SourceOn-Konto',
+    'sa.acctNote': 'SourceOn-Konto erforderlich — die Registrierung ist kostenlos.',
+    'sa.acctRegLink': '→ Jetzt registrieren',
+    'sa.err.login': 'Bitte melde dich zuerst an.',
     'supplier.postSubmit': 'Nach deiner Bewerbung prüfen wir dein Profil und melden uns innerhalb von 48 Stunden. Bei Freigabe erhältst du sofort Zugang zu passenden Ausschreibungen.',
     'page.title': 'Lieferant werden — SourceOn',
     'supplier.subline': 'Zugang zu gebündelten Grossaufträgen ohne eigene Akquise.',
@@ -1611,6 +1666,17 @@ var i18n = {
     'reg.all': 'Ganze Schweiz'
   },
   en: {
+    'sa.gate.title': 'Create account first',
+    'sa.gate.sub': 'To apply as a partner supplier, you need a SourceOn account. Registration is free and takes one minute.',
+    'sa.gate.register': 'Register now →',
+    'sa.gate.login': 'Already have an account? Sign in',
+    'sa.applied.title': '✓ Application received',
+    'sa.applied.sub': 'Your application is being reviewed. You will be notified once your profile is approved.',
+    'sa.applied.dash': 'To Dashboard →',
+    'sa.emailNote': 'Linked to your SourceOn account',
+    'sa.acctNote': 'SourceOn account required — registration is free.',
+    'sa.acctRegLink': '→ Register now',
+    'sa.err.login': 'Please sign in first.',
     'supplier.postSubmit': 'After your application, we review your profile and get back to you within 48 hours. Upon approval, you immediately get access to matching tenders.',
     'page.title': 'Become a supplier — SourceOn',
     'supplier.subline': 'Access to bundled large orders without your own acquisition.',
@@ -1703,6 +1769,17 @@ var i18n = {
     'reg.all': 'All of Switzerland'
   },
   fr: {
+    'sa.gate.title': 'Créer un compte d\'abord',
+    'sa.gate.sub': 'Pour vous inscrire comme fournisseur partenaire, vous avez besoin d\'un compte SourceOn. L\'inscription est gratuite et prend une minute.',
+    'sa.gate.register': 'S\'inscrire maintenant →',
+    'sa.gate.login': 'Déjà un compte? Se connecter',
+    'sa.applied.title': '✓ Candidature reçue',
+    'sa.applied.sub': 'Votre candidature est en cours d\'examen. Vous serez informé dès que votre profil sera approuvé.',
+    'sa.applied.dash': 'Vers le tableau de bord →',
+    'sa.emailNote': 'Lié à votre compte SourceOn',
+    'sa.acctNote': 'Compte SourceOn requis — l\'inscription est gratuite.',
+    'sa.acctRegLink': '→ S\'inscrire maintenant',
+    'sa.err.login': 'Veuillez d\'abord vous connecter.',
     'supplier.postSubmit': 'Après votre candidature, nous examinons votre profil et vous répondons dans les 48 heures. Une fois approuvé, vous accédez immédiatement aux appels d\'offres correspondants.',
     'page.title': 'Devenir fournisseur — SourceOn',
     'supplier.subline': 'Accès à des commandes groupées importantes sans prospection.',
@@ -1795,6 +1872,17 @@ var i18n = {
     'reg.all': 'Toute la Suisse'
   },
   it: {
+    'sa.gate.title': 'Prima crea un account',
+    'sa.gate.sub': 'Per iscriverti come fornitore partner, hai bisogno di un account SourceOn. La registrazione è gratuita e richiede un minuto.',
+    'sa.gate.register': 'Registrati ora →',
+    'sa.gate.login': 'Hai già un account? Accedi',
+    'sa.applied.title': '✓ Candidatura ricevuta',
+    'sa.applied.sub': 'La tua candidatura è in fase di revisione. Sarai informato non appena il tuo profilo sarà approvato.',
+    'sa.applied.dash': 'Alla dashboard →',
+    'sa.emailNote': 'Collegato al tuo account SourceOn',
+    'sa.acctNote': 'Account SourceOn richiesto — la registrazione è gratuita.',
+    'sa.acctRegLink': '→ Registrati ora',
+    'sa.err.login': 'Accedi prima.',
     'supplier.postSubmit': 'Dopo la tua candidatura, esaminiamo il tuo profilo e ti rispondiamo entro 48 ore. Dopo l\'approvazione, ottieni immediatamente accesso alle gare d\'appalto corrispondenti.',
     'page.title': 'Diventa fornitore — SourceOn',
     'supplier.subline': 'Accesso a grandi ordini raggruppati senza acquisizione propria.',
