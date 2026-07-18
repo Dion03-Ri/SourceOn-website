@@ -1407,7 +1407,7 @@ function _saPrefillEmail(user){
   var emailEl=document.getElementById('sa-email');
   if(emailEl){
     var em=user.primaryEmailAddress?user.primaryEmailAddress.emailAddress:'';
-    if(em){emailEl.value=em;emailEl.readOnly=true;emailEl.style.background='var(--bg)';emailEl.style.color='var(--t3)';emailEl.style.cursor='not-allowed';}
+    if(em)emailEl.value=em;   // nur vorausfüllen — Feld bleibt normal editierbar
     var note=document.getElementById('sa-email-note');if(note)note.style.display='block';
   }
 }
