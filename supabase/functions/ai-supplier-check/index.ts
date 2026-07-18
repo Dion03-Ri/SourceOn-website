@@ -129,6 +129,7 @@ Deno.serve(async (req: Request) => {
         if (!geminiResp.ok) {
           const errText = await geminiResp.text();
           console.error(`[ai-supplier-check] Gemini API error for ${supplier.id}: ${geminiResp.status} ${errText}`);
+          console.error(`[ai-supplier-check] Gemini error: ${geminiResp.status} - ${errText}`);
           results.push({ id: supplier.id, company_name: supplier.company_name, score: null, flags: ["api_error"] });
           continue;
         }
