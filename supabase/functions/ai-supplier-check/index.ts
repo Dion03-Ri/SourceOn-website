@@ -111,9 +111,12 @@ Deno.serve(async (req: Request) => {
       try {
         const prompt = buildPrompt(supplier);
 
-        const geminiResp = await fetch(`${GEMINI_URL}?key=${geminiKey}`, {
+        const geminiResp = await fetch(GEMINI_URL, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            "x-goog-api-key": geminiKey,
+          },
           body: JSON.stringify({
             contents: [{ parts: [{ text: prompt }] }],
             generationConfig: {
