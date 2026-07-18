@@ -844,9 +844,9 @@ body{background:#070F1A}
 #lp .card-cat{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:600;margin-bottom:20px}
 #lp .card-title{font-size:22px;font-weight:700;color:var(--t1);letter-spacing:-.02em;line-height:1.3;margin-bottom:12px}
 #lp .card-desc{font-size:14px;color:var(--t2);line-height:1.6;flex:1}
-#lp .card-link{margin-top:32px;font-size:13px;font-weight:600;color:var(--t2);display:flex;align-items:center;gap:6px}
+#lp .card-link{margin-top:32px;font-size:13px;font-weight:600;color:var(--t2);display:flex;align-items:center}
 #lp .card:hover .card-link{color:var(--t1)}
-#lp .card-link .arw{transition:transform .2s}
+#lp .card-link .arw{transition:transform .2s;margin-left:6px}
 
 /* SECTION 3 — stat + text */
 #lp .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
@@ -1008,7 +1008,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <section class="hero">
     <div class="hero-glow"></div>
     <div class="hero-content">
-      <span class="eyebrow" data-i18n="lp_hero_eyebrow">Schweizer Baustoffbeschaffung</span>
+      <span class="eyebrow" data-i18n="lp_hero_eyebrow">B2B BESCHAFFUNGSVERMITTLER</span>
       <h1 class="h1" data-i18n="lp_hero_h1">Baumaterialien günstiger einkaufen.</h1>
       <div class="h1-gold" data-i18n="lp_hero_h1gold">Für jede Schweizer Baufirma.</div>
       <p class="subline" data-i18n="lp_hero_sub">Du zahlst erst, wenn wir dir sparen.</p>
@@ -1102,7 +1102,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <!-- SECTION 5 — SUPPLIER CTA -->
   <section class="supcta"><div class="wrap">
     <div class="lbl reveal" data-i18n="lp_s5_lbl">Für Lieferanten</div>
-    <h2 class="reveal" data-i18n="lp_s5_h2">Schweizer Baustofflieferant?</h2>
+    <h2 class="reveal" data-i18n="lp_s5_h2">Werden Sie Teil des SourceOn-Lieferantennetzwerks.</h2>
     <p class="reveal" data-i18n="lp_s5_p">Zugang zu gebündelten Grossaufträgen ohne eigene Akquise.</p>
     <a class="btn-ghost reveal" href="lieferant.html" data-i18n="lp_s5_cta">Als Lieferant bewerben&nbsp;→</a>
   </div></section>
@@ -1270,7 +1270,7 @@ var I18N={
     lp_aria_account:'Konto',lp_aria_chat:'SourceOn Assistent öffnen',lp_aria_scroll:'Weiter',
     meta_title:'SourceOn — Du zahlst erst, wenn wir dir sparen.',
     meta_desc:'SourceOn bündelt den Materialeinkauf von Schweizer KMU-Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme.',
-    lp_hero_eyebrow:'Schweizer Baustoffbeschaffung',
+    lp_hero_eyebrow:'B2B BESCHAFFUNGSVERMITTLER',
     lp_hero_h1:'Baumaterialien günstiger einkaufen.',
     lp_hero_h1gold:'Für jede Schweizer Baufirma.',
     lp_hero_sub:'Du zahlst erst, wenn wir dir sparen.',
@@ -1296,7 +1296,7 @@ var I18N={
     lp_t3_cat:'Generalunternehmer & TU',lp_t3_title:'Grosse Projekte, maximale Einkaufsmacht.',lp_t3_desc:'Riesige Materialmengen, höchste Rabattstufen.',
     lp_t4_cat:'Öffentliche Auftraggeber',lp_t4_title:'Transparent, normkonform, dokumentiert.',lp_t4_desc:'Gemeinden, Kantone, staatsnahe Betriebe.',
     lp_t5_cat:'Immobilien & Wohnbau',lp_t5_title:'Regelmässiger Unterhaltsbedarf.',lp_t5_desc:'Wohnbaugenossenschaften und Immobilienverwaltungen mit konstantem Bedarf.',
-    lp_s5_lbl:'Für Lieferanten',lp_s5_h2:'Schweizer Baustofflieferant?',lp_s5_p:'Zugang zu gebündelten Grossaufträgen ohne eigene Akquise.',lp_s5_cta:'Als Lieferant bewerben →',
+    lp_s5_lbl:'Für Lieferanten',lp_s5_h2:'Werden Sie Teil des SourceOn-Lieferantennetzwerks.',lp_s5_p:'Zugang zu gebündelten Grossaufträgen ohne eigene Akquise.',lp_s5_cta:'Als Lieferant bewerben →',
     lpf_brand_desc:'Schweizer B2B Beschaffungsvermittler für die Baubranche.',lpf_brand_tag:'Du zahlst erst, wenn wir dir sparen.',
     lpf_col1:'Leistungen',lpf_link_home:'Home',lpf_link_process:'Wie es funktioniert',lpf_link_forwhom:'Für wen',lpf_link_supplier:'Lieferant werden',lpf_link_calc:'Kalkulator',lpf_link_materials:'Materialien',
     lpf_col2:'Unternehmen',lpf_link_about:'Über uns',lpf_link_contact:'Kontakt',lpf_link_supplier2:'Lieferant werden',
@@ -1366,7 +1366,7 @@ var I18N={
     lp_aria_account:'Account',lp_aria_chat:'Open SourceOn Assistant',lp_aria_scroll:'Next',
     meta_title:'SourceOn — You only pay when we save you money.',
     meta_desc:'SourceOn bundles the material purchasing of Swiss SME construction firms and achieves volume discounts that no single customer could obtain alone.',
-    lp_hero_eyebrow:'Swiss building material procurement',
+    lp_hero_eyebrow:'B2B PROCUREMENT PLATFORM',
     lp_hero_h1:'Buy building materials at lower prices.',
     lp_hero_h1gold:'For every Swiss construction firm.',
     lp_hero_sub:'You only pay when we save you money.',
@@ -1392,7 +1392,7 @@ var I18N={
     lp_t3_cat:'General & total contractors',lp_t3_title:'Large projects, maximum purchasing power.',lp_t3_desc:'Huge material quantities, highest discount tiers.',
     lp_t4_cat:'Public sector clients',lp_t4_title:'Transparent, standard-compliant, documented.',lp_t4_desc:'Municipalities, cantons, public-sector entities.',
     lp_t5_cat:'Real estate & housing',lp_t5_title:'Regular maintenance needs.',lp_t5_desc:'Housing cooperatives and property managers with constant demand.',
-    lp_s5_lbl:'For suppliers',lp_s5_h2:'Swiss building material supplier?',lp_s5_p:'Access to bundled large orders without your own acquisition.',lp_s5_cta:'Apply as a supplier →',
+    lp_s5_lbl:'For suppliers',lp_s5_h2:'Become part of the SourceOn supplier network.',lp_s5_p:'Access to bundled large orders without your own acquisition.',lp_s5_cta:'Apply as a supplier →',
     lpf_brand_desc:'Swiss B2B procurement broker for the construction industry.',lpf_brand_tag:'You only pay when we save you money.',
     lpf_col1:'Services',lpf_link_home:'Home',lpf_link_process:'How it works',lpf_link_forwhom:"Who it's for",lpf_link_supplier:'Become a supplier',lpf_link_calc:'Calculator',lpf_link_materials:'Materials',
     lpf_col2:'Company',lpf_link_about:'About us',lpf_link_contact:'Contact',lpf_link_supplier2:'Become a supplier',
@@ -1462,7 +1462,7 @@ var I18N={
     lp_aria_account:'Compte',lp_aria_chat:'Ouvrir l\'assistant SourceOn',lp_aria_scroll:'Suivant',
     meta_title:'SourceOn — Tu ne paies que si on te fait économiser.',
     meta_desc:'SourceOn regroupe les achats de matériaux des PME de construction suisses et obtient des remises de volume qu\'aucun client seul ne pourrait obtenir.',
-    lp_hero_eyebrow:'Approvisionnement suisse en matériaux',
+    lp_hero_eyebrow:'PLATEFORME D\'APPROVISIONNEMENT B2B',
     lp_hero_h1:'Achète tes matériaux de construction moins cher.',
     lp_hero_h1gold:'Pour chaque entreprise de construction suisse.',
     lp_hero_sub:'Tu ne paies que si on te fait économiser.',
@@ -1488,7 +1488,7 @@ var I18N={
     lp_t3_cat:'Entreprises générales & totales',lp_t3_title:'Grands projets, pouvoir d\'achat maximal.',lp_t3_desc:'D\'énormes quantités de matériaux, les niveaux de rabais les plus élevés.',
     lp_t4_cat:'Maîtres d\'ouvrage publics',lp_t4_title:'Transparent, conforme aux normes, documenté.',lp_t4_desc:'Communes, cantons, entreprises paraétatiques.',
     lp_t5_cat:'Immobilier & logement',lp_t5_title:'Besoins d\'entretien réguliers.',lp_t5_desc:'Coopératives d\'habitation et gérances immobilières avec un besoin constant.',
-    lp_s5_lbl:'Pour les fournisseurs',lp_s5_h2:'Fournisseur suisse de matériaux de construction?',lp_s5_p:'Accès à des commandes groupées importantes sans prospection.',lp_s5_cta:'Postuler comme fournisseur →',
+    lp_s5_lbl:'Pour les fournisseurs',lp_s5_h2:'Rejoignez le réseau de fournisseurs SourceOn.',lp_s5_p:'Accès à des commandes groupées importantes sans prospection.',lp_s5_cta:'Postuler comme fournisseur →',
     lpf_brand_desc:'Courtier B2B suisse en approvisionnement pour le secteur de la construction.',lpf_brand_tag:'Tu ne paies que si on te fait économiser.',
     lpf_col1:'Services',lpf_link_home:'Accueil',lpf_link_process:'Comment ça marche',lpf_link_forwhom:'Pour qui',lpf_link_supplier:'Devenir fournisseur',lpf_link_calc:'Calculateur',lpf_link_materials:'Matériaux',
     lpf_col2:'Entreprise',lpf_link_about:'À propos',lpf_link_contact:'Contact',lpf_link_supplier2:'Devenir fournisseur',
@@ -1558,7 +1558,7 @@ var I18N={
     lp_aria_account:'Account',lp_aria_chat:'Apri l\'assistente SourceOn',lp_aria_scroll:'Avanti',
     meta_title:'SourceOn — Paghi solo quando ti facciamo risparmiare.',
     meta_desc:'SourceOn raggruppa gli acquisti di materiale delle PMI edili svizzere e ottiene sconti sul volume che nessun singolo cliente potrebbe ottenere da solo.',
-    lp_hero_eyebrow:'Approvvigionamento svizzero di materiali',
+    lp_hero_eyebrow:'PIATTAFORMA DI APPROVVIGIONAMENTO B2B',
     lp_hero_h1:'Acquista materiali da costruzione a prezzi più bassi.',
     lp_hero_h1gold:'Per ogni impresa edile svizzera.',
     lp_hero_sub:'Paghi solo quando ti facciamo risparmiare.',
@@ -1584,7 +1584,7 @@ var I18N={
     lp_t3_cat:'Imprese generali & totali',lp_t3_title:'Grandi progetti, massimo potere d\'acquisto.',lp_t3_desc:'Enormi quantità di materiale, i livelli di sconto più alti.',
     lp_t4_cat:'Committenti pubblici',lp_t4_title:'Trasparente, conforme alle norme, documentato.',lp_t4_desc:'Comuni, cantoni, aziende parastatali.',
     lp_t5_cat:'Immobili & edilizia abitativa',lp_t5_title:'Fabbisogno di manutenzione regolare.',lp_t5_desc:'Cooperative di abitazione e amministrazioni immobiliari con fabbisogno costante.',
-    lp_s5_lbl:'Per i fornitori',lp_s5_h2:'Fornitore svizzero di materiali da costruzione?',lp_s5_p:'Accesso a grandi ordini raggruppati senza acquisizione propria.',lp_s5_cta:'Candidati come fornitore →',
+    lp_s5_lbl:'Per i fornitori',lp_s5_h2:'Entra a far parte della rete fornitori SourceOn.',lp_s5_p:'Accesso a grandi ordini raggruppati senza acquisizione propria.',lp_s5_cta:'Candidati come fornitore →',
     lpf_brand_desc:'Broker B2B svizzero per l\'approvvigionamento nel settore edile.',lpf_brand_tag:'Paghi solo quando ti facciamo risparmiare.',
     lpf_col1:'Servizi',lpf_link_home:'Home',lpf_link_process:'Come funziona',lpf_link_forwhom:'Per chi',lpf_link_supplier:'Diventa fornitore',lpf_link_calc:'Calcolatore',lpf_link_materials:'Materiali',
     lpf_col2:'Azienda',lpf_link_about:'Chi siamo',lpf_link_contact:'Contatto',lpf_link_supplier2:'Diventa fornitore',
