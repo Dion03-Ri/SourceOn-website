@@ -763,7 +763,7 @@ function _toArr(sel){
     t=t.replace(/^[\{\[]|[\}\]]$/g,'');return t.split(',').map(function(x){return x.replace(/^["'\s]+|["'\s]+$/g,'');}).filter(Boolean);}
   return [];
 }
-function _norm(s){return String(s==null?'':s).replace(/’/g,"'").replace(/\s+/g,' ').trim().toLowerCase();}
+function _norm(s){return String(s==null?'':s).replace(/’/g,"'").replace(/[–—−]/g,'-').replace(/\s+/g,' ').trim().toLowerCase();}
 function renderChecks(cid,items,sel){
   var s=_toArr(sel).map(_norm);
   document.getElementById(cid).innerHTML=items.map(function(it){var on=s.indexOf(_norm(it))!==-1;return '<label class="chk"><input type="checkbox" value="'+esc(it)+'"'+(on?' checked':'')+'/><span>'+esc(it)+'</span></label>';}).join('');
