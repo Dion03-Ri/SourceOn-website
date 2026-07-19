@@ -974,13 +974,27 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   </div></section>
 
   <!-- MATERIAL SELECTOR -->
+  <style>
+  #lp .material-search-wrapper{position:relative;width:100%}
+  #lp .material-search-input{width:100%;background:var(--bg2);border:1px solid var(--lpbs);border-radius:6px;color:var(--t1);font-size:14px;padding:12px 16px;font-family:'Inter',sans-serif;cursor:text}
+  #lp .material-search-input:focus{border-color:var(--gold);outline:none}
+  #lp .material-search-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--bg1);border:1px solid var(--lpbs);border-radius:10px;max-height:280px;overflow-y:auto;z-index:100;box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+  #lp .material-search-item{padding:10px 16px;font-size:13px;color:var(--t2);cursor:pointer;border-bottom:1px solid var(--lpb);display:flex;flex-direction:column;gap:2px}
+  #lp .material-search-item:last-child{border-bottom:none}
+  #lp .material-search-item:hover,#lp .material-search-item.highlighted{background:var(--bg2);color:var(--t1)}
+  #lp .material-search-item-id{font-size:11px;color:var(--gold);font-family:monospace}
+  #lp .material-search-item-category{font-size:11px;color:var(--t3)}
+  #lp .material-no-results{padding:16px;font-size:13px;color:var(--t3);text-align:center}
+  </style>
   <section class="matselsec"><div class="wrap">
     <div class="matsel reveal">
       <span class="matsel-label" data-i18n="mat_select_label">Material wählen, um SourceOn-ID zu sehen</span>
-      <select id="mat-lookup-select">
-        <option value="" data-i18n="mat_select_option">Material wählen…</option>
-      </select>
-      <div class="matsel-result" id="mat-lookup-result">
+      <div class="material-search-wrapper">
+        <input type="text" class="material-search-input" id="mat-search-input" data-i18n-placeholder="mat_search_ph" placeholder="Material suchen…" autocomplete="off"/>
+        <div class="material-search-dropdown" id="mat-search-dd" style="display:none"></div>
+        <input type="hidden" class="material-search-value" id="mat-search-value"/>
+      </div>
+      <div class="matsel-result" id="mat-lookup-result" style="display:none">
         <div class="matsel-field"><span class="fl" data-i18n="mat_field_id">SourceOn-ID</span><span class="fv" id="mat-lookup-id">SO–000</span></div>
         <div class="matsel-field"><span class="fl" data-i18n="mat_field_name">Material</span><span class="fv" id="mat-lookup-name" data-i18n="mat_no_selection">Noch kein Material ausgewählt</span></div>
         <div class="matsel-field"><span class="fl" data-i18n="mat_field_cat">Kategorie</span><span class="fv" id="mat-lookup-cat">—</span></div>
@@ -1127,34 +1141,70 @@ const MATERIAL_DB=[
   {cat:'Haustechnik',items:['Kunststoffrohr PVC-U DN 110 Abwasser','Kunststoffrohr PP DN 50 Entwässerung','Kupferrohr 22mm Trinkwasser','Verbundrohr PE-RT/Al 16mm Heizung','Heizungsverteiler Fussbodenheizung']},
 ];
 const MAT_CODE={'Rohbau Kern':'RB','Ausbau':'AB','Haustechnik':'HT'};
-(function(){
-  const sel=document.getElementById('mat-lookup-select');
-  if(!sel)return;
-  MATERIAL_DB.forEach(group=>{
-    const og=document.createElement('optgroup');
-    og.label=group.cat;og.dataset.cat=group.cat;
-    group.items.forEach((name,i)=>{
-      const id='SO-'+MAT_CODE[group.cat]+'-'+String(i+1).padStart(2,'0');
-      const opt=document.createElement('option');
-      opt.value=id;opt.textContent=name;opt.dataset.cat=group.cat;opt.dataset.name=name;
-      og.appendChild(opt);
+// Flat, searchable catalog built from MATERIAL_DB
+var _MATCAT=[];
+MATERIAL_DB.forEach(function(group){group.items.forEach(function(name,i){_MATCAT.push({sourceon_id:'SO-'+MAT_CODE[group.cat]+'-'+String(i+1).padStart(2,'0'),bezeichnung:name,kategorie:group.cat});});});
+function _mesc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function _matCurLang(){return localStorage.getItem('sourceon-lang')||'de';}
+function _matTr(name){var l=_matCurLang();if(l!=='de'&&window._matDbTrans&&window._matDbTrans[l]&&window._matDbTrans[l][name])return window._matDbTrans[l][name];return name;}
+function _matNoRes(){return ({de:'Kein Material gefunden',en:'No material found',fr:'Aucun matériau trouvé',it:'Nessun materiale trovato'})[_matCurLang()]||'Kein Material gefunden';}
+function _showMatResult(data){
+  var box=document.getElementById('mat-lookup-result');if(box)box.style.display='grid';
+  document.getElementById('mat-lookup-id').textContent=data.id;
+  var nEl=document.getElementById('mat-lookup-name');nEl.textContent=_matTr(data.name);nEl.dataset.deName=data.name;
+  var cEl=document.getElementById('mat-lookup-cat');cEl.textContent=_matTr(data.category);cEl.dataset.deCat=data.category;
+  var tn=document.getElementById('mat-transport-note');if(tn)tn.style.display=/^(Transportbeton|Pumpbeton)/i.test(data.name||'')?'block':'none';
+}
+function _hideMatResult(){
+  var box=document.getElementById('mat-lookup-result');if(box)box.style.display='none';
+  var tn=document.getElementById('mat-transport-note');if(tn)tn.style.display='none';
+}
+(function initMaterialSearch(){
+  var wrapper=document.querySelector('.material-search-wrapper');
+  var input=document.getElementById('mat-search-input');
+  var dropdown=document.getElementById('mat-search-dd');
+  var hidden=document.getElementById('mat-search-value');
+  if(!wrapper||!input||!dropdown)return;
+  function render(items){
+    if(!items.length){dropdown.innerHTML='<div class="material-no-results">'+_mesc(_matNoRes())+'</div>';return;}
+    dropdown.innerHTML=items.map(function(m){
+      return '<div class="material-search-item" data-id="'+_mesc(m.sourceon_id)+'" data-name="'+_mesc(m.bezeichnung)+'" data-category="'+_mesc(m.kategorie)+'">'
+        +'<span class="material-search-item-name">'+_mesc(_matTr(m.bezeichnung))+'</span>'
+        +'<span class="material-search-item-id">'+_mesc(m.sourceon_id)+'</span>'
+        +'<span class="material-search-item-category">'+_mesc(_matTr(m.kategorie))+'</span>'
+      +'</div>';
+    }).join('');
+  }
+  function filter(q){
+    q=(q||'').toLowerCase().trim();
+    if(!q)return _MATCAT;
+    return _MATCAT.filter(function(m){
+      return m.bezeichnung.toLowerCase().indexOf(q)!==-1||_matTr(m.bezeichnung).toLowerCase().indexOf(q)!==-1
+        ||m.sourceon_id.toLowerCase().indexOf(q)!==-1
+        ||m.kategorie.toLowerCase().indexOf(q)!==-1||_matTr(m.kategorie).toLowerCase().indexOf(q)!==-1;
     });
-    sel.appendChild(og);
+  }
+  input.addEventListener('focus',function(){render(_MATCAT);dropdown.style.display='block';});
+  input.addEventListener('input',function(){
+    if(!input.value.trim()){hidden.value='';_hideMatResult();}
+    render(filter(input.value));dropdown.style.display='block';
   });
-  sel.addEventListener('change',()=>{
-    const opt=sel.options[sel.selectedIndex];
-    var _tn=document.getElementById('mat-transport-note');
-    if(!opt.value){document.getElementById('mat-lookup-id').textContent='SO–000';var nk='Noch kein Material ausgewählt';var cl2=localStorage.getItem('sourceon-lang')||'de';if(cl2!=='de'&&window._matDbTrans&&window._matDbTrans[cl2]&&window._matDbTrans[cl2][nk])nk=window._matDbTrans[cl2][nk];document.getElementById('mat-lookup-name').textContent=nk;document.getElementById('mat-lookup-cat').textContent='—';if(_tn)_tn.style.display='none';return;}
-    if(_tn)_tn.style.display=/^(Transportbeton|Pumpbeton)/i.test(opt.dataset.name||'')?'block':'none';
-    document.getElementById('mat-lookup-id').textContent=opt.value;
-    var nEl=document.getElementById('mat-lookup-name');nEl.textContent=opt.dataset.name;nEl.dataset.deName=opt.dataset.name;
-    var cEl=document.getElementById('mat-lookup-cat');cEl.textContent=opt.dataset.cat;cEl.dataset.deCat=opt.dataset.cat;
-    var cl=localStorage.getItem('sourceon-lang')||'de';
-    if(cl!=='de'&&window._matDbTrans&&window._matDbTrans[cl]){
-      var mt=window._matDbTrans[cl];
-      if(mt[opt.dataset.name])nEl.textContent=mt[opt.dataset.name];
-      if(mt[opt.dataset.cat])cEl.textContent=mt[opt.dataset.cat];
-    }
+  dropdown.addEventListener('click',function(e){
+    var item=e.target.closest('.material-search-item');if(!item)return;
+    input.value=_matTr(item.dataset.name);
+    hidden.value=item.dataset.id;
+    dropdown.style.display='none';
+    _showMatResult(item.dataset);
+  });
+  document.addEventListener('click',function(e){if(!wrapper.contains(e.target))dropdown.style.display='none';});
+  input.addEventListener('keydown',function(e){
+    var items=dropdown.querySelectorAll('.material-search-item');
+    var hi=dropdown.querySelector('.highlighted');
+    var idx=Array.prototype.indexOf.call(items,hi);
+    if(e.key==='ArrowDown'){e.preventDefault();if(hi)hi.classList.remove('highlighted');var nx=items[Math.min(idx+1,items.length-1)];if(nx){nx.classList.add('highlighted');nx.scrollIntoView({block:'nearest'});}}
+    else if(e.key==='ArrowUp'){e.preventDefault();if(hi)hi.classList.remove('highlighted');var pv=items[Math.max(idx-1,0)];if(pv){pv.classList.add('highlighted');pv.scrollIntoView({block:'nearest'});}}
+    else if(e.key==='Enter'){e.preventDefault();if(hi)hi.click();}
+    else if(e.key==='Escape'){dropdown.style.display='none';}
   });
 })();
 (function(){const track=document.getElementById('mat-strip-track');if(track)track.innerHTML+=track.innerHTML;})();
@@ -1243,7 +1293,7 @@ const T={
     nav_cta:'Materialbedarf melden',
     nav_dd_bau:'Bauunternehmen & GU',nav_dd_handwerk:'Handwerk & Subunternehmer',nav_dd_gu:'Generalunternehmer & TU',nav_dd_oeff:'Öffentliche Auftraggeber',nav_dd_immo:'Immobilien & Wohnbau',
     nav_ov_bau:'Bauunternehmen',nav_ov_handwerk:'Handwerk',nav_ov_gu:'Generalunternehmer',
-    mat_select_label:'Material wählen, um SourceOn-ID zu sehen',
+    mat_select_label:'Material wählen, um SourceOn-ID zu sehen',mat_search_ph:'Material suchen…',
     mat_select_option:'Material wählen…',
     mat_field_id:'SourceOn-ID',mat_field_name:'Material',mat_field_cat:'Kategorie',mat_field_norm:'Norm',mat_transport_note:'Hinweis: Transportkosten werden separat zwischen dir und dem Lieferanten vereinbart und sind nicht Bestandteil der SourceOn-Vermittlung. Bei grossen Mengen lohnt es sich, auch hier nachzufragen.',
     stat_label_areas:'Bereiche',stat_sub_areas:'Rohbau, Ausbau und Haustechnik',
@@ -1295,7 +1345,7 @@ const T={
     nav_cta:'Report material needs',
     nav_dd_bau:'Construction firms & GC',nav_dd_handwerk:'Trades & subcontractors',nav_dd_gu:'General & total contractors',nav_dd_oeff:'Public clients',nav_dd_immo:'Real estate & housing',
     nav_ov_bau:'Construction firms',nav_ov_handwerk:'Trades',nav_ov_gu:'General contractors',
-    mat_select_label:'Choose a material to see its SourceOn ID',
+    mat_select_label:'Choose a material to see its SourceOn ID',mat_search_ph:'Search material…',
     mat_select_option:'Choose a material…',
     mat_field_id:'SourceOn ID',mat_field_name:'Material',mat_field_cat:'Category',mat_field_norm:'Standard',mat_transport_note:'Note: Transport costs are agreed directly between you and the supplier and are not part of the SourceOn arrangement. For large quantities, it is worth enquiring about these separately.',
     stat_label_areas:'Areas',stat_sub_areas:'Structural shell, finishing and building services',
@@ -1347,7 +1397,7 @@ const T={
     nav_cta:'Signaler un besoin',
     nav_dd_bau:'Entreprises de construction & EG',nav_dd_handwerk:'Artisans & sous-traitants',nav_dd_gu:'Entreprises générales & totales',nav_dd_oeff:'Maîtres d\'ouvrage publics',nav_dd_immo:'Immobilier & logement',
     nav_ov_bau:'Entreprises de construction',nav_ov_handwerk:'Artisans',nav_ov_gu:'Entreprises générales',
-    mat_select_label:'Choisis un matériau pour voir son ID SourceOn',
+    mat_select_label:'Choisis un matériau pour voir son ID SourceOn',mat_search_ph:'Rechercher un matériau…',
     mat_select_option:'Choisir un matériau…',
     mat_field_id:'ID SourceOn',mat_field_name:'Matériau',mat_field_cat:'Catégorie',mat_field_norm:'Norme',mat_transport_note:'Remarque: Les frais de transport sont convenus directement entre toi et le fournisseur et ne font pas partie de l\'arrangement SourceOn. Pour de grandes quantités, il vaut la peine de se renseigner à ce sujet.',
     stat_label_areas:'Domaines',stat_sub_areas:'Gros œuvre, aménagement et technique du bâtiment',
@@ -1400,7 +1450,7 @@ const T={
     nav_cta:'Segnala fabbisogno',
     nav_dd_bau:'Imprese di costruzione & GC',nav_dd_handwerk:'Artigiani & subappaltatori',nav_dd_gu:'Imprese generali & totali',nav_dd_oeff:'Committenti pubblici',nav_dd_immo:'Immobiliare & abitativo',
     nav_ov_bau:'Imprese di costruzione',nav_ov_handwerk:'Artigiani',nav_ov_gu:'Imprese generali',
-    mat_select_label:'Scegli un materiale per vedere il suo ID SourceOn',
+    mat_select_label:'Scegli un materiale per vedere il suo ID SourceOn',mat_search_ph:'Cerca materiale…',
     mat_select_option:'Scegli un materiale…',
     mat_field_id:'ID SourceOn',mat_field_name:'Materiale',mat_field_cat:'Categoria',mat_field_norm:'Norma',mat_transport_note:'Nota: I costi di trasporto vengono concordati direttamente tra te e il fornitore e non fanno parte dell\'accordo SourceOn. Per grandi quantità, vale la pena informarsi anche su questi.',
     stat_label_areas:'Aree',stat_sub_areas:'Opera grezza, finitura e impiantistica',
@@ -1602,6 +1652,9 @@ var newSetLang=function(lang){
     var de=catEl.dataset.deCat;
     catEl.textContent=mt[de]||de;
   }
+  // keep the searchable input's shown material name in the current language
+  var hv=document.getElementById('mat-search-value'),inp=document.getElementById('mat-search-input');
+  if(hv&&hv.value&&inp&&typeof _MATCAT!=='undefined'){var msel=_MATCAT.filter(function(x){return x.sourceon_id===hv.value;})[0];if(msel)inp.value=(mt[msel.bezeichnung]||msel.bezeichnung);}
 };
 window.setLang=newSetLang;
 window.applyLang=newSetLang;
