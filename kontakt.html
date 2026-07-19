@@ -1090,7 +1090,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <div class="container">
     <div class="contact-layout">
       <div>
-        <span class="ck-eyebrow" data-i18n="ck_eyebrow">Kontakt</span>
+        <span class="ck-eyebrow" data-i18n="ck_eyebrow">Materialbedarf melden</span>
         <h1 class="ck-h1" data-i18n="ck_h1">Materialbedarf melden.</h1>
         <p class="ck-sub" data-i18n="ck_sub">Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.</p>
         <div class="cksteps">
@@ -1137,7 +1137,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <div id="kontakt-transport-note" data-i18n="mat_transport_note" style="display:none;font-size:12px;color:var(--t3);background:var(--bg2);border-radius:6px;padding:10px 14px;margin-top:12px;border-left:2px solid var(--lpbs)">Hinweis: Transportkosten werden separat zwischen dir und dem Lieferanten vereinbart und sind nicht Bestandteil der SourceOn-Vermittlung. Bei grossen Mengen lohnt es sich, auch hier nachzufragen.</div>
               <div class="form-error" data-i18n="form_error_material" id="e-c-material">Bitte mindestens ein Material mit Menge angeben</div>
               <button type="button" class="add-material-btn" id="add-material-btn" data-i18n-html="form_add_material" onclick="addMaterialRow()">＋ Weiteres Material hinzufügen</button>
-              <p style="font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.6" data-i18n-html="form_material_hint">Dein Material ist nicht dabei? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.</p>
+              <p style="font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.6" data-i18n-html="form_material_hint">Dein Material ist nicht dabei? <a href="sondermaterial.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.</p>
             </div>
             <span class="fsec-label" data-i18n="fsec_timing">Lieferzeitraum &amp; Adresse</span>
             <div class="form-grid">
@@ -1148,7 +1148,46 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
                 </div>
                 <div class="form-error" id="e-c-timing" data-i18n="err_timing">Bitte gültigen Lieferzeitraum wählen</div>
               </div>
-              <div class="form-group"><label class="form-label" data-i18n="form_address_label">Lieferadresse / Kanton *</label><input type="text" class="form-input" id="c-canton" placeholder="z.B. Zürich, Baustelle Hauptstr. 5" data-i18n-placeholder="form_placeholder_address" required/><div class="form-error" data-i18n="form_error_required" id="e-c-canton">Pflichtfeld</div></div>
+              <div class="form-group" style="display:grid;grid-template-columns:1fr 140px;gap:16px">
+                <div>
+                  <label class="form-label" data-i18n="form_address_label">Lieferadresse *</label>
+                  <input type="text" class="form-input" id="c-address" name="liefer_adresse" placeholder="Strasse, Hausnummer, Ort" data-i18n-placeholder="form_placeholder_address" required/>
+                  <div class="form-error" data-i18n="form_error_required" id="e-c-address">Pflichtfeld</div>
+                </div>
+                <div>
+                  <label class="form-label" data-i18n="form_kanton_label">Kanton *</label>
+                  <select class="form-select" id="c-kanton" name="kanton" required>
+                    <option value="" data-i18n="form_kanton_select">Kanton wählen</option>
+                    <option value="AG">Aargau</option>
+                    <option value="AI">Appenzell Innerrhoden</option>
+                    <option value="AR">Appenzell Ausserrhoden</option>
+                    <option value="BE">Bern</option>
+                    <option value="BL">Basel-Landschaft</option>
+                    <option value="BS">Basel-Stadt</option>
+                    <option value="FR">Freiburg</option>
+                    <option value="GE">Genf</option>
+                    <option value="GL">Glarus</option>
+                    <option value="GR">Graubünden</option>
+                    <option value="JU">Jura</option>
+                    <option value="LU">Luzern</option>
+                    <option value="NE">Neuenburg</option>
+                    <option value="NW">Nidwalden</option>
+                    <option value="OW">Obwalden</option>
+                    <option value="SG">St. Gallen</option>
+                    <option value="SH">Schaffhausen</option>
+                    <option value="SO">Solothurn</option>
+                    <option value="SZ">Schwyz</option>
+                    <option value="TG">Thurgau</option>
+                    <option value="TI">Tessin</option>
+                    <option value="UR">Uri</option>
+                    <option value="VD">Waadt</option>
+                    <option value="VS">Wallis</option>
+                    <option value="ZG">Zug</option>
+                    <option value="ZH">Zürich</option>
+                  </select>
+                  <div class="form-error" data-i18n="form_error_required" id="e-c-kanton">Pflichtfeld</div>
+                </div>
+              </div>
             </div>
             <div id="tempo-indicator" class="tempo-indicator" style="display:none"></div>
             <div class="form-group"><label class="form-label" data-i18n-html="form_project_label">Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span></label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und weitere Anforderungen…" data-i18n-placeholder="form_placeholder_project"></textarea></div>
@@ -1614,7 +1653,7 @@ async function submitContact(e){
   e.preventDefault();
   var matOk=validateMaterials();
   var datesOk=_validateDates();
-  if(![req('c-company','e-c-company'),req('c-name','e-c-name'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone'),matOk,datesOk,req('c-canton','e-c-canton')].every(Boolean))return;
+  if(![req('c-company','e-c-company'),req('c-name','e-c-name'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone'),matOk,datesOk,req('c-address','e-c-address'),selOk('c-kanton','e-c-kanton')].every(Boolean))return;
 
   // Pflicht: verbindliche Auftragsbestätigung (Ziel-Mindestrabatt)
   var commitEl=document.getElementById('c-commitment');
@@ -1637,14 +1676,15 @@ async function submitContact(e){
   submitBtn.disabled=true;submitBtn.style.opacity='0.6';
 
   try{
-    var addrVal=document.getElementById('c-canton').value.trim();
+    var addrVal=document.getElementById('c-address').value.trim();
+    var kantonVal=document.getElementById('c-kanton').value;
     var custPayload={
       firmenname:document.getElementById('c-company').value.trim(),
       ansprechperson:document.getElementById('c-name').value.trim(),
       email:document.getElementById('c-email').value.trim(),
       telefon:document.getElementById('c-phone').value.trim(),
       lieferadresse:addrVal,
-      kanton:_extractKanton(addrVal)
+      kanton:kantonVal
     };
     if(window.Clerk&&window.Clerk.user){custPayload.user_id=window.Clerk.user.id;}
     var _dbUrl=_supabase.supabaseUrl||(_supabase.rest?_supabase.rest.url:'unknown');
@@ -1671,7 +1711,7 @@ async function submitContact(e){
     }
 
     var timing={von:document.getElementById('c-date-von').value,bis:document.getElementById('c-date-bis').value};
-    var zone=_regionForKanton(_extractKanton(addrVal));
+    var zone=_regionForKanton(kantonVal);
     var rows=document.querySelectorAll('#material-rows .material-row');
     var inserts=[];
     var unmatched=[];
@@ -1906,10 +1946,10 @@ window.I18N={
     optgroup_rohbau:"Rohbau Kern",optgroup_ausbau:"Ausbau",optgroup_haustechnik:"Haustechnik",
     form_placeholder_qty:"z.B. 200 m³",
     form_add_material:"＋ Weiteres Material hinzufügen",
-    form_material_hint:'Dein Material ist nicht dabei? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.',
+    form_material_hint:'Dein Material ist nicht dabei? <a href="sondermaterial.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.',
     form_timing_label:"Gewünschter Lieferzeitraum *",
     form_timing_asap:"So schnell wie möglich",form_timing_1week:"Innerhalb 1 Woche",form_timing_2weeks:"Innerhalb 2 Wochen",form_timing_1month:"Innerhalb 1 Monat",form_timing_flexible:"Flexibel — nach Absprache",
-    form_address_label:"Lieferadresse / Kanton *",form_placeholder_address:"z.B. Zürich, Baustelle Hauptstr. 5",
+    form_address_label:"Lieferadresse *",form_kanton_label:"Kanton *",form_kanton_select:"Kanton wählen",form_placeholder_address:"Strasse, Hausnummer, Ort",
     form_project_label:'Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span>',form_placeholder_project:"Kurze Beschreibung des Projekts und weitere Anforderungen…",
     form_submit:"Materialbedarf jetzt melden →",
     form_post_submit:"Nach dem Absenden siehst du sofort deinen garantierten Mindestrabatt und kannst den Status deiner Anfrage jederzeit in deinem Dashboard verfolgen.",
@@ -1924,7 +1964,7 @@ window.I18N={
     meta_title:"Materialbedarf melden — SourceOn",
     nav_dd_bau:"Bauunternehmen & GU",nav_dd_handwerk:"Handwerk & Subunternehmer",nav_dd_gu:"Generalunternehmer & TU",nav_dd_oeff:"Öffentliche Auftraggeber",nav_dd_immo:"Immobilien & Wohnbau",
     nav_ov_bau:"Bauunternehmen",nav_ov_handwerk:"Handwerk",nav_ov_gu:"Generalunternehmer",
-    ck_eyebrow:"Kontakt",ck_h1:"Materialbedarf melden.",ck_sub:"Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.",
+    ck_eyebrow:"Materialbedarf melden",ck_h1:"Materialbedarf melden.",ck_sub:"Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.",
     ckstep1_t:"Material wählen",ckstep1_x:"Aus 58 Katalog-Materialien auswählen, Menge und Lieferzeitraum eingeben.",
     ckstep2_t:"Mindestrabatt sehen",ckstep2_x:"Du siehst sofort deinen garantierten Netto-Mindestrabatt basierend auf deinem Volumen.",
     ckstep3_t:"Absenden & verfolgen",ckstep3_x:"Nach dem Absenden verfolgst du den Status jederzeit in deinem Dashboard.",
@@ -1961,10 +2001,10 @@ window.I18N={
     optgroup_rohbau:"Structural core",optgroup_ausbau:"Interior finishing",optgroup_haustechnik:"Building services",
     form_placeholder_qty:"e.g. 200 m³",
     form_add_material:"＋ Add another material",
-    form_material_hint:'Your material is not listed? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Ask us about custom procurement</a> — we are happy to check if we can bundle it for you.',
+    form_material_hint:'Your material is not listed? <a href="sondermaterial.html" style="color:var(--gold);font-weight:600;text-decoration:none">Ask us about custom procurement</a> — we are happy to check if we can bundle it for you.',
     form_timing_label:"Desired delivery period *",
     form_timing_asap:"As soon as possible",form_timing_1week:"Within 1 week",form_timing_2weeks:"Within 2 weeks",form_timing_1month:"Within 1 month",form_timing_flexible:"Flexible — by arrangement",
-    form_address_label:"Delivery address / canton *",form_placeholder_address:"e.g. Zurich, construction site Hauptstr. 5",
+    form_address_label:"Delivery address *",form_kanton_label:"Canton *",form_kanton_select:"Select canton",form_placeholder_address:"Street, number, city",
     form_project_label:'Project description <span style="font-weight:400;color:var(--body)">(optional)</span>',
     form_placeholder_project:"Brief description of the project and further requirements…",
     form_submit:"Report material needs now →",
@@ -1980,7 +2020,7 @@ window.I18N={
     meta_title:"Report material needs — SourceOn",
     nav_dd_bau:"Construction firms & GC",nav_dd_handwerk:"Trades & subcontractors",nav_dd_gu:"General contractors & TC",nav_dd_oeff:"Public clients",nav_dd_immo:"Real estate & housing",
     nav_ov_bau:"Construction firms",nav_ov_handwerk:"Trades",nav_ov_gu:"General contractors",
-    ck_eyebrow:"Contact",ck_h1:"Report material needs.",ck_sub:"Free for you. You immediately see your guaranteed target minimum discount and track the status anytime in your dashboard.",
+    ck_eyebrow:"Submit material request",ck_h1:"Report material needs.",ck_sub:"Free for you. You immediately see your guaranteed target minimum discount and track the status anytime in your dashboard.",
     ckstep1_t:"Select material",ckstep1_x:"Choose from 58 catalog materials, enter quantity and delivery period.",
     ckstep2_t:"See minimum discount",ckstep2_x:"You immediately see your guaranteed net minimum discount based on your volume.",
     ckstep3_t:"Submit & track",ckstep3_x:"After submitting, you track the status anytime in your dashboard.",
@@ -2017,10 +2057,10 @@ window.I18N={
     optgroup_rohbau:"Gros œuvre",optgroup_ausbau:"Aménagement intérieur",optgroup_haustechnik:"Technique du bâtiment",
     form_placeholder_qty:"p.ex. 200 m³",
     form_add_material:"＋ Ajouter un autre matériau",
-    form_material_hint:'Votre matériau n\'est pas listé ? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Demandez-nous un approvisionnement personnalisé</a> — nous vérifions volontiers si nous pouvons le regrouper pour vous.',
+    form_material_hint:'Votre matériau n\'est pas listé ? <a href="sondermaterial.html" style="color:var(--gold);font-weight:600;text-decoration:none">Demandez-nous un approvisionnement personnalisé</a> — nous vérifions volontiers si nous pouvons le regrouper pour vous.',
     form_timing_label:"Délai de livraison souhaité *",
     form_timing_asap:"Dès que possible",form_timing_1week:"Sous 1 semaine",form_timing_2weeks:"Sous 2 semaines",form_timing_1month:"Sous 1 mois",form_timing_flexible:"Flexible — à convenir",
-    form_address_label:"Adresse de livraison / canton *",form_placeholder_address:"p.ex. Zurich, chantier Hauptstr. 5",
+    form_address_label:"Adresse de livraison *",form_kanton_label:"Canton *",form_kanton_select:"Sélectionner le canton",form_placeholder_address:"Rue, numéro, ville",
     form_project_label:'Description du projet <span style="font-weight:400;color:var(--body)">(optionnel)</span>',form_placeholder_project:"Brève description du projet et exigences supplémentaires…",
     form_submit:"Déclarer le besoin maintenant →",
     form_post_submit:"Après envoi, vous voyez immédiatement votre remise minimale garantie et pouvez suivre le statut de votre demande à tout moment dans votre tableau de bord.",
@@ -2035,7 +2075,7 @@ window.I18N={
     meta_title:"Déclarer un besoin — SourceOn",
     nav_dd_bau:"Entreprises de construction & EG",nav_dd_handwerk:"Artisans & sous-traitants",nav_dd_gu:"Entreprises générales & ET",nav_dd_oeff:"Maîtres d'ouvrage publics",nav_dd_immo:"Immobilier & logement",
     nav_ov_bau:"Entreprises de construction",nav_ov_handwerk:"Artisans",nav_ov_gu:"Entreprises générales",
-    ck_eyebrow:"Contact",ck_h1:"Déclare ton besoin en matériaux.",ck_sub:"Gratuit pour toi. Tu vois immédiatement ta remise minimale cible garantie et tu suis le statut à tout moment dans ton tableau de bord.",
+    ck_eyebrow:"Soumettre une demande de matériau",ck_h1:"Déclare ton besoin en matériaux.",ck_sub:"Gratuit pour toi. Tu vois immédiatement ta remise minimale cible garantie et tu suis le statut à tout moment dans ton tableau de bord.",
     ckstep1_t:"Choisir le matériau",ckstep1_x:"Choisis parmi 58 matériaux du catalogue, indique la quantité et le délai de livraison.",
     ckstep2_t:"Voir la remise minimale",ckstep2_x:"Tu vois immédiatement ta remise minimale nette garantie selon ton volume.",
     ckstep3_t:"Envoyer & suivre",ckstep3_x:"Après l'envoi, tu suis le statut à tout moment dans ton tableau de bord.",
@@ -2072,10 +2112,10 @@ window.I18N={
     optgroup_rohbau:"Opera grezza",optgroup_ausbau:"Finitura interna",optgroup_haustechnik:"Impiantistica",
     form_placeholder_qty:"es. 200 m³",
     form_add_material:"＋ Aggiungere un altro materiale",
-    form_material_hint:'Il tuo materiale non è elencato? <a href="kontakt.html" style="color:var(--gold);font-weight:600;text-decoration:none">Chiedici un approvvigionamento personalizzato</a> — verificheremo volentieri se possiamo raggrupparlo per te.',
+    form_material_hint:'Il tuo materiale non è elencato? <a href="sondermaterial.html" style="color:var(--gold);font-weight:600;text-decoration:none">Chiedici un approvvigionamento personalizzato</a> — verificheremo volentieri se possiamo raggrupparlo per te.',
     form_timing_label:"Periodo di consegna desiderato *",
     form_timing_asap:"Il prima possibile",form_timing_1week:"Entro 1 settimana",form_timing_2weeks:"Entro 2 settimane",form_timing_1month:"Entro 1 mese",form_timing_flexible:"Flessibile — da concordare",
-    form_address_label:"Indirizzo di consegna / cantone *",form_placeholder_address:"es. Zurigo, cantiere Hauptstr. 5",
+    form_address_label:"Indirizzo di consegna *",form_kanton_label:"Cantone *",form_kanton_select:"Seleziona il cantone",form_placeholder_address:"Via, numero, città",
     form_project_label:'Descrizione del progetto <span style="font-weight:400;color:var(--body)">(opzionale)</span>',form_placeholder_project:"Breve descrizione del progetto e ulteriori requisiti…",
     form_submit:"Segnalare fabbisogno ora →",
     form_post_submit:"Dopo l'invio, vedi immediatamente il tuo sconto minimo garantito e puoi seguire lo stato della tua richiesta in qualsiasi momento nella tua dashboard.",
@@ -2090,7 +2130,7 @@ window.I18N={
     meta_title:"Segnalare fabbisogno — SourceOn",
     nav_dd_bau:"Imprese di costruzione & GC",nav_dd_handwerk:"Artigiani & subappaltatori",nav_dd_gu:"Imprese generali & IT",nav_dd_oeff:"Committenti pubblici",nav_dd_immo:"Immobiliare & edilizia abitativa",
     nav_ov_bau:"Imprese di costruzione",nav_ov_handwerk:"Artigiani",nav_ov_gu:"Imprese generali",
-    ck_eyebrow:"Contatto",ck_h1:"Segnala il tuo fabbisogno di materiali.",ck_sub:"Gratuito per te. Vedi subito il tuo sconto minimo obiettivo garantito e segui lo stato in qualsiasi momento nella tua dashboard.",
+    ck_eyebrow:"Invia richiesta di materiale",ck_h1:"Segnala il tuo fabbisogno di materiali.",ck_sub:"Gratuito per te. Vedi subito il tuo sconto minimo obiettivo garantito e segui lo stato in qualsiasi momento nella tua dashboard.",
     ckstep1_t:"Scegliere il materiale",ckstep1_x:"Scegli tra 58 materiali a catalogo, inserisci quantità e periodo di consegna.",
     ckstep2_t:"Vedere lo sconto minimo",ckstep2_x:"Vedi subito il tuo sconto minimo netto garantito in base al tuo volume.",
     ckstep3_t:"Inviare & seguire",ckstep3_x:"Dopo l'invio, segui lo stato in qualsiasi momento nella tua dashboard.",
