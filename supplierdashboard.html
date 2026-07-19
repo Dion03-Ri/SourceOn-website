@@ -705,18 +705,30 @@ function printProvisions(){
 }
 function _xlDate(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
 function _xlSafe(s){return String(s||'SourceOn').replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,'_').slice(0,40);}
+function _supToLines(){
+  var p=_profile||{};var L=[];
+  if(p.company_name)L.push(p.company_name);
+  if(p.contact_person)L.push(p.contact_person);
+  var strasse=p.adresse||p.strasse;if(strasse)L.push(strasse);
+  var plzort=[p.plz,p.ort].filter(Boolean).join(' ');if(plzort)L.push(plzort);
+  if(p.email)L.push(p.email);
+  if(p.phone)L.push(p.phone);
+  if(!L.length)L.push('—');
+  return L;
+}
 function exportProvExcel(){
   var T=window.SO_XL;
   if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
   var firm=(_profile&&_profile.company_name)||'';
-  var CHF=T.Z_CHF;
-  // ---- Sheet 1: Provisionsabrechnung (won bundles) ----
-  var rows=[];
-  rows.push([soCell('SourceOn Provisionsabrechnung',T.title)]);
-  rows.push([soCell('Lieferant: '+firm,T.subtitle)]);
-  rows.push([soCell('Erstellt am: '+fmtDMYfull(new Date()),T.subtitle)]);
-  rows.push([]);
-  var heads=['Datum','Material','SourceOn-ID','Bestellwert CHF','Provision (2.25%) CHF','Netto-Erlös CHF','Status','Zahlungsstatus'];
+  var CHF=T.Z_CHF,PCT=T.Z_PCT,N=8,now=new Date();
+  var docNo='PA-'+_xlDate().replace(/-/g,'')+'-'+String(currentUserId||'').slice(-4).toUpperCase();
+  var due=new Date(now.getTime()+14*86400000);
+  // ---- Sheet 1: Provisionsabrechnung ----
+  var rows=[],merges=[];
+  T.docHead(rows,merges,N,{docType:'Provisionsabrechnung',toLabel:'RECHNUNGSEMPFÄNGER',toLines:_supToLines(),
+    meta:['Abrechnungs-Nr: '+docNo,'Rechnungsdatum: '+fmtDMYfull(now),'Zahlbar bis: '+fmtDMYfull(due)]});
+  T.band(rows,merges,N,'Positionen — Gewonnene Aufträge',T.sectionLabel);
+  var heads=['Datum','Material','SourceOn-ID','Bestellwert CHF','Provision 2.25% CHF','Netto-Erlös CHF','Status','Zahlung'];
   rows.push(heads.map(function(h,i){return soCell(h,(i>=3&&i<=5)?T.headerNum:T.header);}));
   var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
   var sumOrd=0,sumProv=0,sumNet=0,di=0;
@@ -725,47 +737,38 @@ function exportProvExcel(){
     var prov=ord*COMM,net=ord*(1-COMM),paid=bid.provision_paid===true;
     sumOrd+=ord;sumProv+=prov;sumNet+=net;
     var st=T.rowStyle(di),stn=T.rowStyleNum(di);di++;
-    rows.push([
-      soCell(bid.created_at?fmtDMY(new Date(bid.created_at)):'–',st),
-      soCell(bMat(b),st),
-      soCell(b.sourceon_id||'–',st),
-      soCell(ord,stn,CHF),
-      soCell(prov,stn,CHF),
-      soCell(net,stn,CHF),
-      soCell(bid.delivery_confirmed?'Geliefert':'Zugeschlagen',st),
-      soCell(paid?'Bezahlt':'Offen',st)
-    ]);
+    rows.push([soCell(bid.created_at?fmtDMY(new Date(bid.created_at)):'–',st),soCell(bMat(b),st),
+      soCell(b.sourceon_id||'–',st),soCell(ord,stn,CHF),soCell(prov,stn,CHF),soCell(net,stn,CHF),
+      soCell(bid.delivery_confirmed?'Geliefert':'Zugeschlagen',st),soCell(paid?'Bezahlt':'Offen',st)]);
   });
-  rows.push([soCell('Total',T.total),soCell('',T.total),soCell('',T.total),soCell(sumOrd,T.totalNum,CHF),soCell(sumProv,T.totalNum,CHF),soCell(sumNet,T.totalNum,CHF),soCell('',T.total),soCell('',T.total)]);
+  if(!di)rows.push([soCell('Noch keine gewonnenen Aufträge.',T.dataA)]);
+  var vat=sumProv*T.company.vatRate, provBrutto=sumProv+vat;
   rows.push([]);
-  rows.push([soCell('Provisionsrechnungen werden von SourceOn nach Lieferbestätigung ausgestellt. Zahlungsfrist: 14 Tage netto.',T.footer)]);
-  var s1={name:'Provisionsabrechnung',cols:[14,40,14,18,20,18,16,16],
-    merges:[{s:{r:0,c:0},e:{r:0,c:7}},{s:{r:1,c:0},e:{r:1,c:7}},{s:{r:2,c:0},e:{r:2,c:7}},{s:{r:rows.length-1,c:0},e:{r:rows.length-1,c:7}}],
-    rows:rows,rowHeights:[24,15,15]};
-  // ---- Sheet 2: Ausschreibungs-Historie (all bids won & lost) ----
-  var d=[];
-  d.push([soCell('Ausschreibungs-Historie',T.title)]);
-  d.push([soCell('Lieferant: '+firm+' · Erstellt am '+fmtDMYfull(new Date()),T.subtitle)]);
-  d.push([]);
+  T.sumRow(rows,merges,N,'Bestellwert gesamt (netto)',sumOrd,CHF,T.sumLabel,T.sumVal);
+  T.sumRow(rows,merges,N,'SourceOn-Provision 2.25% (netto)',sumProv,CHF,T.sumLabel,T.sumVal);
+  T.sumRow(rows,merges,N,'zzgl. MwSt 8.1%',vat,CHF,T.sumLabel,T.sumVal);
+  T.sumRow(rows,merges,N,'Provisionsbetrag (brutto, zahlbar)',provBrutto,CHF,T.sumTotalLabel,T.sumTotalVal);
+  rows.push([]);
+  T.sumRow(rows,merges,N,'Ihr Netto-Erlös (nach Provision)',sumNet,CHF,T.sumLabel,T.sumVal);
+  rows.push([]);
+  T.band(rows,merges,N,'Zahlbar innert 14 Tagen netto auf IBAN '+T.company.iban+'. Provisionsrechnungen werden von SourceOn nach Lieferbestätigung ausgestellt. Es gilt Schweizer Recht, Gerichtsstand Zürich. '+T.company.name+' · '+T.company.addr+', '+T.company.city+' · '+T.company.mail,T.footer);
+  var s1={name:'Provisionsabrechnung',cols:[14,38,14,18,20,18,15,12],merges:merges,rows:rows,rowHeights:[34,42,6,16,90,6]};
+  // ---- Sheet 2: Ausschreibungs-Historie ----
+  var d=[],dm=[];
+  T.docHead(d,dm,8,{docType:'Ausschreibungs-Historie',toLabel:'LIEFERANT',toLines:_supToLines(),
+    meta:['Dokument-Nr: '+docNo,'Datum: '+fmtDMYfull(now)]});
   var dh=['Datum','Material','SourceOn-ID','Volumen','Rabatt %','Bestellwert CHF','Netto-Erlös CHF','Status'];
   d.push(dh.map(function(h,i){return soCell(h,(i>=5&&i<=6)?T.headerNum:T.header);}));
   var di2=0;
   _bids.filter(function(b){return normStatus(b.status)!=='zurueckgezogen';}).forEach(function(bid){
     var b=bid.bundles||{};var ord=bestellwert(bid,b);var r=parseFloat(bid.rabatt_prozent);
     var st=T.rowStyle(di2),stn=T.rowStyleNum(di2);di2++;
-    d.push([
-      soCell(bid.created_at?fmtDMY(new Date(bid.created_at)):'–',st),
-      soCell(bMat(b),st),
-      soCell(b.sourceon_id||'–',st),
-      soCell(bVolStr(b),st),
-      soCell(isNaN(r)?'–':r,stn,T.Z_PCT),
-      soCell(ord!=null?ord:'–',stn,ord!=null?CHF:null),
-      soCell(ord!=null?ord*(1-COMM):'–',stn,ord!=null?CHF:null),
-      soCell(bidBadge(bid.status).t,st)
-    ]);
+    d.push([soCell(bid.created_at?fmtDMY(new Date(bid.created_at)):'–',st),soCell(bMat(b),st),
+      soCell(b.sourceon_id||'–',st),soCell(bVolStr(b),st),soCell(isNaN(r)?'–':r,stn,PCT),
+      soCell(ord!=null?ord:'–',stn,ord!=null?CHF:null),soCell(ord!=null?ord*(1-COMM):'–',stn,ord!=null?CHF:null),
+      soCell(bidBadge(bid.status).t,st)]);
   });
-  var s2={name:'Ausschreibungs-Historie',cols:[14,40,14,16,10,18,18,16],
-    merges:[{s:{r:0,c:0},e:{r:0,c:7}},{s:{r:1,c:0},e:{r:1,c:7}}],rows:d,rowHeights:[24,15]};
+  var s2={name:'Ausschreibungs-Historie',cols:[14,38,14,16,10,18,18,16],merges:dm,rows:d,rowHeights:[34,42,6,16,90,6]};
   soExcelExport('SourceOn_Provisionsabrechnung_'+_xlSafe(firm)+'_'+_xlDate()+'.xlsx',[s1,s2]);
 }
 

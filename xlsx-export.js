@@ -25,7 +25,83 @@
   };
   var thin = { style: 'thin', color: { rgb: C.line } };
 
+  // Real SourceOn company data (from the Impressum). No UID/VAT number is
+  // invented — the company is still in formation, so it is marked honestly.
+  var SO_COMPANY = {
+    name: 'SourceOn GmbH',
+    addr: 'Musterstrasse 1',
+    city: '8001 Zürich',
+    country: 'Schweiz',
+    mail: 'info@sourceon.ch',
+    web:  'www.sourceon.ch',
+    uid:  'CHE-XXX.XXX.XXX (in Gründung)',
+    iban: 'CH00 0000 0000 0000 0000 0 (folgt)',
+    vatRate: 0.081 // Swiss standard VAT rate (8.1%)
+  };
+
   var SO_XL = {
+    company: SO_COMPANY,
+    // Big gold wordmark for the document header.
+    brand: {
+      font: { bold: true, sz: 26, color: { rgb: C.gold } },
+      fill: { fgColor: { rgb: C.ink } },
+      alignment: { horizontal: 'left', vertical: 'center' }
+    },
+    brandTag: {
+      font: { sz: 9, color: { rgb: C.light } },
+      fill: { fgColor: { rgb: C.ink } },
+      alignment: { horizontal: 'left', vertical: 'top' }
+    },
+    // Document type (e.g. "Provisionsabrechnung"), right side of header.
+    docType: {
+      font: { bold: true, sz: 15, color: { rgb: C.light } },
+      fill: { fgColor: { rgb: C.ink } },
+      alignment: { horizontal: 'right', vertical: 'center' }
+    },
+    docMeta: {
+      font: { sz: 9, color: { rgb: C.muted } },
+      fill: { fgColor: { rgb: C.ink } },
+      alignment: { horizontal: 'right', vertical: 'top' }
+    },
+    // Address blocks (Von / An).
+    addrLabel: {
+      font: { bold: true, sz: 8, color: { rgb: C.gold } },
+      fill: { fgColor: { rgb: C.panel } },
+      alignment: { horizontal: 'left', vertical: 'center' }
+    },
+    addrText: {
+      font: { sz: 10, color: { rgb: C.light } },
+      fill: { fgColor: { rgb: C.panel } },
+      alignment: { horizontal: 'left', vertical: 'top', wrapText: true }
+    },
+    sectionLabel: {
+      font: { bold: true, sz: 10, color: { rgb: C.gold } },
+      fill: { fgColor: { rgb: C.ink } },
+      alignment: { horizontal: 'left', vertical: 'center' }
+    },
+    // Summary block (right-aligned label + value).
+    sumLabel: {
+      font: { sz: 10, color: { rgb: C.light } },
+      fill: { fgColor: { rgb: C.ink } },
+      alignment: { horizontal: 'right', vertical: 'center' }
+    },
+    sumVal: {
+      font: { sz: 10, color: { rgb: C.light } },
+      fill: { fgColor: { rgb: C.ink } },
+      alignment: { horizontal: 'right', vertical: 'center' }
+    },
+    sumTotalLabel: {
+      font: { bold: true, sz: 12, color: { rgb: C.gold } },
+      fill: { fgColor: { rgb: C.total } },
+      alignment: { horizontal: 'right', vertical: 'center' },
+      border: { top: { style: 'medium', color: { rgb: C.gold } } }
+    },
+    sumTotalVal: {
+      font: { bold: true, sz: 12, color: { rgb: C.gold } },
+      fill: { fgColor: { rgb: C.total } },
+      alignment: { horizontal: 'right', vertical: 'center' },
+      border: { top: { style: 'medium', color: { rgb: C.gold } } }
+    },
     title: {
       font: { bold: true, sz: 16, color: { rgb: C.gold } },
       fill: { fgColor: { rgb: C.ink } },
@@ -90,6 +166,68 @@
   // Convenience: pick the alternating data style for a 0-based data-row index.
   SO_XL.rowStyle = function (i) { return (i % 2 === 0) ? SO_XL.dataA : SO_XL.dataB; };
   SO_XL.rowStyleNum = function (i) { return (i % 2 === 0) ? SO_XL.dataANum : SO_XL.dataBNum; };
+
+  // ---- Document-layout builders --------------------------------------------
+  // Push a row split into horizontal segments that tile the full width.
+  // segs: [{ w: span, c: cellDescriptor }]. Remaining width is padded with the
+  // last segment's style. Returns the 0-based row index.
+  SO_XL.segRow = function (rows, merges, ncols, segs) {
+    var r = rows.length, col = 0, row = [];
+    segs.forEach(function (seg) {
+      for (var i = 0; i < seg.w; i++) row.push(i === 0 ? seg.c : soCell('', seg.c.s));
+      if (seg.w > 1) merges.push({ s: { r: r, c: col }, e: { r: r, c: col + seg.w - 1 } });
+      col += seg.w;
+    });
+    var pad = segs.length ? segs[segs.length - 1].c.s : {};
+    while (col < ncols) { row.push(soCell('', pad)); col++; }
+    rows.push(row);
+    return r;
+  };
+
+  // Full-width band (single merged cell across all columns).
+  SO_XL.band = function (rows, merges, ncols, text, style) {
+    return SO_XL.segRow(rows, merges, ncols, [{ w: ncols, c: soCell(text, style) }]);
+  };
+
+  // Summary line: right-aligned label spanning the left, value in the last cells.
+  SO_XL.sumRow = function (rows, merges, ncols, label, value, z, lblStyle, valStyle) {
+    var r = rows.length, row = [], lblEnd = ncols - 3;
+    for (var c = 0; c < ncols; c++) {
+      if (c === 0) row.push(soCell(label, lblStyle));
+      else if (c === ncols - 2) row.push(soCell(value, valStyle, z, typeof value === 'number' ? 'n' : 's'));
+      else row.push(soCell('', c <= lblEnd ? lblStyle : valStyle));
+    }
+    merges.push({ s: { r: r, c: 0 }, e: { r: r, c: lblEnd } });
+    merges.push({ s: { r: r, c: ncols - 2 }, e: { r: r, c: ncols - 1 } });
+    rows.push(row);
+    return r;
+  };
+
+  // Branded document header: wordmark + document type, tagline + meta, and a
+  // Von/An address pair. Returns the number of rows consumed.
+  SO_XL.docHead = function (rows, merges, ncols, opts) {
+    var half = Math.ceil(ncols / 2);
+    var co = SO_COMPANY;
+    SO_XL.segRow(rows, merges, ncols, [
+      { w: half, c: soCell('SourceOn', SO_XL.brand) },
+      { w: ncols - half, c: soCell(opts.docType, SO_XL.docType) }
+    ]);
+    SO_XL.segRow(rows, merges, ncols, [
+      { w: half, c: soCell('Digitale Baustoff-Beschaffung · ' + co.web, SO_XL.brandTag) },
+      { w: ncols - half, c: soCell((opts.meta || []).join('\n'), SO_XL.docMeta) }
+    ]);
+    rows.push([]);
+    SO_XL.segRow(rows, merges, ncols, [
+      { w: half, c: soCell('VON', SO_XL.addrLabel) },
+      { w: ncols - half, c: soCell(opts.toLabel || 'AN', SO_XL.addrLabel) }
+    ]);
+    var fromLines = [co.name, co.addr, co.city + ', ' + co.country, co.mail, 'UID: ' + co.uid];
+    SO_XL.segRow(rows, merges, ncols, [
+      { w: half, c: soCell(fromLines.join('\n'), SO_XL.addrText) },
+      { w: ncols - half, c: soCell((opts.toLines || []).join('\n'), SO_XL.addrText) }
+    ]);
+    rows.push([]);
+  };
 
   // Build a cell descriptor.
   function soCell(v, s, z, t) {

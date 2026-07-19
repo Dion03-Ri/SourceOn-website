@@ -853,51 +853,59 @@ function printOverview(){
 }
 function _xlDate(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
 function _xlSafe(s){return String(s||'SourceOn').replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,'_').slice(0,40);}
+function _custToLines(){
+  var c=_customer||{};var L=[];
+  if(c.firmenname)L.push(c.firmenname);
+  var strasse=c.adresse||c.strasse||c.street;if(strasse)L.push(strasse);
+  var plzort=[c.plz||c.postleitzahl,c.ort||c.stadt].filter(Boolean).join(' ');if(plzort)L.push(plzort);
+  if(c.email)L.push(c.email);
+  if(c.telefon||c.phone)L.push(c.telefon||c.phone);
+  if(!L.length)L.push('—');
+  return L;
+}
 function exportFinExcel(){
   var T=window.SO_XL;
   if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
   var firm=(_customer&&_customer.firmenname)||'';
-  var CHF=T.Z_CHF,PCT=T.Z_PCT;
-  // ---- Sheet 1: Übersicht ----
-  var rows=[];
-  rows.push([soCell('SourceOn Finanzübersicht',T.title)]);
-  rows.push([soCell('Erstellt am: '+fmtDMYfull(new Date()),T.subtitle)]);
-  rows.push([soCell('Firma: '+firm,T.subtitle)]);
-  rows.push([]);
+  var CHF=T.Z_CHF,PCT=T.Z_PCT,N=8,now=new Date();
+  var docNo='FIN-'+_xlDate().replace(/-/g,'')+'-'+String(((_customer&&_customer.id)||'')).slice(0,4).toUpperCase();
+  var rows=[],merges=[];
+  T.docHead(rows,merges,N,{docType:'Finanzübersicht',toLabel:'FÜR',toLines:_custToLines(),
+    meta:['Dokument-Nr: '+docNo,'Datum: '+fmtDMYfull(now),'Typ: Unverbindliche Einsparübersicht']});
+  T.band(rows,merges,N,'Positionen — Materialanfragen',T.sectionLabel);
   var heads=['Material','SourceOn-ID','Menge','Einheit','Volumen CHF','Rabatt %','Ersparnis min. CHF','Status'];
   rows.push(heads.map(function(h,i){return soCell(h,(i>=4&&i<=6)?T.headerNum:T.header);}));
   var totVol=0,totSav=0,di=0;
   _requests.forEach(function(r){
-    var v=reqEstValue(r),gs=reqGuaranteedSaving(r);
+    var v=reqEstValue(r),gs=reqGuaranteedSaving(r),m=parseFloat(r.menge);
     var pct=(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt)))?Math.round(parseFloat(r.committed_min_rabatt)*100):null;
-    var m=parseFloat(r.menge);
     if(v!=null)totVol+=v;if(gs!=null)totSav+=gs;
     var st=T.rowStyle(di),stn=T.rowStyleNum(di);di++;
-    rows.push([
-      soCell(matNameFor(r),st),
-      soCell(r.sourceon_id||'–',st),
-      soCell(isNaN(m)?'–':m,stn,T.Z_INT),
-      soCell(r.einheit||'–',st),
-      soCell(v!=null?v:'–',stn,v!=null?CHF:null),
-      soCell(pct!=null?pct:'–',stn,pct!=null?PCT:null),
-      soCell(gs!=null?gs:'–',stn,gs!=null?CHF:null),
-      soCell(badgeFor(r.status).t,st)
-    ]);
+    rows.push([soCell(matNameFor(r),st),soCell(r.sourceon_id||'–',st),soCell(isNaN(m)?'–':m,stn,T.Z_INT),
+      soCell(r.einheit||'–',st),soCell(v!=null?v:'–',stn,v!=null?CHF:null),
+      soCell(pct!=null?pct:'–',stn,pct!=null?PCT:null),soCell(gs!=null?gs:'–',stn,gs!=null?CHF:null),
+      soCell(badgeFor(r.status).t,st)]);
   });
-  var prov=totVol*0.0225, netto=totSav-prov;
+  if(!di)rows.push([soCell('Noch keine Anfragen erfasst.',T.dataA)]);
+  var netAuftrag=totVol-totSav, vat=netAuftrag*T.company.vatRate, brutto=netAuftrag+vat;
+  var prov=totVol*0.0225, nettoErsp=totSav-prov;
   rows.push([]);
-  rows.push([soCell('Total Einsparpotenzial',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell(totVol,T.totalNum,CHF),soCell('',T.total),soCell(totSav,T.totalNum,CHF),soCell('',T.total)]);
-  rows.push([soCell('SourceOn-Provision (2.25%)',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell(prov,T.totalNum,CHF),soCell('',T.total)]);
-  rows.push([soCell('Garantierte Netto-Ersparnis',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell(netto,T.totalNum,CHF),soCell('',T.total)]);
+  T.sumRow(rows,merges,N,'Listenwert (Richtpreise, exkl. MwSt)',totVol,CHF,T.sumLabel,T.sumVal);
+  T.sumRow(rows,merges,N,'abzgl. verhandelter Rabatt',-totSav,CHF,T.sumLabel,T.sumVal);
+  T.sumRow(rows,merges,N,'Geschätzter Auftragswert (netto)',netAuftrag,CHF,T.sumLabel,T.sumVal);
+  T.sumRow(rows,merges,N,'zzgl. MwSt 8.1%',vat,CHF,T.sumLabel,T.sumVal);
+  T.sumRow(rows,merges,N,'Geschätzter Auftragswert (brutto)',brutto,CHF,T.sumTotalLabel,T.sumTotalVal);
   rows.push([]);
-  rows.push([soCell('Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen.',T.footer)]);
-  var merges=[{s:{r:0,c:0},e:{r:0,c:7}},{s:{r:1,c:0},e:{r:1,c:7}},{s:{r:2,c:0},e:{r:2,c:7}},{s:{r:rows.length-1,c:0},e:{r:rows.length-1,c:7}}];
-  var s1={name:'Übersicht',cols:[45,14,10,10,16,12,18,18],merges:merges,rows:rows,rowHeights:[24,15,15]};
+  T.sumRow(rows,merges,N,'Ihr Einsparpotenzial (Rabattvorteil)',totSav,CHF,T.sumLabel,T.sumVal);
+  T.sumRow(rows,merges,N,'abzgl. SourceOn-Provision (2.25%)',-prov,CHF,T.sumLabel,T.sumVal);
+  T.sumRow(rows,merges,N,'Garantierte Netto-Ersparnis',nettoErsp,CHF,T.sumTotalLabel,T.sumTotalVal);
+  rows.push([]);
+  T.band(rows,merges,N,'Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen. Alle Beträge in CHF. Die effektive Ersparnis wird nach Abschluss der Ausschreibung final bestätigt. '+T.company.name+' · '+T.company.addr+', '+T.company.city+' · '+T.company.mail+' · '+T.company.web,T.footer);
+  var s1={name:'Übersicht',cols:[45,14,10,10,16,12,18,18],merges:merges,rows:rows,rowHeights:[34,42,6,16,84,6]};
   // ---- Sheet 2: Anfragen Detail ----
-  var d=[];
-  d.push([soCell('Anfragen — Detailübersicht',T.title)]);
-  d.push([soCell('Firma: '+firm+' · Erstellt am '+fmtDMYfull(new Date()),T.subtitle)]);
-  d.push([]);
+  var d=[],dm=[];
+  T.docHead(d,dm,11,{docType:'Anfragen — Detail',toLabel:'FÜR',toLines:_custToLines(),
+    meta:['Dokument-Nr: '+docNo,'Datum: '+fmtDMYfull(now)]});
   var dh=['Material','SourceOn-ID','Menge','Einheit','Liefer-Zeitraum','Zone','Volumen CHF','Rabatt %','Ersparnis CHF','Status','Erstellt'];
   d.push(dh.map(function(h,i){return soCell(h,(i===6||i===7||i===8)?T.headerNum:T.header);}));
   var di2=0;
@@ -905,22 +913,13 @@ function exportFinExcel(){
     var v=reqEstValue(r),gs=reqGuaranteedSaving(r),m=parseFloat(r.menge);
     var pct=(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt)))?Math.round(parseFloat(r.committed_min_rabatt)*100):null;
     var st=T.rowStyle(di2),stn=T.rowStyleNum(di2);di2++;
-    d.push([
-      soCell(matNameFor(r),st),
-      soCell(r.sourceon_id||'–',st),
-      soCell(isNaN(m)?'–':m,stn,T.Z_INT),
-      soCell(r.einheit||'–',st),
-      soCell(zeitraumStr(r),st),
-      soCell(r.liefer_zone||r.delivery_zone||'–',st),
-      soCell(v!=null?v:'–',stn,v!=null?CHF:null),
-      soCell(pct!=null?pct:'–',stn,pct!=null?PCT:null),
-      soCell(gs!=null?gs:'–',stn,gs!=null?CHF:null),
-      soCell(badgeFor(r.status).t,st),
-      soCell(r.created_at?fmtDMY(new Date(r.created_at)):'–',st)
-    ]);
+    d.push([soCell(matNameFor(r),st),soCell(r.sourceon_id||'–',st),soCell(isNaN(m)?'–':m,stn,T.Z_INT),
+      soCell(r.einheit||'–',st),soCell(zeitraumStr(r),st),soCell(r.liefer_zone||r.delivery_zone||'–',st),
+      soCell(v!=null?v:'–',stn,v!=null?CHF:null),soCell(pct!=null?pct:'–',stn,pct!=null?PCT:null),
+      soCell(gs!=null?gs:'–',stn,gs!=null?CHF:null),soCell(badgeFor(r.status).t,st),
+      soCell(r.created_at?fmtDMY(new Date(r.created_at)):'–',st)]);
   });
-  var s2={name:'Anfragen Detail',cols:[42,14,10,10,20,16,16,10,16,16,14],
-    merges:[{s:{r:0,c:0},e:{r:0,c:10}},{s:{r:1,c:0},e:{r:1,c:10}}],rows:d,rowHeights:[24,15]};
+  var s2={name:'Anfragen Detail',cols:[42,14,10,10,20,16,16,10,16,16,14],merges:dm,rows:d,rowHeights:[34,42,6,16,84,6]};
   soExcelExport('SourceOn_Finanzübersicht_'+_xlSafe(firm)+'_'+_xlDate()+'.xlsx',[s1,s2]);
 }
 

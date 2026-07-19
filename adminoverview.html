@@ -735,20 +735,27 @@ function exportSuppliersExcel(){
   var T=window.SO_XL;
   if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
   var heads=['Firma','Kontakt','E-Mail','Telefon','Website','Materialien','Regionen','Kapazität','AI Score','Status','Erstellt'];
-  var cols=[34,22,30,16,26,40,32,20,10,14,14];
-  function sheet(name,list){
-    var rows=[];
-    rows.push([soCell('SourceOn — '+name,T.title)]);
-    rows.push([soCell('Erstellt am: '+new Date().toLocaleDateString('de-CH',{day:'2-digit',month:'long',year:'numeric'})+' · '+list.length+' Einträge',T.subtitle)]);
+  var cols=[34,22,30,16,26,40,32,20,10,14,14],N=heads.length;
+  var now=new Date();
+  function sheet(name,subtitle,list){
+    var rows=[],merges=[];
+    T.segRow(rows,merges,N,[{w:6,c:soCell('SourceOn',T.brand)},{w:N-6,c:soCell(name,T.docType)}]);
+    T.segRow(rows,merges,N,[{w:6,c:soCell('Interne Übersicht · '+T.company.web,T.brandTag)},
+      {w:N-6,c:soCell('Erstellt: '+fmtDate(now)+'\n'+list.length+' Einträge',T.docMeta)}]);
     rows.push([]);
+    T.band(rows,merges,N,subtitle,T.sectionLabel);
     rows.push(heads.map(function(h,i){return soCell(h,i===8?T.headerNum:T.header);}));
     list.forEach(function(r,i){rows.push(_supRow(r,T.rowStyle(i),T.rowStyleNum(i),T));});
-    return {name:name,cols:cols,rows:rows,rowHeights:[24,15],
-      merges:[{s:{r:0,c:0},e:{r:0,c:10}},{s:{r:1,c:0},e:{r:1,c:10}}]};
+    if(!list.length)rows.push([soCell('Keine Einträge.',T.dataA)]);
+    rows.push([]);
+    T.band(rows,merges,N,'Vertraulich — nur für den internen Gebrauch. '+T.company.name+' · '+T.company.mail,T.footer);
+    return {name:name,cols:cols,rows:rows,rowHeights:[34,32,6,16],merges:merges};
   }
   var all=_allSuppliers||[];
   var pending=all.filter(function(r){return r.status==='pending';});
-  soExcelExport('SourceOn_Lieferanten_'+_xlDate()+'.xlsx',[sheet('Lieferanten',all),sheet('Pending',pending)]);
+  soExcelExport('SourceOn_Lieferanten_'+_xlDate()+'.xlsx',
+    [sheet('Lieferanten','Alle registrierten Lieferanten',all),
+     sheet('Pending','Wartende Bewerbungen zur Prüfung',pending)]);
 }
 
 async function loadCustomers(){
