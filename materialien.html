@@ -406,7 +406,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .mat-lookup-select{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:18px 20px;color:#fff;font-size:1rem;font-family:inherit;outline:none;cursor:pointer;transition:border-color .2s,background .2s;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E8A020' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 18px center;background-size:18px}
 .mat-lookup-select:focus,.mat-lookup-select:hover{border-color:var(--gold-b);background-color:rgba(232,160,32,.05)}
 .mat-lookup-select option{background:#0D1E30;color:#fff}
-.mat-lookup-result{margin-top:18px;background:linear-gradient(155deg,#16314F 0%,#0A1A2E 100%);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:30px 32px;display:flex;align-items:center;gap:24px}
+.mat-lookup-result{min-height:92px;margin-top:18px;background:linear-gradient(155deg,#16314F 0%,#0A1A2E 100%);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:30px 32px;display:flex;align-items:center;gap:24px}
 .mat-lookup-id{font-size:clamp(20px,2.4vw,28px);font-weight:800;color:var(--gold);letter-spacing:-0.01em;font-variant-numeric:tabular-nums;flex-shrink:0}
 .mat-lookup-meta{flex:1;min-width:0}
 .mat-lookup-name{font-size:1rem;font-weight:700;color:#fff;letter-spacing:-0.01em;line-height:1.4}
@@ -823,7 +823,7 @@ body{background:#070F1A}
 #lp .matsel select{width:100%;background:var(--bg2);border:1px solid var(--lpbs);border-radius:6px;color:var(--t1);font-size:14px;padding:12px 16px;font-family:inherit;appearance:none;-webkit-appearance:none;cursor:pointer;background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E8A020' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 16px center;background-size:16px}
 #lp .matsel select:focus{border-color:var(--gold);outline:none}
 #lp .matsel select option,#lp .matsel select optgroup{background:var(--bg2);color:var(--t1)}
-#lp .matsel-result{margin-top:20px;padding-top:20px;border-top:1px solid var(--lpb);display:grid;grid-template-columns:1fr 1fr;gap:16px}
+#lp .matsel-result{min-height:70px;margin-top:20px;padding-top:20px;border-top:1px solid var(--lpb);display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:480px){#lp .matsel-result{grid-template-columns:1fr}}
 #lp .matsel-field .fl{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:4px}
 #lp .matsel-field .fv{font-size:14px;font-weight:500;color:var(--t1)}
@@ -895,6 +895,8 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   type="text/javascript"
 ></script>
   <link rel="stylesheet" href="mobile-nav.css">
+<link rel="stylesheet" href="perf.css"/>
+<script src="perf.js"></script>
 </head>
 <body>
 <!-- NAV -->

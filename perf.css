@@ -1,0 +1,77 @@
+/* SourceOn — global performance & rendering fixes (shared across all pages) */
+
+/* 5. Smooth scroll everywhere (public pages already set this inline; this covers
+      dashboards, legal and auth pages that did not). */
+html { scroll-behavior: smooth; }
+
+/* 13. Mobile: kill the 300ms tap delay and the grey tap flash, and guarantee
+       no page can scroll horizontally. */
+* { -webkit-tap-highlight-color: transparent; }
+a, button, [role="button"], input, select, textarea, label, .btn, .chk {
+  touch-action: manipulation;
+}
+html, body { overflow-x: hidden; max-width: 100%; }
+
+/* 1. FOUC reveal. perf.js adds .js-fade to <html> synchronously (only if JS runs,
+      so the page can never get stuck hidden) and removes it once fonts are ready.
+      A hard fallback in perf.js guarantees the reveal even if fonts.ready never
+      settles. Coexists with the existing _lh / .lang-ready language layer. */
+html.js-fade body { opacity: 0; }
+body { transition: opacity .15s ease; }
+
+/* 3. Auth-dependent elements can opt in with [data-auth]; they stay hidden until
+      Clerk resolves (or the fallback fires), then body.clerk-loaded reveals them. */
+body:not(.clerk-loaded) [data-auth] { visibility: hidden; }
+
+/* 7. Skeleton loading placeholders for dashboard data. */
+.skeleton {
+  background: linear-gradient(90deg,
+    rgba(148,163,184,.10) 25%,
+    rgba(148,163,184,.22) 50%,
+    rgba(148,163,184,.10) 75%);
+  background-size: 200% 100%;
+  animation: so-skel 1.5s ease-in-out infinite;
+  border-radius: 8px;
+  color: transparent !important;
+  pointer-events: none;
+  user-select: none;
+}
+@keyframes so-skel {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 10. Generic data-load error banner (dashboards + material selector). */
+.so-load-error {
+  margin: 16px 0;
+  padding: 14px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(239,68,68,.35);
+  background: rgba(239,68,68,.08);
+  color: #FCA5A5;
+  font-size: .88rem;
+  line-height: 1.5;
+  text-align: center;
+}
+.so-load-error button {
+  margin-top: 10px;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #E8A020;
+  color: #08111E;
+  font-weight: 700;
+  font-size: .82rem;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* 11. Scroll-animated elements only ever touch opacity/transform (no reflow). */
+.reveal-on-scroll, [data-reveal] { will-change: opacity, transform; }
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .skeleton { animation: none; }
+  body { transition: none; }
+}

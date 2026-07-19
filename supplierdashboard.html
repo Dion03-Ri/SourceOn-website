@@ -321,6 +321,8 @@ p{text-wrap:pretty}
 .num-range{letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
 </style>
   <link rel="stylesheet" href="mobile-nav.css">
+<link rel="stylesheet" href="perf.css"/>
+<script src="perf.js"></script>
 </head>
 <body>
 
@@ -498,6 +500,7 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   if(window.Clerk){window.Clerk.addListener(function(){if(_clerkTrustActive)return;if(!window.Clerk.client||!window.Clerk.client.signIn)return;var si=window.Clerk.client.signIn;if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){_clerkTrustActive=true;_clerkSignInResource=si;try{window.Clerk.closeSignIn();}catch(e){}_clerkSendVerificationCode();}});}
   if(!window.Clerk||!window.Clerk.user){showGate('login');return;}
   currentUserId=window.Clerk.user.id;
+  try{
   var pRes=await sb.from('suppliers').select('*').eq('id',currentUserId).maybeSingle();
   if(pRes.error||!pRes.data){showGate('not_supplier');return;}
   _profile=pRes.data;
@@ -529,6 +532,11 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   try{var abRes=await sb.from('bids').select('bundle_id');if(abRes.data)abRes.data.forEach(function(b){_bidCounts[b.bundle_id]=(_bidCounts[b.bundle_id]||0)+1;});}catch(e){}
   renderNotif();renderAusschreibungen();renderAngebote();renderFinanzen();renderLieferungen();renderProfil();
   setInterval(refreshCountdowns,60000);
+  }catch(_e){
+    var _g=document.getElementById('auth-gate');
+    if(_g){_g.style.display='';_g.innerHTML='<div class="so-load-error" style="max-width:440px;margin:80px auto">Laden fehlgeschlagen — bitte Seite neu laden.<br><button onclick="location.reload()">Neu laden</button></div>';}
+    try{document.getElementById('dash').style.display='none';}catch(__e){}
+  }
 })();
 
 // ── AUSSCHREIBUNGEN ──

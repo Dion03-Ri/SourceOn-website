@@ -374,6 +374,8 @@ p{text-wrap:pretty}
 .num-range{letter-spacing:-0.02em;font-variant-numeric:tabular-nums}
 </style>
   <link rel="stylesheet" href="mobile-nav.css">
+<link rel="stylesheet" href="perf.css"/>
+<script src="perf.js"></script>
 </head>
 <body>
 
@@ -605,6 +607,7 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   if(window.Clerk){window.Clerk.addListener(function(){if(_clerkTrustActive)return;if(!window.Clerk.client||!window.Clerk.client.signIn)return;var si=window.Clerk.client.signIn;if(si.status==='needs_second_factor'||si.status==='needs_client_trust'){_clerkTrustActive=true;_clerkSignInResource=si;try{window.Clerk.closeSignIn();}catch(e){}_clerkSendVerificationCode();}});}
   if(!window.Clerk||!window.Clerk.user){showGate('login');return;}
   currentUserId=window.Clerk.user.id;
+  try{
   var _p=localStorage.getItem('sourceon_pending_customer_link');
   if(_p){try{var chk=await sb.from('customers').select('id,user_id').eq('id',_p).single();if(chk.data&&!chk.data.user_id){await sb.from('customers').update({user_id:currentUserId}).eq('id',_p);}localStorage.removeItem('sourceon_pending_customer_link');}catch(e){console.error('[SourceOn] Customer link error:',e);}}
   try{var _em=window.Clerk.user.primaryEmailAddress?window.Clerk.user.primaryEmailAddress.emailAddress:null;if(_em){await sb.from('customers').update({user_id:currentUserId}).eq('email',_em).is('user_id',null).select('id');}}catch(e){console.error('[SourceOn] Email-claim error:',e);}
@@ -629,6 +632,11 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   var reqIds=_requests.map(function(r){return r.id;});
   if(reqIds.length>0){try{var cRes=await sb.from('commissions').select('kunden_ersparnis_netto,material_request_id').in('material_request_id',reqIds);if(cRes.data){cRes.data.forEach(function(c){if(c.kunden_ersparnis_netto)_commMap[c.material_request_id]=(_commMap[c.material_request_id]||0)+Number(c.kunden_ersparnis_netto);});}}catch(e){}}
   renderUebersicht();renderAnfragen();renderFinanzen();renderKonto();renderDocs();
+  }catch(_e){
+    var _g=document.getElementById('auth-gate');
+    if(_g){_g.style.display='';_g.innerHTML='<div class="so-load-error" style="max-width:440px;margin:80px auto">Laden fehlgeschlagen — bitte Seite neu laden.<br><button onclick="location.reload()">Neu laden</button></div>';}
+    try{document.getElementById('dash').style.display='none';}catch(__e){}
+  }
 })();
 
 function computeTotals(){var potential=0,earned=0,earnedCount=0,active=0,done=0,rabSum=0,rabN=0;_requests.forEach(function(r){if(isActive(r)){active++;var gs=reqGuaranteedSaving(r);if(gs!=null)potential+=gs;}if(isCompleted(r)){done++;var rs=realizedSaving(r);if(rs!=null){earned+=rs;earnedCount++;}}var rb=parseFloat(r.committed_min_rabatt);if(!isNaN(rb)){rabSum+=rb;rabN++;}});return {potential:potential,earned:earned,earnedCount:earnedCount,active:active,done:done,total:_requests.length,avgRab:rabN?rabSum/rabN:null};}
