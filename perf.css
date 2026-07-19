@@ -4,6 +4,14 @@
       dashboards, legal and auth pages that did not). */
 html { scroll-behavior: smooth; }
 
+/* 6b. Always reserve the vertical scrollbar gutter so it never toggles between
+       short and tall views. Without this, switching dashboard tabs (which have
+       different heights) makes the scrollbar appear/disappear, changing the
+       content width by ~15px and visibly shifting viewport-centred elements
+       like the centred tab bar ("Wackeln" when clicking between sections). */
+html { scrollbar-gutter: stable; }
+@supports not (scrollbar-gutter: stable) { html { overflow-y: scroll; } }
+
 /* 13. Mobile: kill the 300ms tap delay and the grey tap flash, and guarantee
        no page can scroll horizontally. */
 * { -webkit-tap-highlight-color: transparent; }
