@@ -459,7 +459,7 @@ p{text-wrap:pretty}
       <div class="m3"><div class="m3-num" id="fin-avgrab">--</div><div class="m3-label">Ø Rabatt</div></div>
       <div class="m3"><div class="m3-num" id="fin-total">0</div><div class="m3-label">Anfragen gesamt</div></div>
     </div>
-    <div class="sec-head"><span class="sec-label">Aufschlüsselung</span><span class="link-m" onclick="printOverview()">↓ Finanzübersicht exportieren</span></div>
+    <div class="sec-head"><span class="sec-label">Aufschlüsselung</span><span class="link-m" onclick="exportFinExcel()">↓ Finanzübersicht exportieren</span></div>
     <div style="overflow-x:auto"><table class="ftable" id="fin-table"></table></div>
     <div class="prov-note" id="prov-text"></div>
     <div id="realized-wrap" style="display:none">
@@ -851,6 +851,78 @@ function printOverview(){
   document.getElementById('print-content').innerHTML='<div style="max-width:680px"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:15px;color:#555;margin-bottom:4px">Finanzübersicht</div><div style="font-size:12px;color:#888;margin-bottom:22px">'+esc((_customer&&_customer.firmenname)||'')+' · Erstellt am '+fmtDMY(new Date())+'</div><div style="display:flex;gap:28px;margin-bottom:24px;font-size:13px;color:#111"><div><div style="color:#888;font-size:11px;text-transform:uppercase">Einsparpotenzial</div><div style="font-size:20px;font-weight:700;color:#E8A020">'+(t.potential>0?fmtCHF(t.potential):'CHF 0')+'</div></div><div><div style="color:#888;font-size:11px;text-transform:uppercase">Bereits gespart</div><div style="font-size:20px;font-weight:700">'+(t.earned>0?fmtCHF(t.earned):'--')+'</div></div></div><table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase"><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Volumen CHF</th><th style="padding:6px 8px;border-bottom:2px solid #333">Status</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Ersparnis min.</th></tr>'+(rows||'<tr><td colspan="4" style="padding:10px;color:#888">Noch keine Anfragen.</td></tr>')+'</table><div style="margin-top:30px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999">SourceOn · sourceon.ch · Dokument erstellt '+fmtDMY(new Date())+' · Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen</div></div>';
   window.print();
 }
+function _xlDate(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
+function _xlSafe(s){return String(s||'SourceOn').replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,'_').slice(0,40);}
+function exportFinExcel(){
+  var T=window.SO_XL;
+  if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
+  var firm=(_customer&&_customer.firmenname)||'';
+  var CHF=T.Z_CHF,PCT=T.Z_PCT;
+  // ---- Sheet 1: Übersicht ----
+  var rows=[];
+  rows.push([soCell('SourceOn Finanzübersicht',T.title)]);
+  rows.push([soCell('Erstellt am: '+fmtDMYfull(new Date()),T.subtitle)]);
+  rows.push([soCell('Firma: '+firm,T.subtitle)]);
+  rows.push([]);
+  var heads=['Material','SourceOn-ID','Menge','Einheit','Volumen CHF','Rabatt %','Ersparnis min. CHF','Status'];
+  rows.push(heads.map(function(h,i){return soCell(h,(i>=4&&i<=6)?T.headerNum:T.header);}));
+  var totVol=0,totSav=0,di=0;
+  _requests.forEach(function(r){
+    var v=reqEstValue(r),gs=reqGuaranteedSaving(r);
+    var pct=(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt)))?Math.round(parseFloat(r.committed_min_rabatt)*100):null;
+    var m=parseFloat(r.menge);
+    if(v!=null)totVol+=v;if(gs!=null)totSav+=gs;
+    var st=T.rowStyle(di),stn=T.rowStyleNum(di);di++;
+    rows.push([
+      soCell(matNameFor(r),st),
+      soCell(r.sourceon_id||'–',st),
+      soCell(isNaN(m)?'–':m,stn,T.Z_INT),
+      soCell(r.einheit||'–',st),
+      soCell(v!=null?v:'–',stn,v!=null?CHF:null),
+      soCell(pct!=null?pct:'–',stn,pct!=null?PCT:null),
+      soCell(gs!=null?gs:'–',stn,gs!=null?CHF:null),
+      soCell(badgeFor(r.status).t,st)
+    ]);
+  });
+  var prov=totVol*0.0225, netto=totSav-prov;
+  rows.push([]);
+  rows.push([soCell('Total Einsparpotenzial',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell(totVol,T.totalNum,CHF),soCell('',T.total),soCell(totSav,T.totalNum,CHF),soCell('',T.total)]);
+  rows.push([soCell('SourceOn-Provision (2.25%)',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell(prov,T.totalNum,CHF),soCell('',T.total)]);
+  rows.push([soCell('Garantierte Netto-Ersparnis',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell('',T.total),soCell(netto,T.totalNum,CHF),soCell('',T.total)]);
+  rows.push([]);
+  rows.push([soCell('Unverbindliche Schätzung basierend auf SourceOn-Richtpreisen.',T.footer)]);
+  var merges=[{s:{r:0,c:0},e:{r:0,c:7}},{s:{r:1,c:0},e:{r:1,c:7}},{s:{r:2,c:0},e:{r:2,c:7}},{s:{r:rows.length-1,c:0},e:{r:rows.length-1,c:7}}];
+  var s1={name:'Übersicht',cols:[45,14,10,10,16,12,18,18],merges:merges,rows:rows,rowHeights:[24,15,15]};
+  // ---- Sheet 2: Anfragen Detail ----
+  var d=[];
+  d.push([soCell('Anfragen — Detailübersicht',T.title)]);
+  d.push([soCell('Firma: '+firm+' · Erstellt am '+fmtDMYfull(new Date()),T.subtitle)]);
+  d.push([]);
+  var dh=['Material','SourceOn-ID','Menge','Einheit','Liefer-Zeitraum','Zone','Volumen CHF','Rabatt %','Ersparnis CHF','Status','Erstellt'];
+  d.push(dh.map(function(h,i){return soCell(h,(i===6||i===7||i===8)?T.headerNum:T.header);}));
+  var di2=0;
+  _requests.forEach(function(r){
+    var v=reqEstValue(r),gs=reqGuaranteedSaving(r),m=parseFloat(r.menge);
+    var pct=(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt)))?Math.round(parseFloat(r.committed_min_rabatt)*100):null;
+    var st=T.rowStyle(di2),stn=T.rowStyleNum(di2);di2++;
+    d.push([
+      soCell(matNameFor(r),st),
+      soCell(r.sourceon_id||'–',st),
+      soCell(isNaN(m)?'–':m,stn,T.Z_INT),
+      soCell(r.einheit||'–',st),
+      soCell(zeitraumStr(r),st),
+      soCell(r.liefer_zone||r.delivery_zone||'–',st),
+      soCell(v!=null?v:'–',stn,v!=null?CHF:null),
+      soCell(pct!=null?pct:'–',stn,pct!=null?PCT:null),
+      soCell(gs!=null?gs:'–',stn,gs!=null?CHF:null),
+      soCell(badgeFor(r.status).t,st),
+      soCell(r.created_at?fmtDMY(new Date(r.created_at)):'–',st)
+    ]);
+  });
+  var s2={name:'Anfragen Detail',cols:[42,14,10,10,20,16,16,10,16,16,14],
+    merges:[{s:{r:0,c:0},e:{r:0,c:10}},{s:{r:1,c:0},e:{r:1,c:10}}],rows:d,rowHeights:[24,15]};
+  soExcelExport('SourceOn_Finanzübersicht_'+_xlSafe(firm)+'_'+_xlDate()+'.xlsx',[s1,s2]);
+}
 
 // ── KONTO ──
 var ACCT_FIELDS=[['firmenname','Firmenname'],['ansprechperson','Ansprechperson'],['telefon','Telefon'],['lieferadresse','Lieferadresse'],['kanton','Kanton']];
@@ -959,5 +1031,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.get
   </div>
 </div>
   <script src="mobile-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<script src="xlsx-export.js"></script>
 </body>
 </html>

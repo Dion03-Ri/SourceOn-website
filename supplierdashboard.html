@@ -397,7 +397,7 @@ p{text-wrap:pretty}
       <div class="m3"><div class="m3-num green" id="f-paid">--</div><div class="m3-label">Bezahlte Provisionen</div></div>
       <div class="m3"><div class="m3-num dim" id="f-avg">--</div><div class="m3-label">Ø Nettoerlös</div></div>
     </div>
-    <div class="sec-head"><span class="sec-label">Provisionsabrechnung</span><span class="link-m" onclick="printProvisions()">↓ Als PDF exportieren</span></div>
+    <div class="sec-head"><span class="sec-label">Provisionsabrechnung</span><span style="display:flex;gap:18px"><span class="link-m" onclick="exportProvExcel()">↓ Als Excel exportieren</span><span class="link-m" onclick="printProvisions()">↓ Als PDF exportieren</span></span></div>
     <div style="overflow-x:auto"><table class="ftable" id="prov-table"></table></div>
     <div class="prov-note">Provisionsrechnungen werden von SourceOn nach Lieferbestätigung ausgestellt. Zahlungsfrist: 14 Tage netto.</div>
     <div class="chart-box" id="chart-blk" style="display:none"><span class="sec-label">Umsatz über Zeit</span><div class="chart-wrap"><canvas id="fin-chart"></canvas></div></div>
@@ -703,6 +703,71 @@ function printProvisions(){
   document.getElementById('print-content').innerHTML='<div style="max-width:660px"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:15px;color:#555;margin-bottom:4px">Provisionsabrechnung</div><div style="font-size:12px;color:#888;margin-bottom:22px">'+esc(_profile.company_name||'')+' · Erstellt am '+fmtDMY(new Date())+'</div><table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase"><th style="padding:6px 8px;border-bottom:2px solid #333">Datum</th><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Bestellwert</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Provision (2.25%)</th></tr>'+(rows||'<tr><td colspan="4" style="padding:8px">Keine Aufträge.</td></tr>')+'<tr><td style="padding:8px;font-weight:700" colspan="2">Total</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(rev)+'</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(prov)+'</td></tr></table><div style="margin-top:30px;font-size:11px;color:#999">Zahlungsfrist: 14 Tage netto nach Lieferbestätigung · sourceon.ch</div></div>';
   window.print();
 }
+function _xlDate(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
+function _xlSafe(s){return String(s||'SourceOn').replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,'_').slice(0,40);}
+function exportProvExcel(){
+  var T=window.SO_XL;
+  if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
+  var firm=(_profile&&_profile.company_name)||'';
+  var CHF=T.Z_CHF;
+  // ---- Sheet 1: Provisionsabrechnung (won bundles) ----
+  var rows=[];
+  rows.push([soCell('SourceOn Provisionsabrechnung',T.title)]);
+  rows.push([soCell('Lieferant: '+firm,T.subtitle)]);
+  rows.push([soCell('Erstellt am: '+fmtDMYfull(new Date()),T.subtitle)]);
+  rows.push([]);
+  var heads=['Datum','Material','SourceOn-ID','Bestellwert CHF','Provision (2.25%) CHF','Netto-Erlös CHF','Status','Zahlungsstatus'];
+  rows.push(heads.map(function(h,i){return soCell(h,(i>=3&&i<=5)?T.headerNum:T.header);}));
+  var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
+  var sumOrd=0,sumProv=0,sumNet=0,di=0;
+  won.forEach(function(bid){
+    var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;
+    var prov=ord*COMM,net=ord*(1-COMM),paid=bid.provision_paid===true;
+    sumOrd+=ord;sumProv+=prov;sumNet+=net;
+    var st=T.rowStyle(di),stn=T.rowStyleNum(di);di++;
+    rows.push([
+      soCell(bid.created_at?fmtDMY(new Date(bid.created_at)):'–',st),
+      soCell(bMat(b),st),
+      soCell(b.sourceon_id||'–',st),
+      soCell(ord,stn,CHF),
+      soCell(prov,stn,CHF),
+      soCell(net,stn,CHF),
+      soCell(bid.delivery_confirmed?'Geliefert':'Zugeschlagen',st),
+      soCell(paid?'Bezahlt':'Offen',st)
+    ]);
+  });
+  rows.push([soCell('Total',T.total),soCell('',T.total),soCell('',T.total),soCell(sumOrd,T.totalNum,CHF),soCell(sumProv,T.totalNum,CHF),soCell(sumNet,T.totalNum,CHF),soCell('',T.total),soCell('',T.total)]);
+  rows.push([]);
+  rows.push([soCell('Provisionsrechnungen werden von SourceOn nach Lieferbestätigung ausgestellt. Zahlungsfrist: 14 Tage netto.',T.footer)]);
+  var s1={name:'Provisionsabrechnung',cols:[14,40,14,18,20,18,16,16],
+    merges:[{s:{r:0,c:0},e:{r:0,c:7}},{s:{r:1,c:0},e:{r:1,c:7}},{s:{r:2,c:0},e:{r:2,c:7}},{s:{r:rows.length-1,c:0},e:{r:rows.length-1,c:7}}],
+    rows:rows,rowHeights:[24,15,15]};
+  // ---- Sheet 2: Ausschreibungs-Historie (all bids won & lost) ----
+  var d=[];
+  d.push([soCell('Ausschreibungs-Historie',T.title)]);
+  d.push([soCell('Lieferant: '+firm+' · Erstellt am '+fmtDMYfull(new Date()),T.subtitle)]);
+  d.push([]);
+  var dh=['Datum','Material','SourceOn-ID','Volumen','Rabatt %','Bestellwert CHF','Netto-Erlös CHF','Status'];
+  d.push(dh.map(function(h,i){return soCell(h,(i>=5&&i<=6)?T.headerNum:T.header);}));
+  var di2=0;
+  _bids.filter(function(b){return normStatus(b.status)!=='zurueckgezogen';}).forEach(function(bid){
+    var b=bid.bundles||{};var ord=bestellwert(bid,b);var r=parseFloat(bid.rabatt_prozent);
+    var st=T.rowStyle(di2),stn=T.rowStyleNum(di2);di2++;
+    d.push([
+      soCell(bid.created_at?fmtDMY(new Date(bid.created_at)):'–',st),
+      soCell(bMat(b),st),
+      soCell(b.sourceon_id||'–',st),
+      soCell(bVolStr(b),st),
+      soCell(isNaN(r)?'–':r,stn,T.Z_PCT),
+      soCell(ord!=null?ord:'–',stn,ord!=null?CHF:null),
+      soCell(ord!=null?ord*(1-COMM):'–',stn,ord!=null?CHF:null),
+      soCell(bidBadge(bid.status).t,st)
+    ]);
+  });
+  var s2={name:'Ausschreibungs-Historie',cols:[14,40,14,16,10,18,18,16],
+    merges:[{s:{r:0,c:0},e:{r:0,c:7}},{s:{r:1,c:0},e:{r:1,c:7}}],rows:d,rowHeights:[24,15]};
+  soExcelExport('SourceOn_Provisionsabrechnung_'+_xlSafe(firm)+'_'+_xlDate()+'.xlsx',[s1,s2]);
+}
 
 // ── LIEFERUNGEN ──
 function renderLieferungen(){
@@ -854,5 +919,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.get
   </div>
 </div>
   <script src="mobile-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<script src="xlsx-export.js"></script>
 </body>
 </html>

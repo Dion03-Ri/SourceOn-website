@@ -268,7 +268,7 @@ p{text-wrap:pretty}
 
   <!-- SECTION 4: All suppliers -->
   <div class="section">
-    <div class="section-title">Alle Lieferanten</div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">Alle Lieferanten<span class="link-m" style="font-size:.82rem;font-weight:600;color:#E8A020;cursor:pointer" onclick="exportSuppliersExcel()">↓ Alle exportieren</span></div>
     <p class="section-sub">Vollständige Liste aller registrierten Lieferanten.</p>
     <input type="text" class="search-input" id="supplier-search" placeholder="Nach Firmenname suchen..." oninput="filterSuppliers()"/>
     <div class="tbl-wrap"><div id="suppliers-table" class="loading">Daten werden geladen...</div></div>
@@ -712,6 +712,45 @@ function filterSuppliers(){
   renderSuppliers(_allSuppliers.filter(function(r){return(r.company_name||'').toLowerCase().indexOf(q)!==-1;}));
 }
 
+function _xlDate(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
+function _supStatusLabel(s){return s==='verified'?'Verifiziert':s==='pending'?'Ausstehend':s==='rejected'?'Abgelehnt':(s||'–');}
+function _supRow(r,st,stn,T){
+  var mats=Array.isArray(r.materials)?r.materials.join(', '):(r.materials||'–');
+  var regs=Array.isArray(r.regions)?r.regions.join(', '):(r.regions||'–');
+  return [
+    soCell(r.company_name||'–',st),
+    soCell(r.contact_person||'–',st),
+    soCell(r.email||'–',st),
+    soCell(r.phone||'–',st),
+    soCell(r.website||'–',st),
+    soCell(mats,st),
+    soCell(regs,st),
+    soCell(r.annual_capacity||'–',st),
+    soCell(r.ai_score!=null?r.ai_score:'–',stn,r.ai_score!=null?T.Z_INT:null),
+    soCell(_supStatusLabel(r.status),st),
+    soCell(fmtDate(r.created_at),st)
+  ];
+}
+function exportSuppliersExcel(){
+  var T=window.SO_XL;
+  if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
+  var heads=['Firma','Kontakt','E-Mail','Telefon','Website','Materialien','Regionen','Kapazität','AI Score','Status','Erstellt'];
+  var cols=[34,22,30,16,26,40,32,20,10,14,14];
+  function sheet(name,list){
+    var rows=[];
+    rows.push([soCell('SourceOn — '+name,T.title)]);
+    rows.push([soCell('Erstellt am: '+new Date().toLocaleDateString('de-CH',{day:'2-digit',month:'long',year:'numeric'})+' · '+list.length+' Einträge',T.subtitle)]);
+    rows.push([]);
+    rows.push(heads.map(function(h,i){return soCell(h,i===8?T.headerNum:T.header);}));
+    list.forEach(function(r,i){rows.push(_supRow(r,T.rowStyle(i),T.rowStyleNum(i),T));});
+    return {name:name,cols:cols,rows:rows,rowHeights:[24,15],
+      merges:[{s:{r:0,c:0},e:{r:0,c:10}},{s:{r:1,c:0},e:{r:1,c:10}}]};
+  }
+  var all=_allSuppliers||[];
+  var pending=all.filter(function(r){return r.status==='pending';});
+  soExcelExport('SourceOn_Lieferanten_'+_xlDate()+'.xlsx',[sheet('Lieferanten',all),sheet('Pending',pending)]);
+}
+
 async function loadCustomers(){
   var [customers,requests]=await Promise.all([
     sbFetch('customers?select=*&order=created_at.desc'),
@@ -740,5 +779,7 @@ async function loadCustomers(){
 }
 </script>
   <script src="mobile-nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+<script src="xlsx-export.js"></script>
 </body>
 </html>
