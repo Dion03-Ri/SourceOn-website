@@ -1148,44 +1148,21 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
                 </div>
                 <div class="form-error" id="e-c-timing" data-i18n="err_timing">Bitte gültigen Lieferzeitraum wählen</div>
               </div>
-              <div class="form-group" style="display:grid;grid-template-columns:1fr 140px;gap:16px">
+              <div class="form-group">
+                <label class="form-label" data-i18n="form_address_label">Lieferadresse *</label>
+                <input type="text" class="form-input" id="c-street" name="strasse" placeholder="Strasse und Hausnummer" data-i18n-placeholder="form_placeholder_address" required/>
+                <div class="form-error" data-i18n="form_error_required" id="e-c-street">Pflichtfeld</div>
+              </div>
+              <div class="form-group" style="display:grid;grid-template-columns:120px 1fr;gap:16px">
                 <div>
-                  <label class="form-label" data-i18n="form_address_label">Lieferadresse *</label>
-                  <input type="text" class="form-input" id="c-address" name="liefer_adresse" placeholder="Strasse, Hausnummer, Ort" data-i18n-placeholder="form_placeholder_address" required/>
-                  <div class="form-error" data-i18n="form_error_required" id="e-c-address">Pflichtfeld</div>
+                  <label class="form-label" data-i18n="form_plz_label">PLZ *</label>
+                  <input type="text" class="form-input" id="c-plz" name="plz" inputmode="numeric" placeholder="8000" data-i18n-placeholder="form_plz_ph" required/>
+                  <div class="form-error" data-i18n="form_error_required" id="e-c-plz">Pflichtfeld</div>
                 </div>
                 <div>
-                  <label class="form-label" data-i18n="form_kanton_label">Kanton *</label>
-                  <select class="form-select" id="c-kanton" name="kanton" required>
-                    <option value="" data-i18n="form_kanton_select">Kanton wählen</option>
-                    <option value="AG">Aargau</option>
-                    <option value="AI">Appenzell Innerrhoden</option>
-                    <option value="AR">Appenzell Ausserrhoden</option>
-                    <option value="BE">Bern</option>
-                    <option value="BL">Basel-Landschaft</option>
-                    <option value="BS">Basel-Stadt</option>
-                    <option value="FR">Freiburg</option>
-                    <option value="GE">Genf</option>
-                    <option value="GL">Glarus</option>
-                    <option value="GR">Graubünden</option>
-                    <option value="JU">Jura</option>
-                    <option value="LU">Luzern</option>
-                    <option value="NE">Neuenburg</option>
-                    <option value="NW">Nidwalden</option>
-                    <option value="OW">Obwalden</option>
-                    <option value="SG">St. Gallen</option>
-                    <option value="SH">Schaffhausen</option>
-                    <option value="SO">Solothurn</option>
-                    <option value="SZ">Schwyz</option>
-                    <option value="TG">Thurgau</option>
-                    <option value="TI">Tessin</option>
-                    <option value="UR">Uri</option>
-                    <option value="VD">Waadt</option>
-                    <option value="VS">Wallis</option>
-                    <option value="ZG">Zug</option>
-                    <option value="ZH">Zürich</option>
-                  </select>
-                  <div class="form-error" data-i18n="form_error_required" id="e-c-kanton">Pflichtfeld</div>
+                  <label class="form-label" data-i18n="form_ort_label">Ort *</label>
+                  <input type="text" class="form-input" id="c-ort" name="ort" placeholder="z.B. Zürich" data-i18n-placeholder="form_ort_ph" required/>
+                  <div class="form-error" data-i18n="form_error_required" id="e-c-ort">Pflichtfeld</div>
                 </div>
               </div>
             </div>
@@ -1630,6 +1607,25 @@ var kantonToRegion={
   'SO':'Aargau'
 };
 function _regionForKanton(kanton){return kantonToRegion[kanton]||'Zürich';}
+// Schweizer PLZ → eine der 10 Bündelungs-Regionen (Näherung nach PLZ-Bereich).
+function _zoneFromPlz(plz){
+  var n=parseInt(String(plz||'').replace(/\D/g,'').slice(0,4),10);
+  if(isNaN(n))return 'Zürich';
+  // Ostschweiz: GR 7xxx · SG/AR/AI 9xxx · SH 82xx · TG 85xx · GL 8750–8785
+  if((n>=7000&&n<=7999)||(n>=9000&&n<=9999)||(n>=8200&&n<=8299)||(n>=8500&&n<=8599)||(n>=8750&&n<=8785))return 'Ostschweiz';
+  // Zentralschweiz: ZG 63xx · SZ/UR 64xx · OW 6050–6078 · SZ March 8840–8863
+  if((n>=6300&&n<=6399)||(n>=6400&&n<=6499)||(n>=6050&&n<=6078)||(n>=8840&&n<=8863))return 'Zentralschweiz';
+  if(n>=1000&&n<=2999)return 'Westschweiz';   // VD/FR/GE/NE/JU
+  if(n>=3900&&n<=3999)return 'Westschweiz';    // VS (Oberwallis/Brig)
+  if(n>=3000&&n<=3899)return 'Bern';
+  if(n>=4000&&n<=4499)return 'Basel';
+  if(n>=4500&&n<=5999)return 'Aargau';         // SO + AG
+  if(n>=6000&&n<=6299)return 'Luzern';
+  if(n>=6500&&n<=6999)return 'Tessin';
+  if(n>=8000&&n<=8749)return 'Zürich';
+  if(n>=8800&&n<=8839)return 'Zürich';
+  return 'Zürich';
+}
 function _extractZone(addr){
   var plz=addr.match(/\b(\d{4})\b/);
   if(plz)return plz[1].substring(0,2);
@@ -1653,7 +1649,7 @@ async function submitContact(e){
   e.preventDefault();
   var matOk=validateMaterials();
   var datesOk=_validateDates();
-  if(![req('c-company','e-c-company'),req('c-name','e-c-name'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone'),matOk,datesOk,req('c-address','e-c-address'),selOk('c-kanton','e-c-kanton')].every(Boolean))return;
+  if(![req('c-company','e-c-company'),req('c-name','e-c-name'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone'),matOk,datesOk,req('c-street','e-c-street'),req('c-plz','e-c-plz'),req('c-ort','e-c-ort')].every(Boolean))return;
 
   // Pflicht: verbindliche Auftragsbestätigung (Ziel-Mindestrabatt)
   var commitEl=document.getElementById('c-commitment');
@@ -1676,15 +1672,17 @@ async function submitContact(e){
   submitBtn.disabled=true;submitBtn.style.opacity='0.6';
 
   try{
-    var addrVal=document.getElementById('c-address').value.trim();
-    var kantonVal=document.getElementById('c-kanton').value;
+    var streetVal=document.getElementById('c-street').value.trim();
+    var plzVal=document.getElementById('c-plz').value.trim();
+    var ortVal=document.getElementById('c-ort').value.trim();
+    var addrVal=streetVal+', '+plzVal+' '+ortVal;
     var custPayload={
       firmenname:document.getElementById('c-company').value.trim(),
       ansprechperson:document.getElementById('c-name').value.trim(),
       email:document.getElementById('c-email').value.trim(),
       telefon:document.getElementById('c-phone').value.trim(),
       lieferadresse:addrVal,
-      kanton:kantonVal
+      kanton:''
     };
     if(window.Clerk&&window.Clerk.user){custPayload.user_id=window.Clerk.user.id;}
     var _dbUrl=_supabase.supabaseUrl||(_supabase.rest?_supabase.rest.url:'unknown');
@@ -1711,7 +1709,7 @@ async function submitContact(e){
     }
 
     var timing={von:document.getElementById('c-date-von').value,bis:document.getElementById('c-date-bis').value};
-    var zone=_regionForKanton(kantonVal);
+    var zone=_zoneFromPlz(plzVal);
     var rows=document.querySelectorAll('#material-rows .material-row');
     var inserts=[];
     var unmatched=[];
@@ -1949,7 +1947,7 @@ window.I18N={
     form_material_hint:'Dein Material ist nicht dabei? <a href="sondermaterial.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.',
     form_timing_label:"Gewünschter Lieferzeitraum *",
     form_timing_asap:"So schnell wie möglich",form_timing_1week:"Innerhalb 1 Woche",form_timing_2weeks:"Innerhalb 2 Wochen",form_timing_1month:"Innerhalb 1 Monat",form_timing_flexible:"Flexibel — nach Absprache",
-    form_address_label:"Lieferadresse *",form_kanton_label:"Kanton *",form_kanton_select:"Kanton wählen",form_placeholder_address:"Strasse, Hausnummer, Ort",
+    form_address_label:"Lieferadresse *",form_plz_label:"PLZ *",form_ort_label:"Ort *",form_plz_ph:"8000",form_ort_ph:"z.B. Zürich",form_placeholder_address:"Strasse und Hausnummer",
     form_project_label:'Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span>',form_placeholder_project:"Kurze Beschreibung des Projekts und weitere Anforderungen…",
     form_submit:"Materialbedarf jetzt melden →",
     form_post_submit:"Nach dem Absenden siehst du sofort deinen garantierten Mindestrabatt und kannst den Status deiner Anfrage jederzeit in deinem Dashboard verfolgen.",
@@ -2004,7 +2002,7 @@ window.I18N={
     form_material_hint:'Your material is not listed? <a href="sondermaterial.html" style="color:var(--gold);font-weight:600;text-decoration:none">Ask us about custom procurement</a> — we are happy to check if we can bundle it for you.',
     form_timing_label:"Desired delivery period *",
     form_timing_asap:"As soon as possible",form_timing_1week:"Within 1 week",form_timing_2weeks:"Within 2 weeks",form_timing_1month:"Within 1 month",form_timing_flexible:"Flexible — by arrangement",
-    form_address_label:"Delivery address *",form_kanton_label:"Canton *",form_kanton_select:"Select canton",form_placeholder_address:"Street, number, city",
+    form_address_label:"Delivery address *",form_plz_label:"Postal code *",form_ort_label:"City *",form_plz_ph:"8000",form_ort_ph:"e.g. Zurich",form_placeholder_address:"Street and number",
     form_project_label:'Project description <span style="font-weight:400;color:var(--body)">(optional)</span>',
     form_placeholder_project:"Brief description of the project and further requirements…",
     form_submit:"Report material needs now →",
@@ -2060,7 +2058,7 @@ window.I18N={
     form_material_hint:'Votre matériau n\'est pas listé ? <a href="sondermaterial.html" style="color:var(--gold);font-weight:600;text-decoration:none">Demandez-nous un approvisionnement personnalisé</a> — nous vérifions volontiers si nous pouvons le regrouper pour vous.',
     form_timing_label:"Délai de livraison souhaité *",
     form_timing_asap:"Dès que possible",form_timing_1week:"Sous 1 semaine",form_timing_2weeks:"Sous 2 semaines",form_timing_1month:"Sous 1 mois",form_timing_flexible:"Flexible — à convenir",
-    form_address_label:"Adresse de livraison *",form_kanton_label:"Canton *",form_kanton_select:"Sélectionner le canton",form_placeholder_address:"Rue, numéro, ville",
+    form_address_label:"Adresse de livraison *",form_plz_label:"NPA *",form_ort_label:"Localité *",form_plz_ph:"8000",form_ort_ph:"p.ex. Zurich",form_placeholder_address:"Rue et numéro",
     form_project_label:'Description du projet <span style="font-weight:400;color:var(--body)">(optionnel)</span>',form_placeholder_project:"Brève description du projet et exigences supplémentaires…",
     form_submit:"Déclarer le besoin maintenant →",
     form_post_submit:"Après envoi, vous voyez immédiatement votre remise minimale garantie et pouvez suivre le statut de votre demande à tout moment dans votre tableau de bord.",
@@ -2115,7 +2113,7 @@ window.I18N={
     form_material_hint:'Il tuo materiale non è elencato? <a href="sondermaterial.html" style="color:var(--gold);font-weight:600;text-decoration:none">Chiedici un approvvigionamento personalizzato</a> — verificheremo volentieri se possiamo raggrupparlo per te.',
     form_timing_label:"Periodo di consegna desiderato *",
     form_timing_asap:"Il prima possibile",form_timing_1week:"Entro 1 settimana",form_timing_2weeks:"Entro 2 settimane",form_timing_1month:"Entro 1 mese",form_timing_flexible:"Flessibile — da concordare",
-    form_address_label:"Indirizzo di consegna *",form_kanton_label:"Cantone *",form_kanton_select:"Seleziona il cantone",form_placeholder_address:"Via, numero, città",
+    form_address_label:"Indirizzo di consegna *",form_plz_label:"CAP *",form_ort_label:"Località *",form_plz_ph:"8000",form_ort_ph:"es. Zurigo",form_placeholder_address:"Via e numero",
     form_project_label:'Descrizione del progetto <span style="font-weight:400;color:var(--body)">(opzionale)</span>',form_placeholder_project:"Breve descrizione del progetto e ulteriori requisiti…",
     form_submit:"Segnalare fabbisogno ora →",
     form_post_submit:"Dopo l'invio, vedi immediatamente il tuo sconto minimo garantito e puoi seguire lo stato della tua richiesta in qualsiasi momento nella tua dashboard.",
