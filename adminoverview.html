@@ -207,10 +207,6 @@ p{text-wrap:pretty}
 <nav class="topnav">
   <a href="index.html" class="topnav-logo">Source<span>On</span> <span style="font-size:.6em;font-weight:400;color:var(--muted);margin-left:8px">Admin</span></a>
   <div class="topnav-right">
-    <button class="btn-refresh" onclick="exportAllExcel()" id="btn-export" title="Alle Daten als Excel exportieren">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Alles exportieren
-    </button>
     <button class="btn-refresh" onclick="loadAllData()" id="btn-refresh">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
       Aktualisieren
@@ -251,7 +247,7 @@ p{text-wrap:pretty}
 
   <!-- SECTION 2: Pending suppliers -->
   <div class="section" id="sec-pending">
-    <div class="section-title">Wartende Lieferanten-Bewerbungen <span class="badge" id="pending-count">0</span></div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px">Wartende Lieferanten-Bewerbungen <span class="badge" id="pending-count">0</span></span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#E8A020;cursor:pointer" onclick="exportPendingExcel()">↓ Exportieren</span></div>
     <p class="section-sub">Lieferanten, die auf Verifizierung warten. Hier kannst du sie direkt verifizieren oder ablehnen.</p>
     <div class="tbl-wrap"><div id="pending-table" class="loading">Daten werden geladen...</div></div>
   </div>
@@ -265,7 +261,7 @@ p{text-wrap:pretty}
 
   <!-- SECTION 3b: Expired bundles -->
   <div class="section" id="sec-expired">
-    <div class="section-title">Abgelaufene Bündel <span class="badge" id="expired-count" style="background:rgba(239,68,68,.12);color:#F87171">0</span></div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px">Abgelaufene Bündel <span class="badge" id="expired-count" style="background:rgba(239,68,68,.12);color:#F87171">0</span></span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#E8A020;cursor:pointer" onclick="exportExpiredBundlesExcel()">↓ Exportieren</span></div>
     <p class="section-sub">Bündel deren Frist abgelaufen ist ohne qualifizierende Gebote. Erneut ausschreiben oder entfernen.</p>
     <div class="tbl-wrap"><div id="expired-table" class="loading">Daten werden geladen...</div></div>
   </div>
@@ -316,6 +312,7 @@ var HEADERS={'apikey':SB_SERVICE_KEY,'Authorization':'Bearer '+SB_SERVICE_KEY,'C
 
 var _allSuppliers=[];
 var _allBundles=[],_allBundleBidCounts={},_allBundleSupMap={};
+var _allExpiredBundles=[];
 var _allCustomers=[],_allCustomerReqCounts={};
 
 async function sha256(str){
@@ -593,6 +590,7 @@ async function loadExpiredBundles(){
     sbFetch('bundles?status=eq.abgelaufen&select=*&order=created_at.desc'),
     sbFetch('bids?select=id,bundle_id,rabatt_prozent,supplier_id')
   ]);
+  _allExpiredBundles=bundles;
   document.getElementById('expired-count').textContent=bundles.length;
   if(!bundles.length){
     document.getElementById('expired-table').innerHTML='<div class="empty-msg">Keine abgelaufenen Bündel.</div>';
@@ -799,15 +797,16 @@ function exportBundlesExcel(){
   soExcelExport('SourceOn_Ausschreibungen_'+_xlDate()+'.xlsx',
     [_bndSheet('Ausschreibungen','Alle Bündel / Ausschreibungen',_allBundles||[])]);
 }
-function exportAllExcel(){
+function exportPendingExcel(){
   var T=window.SO_XL;if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
-  var all=_allSuppliers||[],pending=all.filter(function(r){return r.status==='pending';});
-  soExcelExport('SourceOn_Gesamtexport_'+_xlDate()+'.xlsx',[
-    _supSheet('Lieferanten','Alle registrierten Lieferanten',all),
-    _supSheet('Pending','Wartende Bewerbungen zur Prüfung',pending),
-    _custSheet('Kunden','Alle registrierten Kunden',_allCustomers||[]),
-    _bndSheet('Ausschreibungen','Alle Bündel / Ausschreibungen',_allBundles||[])
-  ]);
+  var pending=(_allSuppliers||[]).filter(function(r){return r.status==='pending';});
+  soExcelExport('SourceOn_Wartende_Bewerbungen_'+_xlDate()+'.xlsx',
+    [_supSheet('Pending','Wartende Bewerbungen zur Prüfung',pending)]);
+}
+function exportExpiredBundlesExcel(){
+  var T=window.SO_XL;if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
+  soExcelExport('SourceOn_Abgelaufene_Buendel_'+_xlDate()+'.xlsx',
+    [_bndSheet('Abgelaufene Bündel','Abgelaufene Bündel ohne qualifizierende Gebote',_allExpiredBundles||[])]);
 }
 
 async function loadCustomers(){
