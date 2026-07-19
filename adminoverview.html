@@ -207,6 +207,10 @@ p{text-wrap:pretty}
 <nav class="topnav">
   <a href="index.html" class="topnav-logo">Source<span>On</span> <span style="font-size:.6em;font-weight:400;color:var(--muted);margin-left:8px">Admin</span></a>
   <div class="topnav-right">
+    <button class="btn-refresh" onclick="exportAllExcel()" id="btn-export" title="Alle Daten als Excel exportieren">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Alles exportieren
+    </button>
     <button class="btn-refresh" onclick="loadAllData()" id="btn-refresh">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
       Aktualisieren
@@ -254,7 +258,7 @@ p{text-wrap:pretty}
 
   <!-- SECTION 3: All bundles -->
   <div class="section">
-    <div class="section-title">Alle Bündel</div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">Alle Bündel<span class="link-m" style="font-size:.82rem;font-weight:600;color:#E8A020;cursor:pointer" onclick="exportBundlesExcel()">↓ Exportieren</span></div>
     <p class="section-sub">Alle erstellten Bündel, sortiert nach Erstelldatum (neueste zuerst).</p>
     <div class="tbl-wrap"><div id="bundles-table" class="loading">Daten werden geladen...</div></div>
   </div>
@@ -276,7 +280,7 @@ p{text-wrap:pretty}
 
   <!-- SECTION 5: All customers -->
   <div class="section">
-    <div class="section-title">Alle Kunden</div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">Alle Kunden<span class="link-m" style="font-size:.82rem;font-weight:600;color:#E8A020;cursor:pointer" onclick="exportCustomersExcel()">↓ Exportieren</span></div>
     <p class="section-sub">Vollständige Liste aller registrierten Kunden mit Anzahl Materialanfragen.</p>
     <div class="tbl-wrap"><div id="customers-table" class="loading">Daten werden geladen...</div></div>
   </div>
@@ -311,6 +315,8 @@ var SB_SERVICE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 var HEADERS={'apikey':SB_SERVICE_KEY,'Authorization':'Bearer '+SB_SERVICE_KEY,'Content-Type':'application/json'};
 
 var _allSuppliers=[];
+var _allBundles=[],_allBundleBidCounts={},_allBundleSupMap={};
+var _allCustomers=[],_allCustomerReqCounts={};
 
 async function sha256(str){
   var buf=new TextEncoder().encode(str);
@@ -542,6 +548,7 @@ async function loadBundles(){
   bids.forEach(function(b){bidCounts[b.bundle_id]=(bidCounts[b.bundle_id]||0)+1;});
   var supMap={};
   suppliers.forEach(function(s){supMap[s.id]=s.company_name;});
+  _allBundles=bundles;_allBundleBidCounts=bidCounts;_allBundleSupMap=supMap;
 
   if(!bundles.length){
     document.getElementById('bundles-table').innerHTML='<div class="empty-msg">Keine Bündel vorhanden.</div>';
@@ -731,31 +738,76 @@ function _supRow(r,st,stn,T){
     soCell(fmtDate(r.created_at),st)
   ];
 }
+// Generic branded sheet: heads/cols + a row-builder that maps each item to cells.
+function _admSheet(name,subtitle,list,heads,cols,numCol,rowFn){
+  var T=window.SO_XL,now=new Date(),N=heads.length,rows=[],merges=[];
+  var lead=Math.min(6,N);
+  T.segRow(rows,merges,N,[{w:lead,c:soCell('SourceOn',T.brand)},{w:N-lead,c:soCell(name,T.docType)}]);
+  T.segRow(rows,merges,N,[{w:lead,c:soCell('Interne Übersicht · '+T.company.web,T.brandTag)},
+    {w:N-lead,c:soCell('Erstellt: '+fmtDate(now)+'\n'+list.length+' Einträge',T.docMeta)}]);
+  rows.push([]);
+  T.band(rows,merges,N,subtitle,T.sectionLabel);
+  rows.push(heads.map(function(h,i){return soCell(h,(numCol&&numCol.indexOf(i)!==-1)?T.headerNum:T.header);}));
+  list.forEach(function(r,i){rows.push(rowFn(r,T.rowStyle(i),T.rowStyleNum(i),T));});
+  if(!list.length)rows.push([soCell('Keine Einträge.',T.dataA)]);
+  rows.push([]);
+  T.band(rows,merges,N,'Vertraulich — nur für den internen Gebrauch. '+T.company.name+' · '+T.company.mail,T.footer);
+  return {name:name,cols:cols,rows:rows,rowHeights:[34,32,6,16],merges:merges};
+}
+var _SUP_HEADS=['Firma','Kontakt','E-Mail','Telefon','Website','Materialien','Regionen','Kapazität','AI Score','Status','Erstellt'];
+var _SUP_COLS=[34,22,30,16,26,40,32,20,10,14,14];
+function _supSheet(name,subtitle,list){return _admSheet(name,subtitle,list,_SUP_HEADS,_SUP_COLS,[8],_supRow);}
+
+var _CUST_HEADS=['Firma','Ansprechperson','E-Mail','Telefon','Anfragen','Erstellt'];
+var _CUST_COLS=[34,24,32,18,12,14];
+function _custRow(c,st,stn,T){
+  return [soCell(c.firmenname||'–',st),soCell(c.ansprechperson||'–',st),soCell(c.email||'–',st),
+    soCell(c.telefon||'–',st),soCell(_allCustomerReqCounts[c.id]||0,stn,T.Z_INT),soCell(fmtDate(c.created_at),st)];
+}
+function _custSheet(name,subtitle,list){return _admSheet(name,subtitle,list,_CUST_HEADS,_CUST_COLS,[4],_custRow);}
+
+var _BND_HEADS=['Material','Lieferzone','Volumen','Ziel-Rabatt %','Status','Deadline','Gebote','Gewinner','Finaler Rabatt %','Erstellt'];
+var _BND_COLS=[26,16,16,13,16,14,9,26,15,14];
+function _bndRow(b,st,stn,T){
+  var mat=b.bundle_type==='multi_material'?'Mehrere Materialien':(b.sourceon_id||'–');
+  var vol=(b.gesamtvolumen!=null&&b.gesamtvolumen!=='')?Number(b.gesamtvolumen):null;
+  var volStr=(vol!=null?vol.toLocaleString('de-CH'):'-')+' '+(b.einheit||'');
+  var ziel=b.ziel_mindestrabatt!=null?(Number(b.ziel_mindestrabatt)<1?Math.round(Number(b.ziel_mindestrabatt)*100):Number(b.ziel_mindestrabatt)):null;
+  var finalR=b.finaler_rabatt!=null?Math.round(b.finaler_rabatt*100):null;
+  var winner=b.gewonnener_supplier_id?(_allBundleSupMap[b.gewonnener_supplier_id]||b.gewonnener_supplier_id):'–';
+  return [soCell(mat,st),soCell(b.liefer_zone||'–',st),soCell(volStr,st),
+    soCell(ziel!=null?ziel:'–',stn,ziel!=null?T.Z_PCT:null),soCell(_supStatusLabel(b.status),st),
+    soCell(fmtDate(b.bid_deadline),st),soCell(_allBundleBidCounts[b.id]||0,stn,T.Z_INT),
+    soCell(winner,st),soCell(finalR!=null?finalR:'–',stn,finalR!=null?T.Z_PCT:null),soCell(fmtDate(b.created_at),st)];
+}
+function _bndSheet(name,subtitle,list){return _admSheet(name,subtitle,list,_BND_HEADS,_BND_COLS,[6,3,8],_bndRow);}
+
 function exportSuppliersExcel(){
-  var T=window.SO_XL;
-  if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
-  var heads=['Firma','Kontakt','E-Mail','Telefon','Website','Materialien','Regionen','Kapazität','AI Score','Status','Erstellt'];
-  var cols=[34,22,30,16,26,40,32,20,10,14,14],N=heads.length;
-  var now=new Date();
-  function sheet(name,subtitle,list){
-    var rows=[],merges=[];
-    T.segRow(rows,merges,N,[{w:6,c:soCell('SourceOn',T.brand)},{w:N-6,c:soCell(name,T.docType)}]);
-    T.segRow(rows,merges,N,[{w:6,c:soCell('Interne Übersicht · '+T.company.web,T.brandTag)},
-      {w:N-6,c:soCell('Erstellt: '+fmtDate(now)+'\n'+list.length+' Einträge',T.docMeta)}]);
-    rows.push([]);
-    T.band(rows,merges,N,subtitle,T.sectionLabel);
-    rows.push(heads.map(function(h,i){return soCell(h,i===8?T.headerNum:T.header);}));
-    list.forEach(function(r,i){rows.push(_supRow(r,T.rowStyle(i),T.rowStyleNum(i),T));});
-    if(!list.length)rows.push([soCell('Keine Einträge.',T.dataA)]);
-    rows.push([]);
-    T.band(rows,merges,N,'Vertraulich — nur für den internen Gebrauch. '+T.company.name+' · '+T.company.mail,T.footer);
-    return {name:name,cols:cols,rows:rows,rowHeights:[34,32,6,16],merges:merges};
-  }
-  var all=_allSuppliers||[];
-  var pending=all.filter(function(r){return r.status==='pending';});
+  var T=window.SO_XL;if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
+  var all=_allSuppliers||[],pending=all.filter(function(r){return r.status==='pending';});
   soExcelExport('SourceOn_Lieferanten_'+_xlDate()+'.xlsx',
-    [sheet('Lieferanten','Alle registrierten Lieferanten',all),
-     sheet('Pending','Wartende Bewerbungen zur Prüfung',pending)]);
+    [_supSheet('Lieferanten','Alle registrierten Lieferanten',all),
+     _supSheet('Pending','Wartende Bewerbungen zur Prüfung',pending)]);
+}
+function exportCustomersExcel(){
+  var T=window.SO_XL;if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
+  soExcelExport('SourceOn_Kunden_'+_xlDate()+'.xlsx',
+    [_custSheet('Kunden','Alle registrierten Kunden',_allCustomers||[])]);
+}
+function exportBundlesExcel(){
+  var T=window.SO_XL;if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
+  soExcelExport('SourceOn_Ausschreibungen_'+_xlDate()+'.xlsx',
+    [_bndSheet('Ausschreibungen','Alle Bündel / Ausschreibungen',_allBundles||[])]);
+}
+function exportAllExcel(){
+  var T=window.SO_XL;if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
+  var all=_allSuppliers||[],pending=all.filter(function(r){return r.status==='pending';});
+  soExcelExport('SourceOn_Gesamtexport_'+_xlDate()+'.xlsx',[
+    _supSheet('Lieferanten','Alle registrierten Lieferanten',all),
+    _supSheet('Pending','Wartende Bewerbungen zur Prüfung',pending),
+    _custSheet('Kunden','Alle registrierten Kunden',_allCustomers||[]),
+    _bndSheet('Ausschreibungen','Alle Bündel / Ausschreibungen',_allBundles||[])
+  ]);
 }
 
 async function loadCustomers(){
@@ -765,6 +817,7 @@ async function loadCustomers(){
   ]);
   var reqCounts={};
   requests.forEach(function(r){if(r.customer_id)reqCounts[r.customer_id]=(reqCounts[r.customer_id]||0)+1;});
+  _allCustomers=customers;_allCustomerReqCounts=reqCounts;
 
   if(!customers.length){
     document.getElementById('customers-table').innerHTML='<div class="empty-msg">Keine Kunden vorhanden.</div>';
