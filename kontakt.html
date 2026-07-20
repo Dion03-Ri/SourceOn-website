@@ -1370,7 +1370,11 @@ function _onDateChange(){
   var err=document.getElementById('e-c-timing');if(err)err.style.display='none';
   var box=document.getElementById('tempo-indicator');
   if(!von||!bis){if(box)box.style.display='none';return;}
-  var avail=_isoDays(von);
+  // Das Tempo richtet sich nach dem SPÄTESTEN akzeptierten Liefertermin (bis):
+  // bis dahin darf geliefert werden, also bestimmt dieser Termin, wie viel Zeit
+  // für die Bündelung bleibt. Ein weites Fenster (bis weit in der Zukunft) ist
+  // flexibel, auch wenn das früheste Datum bald ist.
+  var avail=_isoDays(bis);
   var _tl=(typeof I18N!=='undefined'&&I18N[window._currentLang||localStorage.getItem('sourceon-lang')||'de'])||{};
   if(box){
     if(avail>23){box.textContent=_tl.tempo_msg_flex||'🟢 Flexibler Zeitraum — deine Anfrage sammelt bis zu 14 Tage Bündelungspartner für maximale Ersparnis.';box.style.display='block';}
