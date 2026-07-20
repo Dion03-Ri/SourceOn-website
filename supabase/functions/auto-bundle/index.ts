@@ -33,8 +33,8 @@ function getGrossTarget(estimatedValueCHF: number): number | null {
 // ---------------------------------------------------------------------------
 const DAY_MS = 86_400_000;
 function midnight(d: Date): Date { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; }
-function availableDaysFromToday(vonISO: string): number {
-  return Math.floor((midnight(new Date(vonISO)).getTime() - midnight(new Date()).getTime()) / DAY_MS);
+function availableDaysFromToday(dateISO: string): number {
+  return Math.floor((midnight(new Date(dateISO)).getTime() - midnight(new Date()).getTime()) / DAY_MS);
 }
 function bidDeadlineDays(availableDays: number): number {
   if (availableDays >= 16) return 7;
@@ -42,11 +42,14 @@ function bidDeadlineDays(availableDays: number): number {
   if (availableDays >= 9) return 3;
   return 2; // Minimum
 }
-// collection_end = liefer_zeitraum_von − (bidDeadlineDays + 2 Tage Puffer),
-// jedoch nie später als created_at + 14 Tage (bestehende Fallback-Obergrenze).
-function collectionEnd(vonISO: string, createdAtISO: string | null): Date {
-  const bdd = bidDeadlineDays(availableDaysFromToday(vonISO));
-  const ce = new Date(vonISO);
+// Das Sammelfenster richtet sich nach dem SPÄTESTEN akzeptierten Liefertermin
+// (liefer_zeitraum_bis): bis dahin darf geliefert werden, also bestimmt dieser
+// Termin, wie lange gesammelt werden kann.
+// collection_end = liefer_zeitraum_bis − (bidDeadlineDays + 2 Tage Puffer),
+// jedoch nie später als created_at + 14 Tage (Sammelfenster-Obergrenze).
+function collectionEnd(bisISO: string, createdAtISO: string | null): Date {
+  const bdd = bidDeadlineDays(availableDaysFromToday(bisISO));
+  const ce = new Date(bisISO);
   ce.setDate(ce.getDate() - (bdd + 2));
   if (createdAtISO) {
     const cap = new Date(createdAtISO);
@@ -206,23 +209,26 @@ Deno.serve(async (req: Request) => {
       const discount = getGrossTarget(estimatedCHF); // GROSS gross target, null if < 50k
 
       // --- Window-based timing: evaluate every request in the group ---
-      // The group publishes when the EARLIEST collection_end among its requests is
-      // reached; until then it keeps collecting partners (large orders wait too —
-      // their committed minimum discount is guaranteed regardless).
+      // Timing is driven by each request's LATEST accepted delivery date
+      // (liefer_zeitraum_bis). The group publishes when the EARLIEST collection_end
+      // among its requests is reached — i.e. the member with the earliest
+      // "Spätestens" is the binding deadline; until then it keeps collecting
+      // partners (large orders wait too — their committed minimum discount is
+      // guaranteed regardless). The 14-day cap in collectionEnd() still applies.
       let groupCollEnd: Date | null = null;   // earliest collection_end
-      let earliestVon: string | null = null;  // most urgent (closest delivery)
+      let earliestBis: string | null = null;  // most urgent (earliest latest-date)
       let urgentBidDays = 7;                   // bid_deadline_days of the most urgent request
       for (const r of g.requests) {
-        const avail = availableDaysFromToday(r.liefer_zeitraum_von);
+        const avail = availableDaysFromToday(r.liefer_zeitraum_bis);
         const bdd = bidDeadlineDays(avail);
-        const ce = collectionEnd(r.liefer_zeitraum_von, r.created_at ?? r.fallback_deadline ?? null);
+        const ce = collectionEnd(r.liefer_zeitraum_bis, r.created_at ?? r.fallback_deadline ?? null);
         console.log(
           `[auto-bundle] eval req ${r.id} (${g.sourceon_id}/${g.liefer_zone}): ` +
           `availDays=${avail}, bidDeadlineDays=${bdd}, collectionEnd=${ce.toISOString().slice(0, 10)}`
         );
         if (groupCollEnd === null || ce.getTime() < groupCollEnd.getTime()) groupCollEnd = ce;
-        if (earliestVon === null || r.liefer_zeitraum_von < earliestVon) {
-          earliestVon = r.liefer_zeitraum_von;
+        if (earliestBis === null || r.liefer_zeitraum_bis < earliestBis) {
+          earliestBis = r.liefer_zeitraum_bis;
           urgentBidDays = bdd;
         }
       }

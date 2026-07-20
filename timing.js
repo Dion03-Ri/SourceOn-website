@@ -12,10 +12,10 @@
   var DAY = 86400000;
   function midnight(d){ var x = new Date(d); x.setHours(0,0,0,0); return x; }
 
-  // Verfügbare Tage bis zum frühesten Lieferdatum (ab heute).
-  function availableDaysFromToday(vonISO){
-    if(!vonISO) return null;
-    return Math.floor((midnight(new Date(vonISO)) - midnight(new Date())) / DAY);
+  // Verfügbare Tage bis zu einem Datum (ab heute). Generisch.
+  function availableDaysFromToday(dateISO){
+    if(!dateISO) return null;
+    return Math.floor((midnight(new Date(dateISO)) - midnight(new Date())) / DAY);
   }
 
   // Gebotsfrist in Tagen je nach verfügbarer Zeit (Minimum 2).
@@ -26,13 +26,16 @@
     return 2;
   }
 
-  // collection_end = liefer_zeitraum_von − (bidDeadlineDays + 2 Tage Puffer),
-  // jedoch nie später als created_at + 14 Tage (bestehende Fallback-Obergrenze).
-  function collectionEnd(vonISO, createdAtISO){
-    if(!vonISO) return null;
-    var avail = availableDaysFromToday(vonISO);
+  // Das Sammelfenster richtet sich nach dem SPÄTESTEN akzeptierten Liefertermin
+  // (liefer_zeitraum_bis): bis dahin darf geliefert werden, also bestimmt dieser
+  // Termin, wie lange gesammelt werden kann.
+  // collection_end = liefer_zeitraum_bis − (bidDeadlineDays + 2 Tage Puffer),
+  // jedoch nie später als created_at + 14 Tage (Sammelfenster-Obergrenze).
+  function collectionEnd(bisISO, createdAtISO){
+    if(!bisISO) return null;
+    var avail = availableDaysFromToday(bisISO);
     var bdd = bidDeadlineDays(avail);
-    var ce = new Date(vonISO);
+    var ce = new Date(bisISO);
     ce.setDate(ce.getDate() - (bdd + 2));
     if(createdAtISO){
       var cap = new Date(createdAtISO);
