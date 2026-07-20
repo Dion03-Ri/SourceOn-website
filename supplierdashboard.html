@@ -108,7 +108,7 @@ input,select,textarea{font-family:inherit}
 .btn-gold:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 4px 16px rgba(232,160,32,.25);color:#070F1A}
 .btn-gold:disabled{opacity:.4;cursor:not-allowed;filter:none;transform:none;box-shadow:none}
 
-.greet{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:32px;padding-top:8px;gap:20px;flex-wrap:wrap}
+.greet{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:28px;padding-top:4px;gap:20px;flex-wrap:wrap}
 .greet-hi{font-size:32px;font-weight:700;letter-spacing:-.02em;line-height:1.15}
 .greet-date{font-size:13px;color:var(--text-3);margin-top:6px}
 .verif{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:500}
@@ -119,19 +119,28 @@ input,select,textarea{font-family:inherit}
 .notif{display:none;align-items:center;gap:10px;background:var(--amber-bg);border:1px solid rgba(245,158,11,.2);border-radius:var(--r-sm);padding:12px 20px;margin-bottom:32px;cursor:pointer;font-size:14px;transition:filter .15s}
 .notif:hover{filter:brightness(1.1)}.notif.show{display:flex}.notif .arw{margin-left:auto;color:var(--amber)}
 
-.hero{text-align:center;padding:44px 0}
-.hero-label{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--text-3);margin-bottom:12px}
-.hero-num{font-size:72px;font-weight:800;color:var(--gold);letter-spacing:-.04em;line-height:1}
+/* hero metric — premium balance card */
+.hero{text-align:center;padding:36px 0}
+.hero-card{position:relative;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.02),rgba(255,255,255,0) 40%),var(--bg-1);border:1px solid var(--border-strong);border-radius:var(--r-lg);margin-bottom:40px;box-shadow:0 1px 0 rgba(255,255,255,.02) inset,0 12px 40px -24px rgba(0,0,0,.6)}
+.hero-card::before{content:'';position:absolute;top:-140px;left:-90px;width:440px;height:440px;background:radial-gradient(circle,rgba(232,160,32,.11),transparent 66%);pointer-events:none}
+.hero-card::after{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(232,160,32,.35),transparent);pointer-events:none}
+.hero-panel{position:relative;z-index:1;text-align:left;padding:34px 40px 30px}
+.hero-card-divider{height:1px;background:var(--border);position:relative;z-index:1}
+.hero-label{font-size:11.5px;text-transform:uppercase;letter-spacing:.16em;color:var(--text-2);font-weight:600;margin-bottom:14px}
+.hero-num{font-size:58px;font-weight:800;color:var(--gold);letter-spacing:-.035em;line-height:1;font-variant-numeric:tabular-nums}
 .hero-num.zero{color:var(--text-3)}
-.hero-sub{font-size:14px;color:var(--text-3);margin-top:8px}
-@media(max-width:640px){.hero-num{font-size:52px}}
+.hero-sub{font-size:13.5px;color:var(--text-3);margin-top:14px;max-width:520px;line-height:1.5}
+@media(max-width:640px){.hero-num{font-size:42px}.hero-panel{padding:26px 22px 22px}}
 
-.metrics3{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--r-md);overflow:hidden;margin-bottom:40px}
-.m3{background:var(--bg-1);padding:24px 28px}
-.m3-num{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1}
-.m3-num.dim{color:var(--text-3);font-weight:400}.m3-num.gold{color:var(--gold)}.m3-num.green{color:var(--green)}.m3-num.amber{color:var(--amber)}
-.m3-label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin-top:6px}
-@media(max-width:640px){.metrics3{grid-template-columns:1fr}}
+/* secondary metrics — integrated into the balance card, hairline-separated */
+.metrics3{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:transparent;border-radius:0;overflow:visible;margin:0;position:relative;z-index:1}
+.m3{background:transparent;padding:22px 40px}
+.m3+.m3{position:relative}
+.m3+.m3::before{content:'';position:absolute;left:0;top:18px;bottom:18px;width:1px;background:var(--border)}
+.m3-num{font-size:26px;font-weight:700;color:var(--text-1);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.m3-num.dim{color:var(--text-3);font-weight:500}.m3-num.gold{color:var(--gold)}.m3-num.green{color:var(--green)}.m3-num.amber{color:var(--amber)}
+.m3-label{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--text-3);margin-top:8px}
+@media(max-width:640px){.metrics3{grid-template-columns:1fr}.m3{padding:18px 22px}.m3+.m3::before{display:none}.m3+.m3{border-top:1px solid var(--border)}}
 
 .status-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap;display:inline-block}
 .p-mut{background:var(--bg-3);color:var(--text-2)}.p-green{background:var(--green-bg);color:var(--green)}.p-gold{background:var(--gold-bg);color:var(--gold)}.p-amber{background:var(--amber-bg);color:var(--amber)}.p-red{background:var(--red-bg);color:var(--red)}
@@ -348,10 +357,12 @@ p{text-wrap:pretty}
       <div class="verif ok" id="verif"><span class="dot"></span><span id="verif-t">Verifiziert</span></div>
     </div>
     <div class="notif" id="notif" onclick="showTab('ausschreibungen')"></div>
-    <div class="hero">
-      <div class="hero-label">Offene Ausschreibungen</div>
-      <div class="hero-num" id="au-hero">0</div>
-      <div class="hero-sub" id="au-hero-sub">Passende Ausschreibungen für dein Profil</div>
+    <div class="hero-card">
+      <div class="hero hero-panel">
+        <div class="hero-label">Offene Ausschreibungen</div>
+        <div class="hero-num" id="au-hero">0</div>
+        <div class="hero-sub" id="au-hero-sub">Passende Ausschreibungen für dein Profil</div>
+      </div>
     </div>
     <div class="filters" id="au-filters"></div>
     <div id="bundles-list"></div>
@@ -362,11 +373,11 @@ p{text-wrap:pretty}
   <!-- TAB 2: ANGEBOTE (split) -->
   <div class="db-content" id="sec-angebote"><div class="db-wrap">
     <div class="greet"><div class="greet-hi" style="font-size:24px">Angebote</div></div>
-    <div class="metrics3">
+    <div class="hero-card"><div class="metrics3">
       <div class="m3"><div class="m3-num" id="a1">0</div><div class="m3-label">Eingereichte Angebote</div></div>
       <div class="m3"><div class="m3-num gold" id="a2">0</div><div class="m3-label">Gewonnen</div></div>
       <div class="m3"><div class="m3-num dim" id="a3">--</div><div class="m3-label">Erfolgsquote</div></div>
-    </div>
+    </div></div>
     <div class="split" id="ang-split">
       <div class="sv-list">
         <div class="sv-filters" id="bid-filters">
@@ -387,15 +398,18 @@ p{text-wrap:pretty}
   <!-- TAB 3: FINANZEN -->
   <div class="db-content" id="sec-finanzen"><div class="db-wrap">
     <div class="greet"><div class="greet-hi" style="font-size:24px">Finanzen</div></div>
-    <div class="hero">
-      <div class="hero-label">Gesamtumsatz durch SourceOn</div>
-      <div class="hero-num" id="fin-hero">CHF 0</div>
-      <div class="hero-sub" id="fin-hero-sub">Noch keine gewonnenen Aufträge</div>
-    </div>
-    <div class="metrics3">
-      <div class="m3"><div class="m3-num amber" id="f-open">--</div><div class="m3-label">Offene Provisionen</div></div>
-      <div class="m3"><div class="m3-num green" id="f-paid">--</div><div class="m3-label">Bezahlte Provisionen</div></div>
-      <div class="m3"><div class="m3-num dim" id="f-avg">--</div><div class="m3-label">Ø Nettoerlös</div></div>
+    <div class="hero-card">
+      <div class="hero hero-panel">
+        <div class="hero-label">Gesamtumsatz durch SourceOn</div>
+        <div class="hero-num" id="fin-hero">CHF 0</div>
+        <div class="hero-sub" id="fin-hero-sub">Noch keine gewonnenen Aufträge</div>
+      </div>
+      <div class="hero-card-divider"></div>
+      <div class="metrics3">
+        <div class="m3"><div class="m3-num amber" id="f-open">--</div><div class="m3-label">Offene Provisionen</div></div>
+        <div class="m3"><div class="m3-num green" id="f-paid">--</div><div class="m3-label">Bezahlte Provisionen</div></div>
+        <div class="m3"><div class="m3-num dim" id="f-avg">--</div><div class="m3-label">Ø Nettoerlös</div></div>
+      </div>
     </div>
     <div class="sec-head"><span class="sec-label">Provisionsabrechnung</span><span style="display:flex;gap:18px"><span class="link-m" onclick="exportProvExcel()">↓ Als Excel exportieren</span><span class="link-m" onclick="printProvisions()">↓ Als PDF exportieren</span></span></div>
     <div style="overflow-x:auto"><table class="ftable" id="prov-table"></table></div>
