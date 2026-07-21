@@ -541,8 +541,7 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   if(!_seesAll){
     _bundles=_bundles.filter(function(b){return _supRegions.indexOf(b.liefer_zone||b.delivery_zone)!==-1;});
   }
-  var myRes=await sb.from('bids').select('*,bundles(*)').eq('supplier_id',currentUserId).order('created_at',{ascending:false});
-  _bids=(myRes.data&&!myRes.error)?myRes.data:[];
+  _bids=await fetchMyBids();
   _bids.forEach(function(b){_myBids[b.bundle_id]=b;});
   try{var abRes=await sb.from('bids').select('bundle_id');if(abRes.data)abRes.data.forEach(function(b){_bidCounts[b.bundle_id]=(_bidCounts[b.bundle_id]||0)+1;});}catch(e){}
   renderNotif();renderAusschreibungen();renderAngebote();renderFinanzen();renderLieferungen();renderProfil();
@@ -564,6 +563,21 @@ function startRealtime(){
       .subscribe();
   }catch(e){console.warn('[Realtime] subscribe failed',e);}
 }
+// Lädt die Angebote des eingeloggten Lieferanten robust: fällt bei Join-Fehler
+// auf einen einfachen Select zurück und lädt fehlende Bündel-Infos separat nach
+// (z. B. gewonnene Bündel, deren Status nicht mehr 'ausgeschrieben' ist).
+async function fetchMyBids(){
+  if(!currentUserId)return [];
+  var res=await sb.from('bids').select('*,bundles(*)').eq('supplier_id',currentUserId).order('created_at',{ascending:false});
+  if(res.error){console.warn('[bids] Join fehlgeschlagen, Fallback ohne bundles:',res.error.message);
+    res=await sb.from('bids').select('*').eq('supplier_id',currentUserId).order('created_at',{ascending:false});}
+  var bids=(res.data&&!res.error)?res.data:[];
+  var missing=[];bids.forEach(function(b){if(!b.bundles&&b.bundle_id)missing.push(b.bundle_id);});
+  if(missing.length){try{var bx=await sb.from('bundles').select('*').in('id',missing);
+    if(bx.data){var map={};bx.data.forEach(function(x){map[x.id]=x;});bids.forEach(function(b){if(!b.bundles&&map[b.bundle_id])b.bundles=map[b.bundle_id];});}}catch(e){}}
+  console.log('[bids] '+bids.length+' Angebote geladen für supplier_id='+currentUserId);
+  return bids;
+}
 function scheduleRealtimeReload(){clearTimeout(_rtTimer);_rtTimer=setTimeout(reloadSupplierData,600);}
 async function reloadSupplierData(){
   try{
@@ -572,8 +586,7 @@ async function reloadSupplierData(){
     var supRegions=(_profile&&_profile.regions)||[];
     if(supRegions.indexOf('Ganze Schweiz')===-1){_bundles=_bundles.filter(function(b){return supRegions.indexOf(b.liefer_zone||b.delivery_zone)!==-1;});}
     _myBids={};
-    var myRes=await sb.from('bids').select('*,bundles(*)').eq('supplier_id',currentUserId).order('created_at',{ascending:false});
-    _bids=(myRes.data&&!myRes.error)?myRes.data:[];
+    _bids=await fetchMyBids();
     _bids.forEach(function(b){_myBids[b.bundle_id]=b;});
     _bidCounts={};
     var abRes=await sb.from('bids').select('bundle_id');if(abRes.data)abRes.data.forEach(function(b){_bidCounts[b.bundle_id]=(_bidCounts[b.bundle_id]||0)+1;});
