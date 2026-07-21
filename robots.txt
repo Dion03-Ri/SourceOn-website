@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Block private/admin pages
+Disallow: /adminoverview.html
+Disallow: /kundendashboard.html
+Disallow: /supplierdashboard.html
+Disallow: /supplier-login.html
+Disallow: /preview-gate.js
+
+# Sitemap location
+Sitemap: https://www.sourceon.ch/sitemap.xml
