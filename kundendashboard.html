@@ -165,6 +165,9 @@ input,select,textarea{font-family:inherit}
 .m3-num.dim{color:var(--text-3);font-weight:500}
 .m3-num.gold{color:var(--gold)}
 .m3-label{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--text-3);margin-top:8px}
+.skeleton-val{display:inline-block;width:80px;height:20px;background:linear-gradient(90deg,var(--bg-2) 25%,var(--bg-1) 50%,var(--bg-2) 75%);background-size:200% 100%;animation:skeleton-pulse 1.5s ease-in-out infinite;border-radius:4px;vertical-align:middle}
+.hero-num .skeleton-val{width:180px;height:44px}
+@keyframes skeleton-pulse{0%{background-position:200% 0}100%{background-position:-200% 0}}
 @media(max-width:640px){.metrics3{grid-template-columns:1fr}.m3{padding:18px 22px}.m3+.m3::before{display:none}.m3+.m3{border-top:1px solid var(--border)}}
 
 /* event list */
@@ -414,14 +417,14 @@ p{text-wrap:pretty}
     <div class="hero-card">
       <div class="hero hero-panel">
         <div class="hero-label">Einsparpotenzial</div>
-        <div class="hero-num" id="ov-hero">CHF 0</div>
+        <div class="hero-num" id="ov-hero"><span class="skeleton-val"></span></div>
         <div class="hero-sub" id="ov-hero-sub">Garantiertes Minimum aller aktiven Anfragen</div>
       </div>
       <div class="hero-card-divider"></div>
       <div class="metrics3">
-        <div class="m3"><div class="m3-num dim" id="ov-earned">--</div><div class="m3-label">Erzielte Ersparnis</div></div>
-        <div class="m3"><div class="m3-num" id="ov-active">0</div><div class="m3-label">Aktive Anfragen</div></div>
-        <div class="m3"><div class="m3-num" id="ov-done">0</div><div class="m3-label">Abgeschlossen</div></div>
+        <div class="m3"><div class="m3-num dim" id="ov-earned"><span class="skeleton-val"></span></div><div class="m3-label">Erzielte Ersparnis</div></div>
+        <div class="m3"><div class="m3-num" id="ov-active"><span class="skeleton-val"></span></div><div class="m3-label">Aktive Anfragen</div></div>
+        <div class="m3"><div class="m3-num" id="ov-done"><span class="skeleton-val"></span></div><div class="m3-label">Abgeschlossen</div></div>
       </div>
     </div>
     <div class="sec-head"><span class="sec-label">Bevorstehend</span><span class="link-m" onclick="exportICS()">↓ Kalender</span></div>
@@ -462,14 +465,14 @@ p{text-wrap:pretty}
     <div class="hero-card">
       <div class="hero hero-panel">
         <div class="hero-label">Einsparpotenzial</div>
-        <div class="hero-num" id="fin-hero">CHF 0</div>
+        <div class="hero-num" id="fin-hero"><span class="skeleton-val"></span></div>
         <div class="hero-sub">Garantiertes Minimum aller aktiven Anfragen</div>
       </div>
       <div class="hero-card-divider"></div>
       <div class="metrics3">
-        <div class="m3"><div class="m3-num dim" id="fin-earned">--</div><div class="m3-label">Bereits gespart</div></div>
-        <div class="m3"><div class="m3-num" id="fin-avgrab">--</div><div class="m3-label">Ø Rabatt</div></div>
-        <div class="m3"><div class="m3-num" id="fin-total">0</div><div class="m3-label">Anfragen gesamt</div></div>
+        <div class="m3"><div class="m3-num dim" id="fin-earned"><span class="skeleton-val"></span></div><div class="m3-label">Bereits gespart</div></div>
+        <div class="m3"><div class="m3-num" id="fin-avgrab"><span class="skeleton-val"></span></div><div class="m3-label">Ø Rabatt</div></div>
+        <div class="m3"><div class="m3-num" id="fin-total"><span class="skeleton-val"></span></div><div class="m3-label">Anfragen gesamt</div></div>
       </div>
     </div>
     <div class="sec-head"><span class="sec-label">Aufschlüsselung</span><span class="link-m" onclick="exportFinExcel()">↓ Finanzübersicht exportieren</span></div>
@@ -642,9 +645,16 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   var reqRes=await sb.from('material_requests').select('*').in('customer_id',customerIds).order('created_at',{ascending:false});
   _requests=(reqRes.data&&!reqRes.error)?reqRes.data:[];
   var bundleIds=[];_requests.forEach(function(r){if(r.bundle_id)bundleIds.push(r.bundle_id);});
-  if(bundleIds.length>0){try{var bRes=await sb.from('bundles').select('id,status,bid_deadline,finaler_rabatt,liefer_zeitraum_von,liefer_zeitraum_bis').in('id',bundleIds);if(bRes.data){bRes.data.forEach(function(b){_bundleMap[b.id]=b;});}}catch(e){}}
   var reqIds=_requests.map(function(r){return r.id;});
-  if(reqIds.length>0){try{var cRes=await sb.from('commissions').select('kunden_ersparnis_netto,material_request_id').in('material_request_id',reqIds);if(cRes.data){cRes.data.forEach(function(c){if(c.kunden_ersparnis_netto)_commMap[c.material_request_id]=(_commMap[c.material_request_id]||0)+Number(c.kunden_ersparnis_netto);});}}catch(e){}}
+  // Bündel + Provisionen parallel laden (beide hängen nur an _requests).
+  try{
+    var _pr=await Promise.all([
+      bundleIds.length>0?sb.from('bundles').select('id,status,bid_deadline,finaler_rabatt,liefer_zeitraum_von,liefer_zeitraum_bis').in('id',bundleIds):Promise.resolve({data:[]}),
+      reqIds.length>0?sb.from('commissions').select('kunden_ersparnis_netto,material_request_id').in('material_request_id',reqIds):Promise.resolve({data:[]})
+    ]);
+    if(_pr[0]&&_pr[0].data){_pr[0].data.forEach(function(b){_bundleMap[b.id]=b;});}
+    if(_pr[1]&&_pr[1].data){_pr[1].data.forEach(function(c){if(c.kunden_ersparnis_netto)_commMap[c.material_request_id]=(_commMap[c.material_request_id]||0)+Number(c.kunden_ersparnis_netto);});}
+  }catch(e){}
   renderUebersicht();renderAnfragen();renderFinanzen();renderKonto();renderDocs();
   _customerIds=customerIds;
   startRealtime();

@@ -140,6 +140,9 @@ input,select,textarea{font-family:inherit}
 .m3-num{font-size:26px;font-weight:700;color:var(--text-1);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
 .m3-num.dim{color:var(--text-3);font-weight:500}.m3-num.gold{color:var(--gold)}.m3-num.green{color:var(--green)}.m3-num.amber{color:var(--amber)}
 .m3-label{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--text-3);margin-top:8px}
+.skeleton-val{display:inline-block;width:80px;height:20px;background:linear-gradient(90deg,var(--bg-2) 25%,var(--bg-1) 50%,var(--bg-2) 75%);background-size:200% 100%;animation:skeleton-pulse 1.5s ease-in-out infinite;border-radius:4px;vertical-align:middle}
+.hero-num .skeleton-val{width:180px;height:44px}
+@keyframes skeleton-pulse{0%{background-position:200% 0}100%{background-position:-200% 0}}
 @media(max-width:640px){.metrics3{grid-template-columns:1fr}.m3{padding:18px 22px}.m3+.m3::before{display:none}.m3+.m3{border-top:1px solid var(--border)}}
 
 .status-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap;display:inline-block}
@@ -360,7 +363,7 @@ p{text-wrap:pretty}
     <div class="hero-card">
       <div class="hero hero-panel">
         <div class="hero-label">Offene Ausschreibungen</div>
-        <div class="hero-num" id="au-hero">0</div>
+        <div class="hero-num" id="au-hero"><span class="skeleton-val"></span></div>
         <div class="hero-sub" id="au-hero-sub">Passende Ausschreibungen für dein Profil</div>
       </div>
     </div>
@@ -374,9 +377,9 @@ p{text-wrap:pretty}
   <div class="db-content" id="sec-angebote"><div class="db-wrap">
     <div class="greet"><div class="greet-hi" style="font-size:24px">Angebote</div></div>
     <div class="hero-card"><div class="metrics3">
-      <div class="m3"><div class="m3-num" id="a1">0</div><div class="m3-label">Eingereichte Angebote</div></div>
-      <div class="m3"><div class="m3-num gold" id="a2">0</div><div class="m3-label">Gewonnen</div></div>
-      <div class="m3"><div class="m3-num dim" id="a3">--</div><div class="m3-label">Erfolgsquote</div></div>
+      <div class="m3"><div class="m3-num" id="a1"><span class="skeleton-val"></span></div><div class="m3-label">Eingereichte Angebote</div></div>
+      <div class="m3"><div class="m3-num gold" id="a2"><span class="skeleton-val"></span></div><div class="m3-label">Gewonnen</div></div>
+      <div class="m3"><div class="m3-num dim" id="a3"><span class="skeleton-val"></span></div><div class="m3-label">Erfolgsquote</div></div>
     </div></div>
     <div class="split" id="ang-split">
       <div class="sv-list">
@@ -401,14 +404,14 @@ p{text-wrap:pretty}
     <div class="hero-card">
       <div class="hero hero-panel">
         <div class="hero-label">Gesamtumsatz durch SourceOn</div>
-        <div class="hero-num" id="fin-hero">CHF 0</div>
+        <div class="hero-num" id="fin-hero"><span class="skeleton-val"></span></div>
         <div class="hero-sub" id="fin-hero-sub">Noch keine gewonnenen Aufträge</div>
       </div>
       <div class="hero-card-divider"></div>
       <div class="metrics3">
-        <div class="m3"><div class="m3-num amber" id="f-open">--</div><div class="m3-label">Offene Provisionen</div></div>
-        <div class="m3"><div class="m3-num green" id="f-paid">--</div><div class="m3-label">Bezahlte Provisionen</div></div>
-        <div class="m3"><div class="m3-num dim" id="f-avg">--</div><div class="m3-label">Ø Nettoerlös</div></div>
+        <div class="m3"><div class="m3-num amber" id="f-open"><span class="skeleton-val"></span></div><div class="m3-label">Offene Provisionen</div></div>
+        <div class="m3"><div class="m3-num green" id="f-paid"><span class="skeleton-val"></span></div><div class="m3-label">Bezahlte Provisionen</div></div>
+        <div class="m3"><div class="m3-num dim" id="f-avg"><span class="skeleton-val"></span></div><div class="m3-label">Ø Nettoerlös</div></div>
       </div>
     </div>
     <div class="sec-head"><span class="sec-label">Provisionsabrechnung</span><span style="display:flex;gap:18px"><span class="link-m" onclick="exportProvExcel()">↓ Als Excel exportieren</span><span class="link-m" onclick="printProvisions()">↓ Als PDF exportieren</span></span></div>
@@ -530,20 +533,25 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   document.getElementById('auth-gate').style.display='none';
   document.getElementById('dash').style.display='block';
   showTab(location.hash.replace('#','')||'ausschreibungen');
-  var catRes=await sb.from('material_catalog').select('sourceon_id,bezeichnung,einheit,richtpreis_chf').limit(1000);
+  // Alle Tab-Daten parallel laden, dann alles auf einmal rendern → kein 0-Flash.
+  var _res=await Promise.all([
+    sb.from('material_catalog').select('sourceon_id,bezeichnung,einheit,richtpreis_chf').limit(1000),
+    sb.from('bundles').select('*').eq('status','ausgeschrieben').order('bid_deadline',{ascending:true}),
+    sb.from('bids').select('bundle_id'),
+    fetchMyBids()
+  ]);
+  var catRes=_res[0],bRes=_res[1],abRes=_res[2];
   if(catRes.data){catRes.data.forEach(function(m){_catalog[m.sourceon_id]=m;});}
-  var bRes=await sb.from('bundles').select('*').eq('status','ausgeschrieben').order('bid_deadline',{ascending:true});
   _bundles=(bRes.data&&!bRes.error)?bRes.data:[];
   // Nur Ausschreibungen in den vom Lieferanten gewählten Regionen anzeigen.
   // 'Ganze Schweiz' → alle Bündel, unabhängig von der Zone.
   var _supRegions=(_profile&&_profile.regions)||[];
-  var _seesAll=_supRegions.indexOf('Ganze Schweiz')!==-1;
-  if(!_seesAll){
+  if(_supRegions.indexOf('Ganze Schweiz')===-1){
     _bundles=_bundles.filter(function(b){return _supRegions.indexOf(b.liefer_zone||b.delivery_zone)!==-1;});
   }
-  _bids=await fetchMyBids();
+  _bids=_res[3]||[];
   _bids.forEach(function(b){_myBids[b.bundle_id]=b;});
-  try{var abRes=await sb.from('bids').select('bundle_id');if(abRes.data)abRes.data.forEach(function(b){_bidCounts[b.bundle_id]=(_bidCounts[b.bundle_id]||0)+1;});}catch(e){}
+  if(abRes&&abRes.data)abRes.data.forEach(function(b){_bidCounts[b.bundle_id]=(_bidCounts[b.bundle_id]||0)+1;});
   renderNotif();renderAusschreibungen();renderAngebote();renderFinanzen();renderLieferungen();renderProfil();
   setInterval(refreshCountdowns,60000);
   startRealtime();
