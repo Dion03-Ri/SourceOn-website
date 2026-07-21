@@ -572,10 +572,14 @@ async function fetchMyBids(){
   if(res.error){console.warn('[bids] Join fehlgeschlagen, Fallback ohne bundles:',res.error.message);
     res=await sb.from('bids').select('*').eq('supplier_id',currentUserId).order('submitted_at',{ascending:false});}
   var bids=(res.data&&!res.error)?res.data:[];
-  var missing=[];bids.forEach(function(b){if(!b.bundles&&b.bundle_id)missing.push(b.bundle_id);});
-  if(missing.length){try{var bx=await sb.from('bundles').select('*').in('id',missing);
-    if(bx.data){var map={};bx.data.forEach(function(x){map[x.id]=x;});bids.forEach(function(b){if(!b.bundles&&map[b.bundle_id])b.bundles=map[b.bundle_id];});}}catch(e){}}
-  console.log('[bids] '+bids.length+' Angebote geladen für supplier_id='+currentUserId);
+  // Bündel je Angebot einzeln nachladen (der eingebettete Join liefert bei
+  // vergebenen Bündeln durch RLS teils null zurück).
+  for(var i=0;i<bids.length;i++){
+    var bid=bids[i];
+    if(!bid.bundles&&bid.bundle_id){
+      try{var _b=await sb.from('bundles').select('*').eq('id',bid.bundle_id).maybeSingle();if(_b&&_b.data)bid.bundles=_b.data;}catch(e){}
+    }
+  }
   return bids;
 }
 function scheduleRealtimeReload(){clearTimeout(_rtTimer);_rtTimer=setTimeout(reloadSupplierData,600);}
@@ -701,12 +705,6 @@ function renderBidItems(){
   var el=document.getElementById('bid-items');
   var rows=_bids.filter(function(b){var s=normStatus(b.status);if(s==='zurueckgezogen')return false;return _bidFilter==='alle'||s===_bidFilter;});
   if(rows.length===0){el.innerHTML='<div class="empty-line" style="padding:16px">Keine Angebote.</div>';return;}
-  var _dbg=rows[0]||{};
-  console.log('[bMat] bid object keys:',Object.keys(_dbg||{}));
-  console.log('[bMat] bid.bundle:',JSON.stringify(_dbg.bundle));
-  console.log('[bMat] bid.bundles:',JSON.stringify(_dbg.bundles));
-  console.log('[bMat] bid.sourceon_id:',_dbg.sourceon_id);
-  console.log('[bMat] _catalog keys:',Object.keys(_catalog||{}).slice(0,8));
   el.innerHTML=rows.map(function(bid){var b=bid.bundles||bid.bundle||{};var bg=bidBadge(bid.status);var d=bid.submitted_at?fmtShort(new Date(bid.submitted_at)):'';var _vs=bVolStr(b);var _ml=bMat(b)+((_vs&&_vs!=='--')?' · '+_vs:'');return '<div class="sv-item'+(bid.id===_selBid?' active':'')+'" data-id="'+esc(bid.id)+'" onclick="selectBid(\''+esc(bid.id)+'\')"><div class="sv-top"><span class="sv-mat">'+esc(_ml)+'</span><span class="sv-date">'+esc(d)+'</span></div><div class="sv-bot"><span style="font-size:13px">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% Rabatt</span><span class="status-pill '+bg.c+'">'+esc(bg.t)+'</span></div></div>';}).join('');
 }
 function selectBid(id){
