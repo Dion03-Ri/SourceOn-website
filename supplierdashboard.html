@@ -657,9 +657,10 @@ async function submitBid(id){
   var r=parseFloat(document.getElementById('rb-'+id).value);if(isNaN(r)||r<=0){showBidErr(id,'Bitte gib einen gültigen Rabatt an.');return;}
   var notes=document.getElementById('nt-'+id).value.trim();
   var btn=document.getElementById('sub-'+id);btn.disabled=true;btn.textContent='Wird eingereicht…';
-  // preis_pro_einheit ist NOT NULL: Richtpreis pro Einheit = geschätzter Gesamtwert / Gesamtmenge.
-  var _menge=bVol(b), _est=estValue(b);
-  var _ppe=(_est!=null&&_menge)?Math.round((_est/_menge)*100)/100:(bRicht(b)!=null?Math.round(bRicht(b)*100)/100:0);
+  // preis_pro_einheit (NOT NULL) = tatsächlich angebotener Preis pro Einheit nach Rabatt
+  // (Richtpreis × (1 − Rabatt%)), konsistent mit bestellwert().
+  var _rp=bRicht(b);
+  var _ppe=(_rp!=null)?Math.round(_rp*(1-r/100)*100)/100:0;
   var payload={bundle_id:id,supplier_id:currentUserId,status:'eingereicht',rabatt_prozent:r,preis_pro_einheit:_ppe,delivery_confirmed:true,legal_confirmed:true,legal_confirmed_at:new Date().toISOString()};
   if(notes)payload.lieferfaehigkeit_notes=notes;
   var res=_myBids[id]?await sb.from('bids').update(payload).eq('bundle_id',id).eq('supplier_id',currentUserId):await sb.from('bids').insert(payload);
