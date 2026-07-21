@@ -701,11 +701,15 @@ function renderBidItems(){
   var el=document.getElementById('bid-items');
   var rows=_bids.filter(function(b){var s=normStatus(b.status);if(s==='zurueckgezogen')return false;return _bidFilter==='alle'||s===_bidFilter;});
   if(rows.length===0){el.innerHTML='<div class="empty-line" style="padding:16px">Keine Angebote.</div>';return;}
-  el.innerHTML=rows.map(function(bid){var b=bid.bundles||{};var bg=bidBadge(bid.status);var d=bid.submitted_at?fmtShort(new Date(bid.submitted_at)):'';var _vs=bVolStr(b);var _ml=bMat(b)+((_vs&&_vs!=='--')?' · '+_vs:'');return '<div class="sv-item'+(bid.id===_selBid?' active':'')+'" data-id="'+esc(bid.id)+'" onclick="selectBid(\''+esc(bid.id)+'\')"><div class="sv-top"><span class="sv-mat">'+esc(_ml)+'</span><span class="sv-date">'+esc(d)+'</span></div><div class="sv-bot"><span style="font-size:13px">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% Rabatt</span><span class="status-pill '+bg.c+'">'+esc(bg.t)+'</span></div></div>';}).join('');
+  console.log('[bMat DEBUG] bid keys:',JSON.stringify(Object.keys(rows[0]||{})));
+  console.log('[bMat DEBUG] bid.bundles:',JSON.stringify(rows[0]&&rows[0].bundles));
+  console.log('[bMat DEBUG] bid.bundle:',JSON.stringify(rows[0]&&rows[0].bundle));
+  console.log('[bMat DEBUG] _catalog keys:',JSON.stringify(Object.keys(_catalog||{}).slice(0,5)));
+  el.innerHTML=rows.map(function(bid){var b=bid.bundles||bid.bundle||{};var bg=bidBadge(bid.status);var d=bid.submitted_at?fmtShort(new Date(bid.submitted_at)):'';var _vs=bVolStr(b);var _ml=bMat(b)+((_vs&&_vs!=='--')?' · '+_vs:'');return '<div class="sv-item'+(bid.id===_selBid?' active':'')+'" data-id="'+esc(bid.id)+'" onclick="selectBid(\''+esc(bid.id)+'\')"><div class="sv-top"><span class="sv-mat">'+esc(_ml)+'</span><span class="sv-date">'+esc(d)+'</span></div><div class="sv-bot"><span style="font-size:13px">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% Rabatt</span><span class="status-pill '+bg.c+'">'+esc(bg.t)+'</span></div></div>';}).join('');
 }
 function selectBid(id){
   _selBid=id;document.querySelectorAll('.sv-item').forEach(function(it){it.classList.toggle('active',it.getAttribute('data-id')===id);});
-  var bid=_bids.filter(function(x){return x.id===id;})[0];if(!bid)return;var b=bid.bundles||{};var s=normStatus(bid.status),bg=bidBadge(bid.status);
+  var bid=_bids.filter(function(x){return x.id===id;})[0];if(!bid)return;var b=bid.bundles||bid.bundle||{};var s=normStatus(bid.status),bg=bidBadge(bid.status);
   var net=bestellwert(bid,b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';
   var d=bid.submitted_at?fmtDMY(new Date(bid.submitted_at)):'';
   var html='<div class="rd-head-row"><div><div class="rd-mat">'+esc(bMat(b))+'</div>'+(b.sourceon_id?'<div class="rd-id">'+esc(b.sourceon_id)+'</div>':'')+'</div><div class="rd-head-meta"><span class="status-pill '+bg.c+'">'+esc(bg.t)+'</span><div class="rd-date">'+esc(d)+'</div></div></div>';
