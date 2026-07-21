@@ -480,6 +480,7 @@ var SUPABASE_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
 var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
 var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{accessToken:async function(){if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}return null;}});
 var currentUserId=null,_profile=null,_catalog={},_bundles=[],_myBids={},_bids=[],_bidFilter='alle',_bundleFilter='alle',_bidCounts={},_selBid=null;
+var _rtChannel=null,_rtTimer=null;
 var COMM=0.0225;
 var _WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
 var _MON=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
@@ -546,12 +547,39 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   try{var abRes=await sb.from('bids').select('bundle_id');if(abRes.data)abRes.data.forEach(function(b){_bidCounts[b.bundle_id]=(_bidCounts[b.bundle_id]||0)+1;});}catch(e){}
   renderNotif();renderAusschreibungen();renderAngebote();renderFinanzen();renderLieferungen();renderProfil();
   setInterval(refreshCountdowns,60000);
+  startRealtime();
   }catch(_e){
     var _g=document.getElementById('auth-gate');
     if(_g){_g.style.display='';_g.innerHTML='<div class="so-load-error" style="max-width:440px;margin:80px auto">Laden fehlgeschlagen — bitte Seite neu laden.<br><button onclick="location.reload()">Neu laden</button></div>';}
     try{document.getElementById('dash').style.display='none';}catch(__e){}
   }
 })();
+
+// ── Supabase Realtime: neue/aktualisierte Bündel → Ausschreibungen live ──
+function startRealtime(){
+  if(!sb||typeof sb.channel!=='function'||_rtChannel)return;
+  try{
+    _rtChannel=sb.channel('supplier-dashboard-updates')
+      .on('postgres_changes',{event:'*',schema:'public',table:'bundles'},function(payload){console.log('[Realtime] bundles',payload&&payload.eventType);scheduleRealtimeReload();})
+      .subscribe();
+  }catch(e){console.warn('[Realtime] subscribe failed',e);}
+}
+function scheduleRealtimeReload(){clearTimeout(_rtTimer);_rtTimer=setTimeout(reloadSupplierData,600);}
+async function reloadSupplierData(){
+  try{
+    var bRes=await sb.from('bundles').select('*').eq('status','ausgeschrieben').order('bid_deadline',{ascending:true});
+    _bundles=(bRes.data&&!bRes.error)?bRes.data:[];
+    var supRegions=(_profile&&_profile.regions)||[];
+    if(supRegions.indexOf('Ganze Schweiz')===-1){_bundles=_bundles.filter(function(b){return supRegions.indexOf(b.liefer_zone||b.delivery_zone)!==-1;});}
+    _myBids={};
+    var myRes=await sb.from('bids').select('*,bundles(*)').eq('supplier_id',currentUserId).order('created_at',{ascending:false});
+    _bids=(myRes.data&&!myRes.error)?myRes.data:[];
+    _bids.forEach(function(b){_myBids[b.bundle_id]=b;});
+    _bidCounts={};
+    var abRes=await sb.from('bids').select('bundle_id');if(abRes.data)abRes.data.forEach(function(b){_bidCounts[b.bundle_id]=(_bidCounts[b.bundle_id]||0)+1;});
+  }catch(e){console.warn('[Realtime] reload failed',e);return;}
+  renderNotif();renderAusschreibungen();renderAngebote();renderFinanzen();renderLieferungen();
+}
 
 // ── AUSSCHREIBUNGEN ──
 function renderNotif(){

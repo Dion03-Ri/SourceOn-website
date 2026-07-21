@@ -582,6 +582,7 @@ var SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsI
 var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{accessToken:async function(){if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}return null;}});
 var currentUserId=null,_matCatalogMap={};
 var _requests=[],_bundleMap={},_commMap={},_customer=null,_filter='alle',_selId=null;
+var _customerIds=[],_rtChannel=null,_rtTimer=null;
 
 var _WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
 var _MON=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
@@ -645,12 +646,50 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   var reqIds=_requests.map(function(r){return r.id;});
   if(reqIds.length>0){try{var cRes=await sb.from('commissions').select('kunden_ersparnis_netto,material_request_id').in('material_request_id',reqIds);if(cRes.data){cRes.data.forEach(function(c){if(c.kunden_ersparnis_netto)_commMap[c.material_request_id]=(_commMap[c.material_request_id]||0)+Number(c.kunden_ersparnis_netto);});}}catch(e){}}
   renderUebersicht();renderAnfragen();renderFinanzen();renderKonto();renderDocs();
+  _customerIds=customerIds;
+  startRealtime();
   }catch(_e){
     var _g=document.getElementById('auth-gate');
     if(_g){_g.style.display='';_g.innerHTML='<div class="so-load-error" style="max-width:440px;margin:80px auto">Laden fehlgeschlagen — bitte Seite neu laden.<br><button onclick="location.reload()">Neu laden</button></div>';}
     try{document.getElementById('dash').style.display='none';}catch(__e){}
   }
 })();
+
+// ── Supabase Realtime: Dashboard aktualisiert sich ohne Neuladen ──
+function startRealtime(){
+  if(!sb||typeof sb.channel!=='function'||_rtChannel)return;
+  try{
+    _rtChannel=sb.channel('dashboard-updates')
+      .on('postgres_changes',{event:'*',schema:'public',table:'material_requests'},function(payload){console.log('[Realtime] material_requests',payload&&payload.eventType);scheduleRealtimeReload();})
+      .on('postgres_changes',{event:'*',schema:'public',table:'bundles'},function(payload){console.log('[Realtime] bundles',payload&&payload.eventType);scheduleRealtimeReload();})
+      .subscribe();
+  }catch(e){console.warn('[Realtime] subscribe failed',e);}
+}
+function scheduleRealtimeReload(){clearTimeout(_rtTimer);_rtTimer=setTimeout(reloadDashboardData,600);}
+async function reloadDashboardData(){
+  if(!_customerIds.length)return;
+  try{
+    var reqRes=await sb.from('material_requests').select('*').in('customer_id',_customerIds).order('created_at',{ascending:false});
+    _requests=(reqRes.data&&!reqRes.error)?reqRes.data:[];
+    _bundleMap={};
+    var bundleIds=[];_requests.forEach(function(r){if(r.bundle_id)bundleIds.push(r.bundle_id);});
+    if(bundleIds.length>0){var bRes=await sb.from('bundles').select('id,status,bid_deadline,finaler_rabatt,liefer_zeitraum_von,liefer_zeitraum_bis').in('id',bundleIds);if(bRes.data){bRes.data.forEach(function(b){_bundleMap[b.id]=b;});}}
+    _commMap={};
+    var reqIds=_requests.map(function(r){return r.id;});
+    if(reqIds.length>0){var cRes=await sb.from('commissions').select('kunden_ersparnis_netto,material_request_id').in('material_request_id',reqIds);if(cRes.data){cRes.data.forEach(function(c){if(c.kunden_ersparnis_netto)_commMap[c.material_request_id]=(_commMap[c.material_request_id]||0)+Number(c.kunden_ersparnis_netto);});}}
+  }catch(e){console.warn('[Realtime] reload failed',e);return;}
+  refreshCurrentTab();
+}
+function refreshCurrentTab(){
+  var el=document.querySelector('.db-tab.active');
+  var active=el?el.getAttribute('data-tab'):'uebersicht';
+  // Übersicht enthält die Benachrichtigungen → immer aktualisieren
+  renderUebersicht();
+  if(active==='anfragen')renderAnfragen();
+  else if(active==='finanzen')renderFinanzen();
+  else if(active==='konto')renderKonto();
+  else if(active==='werkzeuge')renderDocs();
+}
 
 function computeTotals(){var potential=0,earned=0,earnedCount=0,active=0,done=0,rabSum=0,rabN=0;_requests.forEach(function(r){if(isActive(r)){active++;var gs=reqGuaranteedSaving(r);if(gs!=null)potential+=gs;}if(isCompleted(r)){done++;var rs=realizedSaving(r);if(rs!=null){earned+=rs;earnedCount++;}}var rb=parseFloat(r.committed_min_rabatt);if(!isNaN(rb)){rabSum+=rb;rabN++;}});return {potential:potential,earned:earned,earnedCount:earnedCount,active:active,done:done,total:_requests.length,avgRab:rabN?rabSum/rabN:null};}
 
