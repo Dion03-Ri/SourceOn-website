@@ -753,8 +753,8 @@ var WARN_I18N={
 function _wlang(){var l=localStorage.getItem('sourceon-lang')||'de';return WARN_I18N[l]?l:'de';}
 function _wt(k){var d=WARN_I18N[_wlang()];return (d&&d[k])||WARN_I18N.de[k]||k;}
 function _daysUntil(r){
-  if(!r||!r.liefer_zeitraum_von)return null;
-  var dd=new Date(r.liefer_zeitraum_von);if(isNaN(dd))return null;
+  if(!r||!r.liefer_zeitraum_bis)return null;
+  var dd=new Date(r.liefer_zeitraum_bis);if(isNaN(dd))return null;
   var today=new Date();today.setHours(0,0,0,0);dd.setHours(0,0,0,0);
   return Math.ceil((dd-today)/(1000*60*60*24));
 }
