@@ -736,7 +736,7 @@ function renderReqItems(){
   el.innerHTML=rows.map(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);var d=r.created_at?fmtShort(new Date(r.created_at)):'';return '<div class="req-item'+(r.id===_selId?' active':'')+'" data-id="'+esc(r.id)+'" onclick="selectReq(\''+esc(r.id)+'\')"><div class="req-item-top"><span class="req-item-mat">'+esc(matNameFor(r))+'</span><span class="req-item-date">'+esc(d)+'</span></div><div class="req-item-bot"><span><span class="status-pill '+b.c+'">'+esc(b.t)+'</span>'+_warnPill(r)+'</span><span class="req-item-chf">'+(gs!=null?fmtCHF(gs):'--')+'</span></div></div>';}).join('');
   if(_selId&&!rows.some(function(r){return r.id===_selId;}))_selId=null;
 }
-function selectReq(id){
+async function selectReq(id){
   _selId=id;
   document.querySelectorAll('.req-item').forEach(function(it){it.classList.toggle('active',it.getAttribute('data-id')===id);});
   var r=_requests.filter(function(x){return x.id===id;})[0];if(!r)return;
@@ -752,6 +752,8 @@ function selectReq(id){
   var mid;
   if(r.status==='vergeben'){
     var fr=finalRabattPct(r),rp=richtpreis(r),m=parseFloat(r.menge);
+    // Finalen Rabatt aus dem Gewinner-Gebot laden (falls im Bündel nicht gesetzt)
+    if(r.bundle_id){try{var _wb=await sb.from('bids').select('rabatt_prozent,preis_pro_einheit').eq('bundle_id',r.bundle_id).eq('status','gewonnen').maybeSingle();if(_wb&&_wb.data&&_wb.data.rabatt_prozent!=null)fr=_normPct(_wb.data.rabatt_prozent);}catch(e){}}
     var ov=orderValue(r),rs=realizedSaving(r);
     var prov=(ov!=null)?ov*0.0225:null;
     var bundle=r.bundle_id?_bundleMap[r.bundle_id]:null;

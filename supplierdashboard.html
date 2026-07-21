@@ -491,7 +491,7 @@ function fmtShort(d){return d.getDate()+'. '+_MON[d.getMonth()];}
 function fmtDMY(d){return d.getDate()+'. '+_MON[d.getMonth()]+' '+d.getFullYear();}
 function fmtDMYfull(d){return d.getDate()+'. '+_MONF[d.getMonth()]+' '+d.getFullYear();}
 function esc(s){if(s==null)return '';var d=document.createElement('div');d.textContent=String(s);return d.innerHTML;}
-function bMat(b){if(b.sourceon_id&&_catalog[b.sourceon_id])return _catalog[b.sourceon_id].bezeichnung;if(b.bundle_type==='multi_material')return 'Mehrere Materialien';return b.material_type||'Material';}
+function bMat(b){if(b.bezeichnung)return b.bezeichnung;if(b.sourceon_id&&_catalog[b.sourceon_id])return _catalog[b.sourceon_id].bezeichnung;if(b.bundle_type==='multi_material')return 'Mehrere Materialien';return b.material_type||b.sourceon_id||'Material';}
 function bVol(b){var v=b.gesamtvolumen||b.total_quantity;return (v==null||v==='')?null:Number(v);}
 function bUnit(b){return b.einheit||b.unit||'';}
 function bVolStr(b){var v=bVol(b);return v!=null?fmtNum(v)+' '+bUnit(b):'--';}
@@ -701,7 +701,7 @@ function renderBidItems(){
   var el=document.getElementById('bid-items');
   var rows=_bids.filter(function(b){var s=normStatus(b.status);if(s==='zurueckgezogen')return false;return _bidFilter==='alle'||s===_bidFilter;});
   if(rows.length===0){el.innerHTML='<div class="empty-line" style="padding:16px">Keine Angebote.</div>';return;}
-  el.innerHTML=rows.map(function(bid){var b=bid.bundles||{};var bg=bidBadge(bid.status);var d=bid.submitted_at?fmtShort(new Date(bid.submitted_at)):'';return '<div class="sv-item'+(bid.id===_selBid?' active':'')+'" data-id="'+esc(bid.id)+'" onclick="selectBid(\''+esc(bid.id)+'\')"><div class="sv-top"><span class="sv-mat">'+esc(bMat(b))+'</span><span class="sv-date">'+esc(d)+'</span></div><div class="sv-bot"><span style="font-size:13px">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% Rabatt</span><span class="status-pill '+bg.c+'">'+esc(bg.t)+'</span></div></div>';}).join('');
+  el.innerHTML=rows.map(function(bid){var b=bid.bundles||{};var bg=bidBadge(bid.status);var d=bid.submitted_at?fmtShort(new Date(bid.submitted_at)):'';var _vs=bVolStr(b);var _ml=bMat(b)+((_vs&&_vs!=='--')?' · '+_vs:'');return '<div class="sv-item'+(bid.id===_selBid?' active':'')+'" data-id="'+esc(bid.id)+'" onclick="selectBid(\''+esc(bid.id)+'\')"><div class="sv-top"><span class="sv-mat">'+esc(_ml)+'</span><span class="sv-date">'+esc(d)+'</span></div><div class="sv-bot"><span style="font-size:13px">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% Rabatt</span><span class="status-pill '+bg.c+'">'+esc(bg.t)+'</span></div></div>';}).join('');
 }
 function selectBid(id){
   _selBid=id;document.querySelectorAll('.sv-item').forEach(function(it){it.classList.toggle('active',it.getAttribute('data-id')===id);});
