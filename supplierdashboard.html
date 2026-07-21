@@ -568,9 +568,9 @@ function startRealtime(){
 // (z. B. gewonnene Bündel, deren Status nicht mehr 'ausgeschrieben' ist).
 async function fetchMyBids(){
   if(!currentUserId)return [];
-  var res=await sb.from('bids').select('*,bundles(*)').eq('supplier_id',currentUserId).order('created_at',{ascending:false});
+  var res=await sb.from('bids').select('*,bundles(*)').eq('supplier_id',currentUserId).order('submitted_at',{ascending:false});
   if(res.error){console.warn('[bids] Join fehlgeschlagen, Fallback ohne bundles:',res.error.message);
-    res=await sb.from('bids').select('*').eq('supplier_id',currentUserId).order('created_at',{ascending:false});}
+    res=await sb.from('bids').select('*').eq('supplier_id',currentUserId).order('submitted_at',{ascending:false});}
   var bids=(res.data&&!res.error)?res.data:[];
   var missing=[];bids.forEach(function(b){if(!b.bundles&&b.bundle_id)missing.push(b.bundle_id);});
   if(missing.length){try{var bx=await sb.from('bundles').select('*').in('id',missing);
