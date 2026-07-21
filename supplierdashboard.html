@@ -530,7 +530,7 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   document.getElementById('auth-gate').style.display='none';
   document.getElementById('dash').style.display='block';
   showTab(location.hash.replace('#','')||'ausschreibungen');
-  var catRes=await sb.from('material_catalog').select('sourceon_id,bezeichnung,einheit,richtpreis_chf');
+  var catRes=await sb.from('material_catalog').select('sourceon_id,bezeichnung,einheit,richtpreis_chf').limit(1000);
   if(catRes.data){catRes.data.forEach(function(m){_catalog[m.sourceon_id]=m;});}
   var bRes=await sb.from('bundles').select('*').eq('status','ausgeschrieben').order('bid_deadline',{ascending:true});
   _bundles=(bRes.data&&!bRes.error)?bRes.data:[];
