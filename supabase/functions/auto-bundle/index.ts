@@ -59,10 +59,14 @@ function collectionEnd(bisISO: string, createdAtISO: string | null): Date {
   return ce;
 }
 
+// Two delivery windows overlap if they intersect at all — inclusive, so windows
+// that merely touch or are a single identical date (liefer_zeitraum_von ===
+// liefer_zeitraum_bis) still count as overlapping. This ensures all requests
+// with the same sourceon_id + liefer_zone and compatible dates land in ONE
+// bundle instead of separate ones.
 function datesOverlap(
   aVon: string, aBis: string,
   bVon: string, bBis: string,
-  minOverlapDays = 3
 ): boolean {
   const a0 = new Date(aVon).getTime();
   const a1 = new Date(aBis).getTime();
@@ -70,8 +74,7 @@ function datesOverlap(
   const b1 = new Date(bBis).getTime();
   const overlapStart = Math.max(a0, b0);
   const overlapEnd = Math.min(a1, b1);
-  const overlapMs = overlapEnd - overlapStart;
-  return overlapMs >= minOverlapDays * 86_400_000;
+  return overlapEnd >= overlapStart;
 }
 
 interface MaterialRequest {
