@@ -788,7 +788,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 
 
 /* ===== NEW MINIMAL DESIGN (scoped #lp / #lpfoot) ===== */
-:root{--bg:#070F1A;--bg1:#0C1824;--bg2:#111F2E;--lpb:rgba(255,255,255,0.06);--lpbs:rgba(255,255,255,0.12);--t1:#F1F5F9;--t2:#94A3B8;--t3:#6B7C99;--golddim:rgba(232,160,32,0.08);--goldbd:rgba(232,160,32,0.15)}
+:root{--bg:#070F1A;--bg1:#0C1824;--bg2:#111F2E;--lpb:rgba(255,255,255,0.06);--lpbs:rgba(255,255,255,0.12);--t1:#F1F5F9;--t2:#94A3B8;--t3:#6B8AAA;--golddim:rgba(232,160,32,0.08);--goldbd:rgba(232,160,32,0.15)}
 body{background:#070F1A}
 #lp{color:var(--t1);font-family:'Inter',-apple-system,sans-serif}
 #lp .wrap,#lpfoot .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
@@ -930,6 +930,8 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 <link rel="canonical" href="https://www.sourceon.ch/fuerwen-handwerk"/>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
+
 <!-- NAV -->
 <nav id="nav" class="scrolled">
   <div class="nav-inner">
@@ -946,7 +948,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     </ul>
     <div class="nav-right">
       <div class="lang-switch" id="lang-switch">
-        <button class="lang-btn" onclick="document.getElementById('lang-switch').classList.toggle('open')"><span id="lang-current">DE</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <button class="lang-btn" aria-label="Sprache wählen" aria-haspopup="true" onclick="document.getElementById('lang-switch').classList.toggle('open')"><span id="lang-current">DE</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
         <div class="lang-dd">
           <button class="lang-opt active" onclick="setLang('de')"><span class="lang-flag">🇨🇭</span> Deutsch</button>
           <button class="lang-opt" onclick="setLang('en')"><span class="lang-flag">🇺🇸</span> English</button>
@@ -977,7 +979,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         </div>
       </div>
       <button class="btn btn-gold btn-md" data-i18n="nav_cta" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
-      <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+      <div id="nav-hamburger" onclick="toggleNav();this.setAttribute('aria-expanded',document.getElementById('nav-overlay').classList.contains('open'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" role="button" tabindex="0" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav-overlay"><span></span><span></span><span></span></div>
     </div>
   </div>
 </nav>
@@ -995,7 +997,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <button class="btn btn-gold btn-lg" style="margin-top:12px" data-i18n="nav_cta" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
 </div>
 
-<main id="lp">
+<main id="lp"><span id="main-content" tabindex="-1"></span>
   <section class="phero"><div class="wrap">
     <div class="crumb" data-i18n-html="crumb_html"><a href="fuerwen.html">Für wen</a> → Handwerk</div>
     <span class="eyebrow" data-i18n="hero_eyebrow">Handwerk &amp; Subunternehmer</span>

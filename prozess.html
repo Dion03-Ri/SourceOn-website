@@ -795,7 +795,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .nav-ov-sub a{font-size:1.05rem!important;color:#94A3B8!important;font-weight:500!important}
 
 /* ===== NEW MINIMAL DESIGN (scoped #lp / #lpfoot) — prozess ===== */
-:root{--bg:#070F1A;--bg1:#0C1824;--bg2:#111F2E;--lpb:rgba(255,255,255,0.06);--lpbs:rgba(255,255,255,0.12);--t1:#F1F5F9;--t2:#94A3B8;--t3:#6B7C99;--golddim:rgba(232,160,32,0.08);--goldbd:rgba(232,160,32,0.15)}
+:root{--bg:#070F1A;--bg1:#0C1824;--bg2:#111F2E;--lpb:rgba(255,255,255,0.06);--lpbs:rgba(255,255,255,0.12);--t1:#F1F5F9;--t2:#94A3B8;--t3:#6B8AAA;--golddim:rgba(232,160,32,0.08);--goldbd:rgba(232,160,32,0.15)}
 body{background:#070F1A}
 #lp{color:var(--t1);font-family:'Inter',-apple-system,sans-serif}
 #lp .wrap,#lpfoot .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
@@ -922,6 +922,8 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 <link rel="canonical" href="https://www.sourceon.ch/prozess"/>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
+
 <!-- NAV -->
 <nav id="nav">
   <div class="nav-inner">
@@ -938,7 +940,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     </ul>
     <div class="nav-right">
       <div class="lang-switch" id="lang-switch">
-        <button class="lang-btn" onclick="document.getElementById('lang-switch').classList.toggle('open')">
+        <button class="lang-btn" aria-label="Sprache wählen" aria-haspopup="true" onclick="document.getElementById('lang-switch').classList.toggle('open')">
           <span id="lang-current">DE</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
@@ -972,7 +974,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         </div>
       </div>
       <button class="btn btn-gold btn-md" data-i18n="nav_cta" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
-      <div id="nav-hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+      <div id="nav-hamburger" onclick="toggleNav();this.setAttribute('aria-expanded',document.getElementById('nav-overlay').classList.contains('open'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" role="button" tabindex="0" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav-overlay"><span></span><span></span><span></span></div>
     </div>
   </div>
 </nav>
@@ -990,7 +992,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <button class="btn btn-gold btn-lg" style="margin-top:12px" data-i18n="nav_cta_m" onclick="toggleNav();window.location.href='kontakt.html'">Materialbedarf melden</button>
 </div>
 
-<main id="lp">
+<main id="lp"><span id="main-content" tabindex="-1"></span>
   <!-- HERO -->
   <section class="phero"><div class="wrap">
     <span class="eyebrow" data-i18n="proc_label">Wie es funktioniert</span>
@@ -1437,6 +1439,7 @@ window.setLang=function(lang){
     btn.classList.toggle('active',btn.getAttribute('onclick').indexOf("'"+lang+"'")!==-1);
   });
   localStorage.setItem('sourceon-lang',lang);
+  document.documentElement.lang=lang;
   document.body.classList.add('lang-ready');var _lh=document.getElementById('_lh');if(_lh){setTimeout(function(){_lh.remove();},200);}
   
   var sw=document.getElementById('lang-switch');
