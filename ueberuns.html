@@ -424,7 +424,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .bento-modal{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;background:rgba(5,10,18,.7);backdrop-filter:blur(6px);padding:24px}
 .bento-modal.open{display:flex}
 .bento-modal-card{background:linear-gradient(155deg,#16314F 0%,#0A1A2E 100%);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:44px 40px;max-width:480px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.5)}
-.bento-modal-card h3{color:#fff;font-size:1.3rem;font-weight:800;letter-spacing:-0.015em;margin-bottom:16px}
+.bento-modal-card h2,.bento-modal-card h3{color:#fff;font-size:1.3rem;font-weight:800;letter-spacing:-0.015em;margin-bottom:16px}
 .bento-modal-card p{color:rgba(255,255,255,.7);font-size:.92rem;line-height:1.75}
 .bento-modal-close{position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:14px;cursor:pointer;transition:background .2s}
 .bento-modal-close:hover{background:rgba(255,255,255,.16)}
@@ -775,7 +775,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
 .clerk-trust-overlay.open{opacity:1;pointer-events:auto}
 .clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;font-family:'Inter',-apple-system,sans-serif;color:#fff}
-.clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
+.clerk-trust-modal h2,.clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
 .clerk-trust-modal p{font-size:.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px}
 .clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none;transition:border-color .2s}
 .clerk-trust-modal input:focus{border-color:#E8A020;box-shadow:0 0 0 3px rgba(232,160,32,.12)}
@@ -920,7 +920,7 @@ p{text-wrap:pretty}
 <script>
 (function(){
 var l=localStorage.getItem('sourceon-lang');
-if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>body{opacity:0}body.lang-ready{opacity:1;transition:opacity .15s ease}/* CLERK TRUST VERIFICATION MODAL */.clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}.clerk-trust-overlay.open{opacity:1;pointer-events:auto}.clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;font-family:\'Inter\',-apple-system,sans-serif;color:#fff}.clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}.clerk-trust-modal p{font-size:.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px}.clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none;transition:border-color .2s}.clerk-trust-modal input:focus{border-color:#E8A020;box-shadow:0 0 0 3px rgba(232,160,32,.12)}.clerk-trust-modal .btn-verify{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,#E8A020,#f0b840);color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:14px;transition:transform .15s}.clerk-trust-modal .btn-verify:hover{transform:translateY(-1px)}.clerk-trust-modal .btn-verify:disabled{opacity:.5;cursor:not-allowed;transform:none}.clerk-trust-modal .trust-error{font-size:.8rem;color:#FCA5A5;margin-top:10px;min-height:1.2em}.clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:#94A3B8;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}.clerk-trust-modal .btn-cancel-trust:hover{border-color:rgba(255,255,255,.2);color:#fff}<\/style>');setTimeout(function(){document.body.classList.add('lang-ready');var h=document.getElementById('_lh');if(h)h.remove();},400);}
+if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>body{opacity:0}body.lang-ready{opacity:1;transition:opacity .15s ease}/* CLERK TRUST VERIFICATION MODAL */.clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}.clerk-trust-overlay.open{opacity:1;pointer-events:auto}.clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;font-family:\'Inter\',-apple-system,sans-serif;color:#fff}.clerk-trust-modal h2,.clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}.clerk-trust-modal p{font-size:.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px}.clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none;transition:border-color .2s}.clerk-trust-modal input:focus{border-color:#E8A020;box-shadow:0 0 0 3px rgba(232,160,32,.12)}.clerk-trust-modal .btn-verify{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,#E8A020,#f0b840);color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:14px;transition:transform .15s}.clerk-trust-modal .btn-verify:hover{transform:translateY(-1px)}.clerk-trust-modal .btn-verify:disabled{opacity:.5;cursor:not-allowed;transform:none}.clerk-trust-modal .trust-error{font-size:.8rem;color:#FCA5A5;margin-top:10px;min-height:1.2em}.clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:#94A3B8;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}.clerk-trust-modal .btn-cancel-trust:hover{border-color:rgba(255,255,255,.2);color:#fff}<\/style>');setTimeout(function(){document.body.classList.add('lang-ready');var h=document.getElementById('_lh');if(h)h.remove();},400);}
 })();
 </script>
 <script
@@ -2082,8 +2082,8 @@ document.addEventListener('keydown',function(e){
 
 <style>.so-2fa [class*="cl-modal"]{display:none!important}</style>
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
-  <div class="clerk-trust-modal">
-    <h3>Verifizierung erforderlich</h3>
+  <div class="clerk-trust-modal" role="dialog" aria-modal="true" aria-label="Verifizierung erforderlich">
+    <h2>Verifizierung erforderlich</h2>
     <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
     <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>

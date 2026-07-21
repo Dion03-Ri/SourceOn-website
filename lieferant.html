@@ -424,7 +424,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;border-radius:50%;bac
 .bento-modal{position:fixed;inset:0;z-index:2000;display:none;align-items:center;justify-content:center;background:rgba(5,10,18,.7);backdrop-filter:blur(6px);padding:24px}
 .bento-modal.open{display:flex}
 .bento-modal-card{background:linear-gradient(155deg,#16314F 0%,#0A1A2E 100%);border:1px solid rgba(255,255,255,.1);border-radius:var(--r-lg);padding:44px 40px;max-width:480px;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.5)}
-.bento-modal-card h3{color:#fff;font-size:1.3rem;font-weight:800;letter-spacing:-0.015em;margin-bottom:16px}
+.bento-modal-card h2,.bento-modal-card h3{color:#fff;font-size:1.3rem;font-weight:800;letter-spacing:-0.015em;margin-bottom:16px}
 .bento-modal-card p{color:rgba(255,255,255,.7);font-size:.92rem;line-height:1.75}
 .bento-modal-close{position:absolute;top:18px;right:18px;width:32px;height:32px;border-radius:50%;background:rgba(255,255,255,.08);border:none;color:#fff;font-size:14px;cursor:pointer;transition:background .2s}
 .bento-modal-close:hover{background:rgba(255,255,255,.16)}
@@ -774,7 +774,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 .clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
 .clerk-trust-overlay.open{opacity:1;pointer-events:auto}
 .clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;font-family:'Inter',-apple-system,sans-serif;color:#fff}
-.clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
+.clerk-trust-modal h2,.clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
 .clerk-trust-modal p{font-size:.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px}
 .clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none;transition:border-color .2s}
 .clerk-trust-modal input:focus{border-color:#E8A020;box-shadow:0 0 0 3px rgba(232,160,32,.12)}
@@ -959,7 +959,7 @@ p{text-wrap:pretty}
 <script>
 (function(){
 var l=localStorage.getItem('sourceon-lang');
-if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>body{opacity:0}body.lang-ready{opacity:1;transition:opacity .15s ease}/* CLERK TRUST VERIFICATION MODAL */.clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}.clerk-trust-overlay.open{opacity:1;pointer-events:auto}.clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;font-family:\'Inter\',-apple-system,sans-serif;color:#fff}.clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}.clerk-trust-modal p{font-size:.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px}.clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none;transition:border-color .2s}.clerk-trust-modal input:focus{border-color:#E8A020;box-shadow:0 0 0 3px rgba(232,160,32,.12)}.clerk-trust-modal .btn-verify{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,#E8A020,#f0b840);color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:14px;transition:transform .15s}.clerk-trust-modal .btn-verify:hover{transform:translateY(-1px)}.clerk-trust-modal .btn-verify:disabled{opacity:.5;cursor:not-allowed;transform:none}.clerk-trust-modal .trust-error{font-size:.8rem;color:#FCA5A5;margin-top:10px;min-height:1.2em}.clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:#94A3B8;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}.clerk-trust-modal .btn-cancel-trust:hover{border-color:rgba(255,255,255,.2);color:#fff}<\/style>');setTimeout(function(){document.body.classList.add('lang-ready');var h=document.getElementById('_lh');if(h)h.remove();},400);}
+if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>body{opacity:0}body.lang-ready{opacity:1;transition:opacity .15s ease}/* CLERK TRUST VERIFICATION MODAL */.clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}.clerk-trust-overlay.open{opacity:1;pointer-events:auto}.clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;font-family:\'Inter\',-apple-system,sans-serif;color:#fff}.clerk-trust-modal h2,.clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}.clerk-trust-modal p{font-size:.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px}.clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none;transition:border-color .2s}.clerk-trust-modal input:focus{border-color:#E8A020;box-shadow:0 0 0 3px rgba(232,160,32,.12)}.clerk-trust-modal .btn-verify{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,#E8A020,#f0b840);color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:14px;transition:transform .15s}.clerk-trust-modal .btn-verify:hover{transform:translateY(-1px)}.clerk-trust-modal .btn-verify:disabled{opacity:.5;cursor:not-allowed;transform:none}.clerk-trust-modal .trust-error{font-size:.8rem;color:#FCA5A5;margin-top:10px;min-height:1.2em}.clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:#94A3B8;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}.clerk-trust-modal .btn-cancel-trust:hover{border-color:rgba(255,255,255,.2);color:#fff}<\/style>');setTimeout(function(){document.body.classList.add('lang-ready');var h=document.getElementById('_lh');if(h)h.remove();},400);}
 })();
 </script>
 <script
@@ -1133,12 +1133,12 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <form id="form-supplier" onsubmit="submitSupplier(event)" novalidate>
         <span class="fsec-label first" data-i18n="form.secContact">Kontakt</span>
         <div class="form-grid">
-          <div class="form-group"><label class="form-label" data-i18n="form.company">Firmenname *</label><input type="text" class="form-input" id="sa-company" required/><div class="form-error" id="e-sa-company" data-i18n="form.required">Pflichtfeld</div></div>
-          <div class="form-group"><label class="form-label" data-i18n="form.contact">Ansprechperson *</label><input type="text" class="form-input" id="sa-name" required/><div class="form-error" id="e-sa-name" data-i18n="form.required">Pflichtfeld</div></div>
+          <div class="form-group"><label class="form-label" for="sa-company" data-i18n="form.company">Firmenname *</label><input type="text" class="form-input" id="sa-company" required aria-required="true"/><div class="form-error" role="alert" id="e-sa-company" data-i18n="form.required">Pflichtfeld</div></div>
+          <div class="form-group"><label class="form-label" for="sa-name" data-i18n="form.contact">Ansprechperson *</label><input type="text" class="form-input" id="sa-name" required aria-required="true"/><div class="form-error" role="alert" id="e-sa-name" data-i18n="form.required">Pflichtfeld</div></div>
         </div>
         <div class="form-grid">
-          <div class="form-group"><label class="form-label" data-i18n="form.email">E-Mail *</label><input type="email" class="form-input" id="sa-email" required/><div class="form-error" id="e-sa-email" data-i18n="form.emailError">Gültige E-Mail erforderlich</div><div id="sa-email-note" data-i18n="sa.emailNote" style="display:none;font-size:11px;color:var(--t3);margin-top:4px">Verknüpft mit deinem SourceOn-Konto</div></div>
-          <div class="form-group"><label class="form-label" data-i18n="form.phone">Telefon *</label><input type="tel" class="form-input" id="sa-phone" required/><div class="form-error" id="e-sa-phone" data-i18n="form.required">Pflichtfeld</div></div>
+          <div class="form-group"><label class="form-label" for="sa-email" data-i18n="form.email">E-Mail *</label><input type="email" class="form-input" id="sa-email" required aria-required="true"/><div class="form-error" role="alert" id="e-sa-email" data-i18n="form.emailError">Gültige E-Mail erforderlich</div><div id="sa-email-note" data-i18n="sa.emailNote" style="display:none;font-size:11px;color:var(--t3);margin-top:4px">Verknüpft mit deinem SourceOn-Konto</div></div>
+          <div class="form-group"><label class="form-label" for="sa-phone" data-i18n="form.phone">Telefon *</label><input type="tel" class="form-input" id="sa-phone" required aria-required="true"/><div class="form-error" role="alert" id="e-sa-phone" data-i18n="form.required">Pflichtfeld</div></div>
         </div>
         <div class="form-group"><label class="form-label" data-i18n="form.website">Website (optional)</label><input type="url" class="form-input" id="sa-web" placeholder="https://"/></div>
         <span class="fsec-label" data-i18n="form.secOffer">Angebotsprofil</span>
@@ -1173,8 +1173,8 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           <p class="form-note" data-i18n="form.regionNote">Hinweis: Ausschreibungen enthalten zu Beginn nur Liefergebiete als Zonen, keine genauen Adressen. Diese werden erst nach Zuschlag freigegeben.</p>
         </div>
         <div class="form-group">
-          <label class="form-label" data-i18n="form.capacity">Jahreskapazität *</label>
-          <select class="form-select" id="sa-cap" required>
+          <label class="form-label" for="sa-cap" data-i18n="form.capacity">Jahreskapazität *</label>
+          <select class="form-select" id="sa-cap" required aria-required="true">
             <option value="" data-i18n="form.capSelect">Bitte wählen</option>
             <option data-i18n="form.capUnder">Unter CHF 500'000</option>
             <option>CHF 500'000 – 2'000'000</option>
@@ -1182,7 +1182,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             <option>CHF 10'000'000 – 50'000'000</option>
             <option data-i18n="form.capOver">Über CHF 50'000'000</option>
           </select>
-          <div class="form-error" id="e-sa-cap" data-i18n="form.capSelect">Bitte wählen</div>
+          <div class="form-error" role="alert" id="e-sa-cap" data-i18n="form.capSelect">Bitte wählen</div>
         </div>
         <div class="form-group">
           <label class="form-label" data-i18n="form.certs">Zertifizierungen</label>
@@ -1195,17 +1195,17 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             <label class="form-check"><input type="checkbox"/><span>Minergie</span></label>
           </div>
         </div>
-        <div class="form-group"><label class="form-label" data-i18n="form.notes">Bemerkungen</label><textarea class="form-textarea" id="sa-notes" data-i18n-placeholder="form.notesPlaceholder" placeholder="Weitere Informationen zu deinem Angebot…"></textarea></div>
+        <div class="form-group"><label class="form-label" for="sa-notes" data-i18n="form.notes">Bemerkungen</label><textarea class="form-textarea" id="sa-notes" data-i18n-placeholder="form.notesPlaceholder" placeholder="Weitere Informationen zu deinem Angebot…"></textarea></div>
         <div class="form-group" style="margin-top:20px;margin-bottom:8px">
           <label class="sa-agree">
             <input type="checkbox" id="sa-agreement"/>
             <span data-i18n-html="form.agreement">Ich akzeptiere die <a href="lieferantenvereinbarung.html" target="_blank">Lieferantenvereinbarung</a> von SourceOn und bestätige, dass die gemachten Angaben korrekt sind. *</span>
           </label>
-          <div class="form-error" id="e-sa-agreement" style="margin-top:6px" data-i18n="form.agreementError">Bitte akzeptiere die Lieferantenvereinbarung, um fortzufahren.</div>
+          <div class="form-error" role="alert" id="e-sa-agreement" style="margin-top:6px" data-i18n="form.agreementError">Bitte akzeptiere die Lieferantenvereinbarung, um fortzufahren.</div>
         </div>
         <button type="submit" class="sa-submit" data-i18n="form.submit">Jetzt als Partnerlieferant bewerben →</button>
         <p class="sa-post" data-i18n="supplier.postSubmit">Nach deiner Bewerbung prüfen wir dein Profil und melden uns innerhalb von 48 Stunden. Bei Freigabe erhältst du sofort Zugang zu passenden Ausschreibungen.</p>
-        <div class="form-error" id="error-supplier" style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#EF4444;font-size:14px"></div>
+        <div class="form-error" role="alert" id="error-supplier" style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#EF4444;font-size:14px"></div>
       </form>
       <div class="form-success" id="success-supplier"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span><strong data-i18n="sa.success.title">✓ Vielen Dank! Deine Bewerbung ist eingegangen.</strong><br><span data-i18n="sa.success.sub" style="font-weight:400;opacity:.85">Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.</span></span></div>
       </div><!-- /sa-formwrap -->
@@ -2493,8 +2493,8 @@ document.addEventListener('keydown',function(e){
 
 <style>.so-2fa [class*="cl-modal"]{display:none!important}</style>
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
-  <div class="clerk-trust-modal">
-    <h3>Verifizierung erforderlich</h3>
+  <div class="clerk-trust-modal" role="dialog" aria-modal="true" aria-label="Verifizierung erforderlich">
+    <h2>Verifizierung erforderlich</h2>
     <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
     <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
