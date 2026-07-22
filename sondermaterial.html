@@ -1036,6 +1036,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <label class="sr-label" data-i18n="sr_l_material">MATERIAL / PRODUKTBEZEICHNUNG *</label>
         <input type="text" class="sr-input" id="sr-material" data-i18n-placeholder="sr_ph_material" placeholder="z.B. Glaswolle 100mm, Stahlträger HEA 200..."/>
       </div>
+      <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;" aria-hidden="true" tabindex="-1"><label for="website_confirm">Website bestätigen</label><input type="text" id="website_confirm" name="website_confirm" tabindex="-1" autocomplete="off" value=""></div>
       <div class="sr-field">
         <label class="sr-label" data-i18n="sr_l_menge">GESCHÄTZTE MENGE *</label>
         <input type="text" class="sr-input" id="sr-menge" data-i18n-placeholder="sr_ph_menge" placeholder="z.B. 500 m², 20 Stück, 5 Tonnen"/>
@@ -1520,8 +1521,17 @@ window.setLang=applyLang;
 // ===== Special material request form =====
 var _SR_VALERR={de:'Bitte fülle alle Pflichtfelder aus.',en:'Please fill in all required fields.',fr:'Veuillez remplir tous les champs obligatoires.',it:'Compila tutti i campi obbligatori.'};
 var _SR_NETERR={de:'Etwas ist schiefgelaufen. Bitte versuche es erneut oder kontaktiere info@sourceon.ch.',en:'Something went wrong. Please try again or contact info@sourceon.ch.',fr:'Une erreur est survenue. Réessaie ou contacte info@sourceon.ch.',it:'Qualcosa è andato storto. Riprova o contatta info@sourceon.ch.'};
+var _formLoadTime=Date.now();
 async function submitSpecialRequest(ev){
   ev.preventDefault();
+  // Spam-Schutz: Honeypot + Timing. Bei Verdacht: Fake-Erfolg, still verwerfen.
+  var _hp=document.getElementById('website_confirm');
+  if((_hp&&_hp.value!=='')||(Date.now()-_formLoadTime<3000)){
+    console.log('[Honeypot] Bot/zu schnell erkannt — Anfrage blockiert');
+    document.getElementById('sr-form').style.display='none';
+    document.getElementById('sr-success').style.display='block';
+    return false;
+  }
   var lang=localStorage.getItem('sourceon-lang')||'de';
   var err=document.getElementById('sr-error');
   var g=function(id){return (document.getElementById(id).value||'').trim();};

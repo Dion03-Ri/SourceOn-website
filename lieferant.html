@@ -1134,6 +1134,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <span class="fsec-label first" data-i18n="form.secContact">Kontakt</span>
         <div class="form-grid">
           <div class="form-group"><label class="form-label" for="sa-company" data-i18n="form.company">Firmenname *</label><input type="text" class="form-input" id="sa-company" required aria-required="true"/><div class="form-error" role="alert" id="e-sa-company" data-i18n="form.required">Pflichtfeld</div></div>
+          <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;" aria-hidden="true" tabindex="-1"><label for="website_confirm">Website bestätigen</label><input type="text" id="website_confirm" name="website_confirm" tabindex="-1" autocomplete="off" value=""></div>
           <div class="form-group"><label class="form-label" for="sa-name" data-i18n="form.contact">Ansprechperson *</label><input type="text" class="form-input" id="sa-name" required aria-required="true"/><div class="form-error" role="alert" id="e-sa-name" data-i18n="form.required">Pflichtfeld</div></div>
         </div>
         <div class="form-grid">
@@ -1395,8 +1396,16 @@ function _showSuccess(){
   sessionStorage.removeItem(PENDING_KEY);
 }
 
+var _formLoadTime=Date.now();
 async function submitSupplier(e){
   e.preventDefault();
+  // Spam-Schutz: Honeypot + Timing. Bei Verdacht: Fake-Erfolg, still verwerfen.
+  var _hp=document.getElementById('website_confirm');
+  if((_hp&&_hp.value!=='')||(Date.now()-_formLoadTime<3000)){
+    console.log('[Honeypot] Bot/zu schnell erkannt — Bewerbung blockiert');
+    _showSuccess();
+    return;
+  }
   var errEl=document.getElementById('error-supplier');
   errEl.style.display='none';
   var agreeBox=document.getElementById('sa-agreement');

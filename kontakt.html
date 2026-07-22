@@ -1163,6 +1163,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             <span class="fsec-label first" data-i18n="fsec_company">Firmendaten</span>
             <div class="form-grid">
               <div class="form-group"><label class="form-label" for="c-company" data-i18n="form_company">Firmenname *</label><input type="text" class="form-input" id="c-company" required aria-required="true"/><div class="form-error" role="alert" data-i18n="form_error_required" id="e-c-company">Pflichtfeld</div></div>
+              <div style="position:absolute;left:-9999px;top:-9999px;opacity:0;pointer-events:none;" aria-hidden="true" tabindex="-1"><label for="website_confirm">Website bestätigen</label><input type="text" id="website_confirm" name="website_confirm" tabindex="-1" autocomplete="off" value=""></div>
               <div class="form-group"><label class="form-label" for="c-name" data-i18n="form_contact_person">Ansprechperson *</label><input type="text" class="form-input" id="c-name" required aria-required="true"/><div class="form-error" role="alert" data-i18n="form_error_required" id="e-c-name">Pflichtfeld</div></div>
             </div>
             <div class="form-grid">
@@ -1693,8 +1694,17 @@ function _extractKanton(addr){
   return addr.trim();
 }
 
+var _formLoadTime=Date.now();
 async function submitContact(e){
   e.preventDefault();
+  // Spam-Schutz: Honeypot-Feld + Timing. Bei Verdacht: Fake-Erfolg zeigen, still verwerfen.
+  var _hp=document.getElementById('website_confirm');
+  if((_hp&&_hp.value!=='')||(Date.now()-_formLoadTime<3000)){
+    console.log('[Honeypot] Bot/zu schnell erkannt — Anfrage blockiert');
+    document.getElementById('form-contact').style.display='none';
+    var _sf=document.getElementById('success-contact');if(_sf){_sf.classList.add('show');_sf.scrollIntoView({behavior:'smooth',block:'center'});}
+    return;
+  }
   var matOk=validateMaterials();
   var datesOk=_validateDates();
   if(![req('c-company','e-c-company'),req('c-name','e-c-name'),emailOk('c-email','e-c-email'),req('c-phone','e-c-phone'),matOk,datesOk,req('c-street','e-c-street'),req('c-plz','e-c-plz'),req('c-ort','e-c-ort')].every(Boolean))return;
