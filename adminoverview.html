@@ -313,7 +313,7 @@ var MAX_ATTEMPTS=5;
 // and only accepts a fixed set of actions gated by this shared secret.
 // ⚠️ Set ADMIN_SECRET to the SAME value you set with `supabase secrets set ADMIN_SECRET=...`.
 var SB_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
-var ADMIN_FN=SB_URL+'/functions/v1/admin-data';
+var ADMIN_FN=SB_URL+'/functions/v1/rapid-api';
 var ADMIN_SECRET='bipcy7-qafxew-Zypnut';
 async function adminCall(action,payload){
   try{
