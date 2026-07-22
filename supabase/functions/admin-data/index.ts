@@ -78,6 +78,13 @@ Deno.serve(async (req) => {
         ]);
         return json({ customers: customers.data ?? [], requests: requests.data ?? [] });
       }
+      case "all_requests": {
+        const [requests, customers] = await Promise.all([
+          sb.from("material_requests").select("*").order("created_at", { ascending: false }),
+          sb.from("customers").select("id,firmenname"),
+        ]);
+        return json({ requests: requests.data ?? [], customers: customers.data ?? [] });
+      }
       case "all_bundles": {
         const [bundles, bids, suppliers] = await Promise.all([
           sb.from("bundles").select("*").order("created_at", { ascending: false }),
