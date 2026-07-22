@@ -1312,7 +1312,7 @@ function selOk(id,errId){const ok=document.getElementById(id).value!=='';documen
 
 var _sbClient=window.supabase?window.supabase.createClient(
   'https://mttzsqtuaisdjisjxrey.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U',
+  'sb_publishable_C2d4skG1yF4lTzlKpvEWbw_mePtBH1c',
   {accessToken:async function(){if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}return null;}}
 ):null;
 
@@ -2132,7 +2132,7 @@ function _soProcessLogin(kind){
   else _soCheckCustomerLogin(window.Clerk.user.id);
 }
 async function _soLoginHeaders(){
-  var k='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';var token=null;
+  var k='sb_publishable_C2d4skG1yF4lTzlKpvEWbw_mePtBH1c';var token=null;
   try{if(window.Clerk&&window.Clerk.session){token=await window.Clerk.session.getToken();}}catch(e){}
   return {'apikey':k,'Content-Type':'application/json','Authorization':token?('Bearer '+token):('Bearer '+k)};
 }
@@ -2208,7 +2208,7 @@ async function _createCustomerIfNeeded(){
     var u=window.Clerk.user;if(!u)return;
     var email=u.primaryEmailAddress?u.primaryEmailAddress.emailAddress:'';
     var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
-    var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
+    var sbKey='sb_publishable_C2d4skG1yF4lTzlKpvEWbw_mePtBH1c';
     var token=null;
     if(window.Clerk.session){token=await window.Clerk.session.getToken();}
     var auth=token?'Bearer '+token:'Bearer '+sbKey;
@@ -2269,7 +2269,7 @@ async function _createCustomerIfNeeded(){
     if(custLink)custLink.style.display='none';
     try{
       var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
-      var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
+      var sbKey='sb_publishable_C2d4skG1yF4lTzlKpvEWbw_mePtBH1c';
       var token=null;
       if(window.Clerk&&window.Clerk.session){token=await window.Clerk.session.getToken();}
       var headers={'apikey':sbKey,'Content-Type':'application/json'};
@@ -2341,7 +2341,7 @@ async function _createCustomerIfNeeded(){
     (async function(){
       try{
         var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
-        var sbKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNDQ3MjYsImV4cCI6MjA5NzgyMDcyNn0.rLy3MZ6xSyNkmNiKrxvPjUSB4BlPMCwMBKhbTFXeO3U';
+        var sbKey='sb_publishable_C2d4skG1yF4lTzlKpvEWbw_mePtBH1c';
         var chkResp=await fetch(sbUrl+'/rest/v1/customers?id=eq.'+encodeURIComponent(_pendingCustId)+'&select=id,user_id&limit=1',{headers:{'apikey':sbKey,'Authorization':'Bearer '+sbKey,'Content-Type':'application/json'}});
         var chkRows=chkResp.ok?await chkResp.json():[];
         if(chkRows.length>0&&!chkRows[0].user_id){
