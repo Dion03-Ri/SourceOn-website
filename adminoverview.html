@@ -280,13 +280,6 @@ p{text-wrap:pretty}
     <p class="section-sub">Vollständige Liste aller registrierten Kunden mit Anzahl Materialanfragen.</p>
     <div class="tbl-wrap"><div id="customers-table" class="loading">Daten werden geladen...</div></div>
   </div>
-
-  <!-- SECTION 6: All material requests -->
-  <div class="section">
-    <div class="section-title">Alle Materialanfragen <span class="badge" id="requests-count">0</span></div>
-    <p class="section-sub">Alle eingegangenen Materialanfragen der Kunden, neueste zuerst.</p>
-    <div class="tbl-wrap"><div id="requests-table" class="loading">Daten werden geladen...</div></div>
-  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
@@ -419,7 +412,7 @@ function esc(s){
 async function loadAllData(){
   document.getElementById('btn-refresh').disabled=true;
   try{
-    await Promise.all([loadStats(),loadPending(),loadBundles(),loadExpiredBundles(),loadSuppliers(),loadCustomers(),loadRequests()]);
+    await Promise.all([loadStats(),loadPending(),loadBundles(),loadExpiredBundles(),loadSuppliers(),loadCustomers()]);
   }catch(e){console.error('loadAllData error:',e);}
   document.getElementById('btn-refresh').disabled=false;
   startSupplierWatch();
@@ -792,11 +785,12 @@ function exportExpiredBundlesExcel(){
     [_bndSheet('Abgelaufene Bündel','Abgelaufene Bündel ohne qualifizierende Gebote',_allExpiredBundles||[])]);
 }
 
+var _reqByCustomer={};
 async function loadCustomers(){
   var _d=await adminCall('all_customers')||{};
   var customers=_d.customers||[],requests=_d.requests||[];
-  var reqCounts={};
-  requests.forEach(function(r){if(r.customer_id)reqCounts[r.customer_id]=(reqCounts[r.customer_id]||0)+1;});
+  var reqCounts={};_reqByCustomer={};
+  requests.forEach(function(r){if(r.customer_id){reqCounts[r.customer_id]=(reqCounts[r.customer_id]||0)+1;(_reqByCustomer[r.customer_id]=_reqByCustomer[r.customer_id]||[]).push(r);}});
   _allCustomers=customers;_allCustomerReqCounts=reqCounts;
 
   if(!customers.length){
@@ -806,47 +800,38 @@ async function loadCustomers(){
   var html='<table><thead><tr><th>Firma</th><th>Ansprechperson</th><th>E-Mail</th><th>Telefon</th><th>Erstellt</th><th>Materialanfragen</th></tr></thead><tbody>';
   customers.forEach(function(c){
     var cnt=reqCounts[c.id]||0;
+    var link=cnt>0?'<span class="link-m" style="color:#E8A020;cursor:pointer;font-weight:600" onclick="toggleCustReqs(\''+esc(c.id)+'\')">'+cnt+' · Anschauen ▾</span>':'0';
     html+='<tr>'
       +'<td><strong>'+esc(c.firmenname||'–')+'</strong></td>'
       +'<td>'+esc(c.ansprechperson||'–')+'</td>'
       +'<td>'+esc(c.email||'–')+'</td>'
       +'<td>'+esc(c.telefon||'–')+'</td>'
       +'<td style="white-space:nowrap">'+fmtDate(c.created_at)+'</td>'
-      +'<td>'+cnt+'</td></tr>';
+      +'<td>'+link+'</td></tr>';
+    if(cnt>0){
+      html+='<tr id="creqrow-'+esc(c.id)+'" style="display:none"><td colspan="6" style="background:rgba(255,255,255,.02);padding:0">'+_custReqsHtml(c.id)+'</td></tr>';
+    }
   });
   html+='</tbody></table>';
   document.getElementById('customers-table').innerHTML=html;
 }
-
-async function loadRequests(){
-  var _d=await adminCall('all_requests')||{};
-  var requests=_d.requests||[],customers=_d.customers||[];
-  var custMap={};customers.forEach(function(c){custMap[c.id]=c.firmenname;});
-  document.getElementById('requests-count').textContent=requests.length;
-  if(!requests.length){
-    document.getElementById('requests-table').innerHTML='<div class="empty-msg">Keine Materialanfragen vorhanden.</div>';
-    return;
-  }
-  var html='<table><thead><tr><th>Material</th><th>Menge</th><th>Kunde</th><th>Lieferzone</th><th>Lieferzeitraum</th><th>Zuges. Rabatt</th><th>Status</th><th>Erstellt</th></tr></thead><tbody>';
-  requests.forEach(function(r){
+function _custReqsHtml(custId){
+  var reqs=_reqByCustomer[custId]||[];
+  var h='<table style="margin:0"><thead><tr><th>Material</th><th>Menge</th><th>Lieferzone</th><th>Lieferzeitraum</th><th>Zuges. Rabatt</th><th>Status</th><th>Erstellt</th></tr></thead><tbody>';
+  reqs.forEach(function(r){
     var zeitraum='–';
     if(r.liefer_zeitraum_von&&r.liefer_zeitraum_bis)zeitraum=fmtDate(r.liefer_zeitraum_von)+' – '+fmtDate(r.liefer_zeitraum_bis);
     else if(r.liefer_zeitraum_von)zeitraum='ab '+fmtDate(r.liefer_zeitraum_von);
     else if(r.liefer_zeitraum_bis)zeitraum='bis '+fmtDate(r.liefer_zeitraum_bis);
     var menge=(r.menge!=null&&r.menge!=='')?(esc(r.menge)+(r.einheit?' '+esc(r.einheit):'')):'–';
     var rab=(r.committed_min_rabatt!=null&&!isNaN(parseFloat(r.committed_min_rabatt)))?Math.round(parseFloat(r.committed_min_rabatt)*100)+'%':'–';
-    html+='<tr>'
-      +'<td><strong>'+esc(r.sourceon_id||'–')+'</strong></td>'
-      +'<td style="white-space:nowrap">'+menge+'</td>'
-      +'<td>'+esc(custMap[r.customer_id]||r.customer_id||'–')+'</td>'
-      +'<td>'+esc(r.liefer_zone||'–')+'</td>'
-      +'<td style="white-space:nowrap">'+zeitraum+'</td>'
-      +'<td>'+rab+'</td>'
-      +'<td>'+statusBadge(r.status)+'</td>'
-      +'<td style="white-space:nowrap">'+fmtDate(r.created_at)+'</td></tr>';
+    h+='<tr><td><strong>'+esc(r.sourceon_id||'–')+'</strong></td><td style="white-space:nowrap">'+menge+'</td><td>'+esc(r.liefer_zone||'–')+'</td><td style="white-space:nowrap">'+zeitraum+'</td><td>'+rab+'</td><td>'+statusBadge(r.status)+'</td><td style="white-space:nowrap">'+fmtDate(r.created_at)+'</td></tr>';
   });
-  html+='</tbody></table>';
-  document.getElementById('requests-table').innerHTML=html;
+  return h+'</tbody></table>';
+}
+function toggleCustReqs(custId){
+  var row=document.getElementById('creqrow-'+custId);
+  if(row)row.style.display=(row.style.display==='none')?'':'none';
 }
 </script>
   <script src="mobile-nav.js"></script>

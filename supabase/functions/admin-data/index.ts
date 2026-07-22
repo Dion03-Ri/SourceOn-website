@@ -72,18 +72,12 @@ Deno.serve(async (req) => {
         return json({ data: data ?? [] });
       }
       case "all_customers": {
+        // Full request details too, so the admin can expand a customer's requests.
         const [customers, requests] = await Promise.all([
           sb.from("customers").select("*").order("created_at", { ascending: false }),
-          sb.from("material_requests").select("customer_id"),
+          sb.from("material_requests").select("*").order("created_at", { ascending: false }),
         ]);
         return json({ customers: customers.data ?? [], requests: requests.data ?? [] });
-      }
-      case "all_requests": {
-        const [requests, customers] = await Promise.all([
-          sb.from("material_requests").select("*").order("created_at", { ascending: false }),
-          sb.from("customers").select("id,firmenname"),
-        ]);
-        return json({ requests: requests.data ?? [], customers: customers.data ?? [] });
       }
       case "all_bundles": {
         const [bundles, bids, suppliers] = await Promise.all([
