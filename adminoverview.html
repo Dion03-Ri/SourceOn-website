@@ -285,13 +285,15 @@ p{text-wrap:pretty}
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <script>
 /*
- * IMPORTANT: This is a basic client-side protection layer suitable only for
- * very early-stage internal use. Before this business has real revenue or
- * sensitive data at scale, this MUST be replaced with proper server-side
- * authentication (e.g. a dedicated admin login via Clerk with a specific
- * admin role/permission check, validated server-side via a Supabase Edge
- * Function, rather than exposing the service_role key in client-side code
- * at all).
+ * The Supabase service_role key is NO LONGER in this file — all admin data now
+ * goes through the 'admin-data' Edge Function, which holds the key server-side
+ * and only allows a fixed set of actions gated by a shared secret.
+ *
+ * REMAINING CAVEAT: the admin PASSWORD gate below is still client-side (SHA-256
+ * hash check in the browser). For a hardened setup, replace it with a real
+ * server-side admin login (e.g. Clerk with an admin role checked inside the
+ * Edge Function). The shared secret is far less dangerous than the old key: it
+ * can only invoke this one function, not run arbitrary queries.
  */
 
 // SHA-256 hash of the admin password (not plaintext).
@@ -306,9 +308,24 @@ var SESSION_DURATION_MS=2*60*60*1000; // 2 hours
 var LOCKOUT_DURATION_MS=5*60*1000; // 5 minutes
 var MAX_ATTEMPTS=5;
 
+// SECURITY: the service_role key is NO LONGER in the browser. All admin data
+// goes through the 'admin-data' Edge Function, which holds the key server-side
+// and only accepts a fixed set of actions gated by this shared secret.
+// ⚠️ Set ADMIN_SECRET to the SAME value you set with `supabase secrets set ADMIN_SECRET=...`.
 var SB_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
-var SB_SERVICE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MjI0NDcyNiwiZXhwIjoyMDk3ODIwNzI2fQ.n3xkLAcIURQ_zLyPYWwDWXHk3-rxJeMJBnq0oGooHYs';
-var HEADERS={'apikey':SB_SERVICE_KEY,'Authorization':'Bearer '+SB_SERVICE_KEY,'Content-Type':'application/json'};
+var ADMIN_FN=SB_URL+'/functions/v1/admin-data';
+var ADMIN_SECRET='CHANGE_ME_SET_SAME_VALUE_IN_SUPABASE_SECRETS';
+async function adminCall(action,payload){
+  try{
+    var resp=await fetch(ADMIN_FN,{
+      method:'POST',
+      headers:{'Content-Type':'application/json','x-admin-secret':ADMIN_SECRET},
+      body:JSON.stringify(Object.assign({action:action},payload||{}))
+    });
+    if(!resp.ok){console.error('[admin] '+action+' failed:',resp.status);return null;}
+    return await resp.json();
+  }catch(e){console.error('[admin] '+action+' error:',e);return null;}
+}
 
 var _allSuppliers=[];
 var _allBundles=[],_allBundleBidCounts={},_allBundleSupMap={};
@@ -375,19 +392,6 @@ async function checkAdminPw(){
   }
 }
 
-async function sbFetch(path){
-  var resp=await fetch(SB_URL+'/rest/v1/'+path,{headers:HEADERS});
-  if(!resp.ok)return[];
-  return resp.json();
-}
-
-async function sbPatch(table,id,data){
-  var resp=await fetch(SB_URL+'/rest/v1/'+table+'?id=eq.'+encodeURIComponent(id),{
-    method:'PATCH',headers:Object.assign({},HEADERS,{'Prefer':'return=representation'}),body:JSON.stringify(data)
-  });
-  return resp.ok;
-}
-
 function fmtDate(d){
   if(!d)return'–';
   var dt=new Date(d);
@@ -436,33 +440,29 @@ function showToast(msg){
   setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},8000);
 }
 function refreshSupplierList(){try{Promise.all([loadPending(),loadStats(),loadSuppliers()]);}catch(e){}}
+var _lastPendingCount=null;
 function startSupplierWatch(){
   if(_supplierWatchStarted)return;
-  if(!window.supabase||!window.supabase.createClient)return;
   _supplierWatchStarted=true;
-  try{
-    var client=window.supabase.createClient(SB_URL,SB_SERVICE_KEY);
-    client.channel('supplier-watch')
-      .on('postgres_changes',{event:'INSERT',schema:'public',table:'suppliers'},function(payload){
-        var name=(payload.new&&(payload.new.company_name||payload.new.firmenname))||'';
-        showToast('🔔 Neue Lieferantenbewerbung eingegangen — '+name);
-        _admBeep();
-        refreshSupplierList();
-      })
-      .subscribe();
-  }catch(e){console.error('[admin] realtime subscribe failed:',e);}
+  // Realtime würde den service_role-Key im Client erfordern → stattdessen alle
+  // 45 s über die admin-data-Function nach neuen Bewerbungen pollen.
+  setInterval(async function(){
+    var res=await adminCall('pending_suppliers');
+    if(!res||!res.data)return;
+    var n=res.data.length;
+    if(_lastPendingCount!=null&&n>_lastPendingCount){
+      var newest=res.data[0]||{};
+      showToast('🔔 Neue Lieferantenbewerbung eingegangen — '+((newest.company_name||newest.firmenname)||''));
+      _admBeep();
+      refreshSupplierList();
+    }
+    _lastPendingCount=n;
+  },45000);
 }
 
 async function loadStats(){
-  var [bundles,suppliers,customers,requests]=await Promise.all([
-    sbFetch('bundles?select=status,gesamtvolumen,gewonnener_supplier_id'),
-    sbFetch('suppliers?select=status'),
-    sbFetch('customers?select=id'),
-    // committed_min_rabatt mitladen, damit Bündelungsentscheide die individuellen
-    // Kundenzusagen berücksichtigen können (siehe auto-bundle: ziel_mindestrabatt eines
-    // Bündels muss >= dem höchsten committed_min_rabatt seiner Anfragen sein).
-    sbFetch('material_requests?select=status,sourceon_id,committed_min_rabatt,commitment_accepted')
-  ]);
+  var _d=await adminCall('stats')||{};
+  var bundles=_d.bundles||[],suppliers=_d.suppliers||[],customers=_d.customers||[],requests=_d.requests||[];
   var activeBundles=bundles.filter(function(b){return b.status==='ausgeschrieben';});
   var awardedBundles=bundles.filter(function(b){return b.status==='vergeben'||b.gewonnener_supplier_id;});
   var totalVol=activeBundles.reduce(function(s,b){return s+(Number(b.gesamtvolumen)||0);},0);
@@ -483,7 +483,7 @@ async function loadStats(){
 }
 
 async function loadPending(){
-  var rows=await sbFetch('suppliers?status=eq.pending&select=*&order=created_at.desc');
+  var rows=(await adminCall('pending_suppliers')||{}).data||[];
   document.getElementById('pending-count').textContent=rows.length;
   if(!rows.length){
     document.getElementById('pending-table').innerHTML='<div class="empty-msg">Keine ausstehenden Bewerbungen.</div>';
@@ -521,26 +521,23 @@ async function loadPending(){
 
 async function verifySupplier(id){
   if(!confirm('Diesen Lieferanten wirklich verifizieren?'))return;
-  var ok=await sbPatch('suppliers',id,{status:'verified'});
-  if(ok){
+  var res=await adminCall('verify_supplier',{id:id});
+  if(res&&res.ok){
     await Promise.all([loadPending(),loadStats(),loadSuppliers()]);
   }else{alert('Fehler beim Verifizieren.');}
 }
 
 async function rejectSupplier(id){
   if(!confirm('Diesen Lieferanten wirklich ablehnen?'))return;
-  var ok=await sbPatch('suppliers',id,{status:'rejected'});
-  if(ok){
+  var res=await adminCall('reject_supplier',{id:id});
+  if(res&&res.ok){
     await Promise.all([loadPending(),loadStats(),loadSuppliers()]);
   }else{alert('Fehler beim Ablehnen.');}
 }
 
 async function loadBundles(){
-  var [bundles,bids,suppliers]=await Promise.all([
-    sbFetch('bundles?select=*&order=created_at.desc'),
-    sbFetch('bids?select=bundle_id'),
-    sbFetch('suppliers?select=id,company_name')
-  ]);
+  var _d=await adminCall('all_bundles')||{};
+  var bundles=_d.bundles||[],bids=_d.bids||[],suppliers=_d.suppliers||[];
   var bidCounts={};
   bids.forEach(function(b){bidCounts[b.bundle_id]=(bidCounts[b.bundle_id]||0)+1;});
   var supMap={};
@@ -586,10 +583,8 @@ function _rabattBruttoNetto(z){
 }
 
 async function loadExpiredBundles(){
-  var [bundles,bids]=await Promise.all([
-    sbFetch('bundles?status=eq.abgelaufen&select=*&order=created_at.desc'),
-    sbFetch('bids?select=id,bundle_id,rabatt_prozent,supplier_id')
-  ]);
+  var _d=await adminCall('expired_bundles')||{};
+  var bundles=_d.bundles||[],bids=_d.bids||[];
   _allExpiredBundles=bundles;
   document.getElementById('expired-count').textContent=bundles.length;
   if(!bundles.length){
@@ -649,43 +644,24 @@ async function relistBundle(id){
   if(!confirm('Bündel erneut ausschreiben? Alle bisherigen Gebote werden gelöscht.'))return;
 
   var newRabattInput=document.getElementById('relist-rabatt-'+id).value;
-  var updateData={status:'ausgeschrieben',bid_deadline:deadline.toISOString(),gewonnener_supplier_id:null,finaler_rabatt:null};
-  if(newRabattInput){
-    var r=Number(newRabattInput);
-    updateData.ziel_mindestrabatt=r>1?r/100:r;
-  }
-
-  var ok=await sbPatch('bundles',id,updateData);
-  if(!ok){alert('Fehler beim Aktualisieren des Bündels.');return;}
-
-  var oldBids=await sbFetch('bids?bundle_id=eq.'+encodeURIComponent(id)+'&select=id');
-  for(var i=0;i<oldBids.length;i++){
-    await fetch(SB_URL+'/rest/v1/bids?id=eq.'+encodeURIComponent(oldBids[i].id),{method:'DELETE',headers:HEADERS});
-  }
+  var payload={id:id,bid_deadline:deadline.toISOString()};
+  if(newRabattInput)payload.ziel_mindestrabatt=Number(newRabattInput);
+  var res=await adminCall('republish_bundle',payload);
+  if(!res||!res.ok){alert('Fehler beim Aktualisieren des Bündels.');return;}
 
   await Promise.all([loadExpiredBundles(),loadBundles(),loadStats()]);
 }
 
 async function removeBundle(id){
   if(!confirm('Bündel und alle zugehörigen Gebote endgültig entfernen? Materialanfragen werden auf "offen" zurückgesetzt.'))return;
-
-  var reqs=await sbFetch('material_requests?bundle_id=eq.'+encodeURIComponent(id)+'&select=id');
-  for(var i=0;i<reqs.length;i++){
-    await sbPatch('material_requests',reqs[i].id,{status:'offen',bundle_id:null});
-  }
-
-  var oldBids=await sbFetch('bids?bundle_id=eq.'+encodeURIComponent(id)+'&select=id');
-  for(var i=0;i<oldBids.length;i++){
-    await fetch(SB_URL+'/rest/v1/bids?id=eq.'+encodeURIComponent(oldBids[i].id),{method:'DELETE',headers:HEADERS});
-  }
-
-  await fetch(SB_URL+'/rest/v1/bundles?id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:HEADERS});
+  var res=await adminCall('remove_bundle',{id:id});
+  if(!res||!res.ok){alert('Fehler beim Entfernen des Bündels.');return;}
 
   await Promise.all([loadExpiredBundles(),loadBundles(),loadStats()]);
 }
 
 async function loadSuppliers(){
-  _allSuppliers=await sbFetch('suppliers?select=*&order=created_at.desc');
+  _allSuppliers=(await adminCall('all_suppliers')||{}).data||[];
   renderSuppliers(_allSuppliers);
 }
 
@@ -810,10 +786,8 @@ function exportExpiredBundlesExcel(){
 }
 
 async function loadCustomers(){
-  var [customers,requests]=await Promise.all([
-    sbFetch('customers?select=*&order=created_at.desc'),
-    sbFetch('material_requests?select=customer_id')
-  ]);
+  var _d=await adminCall('all_customers')||{};
+  var customers=_d.customers||[],requests=_d.requests||[];
   var reqCounts={};
   requests.forEach(function(r){if(r.customer_id)reqCounts[r.customer_id]=(reqCounts[r.customer_id]||0)+1;});
   _allCustomers=customers;_allCustomerReqCounts=reqCounts;
