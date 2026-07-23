@@ -1734,75 +1734,18 @@ async function submitContact(e){
     var plzVal=document.getElementById('c-plz').value.trim();
     var ortVal=document.getElementById('c-ort').value.trim();
     var addrVal=streetVal+', '+plzVal+' '+ortVal;
-    var custPayload={
-      firmenname:document.getElementById('c-company').value.trim(),
-      ansprechperson:document.getElementById('c-name').value.trim(),
-      email:document.getElementById('c-email').value.trim(),
-      telefon:document.getElementById('c-phone').value.trim(),
-      lieferadresse:addrVal,
-      kanton:''
-    };
-    if(window.Clerk&&window.Clerk.user){custPayload.user_id=window.Clerk.user.id;}
-    var _dbUrl=_supabase.supabaseUrl||(_supabase.rest?_supabase.rest.url:'unknown');
-    var _dbKey=_supabase.supabaseKey||(_supabase.rest&&_supabase.rest.headers?_supabase.rest.headers.apikey:'unknown');
-    soLog('[SourceOn Debug] Supabase URL:',_dbUrl);
-    soLog('[SourceOn Debug] Supabase key (first 20):',typeof _dbKey==='string'?_dbKey.substring(0,20):'MISSING');
-    soLog('[SourceOn Debug] Customer payload:',JSON.stringify(custPayload));
-
-    // Reuse existing customer if user is logged in
-    var customerId=null;
-    if(custPayload.user_id){
-      var existingCust=await _supabase.from('customers').select('id').eq('user_id',custPayload.user_id).limit(1).maybeSingle();
-      if(existingCust.data){
-        customerId=existingCust.data.id;
-        await _supabase.from('customers').update(custPayload).eq('id',customerId);
-        soLog('[SourceOn Debug] Reused existing customer:',customerId);
-      }
-    }
-    if(!customerId){
-      var custRes=await _supabase.from('customers').insert(custPayload).select('id').single();
-      soLog('[SourceOn Debug] Customer insert result:',JSON.stringify({data:custRes.data,error:custRes.error}));
-      if(custRes.error)throw custRes.error;
-      customerId=custRes.data.id;
-    }
-
-    var timing={von:document.getElementById('c-date-von').value,bis:document.getElementById('c-date-bis').value};
-    var zone=_zoneFromPlz(plzVal);
+    // Material-Zuordnung bleibt clientseitig (für die Fehlermeldung "aus Liste wählen").
     var rows=document.querySelectorAll('#material-rows .material-row');
-    var inserts=[];
+    var materials=[];
     var unmatched=[];
-    rows.forEach(function(r,idx){
-      var idEl=r.querySelector('.mat-id');
-      var sid=idEl?idEl.value:'';
-      var txtEl=r.querySelector('.mat-search');
-      var txt=txtEl?txtEl.value.trim():'';
+    rows.forEach(function(r){
+      var idEl=r.querySelector('.mat-id');var sid=idEl?idEl.value:'';
+      var txtEl=r.querySelector('.mat-search');var txt=txtEl?txtEl.value.trim():'';
       var qty=r.querySelector('.mat-qty').value.trim();
-      soLog('[SourceOn Debug] Row '+idx+': sourceon_id='+JSON.stringify(sid)+' qty='+JSON.stringify(qty));
-      if(!sid){
-        // Freitext ohne gültige Listen-Auswahl wird NIE übermittelt
-        if(txt&&qty)unmatched.push(txt);
-        return;
-      }
+      if(!sid){if(txt&&qty)unmatched.push(txt);return;}
       if(!qty)return;
-      var m=_matById[sid];
-      inserts.push({
-        customer_id:customerId,
-        sourceon_id:sid,
-        menge:qty,
-        einheit:(m&&m.einheit)||'Stk',
-        liefer_zeitraum_von:timing.von,
-        liefer_zeitraum_bis:timing.bis,
-        liefer_zone:zone,
-        status:'offen',
-        // Verbindliche Auftragsbestätigung — rechtlich nachvollziehbarer Nachweis
-        commitment_accepted:true,
-        commitment_accepted_at:_committedAt,
-        committed_min_rabatt:_committedRate,
-        commitment_version:COMMITMENT_VERSION
-      });
+      materials.push({sourceon_id:sid,menge:qty});
     });
-
-    // Konnte ein ausgewähltes Material NICHT zugeordnet werden? -> nicht still verschlucken, sondern melden.
     if(unmatched.length>0){
       submitBtn.disabled=false;submitBtn.style.opacity='1';
       var umDiv=document.getElementById('submit-error');
@@ -1816,12 +1759,26 @@ async function submitContact(e){
       return;
     }
 
-    if(inserts.length>0){
-      soLog('[SourceOn Debug] material_requests payload:',JSON.stringify(inserts));
-      var matRes=await _supabase.from('material_requests').insert(inserts);
-      soLog('[SourceOn Debug] Material requests insert result:',JSON.stringify({data:matRes.data,error:matRes.error}));
-      if(matRes.error)throw matRes.error;
-    }
+    // Serverseitiger Insert über die Edge-Function (zone + committed_min_rabatt werden
+    // dort berechnet — manipulationssicher; anon schreibt nicht mehr direkt in die DB).
+    var _custEmail=document.getElementById('c-email').value.trim();
+    var _reqPayload={
+      firmenname:document.getElementById('c-company').value.trim(),
+      ansprechperson:document.getElementById('c-name').value.trim(),
+      email:_custEmail,
+      telefon:document.getElementById('c-phone').value.trim(),
+      strasse:streetVal,plz:plzVal,ort:ortVal,
+      materials:materials,
+      liefer_zeitraum_von:document.getElementById('c-date-von').value,
+      liefer_zeitraum_bis:document.getElementById('c-date-bis').value,
+      commitment_accepted:true,
+      commitment_version:COMMITMENT_VERSION
+    };
+    if(window.Clerk&&window.Clerk.user)_reqPayload.clerk_user_id=window.Clerk.user.id;
+    var _fnResp=await fetch('https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/submit-customer-request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(_reqPayload)});
+    var _fnJson=await _fnResp.json().catch(function(){return{};});
+    if(!_fnResp.ok||!_fnJson.success)throw new Error(_fnJson.error||('http '+_fnResp.status));
+    var customerId=_fnJson.customer_id;
 
     // File upload note: file-based material list parsing not yet implemented in this phase
     document.getElementById('form-contact').style.display='none';
@@ -1831,7 +1788,7 @@ async function submitContact(e){
 
     // Account creation flow
     var wantsAccount=document.getElementById('c-create-account')&&document.getElementById('c-create-account').checked;
-    var userEmail=custPayload.email;
+    var userEmail=_custEmail;
     if(window.Clerk&&window.Clerk.user){
       // Eingeloggt: Anfrage immer sofort mit dem bestehenden Kundenkonto verknüpfen,
       // unabhängig von der "Konto erstellen"-Checkbox
