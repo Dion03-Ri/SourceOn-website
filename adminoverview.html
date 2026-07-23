@@ -553,7 +553,7 @@ async function loadBundles(){
     var mat=b.bundle_type==='multi_material'?'Mehrere Materialien':(b.sourceon_id||'–');
     var vol=(b.gesamtvolumen?Number(b.gesamtvolumen).toLocaleString('de-CH'):'-')+' '+(b.einheit||'');
     var rabatt=_rabattBruttoNetto(b.ziel_mindestrabatt); // ausgeschriebener BRUTTO-Wert + impliziertes Kunden-NETTO
-    var finalR=b.finaler_rabatt?(b.finaler_rabatt*100).toFixed(0)+'%':'–';
+    var finalR=b.finaler_rabatt!=null?Math.round(Number(b.finaler_rabatt)<1?Number(b.finaler_rabatt)*100:Number(b.finaler_rabatt))+'%':'–';
     var winner=b.gewonnener_supplier_id?(supMap[b.gewonnener_supplier_id]||b.gewonnener_supplier_id):'–';
     var bc=bidCounts[b.id]||0;
     html+='<tr>'
@@ -747,7 +747,7 @@ function _bndRow(b,st,stn,T){
   var vol=(b.gesamtvolumen!=null&&b.gesamtvolumen!=='')?Number(b.gesamtvolumen):null;
   var volStr=(vol!=null?vol.toLocaleString('de-CH'):'-')+' '+(b.einheit||'');
   var ziel=b.ziel_mindestrabatt!=null?(Number(b.ziel_mindestrabatt)<1?Math.round(Number(b.ziel_mindestrabatt)*100):Number(b.ziel_mindestrabatt)):null;
-  var finalR=b.finaler_rabatt!=null?Math.round(b.finaler_rabatt*100):null;
+  var finalR=b.finaler_rabatt!=null?Math.round(Number(b.finaler_rabatt)<1?Number(b.finaler_rabatt)*100:Number(b.finaler_rabatt)):null;
   var winner=b.gewonnener_supplier_id?(_allBundleSupMap[b.gewonnener_supplier_id]||b.gewonnener_supplier_id):'–';
   return [soCell(mat,st),soCell(b.liefer_zone||'–',st),soCell(volStr,st),
     soCell(ziel!=null?ziel:'–',stn,ziel!=null?T.Z_PCT:null),soCell(_supStatusLabel(b.status),st),
