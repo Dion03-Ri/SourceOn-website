@@ -1544,10 +1544,10 @@ async function submitSpecialRequest(ev){
   err.style.display='none';
   var btn=document.getElementById('sr-btn');btn.disabled=true;
   try{
-    var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
-    var sbKey='sb_publishable_C2d4skG1yF4lTzlKpvEWbw_mePtBH1c';
-    var resp=await fetch(sbUrl+'/rest/v1/special_requests',{method:'POST',headers:{'apikey':sbKey,'Authorization':'Bearer '+sbKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify({firmenname:firm,email:email,material_bezeichnung:material,menge:menge,liefer_zeitraum_von:dateVon||null,liefer_zeitraum_bis:dateBis||null,verwendungszweck:purpose||null,bemerkungen:remarks||null})});
-    if(!resp.ok)throw new Error('http '+resp.status);
+    // Schreibt serverseitig über die Edge-Function (anon schreibt nicht mehr direkt in die DB).
+    var resp=await fetch('https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/submit-special-request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({firmenname:firm,email:email,material_bezeichnung:material,menge:menge,liefer_zeitraum_von:dateVon||null,liefer_zeitraum_bis:dateBis||null,verwendungszweck:purpose||null,bemerkungen:remarks||null})});
+    var jr=await resp.json().catch(function(){return{};});
+    if(!resp.ok||!jr.success)throw new Error(jr.error||('http '+resp.status));
     document.getElementById('sr-form').style.display='none';
     document.getElementById('sr-success').style.display='block';
   }catch(e){
