@@ -968,7 +968,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     </ul>
     <div class="nav-right">
       <div class="lang-switch" id="lang-switch">
-        <button class="lang-btn" aria-label="Sprache wählen" aria-haspopup="true" onclick="document.getElementById('lang-switch').classList.toggle('open')"><span id="lang-current">DE</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
+        <button class="lang-btn" aria-label="Sprache wählen" aria-haspopup="true" onclick="document.getElementById('lang-switch').classList.toggle('open')"><span id="lang-current">DE</span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
         <div class="lang-dd">
           <button class="lang-opt active" onclick="setLang('de')"><span class="lang-flag">🇨🇭</span> Deutsch</button>
           <button class="lang-opt" onclick="setLang('en')"><span class="lang-flag">🇺🇸</span> English</button>
@@ -978,7 +978,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       </div>
       <div id="acct-wrap" style="position:relative">
         <button id="acct-btn" onclick="toggleAcctDD()" aria-label="Konto">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </button>
         <div id="acct-dd">
           <div id="acct-signed-out">
@@ -992,8 +992,8 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           </div>
           <div id="acct-signed-in" style="display:none">
             <div class="acct-user"><strong id="acct-name"></strong><span id="acct-email"></span><div id="acct-status-wrap"></div></div>
-            <a href="kundendashboard.html" id="acct-customer-link" target="_blank" style="display:none" data-i18n="acct_customer_dash"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Zum Kunden-Dashboard</a>
-            <a href="supplierdashboard.html" id="acct-dashboard-link" target="_blank" style="display:none" data-i18n="acct_dashboard"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Zum Lieferanten-Dashboard</a>
+            <a href="kundendashboard.html" id="acct-customer-link" target="_blank" style="display:none" data-i18n="acct_customer_dash"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Zum Kunden-Dashboard</a>
+            <a href="supplierdashboard.html" id="acct-dashboard-link" target="_blank" style="display:none" data-i18n="acct_dashboard"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Zum Lieferanten-Dashboard</a>
             <button onclick="clerkSignOut()" data-i18n="acct_signout">Abmelden</button>
           </div>
         </div>
@@ -1005,7 +1005,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 </nav>
 
 <div id="nav-overlay">
-  <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <button id="nav-close" onclick="toggleNav()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   <a href="/" onclick="toggleNav()" data-i18n="nav_home">Home</a>
   <a href="prozess.html" onclick="toggleNav()" data-i18n="nav_process">Wie es funktioniert</a>
   <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calc">Kalkulator</a>
@@ -1239,7 +1239,7 @@ updateCalc(150000);
 
 <!-- CHAT WIDGET -->
 <button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
 </button>
 <div id="chat-win">
   <div class="chat-head">
@@ -1247,7 +1247,7 @@ updateCalc(150000);
       <div class="chat-avatar">SO</div>
       <div><div class="chat-head-title">SourceOn Assistent</div><div class="chat-head-sub">Beantwortet alle Fragen zu SourceOn</div></div>
     </div>
-    <button id="chat-close" onclick="toggleChat()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <button id="chat-close" onclick="toggleChat()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="chat-msgs" id="chat-msgs"></div>
   <div class="chat-footer">
@@ -1258,7 +1258,7 @@ updateCalc(150000);
     </div>
     <div class="chat-input-row">
       <input type="text" id="chat-input" placeholder="Frage stellen…" onkeydown="if(event.key==='Enter')chatSend()"/>
-      <button id="chat-send" onclick="chatSend()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg></button>
+      <button id="chat-send" onclick="chatSend()"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg></button>
     </div>
   </div>
 </div>

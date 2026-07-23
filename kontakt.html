@@ -1069,7 +1069,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <div class="lang-switch" id="lang-switch">
         <button class="lang-btn" aria-label="Sprache wählen" aria-haspopup="true" onclick="document.getElementById('lang-switch').classList.toggle('open')">
           <span id="lang-current">DE</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
         <div class="lang-dd">
           <button class="lang-opt active" onclick="setLang('de')"><span class="lang-flag">🇨🇭</span> Deutsch</button>
@@ -1080,7 +1080,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       </div>
       <div id="acct-wrap" style="position:relative">
         <button id="acct-btn" onclick="toggleAcctDD()" aria-label="Konto">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
         </button>
         <div id="acct-dd">
           <div id="acct-signed-out">
@@ -1094,8 +1094,8 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           </div>
           <div id="acct-signed-in" style="display:none">
             <div class="acct-user"><strong id="acct-name"></strong><span id="acct-email"></span><div id="acct-status-wrap"></div></div>
-            <a href="kundendashboard.html" id="acct-customer-link" target="_blank" style="display:none" data-i18n="acct_customer_dash"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Zum Kunden-Dashboard</a>
-            <a href="supplierdashboard.html" id="acct-dashboard-link" target="_blank" style="display:none" data-i18n="acct_dashboard"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Zum Lieferanten-Dashboard</a>
+            <a href="kundendashboard.html" id="acct-customer-link" target="_blank" style="display:none" data-i18n="acct_customer_dash"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>Zum Kunden-Dashboard</a>
+            <a href="supplierdashboard.html" id="acct-dashboard-link" target="_blank" style="display:none" data-i18n="acct_dashboard"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>Zum Lieferanten-Dashboard</a>
             <button onclick="clerkSignOut()" data-i18n="acct_signout">Abmelden</button>
           </div>
         </div>
@@ -1107,7 +1107,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 </nav>
 
 <div id="nav-overlay">
-  <button id="nav-close" onclick="toggleNav()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <button id="nav-close" onclick="toggleNav()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   <a href="/" data-i18n="nav_home" onclick="toggleNav()">Home</a>
   <a href="prozess.html" data-i18n="nav_process" onclick="toggleNav()">Wie es funktioniert</a>
   <a href="kalkulator.html" data-i18n="nav_calculator" onclick="toggleNav()">Kalkulator</a>
@@ -1122,7 +1122,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 <!-- BENTO DETAIL MODAL -->
 <div id="bento-modal" class="bento-modal">
   <div class="bento-modal-card" role="dialog" aria-modal="true" aria-labelledby="bento-modal-title">
-    <button class="bento-modal-close" onclick="closeBentoModal()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <button class="bento-modal-close" onclick="closeBentoModal()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     <h2 id="bento-modal-title"></h2>
     <p id="bento-modal-text"></p>
   </div>
@@ -1143,8 +1143,8 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           <div class="ckstep"><div class="ckstep-n">3</div><div><div class="ckstep-t" data-i18n="ckstep3_t">Absenden &amp; verfolgen</div><div class="ckstep-x" data-i18n="ckstep3_x">Nach dem Absenden verfolgst du den Status jederzeit in deinem Dashboard.</div></div></div>
         </div>
         <div class="cinfo">
-          <div class="cinfo-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg><a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
-          <div class="cinfo-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="ck_location">Zürich, Schweiz</span></div>
+          <div class="cinfo-row"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg><a href="mailto:info@sourceon.ch">info@sourceon.ch</a></div>
+          <div class="cinfo-row"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="ck_location">Zürich, Schweiz</span></div>
         </div>
         <div class="tempobox">
           <div class="tempobox-t" data-i18n="tempobox_t">Lieferzeitraum gibt das Tempo vor</div>
@@ -1241,7 +1241,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;text-align:center;font-style:italic" data-i18n="form_post_submit">Nach dem Absenden siehst du sofort deinen garantierten Mindestrabatt und kannst den Status deiner Anfrage jederzeit in deinem Dashboard verfolgen.</p>
             <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;font-style:italic" data-i18n="form_bundle_hint">Hinweis: Wird dein Bedarf mit anderen Baufirmen gebündelt, richtet sich deine individuelle Ersparnis nach deinem Volumenanteil am Gesamtbündel.</p>
           </form>
-            <div class="form-success" id="success-contact" data-i18n-html="form_success"><span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — deine Anfrage ist eingegangen. Verfolge den Status jederzeit in deinem Dashboard. Sobald dein Bündel steht, erhältst du dein konkretes Angebot.</div>
+            <div class="form-success" id="success-contact" data-i18n-html="form_success"><span><svg aria-hidden="true" class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — deine Anfrage ist eingegangen. Verfolge den Status jederzeit in deinem Dashboard. Sobald dein Bündel steht, erhältst du dein konkretes Angebot.</div>
           </div>
         </div>
       </div>
@@ -1575,7 +1575,7 @@ function addMaterialRow(){
   if(matRowCount>=10)return;matRowCount++;
   const rows=document.getElementById('material-rows');
   const div=document.createElement('div');div.className='material-row';
-  div.innerHTML=MAT_COMBO_HTML+'<div class="mat-qty-wrap"><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><span class="mat-unit"></span></div><button type="button" class="mat-remove-btn" onclick="removeMaterialRow(this)" title="Entfernen"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
+  div.innerHTML=MAT_COMBO_HTML+'<div class="mat-qty-wrap"><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><span class="mat-unit"></span></div><button type="button" class="mat-remove-btn" onclick="removeMaterialRow(this)" title="Entfernen"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
   rows.appendChild(div);
   _initMatCombo(div.querySelector('.mat-combo'));
   if(_matCatalogFailed)_applyCatalogFailure();
@@ -1902,7 +1902,7 @@ function toggleFaq(btn){
 
 <!-- CHAT WIDGET -->
 <button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
 </button>
 <div id="chat-win">
   <div class="chat-head">
@@ -1910,7 +1910,7 @@ function toggleFaq(btn){
       <div class="chat-avatar">SO</div>
       <div><div class="chat-head-title" data-i18n="chat_title">SourceOn Assistent</div><div class="chat-head-sub" data-i18n="chat_subtitle">Beantwortet alle Fragen zu SourceOn</div></div>
     </div>
-    <button id="chat-close" onclick="toggleChat()"><svg class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <button id="chat-close" onclick="toggleChat()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="chat-msgs" id="chat-msgs"></div>
   <div class="chat-footer">
@@ -1921,7 +1921,7 @@ function toggleFaq(btn){
     </div>
     <div class="chat-input-row">
       <input type="text" id="chat-input" placeholder="Frage stellen…" data-i18n-placeholder="chat_placeholder" onkeydown="if(event.key==='Enter')chatSend()"/>
-      <button id="chat-send" onclick="chatSend()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg></button>
+      <button id="chat-send" onclick="chatSend()"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg></button>
     </div>
   </div>
 </div>
@@ -1967,7 +1967,7 @@ window.I18N={
     form_submit:"Materialbedarf jetzt melden →",
     form_post_submit:"Nach dem Absenden siehst du sofort deinen garantierten Mindestrabatt und kannst den Status deiner Anfrage jederzeit in deinem Dashboard verfolgen.",
     form_bundle_hint:"Hinweis: Wird dein Bedarf mit anderen Baufirmen gebündelt, richtet sich deine individuelle Ersparnis nach deinem Volumenanteil am Gesamtbündel.",
-    form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — deine Anfrage ist eingegangen. Verfolge den Status jederzeit in deinem Dashboard. Sobald dein Bündel steht, erhältst du dein konkretes Angebot.',
+    form_success:'<span><svg aria-hidden="true" class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — deine Anfrage ist eingegangen. Verfolge den Status jederzeit in deinem Dashboard. Sobald dein Bündel steht, erhältst du dein konkretes Angebot.',
     footer_desc:"Schweizer B2B Beschaffungsvermittler für die Baubranche.",
     footer_services:"Leistungen",footer_company:"Unternehmen",footer_legal:"Rechtliches",
     footer_calculator:"Einsparkalkulator",footer_privacy:"Datenschutz",footer_imprint:"Impressum",footer_terms:"AGB",
@@ -2023,7 +2023,7 @@ window.I18N={
     form_submit:"Report material needs now →",
     form_post_submit:"After submitting, you immediately see your guaranteed minimum discount and can track your request status anytime in your dashboard.",
     form_bundle_hint:"Note: If your demand is bundled with other construction firms, your individual savings depend on your volume share of the total bundle.",
-    form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Thank you — your request has been received. Track the status anytime in your dashboard. As soon as your bundle is ready, you\'ll receive your concrete offer.',
+    form_success:'<span><svg aria-hidden="true" class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Thank you — your request has been received. Track the status anytime in your dashboard. As soon as your bundle is ready, you\'ll receive your concrete offer.',
     footer_desc:"Swiss B2B procurement intermediary for the construction industry.",
     footer_services:"Services",footer_company:"Company",footer_legal:"Legal",
     footer_calculator:"Savings calculator",footer_privacy:"Privacy policy",footer_imprint:"Legal notice",footer_terms:"Terms & conditions",
@@ -2078,7 +2078,7 @@ window.I18N={
     form_submit:"Déclarer le besoin maintenant →",
     form_post_submit:"Après envoi, vous voyez immédiatement votre remise minimale garantie et pouvez suivre le statut de votre demande à tout moment dans votre tableau de bord.",
     form_bundle_hint:"Remarque : Si votre besoin est regroupé avec d'autres entreprises de construction, vos économies individuelles dépendent de votre part de volume dans le regroupement total.",
-    form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Merci — votre demande a bien été reçue. Suivez le statut à tout moment dans votre tableau de bord. Dès que votre regroupement est prêt, vous recevez votre offre concrète.',
+    form_success:'<span><svg aria-hidden="true" class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Merci — votre demande a bien été reçue. Suivez le statut à tout moment dans votre tableau de bord. Dès que votre regroupement est prêt, vous recevez votre offre concrète.',
     footer_desc:"Intermédiaire B2B suisse pour l'approvisionnement dans le secteur de la construction.",
     footer_services:"Services",footer_company:"Entreprise",footer_legal:"Mentions légales",
     footer_calculator:"Calculateur d'économies",footer_privacy:"Protection des données",footer_imprint:"Mentions légales",footer_terms:"CGV",
@@ -2133,7 +2133,7 @@ window.I18N={
     form_submit:"Segnalare fabbisogno ora →",
     form_post_submit:"Dopo l'invio, vedi immediatamente il tuo sconto minimo garantito e puoi seguire lo stato della tua richiesta in qualsiasi momento nella tua dashboard.",
     form_bundle_hint:"Nota: Se il tuo fabbisogno viene raggruppato con altre imprese edili, il tuo risparmio individuale dipende dalla tua quota di volume nel raggruppamento totale.",
-    form_success:'<span><svg class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Grazie — la tua richiesta è stata ricevuta. Segui lo stato in qualsiasi momento nella tua dashboard. Non appena il tuo raggruppamento è pronto, ricevi la tua offerta concreta.',
+    form_success:'<span><svg aria-hidden="true" class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Grazie — la tua richiesta è stata ricevuta. Segui lo stato in qualsiasi momento nella tua dashboard. Non appena il tuo raggruppamento è pronto, ricevi la tua offerta concreta.',
     footer_desc:"Intermediario B2B svizzero per gli approvvigionamenti nel settore edile.",
     footer_services:"Servizi",footer_company:"Azienda",footer_legal:"Note legali",
     footer_calculator:"Calcolatore di risparmio",footer_privacy:"Protezione dei dati",footer_imprint:"Impressum",footer_terms:"CGC",
