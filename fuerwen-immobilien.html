@@ -1155,8 +1155,8 @@ function toggleFaq(btn){
 </div>
 <script>
 (function(){
-const APIKEY='ANTHROPIC_API_KEY_HERE';
-const SYSTEM="Du bist der offizielle SourceOn Assistent. SourceOn ist ein Schweizer B2B Beschaffungsvermittler für die Baubranche. Provision: 2.25% auf Materialwert, nur bei nachgewiesener Ersparnis. Antworte immer auf Deutsch, kurz und präzise, maximal 3 Sätze.";
+
+
 let history=[];let chatOpen=false;
 window.toggleChat=function(){chatOpen=!chatOpen;document.getElementById('chat-win').classList.toggle('open',chatOpen);if(chatOpen&&document.getElementById('chat-msgs').children.length===0)addBotMsg('Hallo! Ich bin der SourceOn Assistent. Wie kann ich dir helfen?');};
 window.sendChip=function(el){document.getElementById('chat-chips').style.display='none';handleSend(el.textContent);};
@@ -1166,7 +1166,7 @@ function addBotMsg(txt){const wrap=document.createElement('div');const lbl=docum
 function showTyping(){const el=document.createElement('div');el.className='chat-typing';el.id='chat-typing';el.innerHTML='<span></span><span></span><span></span>';document.getElementById('chat-msgs').appendChild(el);scrollBottom();}
 function hideTyping(){const el=document.getElementById('chat-typing');if(el)el.remove();}
 function scrollBottom(){const m=document.getElementById('chat-msgs');m.scrollTop=m.scrollHeight;}
-async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content:txt});if(history.length>20)history=history.slice(-20);if(APIKEY==='ANTHROPIC_API_KEY_HERE'){addBotMsg('Assistent wird bald verfügbar. Kontaktiere uns direkt: info@sourceon.ch');return;}showTyping();try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':APIKEY,'anthropic-version':'2023-06-01'},body:JSON.stringify({model:'claude-haiku-4-5-20251001',max_tokens:300,system:SYSTEM,messages:history})});const d=await r.json();const reply=d.content&&d.content[0]?d.content[0].text:'Entschuldigung. Kontaktiere uns: info@sourceon.ch';hideTyping();history.push({role:'assistant',content:reply});if(history.length>20)history=history.slice(-20);addBotMsg(reply);}catch(e){hideTyping();addBotMsg('Verbindungsfehler. Kontaktiere uns: info@sourceon.ch');}
+async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content:txt});if(history.length>20)history=history.slice(-20);showTyping();try{const r=await fetch('https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history})});const d=await r.json();const reply=d.reply?d.reply:'Entschuldigung. Kontaktiere uns: info@sourceon.ch';hideTyping();history.push({role:'assistant',content:reply});if(history.length>20)history=history.slice(-20);addBotMsg(reply);}catch(e){hideTyping();addBotMsg('Verbindungsfehler. Kontaktiere uns: info@sourceon.ch');}
 }
 })();
 </script>
