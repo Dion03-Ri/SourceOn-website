@@ -229,6 +229,13 @@ input,select,textarea{font-family:inherit}
 .warn-pill{font-size:11px;background:var(--amber-bg);color:var(--amber);padding:2px 8px;border-radius:999px;white-space:nowrap;margin-left:6px}
 .warn-pill.crit{background:var(--red-bg);color:var(--red)}
 .warn-ov-bar{background:var(--amber-bg);border:1px solid rgba(245,158,11,0.3);border-radius:var(--r-sm);padding:10px 14px;margin-bottom:12px;font-size:13px;color:var(--amber);font-weight:600;cursor:pointer}
+/* Dashboard-Politur — Übersicht-Listen als Karten */
+.ov-card{background:linear-gradient(180deg,rgba(255,255,255,.015),rgba(255,255,255,0) 40%),var(--bg-1);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-bottom:8px}
+.ov-card .ev-row,.ov-card .prev-row{margin:0;padding:15px 20px;border-bottom:1px solid var(--border);border-radius:0;transition:background .15s}
+.ov-card .ev-row:last-child,.ov-card .prev-row:last-child{border-bottom:none}
+.ov-card .ev-row:hover,.ov-card .prev-row:hover{background:var(--bg-2)}
+.ov-card .empty-line{padding:18px 20px}
+.ov-card .warn-ov-bar{margin:0;border-radius:0;border-left:none;border-right:none;border-top:none}
 .req-empty{display:flex;align-items:center;justify-content:center;height:520px;color:var(--text-3);font-size:14px}
 .rd-mat{font-size:24px;font-weight:700;letter-spacing:-.01em;margin-bottom:4px}
 .rd-id{font-size:12px;color:var(--gold);font-weight:500}
@@ -428,10 +435,10 @@ p{text-wrap:pretty}
       </div>
     </div>
     <div class="sec-head"><span class="sec-label">Bevorstehend</span><span class="link-m" onclick="exportICS()">↓ Kalender</span></div>
-    <div id="ov-agenda"></div>
+    <div id="ov-agenda" class="ov-card"></div>
     <div class="divider"></div>
     <div class="sec-head"><span class="sec-label">Letzte Anfragen</span><span class="link-g" onclick="showTab('anfragen')">Alle anzeigen →</span></div>
-    <div id="ov-preview"></div>
+    <div id="ov-preview" class="ov-card"></div>
     <div id="ov-verlauf-wrap" style="display:none">
       <div class="divider"></div>
       <span class="sec-label">Verlauf</span>
