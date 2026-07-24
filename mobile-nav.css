@@ -14,7 +14,7 @@
 }
 
 /* --- Hauptnavigation auf Mobile aufräumen (Seiten mit #nav) --- */
-@media (max-width: 1120px){
+@media (max-width: 900px){
   /* Die breite Gold-CTA in der Leiste ausblenden — sie ist im Burger-Overlay vorhanden */
   #nav .nav-right > .btn { display: none !important; }
   #nav .nav-right { gap: 10px !important; }
