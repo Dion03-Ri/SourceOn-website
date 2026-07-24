@@ -267,12 +267,26 @@
     return ws;
   }
 
-  function soExcelExport(filename, sheets) {
+  // Lazy-Loader: die schwere xlsx-js-style-Bibliothek (~1 MB) wird erst beim
+  // ersten Export nachgeladen, nicht schon beim Seitenaufbau.
+  var XLSX_SRC = 'https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js';
+  var _xlsxLoading = null;
+  function ensureXLSX() {
+    if (global.XLSX && global.XLSX.utils) return Promise.resolve(true);
+    if (_xlsxLoading) return _xlsxLoading;
+    _xlsxLoading = new Promise(function (resolve, reject) {
+      var sc = document.createElement('script');
+      sc.src = XLSX_SRC;
+      sc.async = true;
+      sc.onload = function () { resolve(true); };
+      sc.onerror = function () { _xlsxLoading = null; reject(new Error('xlsx_load_failed')); };
+      document.head.appendChild(sc);
+    });
+    return _xlsxLoading;
+  }
+
+  function _buildAndWrite(filename, sheets) {
     var XLSX = global.XLSX;
-    if (!XLSX || !XLSX.utils) {
-      alert('Excel-Bibliothek noch nicht geladen — bitte einen Moment warten und erneut versuchen.');
-      return false;
-    }
     var wb = XLSX.utils.book_new();
     sheets.forEach(function (def) {
       var ws = buildSheet(def);
@@ -282,7 +296,20 @@
     return true;
   }
 
+  function soExcelExport(filename, sheets) {
+    if (global.XLSX && global.XLSX.utils) {
+      return Promise.resolve(_buildAndWrite(filename, sheets));
+    }
+    return ensureXLSX()
+      .then(function () { return _buildAndWrite(filename, sheets); })
+      .catch(function () {
+        alert('Excel-Bibliothek konnte nicht geladen werden — bitte Internetverbindung prüfen und erneut versuchen.');
+        return false;
+      });
+  }
+
   global.SO_XL = SO_XL;
   global.soCell = soCell;
   global.soExcelExport = soExcelExport;
+  global.soEnsureXLSX = ensureXLSX;
 })(window);
