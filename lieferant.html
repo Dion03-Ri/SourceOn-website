@@ -1107,7 +1107,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <div class="fcard-accent"></div>
       <div class="saform-inner">
       <!-- AUTH GATE (shown when not logged in) -->
-      <div id="sa-authgate" style="display:none;text-align:center;padding:48px 32px;max-width:480px;margin:0 auto">
+      <div id="sa-authgate" style="text-align:center;padding:48px 32px;max-width:480px;margin:0 auto">
         <div style="font-size:32px;margin-bottom:16px">🔐</div>
         <div data-i18n="sa.gate.title" style="font-size:20px;font-weight:700;color:#0F172A;margin-bottom:8px">Zuerst Konto erstellen</div>
         <div data-i18n="sa.gate.sub" style="font-size:14px;color:#64748B;line-height:1.6;margin-bottom:28px">Um dich als Partnerlieferant zu bewerben, benötigst du ein SourceOn-Konto. Die Registrierung ist kostenlos und dauert eine Minute.</div>
@@ -1475,7 +1475,15 @@ async function _gateSupplier(){
     if(window.Clerk&&window.Clerk.addListener){
       window.Clerk.addListener(function(){
         _gateSupplier().then(function(){
-          if(window.Clerk.user){var w=document.getElementById('sa-formwrap');if(w&&w.style.display!=='none'){try{w.scrollIntoView({behavior:'smooth',block:'start'});}catch(e){}}}
+          // Nur nach Registrierungs-Rücksprung sanft zum Formular scrollen —
+          // NICHT bei jedem normalen Seitenaufruf (verhindert das Springen).
+          try{
+            if(window.Clerk.user&&localStorage.getItem('sourceon_redirect_after_login')){
+              localStorage.removeItem('sourceon_redirect_after_login');
+              var w=document.getElementById('sa-formwrap');
+              if(w&&w.style.display!=='none'){w.scrollIntoView({behavior:'smooth',block:'start'});}
+            }
+          }catch(e){}
         });
       });
     }
