@@ -1106,8 +1106,13 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="saform">
       <div class="fcard-accent"></div>
       <div class="saform-inner">
+      <style>@keyframes saSpin{to{transform:rotate(360deg)}}</style>
+      <!-- NEUTRALER LADEZUSTAND — verhindert Aufblitzen des falschen Zustands bis Clerk aufgelöst ist -->
+      <div id="sa-loading" style="min-height:360px;display:flex;align-items:center;justify-content:center">
+        <div style="width:34px;height:34px;border:3px solid rgba(15,23,42,.12);border-top-color:var(--gold);border-radius:50%;animation:saSpin .8s linear infinite" role="status" aria-label="Wird geladen"></div>
+      </div>
       <!-- AUTH GATE (shown when not logged in) -->
-      <div id="sa-authgate" style="text-align:center;padding:48px 32px;max-width:480px;margin:0 auto">
+      <div id="sa-authgate" style="display:none;text-align:center;padding:48px 32px;max-width:480px;margin:0 auto">
         <div style="font-size:32px;margin-bottom:16px">🔐</div>
         <div data-i18n="sa.gate.title" style="font-size:20px;font-weight:700;color:#0F172A;margin-bottom:8px">Zuerst Konto erstellen</div>
         <div data-i18n="sa.gate.sub" style="font-size:14px;color:#64748B;line-height:1.6;margin-bottom:28px">Um dich als Partnerlieferant zu bewerben, benötigst du ein SourceOn-Konto. Die Registrierung ist kostenlos und dauert eine Minute.</div>
@@ -1444,6 +1449,7 @@ function _saT(k){var l=localStorage.getItem('sourceon-lang')||'de';return (windo
 function supplierRegister(){if(!window.Clerk)return;try{localStorage.setItem('sourceon_redirect_after_login',window.location.href);}catch(e){}window.Clerk.openSignUp({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});}
 function supplierLogin(){if(!window.Clerk)return;window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});}
 function _saShow(which){
+  var ld=document.getElementById('sa-loading');if(ld)ld.style.display='none';
   var map={gate:'sa-authgate',form:'sa-formwrap',pending:'sa-pending',rejected:'sa-rejected'};
   Object.keys(map).forEach(function(k){var el=document.getElementById(map[k]);if(el)el.style.display=(k===which)?'block':'none';});
   var lr=document.getElementById('lben-register');if(lr)lr.style.display=(which==='gate')?'inline':'none';
@@ -1491,7 +1497,7 @@ async function _gateSupplier(){
   var n=0,iv=setInterval(function(){
     n+=150;
     if(window.Clerk){clearInterval(iv);if(typeof window.Clerk.load==='function'){window.Clerk.load().then(onClerk).catch(onClerk);}else{onClerk();}}
-    else if(n>=12000){clearInterval(iv);}
+    else if(n>=12000){clearInterval(iv);_saShow('gate');}
   },150);
 })();
 
