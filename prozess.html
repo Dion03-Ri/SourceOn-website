@@ -843,6 +843,25 @@ body{background:#070F1A}
   #lp .cmp2 .cl{text-align:left;padding:0;border:none;color:var(--t3);font-size:13px;text-decoration:line-through}
   #lp .cmp2 .cr{padding:0;border:none;color:var(--t1);font-size:14px;font-weight:600}
 }
+/* comparison — zwei Karten */
+#lp .cmpx{display:grid;grid-template-columns:1fr 1fr;gap:20px;max-width:880px;margin:0 auto;align-items:stretch}
+#lp .cmpx-card{border:1px solid var(--border);border-radius:16px;padding:30px 28px;background:var(--bg);display:flex;flex-direction:column}
+#lp .cmpx-solo{background:var(--bg2)}
+#lp .cmpx-so{border-color:var(--gold-b);box-shadow:0 14px 44px rgba(232,160,32,.12);position:relative;background:linear-gradient(180deg,var(--gold-dim),transparent 55%),var(--bg)}
+#lp .cmpx-head{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:700;letter-spacing:-.01em;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid var(--border)}
+#lp .cmpx-solo .cmpx-head{color:var(--t3)}
+#lp .cmpx-so .cmpx-head{color:var(--gold)}
+#lp .cmpx-so .cmpx-head::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px var(--gold-dim);margin-left:auto}
+#lp .cmpx-list{display:flex;flex-direction:column;gap:18px}
+#lp .cmpx-item{display:flex;gap:12px;align-items:flex-start}
+#lp .cmpx-ic{flex-shrink:0;width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;margin-top:1px;line-height:1}
+#lp .cmpx-solo .cmpx-ic{background:rgba(100,116,139,.14);color:var(--t3)}
+#lp .cmpx-so .cmpx-ic{background:var(--gold);color:#1a1a1a}
+#lp .cmpx-cat{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--t3);margin-bottom:3px}
+#lp .cmpx-txt{font-size:14px;line-height:1.35}
+#lp .cmpx-solo .cmpx-txt{color:var(--t2)}
+#lp .cmpx-so .cmpx-txt{color:var(--t1);font-weight:600}
+@media(max-width:640px){#lp .cmpx{grid-template-columns:1fr;gap:14px}#lp .cmpx-card{padding:24px 22px}}
 /* centered cta */
 #lp .cta-center{text-align:center;padding:100px 0;border-top:1px solid var(--lpb)}
 #lp .cta-center h2{font-size:clamp(28px,4vw,48px);font-weight:800;color:var(--t1);letter-spacing:-.03em}
@@ -1045,18 +1064,29 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <!-- COMPARISON -->
   <section class="sec bt"><div class="wrap">
     <span class="sec-label" data-i18n="cmp_seclabel">Der Unterschied</span>
-    <div class="cmp2 reveal">
-      <div class="chead">
-        <div class="ch-l" data-i18n="cmpx_l">Alleine einkaufen</div>
-        <div class="ch-c"></div>
-        <div class="ch-r" data-i18n="cmpx_r">Mit SourceOn</div>
+    <div class="cmpx reveal">
+      <div class="cmpx-card cmpx-solo">
+        <div class="cmpx-head" data-i18n="cmpx_l">Alleine einkaufen</div>
+        <div class="cmpx-list">
+          <div class="cmpx-item"><span class="cmpx-ic">✕</span><div><span class="cmpx-cat" data-i18n="cmpx_1c">Preis</span><span class="cmpx-txt" data-i18n="cmpx_1l">Einzelpreis</span></div></div>
+          <div class="cmpx-item"><span class="cmpx-ic">✕</span><div><span class="cmpx-cat" data-i18n="cmpx_2c">Verhandlung</span><span class="cmpx-txt" data-i18n="cmpx_2l">Einzelvolumen</span></div></div>
+          <div class="cmpx-item"><span class="cmpx-ic">✕</span><div><span class="cmpx-cat" data-i18n="cmpx_3c">Transparenz</span><span class="cmpx-txt" data-i18n="cmpx_3l">Begrenzt</span></div></div>
+          <div class="cmpx-item"><span class="cmpx-ic">✕</span><div><span class="cmpx-cat" data-i18n="cmpx_4c">Lieferanten</span><span class="cmpx-txt" data-i18n="cmpx_4l">Eigenrecherche</span></div></div>
+          <div class="cmpx-item"><span class="cmpx-ic">✕</span><div><span class="cmpx-cat" data-i18n="cmpx_5c">Datenschutz</span><span class="cmpx-txt" data-i18n="cmpx_5l">Identität sofort bekannt</span></div></div>
+          <div class="cmpx-item"><span class="cmpx-ic">✕</span><div><span class="cmpx-cat" data-i18n="cmpx_6c">Risiko</span><span class="cmpx-txt" data-i18n="cmpx_6l">Volle Kosten ohne Garantie</span></div></div>
+        </div>
       </div>
-      <div class="crow"><div class="cl" data-i18n="cmpx_1l">Einzelpreis</div><div class="cc" data-i18n="cmpx_1c">Preis</div><div class="cr"><span class="dot">●</span><span data-i18n="cmpx_1r">Bündelrabatt</span></div></div>
-      <div class="crow"><div class="cl" data-i18n="cmpx_2l">Einzelvolumen</div><div class="cc" data-i18n="cmpx_2c">Verhandlung</div><div class="cr"><span class="dot">●</span><span data-i18n="cmpx_2r">Gebündeltes Volumen</span></div></div>
-      <div class="crow"><div class="cl" data-i18n="cmpx_3l">Begrenzt</div><div class="cc" data-i18n="cmpx_3c">Transparenz</div><div class="cr"><span class="dot">●</span><span data-i18n="cmpx_3r">Vollständig</span></div></div>
-      <div class="crow"><div class="cl" data-i18n="cmpx_4l">Eigenrecherche</div><div class="cc" data-i18n="cmpx_4c">Lieferanten</div><div class="cr"><span class="dot">●</span><span data-i18n="cmpx_4r">SIA/ISO-geprüft</span></div></div>
-      <div class="crow"><div class="cl" data-i18n="cmpx_5l">Identität sofort bekannt</div><div class="cc" data-i18n="cmpx_5c">Datenschutz</div><div class="cr"><span class="dot">●</span><span data-i18n="cmpx_5r">Geschützt bis Zuschlag</span></div></div>
-      <div class="crow"><div class="cl" data-i18n="cmpx_6l">Volle Kosten ohne Garantie</div><div class="cc" data-i18n="cmpx_6c">Risiko</div><div class="cr"><span class="dot">●</span><span data-i18n="cmpx_6r">Null — nur Provision bei Ersparnis</span></div></div>
+      <div class="cmpx-card cmpx-so">
+        <div class="cmpx-head" data-i18n="cmpx_r">Mit SourceOn</div>
+        <div class="cmpx-list">
+          <div class="cmpx-item"><span class="cmpx-ic">✓</span><div><span class="cmpx-cat" data-i18n="cmpx_1c">Preis</span><span class="cmpx-txt" data-i18n="cmpx_1r">Bündelrabatt</span></div></div>
+          <div class="cmpx-item"><span class="cmpx-ic">✓</span><div><span class="cmpx-cat" data-i18n="cmpx_2c">Verhandlung</span><span class="cmpx-txt" data-i18n="cmpx_2r">Gebündeltes Volumen</span></div></div>
+          <div class="cmpx-item"><span class="cmpx-ic">✓</span><div><span class="cmpx-cat" data-i18n="cmpx_3c">Transparenz</span><span class="cmpx-txt" data-i18n="cmpx_3r">Vollständig</span></div></div>
+          <div class="cmpx-item"><span class="cmpx-ic">✓</span><div><span class="cmpx-cat" data-i18n="cmpx_4c">Lieferanten</span><span class="cmpx-txt" data-i18n="cmpx_4r">SIA/ISO-geprüft</span></div></div>
+          <div class="cmpx-item"><span class="cmpx-ic">✓</span><div><span class="cmpx-cat" data-i18n="cmpx_5c">Datenschutz</span><span class="cmpx-txt" data-i18n="cmpx_5r">Geschützt bis Zuschlag</span></div></div>
+          <div class="cmpx-item"><span class="cmpx-ic">✓</span><div><span class="cmpx-cat" data-i18n="cmpx_6c">Risiko</span><span class="cmpx-txt" data-i18n="cmpx_6r">Null — nur Provision bei Ersparnis</span></div></div>
+        </div>
+      </div>
     </div>
   </div></section>
 
