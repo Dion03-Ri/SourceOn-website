@@ -344,7 +344,7 @@ Deno.serve(async (req: Request) => {
     for (const s of summary) {
       console.log(
         `  Bundle: ${s.sourceon_id} / ${s.liefer_zone} — ${s.totalMenge} ${s.einheit} ` +
-        `(~${s.estimatedCHF} CHF) → ${(s.targetDiscount * 100).toFixed(0)}% target, ${s.requestCount} requests`
+        `(~${s.estimatedCHF} CHF) → ${(s.targetDiscount * 100).toFixed(2)}% target, ${s.requestCount} requests`
       );
     }
 
