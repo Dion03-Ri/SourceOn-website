@@ -260,30 +260,33 @@ Deno.serve(async (req: Request) => {
       bidDeadline.setDate(bidDeadline.getDate() + urgentBidDays);
 
       const isFallback = discount === null;
-      const volumeGross = isFallback ? FALLBACK_GROSS : (discount as number); // GROSS aus Gesamt-Bündelvolumen-Tarifstufe
 
-      // Commitment-Untergrenze: JEDER Kunde im Bündel muss mindestens seinen bei
-      // Anfrage garantierten NETTO-Mindestrabatt erhalten. Da bundle.ziel_mindestrabatt
-      // ein einheitlicher GROSS-Satz fürs ganze Bündel ist, muss er das HÖCHSTE
-      // individuelle Minimum abdecken (ein Durchschnitt würde Grosskunden
-      // unter ihre Garantie bringen). GROSS = NETTO + 2.25% Provision, auf 0.25%
-      // aufgerundet. Requests ohne festen Satz (committed_min_rabatt = null, >6 Mio.
-      // individuell) sind durch die Volumen-Tarifstufe abgedeckt und werden hier
-      // übersprungen.
-      let maxCommittedNet = 0;
+      // target_discount = volumengewichteter Durchschnitt der individuell garantierten
+      // NETTO-Mindestrabätte + 2.25% Provision (→ GROSS, wie an Lieferanten ausgeschrieben).
+      // Bei einem Gebot GENAU auf die Zielmarke reicht der Gesamt-Rabatttopf exakt aus, um
+      // JEDEM Kunden seinen eigenen Satz auf sein eigenes Volumen auszuzahlen
+      // (SourceOn verteilt pro Kunde zu dessen committed_min_rabatt; ein Gebot ÜBER der
+      // Zielmarke verteilt den Mehrwert proportional nach Volumen). Requests ohne festen
+      // Satz (>6 Mio., committed_min_rabatt = null) werden übersprungen.
+      let weightedNetSum = 0; // Σ(estimatedCHF_i × committed_min_rabatt_i)
+      let ratedChfSum = 0;    // Σ(estimatedCHF_i) der bewerteten Requests
       for (const r of g.requests) {
         const c = r.committed_min_rabatt;
         if (c == null) continue;
-        const n = Number(c);
-        if (!isNaN(n) && n > maxCommittedNet) maxCommittedNet = n;
+        const rate = Number(c);
+        if (isNaN(rate)) continue;
+        const chf = Number(r.menge) * richtpreis;
+        weightedNetSum += chf * rate;
+        ratedChfSum += chf;
       }
-      const committedGross = maxCommittedNet > 0
-        ? Math.ceil((maxCommittedNet + 0.0225) / 0.0025 - 1e-9) * 0.0025
-        : 0;
-
-      // Höherer der beiden Werte — nie unter der Volumen-Tarifstufe, nie unter der
-      // Commitment-Garantie. Auf 0.25% gerundet gegen Float-Drift.
-      const targetRabatt = Math.round(Math.max(volumeGross, committedGross) / 0.0025) * 0.0025;
+      let targetRabatt: number;
+      if (ratedChfSum > 0) {
+        const targetNet = weightedNetSum / ratedChfSum;
+        targetRabatt = Math.round((targetNet + 0.0225) * 10000) / 10000; // GROSS, auf 0.01% gerundet
+      } else {
+        // kein Request mit festem Satz → Volumen-Tarifstufe als Rückfall
+        targetRabatt = isFallback ? FALLBACK_GROSS : (discount as number);
+      }
 
       const { data: bundle, error: insertErr } = await sb
         .from("bundles")
@@ -320,7 +323,7 @@ Deno.serve(async (req: Request) => {
       console.log(
         `[auto-bundle] PUBLISHED ${isFallback ? "FALLBACK " : ""}bundle ${g.sourceon_id}/${g.liefer_zone} — ` +
         `${g.totalMenge} ${g.einheit} (~${Math.round(estimatedCHF)} CHF) → ${(targetRabatt * 100).toFixed(2)}% target ` +
-        `[volumen ${(volumeGross * 100).toFixed(2)}% vs commitment ${(committedGross * 100).toFixed(2)}%${committedGross > volumeGross ? " ← bindend" : ""}], ` +
+        `(volumengewichtet aus ${g.requests.length} Commitments${ratedChfSum > 0 ? "" : " → Rückfall Volumenstufe"}), ` +
         `${requestIds.length} req, bidDeadline=+${urgentBidDays}d ` +
         `(reason: collection_end ${groupCollEnd ? groupCollEnd.toISOString().slice(0, 10) : "?"} reached)`
       );
