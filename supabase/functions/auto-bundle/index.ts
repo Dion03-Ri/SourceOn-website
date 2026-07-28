@@ -87,6 +87,7 @@ interface MaterialRequest {
   liefer_zeitraum_bis: string;
   fallback_deadline: string | null;
   created_at: string | null;
+  committed_min_rabatt: number | null; // NETTO-Mindestrabatt, den dieser Kunde bei Anfrage garantiert bekam
 }
 
 interface RequestGroup {
@@ -259,7 +260,30 @@ Deno.serve(async (req: Request) => {
       bidDeadline.setDate(bidDeadline.getDate() + urgentBidDays);
 
       const isFallback = discount === null;
-      const targetRabatt = isFallback ? FALLBACK_GROSS : (discount as number); // GROSS published to suppliers
+      const volumeGross = isFallback ? FALLBACK_GROSS : (discount as number); // GROSS aus Gesamt-Bündelvolumen-Tarifstufe
+
+      // Commitment-Untergrenze: JEDER Kunde im Bündel muss mindestens seinen bei
+      // Anfrage garantierten NETTO-Mindestrabatt erhalten. Da bundle.ziel_mindestrabatt
+      // ein einheitlicher GROSS-Satz fürs ganze Bündel ist, muss er das HÖCHSTE
+      // individuelle Minimum abdecken (ein Durchschnitt würde Grosskunden
+      // unter ihre Garantie bringen). GROSS = NETTO + 2.25% Provision, auf 0.25%
+      // aufgerundet. Requests ohne festen Satz (committed_min_rabatt = null, >6 Mio.
+      // individuell) sind durch die Volumen-Tarifstufe abgedeckt und werden hier
+      // übersprungen.
+      let maxCommittedNet = 0;
+      for (const r of g.requests) {
+        const c = r.committed_min_rabatt;
+        if (c == null) continue;
+        const n = Number(c);
+        if (!isNaN(n) && n > maxCommittedNet) maxCommittedNet = n;
+      }
+      const committedGross = maxCommittedNet > 0
+        ? Math.ceil((maxCommittedNet + 0.0225) / 0.0025 - 1e-9) * 0.0025
+        : 0;
+
+      // Höherer der beiden Werte — nie unter der Volumen-Tarifstufe, nie unter der
+      // Commitment-Garantie. Auf 0.25% gerundet gegen Float-Drift.
+      const targetRabatt = Math.round(Math.max(volumeGross, committedGross) / 0.0025) * 0.0025;
 
       const { data: bundle, error: insertErr } = await sb
         .from("bundles")
@@ -295,7 +319,8 @@ Deno.serve(async (req: Request) => {
 
       console.log(
         `[auto-bundle] PUBLISHED ${isFallback ? "FALLBACK " : ""}bundle ${g.sourceon_id}/${g.liefer_zone} — ` +
-        `${g.totalMenge} ${g.einheit} (~${Math.round(estimatedCHF)} CHF) → ${(targetRabatt * 100).toFixed(0)}% target, ` +
+        `${g.totalMenge} ${g.einheit} (~${Math.round(estimatedCHF)} CHF) → ${(targetRabatt * 100).toFixed(2)}% target ` +
+        `[volumen ${(volumeGross * 100).toFixed(2)}% vs commitment ${(committedGross * 100).toFixed(2)}%${committedGross > volumeGross ? " ← bindend" : ""}], ` +
         `${requestIds.length} req, bidDeadline=+${urgentBidDays}d ` +
         `(reason: collection_end ${groupCollEnd ? groupCollEnd.toISOString().slice(0, 10) : "?"} reached)`
       );
