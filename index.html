@@ -827,22 +827,6 @@ body{background:#070F1A}
 #lp .scrolldown{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);color:var(--t3);z-index:1;opacity:0;animation:lpFloat 2s ease-in-out infinite;animation-delay:2s}
 @keyframes lpFloat{0%,100%{transform:translate(-50%,0);opacity:.4}50%{transform:translate(-50%,6px);opacity:.7}}
 
-/* Hero — asymmetrisch (Headline links, Erklaertext rechts) */
-#lp .hero{text-align:left;justify-content:flex-start}
-#lp .hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(40px,6vw,80px);align-items:center;max-width:1240px;margin:0 auto;padding:120px 48px;position:relative;z-index:1;width:100%}
-#lp .hero-grid>*{opacity:0;animation:lpHeroIn .8s cubic-bezier(.2,.7,.2,1) forwards}
-#lp .hero-main{animation-delay:.06s}
-#lp .hero-side{animation-delay:.2s}
-#lp .hero-main .h1{font-size:clamp(34px,4.4vw,58px);line-height:1.12;margin-bottom:36px}
-#lp .hero-main .h1-gold{font-size:inherit;line-height:inherit;display:inline;margin-bottom:0}
-#lp .hero-main .cta-row{justify-content:flex-start;margin-bottom:0}
-#lp .hero-side-lead{display:block;color:var(--t1);font-weight:600;font-size:clamp(17px,1.6vw,20px);line-height:1.4;margin-bottom:12px;letter-spacing:-.01em}
-#lp .hero-side-text{display:block;color:var(--t2);font-size:clamp(15px,1.3vw,17px);line-height:1.7}
-@media(max-width:860px){
-  #lp .hero-grid{grid-template-columns:1fr;gap:28px;padding:110px 28px 80px;align-items:start}
-  #lp .hero-side{border-top:1px solid var(--lpb);padding-top:24px}
-}
-
 /* SECTION shared */
 #lp .sec{padding:120px 0}
 #lp .sec.bt{border-top:1px solid var(--lpb)}
@@ -1058,18 +1042,14 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <!-- HERO -->
   <section class="hero">
     <div class="hero-glow"></div>
-    <div class="hero-grid">
-      <div class="hero-main">
-        <span class="eyebrow" data-i18n="lp_hero_eyebrow">B2B BESCHAFFUNGSVERMITTLER</span>
-        <h1 class="h1"><span data-i18n="lp_hero_h1">Baumaterialien günstiger einkaufen.</span> <span class="h1-gold" data-i18n="lp_hero_h1gold">Für jede Schweizer Baufirma.</span></h1>
-        <div class="cta-row">
-          <a class="btn-primary" href="kontakt.html" data-i18n="lp_hero_cta1">Materialbedarf melden&nbsp;→</a>
-          <a class="btn-ghost" href="prozess.html" data-i18n="lp_hero_cta2">Wie es funktioniert&nbsp;→</a>
-        </div>
-      </div>
-      <div class="hero-side">
-        <span class="hero-side-lead" data-i18n="lp_hero_sub">Du zahlst erst, wenn wir dir sparen.</span>
-        <span class="hero-side-text" data-i18n="lp_hero_side">SourceOn bündelt den Materialeinkauf von Schweizer Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme.</span>
+    <div class="hero-content">
+      <span class="eyebrow" data-i18n="lp_hero_eyebrow">B2B BESCHAFFUNGSVERMITTLER</span>
+      <h1 class="h1" data-i18n="lp_hero_h1">Baumaterialien günstiger einkaufen.</h1>
+      <div class="h1-gold" data-i18n="lp_hero_h1gold">Für jede Schweizer Baufirma.</div>
+      <p class="subline" data-i18n="lp_hero_sub">Du zahlst erst, wenn wir dir sparen.</p>
+      <div class="cta-row">
+        <a class="btn-primary" href="kontakt.html" data-i18n="lp_hero_cta1">Materialbedarf melden&nbsp;→</a>
+        <a class="btn-ghost" href="prozess.html" data-i18n="lp_hero_cta2">Wie es funktioniert&nbsp;→</a>
       </div>
     </div>
     <a class="scrolldown" href="#lp-cards" aria-label="Weiter" data-i18n-aria="lp_aria_scroll">
@@ -1329,7 +1309,6 @@ var I18N={
     lp_hero_h1:'Baumaterialien günstiger einkaufen.',
     lp_hero_h1gold:'Für jede Schweizer Baufirma.',
     lp_hero_sub:'Du zahlst erst, wenn wir dir sparen.',
-    lp_hero_side:'SourceOn bündelt den Materialeinkauf von Schweizer Baufirmen und erzielt Mengenrabatte, die kein Einzelkunde alleine bekäme.',
     lp_hero_cta1:'Materialbedarf melden →',lp_hero_cta2:'Wie es funktioniert →',
     lp_s2_label:"So funktioniert's",
     lp_c1_cat:'Prozess',lp_c1_title:'Vier Schritte vom Bedarf bis zur Lieferung.',
@@ -1426,7 +1405,6 @@ var I18N={
     lp_hero_h1:'Buy building materials at lower prices.',
     lp_hero_h1gold:'For every Swiss construction firm.',
     lp_hero_sub:'You only pay when we save you money.',
-    lp_hero_side:'SourceOn bundles the material purchasing of Swiss construction firms and secures volume discounts no single customer could get alone.',
     lp_hero_cta1:'Report material demand →',lp_hero_cta2:'How it works →',
     lp_s2_label:'How it works',
     lp_c1_cat:'Process',lp_c1_title:'Four steps from demand to delivery.',
@@ -1523,7 +1501,6 @@ var I18N={
     lp_hero_h1:'Achète tes matériaux de construction moins cher.',
     lp_hero_h1gold:'Pour chaque entreprise de construction suisse.',
     lp_hero_sub:'Tu ne paies que si on te fait économiser.',
-    lp_hero_side:'SourceOn regroupe les achats de matériaux des entreprises de construction suisses et obtient des remises sur volume qu\'aucun client seul ne pourrait obtenir.',
     lp_hero_cta1:'Annoncer un besoin →',lp_hero_cta2:'Comment ça marche →',
     lp_s2_label:'Comment ça marche',
     lp_c1_cat:'Processus',lp_c1_title:'Quatre étapes du besoin à la livraison.',
@@ -1620,7 +1597,6 @@ var I18N={
     lp_hero_h1:'Acquista materiali da costruzione a prezzi più bassi.',
     lp_hero_h1gold:'Per ogni impresa edile svizzera.',
     lp_hero_sub:'Paghi solo quando ti facciamo risparmiare.',
-    lp_hero_side:'SourceOn raggruppa gli acquisti di materiali delle imprese edili svizzere e ottiene sconti sui volumi che nessun singolo cliente potrebbe ottenere da solo.',
     lp_hero_cta1:'Segnala il fabbisogno →',lp_hero_cta2:'Come funziona →',
     lp_s2_label:'Come funziona',
     lp_c1_cat:'Processo',lp_c1_title:'Quattro passi dal fabbisogno alla consegna.',
