@@ -835,7 +835,13 @@ body{background:#070F1A}
 
 /* SECTION shared */
 #lp .sec{padding:120px 0}
-#lp .sec.bt{border-top:1px solid var(--lpb)}
+#lp .sec.bt{position:relative}
+/* Bemassungs-Linie als Sektionstrenner: Haarlinie mit goldenen End-Strichen */
+#lp .sec.bt::before{content:'';position:absolute;top:-4px;left:50%;transform:translateX(-50%);width:min(calc(100% - 96px),1104px);height:9px;pointer-events:none;
+  background:linear-gradient(var(--lpb),var(--lpb)) left center/100% 1px no-repeat,
+    linear-gradient(rgba(232,160,32,.55),rgba(232,160,32,.55)) left top/1px 9px no-repeat,
+    linear-gradient(rgba(232,160,32,.55),rgba(232,160,32,.55)) right top/1px 9px no-repeat}
+@media(max-width:768px){#lp .sec.bt::before{width:calc(100% - 40px)}}
 #lp .sec-label{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:48px}
 #lp .reveal{opacity:0;transform:translateY(16px);transition:opacity .6s ease,transform .6s ease}
 #lp .reveal.visible{opacity:1;transform:none}
@@ -887,7 +893,13 @@ body{background:#070F1A}
 #lp .supcta p{font-size:18px;color:var(--t2);margin-top:12px;margin-bottom:40px}
 
 /* FOOTER */
-#lpfoot{background:var(--bg);border-top:1px solid var(--lpb);padding:48px 0;font-family:'Inter',sans-serif}
+#lpfoot{background:var(--bg);border-top:1px solid var(--lpb);padding:48px 0;font-family:'Inter',sans-serif;position:relative;overflow:hidden}
+/* dezente vertikale Bauplan-Linien im Footer */
+#lpfoot::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+  background-size:calc(100%/7) 100%;background-position:center;
+  -webkit-mask-image:linear-gradient(180deg,transparent,#000 45%);mask-image:linear-gradient(180deg,transparent,#000 45%)}
+#lpfoot .wrap{position:relative;z-index:1}
 #lpfoot .fgrid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px}
 @media(max-width:768px){#lpfoot .fgrid{grid-template-columns:1fr 1fr;gap:32px}}
 @media(max-width:480px){#lpfoot .fgrid{grid-template-columns:1fr}}
