@@ -1883,6 +1883,10 @@ async function _createCustomerIfNeeded(){
       soLog('[SourceOn] Profile check — Supplier rows found:',supplierRows.length,'Customer rows found:',customerRows.length);
       var isVerifiedSupplier=supplierRows&&supplierRows.length>0&&supplierRows[0].status==='verified';
       var isLinkedCustomer=customerRows&&customerRows.length>0;
+      // Neu registriert (weder Kunde noch Lieferant) -> Kundenprofil automatisch anlegen, damit das Dashboard sofort erreichbar ist
+      if(!isLinkedCustomer&&(!supplierRows||supplierRows.length===0)){
+        try{await _createCustomerIfNeeded();var _rc=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(clerkId)+'&select=id&limit=1',{headers:headers});var _rcj=_rc.ok?await _rc.json():[];if(_rcj.length>0)isLinkedCustomer=true;}catch(_e){}
+      }
       console.log('[SourceOn] Auth roles \u2014 customer:', isLinkedCustomer, 'supplier:', isVerifiedSupplier);
       soLog('[SourceOn] Final decision — Show supplier link:',isVerifiedSupplier,'Show customer link:',isLinkedCustomer);
       if(dashLink)dashLink.style.display=isVerifiedSupplier?'flex':'none';

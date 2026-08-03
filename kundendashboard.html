@@ -636,6 +636,15 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   if(_p){try{var chk=await sb.from('customers').select('id,user_id').eq('id',_p).single();if(chk.data&&!chk.data.user_id){await sb.from('customers').update({user_id:currentUserId}).eq('id',_p);}localStorage.removeItem('sourceon_pending_customer_link');}catch(e){console.error('[SourceOn] Customer link error:',e);}}
   try{var _em=window.Clerk.user.primaryEmailAddress?window.Clerk.user.primaryEmailAddress.emailAddress:null;if(_em){await sb.from('customers').update({user_id:currentUserId}).eq('email',_em).is('user_id',null).select('id');}}catch(e){console.error('[SourceOn] Email-claim error:',e);}
   var custRes=await sb.from('customers').select('*').eq('user_id',currentUserId);
+  // Neu registrierter Kunde ohne Profil-Zeile -> automatisch anlegen (leeres Dashboard statt Sperre)
+  if(!custRes.error&&(!custRes.data||custRes.data.length===0)){
+    try{
+      var _em2=window.Clerk.user.primaryEmailAddress?window.Clerk.user.primaryEmailAddress.emailAddress:'';
+      var _nm=window.Clerk.user.fullName||window.Clerk.user.firstName||'';
+      var _ins=await sb.from('customers').insert({user_id:currentUserId,email:_em2,ansprechperson:_nm,firmenname:'',telefon:'',lieferadresse:'',kanton:''}).select('*');
+      if(!_ins.error&&_ins.data&&_ins.data.length)custRes={data:_ins.data,error:null};
+    }catch(e){console.error('[SourceOn] Kundenprofil-Anlage fehlgeschlagen:',e);}
+  }
   if(custRes.error||!custRes.data||custRes.data.length===0){showGate('no_customer');return;}
   _customer=custRes.data[0];
   var customerIds=custRes.data.map(function(c){return c.id;});
