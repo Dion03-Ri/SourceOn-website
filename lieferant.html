@@ -1122,6 +1122,15 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           <button type="button" onclick="supplierLogin()" data-i18n="sa.gate.login" style="width:100%;background:transparent;border:1px solid #E2E8F0;color:#475569;padding:12px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:600;cursor:pointer">Bereits ein Konto? Einloggen</button>
         </div>
       </div>
+      <!-- CUSTOMER GATE: eingeloggt als Kunde -> nicht direkt bewerben -->
+      <div id="sa-customergate" style="display:none;text-align:center;padding:48px 32px;max-width:480px;margin:0 auto">
+        <div style="font-size:32px;margin-bottom:16px">🔒</div>
+        <div data-i18n="sa.custgate.title" style="font-size:20px;font-weight:700;color:#0F172A;margin-bottom:8px">Als Kunde eingeloggt</div>
+        <div data-i18n="sa.custgate.sub" style="font-size:14px;color:#64748B;line-height:1.6;margin-bottom:28px">Dieses Konto ist als Kunde registriert. Um dich als Partnerlieferant zu bewerben, melde dich zuerst ab und registriere dich als Lieferant.</div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <button type="button" onclick="clerkSignOut()" data-i18n="sa.custgate.logout" style="width:100%;background:var(--gold);color:#070F1A;border:none;padding:13px;border-radius:6px;font-family:inherit;font-size:14px;font-weight:700;cursor:pointer">Abmelden & als Lieferant registrieren →</button>
+        </div>
+      </div>
       <!-- ALREADY APPLIED (supplier row exists) -->
       <!-- PENDING (status=pending) -->
       <div id="sa-pending" style="display:none;text-align:center;padding:48px 32px;max-width:480px;margin:0 auto">
@@ -1454,7 +1463,7 @@ function supplierRegister(){if(!window.Clerk)return;try{localStorage.setItem('so
 function supplierLogin(){if(!window.Clerk)return;window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});}
 function _saShow(which){
   var ld=document.getElementById('sa-loading');if(ld)ld.style.display='none';
-  var map={gate:'sa-authgate',form:'sa-formwrap',pending:'sa-pending',rejected:'sa-rejected'};
+  var map={gate:'sa-authgate',form:'sa-formwrap',pending:'sa-pending',rejected:'sa-rejected',customergate:'sa-customergate'};
   Object.keys(map).forEach(function(k){var el=document.getElementById(map[k]);if(el)el.style.display=(k===which)?'block':'none';});
   var lr=document.getElementById('lben-register');if(lr)lr.style.display=(which==='gate')?'inline':'none';
 }
@@ -1473,7 +1482,14 @@ async function _gateSupplier(){
   if(!user){_saShow('gate');return;}           // CASE 1
   var row=null;
   try{if(_sbClient){var r=await _sbClient.from('suppliers').select('id,status').eq('id',user.id).maybeSingle();row=r&&r.data;}}catch(e){}
-  if(!row){ _saShow('form'); _saPrefillEmail(user); return; }   // CASE 2: no row → form
+  if(!row){
+    // CASE 2: kein Lieferantenprofil. Wer als KUNDE registriert ist, darf das
+    // Formular NICHT direkt ausfüllen — erst als Lieferant registrieren.
+    var isCust=false;
+    try{if(_sbClient){var cr=await _sbClient.from('customers').select('id').eq('user_id',user.id).limit(1);isCust=!!(cr&&cr.data&&cr.data.length);}}catch(e){}
+    if(isCust){ _saShow('customergate'); return; }
+    _saShow('form'); _saPrefillEmail(user); return;
+  }
   var st=(row.status||'').toLowerCase();
   if(st==='verified'){ _saShow('form'); _saPrefillEmail(user); if(banner)banner.style.display='flex'; return; } // CASE 5
   if(st==='rejected'){ _saShow('rejected'); return; }          // CASE 6
@@ -1647,6 +1663,9 @@ var i18n = {
     'sa.rejected.title': 'Deine Bewerbung wurde leider nicht genehmigt.',
     'sa.rejected.sub': 'Bei Fragen melde dich unter <a href="mailto:info@sourceon.ch" style="color:var(--gold)">info@sourceon.ch</a>',
     'sa.gate.title': 'Zuerst Konto erstellen',
+    'sa.custgate.title': 'Als Kunde eingeloggt',
+    'sa.custgate.sub': 'Dieses Konto ist als Kunde registriert. Um dich als Partnerlieferant zu bewerben, melde dich zuerst ab und registriere dich als Lieferant.',
+    'sa.custgate.logout': 'Abmelden & als Lieferant registrieren →',
     'sa.gate.sub': 'Um dich als Partnerlieferant zu bewerben, benötigst du ein SourceOn-Konto. Die Registrierung ist kostenlos und dauert eine Minute.',
     'sa.gate.register': 'Jetzt registrieren →',
     'sa.gate.login': 'Bereits ein Konto? Einloggen',
@@ -1761,6 +1780,9 @@ var i18n = {
     'sa.rejected.title': 'Your application was unfortunately not approved.',
     'sa.rejected.sub': 'For questions contact <a href="mailto:info@sourceon.ch" style="color:var(--gold)">info@sourceon.ch</a>',
     'sa.gate.title': 'Create account first',
+    'sa.custgate.title': 'Signed in as a customer',
+    'sa.custgate.sub': 'This account is registered as a customer. To apply as a partner supplier, please sign out first and register as a supplier.',
+    'sa.custgate.logout': 'Sign out & register as supplier →',
     'sa.gate.sub': 'To apply as a partner supplier, you need a SourceOn account. Registration is free and takes one minute.',
     'sa.gate.register': 'Register now →',
     'sa.gate.login': 'Already have an account? Sign in',
@@ -1875,6 +1897,9 @@ var i18n = {
     'sa.rejected.title': 'Ta candidature n\'a malheureusement pas été approuvée.',
     'sa.rejected.sub': 'Pour toute question, contacte <a href="mailto:info@sourceon.ch" style="color:var(--gold)">info@sourceon.ch</a>',
     'sa.gate.title': 'Créer un compte d\'abord',
+    'sa.custgate.title': 'Connecté en tant que client',
+    'sa.custgate.sub': 'Ce compte est enregistré comme client. Pour postuler comme fournisseur partenaire, déconnecte-toi d\'abord et inscris-toi comme fournisseur.',
+    'sa.custgate.logout': 'Se déconnecter & s\'inscrire comme fournisseur →',
     'sa.gate.sub': 'Pour vous inscrire comme fournisseur partenaire, vous avez besoin d\'un compte SourceOn. L\'inscription est gratuite et prend une minute.',
     'sa.gate.register': 'S\'inscrire maintenant →',
     'sa.gate.login': 'Déjà un compte? Se connecter',
@@ -1989,6 +2014,9 @@ var i18n = {
     'sa.rejected.title': 'La tua candidatura non è stata approvata.',
     'sa.rejected.sub': 'Per domande contatta <a href="mailto:info@sourceon.ch" style="color:var(--gold)">info@sourceon.ch</a>',
     'sa.gate.title': 'Prima crea un account',
+    'sa.custgate.title': 'Connesso come cliente',
+    'sa.custgate.sub': 'Questo account è registrato come cliente. Per candidarti come fornitore partner, esci prima e registrati come fornitore.',
+    'sa.custgate.logout': 'Esci & registrati come fornitore →',
     'sa.gate.sub': 'Per iscriverti come fornitore partner, hai bisogno di un account SourceOn. La registrazione è gratuita e richiede un minuto.',
     'sa.gate.register': 'Registrati ora →',
     'sa.gate.login': 'Hai già un account? Accedi',
@@ -2321,14 +2349,10 @@ async function _createCustomerIfNeeded(){
       soLog('[SourceOn] Profile check — Supplier rows found:',supplierRows.length,'Customer rows found:',customerRows.length);
       var isVerifiedSupplier=supplierRows&&supplierRows.length>0&&supplierRows[0].status==='verified';
       var isLinkedCustomer=customerRows&&customerRows.length>0;
-      // Neu registriert (weder Kunde noch Lieferant) -> Kundenprofil automatisch anlegen, damit das Dashboard sofort erreichbar ist
-      if(!isLinkedCustomer&&(!supplierRows||supplierRows.length===0)){
-        try{await _createCustomerIfNeeded();var _rc=await fetch(sbUrl+'/rest/v1/customers?user_id=eq.'+encodeURIComponent(clerkId)+'&select=id&limit=1',{headers:headers});var _rcj=_rc.ok?await _rc.json():[];if(_rcj.length>0)isLinkedCustomer=true;}catch(_e){}
-      }
       console.log('[SourceOn] Auth roles \u2014 customer:', isLinkedCustomer, 'supplier:', isVerifiedSupplier);
       soLog('[SourceOn] Final decision — Show supplier link:',isVerifiedSupplier,'Show customer link:',isLinkedCustomer);
       if(dashLink)dashLink.style.display=isVerifiedSupplier?'flex':'none';
-      if(custLink)custLink.style.display=isLinkedCustomer?'flex':'none';
+      if(custLink)custLink.style.display=(isLinkedCustomer||(!supplierRows||supplierRows.length===0))?'flex':'none';
       if(statusWrap){
         if(supplierRows&&supplierRows.length>0){
           var s=supplierRows[0].status;
