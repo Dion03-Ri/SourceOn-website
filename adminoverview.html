@@ -201,6 +201,13 @@ p{text-wrap:pretty}
   <link rel="stylesheet" href="mobile-nav.css">
 <link rel="stylesheet" href="perf.css"/>
 <script src="perf.js"></script>
+<script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_dG9sZXJhbnQtc2tpbmstNjIuY2xlcmsuYWNjb3VudHMuZGV2JA"
+  src="https://tolerant-skink-62.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js"
+  type="text/javascript"
+></script>
 </head>
 <body>
 
@@ -219,11 +226,10 @@ p{text-wrap:pretty}
 <div class="auth-gate" id="auth-gate">
   <div class="auth-card">
     <h2>Admin-Zugang</h2>
-    <p>Bitte Passwort eingeben, um auf das Admin-Dashboard zuzugreifen.</p>
-    <input type="password" class="auth-input" id="admin-pw" placeholder="Passwort" onkeydown="if(event.key==='Enter')checkAdminPw()"/>
-    <button class="auth-btn" onclick="checkAdminPw()">Anmelden</button>
-    <div class="auth-error" id="auth-error">Falsches Passwort. Zugang verweigert.</div>
-    <div class="auth-error" id="auth-lockout" style="display:none">Zu viele Fehlversuche. Bitte 5 Minuten warten.</div>
+    <p id="auth-msg">Bitte mit deinem Admin-Konto anmelden.</p>
+    <button class="auth-btn" id="auth-login-btn" onclick="clerkAdminLogin()">Anmelden</button>
+    <button class="auth-btn" id="auth-logout-btn" style="display:none;background:transparent;border:1px solid rgba(255,255,255,.2)" onclick="clerkAdminLogout()">Abmelden</button>
+    <div class="auth-error" id="auth-error" style="display:none">Dieses Konto hat keinen Admin-Zugang.</div>
   </div>
 </div>
 
@@ -296,30 +302,19 @@ p{text-wrap:pretty}
  * can only invoke this one function, not run arbitrary queries.
  */
 
-// SHA-256 hash of the admin password (not plaintext).
-// To change the password, generate a new hash:
-//   echo -n "YourNewPassword" | sha256sum
-// Then replace the hash below.
-var ADMIN_PW_HASH='c80b8f38425c1c31260217fa56357852b4d38a2ff8a8e0eb76b53248f5375077';
-var ADMIN_SESSION_KEY='admin_session_granted_at';
-var ADMIN_LOCKOUT_KEY='admin_lockout_until';
-var ADMIN_ATTEMPTS_KEY='admin_fail_count';
-var SESSION_DURATION_MS=2*60*60*1000; // 2 hours
-var LOCKOUT_DURATION_MS=5*60*1000; // 5 minutes
-var MAX_ATTEMPTS=5;
-
-// SECURITY: the service_role key is NO LONGER in the browser. All admin data
-// goes through the 'admin-data' Edge Function, which holds the key server-side
-// and only accepts a fixed set of actions gated by this shared secret.
-// ⚠️ Set ADMIN_SECRET to the SAME value you set with `supabase secrets set ADMIN_SECRET=...`.
+// SECURITY: Admin-Zugang laeuft ueber Clerk. Der Nutzer meldet sich an; jeder
+// Function-Aufruf schickt seinen Clerk-Session-Token, den die Edge-Function
+// serverseitig verifiziert und gegen die admins-Tabelle prueft. Kein Passwort/
+// Shared Secret mehr im Browser. Der service_role/secret key bleibt serverseitig.
 var SB_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
 var ADMIN_FN=SB_URL+'/functions/v1/rapid-api';
-var ADMIN_SECRET='bipcy7-qafxew-Zypnut';
 async function adminCall(action,payload){
   try{
+    if(!window.Clerk||!window.Clerk.session){return null;}
+    var token=await window.Clerk.session.getToken();
     var resp=await fetch(ADMIN_FN,{
       method:'POST',
-      headers:{'Content-Type':'application/json','x-admin-secret':ADMIN_SECRET},
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},
       body:JSON.stringify(Object.assign({action:action},payload||{}))
     });
     if(!resp.ok){console.error('[admin] '+action+' failed:',resp.status);return null;}
@@ -332,65 +327,34 @@ var _allBundles=[],_allBundleBidCounts={},_allBundleSupMap={};
 var _allExpiredBundles=[];
 var _allCustomers=[],_allCustomerReqCounts={};
 
-async function sha256(str){
-  var buf=new TextEncoder().encode(str);
-  var hash=await crypto.subtle.digest('SHA-256',buf);
-  return Array.from(new Uint8Array(hash)).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+function showGate(which){
+  document.getElementById('auth-gate').style.display='flex';
+  document.getElementById('dash-main').style.display='none';
+  var msg=document.getElementById('auth-msg'),err=document.getElementById('auth-error'),lin=document.getElementById('auth-login-btn'),lout=document.getElementById('auth-logout-btn');
+  if(which==='denied'){ if(msg)msg.textContent='Dieses Konto hat keinen Admin-Zugang.'; if(err)err.style.display='block'; if(lin)lin.style.display='none'; if(lout)lout.style.display='inline-block'; }
+  else { if(msg)msg.textContent='Bitte mit deinem Admin-Konto anmelden.'; if(err)err.style.display='none'; if(lin)lin.style.display='inline-block'; if(lout)lout.style.display='none'; }
+}
+function clerkAdminLogin(){ if(!window.Clerk)return; window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}},fallbackRedirectUrl:window.location.href}); }
+function clerkAdminLogout(){ if(!window.Clerk)return; window.Clerk.signOut().then(function(){window.location.reload();}); }
+
+async function _afterLogin(){
+  // Admin-Check: eine echte Function-Antwort (403 -> adminCall gibt null -> kein Admin)
+  var probe=await adminCall('stats');
+  if(probe===null||probe.error){ showGate('denied'); return; }
+  document.getElementById('auth-gate').style.display='none';
+  document.getElementById('dash-main').style.display='block';
+  loadAllData();
 }
 
-function isSessionValid(){
-  var ts=localStorage.getItem(ADMIN_SESSION_KEY);
-  if(!ts)return false;
-  return(Date.now()-Number(ts))<SESSION_DURATION_MS;
-}
-
-function isLockedOut(){
-  var until=localStorage.getItem(ADMIN_LOCKOUT_KEY);
-  if(!until)return false;
-  if(Date.now()<Number(until))return true;
-  localStorage.removeItem(ADMIN_LOCKOUT_KEY);
-  localStorage.removeItem(ADMIN_ATTEMPTS_KEY);
-  return false;
-}
-
-// Auto-grant if session still valid
-if(isSessionValid()){
-  document.addEventListener('DOMContentLoaded',function(){
-    document.getElementById('auth-gate').style.display='none';
-    document.getElementById('dash-main').style.display='block';
-    loadAllData();
-  });
-}
-
-async function checkAdminPw(){
-  if(isLockedOut()){
-    document.getElementById('auth-error').style.display='none';
-    document.getElementById('auth-lockout').style.display='block';
-    return;
-  }
-  var pw=document.getElementById('admin-pw').value;
-  var hash=await sha256(pw);
-  if(hash===ADMIN_PW_HASH){
-    localStorage.setItem(ADMIN_SESSION_KEY,String(Date.now()));
-    localStorage.removeItem(ADMIN_ATTEMPTS_KEY);
-    localStorage.removeItem(ADMIN_LOCKOUT_KEY);
-    document.getElementById('auth-gate').style.display='none';
-    document.getElementById('dash-main').style.display='block';
-    loadAllData();
-  }else{
-    var fails=Number(localStorage.getItem(ADMIN_ATTEMPTS_KEY)||'0')+1;
-    localStorage.setItem(ADMIN_ATTEMPTS_KEY,String(fails));
-    if(fails>=MAX_ATTEMPTS){
-      localStorage.setItem(ADMIN_LOCKOUT_KEY,String(Date.now()+LOCKOUT_DURATION_MS));
-      document.getElementById('auth-error').style.display='none';
-      document.getElementById('auth-lockout').style.display='block';
-    }else{
-      document.getElementById('auth-error').style.display='block';
-      document.getElementById('auth-error').textContent='Falsches Passwort. Zugang verweigert. ('+fails+'/'+MAX_ATTEMPTS+' Versuche)';
-    }
-    document.getElementById('admin-pw').value='';
-  }
-}
+(async function _initAdmin(){
+  var waited=0;
+  while(!window.Clerk&&waited<10000){ await new Promise(function(r){setTimeout(r,200);}); waited+=200; }
+  if(window.Clerk&&typeof window.Clerk.load==='function'){ try{await window.Clerk.load();}catch(e){} }
+  if(!window.Clerk){ showGate('login'); return; }
+  if(window.Clerk.user){ _afterLogin(); } else { showGate('login'); }
+  // falls Login/Logout waehrend der Session passiert
+  if(window.Clerk.addListener){ window.Clerk.addListener(function(){ if(window.Clerk.user){ _afterLogin(); } else { showGate('login'); } }); }
+})();
 
 function fmtDate(d){
   if(!d)return'–';

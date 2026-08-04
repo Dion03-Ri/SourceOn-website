@@ -1,20 +1,24 @@
 // admin-data — server-side admin API for adminoverview.html.
 //
-// SECURITY: The Supabase service_role key must NEVER live in client code. This
-// function holds it server-side (via the auto-injected SUPABASE_SERVICE_ROLE_KEY
-// env) and exposes only a fixed set of admin actions, gated by a shared secret
-// header (x-admin-secret === ADMIN_SECRET). The shared secret can only invoke
-// this specific function — it cannot run arbitrary queries against the database.
+// SECURITY: Zugriff nur fuer echte Admins. Der Aufrufer schickt seinen CLERK-
+// Session-Token (Authorization: Bearer). Diese Function verifiziert die Signatur
+// serverseitig gegen Clerks JWKS und prueft, ob der Nutzer-sub in der Tabelle
+// public.admins steht. Kein im Browser sichtbares Shared Secret mehr.
+// Der Supabase service_role/secret key bleibt serverseitig (nie im Client).
 //
 // Deploy:  supabase functions deploy admin-data --no-verify-jwt
-// Secret:  supabase secrets set ADMIN_SECRET="<a long random string>"
-//          (SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY are injected automatically)
+//          (Verify JWT MUSS AUS sein — die Function verifiziert den Clerk-Token selbst.)
+// Voraussetzung: Tabelle public.admins (siehe supabase/admins.sql).
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createRemoteJWKSet, jwtVerify } from "https://esm.sh/jose@5";
+
+const CLERK_ISSUER = "https://tolerant-skink-62.clerk.accounts.dev";
+const JWKS = createRemoteJWKSet(new URL(CLERK_ISSUER + "/.well-known/jwks.json"));
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-admin-secret",
+  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 
@@ -30,15 +34,28 @@ const sb = createClient(
   Deno.env.get("SB_SECRET_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
 );
 
+// Verifiziert den Clerk-Token und gibt den sub zurueck, wenn der Nutzer Admin ist.
+async function requireAdmin(req: Request): Promise<string | null> {
+  const auth = req.headers.get("Authorization") || "";
+  const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+  if (!token) return null;
+  let sub: string | null = null;
+  try {
+    const { payload } = await jwtVerify(token, JWKS, { issuer: CLERK_ISSUER });
+    sub = (payload.sub as string) || null;
+  } catch { return null; }        // ungueltige/abgelaufene Signatur
+  if (!sub) return null;
+  const { data } = await sb.from("admins").select("user_id").eq("user_id", sub).maybeSingle();
+  return data ? sub : null;       // nur wenn in admins-Tabelle
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
   if (req.method !== "POST") return json({ error: "method_not_allowed" }, 405);
 
-  // --- Shared-secret auth ---
-  const secret = Deno.env.get("ADMIN_SECRET");
-  if (!secret || req.headers.get("x-admin-secret") !== secret) {
-    return json({ error: "unauthorized" }, 401);
-  }
+  // --- Clerk-Token + admins-Tabelle ---
+  const adminId = await requireAdmin(req);
+  if (!adminId) return json({ error: "forbidden" }, 403);
 
   let body: { action?: string; id?: string; ziel_mindestrabatt?: number; bid_deadline?: string };
   try { body = await req.json(); } catch { return json({ error: "bad_request" }, 400); }
