@@ -7,6 +7,8 @@
 // Deploy: Function "chat", Verify JWT = AUS.
 // Secret setzen: ANTHROPIC_API_KEY = <dein Anthropic-Key>
 
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
 const CORS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "content-type",
@@ -14,6 +16,26 @@ const CORS = {
 };
 function json(body: unknown, status = 200): Response {
   return new Response(JSON.stringify(body), { status, headers: { ...CORS, "Content-Type": "application/json" } });
+}
+
+// --- Rate-Limiting (pro Client-IP) -----------------------------------------
+const sb = createClient(
+  Deno.env.get("SUPABASE_URL")!,
+  Deno.env.get("SB_SECRET_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+);
+function clientIp(req: Request): string {
+  const xff = req.headers.get("x-forwarded-for") || "";
+  return xff.split(",")[0].trim() || req.headers.get("x-real-ip") || "unknown";
+}
+// true = Limit ueberschritten. Fail-open bei Limiter-Fehler (echte Nutzer nicht blocken).
+async function overLimit(bucket: string, ip: string, max: number, windowSec: number): Promise<boolean> {
+  try {
+    const { data, error } = await sb.rpc("rate_limit_hit", {
+      p_bucket: bucket, p_identifier: ip, p_max: max, p_window_seconds: windowSec,
+    });
+    if (error) { console.error("[rate_limit_hit]", error.message); return false; }
+    return data === false;
+  } catch (e) { console.error("[rate_limit_hit]", e); return false; }
 }
 
 // Fester System-Prompt (serverseitig, nicht vom Client überschreibbar).
@@ -38,6 +60,12 @@ Deno.serve(async (req) => {
 
   const key = Deno.env.get("ANTHROPIC_API_KEY");
   if (!key) return json({ error: "not_configured" }, 503);
+
+  // Rate-Limit: bezahlter LLM -> Kosten-/DoS-Schutz. 15/Min und 150/Std pro IP.
+  const ip = clientIp(req);
+  if (await overLimit("chat_min", ip, 15, 60) || await overLimit("chat_hour", ip, 150, 3600)) {
+    return json({ error: "rate_limited" }, 429);
+  }
 
   let body: { messages?: Msg[] };
   try { body = await req.json(); } catch { return json({ error: "bad_request" }, 400); }

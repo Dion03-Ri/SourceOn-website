@@ -43,6 +43,21 @@ const sb = createClient(
   Deno.env.get("SB_SECRET_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
 );
 
+function clientIp(req: Request): string {
+  const xff = req.headers.get("x-forwarded-for") || "";
+  return xff.split(",")[0].trim() || req.headers.get("x-real-ip") || "unknown";
+}
+// true = Limit ueberschritten. Fail-open bei Limiter-Fehler.
+async function overLimit(bucket: string, ip: string, max: number, windowSec: number): Promise<boolean> {
+  try {
+    const { data, error } = await sb.rpc("rate_limit_hit", {
+      p_bucket: bucket, p_identifier: ip, p_max: max, p_window_seconds: windowSec,
+    });
+    if (error) { console.error("[rate_limit_hit]", error.message); return false; }
+    return data === false;
+  } catch (e) { console.error("[rate_limit_hit]", e); return false; }
+}
+
 // --- Rabattstufen (NET) — synchron mit /tiers.js -----------------------------
 const TIERS: { min: number; net: number | null }[] = [
   { min: 6_000_000, net: null }, // > 6 Mio. -> individuell
@@ -93,6 +108,12 @@ interface Body {
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: CORS });
   if (req.method !== "POST") return json({ success: false, error: "method_not_allowed" }, 405);
+
+  // Spam-/Flood-Schutz: 5/Min und 30/Std pro IP.
+  const ip = clientIp(req);
+  if (await overLimit("custreq_min", ip, 5, 60) || await overLimit("custreq_hour", ip, 30, 3600)) {
+    return json({ success: false, error: "rate_limited" }, 429);
+  }
 
   let b: Body;
   try { b = await req.json(); } catch { return json({ success: false, error: "bad_request" }, 400); }
