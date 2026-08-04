@@ -64,7 +64,7 @@ begin
   if ziel is not null and new.rabatt_prozent is not null then
     -- ziel ist als Bruch gespeichert (z.B. 0.16), rabatt_prozent als Prozent (16).
     if new.rabatt_prozent < (ziel * 100) then
-      raise exception 'Gebot % liegt unter dem geforderten Mindestrabatt %.',
+      raise exception 'Gebot % liegt unter dem geforderten Mindestrabatt %',
         new.rabatt_prozent, round(ziel * 100, 2);
     end if;
   end if;
