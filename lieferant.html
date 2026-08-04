@@ -1007,6 +1007,12 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 <style id="blueprint-grid">body{background-image:linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:calc(100%/7) 100%;background-position:center}@media(max-width:768px){body{background-size:calc(100%/3) 100%;background-image:linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px)}}</style>
 </head>
 <body>
+<script>
+/* Back-Forward-Cache: beim Zurueck-/Vorwaerts-Navigieren zeigt der Browser sonst
+   einen alten Snapshot (z.B. ausgeloggt), obwohl man noch eingeloggt ist.
+   Bei Wiederherstellung aus dem bfcache neu laden -> echter Auth-Status. */
+window.addEventListener('pageshow',function(e){if(e.persisted){window.location.reload();}});
+</script>
 <a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
 
 <!-- NAV -->
@@ -1368,6 +1374,7 @@ async function _insertSupplier(data,clerkId){
 
   if(!_sbClient){throw new Error('Supabase client not available');}
 
+  // Basis-Payload OHNE status — der status wird nur bei Neuanlage gesetzt.
   var payload={
     id:clerkId,
     company_name:data.company_name,
@@ -1380,13 +1387,23 @@ async function _insertSupplier(data,clerkId){
     annual_capacity:data.annual_capacity||'',
     certifications:data.certifications||[],
     notes:data.notes||'',
-    status:'pending',
     agreement_accepted:true,
     agreement_accepted_at:new Date().toISOString(),
     agreement_version:'v1.0-2026-06-28'
   };
-  soLog('[Supplier] INSERT payload:',JSON.stringify(payload));
-  var insRes=await _sbClient.from('suppliers').upsert(payload,{onConflict:'id',ignoreDuplicates:false});
+  // Existiert bereits eine Zeile? Dann NUR aktualisieren, status NICHT anfassen —
+  // sonst blockt der Schutz-Trigger (Status aendert nur SourceOn). Sonst neu anlegen.
+  var existing=null;
+  try{var ex=await _sbClient.from('suppliers').select('id').eq('id',clerkId).maybeSingle();existing=ex&&ex.data;}catch(e){}
+  var insRes;
+  if(existing){
+    soLog('[Supplier] UPDATE (existing row, status unchanged):',JSON.stringify(payload));
+    insRes=await _sbClient.from('suppliers').update(payload).eq('id',clerkId);
+  }else{
+    payload.status='pending';
+    soLog('[Supplier] INSERT payload:',JSON.stringify(payload));
+    insRes=await _sbClient.from('suppliers').insert(payload);
+  }
   if(insRes.error){
     console.error('[Supplier] Supabase error details:', JSON.stringify(insRes.error));
     throw insRes.error;
