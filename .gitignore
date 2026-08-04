@@ -1,1 +1,14 @@
 node_modules/
+
+# Secrets / Umgebungsvariablen — NIEMALS committen
+.env
+.env.*
+!.env.example
+*.local
+
+# Supabase CLI (kann Secrets/temp enthalten)
+supabase/.temp/
+supabase/.branches/
+
+# OS / Editor
+.DS_Store
