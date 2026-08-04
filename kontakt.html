@@ -1214,16 +1214,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             </div>
             <div id="tempo-indicator" class="tempo-indicator" style="display:none"></div>
             <div class="form-group"><label class="form-label" for="c-desc" data-i18n-html="form_project_label">Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span></label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und weitere Anforderungen…" data-i18n-placeholder="form_placeholder_project"></textarea></div>
-            <div id="acct-opt-section" class="acct-opt-section">
-              <span class="acct-opt-label" data-i18n="acct_opt_label">Anfragen jederzeit verfolgen</span>
-              <div class="acct-opt-card">
-                <label class="acct-opt-check">
-                  <input type="checkbox" id="c-create-account" checked onchange="document.getElementById('acct-opt-hint').classList.toggle('visible',this.checked)"/>
-                  <span class="acct-opt-check-text" data-i18n="acct_opt_check">Konto erstellen, um meine Anfragen und Ersparnisse jederzeit einzusehen</span>
-                </label>
-                <p class="acct-opt-hint" id="acct-opt-hint" data-i18n="acct_opt_hint">Nach dem Absenden wirst du aufgefordert, ein Passwort festzulegen. Du kannst dich danach jederzeit einloggen, um den Status deiner Anfragen zu verfolgen.</p>
-              </div>
-            </div>
             <div id="tier-summary" class="tier-summary" style="display:none">
               <div class="tier-row"><span class="tier-label" data-i18n="tier_label_value">Geschätzter Auftragswert</span><span class="tier-val" id="tier-value">CHF 0</span></div>
               <div class="tier-note-sub" data-i18n="tier_note_sub">basierend auf SourceOn-Richtpreisen</div>
@@ -1239,7 +1229,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
               <div class="form-error" role="alert" id="e-c-commitment" data-i18n="err_commit">Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.</div>
             </div>
             <button type="submit" class="btn btn-gold btn-lg btn-full" data-i18n="form_submit">Materialbedarf jetzt melden →</button>
-            <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;text-align:center;font-style:italic" data-i18n="form_post_submit">Nach dem Absenden siehst du sofort deinen garantierten Mindestrabatt und kannst den Status deiner Anfrage jederzeit in deinem Dashboard verfolgen.</p>
+            <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;text-align:center;font-style:italic" data-i18n="form_post_submit">Nach dem Absenden wirst du aufgefordert, ein kostenloses Konto zu erstellen. So kannst du den Status deiner Anfrage jederzeit verfolgen.</p>
             <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;font-style:italic" data-i18n="form_bundle_hint">Hinweis: Wird dein Bedarf mit anderen Baufirmen gebündelt, richtet sich deine individuelle Ersparnis nach deinem Volumenanteil am Gesamtbündel.</p>
           </form>
             <div class="form-success" id="success-contact" data-i18n-html="form_success"><span><svg aria-hidden="true" class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — deine Anfrage ist eingegangen. Verfolge den Status jederzeit in deinem Dashboard. Sobald dein Bündel steht, erhältst du dein konkretes Angebot.</div>
@@ -1760,8 +1750,8 @@ async function submitContact(e){
       return;
     }
 
-    // Serverseitiger Insert über die Edge-Function (zone + committed_min_rabatt werden
-    // dort berechnet — manipulationssicher; anon schreibt nicht mehr direkt in die DB).
+    // Konto ist PFLICHT. Zahlungs-/Anfragedaten werden serverseitig eingereicht
+    // (zone + committed_min_rabatt manipulationssicher in der Edge-Function berechnet).
     var _custEmail=document.getElementById('c-email').value.trim();
     var _reqPayload={
       firmenname:document.getElementById('c-company').value.trim(),
@@ -1775,48 +1765,31 @@ async function submitContact(e){
       commitment_accepted:true,
       commitment_version:COMMITMENT_VERSION
     };
-    // Identitaet wird serverseitig aus dem Clerk-Token verifiziert (nicht mehr aus dem Body).
-    var _fnHeaders={'Content-Type':'application/json'};
-    try{if(window.Clerk&&window.Clerk.session){var _tk=await window.Clerk.session.getToken();if(_tk)_fnHeaders['Authorization']='Bearer '+_tk;}}catch(e){}
-    var _fnResp=await fetch('https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/submit-customer-request',{method:'POST',headers:_fnHeaders,body:JSON.stringify(_reqPayload)});
-    var _fnJson=await _fnResp.json().catch(function(){return{};});
-    if(!_fnResp.ok||!_fnJson.success)throw new Error(_fnJson.error||('http '+_fnResp.status));
-    var customerId=_fnJson.customer_id;
 
-    // File upload note: file-based material list parsing not yet implemented in this phase
-    document.getElementById('form-contact').style.display='none';
-    var successEl=document.getElementById('success-contact');
-    successEl.classList.add('show');
-    successEl.scrollIntoView({behavior:'smooth',block:'center'});
-
-    // Account creation flow
-    var wantsAccount=document.getElementById('c-create-account')&&document.getElementById('c-create-account').checked;
-    var userEmail=_custEmail;
     if(window.Clerk&&window.Clerk.user){
-      // Eingeloggt: Anfrage immer sofort mit dem bestehenden Kundenkonto verknüpfen,
-      // unabhängig von der "Konto erstellen"-Checkbox
-      soLog('[SourceOn] User already signed in, linking customer record');
-      _linkCustomerAccount(customerId,window.Clerk.user.id);
-    }else if(wantsAccount&&window.Clerk){
-      {
-        // Store in localStorage as backup for redirect/reload case (persists across reloads)
-        localStorage.setItem('sourceon_pending_customer_link',customerId);
-        soLog('[SourceOn] Stored pending customer ID in localStorage:',customerId);
+      // Bereits eingeloggt → direkt einreichen (Identität via Clerk-Token, serverseitig verifiziert).
+      soLog('[SourceOn] User already signed in, submitting request');
+      await _soSubmitRequest(_reqPayload);
+    }else{
+      // NICHT eingeloggt → Registrierung ERZWINGEN. Erst nach erfolgreichem Signup
+      // wird die Anfrage (mit dem neuen Konto-Token) an die Edge-Function gesendet.
+      try{localStorage.setItem('sourceon_pending_request',JSON.stringify(_reqPayload));}catch(e){}
+      submitBtn.disabled=false;submitBtn.style.opacity='1';
+      if(window.Clerk){
+        soLog('[SourceOn] Not signed in — opening mandatory sign-up before submit');
         window.Clerk.openSignUp({
           appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'},elements:{footer:'display:none',footerAction:'display:none',footerActionText:'display:none',footerActionLink:'display:none',footer__signUp:'display:none'}},
-          initialValues:{emailAddress:userEmail},
+          initialValues:{emailAddress:_custEmail},
           afterSignUpUrl:window.location.href
         });
-        // Listen for sign-up completion — fires when modal finishes (no redirect needed)
+        // Signup abgeschlossen (ohne Reload) → gespeicherte Anfrage einreichen.
         var _unsubSignUp=window.Clerk.addListener(function(emission){
           var u=emission&&emission.user?emission.user:(window.Clerk?window.Clerk.user:null);
           if(!u)return;
-          var pid=localStorage.getItem('sourceon_pending_customer_link');
-          if(!pid)return;
+          if(!localStorage.getItem('sourceon_pending_request'))return;
           if(typeof _unsubSignUp==='function')_unsubSignUp();
-          localStorage.removeItem('sourceon_pending_customer_link');
-          soLog('[SourceOn] Sign-up complete, linking customer:',pid,'->',u.id);
-          _linkCustomerAccount(pid,u.id);
+          soLog('[SourceOn] Sign-up complete, submitting stored request');
+          _soSubmitStoredRequest();
         });
       }
     }
@@ -1834,6 +1807,38 @@ async function submitContact(e){
   }
 }
 
+
+// Reicht eine Materialbedarf-Anfrage bei der Edge-Function ein. Identität wird
+// serverseitig aus dem Clerk-Token verifiziert (user_id wird server-seitig gesetzt).
+async function _soSubmitRequest(payload){
+  var submitBtn=document.querySelector('#form-contact button[type="submit"]');
+  try{
+    var _fnHeaders={'Content-Type':'application/json'};
+    try{if(window.Clerk&&window.Clerk.session){var _tk=await window.Clerk.session.getToken();if(_tk)_fnHeaders['Authorization']='Bearer '+_tk;}}catch(e){}
+    var _fnResp=await fetch('https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/submit-customer-request',{method:'POST',headers:_fnHeaders,body:JSON.stringify(payload)});
+    var _fnJson=await _fnResp.json().catch(function(){return{};});
+    if(!_fnResp.ok||!_fnJson.success)throw new Error(_fnJson.error||('http '+_fnResp.status));
+    try{localStorage.removeItem('sourceon_pending_request');}catch(e){}
+    var formEl=document.getElementById('form-contact');if(formEl)formEl.style.display='none';
+    var successEl=document.getElementById('success-contact');
+    if(successEl){successEl.classList.add('show');successEl.scrollIntoView({behavior:'smooth',block:'center'});}
+    return true;
+  }catch(err){
+    console.error('[SourceOn] submit request error:',err);
+    if(submitBtn){submitBtn.disabled=false;submitBtn.style.opacity='1';}
+    var errDiv=document.getElementById('submit-error');
+    if(!errDiv&&submitBtn){errDiv=document.createElement('div');errDiv.id='submit-error';errDiv.style.cssText='background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:14px 18px;margin-top:14px;font-size:.85rem;color:#991b1b;line-height:1.6';submitBtn.parentNode.insertBefore(errDiv,submitBtn.nextSibling);}
+    if(errDiv){errDiv.textContent='Es gab ein Problem bei der Übermittlung. Bitte versuche es erneut oder kontaktiere uns direkt unter info@sourceon.ch.';errDiv.style.display='block';}
+    return false;
+  }
+}
+// Reicht eine zwischengespeicherte Anfrage nach erfolgreichem Signup ein.
+async function _soSubmitStoredRequest(){
+  var raw=null;try{raw=localStorage.getItem('sourceon_pending_request');}catch(e){}
+  if(!raw)return;
+  var payload;try{payload=JSON.parse(raw);}catch(e){try{localStorage.removeItem('sourceon_pending_request');}catch(_e){}return;}
+  await _soSubmitRequest(payload);
+}
 
 async function _linkCustomerAccount(newCustomerId,clerkUserId){
   try{
@@ -1968,7 +1973,7 @@ window.I18N={
     form_address_label:"Lieferadresse *",form_plz_label:"PLZ *",form_ort_label:"Ort *",form_plz_ph:"8000",form_ort_ph:"z.B. Zürich",form_placeholder_address:"Strasse und Hausnummer",
     form_project_label:'Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span>',form_placeholder_project:"Kurze Beschreibung des Projekts und weitere Anforderungen…",
     form_submit:"Materialbedarf jetzt melden →",
-    form_post_submit:"Nach dem Absenden siehst du sofort deinen garantierten Mindestrabatt und kannst den Status deiner Anfrage jederzeit in deinem Dashboard verfolgen.",
+    form_post_submit:"Nach dem Absenden wirst du aufgefordert, ein kostenloses Konto zu erstellen. So kannst du den Status deiner Anfrage jederzeit verfolgen.",
     form_bundle_hint:"Hinweis: Wird dein Bedarf mit anderen Baufirmen gebündelt, richtet sich deine individuelle Ersparnis nach deinem Volumenanteil am Gesamtbündel.",
     form_success:'<span><svg aria-hidden="true" class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — deine Anfrage ist eingegangen. Verfolge den Status jederzeit in deinem Dashboard. Sobald dein Bündel steht, erhältst du dein konkretes Angebot.',
     footer_desc:"Schweizer B2B Beschaffungsvermittler für die Baubranche.",
@@ -2024,7 +2029,7 @@ window.I18N={
     form_project_label:'Project description <span style="font-weight:400;color:var(--body)">(optional)</span>',
     form_placeholder_project:"Brief description of the project and further requirements…",
     form_submit:"Report material needs now →",
-    form_post_submit:"After submitting, you immediately see your guaranteed minimum discount and can track your request status anytime in your dashboard.",
+    form_post_submit:"After submitting, you will be prompted to create a free account so you can track your request at any time.",
     form_bundle_hint:"Note: If your demand is bundled with other construction firms, your individual savings depend on your volume share of the total bundle.",
     form_success:'<span><svg aria-hidden="true" class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Thank you — your request has been received. Track the status anytime in your dashboard. As soon as your bundle is ready, you\'ll receive your concrete offer.',
     footer_desc:"Swiss B2B procurement intermediary for the construction industry.",
@@ -2079,7 +2084,7 @@ window.I18N={
     form_address_label:"Adresse de livraison *",form_plz_label:"NPA *",form_ort_label:"Localité *",form_plz_ph:"8000",form_ort_ph:"p.ex. Zurich",form_placeholder_address:"Rue et numéro",
     form_project_label:'Description du projet <span style="font-weight:400;color:var(--body)">(optionnel)</span>',form_placeholder_project:"Brève description du projet et exigences supplémentaires…",
     form_submit:"Déclarer le besoin maintenant →",
-    form_post_submit:"Après envoi, vous voyez immédiatement votre remise minimale garantie et pouvez suivre le statut de votre demande à tout moment dans votre tableau de bord.",
+    form_post_submit:"Après l'envoi, il te sera demandé de créer un compte gratuit pour suivre ta demande à tout moment.",
     form_bundle_hint:"Remarque : Si votre besoin est regroupé avec d'autres entreprises de construction, vos économies individuelles dépendent de votre part de volume dans le regroupement total.",
     form_success:'<span><svg aria-hidden="true" class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Merci — votre demande a bien été reçue. Suivez le statut à tout moment dans votre tableau de bord. Dès que votre regroupement est prêt, vous recevez votre offre concrète.',
     footer_desc:"Intermédiaire B2B suisse pour l'approvisionnement dans le secteur de la construction.",
@@ -2134,7 +2139,7 @@ window.I18N={
     form_address_label:"Indirizzo di consegna *",form_plz_label:"CAP *",form_ort_label:"Località *",form_plz_ph:"8000",form_ort_ph:"es. Zurigo",form_placeholder_address:"Via e numero",
     form_project_label:'Descrizione del progetto <span style="font-weight:400;color:var(--body)">(opzionale)</span>',form_placeholder_project:"Breve descrizione del progetto e ulteriori requisiti…",
     form_submit:"Segnalare fabbisogno ora →",
-    form_post_submit:"Dopo l'invio, vedi immediatamente il tuo sconto minimo garantito e puoi seguire lo stato della tua richiesta in qualsiasi momento nella tua dashboard.",
+    form_post_submit:"Dopo l'invio, ti verrà chiesto di creare un account gratuito per seguire la tua richiesta in qualsiasi momento.",
     form_bundle_hint:"Nota: Se il tuo fabbisogno viene raggruppato con altre imprese edili, il tuo risparmio individuale dipende dalla tua quota di volume nel raggruppamento totale.",
     form_success:'<span><svg aria-hidden="true" class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Grazie — la tua richiesta è stata ricevuta. Segui lo stato in qualsiasi momento nella tua dashboard. Non appena il tuo raggruppamento è pronto, ricevi la tua offerta concreta.',
     footer_desc:"Intermediario B2B svizzero per gli approvvigionamenti nel settore edile.",
@@ -2485,6 +2490,12 @@ async function _createCustomerIfNeeded(){
         }
       }catch(e){console.error('[SourceOn] Customer link error:',e);}
     })();
+  }
+
+  // Nach erfolgreichem Signup mit Reload: zwischengespeicherte Anfrage einreichen.
+  if(localStorage.getItem('sourceon_pending_request')&&window.Clerk.user){
+    soLog('[SourceOn] Pending request found on load — submitting after sign-up');
+    _soSubmitStoredRequest();
   }
 
   // Handle customer signup: create customer row if needed (no redirect)
