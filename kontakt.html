@@ -2412,6 +2412,10 @@ async function _createCustomerIfNeeded(){
       soLog('[SourceOn] Final decision — Show supplier link:',isVerifiedSupplier,'Show customer link:',isLinkedCustomer);
       if(dashLink)dashLink.style.display=isVerifiedSupplier?'flex':'none';
       if(custLink)custLink.style.display=(isLinkedCustomer||(!supplierRows||supplierRows.length===0))?'flex':'none';
+      // "Konto erstellen"-Opt-in nur zeigen, wenn NICHT bereits registrierter Kunde.
+      var _acctSec=document.getElementById('acct-opt-section');
+      if(_acctSec)_acctSec.style.display=isLinkedCustomer?'none':'block';
+      if(isLinkedCustomer){var _cca=document.getElementById('c-create-account');if(_cca)_cca.checked=false;}
       if(statusWrap){
         if(supplierRows&&supplierRows.length>0){
           var s=supplierRows[0].status;
