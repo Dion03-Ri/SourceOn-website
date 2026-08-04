@@ -10,10 +10,28 @@
 // Deploy: Function "submit-customer-request", Verify JWT = AUS.
 
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createRemoteJWKSet, jwtVerify } from "https://esm.sh/jose@5";
+
+// Clerk-Token-Verifizierung: die Identitaet (user_id) darf NICHT aus dem Body
+// geglaubt werden (Clerk-IDs sind nicht geheim). Wir verifizieren den mit-
+// gesendeten Clerk-Session-Token und nehmen den sub daraus. Ohne gueltigen
+// Token -> anonyme Einreichung (user_id bleibt null, spaeter verknuepft).
+const CLERK_ISSUER = "https://tolerant-skink-62.clerk.accounts.dev";
+const JWKS = createRemoteJWKSet(new URL(CLERK_ISSUER + "/.well-known/jwks.json"));
+
+async function verifiedSub(req: Request): Promise<string | null> {
+  const auth = req.headers.get("Authorization") || "";
+  const token = auth.startsWith("Bearer ") ? auth.slice(7) : "";
+  if (!token) return null;
+  try {
+    const { payload } = await jwtVerify(token, JWKS, { issuer: CLERK_ISSUER });
+    return (payload.sub as string) || null;
+  } catch { return null; }
+}
 
 const CORS = {
   "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "content-type",
+  "Access-Control-Allow-Headers": "authorization, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
 };
 function json(body: unknown, status = 200): Response {
@@ -117,16 +135,19 @@ Deno.serve(async (req) => {
   const committedAt = new Date().toISOString();
   const commitmentVersion = (b.commitment_version || "").toString().slice(0, 40) || "server";
 
+  // Identitaet NUR aus dem verifizierten Clerk-Token — niemals aus dem Body.
+  const userId = await verifiedSub(req);
+
   const custPayload: Record<string, unknown> = {
     firmenname, ansprechperson, email, telefon, lieferadresse, kanton: "",
   };
-  if (b.clerk_user_id) custPayload.user_id = b.clerk_user_id;
+  if (userId) custPayload.user_id = userId;
 
   try {
     // Bestehenden Kunden wiederverwenden, wenn eingeloggt.
     let customerId: string | null = null;
-    if (b.clerk_user_id) {
-      const ex = await sb.from("customers").select("id").eq("user_id", b.clerk_user_id).limit(1).maybeSingle();
+    if (userId) {
+      const ex = await sb.from("customers").select("id").eq("user_id", userId).limit(1).maybeSingle();
       if (ex.data) {
         customerId = ex.data.id;
         await sb.from("customers").update(custPayload).eq("id", customerId);

@@ -1775,8 +1775,10 @@ async function submitContact(e){
       commitment_accepted:true,
       commitment_version:COMMITMENT_VERSION
     };
-    if(window.Clerk&&window.Clerk.user)_reqPayload.clerk_user_id=window.Clerk.user.id;
-    var _fnResp=await fetch('https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/submit-customer-request',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(_reqPayload)});
+    // Identitaet wird serverseitig aus dem Clerk-Token verifiziert (nicht mehr aus dem Body).
+    var _fnHeaders={'Content-Type':'application/json'};
+    try{if(window.Clerk&&window.Clerk.session){var _tk=await window.Clerk.session.getToken();if(_tk)_fnHeaders['Authorization']='Bearer '+_tk;}}catch(e){}
+    var _fnResp=await fetch('https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/submit-customer-request',{method:'POST',headers:_fnHeaders,body:JSON.stringify(_reqPayload)});
     var _fnJson=await _fnResp.json().catch(function(){return{};});
     if(!_fnResp.ok||!_fnJson.success)throw new Error(_fnJson.error||('http '+_fnResp.status));
     var customerId=_fnJson.customer_id;
