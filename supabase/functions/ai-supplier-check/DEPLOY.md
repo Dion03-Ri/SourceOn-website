@@ -35,12 +35,23 @@ supabase functions deploy ai-supplier-check --no-verify-jwt
 
 ## Step 3: Set up automatic trigger on new supplier insert
 
+### Internal auth secret
+
+The function verifies an internal header `x-ai-secret` against the function
+secret `AI_TRIGGER_SECRET`. Without it, the function is open to the internet
+(it triggers paid Gemini calls). Set up:
+
+1. Create a function secret `AI_TRIGGER_SECRET` with a long random value
+   (Edge Functions → Secrets), e.g. `ai_7pK9mQ2xL4vR8nT3wZ6bY1cH5dF0jS`.
+2. Put the **exact same value** into the trigger function below.
+
 Run this SQL in Supabase Dashboard → SQL Editor:
 
 ```sql
 -- Enable pg_net if not already enabled (Database → Extensions)
 
--- Create trigger function that calls the Edge Function
+-- Create trigger function that calls the Edge Function.
+-- The x-ai-secret value MUST match the function secret AI_TRIGGER_SECRET.
 CREATE OR REPLACE FUNCTION notify_ai_supplier_check()
 RETURNS trigger AS $$
 BEGIN
@@ -48,9 +59,7 @@ BEGIN
     url := 'https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/ai-supplier-check',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
-      'Authorization', 'Bearer ' || current_setting('app.settings.service_role_key', true),
-      -- Interner Auth-Header: muss dem Function-Secret AI_TRIGGER_SECRET entsprechen.
-      'x-ai-secret', current_setting('app.settings.ai_trigger_secret', true)
+      'x-ai-secret', 'ai_7pK9mQ2xL4vR8nT3wZ6bY1cH5dF0jS'
     ),
     body := jsonb_build_object('record', jsonb_build_object('id', NEW.id))
   );
@@ -66,28 +75,11 @@ CREATE TRIGGER on_new_supplier_ai_check
   EXECUTE FUNCTION notify_ai_supplier_check();
 ```
 
-If `current_setting('app.settings.service_role_key')` is not configured, use the
-literal service role key in the SQL (same as for auto-bundle cron setup):
-
-```sql
-CREATE OR REPLACE FUNCTION notify_ai_supplier_check()
-RETURNS trigger AS $$
-BEGIN
-  PERFORM net.http_post(
-    url := 'https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/ai-supplier-check',
-    headers := '{"Content-Type": "application/json", "Authorization": "Bearer YOUR_SERVICE_ROLE_KEY"}'::jsonb,
-    body := jsonb_build_object('record', jsonb_build_object('id', NEW.id))
-  );
-  RETURN NEW;
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
-
-DROP TRIGGER IF EXISTS on_new_supplier_ai_check ON suppliers;
-CREATE TRIGGER on_new_supplier_ai_check
-  AFTER INSERT ON suppliers
-  FOR EACH ROW
-  EXECUTE FUNCTION notify_ai_supplier_check();
-```
+> Note: `ALTER DATABASE ... SET app.settings.ai_trigger_secret` fails with
+> `permission denied` in the hosted SQL editor — that's why the secret is
+> written as a literal in the trigger function instead of via `current_setting`.
+> The trigger runs only server-side in the DB; the value is never exposed to
+> the browser.
 
 ## Testing manually
 
