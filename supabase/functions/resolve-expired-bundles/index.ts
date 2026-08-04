@@ -1,7 +1,16 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-Deno.serve(async (_req: Request) => {
+Deno.serve(async (req: Request) => {
   try {
+    // --- Interner Auth-Check (gleiches Muster wie ai-supplier-check) ---
+    // Verify JWT ist AUS; die Function wird nur vom pg_cron-Job aufgerufen, der
+    // den geheimen Header x-ai-secret mitschickt. Ohne diesen Header waere die
+    // Function fuer jeden im Internet aufrufbar (Compute-/DoS-Hebel).
+    const triggerSecret = Deno.env.get("AI_TRIGGER_SECRET");
+    if (!triggerSecret || req.headers.get("x-ai-secret") !== triggerSecret) {
+      return Response.json({ error: "unauthorized" }, { status: 401 });
+    }
+
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SB_SECRET_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const sb = createClient(supabaseUrl, supabaseKey);

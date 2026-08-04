@@ -65,9 +65,19 @@ Or simply open the URL in a browser if JWT is disabled.
 
 Run this SQL in Supabase Dashboard → SQL Editor:
 
+Die Function verifiziert intern den Header `x-ai-secret` gegen das Function-
+Secret `AI_TRIGGER_SECRET` (gleiches Muster wie ai-supplier-check). Der Cron-Job
+MUSS diesen Header mitschicken, sonst antwortet die Function mit 401. Verify JWT
+ist AUS — ein `Authorization`-Bearer wird nicht mehr benoetigt.
+
+`<AI_TRIGGER_SECRET>` unten durch den echten Wert des Function-Secrets ersetzen.
+
 ```sql
 -- Enable pg_cron and pg_net if not already enabled
 -- (go to Database → Extensions and enable both first)
+
+-- vorhandenen Job zuerst entfernen (falls schon geplant)
+SELECT cron.unschedule('auto-bundle-hourly');
 
 -- Create the hourly cron job
 SELECT cron.schedule(
@@ -78,25 +88,8 @@ SELECT cron.schedule(
     url := 'https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/auto-bundle',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
-      'Authorization', 'Bearer ' || current_setting('app.settings.service_role_key', true)
+      'x-ai-secret', '<AI_TRIGGER_SECRET>'
     ),
-    body := '{}'::jsonb
-  ) AS request_id;
-  $$
-);
-```
-
-If `current_setting('app.settings.service_role_key')` is not configured, use the
-literal service role key instead (find it in Dashboard → Settings → API):
-
-```sql
-SELECT cron.schedule(
-  'auto-bundle-hourly',
-  '0 * * * *',
-  $$
-  SELECT net.http_post(
-    url := 'https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/auto-bundle',
-    headers := '{"Content-Type": "application/json", "Authorization": "Bearer YOUR_SERVICE_ROLE_KEY"}'::jsonb,
     body := '{}'::jsonb
   ) AS request_id;
   $$
