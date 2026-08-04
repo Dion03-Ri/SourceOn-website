@@ -1404,11 +1404,11 @@ function _onDateChange(){
   var err=document.getElementById('e-c-timing');if(err)err.style.display='none';
   var box=document.getElementById('tempo-indicator');
   if(!von||!bis){if(box)box.style.display='none';return;}
-  // Das Tempo richtet sich nach dem SPÄTESTEN akzeptierten Liefertermin (bis):
-  // bis dahin darf geliefert werden, also bestimmt dieser Termin, wie viel Zeit
-  // für die Bündelung bleibt. Ein weites Fenster (bis weit in der Zukunft) ist
-  // flexibel, auch wenn das früheste Datum bald ist.
-  var avail=_isoDays(bis);
+  // Das Tempo richtet sich nach dem FRÜHESTEN gewünschten Liefertermin (von):
+  // bis dahin muss geliefert werden können, also bestimmt dieser Termin, wie viel
+  // Zeit real zum Sammeln von Bündelungspartnern bleibt. (Zurückgesetzt von der
+  // bis-basierten Variante, die ein enges Fenster faelschlich als flexibel zeigte.)
+  var avail=_isoDays(von);
   var _tl=(typeof I18N!=='undefined'&&I18N[window._currentLang||localStorage.getItem('sourceon-lang')||'de'])||{};
   if(box){
     if(avail>23){box.textContent=_tl.tempo_msg_flex||'🟢 Flexibler Zeitraum — deine Anfrage sammelt bis zu 14 Tage Bündelungspartner für maximale Ersparnis.';box.style.display='block';}
@@ -1775,23 +1775,8 @@ async function submitContact(e){
       // wird die Anfrage (mit dem neuen Konto-Token) an die Edge-Function gesendet.
       try{localStorage.setItem('sourceon_pending_request',JSON.stringify(_reqPayload));}catch(e){}
       submitBtn.disabled=false;submitBtn.style.opacity='1';
-      if(window.Clerk){
-        soLog('[SourceOn] Not signed in — opening mandatory sign-up before submit');
-        window.Clerk.openSignUp({
-          appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'},elements:{footer:'display:none',footerAction:'display:none',footerActionText:'display:none',footerActionLink:'display:none',footer__signUp:'display:none'}},
-          initialValues:{emailAddress:_custEmail},
-          afterSignUpUrl:window.location.href
-        });
-        // Signup abgeschlossen (ohne Reload) → gespeicherte Anfrage einreichen.
-        var _unsubSignUp=window.Clerk.addListener(function(emission){
-          var u=emission&&emission.user?emission.user:(window.Clerk?window.Clerk.user:null);
-          if(!u)return;
-          if(!localStorage.getItem('sourceon_pending_request'))return;
-          if(typeof _unsubSignUp==='function')_unsubSignUp();
-          soLog('[SourceOn] Sign-up complete, submitting stored request');
-          _soSubmitStoredRequest();
-        });
-      }
+      soLog('[SourceOn] Not signed in — opening mandatory sign-up before submit');
+      _soOpenMandatorySignup(_custEmail);
     }
   }catch(err){
     console.error('Supabase insert error:',err);
@@ -1807,6 +1792,37 @@ async function submitContact(e){
   }
 }
 
+
+// Öffnet die Clerk-Registrierung (Pflicht) und reicht nach erfolgreichem Signup
+// die zwischengespeicherte Anfrage ein. Robust: wartet auf Clerk, ohne fragiles
+// appearance-Objekt (das mit Clerk @latest openSignUp brechen konnte), mit Fallback.
+function _soOpenMandatorySignup(email){
+  function open(attempt){
+    if(window.Clerk&&typeof window.Clerk.openSignUp==='function'){
+      // Listener ZUERST registrieren, damit kein Signup-Event verpasst wird.
+      var _unsub=window.Clerk.addListener(function(emission){
+        var u=emission&&emission.user?emission.user:(window.Clerk?window.Clerk.user:null);
+        if(!u)return;
+        if(!localStorage.getItem('sourceon_pending_request'))return;
+        if(typeof _unsub==='function')_unsub();
+        soLog('[SourceOn] Sign-up complete, submitting stored request');
+        _soSubmitStoredRequest();
+      });
+      try{
+        window.Clerk.openSignUp({initialValues:{emailAddress:email},afterSignUpUrl:window.location.href});
+      }catch(e){
+        console.error('[SourceOn] openSignUp failed, retrying without options:',e);
+        try{window.Clerk.openSignUp();}catch(_e){console.error('[SourceOn] openSignUp fallback failed:',_e);}
+      }
+      return;
+    }
+    if(attempt<25){setTimeout(function(){open(attempt+1);},150);return;}
+    // Clerk nicht verfügbar → Nutzer nicht stumm hängen lassen.
+    console.error('[SourceOn] Clerk not available for mandatory sign-up');
+    alert('Um deine Anfrage abzusenden, ist ein kostenloses Konto nötig. Bitte lade die Seite neu und versuche es erneut — falls das Registrierungsfenster nicht erscheint, kontaktiere uns unter info@sourceon.ch.');
+  }
+  open(0);
+}
 
 // Reicht eine Materialbedarf-Anfrage bei der Edge-Function ein. Identität wird
 // serverseitig aus dem Clerk-Token verifiziert (user_id wird server-seitig gesetzt).
