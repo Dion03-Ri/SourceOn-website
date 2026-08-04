@@ -42,7 +42,7 @@ secret `AI_TRIGGER_SECRET`. Without it, the function is open to the internet
 (it triggers paid Gemini calls). Set up:
 
 1. Create a function secret `AI_TRIGGER_SECRET` with a long random value
-   (Edge Functions → Secrets), e.g. `ai_7pK9mQ2xL4vR8nT3wZ6bY1cH5dF0jS`.
+   (Edge Functions → Secrets), e.g. `<DEIN_SECRET_HIER>`.
 2. Put the **exact same value** into the trigger function below.
 
 Run this SQL in Supabase Dashboard → SQL Editor:
@@ -59,7 +59,7 @@ BEGIN
     url := 'https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/ai-supplier-check',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
-      'x-ai-secret', 'ai_7pK9mQ2xL4vR8nT3wZ6bY1cH5dF0jS'
+      'x-ai-secret', '<DEIN_SECRET_HIER>'
     ),
     body := jsonb_build_object('record', jsonb_build_object('id', NEW.id))
   );
