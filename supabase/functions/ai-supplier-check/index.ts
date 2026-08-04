@@ -63,6 +63,16 @@ function parseGeminiResponse(responseBody: Record<string, unknown>): { score: nu
 
 Deno.serve(async (req: Request) => {
   try {
+    // --- Interner Auth-Check ---
+    // Verify JWT ist AUS (die Function wird vom DB-Trigger server-to-server aufgerufen),
+    // daher MUSS die Function selbst pruefen. Nur Aufrufe mit dem geheimen Header
+    // x-ai-secret (den nur der DB-Trigger kennt) duerfen das bezahlte Gemini ausloesen.
+    // Ohne diesen Check waere die Function fuer jeden im Internet aufrufbar.
+    const triggerSecret = Deno.env.get("AI_TRIGGER_SECRET");
+    if (!triggerSecret || req.headers.get("x-ai-secret") !== triggerSecret) {
+      return Response.json({ error: "unauthorized" }, { status: 401 });
+    }
+
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
     const supabaseKey = Deno.env.get("SB_SECRET_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const geminiKey = Deno.env.get("GEMINI_API_KEY");

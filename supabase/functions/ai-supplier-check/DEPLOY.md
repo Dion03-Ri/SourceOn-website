@@ -48,7 +48,9 @@ BEGIN
     url := 'https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/ai-supplier-check',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
-      'Authorization', 'Bearer ' || current_setting('app.settings.service_role_key', true)
+      'Authorization', 'Bearer ' || current_setting('app.settings.service_role_key', true),
+      -- Interner Auth-Header: muss dem Function-Secret AI_TRIGGER_SECRET entsprechen.
+      'x-ai-secret', current_setting('app.settings.ai_trigger_secret', true)
     ),
     body := jsonb_build_object('record', jsonb_build_object('id', NEW.id))
   );
