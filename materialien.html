@@ -2145,5 +2145,8 @@ document.addEventListener('keydown',function(e){
   var _o=window.setLang;if(typeof _o==='function'){window.setLang=function(l){_o(l);paint();};}
 })();
 </script>
+<script>
+window.addEventListener("pageshow", function(e){ if(e.persisted){ window.location.reload(); } });
+</script>
 </body>
 </html>

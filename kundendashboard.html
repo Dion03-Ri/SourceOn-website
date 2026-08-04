@@ -1112,5 +1112,8 @@ document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.get
   <script src="mobile-nav.js"></script>
 
 <script src="xlsx-export.js"></script>
+<script>
+window.addEventListener("pageshow", function(e){ if(e.persisted){ window.location.reload(); } });
+</script>
 </body>
 </html>
