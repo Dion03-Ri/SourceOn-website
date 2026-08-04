@@ -1407,7 +1407,7 @@ function _onDateChange(){
   // Das Tempo richtet sich nach der Zeitspanne vom Absenden (heute) bis zum
   // SPÄTESTEN gewünschten Liefertermin (bis) — so viel Zeit bleibt real, um
   // Bündelungspartner zu sammeln und auszuschreiben.
-  var avail=_isoDays(bis);
+  var avail=Math.ceil((new Date(bis)-new Date())/(1000*60*60*24));
   var _tl=(typeof I18N!=='undefined'&&I18N[window._currentLang||localStorage.getItem('sourceon-lang')||'de'])||{};
   if(box){
     if(avail>23){box.textContent=_tl.tempo_msg_flex||'🟢 Flexibler Zeitraum — deine Anfrage sammelt bis zu 14 Tage Bündelungspartner für maximale Ersparnis.';box.style.display='block';}
