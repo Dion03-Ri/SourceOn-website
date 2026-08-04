@@ -1773,7 +1773,7 @@ async function submitContact(e){
       // Nach erfolgreichem Auth wird automatisch abgesendet (Listener + Load-Resume).
       try{localStorage.setItem('sourceon_pending_request',JSON.stringify(_reqPayload));}catch(e){}
       submitBtn.disabled=false;submitBtn.style.opacity='1';
-      if(window.Clerk&&window.Clerk.openSignIn){try{window.Clerk.openSignIn();}catch(e){}}
+      if(window.Clerk&&window.Clerk.openSignIn){try{window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});}catch(e){}}
     }
   }catch(err){
     console.error('Supabase insert error:',err);
