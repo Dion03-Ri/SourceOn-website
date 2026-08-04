@@ -33,6 +33,8 @@ create policy suppliers_select_own on public.suppliers
 -- Anonyme (requesting_user_id() = NULL) sehen nichts.
 -- ----------------------------------------------------------------------------
 drop policy if exists bundles_select_public on public.bundles;
+drop policy if exists bundles_read_all on public.bundles;                        -- Legacy using(true), nur in Live-DB
+drop policy if exists bundles_select_for_verified_suppliers_clerk on public.bundles;
 drop policy if exists bundles_select_participants on public.bundles;
 create policy bundles_select_participants on public.bundles
   for select using (
