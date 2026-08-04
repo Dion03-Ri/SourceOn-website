@@ -54,18 +54,21 @@ alter table public.bids
 create or replace function public.guard_bid_min_discount()
 returns trigger language plpgsql as $$
 declare
-  ziel numeric;
+  ziel_raw numeric;
+  ziel_pct numeric;
 begin
   if current_user = 'service_role' then
     return new;
   end if;
-  select b.ziel_mindestrabatt into ziel
+  select b.ziel_mindestrabatt into ziel_raw
     from public.bundles b where b.id = new.bundle_id;
-  if ziel is not null and new.rabatt_prozent is not null then
-    -- ziel ist als Bruch gespeichert (z.B. 0.16), rabatt_prozent als Prozent (16).
-    if new.rabatt_prozent < (ziel * 100) then
+  if ziel_raw is not null and new.rabatt_prozent is not null then
+    -- Skala-agnostisch — identische Normalisierung wie resolve-expired-bundles:
+    -- Bruch (0.16) wird zu Prozent (16), bereits-Prozent bleibt unveraendert.
+    ziel_pct := case when ziel_raw < 1 then ziel_raw * 100 else ziel_raw end;
+    if new.rabatt_prozent < ziel_pct then
       raise exception 'Gebot % liegt unter dem geforderten Mindestrabatt %',
-        new.rabatt_prozent, round(ziel * 100, 2);
+        new.rabatt_prozent, round(ziel_pct, 2);
     end if;
   end if;
   return new;
