@@ -1765,16 +1765,17 @@ async function submitContact(e){
       commitment_version:COMMITMENT_VERSION
     };
 
+    console.log('[SourceOn] SUBMIT reached account branch. Clerk?',!!window.Clerk,'| user logged in?',!!(window.Clerk&&window.Clerk.user));
     if(window.Clerk&&window.Clerk.user){
       // Bereits eingeloggt → direkt einreichen (Identität via Clerk-Token, serverseitig verifiziert).
-      soLog('[SourceOn] User already signed in, submitting request');
+      console.log('[SourceOn] Path: already signed in → submitting directly (no modal expected)');
       await _soSubmitRequest(_reqPayload);
     }else{
       // NICHT eingeloggt → Registrierung ERZWINGEN. Erst nach erfolgreichem Signup
       // wird die Anfrage (mit dem neuen Konto-Token) an die Edge-Function gesendet.
       try{localStorage.setItem('sourceon_pending_request',JSON.stringify(_reqPayload));}catch(e){}
       submitBtn.disabled=false;submitBtn.style.opacity='1';
-      soLog('[SourceOn] Not signed in — opening mandatory sign-up before submit');
+      console.log('[SourceOn] Path: NOT signed in → opening Clerk sign-in modal now');
       _soOpenMandatorySignup(_custEmail);
     }
   }catch(err){
@@ -1797,6 +1798,7 @@ async function submitContact(e){
 // appearance-Objekt (das mit Clerk @latest openSignUp brechen konnte), mit Fallback.
 function _soOpenMandatorySignup(email){
   function open(attempt){
+    console.log('[SourceOn] _soOpenMandatorySignup attempt',attempt,'| Clerk?',!!window.Clerk,'| openSignIn?',!!(window.Clerk&&typeof window.Clerk.openSignIn==='function'));
     // WICHTIG: openSignIn ist der auf der ganzen Seite bewährte, funktionierende
     // Aufruf (siehe clerkCustomerSignUp). openSignUp oeffnete mit dieser Clerk-
     // Version nicht. Das Sign-in-Fenster enthaelt den Registrieren-Link.
