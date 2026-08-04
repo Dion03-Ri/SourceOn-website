@@ -28,7 +28,12 @@ SELECT cron.schedule(
   $$
   SELECT net.http_post(
     url := 'https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/resolve-expired-bundles',
-    headers := '{"Content-Type": "application/json", "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im10dHpzcXR1YWlzZGppc2p4cmV5Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc4MjI0NDcyNiwiZXhwIjoyMDk3ODIwNzI2fQ.n3xkLAcIURQ_zLyPYWwDWXHk3-rxJeMJBnq0oGooHYs"}'::jsonb,
+    headers := jsonb_build_object(
+      'Content-Type', 'application/json',
+      -- Service-Role-Key NICHT hardcoden. Als DB-Setting hinterlegen:
+      --   alter database postgres set app.settings.service_role_key = '<KEY>';
+      'Authorization', 'Bearer ' || current_setting('app.settings.service_role_key', true)
+    ),
     body := '{}'::jsonb
   ) AS request_id;
   $$
