@@ -1158,21 +1158,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="contact-form-card">
           <div class="form-gold-bar"></div>
           <div class="ck-cardpad">
-          <style>
-          .auth-blur-wrapper{position:relative}
-          .auth-blur-overlay{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;background:rgba(7,15,26,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:var(--r-lg,28px)}
-          .auth-blur-content{text-align:center;padding:48px 36px;max-width:400px}
-          .auth-blur-icon{font-size:48px;margin-bottom:20px;display:block;filter:drop-shadow(0 0 12px rgba(232,160,32,0.4))}
-          .auth-blur-title{font-size:22px;font-weight:700;color:var(--t1,#F1F5F9);margin-bottom:10px;font-family:Inter,sans-serif}
-          .auth-blur-sub{font-size:14px;color:var(--t2,#94A3B8);line-height:1.6;margin-bottom:28px}
-          .auth-blur-buttons{display:flex;flex-direction:column;gap:12px}
-          .auth-blur-btn-primary{background:var(--gold);color:#070F1A;border:none;border-radius:12px;padding:13px 24px;font-size:15px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;transition:opacity 0.15s}
-          .auth-blur-btn-primary:hover{opacity:0.88}
-          .auth-blur-btn-secondary{background:transparent;color:var(--t2,#94A3B8);border:1px solid var(--border-md,#CBD5E1);border-radius:12px;padding:12px 24px;font-size:14px;cursor:pointer;font-family:Inter,sans-serif;transition:border-color 0.15s,color 0.15s}
-          .auth-blur-btn-secondary:hover{border-color:var(--gold);color:var(--t1,#F1F5F9)}
-          </style>
-          <div class="auth-blur-wrapper">
-          <div id="form-content">
           <form id="form-contact" onsubmit="submitContact(event)" novalidate>
             <div class="form-title" data-i18n="form_title">Jetzt melden</div>
             <div class="form-subtitle" data-i18n="form_subtitle">Du siehst deinen garantierten Mindestrabatt vor dem Absenden.</div>
@@ -1247,19 +1232,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;text-align:center;font-style:italic" data-i18n="form_post_submit">Nach dem Absenden wirst du aufgefordert, ein kostenloses Konto zu erstellen. So kannst du den Status deiner Anfrage jederzeit verfolgen.</p>
             <p style="font-size:.78rem;color:var(--muted);margin-top:12px;line-height:1.6;font-style:italic" data-i18n="form_bundle_hint">Hinweis: Wird dein Bedarf mit anderen Baufirmen gebündelt, richtet sich deine individuelle Ersparnis nach deinem Volumenanteil am Gesamtbündel.</p>
           </form>
-          </div>
-          <div class="auth-blur-overlay" id="auth-blur-overlay" style="display:flex">
-            <div class="auth-blur-content">
-              <span class="auth-blur-icon">🔒</span>
-              <div class="auth-blur-title" data-i18n="auth_blur_title">Zuerst anmelden</div>
-              <div class="auth-blur-sub" data-i18n="auth_blur_sub">Dein Bedarf, deine Ersparnis — jederzeit verfolgbar. Kostenlos, dauert eine Minute.</div>
-              <div class="auth-blur-buttons">
-                <button type="button" class="auth-blur-btn-primary" onclick="if(window.Clerk&&window.Clerk.openSignIn)window.Clerk.openSignIn()" data-i18n="auth_blur_login">Anmelden →</button>
-                <button type="button" class="auth-blur-btn-secondary" onclick="if(window.Clerk&&window.Clerk.openSignIn)window.Clerk.openSignIn()" data-i18n="auth_blur_register">Noch kein Konto? Kostenlos registrieren</button>
-              </div>
-            </div>
-          </div>
-          </div>
             <div class="form-success" id="success-contact" data-i18n-html="form_success"><span><svg aria-hidden="true" class="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span> Vielen Dank — deine Anfrage ist eingegangen. Verfolge den Status jederzeit in deinem Dashboard. Sobald dein Bündel steht, erhältst du dein konkretes Angebot.</div>
           </div>
         </div>
@@ -1797,11 +1769,10 @@ async function submitContact(e){
       // Eingeloggt → direkt einreichen (Identität via Clerk-Token, serverseitig verifiziert).
       await _soSubmitRequest(_reqPayload);
     }else{
-      // Sollte durch das Blur-Overlay verhindert sein — Sicherheits-Fallback.
+      // Nicht eingeloggt: Formulardaten sichern, Login/Registrierung oeffnen.
+      // Nach erfolgreichem Auth wird automatisch abgesendet (Listener + Load-Resume).
+      try{localStorage.setItem('sourceon_pending_request',JSON.stringify(_reqPayload));}catch(e){}
       submitBtn.disabled=false;submitBtn.style.opacity='1';
-      var _le=document.getElementById('submit-error');
-      if(!_le){_le=document.createElement('div');_le.id='submit-error';_le.style.cssText='background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:14px 18px;margin-top:14px;font-size:.85rem;color:#991b1b;line-height:1.6';submitBtn.parentNode.insertBefore(_le,submitBtn.nextSibling);}
-      _le.textContent='Bitte zuerst anmelden.';_le.style.display='block';
       if(window.Clerk&&window.Clerk.openSignIn){try{window.Clerk.openSignIn();}catch(e){}}
     }
   }catch(err){
@@ -1819,31 +1790,29 @@ async function submitContact(e){
 }
 
 
-// Blur-Overlay: Formular ist sichtbar aber verschwommen, solange NICHT eingeloggt.
-// Eingeloggt → Overlay weg, Formular nutzbar; E-Mail wird vorausgefüllt (read-only).
-async function checkAuthAndToggleBlur(){
-  try{if(window.Clerk&&window.Clerk.load)await window.Clerk.load();}catch(e){}
-  var overlay=document.getElementById('auth-blur-overlay');
-  if(!overlay)return;
+// E-Mail vorausfüllen (read-only), sobald eingeloggt. Bei Auth-Änderung reagieren.
+function _soPrefillEmailIfLoggedIn(){
   var user=window.Clerk?window.Clerk.user:null;
+  var emailEl=document.getElementById('c-email');
+  if(!emailEl)return;
   if(user){
-    overlay.style.display='none';
-    // E-Mail vorausfüllen (read-only), falls vorhanden.
-    var emailEl=document.getElementById('c-email');
     var mail=user.primaryEmailAddress?user.primaryEmailAddress.emailAddress:'';
-    if(emailEl&&mail){emailEl.value=mail;emailEl.readOnly=true;}
-  }else{
-    overlay.style.display='flex';
-    var emailEl2=document.getElementById('c-email');
-    if(emailEl2)emailEl2.readOnly=false;
-  }
+    if(mail){emailEl.value=mail;emailEl.readOnly=true;}
+  }else{emailEl.readOnly=false;}
+}
+// Nach erfolgreichem Login/Registrierung: gespeicherte Anfrage automatisch absenden.
+function _soCheckAndSubmitPending(){
+  if(!(window.Clerk&&window.Clerk.user))return;
+  if(!localStorage.getItem('sourceon_pending_request'))return;
+  _soSubmitStoredRequest();
 }
 // Auf Clerk warten, dann initial prüfen + auf Auth-Änderungen reagieren.
-(function _initAuthBlur(){
+(function _initPendingSubmit(){
   function ready(attempt){
     if(window.Clerk){
-      checkAuthAndToggleBlur();
-      try{window.Clerk.addListener(function(){checkAuthAndToggleBlur();});}catch(e){}
+      _soPrefillEmailIfLoggedIn();
+      _soCheckAndSubmitPending();
+      try{window.Clerk.addListener(function(){_soPrefillEmailIfLoggedIn();_soCheckAndSubmitPending();});}catch(e){}
       return;
     }
     if(attempt<50){setTimeout(function(){ready(attempt+1);},150);}
@@ -1875,12 +1844,16 @@ async function _soSubmitRequest(payload){
     return false;
   }
 }
-// Reicht eine zwischengespeicherte Anfrage nach erfolgreichem Signup ein.
+// Reicht eine zwischengespeicherte Anfrage nach erfolgreichem Login/Signup ein.
+// Guard gegen Doppel-Submit (Listener + Load-Resume koennen mehrfach feuern).
+var _soSubmittingPending=false;
 async function _soSubmitStoredRequest(){
+  if(_soSubmittingPending)return;
   var raw=null;try{raw=localStorage.getItem('sourceon_pending_request');}catch(e){}
   if(!raw)return;
   var payload;try{payload=JSON.parse(raw);}catch(e){try{localStorage.removeItem('sourceon_pending_request');}catch(_e){}return;}
-  await _soSubmitRequest(payload);
+  _soSubmittingPending=true;
+  try{await _soSubmitRequest(payload);}finally{_soSubmittingPending=false;}
 }
 
 async function _linkCustomerAccount(newCustomerId,clerkUserId){

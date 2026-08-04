@@ -1133,21 +1133,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div data-i18n="sa.rejected.title" style="font-size:16px;font-weight:600;color:#0F172A;margin-bottom:8px">Deine Bewerbung wurde leider nicht genehmigt.</div>
         <div data-i18n-html="sa.rejected.sub" style="font-size:14px;color:#64748B;line-height:1.6">Bei Fragen melde dich unter <a href="mailto:info@sourceon.ch" style="color:var(--gold)">info@sourceon.ch</a></div>
       </div>
-      <style>
-      .auth-blur-wrapper{position:relative}
-      .auth-blur-overlay{position:absolute;inset:0;z-index:10;display:flex;align-items:center;justify-content:center;background:rgba(7,15,26,0.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:var(--r-lg,28px)}
-      .auth-blur-content{text-align:center;padding:48px 36px;max-width:400px}
-      .auth-blur-icon{font-size:48px;margin-bottom:20px;display:block;filter:drop-shadow(0 0 12px rgba(232,160,32,0.4))}
-      .auth-blur-title{font-size:22px;font-weight:700;color:var(--t1,#F1F5F9);margin-bottom:10px;font-family:Inter,sans-serif}
-      .auth-blur-sub{font-size:14px;color:var(--t2,#94A3B8);line-height:1.6;margin-bottom:28px}
-      .auth-blur-buttons{display:flex;flex-direction:column;gap:12px}
-      .auth-blur-btn-primary{background:var(--gold);color:#070F1A;border:none;border-radius:12px;padding:13px 24px;font-size:15px;font-weight:700;cursor:pointer;font-family:Inter,sans-serif;transition:opacity 0.15s}
-      .auth-blur-btn-primary:hover{opacity:0.88}
-      .auth-blur-btn-secondary{background:transparent;color:var(--t2,#94A3B8);border:1px solid var(--border-md,#CBD5E1);border-radius:12px;padding:12px 24px;font-size:14px;cursor:pointer;font-family:Inter,sans-serif;transition:border-color 0.15s,color 0.15s}
-      .auth-blur-btn-secondary:hover{border-color:var(--gold);color:var(--t1,#F1F5F9)}
-      </style>
-      <div id="sa-formwrap" class="auth-blur-wrapper" style="display:none">
-      <div id="form-content">
+      <div id="sa-formwrap" style="display:none">
       <div class="fcard-title" data-i18n="form.applyTitle">Jetzt bewerben</div>
       <div class="fcard-sub" data-i18n="form.applySub">Wir prüfen dein Profil innerhalb von 48 Stunden.</div>
       <form id="form-supplier" onsubmit="submitSupplier(event)" novalidate>
@@ -1232,18 +1218,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="form-error" role="alert" id="error-supplier" style="margin-top:12px;padding:12px;border-radius:10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);color:#EF4444;font-size:14px"></div>
       </form>
       <div class="form-success" id="success-supplier"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span><strong data-i18n="sa.success.title">✓ Vielen Dank! Deine Bewerbung ist eingegangen.</strong><br><span data-i18n="sa.success.sub" style="font-weight:400;opacity:.85">Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.</span></span></div>
-      </div>
-      <div class="auth-blur-overlay" id="sa-blur-overlay" style="display:none">
-        <div class="auth-blur-content">
-          <span class="auth-blur-icon">🔒</span>
-          <div class="auth-blur-title" data-i18n="auth_blur_title">Zuerst anmelden</div>
-          <div class="auth-blur-sub" data-i18n="auth_blur_sub">Dein Bedarf, deine Ersparnis — jederzeit verfolgbar. Kostenlos, dauert eine Minute.</div>
-          <div class="auth-blur-buttons">
-            <button type="button" class="auth-blur-btn-primary" onclick="if(window.Clerk&&window.Clerk.openSignIn)window.Clerk.openSignIn()" data-i18n="auth_blur_login">Anmelden →</button>
-            <button type="button" class="auth-blur-btn-secondary" onclick="if(window.Clerk&&window.Clerk.openSignIn)window.Clerk.openSignIn()" data-i18n="auth_blur_register">Noch kein Konto? Kostenlos registrieren</button>
-          </div>
-        </div>
-      </div>
       </div><!-- /sa-formwrap -->
       </div>
     </div>
@@ -1469,9 +1443,21 @@ async function submitSupplier(e){
     return;
   }
 
-  // Safety: the form is only shown when logged in (auth gate). If we somehow reach here without a user:
-  errEl.textContent=_saT('sa.err.login');errEl.style.display='block';
+  // Nicht eingeloggt: Formulardaten sichern, Login/Registrierung oeffnen.
+  // Nach erfolgreichem Auth wird automatisch abgesendet (Listener hier + Load-Resume).
+  try{sessionStorage.setItem(PENDING_KEY,JSON.stringify(formData));}catch(e){}
   btn.disabled=false;btn.textContent='Jetzt als Partnerlieferant bewerben';
+  if(window.Clerk.addListener){
+    var _unsubSup=window.Clerk.addListener(async function(){
+      if(!window.Clerk.user)return;
+      var p=sessionStorage.getItem(PENDING_KEY);
+      if(!p)return;
+      if(typeof _unsubSup==='function')_unsubSup();
+      try{await _insertSupplier(JSON.parse(p),window.Clerk.user.id);_showSuccess();}
+      catch(err){console.error('[Supplier] post-auth insert error:',err);var e2=document.getElementById('error-supplier');if(e2){e2.textContent='Profil konnte nicht gespeichert werden: '+(err.message||err);e2.style.display='block';}}
+    });
+  }
+  if(window.Clerk.openSignIn){try{window.Clerk.openSignIn();}catch(e){}}
 }
 
 // ── Supplier auth gate ──
@@ -1480,7 +1466,6 @@ function supplierRegister(){if(!window.Clerk)return;try{localStorage.setItem('so
 function supplierLogin(){if(!window.Clerk)return;window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}}});}
 function _saShow(which){
   var ld=document.getElementById('sa-loading');if(ld)ld.style.display='none';
-  var ov=document.getElementById('sa-blur-overlay');if(ov)ov.style.display='none'; // Blur-Overlay standardmaessig aus
   var map={form:'sa-formwrap',pending:'sa-pending',rejected:'sa-rejected',customergate:'sa-customergate'};
   Object.keys(map).forEach(function(k){var el=document.getElementById(map[k]);if(el)el.style.display=(k===which)?'block':'none';});
   var lr=document.getElementById('lben-register');if(lr)lr.style.display='none';
@@ -1489,7 +1474,7 @@ function _saPrefillEmail(user){
   var emailEl=document.getElementById('sa-email');
   if(emailEl){
     var em=user.primaryEmailAddress?user.primaryEmailAddress.emailAddress:'';
-    if(em)emailEl.value=em;   // nur vorausfüllen — Feld bleibt normal editierbar
+    if(em){emailEl.value=em;emailEl.readOnly=true;}   // vorausfüllen + read-only (mit Konto verknüpft)
     var note=document.getElementById('sa-email-note');if(note)note.style.display='block';
   }
 }
@@ -1497,12 +1482,7 @@ async function _gateSupplier(){
   var banner=document.getElementById('sa-verified-banner');
   if(banner)banner.style.display='none';
   var user=(window.Clerk&&window.Clerk.user)?window.Clerk.user:null;
-  if(!user){                                    // CASE 1: nicht eingeloggt
-    _saShow('form');                            // Formular sichtbar, aber ...
-    var ov=document.getElementById('sa-blur-overlay');if(ov)ov.style.display='flex'; // ... verschwommen + Overlay
-    var lr=document.getElementById('lben-register');if(lr)lr.style.display='inline';
-    return;
-  }
+  if(!user){_saShow('form');return;}            // CASE 1: nicht eingeloggt → Formular offen ausfüllbar
   var row=null;
   try{if(_sbClient){var r=await _sbClient.from('suppliers').select('id,status').eq('id',user.id).maybeSingle();row=r&&r.data;}}catch(e){}
   if(!row){
@@ -1540,7 +1520,7 @@ async function _gateSupplier(){
   var n=0,iv=setInterval(function(){
     n+=150;
     if(window.Clerk){clearInterval(iv);if(typeof window.Clerk.load==='function'){window.Clerk.load().then(onClerk).catch(onClerk);}else{onClerk();}}
-    else if(n>=12000){clearInterval(iv);_saShow('form');var ov=document.getElementById('sa-blur-overlay');if(ov)ov.style.display='flex';}
+    else if(n>=12000){clearInterval(iv);_saShow('form');}
   },150);
 })();
 
