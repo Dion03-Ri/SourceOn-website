@@ -19,10 +19,10 @@
 -- Kontaktdaten sind damit fuer Anonyme/Fremde unsichtbar. Admin liest weiter
 -- ueber die Edge-Function mit Service-Key (RLS umgangen).
 -- ----------------------------------------------------------------------------
+-- In der Live-DB heisst die korrekte Policy bereits suppliers_select_own_clerk
+-- (id = auth.jwt()->>'sub'). Wir droppen nur die evtl. aus rls_policies.sql
+-- stammende oeffentliche Variante; die eigene-Zeile-Policy bleibt bestehen.
 drop policy if exists suppliers_select_public_verified on public.suppliers;
-drop policy if exists suppliers_select_own on public.suppliers;
-create policy suppliers_select_own on public.suppliers
-  for select using (id = public.requesting_user_id());
 
 -- ----------------------------------------------------------------------------
 -- bundles: SELECT nur fuer Beteiligte (kein using(true) mehr).
@@ -36,23 +36,25 @@ drop policy if exists bundles_select_public on public.bundles;
 drop policy if exists bundles_read_all on public.bundles;                        -- Legacy using(true), nur in Live-DB
 drop policy if exists bundles_select_for_verified_suppliers_clerk on public.bundles;
 drop policy if exists bundles_select_participants on public.bundles;
+-- Hinweis: die Live-DB hat KEINE Funktion requesting_user_id() — die echten
+-- Policies nutzen direkt auth.jwt() ->> 'sub'. Deshalb hier ebenso.
 create policy bundles_select_participants on public.bundles
   for select using (
     (
       status = 'ausgeschrieben'
       and exists (
         select 1 from public.suppliers s
-        where s.id = public.requesting_user_id() and s.status = 'verified'
+        where s.id = (auth.jwt() ->> 'sub') and s.status = 'verified'
       )
     )
     or exists (
       select 1 from public.bids b
-      where b.bundle_id = bundles.id and b.supplier_id = public.requesting_user_id()
+      where b.bundle_id = bundles.id and b.supplier_id = (auth.jwt() ->> 'sub')
     )
-    or gewonnener_supplier_id = public.requesting_user_id()
+    or gewonnener_supplier_id = (auth.jwt() ->> 'sub')
     or exists (
       select 1 from public.material_requests mr
       join public.customers c on c.id = mr.customer_id
-      where mr.bundle_id = bundles.id and c.user_id = public.requesting_user_id()
+      where mr.bundle_id = bundles.id and c.user_id = (auth.jwt() ->> 'sub')
     )
   );
