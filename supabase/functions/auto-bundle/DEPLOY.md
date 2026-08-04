@@ -70,6 +70,11 @@ Secret `AI_TRIGGER_SECRET` (gleiches Muster wie ai-supplier-check). Der Cron-Job
 MUSS diesen Header mitschicken, sonst antwortet die Function mit 401. Verify JWT
 ist AUS — ein `Authorization`-Bearer wird nicht mehr benoetigt.
 
+⚠️ WICHTIG — Function-Name: Diese Function ist in Supabase als **`smart-task`**
+deployt (NICHT `auto-bundle`). Der Ordnername im Repo ist historisch `auto-bundle`,
+aber URL und Deploy-Ziel sind `.../functions/v1/smart-task`. (Analog: `admin-data`
+= `rapid-api`.)
+
 `<AI_TRIGGER_SECRET>` unten durch den echten Wert des Function-Secrets ersetzen.
 
 ```sql
@@ -85,7 +90,7 @@ SELECT cron.schedule(
   '0 * * * *',                    -- every hour at minute 0
   $$
   SELECT net.http_post(
-    url := 'https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/auto-bundle',
+    url := 'https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/smart-task',
     headers := jsonb_build_object(
       'Content-Type', 'application/json',
       'x-ai-secret', '<AI_TRIGGER_SECRET>'
