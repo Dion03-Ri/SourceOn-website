@@ -1077,6 +1077,45 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     </a>
   </section>
 
+  <!-- PROCESS STRIP -->
+  <style>
+  .process-strip{border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);padding:20px 0;background:var(--bg1)}
+  .process-strip-steps{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+  .process-strip-step{display:flex;align-items:center;gap:8px}
+  .process-strip-num{font-size:11px;font-weight:700;color:var(--gold);font-family:Inter,sans-serif;opacity:0.7}
+  .process-strip-label{font-size:13px;font-weight:500;color:var(--t2);font-family:Inter,sans-serif;white-space:nowrap}
+  .process-strip-arrow{font-size:14px;color:var(--t3);flex-shrink:0}
+  .process-strip-link{margin-left:auto;font-size:13px;color:var(--gold);text-decoration:none;font-weight:500;white-space:nowrap;transition:opacity 0.15s}
+  .process-strip-link:hover{opacity:0.8}
+  @media(max-width:768px){.process-strip-steps{gap:10px}.process-strip-link{margin-left:0;margin-top:8px;width:100%}}
+  </style>
+  <section class="process-strip">
+    <div class="wrap">
+      <div class="process-strip-steps">
+        <div class="process-strip-step">
+          <span class="process-strip-num">01</span>
+          <span class="process-strip-label" data-i18n="strip_step1">Bedarf melden</span>
+        </div>
+        <div class="process-strip-arrow">→</div>
+        <div class="process-strip-step">
+          <span class="process-strip-num">02</span>
+          <span class="process-strip-label" data-i18n="strip_step2">Automatisch gebündelt</span>
+        </div>
+        <div class="process-strip-arrow">→</div>
+        <div class="process-strip-step">
+          <span class="process-strip-num">03</span>
+          <span class="process-strip-label" data-i18n="strip_step3">Bestes Angebot gewinnt</span>
+        </div>
+        <div class="process-strip-arrow">→</div>
+        <div class="process-strip-step">
+          <span class="process-strip-num">04</span>
+          <span class="process-strip-label" data-i18n="strip_step4">Du sparst — garantiert</span>
+        </div>
+        <a href="/prozess" class="process-strip-link" data-i18n="strip_link">Wie es funktioniert →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- SECTION 2 — THREE CARDS -->
   <section class="sec" id="lp-cards"><div class="wrap">
     <span class="sec-label reveal" data-i18n="lp_s2_label">So funktioniert's</span>
@@ -1331,6 +1370,7 @@ var I18N={
     lp_hero_sub:'Du zahlst erst, wenn wir dir sparen.',
     lp_hero_cta1:'Materialbedarf melden →',lp_hero_cta2:'Wie es funktioniert →',
     lp_s2_label:"So funktioniert's",
+    strip_step1:"Bedarf melden",strip_step2:"Automatisch gebündelt",strip_step3:"Bestes Angebot gewinnt",strip_step4:"Du sparst — garantiert",strip_link:"Wie es funktioniert →",
     lp_c1_cat:'Prozess',lp_c1_title:'Vier Schritte vom Bedarf bis zur Lieferung.',
     lp_c1_desc:'Bedarf melden, Bündel abwarten, Mindestrabatt bestätigen — fertig. Du zahlst erst, wenn du sparst.',
     lp_c1_link:'Wie es funktioniert',
@@ -1427,6 +1467,7 @@ var I18N={
     lp_hero_sub:'You only pay when we save you money.',
     lp_hero_cta1:'Report material demand →',lp_hero_cta2:'How it works →',
     lp_s2_label:'How it works',
+    strip_step1:'Submit request',strip_step2:'Automatically bundled',strip_step3:'Best offer wins',strip_step4:'You save — guaranteed',strip_link:'How it works →',
     lp_c1_cat:'Process',lp_c1_title:'Four steps from demand to delivery.',
     lp_c1_desc:'Report your demand, wait for the bundle, confirm your minimum discount — done. You only pay when you save.',
     lp_c1_link:'How it works',
@@ -1523,6 +1564,7 @@ var I18N={
     lp_hero_sub:'Tu ne paies que si on te fait économiser.',
     lp_hero_cta1:'Annoncer un besoin →',lp_hero_cta2:'Comment ça marche →',
     lp_s2_label:'Comment ça marche',
+    strip_step1:'Soumettre une demande',strip_step2:'Regroupé automatiquement',strip_step3:'La meilleure offre gagne',strip_step4:'Tu économises — garanti',strip_link:'Comment ça fonctionne →',
     lp_c1_cat:'Processus',lp_c1_title:'Quatre étapes du besoin à la livraison.',
     lp_c1_desc:'Annonce ton besoin, attends le regroupement, confirme ton rabais minimum — c\'est fait. Tu ne paies que si tu économises.',
     lp_c1_link:'Comment ça marche',
@@ -1619,6 +1661,7 @@ var I18N={
     lp_hero_sub:'Paghi solo quando ti facciamo risparmiare.',
     lp_hero_cta1:'Segnala il fabbisogno →',lp_hero_cta2:'Come funziona →',
     lp_s2_label:'Come funziona',
+    strip_step1:'Invia richiesta',strip_step2:'Raggruppato automaticamente',strip_step3:'La migliore offerta vince',strip_step4:'Risparmi — garantito',strip_link:'Come funziona →',
     lp_c1_cat:'Processo',lp_c1_title:'Quattro passi dal fabbisogno alla consegna.',
     lp_c1_desc:'Segnala il fabbisogno, attendi il raggruppamento, conferma lo sconto minimo — fatto. Paghi solo se risparmi.',
     lp_c1_link:'Come funziona',
