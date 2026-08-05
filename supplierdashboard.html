@@ -955,7 +955,8 @@ async function soOrderDetails(bundleId){
   if(d&&d.bundle)_ordCache[bundleId]=d;
   return d;
 }
-function _custSummary(custs){return (custs||[]).map(function(c){return c.firmenname||'';}).filter(Boolean).join(', ')||'–';}
+function _ortFrom(addr){if(!addr)return '';var last=String(addr).split(',').pop().trim();return last.replace(/^\d{3,5}\s*/,'').trim();}
+function _custSummary(custs){var seen={},out=[];(custs||[]).forEach(function(c){var n=c.firmenname||'';if(!n||seen[n])return;seen[n]=1;var ort=(c.kanton&&String(c.kanton).trim())||_ortFrom(c.lieferadresse);out.push(ort?(n+', '+ort):n);});return out.join(' · ')||'–';}
 async function fillAuftraggeber(bundleId,elId){
   var el=document.getElementById(elId);if(!el)return;
   var d=await soOrderDetails(bundleId);
