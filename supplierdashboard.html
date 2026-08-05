@@ -613,7 +613,17 @@ function renderNotif(){
   var b=open[0],days=Math.max(0,Math.ceil((new Date(b.bid_deadline)-new Date())/86400000));
   var el=document.getElementById('notif');
   el.innerHTML='<span>⚡</span><span>Neue Ausschreibung: <b>'+esc(bMat(b))+'</b> · '+esc(bVolStr(b))+' · '+esc(bZone(b))+' · Frist in '+days+' Tag'+(days!==1?'en':'')+'</span><span class="arw">→</span>';
+  el.onclick=function(){openTender(b.id);};   // direkt zu DIESER Ausschreibung (Gebotsformular)
   el.classList.add('show');
+}
+// Oeffnet eine bestimmte Ausschreibung im Ausschreibungen-Tab (Zeile aufklappen + hinscrollen).
+function openTender(id){
+  showTab('ausschreibungen');
+  if(_bundleFilter!=='alle'){_bundleFilter='alle';renderAusschreibungen();}
+  setTimeout(function(){
+    var row=document.querySelector('#bundles-list .row-x[data-id="'+id+'"]');
+    if(row){row.classList.add('open');row.scrollIntoView({behavior:'smooth',block:'center'});}
+  },60);
 }
 function renderAusschreibungen(){
   var v=document.getElementById('verif');if(_profile.status==='verified'){v.className='verif ok';document.getElementById('verif-t').textContent='Verifiziert';}else{v.className='verif pend';document.getElementById('verif-t').textContent='Ausstehend';}
