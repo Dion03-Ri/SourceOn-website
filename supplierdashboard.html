@@ -116,8 +116,8 @@ input,select,textarea{font-family:inherit}
 .verif.ok{color:var(--green)}.verif.ok .dot{background:var(--green)}
 .verif.pend{color:var(--amber)}.verif.pend .dot{background:var(--amber)}
 
-.notif{display:none;align-items:center;gap:10px;background:var(--amber-bg);border:1px solid rgba(245,158,11,.2);border-radius:var(--r-sm);padding:12px 20px;margin-bottom:32px;cursor:pointer;font-size:14px;transition:filter .15s}
-.notif:hover{filter:brightness(1.1)}.notif.show{display:flex}.notif .arw{margin-left:auto;color:var(--amber)}
+.notif{display:none;align-items:center;gap:10px;background:var(--amber-bg);border:1px solid rgba(245,158,11,.2);border-radius:var(--r-sm);padding:12px 20px;margin-bottom:32px;font-size:14px}
+.notif.show{display:flex}
 
 /* hero metric — premium balance card */
 .hero{text-align:center;padding:36px 0}
@@ -164,18 +164,18 @@ input,select,textarea{font-family:inherit}
 .rc-v.gold{color:var(--gold);font-weight:600}
 .rc-s{font-size:12px;color:var(--text-3);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .rc-right{display:flex;align-items:center;justify-content:flex-end;gap:10px}
-.rc-chev{font-size:20px;color:var(--text-3);transition:transform .2s}
-.row-x.open .rc-chev{transform:rotate(90deg);color:var(--gold)}
+.rc-chev{font-size:15px;color:var(--text-3);transition:transform .2s}
+.row-x.open .rc-chev{transform:rotate(90deg);color:var(--text-2)}
 .cd{font-size:13px;font-weight:600;white-space:nowrap}
 .cd-green{color:var(--text-2)}.cd-amber{color:var(--amber)}.cd-red{color:var(--red);animation:pulse 1.6s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
 .row-detail{max-height:0;overflow:hidden;transition:max-height .25s ease}
 .row-x.open .row-detail{max-height:1600px}
-.row-detail-inner{background:var(--bg-1);border-left:3px solid var(--gold);padding:24px 28px;margin-top:1px;border-radius:0 var(--r-sm) var(--r-sm) 0}
-.sumbox{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;background:var(--bg-2);border-radius:var(--r-md);padding:16px 20px;margin-bottom:16px}
+.row-detail-inner{background:var(--bg-1);border:1px solid var(--border);padding:26px 28px;margin:6px 0 4px;border-radius:var(--r-md)}
+.sumbox{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;background:transparent;border:1px solid var(--border);border-radius:var(--r-md);padding:18px 22px;margin-bottom:20px}
 .sumbox .l{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--text-3)}
-.sumbox .v{font-size:14px;color:var(--text-1);margin-top:4px}
-.sumbox .v.gold{font-size:20px;font-weight:700;color:var(--gold)}
+.sumbox .v{font-size:14px;color:var(--text-1);margin-top:5px}
+.sumbox .v.gold{font-size:17px;font-weight:600;color:var(--gold)}
 .sumnote{font-size:11px;color:var(--text-3);margin-bottom:16px}
 .fomo{font-size:13px;color:var(--text-2);margin-bottom:18px}
 .fomo .dots{letter-spacing:3px;margin-left:8px}.fomo .dots .on{color:var(--gold)}.fomo .dots .off{color:var(--border-strong)}
@@ -359,7 +359,7 @@ p{text-wrap:pretty}
       <div><div class="greet-hi" id="greet-hi">Guten Tag.</div><div class="greet-date" id="greet-date"></div></div>
       <div class="verif ok" id="verif"><span class="dot"></span><span id="verif-t">Verifiziert</span></div>
     </div>
-    <div class="notif" id="notif" onclick="showTab('ausschreibungen')"></div>
+    <div class="notif" id="notif"></div>
     <div class="hero-card">
       <div class="hero hero-panel">
         <div class="hero-label">Offene Ausschreibungen</div>
@@ -612,18 +612,8 @@ function renderNotif(){
   if(open.length===0)return;
   var b=open[0],days=Math.max(0,Math.ceil((new Date(b.bid_deadline)-new Date())/86400000));
   var el=document.getElementById('notif');
-  el.innerHTML='<span>⚡</span><span>Neue Ausschreibung: <b>'+esc(bMat(b))+'</b> · '+esc(bVolStr(b))+' · '+esc(bZone(b))+' · Frist in '+days+' Tag'+(days!==1?'en':'')+'</span><span class="arw">→</span>';
-  el.onclick=function(){openTender(b.id);};   // direkt zu DIESER Ausschreibung (Gebotsformular)
+  el.innerHTML='<span>⚡</span><span>Neue Ausschreibung: <b>'+esc(bMat(b))+'</b> · '+esc(bVolStr(b))+' · '+esc(bZone(b))+' · Frist in '+days+' Tag'+(days!==1?'en':'')+'</span>';
   el.classList.add('show');
-}
-// Oeffnet eine bestimmte Ausschreibung im Ausschreibungen-Tab (Zeile aufklappen + hinscrollen).
-function openTender(id){
-  showTab('ausschreibungen');
-  if(_bundleFilter!=='alle'){_bundleFilter='alle';renderAusschreibungen();}
-  setTimeout(function(){
-    var row=document.querySelector('#bundles-list .row-x[data-id="'+id+'"]');
-    if(row){row.classList.add('open');row.scrollIntoView({behavior:'smooth',block:'center'});}
-  },60);
 }
 function renderAusschreibungen(){
   var v=document.getElementById('verif');if(_profile.status==='verified'){v.className='verif ok';document.getElementById('verif-t').textContent='Verifiziert';}else{v.className='verif pend';document.getElementById('verif-t').textContent='Ausstehend';}
