@@ -946,6 +946,32 @@ function exportProvExcel(){
 }
 
 // ── LIEFERUNGEN ──
+// Echte Kundendaten pro Bundle (nur fuer Gewinner, via Edge-Function) — mit Cache.
+var _ordCache={};
+async function soOrderDetails(bundleId){
+  if(!bundleId)return null;
+  if(_ordCache[bundleId])return _ordCache[bundleId];
+  var d=await soApiCall('won_order_details',{id:bundleId});
+  if(d&&d.bundle)_ordCache[bundleId]=d;
+  return d;
+}
+function _custSummary(custs){return (custs||[]).map(function(c){return c.firmenname||'';}).filter(Boolean).join(', ')||'–';}
+async function fillAuftraggeber(bundleId,elId){
+  var el=document.getElementById(elId);if(!el)return;
+  var d=await soOrderDetails(bundleId);
+  if(d&&d.customers)el.textContent=_custSummary(d.customers);
+}
+async function fillDeliveryDetail(bundleId,bidId){
+  var d=await soOrderDetails(bundleId);if(!d||!d.customers)return;
+  var a=document.getElementById('dlv-auftr-'+bidId);if(a)a.textContent=_custSummary(d.customers);
+  var c=document.getElementById('dlv-cust-'+bidId);
+  if(c){c.innerHTML=d.customers.map(function(cu){
+    return '<div style="margin-top:6px"><b style="color:var(--text-1)">'+esc(cu.firmenname||'–')+'</b>'+(cu.ansprechperson?' · '+esc(cu.ansprechperson):'')+'<br>'+esc(cu.lieferadresse||'–')
+      +(cu.telefon?' · <a href="tel:'+esc(cu.telefon)+'" style="color:var(--gold)">'+esc(cu.telefon)+'</a>':'')
+      +(cu.email?' · <a href="mailto:'+esc(cu.email)+'" style="color:var(--gold)">'+esc(cu.email)+'</a>':'')
+      +'</div>';
+  }).join('');}
+}
 function renderLieferungen(){
   var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
   if(won.length===0){document.getElementById('deliv-empty').style.display='block';return;}
@@ -954,15 +980,18 @@ function renderLieferungen(){
   up.innerHTML=upcoming.length?upcoming.map(buildDeliveryRow).join(''):'<div class="empty-line">Keine bevorstehenden Lieferungen.</div>';
   up.querySelectorAll('.row-head').forEach(function(hd){hd.addEventListener('click',function(e){if(e.target.closest('button,.act-link,a'))return;hd.parentNode.classList.toggle('open');});});
   var head='<thead><tr><th>Datum</th><th>Material</th><th>Menge</th><th>Auftraggeber</th><th class="num">Nettoerlös</th><th>Status</th></tr></thead>';
-  var body='<tbody>'+(past.length?past.map(function(bid){var b=bid.bundles||{};var net=bestellwert(bid,b);var d=bid.delivery_confirmed_at?fmtShort(new Date(bid.delivery_confirmed_at)):'--';return '<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td>'+esc(bVolStr(b))+'</td><td>Baufirma, '+esc(bZone(b))+'</td><td class="num">'+(net!=null?fmtCHF(net*(1-COMM)):'--')+'</td><td><span class="status-pill p-green">Geliefert</span></td></tr>';}).join(''):'<tr><td colspan="6" style="color:var(--text-3)">Noch keine abgeschlossenen Lieferungen.</td></tr>')+'</tbody>';
+  var body='<tbody>'+(past.length?past.map(function(bid){var b=bid.bundles||{};var net=bestellwert(bid,b);var d=bid.delivery_confirmed_at?fmtShort(new Date(bid.delivery_confirmed_at)):'--';return '<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td>'+esc(bVolStr(b))+'</td><td id="dlv-p-'+esc(bid.id)+'">…</td><td class="num">'+(net!=null?fmtCHF(net*(1-COMM)):'--')+'</td><td><span class="status-pill p-green">Geliefert</span></td></tr>';}).join(''):'<tr><td colspan="6" style="color:var(--text-3)">Noch keine abgeschlossenen Lieferungen.</td></tr>')+'</tbody>';
   document.getElementById('deliv-past').innerHTML=head+body;
+  // Echte Kundennamen/-daten nachladen (Edge-Function, nur Gewinner):
+  upcoming.forEach(function(bid){fillDeliveryDetail(bid.bundle_id,bid.id);});
+  past.forEach(function(bid){fillAuftraggeber(bid.bundle_id,'dlv-p-'+bid.id);});
 }
 function buildDeliveryRow(bid){
   var b=bid.bundles||{};var net=bestellwert(bid,b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';
   var lieferdatum=b.liefer_zeitraum_von?fmtShort(new Date(b.liefer_zeitraum_von)):(b.delivery_timeframe||'--');
   var confirmed=bid.delivery_confirmed===true;
-  var detail='<div class="sumbox"><div><div class="l">Auftraggeber</div><div class="v">Baufirma, '+esc(bZone(b))+'</div></div><div><div class="l">Lieferzeitraum</div><div class="v">'+esc(bZeitraum(b))+'</div></div><div><div class="l">Vereinb. Rabatt · Nettoerlös</div><div class="v gold">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% · '+netStr+'</div></div></div>';
-  detail+='<div class="sumnote">Genaue Lieferadresse und Kontaktdaten werden per E-Mail übermittelt.</div>';
+  var detail='<div class="sumbox"><div><div class="l">Auftraggeber</div><div class="v" id="dlv-auftr-'+esc(bid.id)+'">…</div></div><div><div class="l">Lieferzeitraum</div><div class="v">'+esc(bZeitraum(b))+'</div></div><div><div class="l">Vereinb. Rabatt · Nettoerlös</div><div class="v gold">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% · '+netStr+'</div></div></div>';
+  detail+='<div class="sumnote" id="dlv-cust-'+esc(bid.id)+'">Kundendaten werden geladen…</div>';
   detail+='<div class="rd-actions" style="border-top:none;padding-top:0;margin-top:0">'+(confirmed?'<span style="color:var(--green);font-size:13px">✓ Bestätigt'+(bid.delivery_confirmed_at?' am '+esc(fmtDMY(new Date(bid.delivery_confirmed_at))):'')+'</span>':'<button class="btn-gold" onclick="confirmDelivery(\''+esc(bid.id)+'\')">Lieferung bestätigen →</button>')+'<span class="act-link" onclick="makeDeliveryPDF(\''+esc(bid.id)+'\')">Lieferauftrag als PDF →</span></div>';
   return '<div class="row-x"><div class="row-head d-head"><div><div class="rc-t">'+esc(bMat(b))+'</div>'+(b.sourceon_id?'<div class="rc-id">'+esc(b.sourceon_id)+'</div>':'')+'</div><div><div class="rc-v">'+esc(bVolStr(b))+'</div></div><div><div class="rc-v">'+esc(lieferdatum)+'</div></div><div><span class="status-pill p-amber">Ausstehend</span></div><div class="rc-right"><span class="rc-chev">›</span></div></div><div class="row-detail"><div class="row-detail-inner">'+detail+'</div></div></div>';
 }
