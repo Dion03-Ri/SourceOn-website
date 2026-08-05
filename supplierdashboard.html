@@ -725,18 +725,20 @@ function selectBid(id){
   if(s==='gewonnen'){
     var confirmed=bid.delivery_confirmed===true;
     html+='<div class="award-box"><div class="t">🏆 Zuschlag erhalten</div>'
-      +'<div style="font-size:13px;color:var(--text-2);line-height:1.7"><b style="color:var(--text-1)">Auftraggeber:</b> Baufirma, '+esc(bZone(b))+'<br>Kontaktdaten werden per E-Mail übermittelt.<br><b style="color:var(--text-1)">Lieferzeitraum:</b> '+esc(bZeitraum(b))+'</div>';
+      +'<div style="font-size:13px;color:var(--text-2);line-height:1.7">Die vollständigen Auftrags- und Kundendetails findest du unten.</div>';
     if(confirmed){html+='<div style="color:var(--green);font-size:13px;margin-top:12px">✓ Lieferung bestätigt'+(bid.delivery_confirmed_at?' am '+esc(fmtDMY(new Date(bid.delivery_confirmed_at))):'')+'</div>';}
     else{html+='<button class="btn-gold" style="margin-top:14px" onclick="confirmDelivery(\''+esc(bid.id)+'\')">Lieferung bestätigen →</button>';}
     html+='</div>';
+    html+='<div id="auftragsdetails" style="background:var(--bg-1);border:1px solid var(--border);border-radius:var(--r-md);padding:20px;margin-top:16px;font-size:13px;color:var(--text-2)">Auftragsdetails werden geladen…</div>';
   }else if(s==='eingereicht'){
     var st=timelineStates(s),tlLbl=['Eingegangen','Bündelung','Ausschreibung','Zuschlag'];var tl='<div class="tl">';for(var i=0;i<4;i++){tl+='<div class="tl-step '+st[i]+'"><div class="tl-dot"></div><div class="tl-lbl">'+tlLbl[i]+'</div></div>';if(i<3)tl+='<div class="tl-conn'+(st[i]==='done'?' done':'')+'"></div>';}tl+='</div>';
     html+=tl+'<div class="muted-msg">Dein Angebot ist eingereicht. Du wirst benachrichtigt, sobald über den Zuschlag entschieden ist.</div>';
   }else if(s==='verloren'){html+='<div class="muted-msg">Dieser Auftrag wurde an einen anderen Lieferanten vergeben.</div>';}
   else if(s==='abgelaufen'){html+='<div class="muted-msg">Ausschreibung ohne Zuschlag abgelaufen.</div>';}
   var mailto='mailto:info@sourceon.ch?subject='+encodeURIComponent('Angebot '+(b.sourceon_id||''));
-  html+='<div class="rd-actions">'+(s==='gewonnen'?'<span class="act-link" onclick="makeDeliveryPDF(\''+esc(bid.id)+'\')">Lieferauftrag als PDF →</span>':'')+'<a class="act-link" href="'+mailto+'">Frage zu diesem Angebot →</a></div>';
+  html+='<div class="rd-actions">'+(s==='gewonnen'?'<span class="act-link" onclick="makeDeliveryPDF(\''+esc(bid.id)+'\')">Lieferauftrag als PDF →</span><span class="act-link" onclick="makeProvisionPDF(\''+esc(bid.id)+'\')">Provisionsabrechnung als PDF →</span>':'')+'<a class="act-link" href="'+mailto+'">Frage zu diesem Angebot →</a></div>';
   document.getElementById('bid-detail').innerHTML=html;
+  if(s==='gewonnen'){loadAuftragsdetails(bid.bundle_id);}
 }
 
 // ── FINANZEN ──
@@ -745,14 +747,14 @@ function renderFinanzen(){
   var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
   won.forEach(function(bid){var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;revenue+=ord;var prov=ord*COMM;var paid=bid.provision_paid===true;if(paid)paidProv+=prov;else openProv+=prov;netSum+=ord*(1-COMM);netCount++;
     var d=bid.submitted_at?fmtShort(new Date(bid.submitted_at)):'--';
-    rows+='<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td class="num">'+fmtCHF(ord)+'</td><td class="num">'+fmtCHF(prov)+'</td><td><span class="status-pill '+(paid?'p-green':'p-amber')+'">'+(paid?'Bezahlt':'Offen')+'</span></td></tr>';});
+    rows+='<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td class="num">'+fmtCHF(ord)+'</td><td class="num">'+fmtCHF(prov)+'</td><td><span class="status-pill '+(paid?'p-green':'p-amber')+'">'+(paid?'Bezahlt':'Offen')+'</span></td><td><span class="act-link" style="cursor:pointer;color:var(--gold);white-space:nowrap" onclick="makeProvisionPDF(\''+esc(bid.id)+'\')">↓ PDF</span></td></tr>';});
   var h=document.getElementById('fin-hero');h.textContent=revenue>0?fmtCHF(revenue):'CHF 0';h.className='hero-num'+(revenue>0?'':' zero');
   document.getElementById('fin-hero-sub').textContent=won.length>0?('Aus '+won.length+' gewonnenen Auftrag'+(won.length!==1?'en':'')):'Noch keine gewonnenen Aufträge';
   var fo=document.getElementById('f-open');fo.textContent=openProv>0?fmtCHF(openProv):'--';fo.className='m3-num'+(openProv>0?' amber':' dim');
   var fp=document.getElementById('f-paid');fp.textContent=paidProv>0?fmtCHF(paidProv):'--';fp.className='m3-num'+(paidProv>0?' green':' dim');
   var fa=document.getElementById('f-avg');fa.textContent=netCount>0?fmtCHF(netSum/netCount):'--';fa.className='m3-num'+(netCount>0?'':' dim');
-  var head='<thead><tr><th>Datum</th><th>Material</th><th class="num">Bestellwert CHF</th><th class="num">Provision (2.25%)</th><th>Status</th></tr></thead>';
-  var body='<tbody>'+(rows||'<tr><td colspan="5" style="color:var(--text-3)">Noch keine Provisionen — erst nach gewonnenen Aufträgen</td></tr>')+(rows?'<tr class="total"><td>Total</td><td></td><td class="num">'+fmtCHF(revenue)+'</td><td class="num gold">'+fmtCHF(openProv+paidProv)+'</td><td></td></tr>':'')+'</tbody>';
+  var head='<thead><tr><th>Datum</th><th>Material</th><th class="num">Bestellwert CHF</th><th class="num">Provision (2.25%)</th><th>Status</th><th>Abrechnung</th></tr></thead>';
+  var body='<tbody>'+(rows||'<tr><td colspan="6" style="color:var(--text-3)">Noch keine Provisionen — erst nach gewonnenen Aufträgen</td></tr>')+(rows?'<tr class="total"><td>Total</td><td></td><td class="num">'+fmtCHF(revenue)+'</td><td class="num gold">'+fmtCHF(openProv+paidProv)+'</td><td></td><td></td></tr>':'')+'</tbody>';
   document.getElementById('prov-table').innerHTML=head+body;
   renderChart(won);
 }
@@ -773,6 +775,106 @@ function printProvisions(){
   won.forEach(function(bid){var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;rev+=ord;var pr=ord*COMM;prov+=pr;var d=bid.submitted_at?fmtDMY(new Date(bid.submitted_at)):'--';rows+='<tr><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+esc(d)+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+esc(bMat(b))+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(ord)+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(pr)+'</td></tr>';});
   document.getElementById('print-content').innerHTML='<div style="max-width:660px"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:15px;color:#555;margin-bottom:4px">Provisionsabrechnung</div><div style="font-size:12px;color:#888;margin-bottom:22px">'+esc(_profile.company_name||'')+' · Erstellt am '+fmtDMY(new Date())+'</div><table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase"><th style="padding:6px 8px;border-bottom:2px solid #333">Datum</th><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Bestellwert</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Provision (2.25%)</th></tr>'+(rows||'<tr><td colspan="4" style="padding:8px">Keine Aufträge.</td></tr>')+'<tr><td style="padding:8px;font-weight:700" colspan="2">Total</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(rev)+'</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(prov)+'</td></tr></table><div style="margin-top:30px;font-size:11px;color:#999">Zahlungsfrist: 14 Tage netto nach Lieferbestätigung · sourceon.ch</div></div>';
   window.print();
+}
+
+// ── Post-Zuschlag: Auftragsdetails (via Edge-Function, nur fuer Gewinner) ──
+async function soApiCall(action,payload){
+  try{
+    var token=(window.Clerk&&window.Clerk.session)?await window.Clerk.session.getToken():null;
+    if(!token)return null;
+    var resp=await fetch(SUPABASE_URL+'/functions/v1/rapid-api',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify(Object.assign({action:action},payload||{}))});
+    if(!resp.ok)return null;
+    return await resp.json();
+  }catch(e){return null;}
+}
+async function loadAuftragsdetails(bundleId){
+  var el=document.getElementById('auftragsdetails');
+  if(!el||!bundleId)return;
+  var d=await soApiCall('won_order_details',{id:bundleId});
+  if(!d||!d.bundle){el.innerHTML='<div style="font-size:12px;color:var(--text-3)">Auftragsdetails konnten nicht geladen werden.</div>';return;}
+  var b=d.bundle, custs=d.customers||[];
+  function fD(s){if(!s)return '–';var dt=new Date(s);return dt.getDate()+'. '+_MON[dt.getMonth()]+' '+dt.getFullYear();}
+  var von=null,bis=null;
+  custs.forEach(function(c){if(c.liefer_zeitraum_von&&(!von||c.liefer_zeitraum_von<von))von=c.liefer_zeitraum_von;if(c.liefer_zeitraum_bis&&(!bis||c.liefer_zeitraum_bis>bis))bis=c.liefer_zeitraum_bis;});
+  var zeitraum=fD(von)+' – '+fD(bis);
+  var mat=(b.sourceon_id||'')+(b.bezeichnung?' — '+b.bezeichnung:'');
+  function row(l,v){return '<div style="color:var(--text-3)">'+l+'</div><div style="color:var(--text-1)">'+esc(v)+'</div>';}
+  function cr(l,v){return '<div style="display:flex;justify-content:space-between;gap:12px;padding:3px 0"><span style="color:var(--text-3)">'+l+'</span><span style="color:var(--text-1);text-align:right">'+v+'</span></div>';}
+  var html='<div style="font-size:11px;text-transform:uppercase;color:var(--gold);letter-spacing:0.1em;margin-bottom:14px">Auftragsdetails</div>';
+  html+='<div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13px">';
+  html+=row('Material',mat)+row('Gesamtmenge',(b.gesamtvolumen!=null?Number(b.gesamtvolumen).toLocaleString('de-CH'):'–')+' '+(b.einheit||''))+row('Lieferzeitraum',zeitraum)+row('Lieferzone',b.liefer_zone||'–');
+  html+='</div>';
+  custs.forEach(function(c){
+    html+='<div style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;margin-top:12px;font-size:13px">'
+      +cr('Firma',esc(c.firmenname||'–'))
+      +cr('Ansprechperson',esc(c.ansprechperson||'–'))
+      +cr('Telefon',c.telefon?'<a href="tel:'+esc(c.telefon)+'" style="color:var(--gold)">'+esc(c.telefon)+'</a>':'–')
+      +cr('E-Mail',c.email?'<a href="mailto:'+esc(c.email)+'" style="color:var(--gold)">'+esc(c.email)+'</a>':'–')
+      +cr('Lieferadresse',esc(c.lieferadresse||'–'))
+      +cr('Menge',(c.menge!=null?esc(String(c.menge)):'–')+' '+esc(c.einheit||''))
+      +'</div>';
+  });
+  html+='<div style="font-size:12px;color:var(--text-3);margin-top:14px;line-height:1.6">Bitte koordiniere die Lieferung direkt mit dem Kunden. Die SourceOn-Provision ist separat zu begleichen.</div>';
+  el.innerHTML=html;
+}
+
+// ── Provisionsabrechnung als PDF (jsPDF, lazy von CDN) ──
+var _jspdfPromise=null;
+function loadJsPDF(){
+  if(window.jspdf&&window.jspdf.jsPDF)return Promise.resolve();
+  if(_jspdfPromise)return _jspdfPromise;
+  _jspdfPromise=new Promise(function(res,rej){
+    var s=document.createElement('script');
+    s.src='https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
+    s.onload=function(){res();};s.onerror=function(){rej(new Error('jsPDF load failed'));};
+    document.head.appendChild(s);
+  });
+  return _jspdfPromise;
+}
+async function makeProvisionPDF(bidId){
+  var bid=_bids.filter(function(x){return x.id===bidId;})[0];if(!bid)return;
+  var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)ord=0;var prov=ord*COMM;
+  try{await loadJsPDF();}catch(e){alert('PDF-Bibliothek konnte nicht geladen werden.');return;}
+  var today=new Date();
+  function fD(dt){return dt.getDate()+'. '+_MON[dt.getMonth()]+' '+dt.getFullYear();}
+  function chf(n){return 'CHF '+Number(n||0).toLocaleString('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  var bid8=String(bid.bundle_id||b.id||'').slice(0,8);
+  var mat=bMat(b);var vol=(b.gesamtvolumen!=null?Number(b.gesamtvolumen).toLocaleString('de-CH'):'')+' '+(b.einheit||'');
+  var doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'});
+  var L=20,R=190,y=22;
+  doc.setFont('helvetica','bold');doc.setFontSize(26);doc.setTextColor(232,160,32);doc.text('SourceOn',L,y);
+  doc.setFontSize(12);doc.setTextColor(60,60,60);doc.text('Provisionsabrechnung',L,y+8);
+  doc.setDrawColor(210,210,210);doc.line(L,y+13,R,y+13);
+  y+=24;
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(90,90,90);
+  doc.text(['SourceOn','Zürich, Schweiz','info@sourceon.ch','sourceon.ch'],L,y);
+  doc.text(['An: '+(_profile.company_name||''),(_profile.email||'')],R,y,{align:'right'});
+  y+=24;
+  doc.setTextColor(30,30,30);
+  doc.text('Datum: '+fD(today),L,y);
+  doc.text('Dok-Nr.: SO-PROV-'+bid8,R,y,{align:'right'});
+  y+=12;
+  // Tabelle
+  doc.setFillColor(245,245,245);doc.rect(L,y-5,R-L,8,'F');
+  doc.setFont('helvetica','bold');doc.setFontSize(9.5);doc.setTextColor(40,40,40);
+  doc.text('Beschreibung',L+2,y);doc.text('Betrag CHF',R-2,y,{align:'right'});
+  y+=9;doc.setFont('helvetica','normal');doc.setTextColor(40,40,40);
+  function trow(desc,amt){doc.text(desc,L+2,y,{maxWidth:120});doc.text(amt,R-2,y,{align:'right'});doc.setDrawColor(230,230,230);doc.line(L,y+3,R,y+3);y+=10;}
+  trow('Vermittlungsprovision — '+mat+' '+vol,chf(prov));
+  trow('Bestellwert (Referenz)',chf(ord));
+  trow('Provisionssatz','2.25%');
+  doc.setFont('helvetica','bold');doc.setFontSize(10.5);
+  doc.text('Geschuldete Provision',L+2,y+1);doc.text(chf(prov),R-2,y+1,{align:'right'});
+  doc.setDrawColor(120,120,120);doc.line(L,y+5,R,y+5);
+  y+=18;
+  // Zahlung
+  doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(60,60,60);
+  doc.text(['Zahlungsfrist: 14 Tage netto ab Rechnungsdatum','Bitte überweise den Betrag auf folgendes Konto:','IBAN: CH00 0000 0000 0000 0000 0','Kontoinhaber: Dion Richner, Zürich'],L,y);
+  y+=26;
+  doc.setFontSize(7.5);doc.setTextColor(140,140,140);
+  doc.text(['Diese Abrechnung ist kein Mehrwertsteuer-Dokument. SourceOn ist ein Einzelunternehmen.','Bei Fragen: info@sourceon.ch'],L,y);
+  var fname='SourceOn_Provision_'+bid8+'_'+today.getFullYear()+('0'+(today.getMonth()+1)).slice(-2)+('0'+today.getDate()).slice(-2)+'.pdf';
+  doc.save(fname);
 }
 function _xlDate(){var d=new Date();return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);}
 function _xlSafe(s){return String(s||'SourceOn').replace(/[\\/:*?"<>|]+/g,'').replace(/\s+/g,'_').slice(0,40);}

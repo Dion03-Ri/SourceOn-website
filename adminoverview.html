@@ -265,6 +265,17 @@ p{text-wrap:pretty}
     <div class="tbl-wrap"><div id="bundles-table" class="loading">Daten werden geladen...</div></div>
   </div>
 
+  <!-- SECTION 3c: Ausstehende Provisionen -->
+  <div class="section" id="sec-provisions">
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px">Ausstehende Provisionen <span class="badge" id="prov-count">0</span></span></div>
+    <p class="section-sub">Vergebene Bündel mit fälliger Vermittlungsprovision (2.25% des Bestellwerts). Nach Zahlungseingang als bezahlt markieren.</p>
+    <div style="display:flex;gap:28px;flex-wrap:wrap;margin:6px 0 16px;font-size:.9rem">
+      <div>Ausstehende Provisionen: <strong id="prov-open-sum" style="color:#E8A020">CHF 0</strong></div>
+      <div>Bereits eingegangen: <strong id="prov-collected-sum" style="color:#34D399">CHF 0</strong></div>
+    </div>
+    <div class="tbl-wrap"><div id="provisions-table" class="loading">Daten werden geladen...</div></div>
+  </div>
+
   <!-- SECTION 3b: Expired bundles -->
   <div class="section" id="sec-expired">
     <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px">Abgelaufene Bündel <span class="badge" id="expired-count" style="background:rgba(239,68,68,.12);color:#F87171">0</span></span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#E8A020;cursor:pointer" onclick="exportExpiredBundlesExcel()">↓ Exportieren</span></div>
@@ -387,7 +398,7 @@ function esc(s){
 async function loadAllData(){
   document.getElementById('btn-refresh').disabled=true;
   try{
-    await Promise.all([loadStats(),loadPending(),loadBundles(),loadExpiredBundles(),loadSuppliers(),loadCustomers()]);
+    await Promise.all([loadStats(),loadPending(),loadBundles(),loadExpiredBundles(),loadProvisions(),loadSuppliers(),loadCustomers()]);
   }catch(e){console.error('loadAllData error:',e);}
   document.getElementById('btn-refresh').disabled=false;
   startSupplierWatch();
@@ -545,6 +556,48 @@ async function loadBundles(){
   });
   html+='</tbody></table>';
   document.getElementById('bundles-table').innerHTML=html;
+}
+
+function _fmtChf(n){return 'CHF '+Math.round(Number(n)||0).toLocaleString('de-CH');}
+async function loadProvisions(){
+  var _d=await adminCall('pending_provisions')||{};
+  var rows=_d.rows||[];
+  var openSum=0,collSum=0,openCount=0;
+  rows.forEach(function(r){ if(r.provision_collected){collSum+=Number(r.provision)||0;} else {openSum+=Number(r.provision)||0;openCount++;} });
+  document.getElementById('prov-count').textContent=openCount;
+  document.getElementById('prov-open-sum').textContent=_fmtChf(openSum);
+  document.getElementById('prov-collected-sum').textContent=_fmtChf(collSum);
+  if(!rows.length){
+    document.getElementById('provisions-table').innerHTML='<div class="empty-msg">Keine vergebenen Bündel.</div>';
+    return;
+  }
+  var html='<table><thead><tr><th>Material</th><th>Lieferzone</th><th>Volumen</th><th>Gewinner</th><th>Bestellwert CHF</th><th>Provision CHF</th><th>Status</th><th>Aktion</th></tr></thead><tbody>';
+  rows.forEach(function(r){
+    var vol=(r.gesamtvolumen?Number(r.gesamtvolumen).toLocaleString('de-CH'):'-')+' '+(r.einheit||'');
+    var winner=r.supplier_name||r.gewonnener_supplier_id||'–';
+    var st=r.provision_collected
+      ? '<span class="badge" style="background:rgba(52,211,153,.14);color:#34D399">bezahlt</span>'
+      : '<span class="badge" style="background:rgba(232,160,32,.14);color:#E8A020">offen</span>';
+    var act=r.provision_collected ? '–'
+      : '<span class="link-m" style="color:#34D399;cursor:pointer;font-weight:600" onclick="markProvision(\''+esc(r.id)+'\')">Als bezahlt markieren</span>';
+    html+='<tr>'
+      +'<td>'+esc(r.bezeichnung||r.sourceon_id||'–')+'</td>'
+      +'<td>'+esc(r.liefer_zone||'–')+'</td>'
+      +'<td style="white-space:nowrap">'+vol+'</td>'
+      +'<td>'+esc(winner)+'</td>'
+      +'<td style="white-space:nowrap">'+_fmtChf(r.estimatedCHF)+'</td>'
+      +'<td style="white-space:nowrap;font-weight:600">'+_fmtChf(r.provision)+'</td>'
+      +'<td>'+st+'</td>'
+      +'<td style="white-space:nowrap">'+act+'</td></tr>';
+  });
+  html+='</tbody></table>';
+  document.getElementById('provisions-table').innerHTML=html;
+}
+async function markProvision(id){
+  if(!confirm('Provision als bezahlt markieren?'))return;
+  var res=await adminCall('mark_provision_collected',{id:id});
+  if(res&&res.ok){ await loadProvisions(); }
+  else { alert('Fehler beim Markieren.'); }
 }
 
 // Interne Admin-Anzeige: ausgeschriebener BRUTTO-Mindestrabatt + impliziertes Kunden-NETTO.
