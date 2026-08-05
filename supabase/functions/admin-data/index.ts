@@ -10,7 +10,7 @@
 //          (Verify JWT MUSS AUS sein — die Function verifiziert den Clerk-Token selbst.)
 // Voraussetzung: Tabelle public.admins (siehe supabase/admins.sql).
 
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+import { createClient } from "npm:@supabase/supabase-js@2";
 import { createRemoteJWKSet, jwtVerify } from "https://esm.sh/jose@5";
 
 const CLERK_ISSUER = "https://tolerant-skink-62.clerk.accounts.dev";
