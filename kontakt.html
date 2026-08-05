@@ -1783,6 +1783,11 @@ async function submitContact(e){
       commitment_version:COMMITMENT_VERSION
     };
 
+    // WICHTIG: erst Clerk fertig laden, sonst ist window.Clerk.user beim Klick evtl.
+    // noch null (Race) -> es wuerde faelschlich der Login geoeffnet, obwohl bereits
+    // eine Session besteht ("You're already signed in").
+    try{if(window.Clerk&&window.Clerk.load)await window.Clerk.load();}catch(e){}
+
     if(window.Clerk&&window.Clerk.user){
       // Eingeloggt → direkt einreichen (Identität via Clerk-Token, serverseitig verifiziert).
       await _soSubmitRequest(_reqPayload);
