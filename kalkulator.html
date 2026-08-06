@@ -949,19 +949,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 </script>
 <link rel="canonical" href="https://www.sourceon.ch/kalkulator"/>
 <style id="blueprint-grid">body{background-image:linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:calc(100%/7) 100%;background-position:center}@media(max-width:768px){body{background-size:calc(100%/3) 100%;background-image:linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px)}}</style>
-<style id="nav-dd-v2">
-.nav-dropdown{position:relative;list-style:none}
-.nav-dropdown-trigger{display:flex;align-items:center;gap:5px;background:none;border:none;font-size:clamp(.76rem,.9vw,.86rem);font-weight:500;color:rgba(255,255,255,.75);cursor:pointer;padding:0;font-family:inherit;line-height:1;transition:color .2s;white-space:nowrap}
-.nav-dropdown-trigger:hover,.nav-dropdown-trigger[aria-expanded="true"]{color:#fff}
-.nav-dropdown-trigger svg{transition:transform .2s ease;color:currentColor}
-.nav-dropdown-trigger[aria-expanded="true"] svg{transform:rotate(180deg)}
-.nav-dropdown-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-4px);background:rgba(7,15,26,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:6px;min-width:264px;box-shadow:0 12px 40px rgba(0,0,0,.5);opacity:0;visibility:hidden;transition:opacity .15s ease,transform .15s ease,visibility .15s;z-index:300}
-.nav-dropdown-menu.open{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
-.nav-dropdown-item{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:8px;text-decoration:none;transition:background .12s}
-.nav-dropdown-item:hover{background:rgba(255,255,255,.06)}
-.nav-dropdown-title{font-size:13px;font-weight:500;color:#F1F5F9}
-.nav-dropdown-sub{font-size:11px;color:#8A99AA}
-</style>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
@@ -974,15 +961,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="/" data-i18n="nav_home">Home</a></li>
       <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
-      <li class="nav-dropdown">
-  <button class="nav-dropdown-trigger" aria-expanded="false" aria-haspopup="true"><span data-i18n="nav_forwhom">Für wen</span><svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-  <div class="nav-dropdown-menu" role="menu">
-    <a href="/fuerwen-bauunternehmen" class="nav-dropdown-item" role="menuitem"><span class="nav-dropdown-title" data-i18n="nav_fw_bau">Bauunternehmen &amp; GU</span><span class="nav-dropdown-sub" data-i18n="nav_fw_bau_sub">Bessere Preise für jede Baufirma</span></a>
-    <a href="/fuerwen-handwerk" class="nav-dropdown-item" role="menuitem"><span class="nav-dropdown-title" data-i18n="nav_fw_hw">Handwerk &amp; Subunternehmer</span><span class="nav-dropdown-sub" data-i18n="nav_fw_hw_sub">Auch kleine Mengen profitieren</span></a>
-    <a href="/fuerwen-oeffentlich" class="nav-dropdown-item" role="menuitem"><span class="nav-dropdown-title" data-i18n="nav_fw_oe">Öffentliche Auftraggeber</span><span class="nav-dropdown-sub" data-i18n="nav_fw_oe_sub">Transparent, normkonform, dokumentiert</span></a>
-    <a href="/fuerwen-immobilien" class="nav-dropdown-item" role="menuitem"><span class="nav-dropdown-title" data-i18n="nav_fw_immo">Immobilien &amp; Wohnbau</span><span class="nav-dropdown-sub" data-i18n="nav_fw_immo_sub">Regelmässiger Bedarf gebündelt</span></a>
-  </div>
-</li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_fw_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_fw_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-bauunternehmen.html" data-i18n="nav_fw_gu">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_fw_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_fw_immo">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
       <li><a href="kontakt.html" data-i18n="nav_contact">Kontakt</a></li>
@@ -1308,7 +1287,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       nav_process: 'Wie es funktioniert',
       nav_calc: 'Kalkulator',
       nav_materials: 'Materialien',
-      nav_forwhom: 'Für wen',nav_fw_bau:"Bauunternehmen & GU",nav_fw_bau_sub:"Bessere Preise für jede Baufirma",nav_fw_hw:"Handwerk & Subunternehmer",nav_fw_hw_sub:"Auch kleine Mengen profitieren",nav_fw_oe:"Öffentliche Auftraggeber",nav_fw_oe_sub:"Transparent, normkonform, dokumentiert",nav_fw_immo:"Immobilien & Wohnbau",nav_fw_immo_sub:"Regelmässiger Bedarf gebündelt",
+      nav_forwhom: 'Für wen',
       nav_supplier: 'Lieferant werden',
       nav_about: 'Über uns',
       nav_contact: 'Kontakt',
@@ -1384,7 +1363,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       nav_process: 'How it works',
       nav_calc: 'Calculator',
       nav_materials: 'Materials',
-      nav_forwhom: 'For whom',nav_fw_bau:"Contractors & GCs",nav_fw_bau_sub:"Better prices for every contractor",nav_fw_hw:"Trades & Subcontractors",nav_fw_hw_sub:"Even small quantities benefit",nav_fw_oe:"Public Clients",nav_fw_oe_sub:"Transparent, compliant, documented",nav_fw_immo:"Real Estate & Housing",nav_fw_immo_sub:"Regular needs bundled",
+      nav_forwhom: 'For whom',
       nav_supplier: 'Become a supplier',
       nav_about: 'About us',
       nav_contact: 'Contact',
@@ -1460,7 +1439,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       nav_process: 'Comment ça marche',
       nav_calc: 'Calculateur',
       nav_materials: 'Matériaux',
-      nav_forwhom: 'Pour qui',nav_fw_bau:"Entreprises & EG",nav_fw_bau_sub:"Meilleurs prix pour chaque entreprise",nav_fw_hw:"Artisans & sous-traitants",nav_fw_hw_sub:"Même les petites quantités profitent",nav_fw_oe:"Donneurs d'ordre publics",nav_fw_oe_sub:"Transparent, conforme, documenté",nav_fw_immo:"Immobilier & logement",nav_fw_immo_sub:"Besoins réguliers regroupés",
+      nav_forwhom: 'Pour qui',
       nav_supplier: 'Devenir fournisseur',
       nav_about: 'À propos',
       nav_contact: 'Contact',
@@ -1536,7 +1515,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       nav_process: 'Come funziona',
       nav_calc: 'Calcolatore',
       nav_materials: 'Materiali',
-      nav_forwhom: 'Per chi',nav_fw_bau:"Imprese & GC",nav_fw_bau_sub:"Prezzi migliori per ogni impresa",nav_fw_hw:"Artigiani & subappaltatori",nav_fw_hw_sub:"Anche le piccole quantità ne beneficiano",nav_fw_oe:"Committenti pubblici",nav_fw_oe_sub:"Trasparente, conforme, documentato",nav_fw_immo:"Immobiliare & edilizia",nav_fw_immo_sub:"Fabbisogno regolare raggruppato",
+      nav_forwhom: 'Per chi',
       nav_supplier: 'Diventa fornitore',
       nav_about: 'Chi siamo',
       nav_contact: 'Contatto',
@@ -2109,20 +2088,6 @@ document.addEventListener('keydown',function(e){
 </script>
 <script>
 window.addEventListener("pageshow", function(e){ if(e.persisted){ window.location.reload(); } });
-</script>
-<script id="nav-dd-v2-js">
-document.querySelectorAll('.nav-dropdown').forEach(function(dd){
-  var trigger=dd.querySelector('.nav-dropdown-trigger'), menu=dd.querySelector('.nav-dropdown-menu');
-  if(!trigger||!menu)return;
-  trigger.addEventListener('click',function(e){
-    e.stopPropagation();
-    var isOpen=menu.classList.contains('open');
-    document.querySelectorAll('.nav-dropdown-menu.open').forEach(function(m){m.classList.remove('open');m.previousElementSibling.setAttribute('aria-expanded','false');});
-    if(!isOpen){menu.classList.add('open');trigger.setAttribute('aria-expanded','true');}
-  });
-});
-document.addEventListener('click',function(){document.querySelectorAll('.nav-dropdown-menu.open').forEach(function(m){m.classList.remove('open');m.previousElementSibling.setAttribute('aria-expanded','false');});});
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.nav-dropdown-menu.open').forEach(function(m){m.classList.remove('open');m.previousElementSibling.setAttribute('aria-expanded','false');});}});
 </script>
 </body>
 </html>
