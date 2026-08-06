@@ -1064,7 +1064,10 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   #lp .hero-content{max-width:1200px;margin:0 auto;padding:80px 48px;text-align:left;animation:none}
   #lp .hero-content>*{opacity:1;animation:none}
   #lp .h1{font-size:clamp(52px,7vw,96px);font-weight:800;color:var(--t1);letter-spacing:-.04em;line-height:1.0;margin:0}
-  #lp .h1 .h1-l2{display:block}
+  #lp .h1 .h1-l2{display:block;background:linear-gradient(94deg,var(--gold) 0%,#f5c469 65%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent}
+  #lp .hero .eyebrow{display:inline-block;font-size:12px;text-transform:uppercase;letter-spacing:.18em;color:var(--gold);font-weight:600;margin:0 0 22px;padding:7px 14px;border:1px solid var(--goldbd);border-radius:999px;background:var(--golddim)}
+  #lp .hero-proof{margin-top:30px;font-size:13px;color:var(--t3);letter-spacing:.01em;line-height:1.6}
+  #lp .hero-proof b{color:var(--gold);font-weight:700}
   #lp .subline{font-size:16px;color:var(--t3);font-weight:400;margin:24px 0 40px;letter-spacing:0}
   #lp .cta-row{display:flex;gap:16px;justify-content:flex-start;flex-wrap:wrap}
   @media(max-width:768px){#lp .hero-content{padding:84px 20px 64px}}
@@ -1092,12 +1095,14 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   </style>
   <section class="hero">
     <div class="hero-content">
+      <span class="eyebrow" data-i18n="lp_hero_eyebrow">Schweizer B2B-Beschaffung</span>
       <h1 class="h1" data-i18n-html="lp_hero_h1">Baumaterialien<br><span class="h1-l2">günstiger einkaufen.</span></h1>
       <p class="subline" data-i18n="lp_hero_sub">Du zahlst erst, wenn wir dir sparen.</p>
       <div class="cta-row">
         <a class="btn-primary" href="kontakt.html" data-i18n="lp_hero_cta1">Materialbedarf melden&nbsp;→</a>
         <a class="btn-ghost" href="prozess.html" data-i18n="lp_hero_cta2">Wie es funktioniert&nbsp;→</a>
       </div>
+      <div class="hero-proof" data-i18n-html="lp_hero_proof"><b>8–35 %</b> Netto-Mindestrabatt garantiert&nbsp;&nbsp;·&nbsp;&nbsp;Kostenlos für Baufirmen&nbsp;&nbsp;·&nbsp;&nbsp;Nur bei Ersparnis</div>
     </div>
   </section>
 
@@ -1370,6 +1375,7 @@ var I18N={
     meta_desc:'SourceOn bündelt Baumaterial-Bestellungen Schweizer Baufirmen und verhandelt Mengenrabatte. 8–35% Netto-Mindestrabatt garantiert. Kostenlos für Baufirmen — du zahlst erst, wenn du sparst.',
     lp_hero_eyebrow:'B2B BESCHAFFUNGSVERMITTLER',
     lp_hero_h1:'Baumaterialien<br><span class="h1-l2">günstiger einkaufen.</span>',
+    lp_hero_proof:'<b>8–35 %</b> Netto-Mindestrabatt garantiert&nbsp;&nbsp;·&nbsp;&nbsp;Kostenlos für Baufirmen&nbsp;&nbsp;·&nbsp;&nbsp;Nur bei Ersparnis',
     lp_hero_h1gold:'Für jede Schweizer Baufirma.',
     lp_hero_sub:'Du zahlst erst, wenn wir dir sparen.',
     lp_hero_cta1:'Materialbedarf melden →',lp_hero_cta2:'Wie es funktioniert →',
@@ -1468,6 +1474,7 @@ var I18N={
     meta_desc:'SourceOn bundles construction material orders from Swiss contractors and negotiates volume discounts. 8–35% net minimum discount guaranteed. Free for contractors — you only pay when you save.',
     lp_hero_eyebrow:'B2B PROCUREMENT PLATFORM',
     lp_hero_h1:'Buy building materials<br><span class="h1-l2">at lower prices.</span>',
+    lp_hero_proof:'<b>8–35%</b> net minimum discount guaranteed&nbsp;&nbsp;·&nbsp;&nbsp;Free for builders&nbsp;&nbsp;·&nbsp;&nbsp;Only pay when you save',
     lp_hero_h1gold:'For every Swiss construction firm.',
     lp_hero_sub:'You only pay when we save you money.',
     lp_hero_cta1:'Report material demand →',lp_hero_cta2:'How it works →',
@@ -1566,6 +1573,7 @@ var I18N={
     meta_desc:'SourceOn regroupe les commandes de matériaux de construction des entreprises suisses et négocie des remises sur volume. Remise minimale nette de 8 à 35% garantie. Gratuit — tu ne paies que si tu économises.',
     lp_hero_eyebrow:'PLATEFORME D\'APPROVISIONNEMENT B2B',
     lp_hero_h1:'Achète tes matériaux<br><span class="h1-l2">de construction moins cher.</span>',
+    lp_hero_proof:'<b>8–35 %</b> de remise nette minimale garantie&nbsp;&nbsp;·&nbsp;&nbsp;Gratuit pour les entreprises&nbsp;&nbsp;·&nbsp;&nbsp;Tu ne paies que si tu économises',
     lp_hero_h1gold:'Pour chaque entreprise de construction suisse.',
     lp_hero_sub:'Tu ne paies que si on te fait économiser.',
     lp_hero_cta1:'Annoncer un besoin →',lp_hero_cta2:'Comment ça marche →',
@@ -1664,6 +1672,7 @@ var I18N={
     meta_desc:'SourceOn raggruppa gli ordini di materiali da costruzione delle imprese svizzere e negozia sconti sul volume. Sconto minimo netto garantito dall\'8 al 35%. Gratuito — paghi solo se risparmi.',
     lp_hero_eyebrow:'PIATTAFORMA DI APPROVVIGIONAMENTO B2B',
     lp_hero_h1:'Acquista materiali<br><span class="h1-l2">a prezzi più bassi.</span>',
+    lp_hero_proof:'<b>8–35 %</b> di sconto minimo netto garantito&nbsp;&nbsp;·&nbsp;&nbsp;Gratuito per le imprese&nbsp;&nbsp;·&nbsp;&nbsp;Paghi solo se risparmi',
     lp_hero_h1gold:'Per ogni impresa edile svizzera.',
     lp_hero_sub:'Paghi solo quando ti facciamo risparmiare.',
     lp_hero_cta1:'Segnala il fabbisogno →',lp_hero_cta2:'Come funziona →',
