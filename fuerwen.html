@@ -928,6 +928,13 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 </script>
 <link rel="canonical" href="https://www.sourceon.ch/fuerwen"/>
 <style id="blueprint-grid">body{background-image:linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);background-size:calc(100%/7) 100%;background-position:center}@media(max-width:768px){body{background-size:calc(100%/3) 100%;background-image:linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px)}}</style>
+<style id="nav-btn-v2">
+.nav-btn-primary{background:var(--gold);color:#070F1A;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;text-decoration:none;font-family:Inter,sans-serif;white-space:nowrap;transition:opacity .15s}
+.nav-btn-primary:hover{opacity:.88}
+.nav-btn-sep{width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px;flex-shrink:0}
+.nav-btn-ghost{background:none;border:none;color:var(--t3);font-size:13px;font-weight:400;padding:8px 12px;text-decoration:none;font-family:Inter,sans-serif;white-space:nowrap;transition:color .15s;cursor:pointer}
+.nav-btn-ghost:hover{color:var(--t1)}
+</style>
 </head>
 <body>
 <a href="#main-content" class="skip-link">Zum Hauptinhalt springen</a>
@@ -940,7 +947,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
       <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div></li>
-      <li><a href="lieferant.html" data-i18n="nav_supplier">Lieferant werden</a></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
     </ul>
     <div class="nav-right">
@@ -975,7 +981,9 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
           </div>
         </div>
       </div>
-      <button class="btn btn-gold btn-md" data-i18n="nav_cta" onclick="window.location.href='kontakt.html'">Materialbedarf melden</button>
+      <a href="/kontakt" class="nav-btn-primary" data-i18n="nav_cta">Materialbedarf melden</a>
+      <div class="nav-btn-sep"></div>
+      <a href="/lieferant" class="nav-btn-ghost" data-i18n="nav_supplier">Lieferant werden</a>
       <div id="nav-hamburger" onclick="toggleNav();this.setAttribute('aria-expanded',document.getElementById('nav-overlay').classList.contains('open'))" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" role="button" tabindex="0" aria-label="Menü öffnen" aria-expanded="false" aria-controls="nav-overlay"><span></span><span></span><span></span></div>
     </div>
   </div>
