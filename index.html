@@ -1062,7 +1062,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <!-- HERO -->
   <style id="lp-redesign">
-  #lp .hero{min-height:88vh;text-align:left;overflow:visible}
+  #lp .hero{min-height:100vh;text-align:left;overflow:visible}
   #lp .hero-content{max-width:1200px;margin:0 auto;padding:80px 48px;text-align:left;animation:none}
   #lp .hero-content>*{opacity:1;animation:none}
   #lp .h1{font-size:clamp(52px,7vw,96px);font-weight:800;color:var(--t1);letter-spacing:-.04em;line-height:1.08;margin:0}
@@ -1110,14 +1110,27 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <!-- PROCESS STRIP -->
   <style>
-  .process-strip{border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);padding:22px 0;background:var(--bg1)}
-  .process-strip-inner{display:flex;align-items:center;justify-content:space-between;gap:18px 40px;flex-wrap:wrap}
-  .ps-item{display:flex;align-items:baseline;gap:10px}
-  .ps-n{font-size:11px;font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums;letter-spacing:.03em}
+  .process-strip{border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);padding:52px 0;background:var(--bg1)}
+  .process-strip-inner{display:flex;align-items:center;justify-content:space-between;gap:20px 40px;flex-wrap:wrap}
+  .ps-item{display:flex;align-items:baseline;gap:10px;opacity:0;transform:translateY(12px)}
+  .ps-n{font-size:11px;font-weight:700;color:var(--t3);font-variant-numeric:tabular-nums;letter-spacing:.03em}
   .ps-t{font-size:13.5px;font-weight:500;color:var(--t1);letter-spacing:-.01em;white-space:nowrap}
-  .ps-cta{font-size:13px;color:var(--gold);text-decoration:none;white-space:nowrap;opacity:.85;transition:opacity .15s}
-  .ps-cta:hover{opacity:1}
-  @media(max-width:768px){.process-strip-inner{justify-content:flex-start;gap:14px 22px}}
+  .ps-cta{font-size:13px;color:var(--gold);text-decoration:none;white-space:nowrap;opacity:0;transform:translateY(12px)}
+  .ps-cta:hover{text-decoration:underline;text-underline-offset:3px}
+  .process-strip.lit .ps-item,.process-strip.lit .ps-cta{animation:psIn .55s cubic-bezier(.2,.7,.2,1) forwards}
+  .process-strip.lit .ps-item:nth-child(1){animation-delay:.04s}
+  .process-strip.lit .ps-item:nth-child(2){animation-delay:.13s}
+  .process-strip.lit .ps-item:nth-child(3){animation-delay:.22s}
+  .process-strip.lit .ps-item:nth-child(4){animation-delay:.31s}
+  .process-strip.lit .ps-cta{animation-delay:.44s}
+  .process-strip.lit .ps-item:nth-child(1) .ps-n{animation:psGlow .7s ease .04s forwards}
+  .process-strip.lit .ps-item:nth-child(2) .ps-n{animation:psGlow .7s ease .13s forwards}
+  .process-strip.lit .ps-item:nth-child(3) .ps-n{animation:psGlow .7s ease .22s forwards}
+  .process-strip.lit .ps-item:nth-child(4) .ps-n{animation:psGlow .7s ease .31s forwards}
+  @keyframes psIn{to{opacity:1;transform:none}}
+  @keyframes psGlow{0%{color:var(--t3);text-shadow:none}45%{color:#F6C560;text-shadow:0 0 16px rgba(232,160,32,.7)}100%{color:var(--gold);text-shadow:0 0 0 rgba(232,160,32,0)}}
+  @media(max-width:768px){.process-strip{padding:38px 0}.process-strip-inner{justify-content:flex-start;gap:16px 24px}}
+  @media(prefers-reduced-motion:reduce){.ps-item,.ps-cta{opacity:1!important;transform:none!important;animation:none!important}.ps-n{color:var(--gold)!important}}
   </style>
   <section class="process-strip">
     <div class="wrap">
@@ -1130,6 +1143,15 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       </div>
     </div>
   </section>
+  <script>
+  (function(){
+    var strip=document.querySelector('.process-strip');
+    if(!strip)return;
+    if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches){strip.classList.add('lit');return;}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){strip.classList.add('lit');io.disconnect();}});},{threshold:.45});
+    io.observe(strip);
+  })();
+  </script>
 
   <!-- SECTION 2 — STATS ROW -->
   <section class="sec" id="lp-stats"><div class="wrap">
