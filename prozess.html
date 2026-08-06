@@ -1063,30 +1063,61 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   </div></section>
 
   <!-- COMPARISON -->
+  <style>
+  #lp .cmp2{display:block;margin-top:44px;border-top:1px solid var(--lpbs)}
+  #lp .cmp2-row{display:grid;grid-template-columns:1.1fr 1fr 1fr;align-items:center;gap:28px;padding:20px 0;border-bottom:1px solid var(--lpb)}
+  #lp .cmp2-head{padding:0 0 16px;border-bottom:1px solid var(--lpbs)}
+  #lp .cmp2-asp{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--t3)}
+  #lp .cmp2-head .cmp2-a,#lp .cmp2-head .cmp2-b{font-size:15px;font-weight:700;letter-spacing:-.01em}
+  #lp .cmp2-head .cmp2-a{color:var(--t2)}
+  #lp .cmp2-head .cmp2-b{color:var(--gold);position:relative}
+  #lp .cmp2-a{display:flex;align-items:center;gap:11px;font-size:14.5px;color:var(--t3)}
+  #lp .cmp2-a .ic{font-size:11px;color:var(--t3);opacity:.55;flex:0 0 auto}
+  #lp .cmp2-b{display:flex;align-items:center;gap:11px;font-size:14.5px;color:var(--t1);font-weight:600}
+  #lp .cmp2-b .ic{font-size:12px;color:var(--gold);flex:0 0 auto}
+  @media(max-width:680px){
+    #lp .cmp2-head{display:none}
+    #lp .cmp2-row{grid-template-columns:1fr;gap:7px;padding:18px 0}
+    #lp .cmp2-asp{margin-bottom:2px}
+  }
+  </style>
   <section class="sec bt"><div class="wrap">
     <span class="sec-label" data-i18n="cmp_seclabel">Der Unterschied</span>
-    <div class="cmpx reveal">
-      <div class="cmpx-card cmpx-solo">
-        <div class="cmpx-head" data-i18n="cmpx_l">Alleine einkaufen</div>
-        <div class="cmpx-list">
-          <div class="cmpx-item"><span class="cmpx-ic">✕</span><div><span class="cmpx-cat" data-i18n="cmpx_1c">Preis</span><span class="cmpx-txt" data-i18n="cmpx_1l">Einzelpreis</span></div></div>
-          <div class="cmpx-item"><span class="cmpx-ic">✕</span><div><span class="cmpx-cat" data-i18n="cmpx_2c">Verhandlung</span><span class="cmpx-txt" data-i18n="cmpx_2l">Einzelvolumen</span></div></div>
-          <div class="cmpx-item"><span class="cmpx-ic">✕</span><div><span class="cmpx-cat" data-i18n="cmpx_3c">Transparenz</span><span class="cmpx-txt" data-i18n="cmpx_3l">Begrenzt</span></div></div>
-          <div class="cmpx-item"><span class="cmpx-ic">✕</span><div><span class="cmpx-cat" data-i18n="cmpx_4c">Lieferanten</span><span class="cmpx-txt" data-i18n="cmpx_4l">Eigenrecherche</span></div></div>
-          <div class="cmpx-item"><span class="cmpx-ic">✕</span><div><span class="cmpx-cat" data-i18n="cmpx_5c">Datenschutz</span><span class="cmpx-txt" data-i18n="cmpx_5l">Identität sofort bekannt</span></div></div>
-          <div class="cmpx-item"><span class="cmpx-ic">✕</span><div><span class="cmpx-cat" data-i18n="cmpx_6c">Risiko</span><span class="cmpx-txt" data-i18n="cmpx_6l">Volle Kosten ohne Garantie</span></div></div>
-        </div>
+    <div class="cmp2 reveal">
+      <div class="cmp2-row cmp2-head">
+        <div class="cmp2-asp"></div>
+        <div class="cmp2-a" data-i18n="cmpx_l">Alleine einkaufen</div>
+        <div class="cmp2-b" data-i18n="cmpx_r">Mit SourceOn</div>
       </div>
-      <div class="cmpx-card cmpx-so">
-        <div class="cmpx-head" data-i18n="cmpx_r">Mit SourceOn</div>
-        <div class="cmpx-list">
-          <div class="cmpx-item"><span class="cmpx-ic">✓</span><div><span class="cmpx-cat" data-i18n="cmpx_1c">Preis</span><span class="cmpx-txt" data-i18n="cmpx_1r">Bündelrabatt</span></div></div>
-          <div class="cmpx-item"><span class="cmpx-ic">✓</span><div><span class="cmpx-cat" data-i18n="cmpx_2c">Verhandlung</span><span class="cmpx-txt" data-i18n="cmpx_2r">Gebündeltes Volumen</span></div></div>
-          <div class="cmpx-item"><span class="cmpx-ic">✓</span><div><span class="cmpx-cat" data-i18n="cmpx_3c">Transparenz</span><span class="cmpx-txt" data-i18n="cmpx_3r">Vollständig</span></div></div>
-          <div class="cmpx-item"><span class="cmpx-ic">✓</span><div><span class="cmpx-cat" data-i18n="cmpx_4c">Lieferanten</span><span class="cmpx-txt" data-i18n="cmpx_4r">SIA/ISO-geprüft</span></div></div>
-          <div class="cmpx-item"><span class="cmpx-ic">✓</span><div><span class="cmpx-cat" data-i18n="cmpx_5c">Datenschutz</span><span class="cmpx-txt" data-i18n="cmpx_5r">Geschützt bis Zuschlag</span></div></div>
-          <div class="cmpx-item"><span class="cmpx-ic">✓</span><div><span class="cmpx-cat" data-i18n="cmpx_6c">Risiko</span><span class="cmpx-txt" data-i18n="cmpx_6r">Null — nur Provision bei Ersparnis</span></div></div>
-        </div>
+      <div class="cmp2-row">
+        <div class="cmp2-asp" data-i18n="cmpx_1c">Preis</div>
+        <div class="cmp2-a"><span class="ic">✕</span><span data-i18n="cmpx_1l">Einzelpreis</span></div>
+        <div class="cmp2-b"><span class="ic">✓</span><span data-i18n="cmpx_1r">Bündelrabatt</span></div>
+      </div>
+      <div class="cmp2-row">
+        <div class="cmp2-asp" data-i18n="cmpx_2c">Verhandlung</div>
+        <div class="cmp2-a"><span class="ic">✕</span><span data-i18n="cmpx_2l">Einzelvolumen</span></div>
+        <div class="cmp2-b"><span class="ic">✓</span><span data-i18n="cmpx_2r">Gebündeltes Volumen</span></div>
+      </div>
+      <div class="cmp2-row">
+        <div class="cmp2-asp" data-i18n="cmpx_3c">Transparenz</div>
+        <div class="cmp2-a"><span class="ic">✕</span><span data-i18n="cmpx_3l">Begrenzt</span></div>
+        <div class="cmp2-b"><span class="ic">✓</span><span data-i18n="cmpx_3r">Vollständig</span></div>
+      </div>
+      <div class="cmp2-row">
+        <div class="cmp2-asp" data-i18n="cmpx_4c">Lieferanten</div>
+        <div class="cmp2-a"><span class="ic">✕</span><span data-i18n="cmpx_4l">Eigenrecherche</span></div>
+        <div class="cmp2-b"><span class="ic">✓</span><span data-i18n="cmpx_4r">SIA/ISO-geprüft</span></div>
+      </div>
+      <div class="cmp2-row">
+        <div class="cmp2-asp" data-i18n="cmpx_5c">Datenschutz</div>
+        <div class="cmp2-a"><span class="ic">✕</span><span data-i18n="cmpx_5l">Identität sofort bekannt</span></div>
+        <div class="cmp2-b"><span class="ic">✓</span><span data-i18n="cmpx_5r">Geschützt bis Zuschlag</span></div>
+      </div>
+      <div class="cmp2-row">
+        <div class="cmp2-asp" data-i18n="cmpx_6c">Risiko</div>
+        <div class="cmp2-a"><span class="ic">✕</span><span data-i18n="cmpx_6l">Volle Kosten ohne Garantie</span></div>
+        <div class="cmp2-b"><span class="ic">✓</span><span data-i18n="cmpx_6r">Null — nur Provision bei Ersparnis</span></div>
       </div>
     </div>
   </div></section>
