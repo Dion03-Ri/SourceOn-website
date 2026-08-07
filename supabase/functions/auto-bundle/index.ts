@@ -26,6 +26,14 @@ function getGrossTarget(estimatedValueCHF: number): number | null {
   return null; // below 20k — fallback bundle
 }
 
+// Liefert den NETTO-Tarifsatz fuer ein Gesamtvolumen (0, wenn < 20k).
+function getNetTier(estimatedValueCHF: number): number {
+  for (const tier of SUPPLIER_TIERS) {
+    if (estimatedValueCHF >= tier.min) return tier.net;
+  }
+  return 0; // below 20k
+}
+
 // ---------------------------------------------------------------------------
 // Dynamische Timing-Formeln (Sammelfenster + Gebotsfrist).
 // ⚠️ MÜSSEN synchron bleiben mit /timing.js (Kunden-Dashboard-Anzeige) und dem
@@ -290,7 +298,13 @@ Deno.serve(async (req: Request) => {
       }
       let targetRabatt: number;
       if (ratedChfSum > 0) {
-        const targetNet = weightedNetSum / ratedChfSum;
+        // NETTO-Zielrabatt = MAX aus (a) volumengewichtetem Durchschnitt der individuell
+        // garantierten Saetze und (b) dem Tarifsatz fuer das GESAMTE Buendelvolumen.
+        // So faellt ein grosses Sammelbuendel nie unter die Stufe, die dem Gesamtvolumen
+        // zusteht (z. B. 8 Firmen mit total 1.2 Mio. → mind. 30% netto statt Durchschnitt).
+        const weightedAvg = weightedNetSum / ratedChfSum;
+        const tierRate = getNetTier(estimatedCHF); // Tarif fuer Gesamtvolumen
+        const targetNet = Math.max(tierRate, weightedAvg);
         targetRabatt = Math.round((targetNet + 0.0225) * 10000) / 10000; // GROSS, auf 0.01% gerundet
       } else {
         // kein Request mit festem Satz → Volumen-Tarifstufe als Rückfall
