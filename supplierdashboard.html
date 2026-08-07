@@ -798,13 +798,18 @@ function setFinStatus(s,btn){
   document.querySelectorAll('#fin-filters .filt[data-s]').forEach(function(p){p.classList.toggle('active',p.getAttribute('data-s')===s);});
   renderFinanzen();
 }
-// Referenz je Abrechnung (lokal gespeichert)
-var _provNotes=null;
-function _loadProvNotes(){if(_provNotes)return _provNotes;try{_provNotes=JSON.parse(localStorage.getItem('so_prov_notes')||'{}');}catch(e){_provNotes={};}return _provNotes;}
-function _saveProvNotes(){try{localStorage.setItem('so_prov_notes',JSON.stringify(_provNotes||{}));}catch(e){}}
-function provRefHtml(id){var n=_loadProvNotes();var v=n[id]||'';return '<span class="'+(v?'prov-ref set':'prov-ref')+'" data-id="'+esc(id)+'" onclick="editProvRef(this)">'+(v?esc(v):'＋ Referenz')+'</span>';}
-function editProvRef(el){var id=el.getAttribute('data-id');var n=_loadProvNotes();var cur=n[id]||'';var inp=document.createElement('input');inp.className='prov-ref-input';inp.value=cur;inp.maxLength=40;inp.placeholder='z.B. Auftrag Nr.';el.replaceWith(inp);inp.focus();
-  function done(){var v=inp.value.trim();if(v)n[id]=v;else delete n[id];_saveProvNotes();var tmp=document.createElement('div');tmp.innerHTML=provRefHtml(id);inp.replaceWith(tmp.firstChild);}
+// Referenz je Abrechnung (in der Datenbank gespeichert, geräteübergreifend)
+function _bidById(id){for(var i=0;i<_bids.length;i++){if(String(_bids[i].id)===String(id))return _bids[i];}return null;}
+function provRefHtml(id){var bid=_bidById(id);var v=(bid&&bid.referenz)?bid.referenz:'';return '<span class="'+(v?'prov-ref set':'prov-ref')+'" data-id="'+esc(id)+'" onclick="editProvRef(this)">'+(v?esc(v):'＋ Referenz')+'</span>';}
+function editProvRef(el){var id=el.getAttribute('data-id');var bid=_bidById(id);var cur=(bid&&bid.referenz)?bid.referenz:'';var inp=document.createElement('input');inp.className='prov-ref-input';inp.value=cur;inp.maxLength=60;inp.placeholder='z.B. Auftrag Nr.';el.replaceWith(inp);inp.focus();var saving=false;
+  async function done(){if(saving)return;saving=true;var v=inp.value.trim();
+    if(v!==cur){
+      var res=await sb.from('bids').update({referenz:v||null}).eq('id',id);
+      if(res&&res.error){alert('Referenz konnte nicht gespeichert werden: '+res.error.message);saving=false;inp.focus();return;}
+      if(bid)bid.referenz=v||null;
+    }
+    var tmp=document.createElement('div');tmp.innerHTML=provRefHtml(id);inp.replaceWith(tmp.firstChild);
+  }
   inp.addEventListener('blur',done);inp.addEventListener('keydown',function(e){if(e.key==='Enter')inp.blur();else if(e.key==='Escape'){inp.value=cur;inp.blur();}});
 }
 function _finPopulateYears(won){
@@ -837,10 +842,10 @@ function renderFinanzen(){
 // Jahres-Zusammenfassung (PDF)
 function printYearSummary(){
   var sel=document.getElementById('fin-year');var year=sel?Number(sel.value):new Date().getFullYear();
-  var notes=_loadProvNotes();var rows='',rev=0,prov=0,cnt=0;
+  var rows='',rev=0,prov=0,cnt=0;
   var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
   won.forEach(function(bid){if(!bid.submitted_at)return;var d=new Date(bid.submitted_at);if(d.getFullYear()!==year)return;var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;rev+=ord;var pr=ord*COMM;prov+=pr;cnt++;
-    var ref=notes[bid.id]?esc(notes[bid.id]):'';
+    var ref=bid.referenz?esc(bid.referenz):'';
     rows+='<tr><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+esc(fmtDMY(d))+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+esc(bMat(b))+(ref?' <span style="color:#999">· '+ref+'</span>':'')+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(ord)+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(pr)+'</td></tr>';});
   document.getElementById('print-content').innerHTML='<div style="max-width:660px"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:15px;color:#555;margin-bottom:4px">Provisionsübersicht '+year+'</div><div style="font-size:12px;color:#888;margin-bottom:22px">'+esc(_profile.company_name||'')+' · '+cnt+' Aufträge · Erstellt am '+fmtDMY(new Date())+'</div><table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase"><th style="padding:6px 8px;border-bottom:2px solid #333">Datum</th><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Bestellwert</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Provision (2.25%)</th></tr>'+(rows||'<tr><td colspan="4" style="padding:8px">Keine Aufträge in '+year+'.</td></tr>')+'<tr><td style="padding:8px;font-weight:700" colspan="2">Total '+year+'</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(rev)+'</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(prov)+'</td></tr></table><div style="margin-top:30px;font-size:11px;color:#999">Jahresübersicht zu Buchhaltungszwecken · sourceon.ch</div></div>';
   window.print();
