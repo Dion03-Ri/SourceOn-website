@@ -66,33 +66,33 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --dark:#08111E;--dark2:#0A1626;--dark3:#0F2238;
-  --gold:#E8A020;--gold-h:#f0b840;--gold-dim:rgba(232,160,32,.12);
-  --muted:#94A3B8;--body:#64748B;
-  --green:#10B981;--red:#EF4444;--amber:#F59E0B;--blue:#3B82F6;
+  --dark:#0E1116;--dark2:#F5F6F8;--dark3:#FFFFFF;
+  --gold:#E8A020;--gold-h:#d4901a;--gold-ink:#9A6A00;--gold-dim:rgba(232,160,32,.14);
+  --muted:#56616F;--body:#7C8695;
+  --green:#15924F;--red:#D64545;--amber:#B7791F;--blue:#2F6FD6;--purple:#7C5CD6;
   --r:16px;
   --ease:cubic-bezier(0.4,0,0.2,1);
 }
-body{font-family:'Inter',-apple-system,sans-serif;background:var(--dark2);color:#fff;min-height:100vh;-webkit-font-smoothing:antialiased}
-a{color:var(--gold);text-decoration:none}
+body{font-family:'Inter',-apple-system,sans-serif;background:var(--dark2);color:#141A24;min-height:100vh;-webkit-font-smoothing:antialiased}
+a{color:var(--gold-ink);text-decoration:none}
 ::selection{background:var(--gold);color:#1a1a1a}
 
-.topnav{background:var(--dark3);border-bottom:1px solid rgba(255,255,255,.06);padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.topnav-logo{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#fff;cursor:pointer;text-decoration:none}
-.topnav-logo span{color:var(--gold)}
+.topnav{background:var(--dark3);border-bottom:1px solid rgba(16,24,40,.06);padding:0 48px;height:64px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.topnav-logo{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#141A24;cursor:pointer;text-decoration:none}
+.topnav-logo span{color:var(--gold-ink)}
 .topnav-right{display:flex;align-items:center;gap:12px}
-.btn-refresh{padding:8px 20px;border-radius:100px;border:1.5px solid var(--gold);background:transparent;color:var(--gold);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
+.btn-refresh{padding:8px 20px;border-radius:100px;border:1.5px solid var(--gold);background:transparent;color:var(--gold-ink);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;display:inline-flex;align-items:center;gap:6px}
 .btn-refresh:hover{background:var(--gold);color:var(--dark)}
-.btn-back{padding:8px 18px;border-radius:100px;border:1.5px solid rgba(255,255,255,.12);background:transparent;color:var(--muted);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-.btn-back:hover{border-color:rgba(255,255,255,.3);color:#fff}
+.btn-back{padding:8px 18px;border-radius:100px;border:1.5px solid rgba(16,24,40,.12);background:transparent;color:var(--muted);font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn-back:hover{border-color:rgba(16,24,40,.3);color:#141A24}
 
 /* AUTH GATE */
 .auth-gate{display:flex;align-items:center;justify-content:center;min-height:80vh;padding:24px}
-.auth-card{background:var(--dark3);border:1px solid rgba(255,255,255,.08);border-radius:20px;padding:48px;text-align:center;max-width:400px;width:100%}
+.auth-card{background:var(--dark3);border:1px solid rgba(16,24,40,.08);border-radius:20px;padding:48px;text-align:center;max-width:400px;width:100%}
 .auth-card h2{font-size:1.3rem;font-weight:700;margin-bottom:8px}
 .auth-card p{font-size:.85rem;color:var(--muted);margin-bottom:24px}
-.auth-input{width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s}
-.auth-input:focus{border-color:var(--gold)}
+.auth-input{width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid rgba(16,24,40,.1);background:rgba(16,24,40,.04);color:#141A24;font-size:.9rem;font-family:inherit;outline:none;transition:border-color .2s}
+.auth-input:focus{border-color:var(--gold-ink)}
 .auth-input::placeholder{color:var(--muted)}
 .auth-btn{width:100%;margin-top:16px;padding:12px;border-radius:10px;border:none;background:var(--gold);color:var(--dark);font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer;transition:background .2s}
 .auth-btn:hover{background:var(--gold-h)}
@@ -105,11 +105,11 @@ a{color:var(--gold);text-decoration:none}
 
 /* STATS GRID */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
-.stat-card{background:var(--dark3);border:1px solid rgba(255,255,255,.07);border-radius:var(--r);padding:24px 20px;transition:border-color .2s}
+.stat-card{background:var(--dark3);border:1px solid rgba(16,24,40,.09);border-radius:var(--r);padding:24px 20px;transition:border-color .2s,box-shadow .2s;box-shadow:0 1px 2px rgba(16,24,40,.04)}
 .stat-card:hover{border-color:rgba(232,160,32,.15)}
 .stat-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
 .stat-value{font-size:1.7rem;font-weight:800;letter-spacing:-.02em}
-.stat-value.gold{color:var(--gold)}
+.stat-value.gold{color:var(--gold-ink)}
 .stat-value.green{color:var(--green)}
 .stat-value.amber{color:var(--amber)}
 .stat-value.blue{color:var(--blue)}
@@ -117,61 +117,61 @@ a{color:var(--gold);text-decoration:none}
 /* SECTION */
 .section{margin-bottom:48px}
 .section-title{font-size:1.15rem;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:10px}
-.section-title .badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:100px;background:var(--gold-dim);color:var(--gold)}
+.section-title .badge{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:100px;background:var(--gold-dim);color:var(--gold-ink)}
 .section-sub{font-size:.8rem;color:var(--muted);margin-bottom:20px}
 
 /* TABLE */
-.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(255,255,255,.07)}
+.tbl-wrap{overflow-x:auto;border-radius:12px;border:1px solid rgba(16,24,40,.09);box-shadow:0 1px 2px rgba(16,24,40,.04);background:var(--dark3)}
 table{width:100%;border-collapse:collapse;font-size:.8rem}
-thead{background:rgba(255,255,255,.04)}
-th{padding:12px 14px;text-align:left;font-weight:600;color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;border-bottom:1px solid rgba(255,255,255,.07)}
-td{padding:11px 14px;border-bottom:1px solid rgba(255,255,255,.04);vertical-align:top}
-tbody tr:nth-child(even){background:rgba(255,255,255,.02)}
+thead{background:rgba(16,24,40,.04)}
+th{padding:12px 14px;text-align:left;font-weight:600;color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;border-bottom:1px solid rgba(16,24,40,.07)}
+td{padding:11px 14px;border-bottom:1px solid rgba(16,24,40,.04);vertical-align:top}
+tbody tr:nth-child(even){background:rgba(16,24,40,.02)}
 tbody tr:hover{background:rgba(232,160,32,.04)}
 .cell-trunc{max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 /* BADGES */
 .badge-status{display:inline-block;padding:3px 10px;border-radius:100px;font-size:.7rem;font-weight:600;white-space:nowrap}
-.badge-status.verified,.badge-status.ausgeschrieben{background:rgba(16,185,129,.12);color:#34D399}
-.badge-status.pending{background:rgba(245,158,11,.12);color:#FBBF24}
-.badge-status.rejected,.badge-status.abgelehnt{background:rgba(239,68,68,.12);color:#F87171}
-.badge-status.vergeben{background:rgba(59,130,246,.12);color:#60A5FA}
-.badge-status.abgelaufen{background:rgba(239,68,68,.12);color:#F87171}
-.badge-status.abgeschlossen{background:rgba(139,92,246,.12);color:#A78BFA}
+.badge-status.verified,.badge-status.ausgeschrieben{background:rgba(16,185,129,.12);color:#15924F}
+.badge-status.pending{background:rgba(245,158,11,.12);color:#B7791F}
+.badge-status.rejected,.badge-status.abgelehnt{background:rgba(239,68,68,.12);color:#D64545}
+.badge-status.vergeben{background:rgba(59,130,246,.12);color:#2F6FD6}
+.badge-status.abgelaufen{background:rgba(239,68,68,.12);color:#D64545}
+.badge-status.abgeschlossen{background:rgba(139,92,246,.12);color:#7C5CD6}
 @keyframes admToastIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
 @keyframes admToastOut{to{opacity:0;transform:translateX(24px)}}
 .adm-toast{position:fixed;top:24px;right:24px;z-index:9999;background:var(--gold);color:#070F1A;padding:14px 20px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 4px 24px rgba(232,160,32,0.3);cursor:pointer;max-width:360px;line-height:1.4;animation:admToastIn .3s ease,admToastOut .3s ease 7.7s forwards}
 
 /* ACTION BUTTONS */
 .btn-sm{padding:5px 14px;border-radius:100px;font-size:.72rem;font-weight:600;font-family:inherit;cursor:pointer;border:none;transition:all .2s}
-.btn-verify{background:rgba(16,185,129,.15);color:#34D399}
+.btn-verify{background:rgba(16,185,129,.15);color:#15924F}
 .btn-verify:hover{background:rgba(16,185,129,.3)}
-.btn-reject{background:rgba(239,68,68,.12);color:#F87171}
+.btn-reject{background:rgba(239,68,68,.12);color:#D64545}
 .btn-reject:hover{background:rgba(239,68,68,.25)}
-.btn-relist{background:rgba(232,160,32,.15);color:#E8A020}
+.btn-relist{background:rgba(232,160,32,.15);color:#9A6A00}
 .btn-relist:hover{background:rgba(232,160,32,.3)}
-.btn-remove{background:rgba(239,68,68,.12);color:#F87171}
+.btn-remove{background:rgba(239,68,68,.12);color:#D64545}
 .btn-remove:hover{background:rgba(239,68,68,.25)}
 
-.relist-form{display:none;margin-top:8px;padding:12px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08);border-radius:10px}
+.relist-form{display:none;margin-top:8px;padding:12px;background:rgba(16,24,40,.03);border:1px solid rgba(16,24,40,.08);border-radius:10px}
 .relist-form label{display:block;font-size:.72rem;color:var(--muted);margin-bottom:4px;font-weight:600}
-.relist-form input{width:100%;padding:6px 10px;border-radius:6px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;font-size:.8rem;font-family:inherit;outline:none;margin-bottom:8px}
-.relist-form input:focus{border-color:var(--gold)}
+.relist-form input{width:100%;padding:6px 10px;border-radius:6px;border:1px solid rgba(16,24,40,.1);background:rgba(16,24,40,.04);color:#141A24;font-size:.8rem;font-family:inherit;outline:none;margin-bottom:8px}
+.relist-form input:focus{border-color:var(--gold-ink)}
 .relist-actions{display:flex;gap:8px;margin-top:4px}
 .relist-actions .btn-sm{padding:5px 12px}
 
 /* SEARCH */
-.search-input{padding:10px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:#fff;font-size:.85rem;font-family:inherit;width:320px;max-width:100%;outline:none;transition:border-color .2s;margin-bottom:16px}
-.search-input:focus{border-color:var(--gold)}
+.search-input{padding:10px 16px;border-radius:10px;border:1.5px solid rgba(16,24,40,.1);background:rgba(16,24,40,.04);color:#141A24;font-size:.85rem;font-family:inherit;width:320px;max-width:100%;outline:none;transition:border-color .2s;margin-bottom:16px}
+.search-input:focus{border-color:var(--gold-ink)}
 .search-input::placeholder{color:var(--muted)}
 
 /* AI SCORE */
 .ai-score{display:inline-block;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:700;white-space:nowrap}
-.ai-score.high{background:rgba(16,185,129,.15);color:#34D399}
-.ai-score.mid{background:rgba(232,160,32,.15);color:#E8A020}
-.ai-score.low{background:rgba(239,68,68,.15);color:#F87171}
-.ai-score.none{background:rgba(148,163,184,.1);color:#94A3B8}
-.ai-flag{display:inline-block;padding:2px 8px;border-radius:100px;font-size:.65rem;font-weight:500;background:rgba(148,163,184,.1);color:#94A3B8;margin:1px 2px}
+.ai-score.high{background:rgba(16,185,129,.15);color:#15924F}
+.ai-score.mid{background:rgba(232,160,32,.15);color:#9A6A00}
+.ai-score.low{background:rgba(239,68,68,.15);color:#D64545}
+.ai-score.none{background:rgba(148,163,184,.1);color:#56616F}
+.ai-flag{display:inline-block;padding:2px 8px;border-radius:100px;font-size:.65rem;font-weight:500;background:rgba(148,163,184,.1);color:#56616F;margin:1px 2px}
 .ai-assessment{font-size:.72rem;color:var(--muted);line-height:1.4;max-width:280px}
 
 .empty-msg{padding:40px;text-align:center;color:var(--muted);font-size:.85rem}
@@ -188,9 +188,9 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
 }
 /* global-polish */
 a:not(.no-hover){transition:color .15s ease,opacity .15s ease}
-.nav-link:hover{color:#F1F5F9}
-footer a:hover,#lpfoot a:hover{color:#E8A020}
-.content a:not(.btn):hover{color:#E8A020;text-decoration:underline;text-decoration-color:rgba(232,160,32,0.4);text-underline-offset:3px}
+.nav-link:hover{color:#141A24}
+footer a:hover,#lpfoot a:hover{color:#9A6A00}
+.content a:not(.btn):hover{color:#9A6A00;text-decoration:underline;text-decoration-color:rgba(232,160,32,0.4);text-underline-offset:3px}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #E8A020;outline-offset:3px;border-radius:6px}
 h1,h2,h3{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 .hero-headline,[class*="headline"]{letter-spacing:-0.03em}
@@ -228,7 +228,7 @@ p{text-wrap:pretty}
     <h2>Admin-Zugang</h2>
     <p id="auth-msg">Bitte mit deinem Admin-Konto anmelden.</p>
     <button class="auth-btn" id="auth-login-btn" onclick="clerkAdminLogin()">Anmelden</button>
-    <button class="auth-btn" id="auth-logout-btn" style="display:none;background:transparent;border:1px solid rgba(255,255,255,.2)" onclick="clerkAdminLogout()">Abmelden</button>
+    <button class="auth-btn" id="auth-logout-btn" style="display:none;background:transparent;border:1px solid rgba(16,24,40,.2)" onclick="clerkAdminLogout()">Abmelden</button>
     <div class="auth-error" id="auth-error" style="display:none">Dieses Konto hat keinen Admin-Zugang.</div>
   </div>
 </div>
@@ -247,20 +247,20 @@ p{text-wrap:pretty}
     <div class="stat-card"><div class="stat-label">Verifizierte Lieferanten</div><div class="stat-value green" id="st-verified-suppliers">–</div></div>
     <div class="stat-card"><div class="stat-label">Wartende Bewerbungen</div><div class="stat-value amber" id="st-pending-suppliers">–</div></div>
     <div class="stat-card"><div class="stat-label">Registrierte Kunden</div><div class="stat-value" id="st-total-customers">–</div></div>
-    <div class="stat-card"><div class="stat-label">Abgelaufene Bündel</div><div class="stat-value" style="color:#F87171" id="st-expired-bundles">–</div></div>
+    <div class="stat-card"><div class="stat-label">Abgelaufene Bündel</div><div class="stat-value" style="color:#D64545" id="st-expired-bundles">–</div></div>
     <div class="stat-card"><div class="stat-label">Offene Materialanfragen</div><div class="stat-value amber" id="st-open-requests">–</div></div>
   </div>
 
   <!-- SECTION 2: Pending suppliers -->
   <div class="section" id="sec-pending">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px">Wartende Lieferanten-Bewerbungen <span class="badge" id="pending-count">0</span></span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#E8A020;cursor:pointer" onclick="exportPendingExcel()">↓ Exportieren</span></div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px">Wartende Lieferanten-Bewerbungen <span class="badge" id="pending-count">0</span></span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportPendingExcel()">↓ Exportieren</span></div>
     <p class="section-sub">Lieferanten, die auf Verifizierung warten. Hier kannst du sie direkt verifizieren oder ablehnen.</p>
     <div class="tbl-wrap"><div id="pending-table" class="loading">Daten werden geladen...</div></div>
   </div>
 
   <!-- SECTION 3: All bundles -->
   <div class="section">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">Alle Bündel<span class="link-m" style="font-size:.82rem;font-weight:600;color:#E8A020;cursor:pointer" onclick="exportBundlesExcel()">↓ Exportieren</span></div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">Alle Bündel<span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportBundlesExcel()">↓ Exportieren</span></div>
     <p class="section-sub">Alle erstellten Bündel, sortiert nach Erstelldatum (neueste zuerst).</p>
     <div class="tbl-wrap"><div id="bundles-table" class="loading">Daten werden geladen...</div></div>
   </div>
@@ -270,22 +270,22 @@ p{text-wrap:pretty}
     <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px">Ausstehende Provisionen <span class="badge" id="prov-count">0</span></span></div>
     <p class="section-sub">Vergebene Bündel mit fälliger Vermittlungsprovision (2.25% des Bestellwerts). Nach Zahlungseingang als bezahlt markieren.</p>
     <div style="display:flex;gap:28px;flex-wrap:wrap;margin:6px 0 16px;font-size:.9rem">
-      <div>Ausstehende Provisionen: <strong id="prov-open-sum" style="color:#E8A020">CHF 0</strong></div>
-      <div>Bereits eingegangen: <strong id="prov-collected-sum" style="color:#34D399">CHF 0</strong></div>
+      <div>Ausstehende Provisionen: <strong id="prov-open-sum" style="color:#9A6A00">CHF 0</strong></div>
+      <div>Bereits eingegangen: <strong id="prov-collected-sum" style="color:#15924F">CHF 0</strong></div>
     </div>
     <div class="tbl-wrap"><div id="provisions-table" class="loading">Daten werden geladen...</div></div>
   </div>
 
   <!-- SECTION 3b: Expired bundles -->
   <div class="section" id="sec-expired">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px">Abgelaufene Bündel <span class="badge" id="expired-count" style="background:rgba(239,68,68,.12);color:#F87171">0</span></span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#E8A020;cursor:pointer" onclick="exportExpiredBundlesExcel()">↓ Exportieren</span></div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px">Abgelaufene Bündel <span class="badge" id="expired-count" style="background:rgba(239,68,68,.12);color:#D64545">0</span></span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportExpiredBundlesExcel()">↓ Exportieren</span></div>
     <p class="section-sub">Bündel deren Frist abgelaufen ist ohne qualifizierende Gebote. Erneut ausschreiben oder entfernen.</p>
     <div class="tbl-wrap"><div id="expired-table" class="loading">Daten werden geladen...</div></div>
   </div>
 
   <!-- SECTION 4: All suppliers -->
   <div class="section">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">Alle Lieferanten<span class="link-m" style="font-size:.82rem;font-weight:600;color:#E8A020;cursor:pointer" onclick="exportSuppliersExcel()">↓ Alle exportieren</span></div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">Alle Lieferanten<span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportSuppliersExcel()">↓ Alle exportieren</span></div>
     <p class="section-sub">Vollständige Liste aller registrierten Lieferanten.</p>
     <input type="text" class="search-input" id="supplier-search" placeholder="Nach Firmenname suchen..." oninput="filterSuppliers()"/>
     <div class="tbl-wrap"><div id="suppliers-table" class="loading">Daten werden geladen...</div></div>
@@ -293,7 +293,7 @@ p{text-wrap:pretty}
 
   <!-- SECTION 5: All customers -->
   <div class="section">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">Alle Kunden<span class="link-m" style="font-size:.82rem;font-weight:600;color:#E8A020;cursor:pointer" onclick="exportCustomersExcel()">↓ Exportieren</span></div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">Alle Kunden<span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportCustomersExcel()">↓ Exportieren</span></div>
     <p class="section-sub">Vollständige Liste aller registrierten Kunden mit Anzahl Materialanfragen.</p>
     <div class="tbl-wrap"><div id="customers-table" class="loading">Daten werden geladen...</div></div>
   </div>
@@ -345,7 +345,7 @@ function showGate(which){
   if(which==='denied'){ if(msg)msg.textContent='Dieses Konto hat keinen Admin-Zugang.'; if(err)err.style.display='block'; if(lin)lin.style.display='none'; if(lout)lout.style.display='inline-block'; }
   else { if(msg)msg.textContent='Bitte mit deinem Admin-Konto anmelden.'; if(err)err.style.display='none'; if(lin)lin.style.display='inline-block'; if(lout)lout.style.display='none'; }
 }
-function clerkAdminLogin(){ if(!window.Clerk)return; window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#0F2238',colorText:'#ffffff',colorInputBackground:'#162A44',colorInputText:'#ffffff'}},fallbackRedirectUrl:window.location.href}); }
+function clerkAdminLogin(){ if(!window.Clerk)return; window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#FFFFFF',colorText:'#141A24',colorInputBackground:'#F5F6F8',colorInputText:'#141A24'}},fallbackRedirectUrl:window.location.href}); }
 function clerkAdminLogout(){ if(!window.Clerk)return; window.Clerk.signOut().then(function(){window.location.reload();}); }
 
 // 2FA / Geraete-Verifizierung (Clerk needs_client_trust) — sonst haengt das Login-Fenster
@@ -495,7 +495,7 @@ async function loadPending(){
       +'<td class="cell-trunc" title="'+esc(regs)+'">'+esc(regs)+'</td>'
       +'<td>'+esc(r.annual_capacity||'–')+'</td>'
       +'<td style="white-space:nowrap">'+fmtDate(r.created_at)+'</td>'
-      +'<td>'+(r.agreement_accepted?'<span style="color:#4ade80;font-size:.8rem;font-weight:600">✓ Vereinbarung akzeptiert'+(r.agreement_accepted_at?'<br><span style="font-weight:400;color:#94A3B8;font-size:.72rem">'+fmtDate(r.agreement_accepted_at)+(r.agreement_version?' · '+esc(r.agreement_version):'')+'</span>':'')+'</span>':'<span style="color:#f87171;font-size:.8rem">✗ Nicht akzeptiert</span>')+'</td>'
+      +'<td>'+(r.agreement_accepted?'<span style="color:#4ade80;font-size:.8rem;font-weight:600">✓ Vereinbarung akzeptiert'+(r.agreement_accepted_at?'<br><span style="font-weight:400;color:#56616F;font-size:.72rem">'+fmtDate(r.agreement_accepted_at)+(r.agreement_version?' · '+esc(r.agreement_version):'')+'</span>':'')+'</span>':'<span style="color:#f87171;font-size:.8rem">✗ Nicht akzeptiert</span>')+'</td>'
       +'<td style="white-space:nowrap">'
         +'<button class="btn-sm btn-verify" onclick="verifySupplier(\''+r.id+'\')">Verifizieren</button> '
         +'<button class="btn-sm btn-reject" onclick="rejectSupplier(\''+r.id+'\')">Ablehnen</button>'
@@ -576,10 +576,10 @@ async function loadProvisions(){
     var vol=(r.gesamtvolumen?Number(r.gesamtvolumen).toLocaleString('de-CH'):'-')+' '+(r.einheit||'');
     var winner=r.supplier_name||r.gewonnener_supplier_id||'–';
     var st=r.provision_collected
-      ? '<span class="badge" style="background:rgba(52,211,153,.14);color:#34D399">bezahlt</span>'
-      : '<span class="badge" style="background:rgba(232,160,32,.14);color:#E8A020">offen</span>';
+      ? '<span class="badge" style="background:rgba(52,211,153,.14);color:#15924F">bezahlt</span>'
+      : '<span class="badge" style="background:rgba(232,160,32,.14);color:#9A6A00">offen</span>';
     var act=r.provision_collected ? '–'
-      : '<span class="link-m" style="color:#34D399;cursor:pointer;font-weight:600" onclick="markProvision(\''+esc(r.id)+'\')">Als bezahlt markieren</span>';
+      : '<span class="link-m" style="color:#15924F;cursor:pointer;font-weight:600" onclick="markProvision(\''+esc(r.id)+'\')">Als bezahlt markieren</span>';
     html+='<tr>'
       +'<td>'+esc(r.bezeichnung||r.sourceon_id||'–')+'</td>'
       +'<td>'+esc(r.liefer_zone||'–')+'</td>'
@@ -828,7 +828,7 @@ async function loadCustomers(){
   var html='<table><thead><tr><th>Firma</th><th>Ansprechperson</th><th>E-Mail</th><th>Telefon</th><th>Erstellt</th><th>Materialanfragen</th></tr></thead><tbody>';
   customers.forEach(function(c){
     var cnt=reqCounts[c.id]||0;
-    var link=cnt>0?'<span class="link-m" style="color:#E8A020;cursor:pointer;font-weight:600" onclick="toggleCustReqs(\''+esc(c.id)+'\')">'+cnt+' · Anschauen ▾</span>':'0';
+    var link=cnt>0?'<span class="link-m" style="color:#9A6A00;cursor:pointer;font-weight:600" onclick="toggleCustReqs(\''+esc(c.id)+'\')">'+cnt+' · Anschauen ▾</span>':'0';
     html+='<tr>'
       +'<td><strong>'+esc(c.firmenname||'–')+'</strong></td>'
       +'<td>'+esc(c.ansprechperson||'–')+'</td>'
@@ -837,7 +837,7 @@ async function loadCustomers(){
       +'<td style="white-space:nowrap">'+fmtDate(c.created_at)+'</td>'
       +'<td>'+link+'</td></tr>';
     if(cnt>0){
-      html+='<tr id="creqrow-'+esc(c.id)+'" style="display:none"><td colspan="6" style="background:rgba(255,255,255,.02);padding:0">'+_custReqsHtml(c.id)+'</td></tr>';
+      html+='<tr id="creqrow-'+esc(c.id)+'" style="display:none"><td colspan="6" style="background:rgba(16,24,40,.02);padding:0">'+_custReqsHtml(c.id)+'</td></tr>';
     }
   });
   html+='</tbody></table>';
@@ -868,15 +868,15 @@ function toggleCustReqs(custId){
 <style>
 .clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
 .clerk-trust-overlay.open{opacity:1;pointer-events:auto}
-.clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;color:#fff}
+.clerk-trust-modal{background:#FFFFFF;border:1px solid rgba(16,24,40,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;color:#141A24}
 .clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
-.clerk-trust-modal p{font-size:.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px}
-.clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none}
-.clerk-trust-modal input:focus{border-color:#E8A020}
-.clerk-trust-modal .btn-verify{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:linear-gradient(135deg,#E8A020,#f0b840);color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:14px}
+.clerk-trust-modal p{font-size:.85rem;color:#56616F;line-height:1.6;margin-bottom:20px}
+.clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(16,24,40,.12);background:rgba(16,24,40,.05);color:#141A24;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none}
+.clerk-trust-modal input:focus{border-color:#9A6A00}
+.clerk-trust-modal .btn-verify{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:#E8A020;color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:14px}
 .clerk-trust-modal .btn-verify:disabled{opacity:.5;cursor:not-allowed}
 .clerk-trust-modal .trust-error{font-size:.8rem;color:#FCA5A5;margin-top:10px;min-height:1.2em}
-.clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,.08);color:#94A3B8;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}
+.clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(16,24,40,.08);color:#56616F;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}
 .so-2fa [class*="cl-modal"]{display:none!important}
 </style>
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
@@ -886,7 +886,7 @@ function toggleCustReqs(custId){
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
     <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
-    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#E8A020;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
+    <div style="margin-top:12px;font-size:.78rem;color:#56616F">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#9A6A00;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
     <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
   </div>
 </div>
