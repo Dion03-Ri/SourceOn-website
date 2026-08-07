@@ -815,13 +815,14 @@ body{background:#070F1A}
 #lp .phero .sub{font-size:clamp(16px,2vw,20px);color:var(--t2);max-width:600px;margin:0 auto 40px;line-height:1.6}
 @media(max-width:768px){#lp .phero{padding:60px 0 40px}}
 /* steps as numbered rows */
-#lp .psteps .pstep{display:flex;flex-direction:column;gap:0;padding:32px 0 32px 20px;border-bottom:1px solid var(--lpb);position:relative}
-#lp .psteps .pstep::before{content:'';position:absolute;left:0;top:32px;bottom:32px;width:2px;background:var(--gold);border-radius:2px;opacity:.6}
-#lp .psteps .pstep-n{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:600;margin-bottom:8px;line-height:1.2}
-#lp .psteps .pstep-t{font-size:20px;font-weight:700;color:var(--t1);letter-spacing:-.01em;margin-bottom:10px}
-#lp .psteps .pstep-x{font-size:15px;color:var(--t2);line-height:1.7;max-width:640px}
+#lp .psteps .pstep{display:grid;grid-template-columns:200px 1fr;gap:48px;padding:40px 0;border-bottom:1px solid var(--lpb);position:relative;align-items:start}
+#lp .psteps .pstep-side{position:relative}
+#lp .psteps .pstep-n{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);font-weight:600;line-height:1.2}
+#lp .psteps .pstep-num{font-size:72px;font-weight:800;line-height:.9;letter-spacing:-.04em;color:transparent;-webkit-text-stroke:1.5px var(--gold-b);margin-top:14px;font-variant-numeric:tabular-nums;user-select:none}
+#lp .psteps .pstep-t{font-size:21px;font-weight:700;color:var(--t1);letter-spacing:-.01em;margin-bottom:12px}
+#lp .psteps .pstep-x{font-size:15px;color:var(--t2);line-height:1.7;max-width:660px}
+@media(max-width:768px){#lp .psteps .pstep{grid-template-columns:1fr;gap:10px;padding:30px 0}#lp .psteps .pstep-num{display:none}}
 #lp .ptiming{font-size:14px;color:var(--t3);text-align:center;padding-top:32px;border-top:1px solid var(--lpb)}
-@media(max-width:768px){#lp .psteps .pstep{padding-left:16px}}
 /* comparison (side-by-side) */
 #lp .cmp2{display:grid;grid-template-columns:1fr 80px 1fr;max-width:900px;margin:0 auto}
 #lp .cmp2 .chead,#lp .cmp2 .crow{display:contents}
@@ -1028,14 +1029,14 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     <span class="sec-label" data-i18n="proc_seclabel">Der Prozess</span>
     <div class="psteps">
       <div class="pstep reveal">
-        <div class="pstep-n" data-i18n="proc_step1_n">Schritt 1</div>
+        <div class="pstep-side"><div class="pstep-n" data-i18n="proc_step1_n">Schritt 1</div><div class="pstep-num" aria-hidden="true">1</div></div>
         <div>
           <div class="pstep-t" data-i18n="proc_step1_title">Bedarf melden</div>
           <div class="pstep-x" data-i18n="proc_step1_text">Du teilst uns deinen Materialbedarf mit — Materialart, Menge und Lieferzeitraum. Du siehst sofort deinen garantierten Ziel-Mindestrabatt. Dauert zwei Minuten.</div>
         </div>
       </div>
       <div class="pstep reveal">
-        <div class="pstep-n" data-i18n="proc_step2_n">Schritt 2</div>
+        <div class="pstep-side"><div class="pstep-n" data-i18n="proc_step2_n">Schritt 2</div><div class="pstep-num" aria-hidden="true">2</div></div>
         <div>
           <div class="pstep-t" data-i18n="proc_step2_title">Angebot erhalten</div>
           <div class="pstep-x" data-i18n="proc_step2_text">SourceOn bündelt deinen Bedarf mit anderen Baufirmen und verhandelt Mengenrabatte direkt beim Lieferanten. Dein Lieferzeitraum gibt das Tempo vor — je flexibler dein Termin, desto grösser dein Bündel und desto höher deine Ersparnis. Im Dashboard verfolgst du jederzeit den Status deiner Anfrage.</div>
@@ -1043,7 +1044,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         </div>
       </div>
       <div class="pstep reveal">
-        <div class="pstep-n" data-i18n="proc_step3_n">Schritt 3</div>
+        <div class="pstep-side"><div class="pstep-n" data-i18n="proc_step3_n">Schritt 3</div><div class="pstep-num" aria-hidden="true">3</div></div>
         <div>
           <div class="pstep-t" data-i18n="proc_step3_title">Deine Garantie</div>
           <div class="pstep-x" data-i18n="proc_step3_text">Dein Mindestrabatt steht fest, bevor irgendetwas verbindlich wird. Erreicht das verhandelte Angebot deine Zielmarke, wird dein Auftrag automatisch zu diesen Konditionen ausgeführt. Wird sie verfehlt, entfällt deine Anfrage kostenlos — ganz automatisch.</div>
@@ -1051,7 +1052,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         </div>
       </div>
       <div class="pstep reveal">
-        <div class="pstep-n" data-i18n="proc_step4_n">Schritt 4</div>
+        <div class="pstep-side"><div class="pstep-n" data-i18n="proc_step4_n">Schritt 4</div><div class="pstep-num" aria-hidden="true">4</div></div>
         <div>
           <div class="pstep-t" data-i18n="proc_step4_title">Du sparst — garantiert</div>
           <div class="pstep-x" data-i18n="proc_step4_text">Direktlieferung auf deine Baustelle. Dein garantierter Mindestrabatt kommt vollständig bei dir an — die SourceOn-Provision trägt der Lieferant. Nach Zuschlag werden deine Kontaktdaten freigegeben — der Lieferant koordiniert die Lieferung direkt mit dir.</div>
