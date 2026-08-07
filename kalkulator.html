@@ -1039,7 +1039,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <input type="text" class="calc-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" data-i18n-placeholder="calc_placeholder" value="150'000"/>
         <p class="calc-mnote" data-i18n="calc_mnote">Beträge über CHF 10 Mio. bitte manuell eingeben.</p>
         <div class="calc-results">
-          <div class="calc-tierrow"><span class="l" data-i18n="calc_rate_label">Garantierter Netto-Mindestrabatt</span><span class="r" id="calc-rate">16%</span><span class="r" id="calc-rate-ind" data-i18n="calc_rate_ind" style="display:none">35%+</span></div>
+          <div class="calc-tierrow"><span class="l" data-i18n="calc_rate_label">Garantierter Netto-Mindestrabatt</span><span class="r" id="calc-rate">16%</span><span class="r" id="calc-rate-ind" data-i18n="calc_rate_ind" style="display:none">Individuell</span></div>
           <div id="calc-num">
             <div class="calc-rrow"><span class="l" data-i18n="calc_gross_label">Verhandelter Rabatt (brutto)</span><span class="r" id="calc-gross">CHF 26'625</span></div>
             <div class="calc-rrow net"><span class="l" data-i18n="calc_net_short">Deine garantierte Ersparnis (netto)</span><span class="r" id="calc-net">CHF 24'000</span></div>
@@ -1062,7 +1062,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
             <tr data-tier="4"><td class="vol">CHF 600'000 – 1.2 Mio.</td><td class="pct">25%</td></tr>
             <tr data-tier="5"><td class="vol">CHF 1.2 – 3 Mio.</td><td class="pct">30%</td></tr>
             <tr data-tier="6"><td class="vol">CHF 3 – 6 Mio.</td><td class="pct">35%</td></tr>
-            <tr data-tier="7"><td class="vol" data-i18n="tier_over6">Über CHF 6 Mio.</td><td class="pct" data-i18n="tier_over6_val">35%+</td></tr>
+            <tr data-tier="7"><td class="vol" data-i18n="tier_over6">Über CHF 6 Mio.</td><td class="pct" data-i18n="tier_over6_val">Individuell</td></tr>
           </tbody>
         </table>
         <p class="tiernote" data-i18n="tier_note">Netto-Mindestrabatt nach SourceOn-Provision (2.25%). Durch Bündelung oft höher.</p>
@@ -1324,8 +1324,8 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier_col_vol: 'Bestellvolumen',
       tier_col_disc: 'Netto-Mindestrabatt',
       tier_over6: 'Über CHF 6 Mio.',
-      tier_over6_val: '35%+',
-      calc_rate_ind: '35%+',
+      tier_over6_val: 'Individuell',
+      calc_rate_ind: 'Individuell',
       calc_individual: 'Individuelle Konditionen — kontaktiere uns direkt →',
       tier_note: 'Netto-Mindestrabatt nach SourceOn-Provision (2.25%). Durch Bündelung oft höher.',
       tier_bundle_label: 'Bündelungseffekt',
@@ -1400,8 +1400,8 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier_col_vol: 'Order volume',
       tier_col_disc: 'Net minimum discount',
       tier_over6: 'Over CHF 6 Mio.',
-      tier_over6_val: '35%+',
-      calc_rate_ind: '35%+',
+      tier_over6_val: 'Individual',
+      calc_rate_ind: 'Individual',
       calc_individual: 'Individual terms — contact us directly →',
       tier_note: 'Net minimum discount after SourceOn commission (2.25%). Often higher through bundling.',
       tier_bundle_label: 'Bundling effect',
@@ -1476,8 +1476,8 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier_col_vol: 'Volume de commande',
       tier_col_disc: 'Rabais net minimum',
       tier_over6: 'Plus de CHF 6 Mio.',
-      tier_over6_val: '35%+',
-      calc_rate_ind: '35%+',
+      tier_over6_val: 'Individuel',
+      calc_rate_ind: 'Individuel',
       calc_individual: 'Conditions individuelles — contacte-nous directement →',
       tier_note: 'Rabais net minimum après commission SourceOn (2.25%). Souvent plus élevé grâce au regroupement.',
       tier_bundle_label: 'Effet de regroupement',
@@ -1552,8 +1552,8 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       tier_col_vol: 'Volume ordini',
       tier_col_disc: 'Sconto netto minimo',
       tier_over6: 'Oltre CHF 6 Mio.',
-      tier_over6_val: '35%+',
-      calc_rate_ind: '35%+',
+      tier_over6_val: 'Individuale',
+      calc_rate_ind: 'Individuale',
       calc_individual: 'Condizioni individuali — contattaci direttamente →',
       tier_note: 'Sconto netto minimo dopo la provvigione SourceOn (2.25%). Spesso maggiore grazie al raggruppamento.',
       tier_bundle_label: 'Effetto di raggruppamento',
