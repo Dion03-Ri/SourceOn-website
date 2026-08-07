@@ -1068,46 +1068,49 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <style>
   #lp .cmp-was{font-size:14px;color:var(--t3);margin-top:6px}
   #lp .cmp-was b{color:var(--t2);font-weight:500}
-  /* Der Unterschied — clean, zweiseitig */
-  #lp .udiff{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:900px;margin:10px auto 0;align-items:start}
-  #lp .udiff-col{border:1px solid var(--lpb);border-radius:16px;padding:26px 26px 10px}
-  #lp .udiff-col.off{background:var(--bg2)}
-  #lp .udiff-col.on{background:var(--bg);border-color:var(--gold-b)}
-  #lp .udiff-head{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;letter-spacing:-.01em;padding-bottom:16px;border-bottom:1px solid var(--lpb)}
+  /* Der Unterschied — frei im Raum, minimal */
+  #lp .udiff{display:grid;grid-template-columns:1fr 1fr;gap:56px;max-width:820px;margin:16px auto 0;align-items:start}
+  #lp .udiff-col{position:relative;padding:6px 2px 0}
+  #lp .udiff-head{font-size:14px;font-weight:700;letter-spacing:-.01em;margin-bottom:24px}
   #lp .udiff-col.off .udiff-head{color:var(--t3)}
   #lp .udiff-col.on .udiff-head{color:var(--gold)}
-  #lp .udiff-col.on .udiff-head::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--gold);margin-left:auto}
-  #lp .udiff-item{display:flex;gap:12px;align-items:flex-start;padding:15px 0;border-bottom:1px solid var(--lpb)}
-  #lp .udiff-item:last-child{border-bottom:none}
-  #lp .udiff-ic{flex:0 0 18px;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1;margin-top:1px}
-  #lp .udiff-col.off .udiff-ic{background:rgba(120,130,145,.16);color:var(--t3)}
-  #lp .udiff-col.on .udiff-ic{background:var(--gold);color:#1a1a1a;font-weight:700}
+  #lp .udiff-item{padding:13px 0}
   #lp .udiff-cat{display:block;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;color:var(--t3);margin-bottom:3px}
-  #lp .udiff-txt{font-size:14px;line-height:1.4}
-  #lp .udiff-col.off .udiff-txt{color:var(--t2)}
+  #lp .udiff-txt{font-size:15px;line-height:1.4}
+  #lp .udiff-col.off .udiff-txt{color:var(--t3)}
   #lp .udiff-col.on .udiff-txt{color:var(--t1);font-weight:500}
-  @media(max-width:720px){#lp .udiff{grid-template-columns:1fr;gap:14px}}
+  /* minimales Eck-Detail: 3 kurze Linien (~1cm) oben rechts */
+  #lp .udiff-corner{position:absolute;top:4px;right:2px;display:flex;flex-direction:column;gap:4px;width:26px;pointer-events:none}
+  #lp .udiff-corner span{height:2px;border-radius:2px;background:currentColor;display:block}
+  #lp .udiff-corner span:nth-child(1){width:100%}
+  #lp .udiff-corner span:nth-child(2){width:66%}
+  #lp .udiff-corner span:nth-child(3){width:38%}
+  #lp .udiff-col.off .udiff-corner{color:var(--t3);opacity:.45}
+  #lp .udiff-col.on .udiff-corner{color:var(--gold);opacity:.9}
+  @media(max-width:720px){#lp .udiff{grid-template-columns:1fr;gap:32px}}
   </style>
   <section class="sec bt"><div class="wrap">
     <span class="sec-label" data-i18n="cmp_seclabel">Der Unterschied</span>
     <div class="udiff">
       <div class="udiff-col off reveal">
+        <div class="udiff-corner" aria-hidden="true"><span></span><span></span><span></span></div>
         <div class="udiff-head" data-i18n="cmp_head_solo">Einzelbeschaffung</div>
-        <div class="udiff-item"><span class="udiff-ic">✕</span><div><span class="udiff-cat" data-i18n="cmpx_1c">Preis</span><div class="udiff-txt" data-i18n="cmpx_1l">Einzelpreis</div></div></div>
-        <div class="udiff-item"><span class="udiff-ic">✕</span><div><span class="udiff-cat" data-i18n="cmpx_2c">Verhandlung</span><div class="udiff-txt" data-i18n="cmpx_2l">Einzelvolumen</div></div></div>
-        <div class="udiff-item"><span class="udiff-ic">✕</span><div><span class="udiff-cat" data-i18n="cmpx_3c">Transparenz</span><div class="udiff-txt" data-i18n="cmpx_3l">Begrenzt</div></div></div>
-        <div class="udiff-item"><span class="udiff-ic">✕</span><div><span class="udiff-cat" data-i18n="cmpx_4c">Lieferanten</span><div class="udiff-txt" data-i18n="cmpx_4l">Eigenrecherche</div></div></div>
-        <div class="udiff-item"><span class="udiff-ic">✕</span><div><span class="udiff-cat" data-i18n="cmpx_5c">Datenschutz</span><div class="udiff-txt" data-i18n="cmpx_5l">Identität sofort bekannt</div></div></div>
-        <div class="udiff-item"><span class="udiff-ic">✕</span><div><span class="udiff-cat" data-i18n="cmpx_6c">Risiko</span><div class="udiff-txt" data-i18n="cmpx_6l">Volle Kosten ohne Garantie</div></div></div>
+        <div class="udiff-item"><span class="udiff-cat" data-i18n="cmpx_1c">Preis</span><div class="udiff-txt" data-i18n="cmpx_1l">Einzelpreis</div></div>
+        <div class="udiff-item"><span class="udiff-cat" data-i18n="cmpx_2c">Verhandlung</span><div class="udiff-txt" data-i18n="cmpx_2l">Einzelvolumen</div></div>
+        <div class="udiff-item"><span class="udiff-cat" data-i18n="cmpx_3c">Transparenz</span><div class="udiff-txt" data-i18n="cmpx_3l">Begrenzt</div></div>
+        <div class="udiff-item"><span class="udiff-cat" data-i18n="cmpx_4c">Lieferanten</span><div class="udiff-txt" data-i18n="cmpx_4l">Eigenrecherche</div></div>
+        <div class="udiff-item"><span class="udiff-cat" data-i18n="cmpx_5c">Datenschutz</span><div class="udiff-txt" data-i18n="cmpx_5l">Identität sofort bekannt</div></div>
+        <div class="udiff-item"><span class="udiff-cat" data-i18n="cmpx_6c">Risiko</span><div class="udiff-txt" data-i18n="cmpx_6l">Volle Kosten ohne Garantie</div></div>
       </div>
       <div class="udiff-col on reveal">
+        <div class="udiff-corner" aria-hidden="true"><span></span><span></span><span></span></div>
         <div class="udiff-head" data-i18n="cmp_head_sourceon">Mit SourceOn</div>
-        <div class="udiff-item"><span class="udiff-ic">✓</span><div><span class="udiff-cat" data-i18n="cmpx_1c">Preis</span><div class="udiff-txt" data-i18n="cmpx_1r">Bündelrabatt</div></div></div>
-        <div class="udiff-item"><span class="udiff-ic">✓</span><div><span class="udiff-cat" data-i18n="cmpx_2c">Verhandlung</span><div class="udiff-txt" data-i18n="cmpx_2r">Gebündeltes Volumen</div></div></div>
-        <div class="udiff-item"><span class="udiff-ic">✓</span><div><span class="udiff-cat" data-i18n="cmpx_3c">Transparenz</span><div class="udiff-txt" data-i18n="cmpx_3r">Vollständig</div></div></div>
-        <div class="udiff-item"><span class="udiff-ic">✓</span><div><span class="udiff-cat" data-i18n="cmpx_4c">Lieferanten</span><div class="udiff-txt" data-i18n="cmpx_4r">SIA/ISO-geprüft</div></div></div>
-        <div class="udiff-item"><span class="udiff-ic">✓</span><div><span class="udiff-cat" data-i18n="cmpx_5c">Datenschutz</span><div class="udiff-txt" data-i18n="cmpx_5r">Geschützt bis Zuschlag</div></div></div>
-        <div class="udiff-item"><span class="udiff-ic">✓</span><div><span class="udiff-cat" data-i18n="cmpx_6c">Risiko</span><div class="udiff-txt" data-i18n="cmpx_6r">Null — nur Provision bei Ersparnis</div></div></div>
+        <div class="udiff-item"><span class="udiff-cat" data-i18n="cmpx_1c">Preis</span><div class="udiff-txt" data-i18n="cmpx_1r">Bündelrabatt</div></div>
+        <div class="udiff-item"><span class="udiff-cat" data-i18n="cmpx_2c">Verhandlung</span><div class="udiff-txt" data-i18n="cmpx_2r">Gebündeltes Volumen</div></div>
+        <div class="udiff-item"><span class="udiff-cat" data-i18n="cmpx_3c">Transparenz</span><div class="udiff-txt" data-i18n="cmpx_3r">Vollständig</div></div>
+        <div class="udiff-item"><span class="udiff-cat" data-i18n="cmpx_4c">Lieferanten</span><div class="udiff-txt" data-i18n="cmpx_4r">SIA/ISO-geprüft</div></div>
+        <div class="udiff-item"><span class="udiff-cat" data-i18n="cmpx_5c">Datenschutz</span><div class="udiff-txt" data-i18n="cmpx_5r">Geschützt bis Zuschlag</div></div>
+        <div class="udiff-item"><span class="udiff-cat" data-i18n="cmpx_6c">Risiko</span><div class="udiff-txt" data-i18n="cmpx_6r">Null — nur Provision bei Ersparnis</div></div>
       </div>
     </div>
   </div></section>
