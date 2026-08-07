@@ -1857,6 +1857,7 @@ async function _soSubmitRequest(payload){
     var _fnJson=await _fnResp.json().catch(function(){return{};});
     if(!_fnResp.ok||!_fnJson.success)throw new Error(_fnJson.error||('http '+_fnResp.status));
     try{localStorage.removeItem('sourceon_pending_request');}catch(e){}
+    if(window.soClearDraft)window.soClearDraft();
     var formEl=document.getElementById('form-contact');if(formEl)formEl.style.display='none';
     var successEl=document.getElementById('success-contact');
     if(successEl){successEl.classList.add('show');successEl.scrollIntoView({behavior:'smooth',block:'center'});}
@@ -2717,6 +2718,91 @@ document.addEventListener('keydown',function(e){
   function initCookieBanner(){paint();try{if(!localStorage.getItem('sourceon_cookie_accepted')){var b=document.getElementById('cookie-banner');if(b)b.style.display='flex';}}catch(e){}}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initCookieBanner);else initCookieBanner();
   var _o=window.setLang;if(typeof _o==='function'){window.setLang=function(l){_o(l);paint();};}
+})();
+</script>
+<script>
+/* Formular-Entwurf: speichert Eingaben in localStorage (2h gültig), stellt sie
+   bei Rückkehr wieder her, zeigt einen dezenten Banner. Rechtliche Bestätigung
+   (c-commitment) wird bewusst NICHT gespeichert/wiederhergestellt. */
+(function(){
+  var KEY='sourceon_form_draft', MAXAGE=7200000; // 2 Stunden
+  var FIELDS=['c-company','c-name','c-email','c-phone','c-street','c-plz','c-ort','c-date-von','c-date-bis','c-desc'];
+  var CHECKS=['c-create-account'];
+  var DI18N={
+    de:{restored:'Entwurf wiederhergestellt — zuletzt gespeichert vor %s.',min:'%n Min.',now:'wenigen Sekunden',del:'Entwurf löschen'},
+    en:{restored:'Draft restored — last saved %s ago.',min:'%n min',now:'moments',del:'Discard draft'},
+    fr:{restored:'Brouillon restauré — dernier enregistrement il y a %s.',min:'%n min',now:'quelques secondes',del:'Supprimer le brouillon'},
+    it:{restored:'Bozza ripristinata — ultimo salvataggio %s fa.',min:'%n min',now:'pochi secondi',del:'Elimina bozza'}
+  };
+  function T(){var l=window._currentLang||localStorage.getItem('sourceon-lang')||'de';return DI18N[l]||DI18N.de;}
+  function form(){return document.getElementById('form-contact');}
+  function setVal(id,v){var el=document.getElementById(id);if(!el)return;if(el.type==='checkbox')el.checked=!!v;else el.value=(v==null?'':v);}
+  function collect(){
+    var d={};
+    FIELDS.forEach(function(id){var el=document.getElementById(id);if(el)d[id]=el.value;});
+    CHECKS.forEach(function(id){var el=document.getElementById(id);if(el)d[id]=el.checked;});
+    var mats=[];
+    document.querySelectorAll('#material-rows .material-row').forEach(function(r){
+      var s=r.querySelector('.mat-search'),idEl=r.querySelector('.mat-id'),q=r.querySelector('.mat-qty'),u=r.querySelector('.mat-unit');
+      var sv=s?s.value:'',iv=idEl?idEl.value:'',qv=q?q.value:'',uv=u?u.textContent:'';
+      if(sv||iv||qv)mats.push({q:sv,id:iv,qty:qv,unit:uv});
+    });
+    d._mats=mats;return d;
+  }
+  function hasContent(d){
+    var any=false;
+    Object.keys(d).forEach(function(k){if(k==='_mats')return;var v=d[k];if(typeof v==='string'&&v.trim())any=true;});
+    if(d._mats&&d._mats.length)any=true;return any;
+  }
+  var saveTimer=null;
+  function save(){var d=collect();if(!hasContent(d)){try{localStorage.removeItem(KEY);}catch(e){}return;}try{localStorage.setItem(KEY,JSON.stringify({savedAt:Date.now(),data:d}));}catch(e){}}
+  function scheduleSave(){if(saveTimer)clearTimeout(saveTimer);saveTimer=setTimeout(save,300);}
+  window.soClearDraft=function(){try{localStorage.removeItem(KEY);}catch(e){}var b=document.getElementById('draft-banner');if(b)b.remove();};
+  function resetForm(){
+    FIELDS.forEach(function(id){setVal(id,'');});CHECKS.forEach(function(id){setVal(id,false);});
+    var rws=document.querySelectorAll('#material-rows .material-row');
+    for(var i=rws.length-1;i>=1;i--){var rb=rws[i].querySelector('.mat-remove-btn');if(rb&&typeof removeMaterialRow==='function')removeMaterialRow(rb);else rws[i].remove();}
+    var f=document.querySelector('#material-rows .material-row');
+    if(f){var s=f.querySelector('.mat-search'),idEl=f.querySelector('.mat-id'),q=f.querySelector('.mat-qty'),u=f.querySelector('.mat-unit');if(s)s.value='';if(idEl)idEl.value='';if(q)q.value='';if(u){u.textContent='';u.classList.remove('visible');}}
+    if(typeof _recalcTier==='function')_recalcTier();
+  }
+  function restore(d){
+    FIELDS.forEach(function(id){if(d[id]!=null)setVal(id,d[id]);});
+    CHECKS.forEach(function(id){if(d[id]!=null)setVal(id,d[id]);});
+    if(d['c-create-account']){var h=document.getElementById('acct-opt-hint');if(h)h.classList.add('visible');}
+    if(d._mats&&d._mats.length){
+      var need=d._mats.length,guard=0;
+      while(document.querySelectorAll('#material-rows .material-row').length<need&&typeof addMaterialRow==='function'&&guard++<12){addMaterialRow();}
+      var rows=document.querySelectorAll('#material-rows .material-row');
+      d._mats.forEach(function(m,i){var r=rows[i];if(!r)return;
+        var s=r.querySelector('.mat-search'),idEl=r.querySelector('.mat-id'),q=r.querySelector('.mat-qty'),u=r.querySelector('.mat-unit');
+        if(s)s.value=m.q||'';if(idEl)idEl.value=m.id||'';if(q)q.value=m.qty||'';
+        if(u&&m.unit){u.textContent=m.unit;u.classList.add('visible');}
+      });
+    }
+    if(typeof _recalcTier==='function')_recalcTier();
+    if(typeof _onDateChange==='function')_onDateChange();
+  }
+  function relTime(savedAt){var mins=Math.floor((Date.now()-savedAt)/60000);if(mins<1)return T().now;return T().min.replace('%n',mins);}
+  function showBanner(savedAt){
+    var f=form();if(!f)return;var old=document.getElementById('draft-banner');if(old)old.remove();
+    var div=document.createElement('div');div.id='draft-banner';
+    div.style.cssText='font-size:12px;color:var(--t3);margin-bottom:12px;display:flex;gap:10px;align-items:center;flex-wrap:wrap';
+    var span=document.createElement('span');span.textContent=T().restored.replace('%s',relTime(savedAt));
+    var a=document.createElement('a');a.href='#';a.textContent=T().del;a.style.cssText='color:var(--gold);font-weight:600;text-decoration:none;white-space:nowrap';
+    a.addEventListener('click',function(e){e.preventDefault();resetForm();window.soClearDraft();});
+    div.appendChild(span);div.appendChild(a);
+    f.insertBefore(div,f.firstChild);
+  }
+  document.addEventListener('DOMContentLoaded',function(){
+    var f=form();if(!f)return;
+    try{var raw=localStorage.getItem(KEY);if(raw){var obj=JSON.parse(raw);
+      if(obj&&obj.savedAt&&(Date.now()-obj.savedAt)<=MAXAGE&&obj.data&&hasContent(obj.data)){restore(obj.data);showBanner(obj.savedAt);}
+      else{localStorage.removeItem(KEY);}
+    }}catch(e){}
+    f.addEventListener('input',scheduleSave);
+    f.addEventListener('change',scheduleSave);
+  });
 })();
 </script>
 </body>
