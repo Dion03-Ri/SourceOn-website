@@ -251,6 +251,17 @@ input,select,textarea{font-family:inherit}
 .ftable .total td{font-weight:600;border-top:2px solid var(--border-strong);border-bottom:none;background:transparent!important}
 .ftable .total td.gold{color:var(--gold-ink)}
 .prov-note{background:var(--bg-1);border-radius:var(--r-sm);padding:14px 16px;margin-top:20px;font-size:13px;color:var(--text-2);line-height:1.55}
+/* Finanzen — Filter, Referenz, Jahres-Export */
+.fin-filters{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:0 0 18px}
+.fin-glabel{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-3);margin:0 2px 0 2px}
+.fin-sep{width:1px;height:20px;background:var(--border);margin:0 6px}
+.fin-date{background:var(--bg-1);border:1px solid var(--border-strong);border-radius:999px;color:var(--text-2);font-size:12px;padding:5px 10px;font-family:inherit}
+.fin-date:focus{border-color:var(--gold);outline:none}
+.fin-year{background:var(--bg-1);border:1px solid var(--border-strong);border-radius:6px;color:var(--text-1);font-size:12px;padding:5px 8px;font-family:inherit;cursor:pointer}
+.prov-ref{font-size:12px;color:var(--text-3);cursor:pointer;white-space:nowrap;transition:color .15s}
+.prov-ref.set{color:var(--text-2)}
+.prov-ref:hover{color:var(--gold-ink)}
+.prov-ref-input{background:var(--bg-1);border:1px solid var(--gold);border-radius:4px;color:var(--text-1);font-size:12px;padding:3px 6px;font-family:inherit;width:130px;outline:none}
 .chart-box{background:var(--bg-1);border-radius:var(--r-md);padding:24px;margin-top:24px}
 .chart-wrap{position:relative;height:200px}
 .empty-line{font-size:14px;color:var(--text-3);padding:16px 0;text-align:center}
@@ -412,7 +423,22 @@ p{text-wrap:pretty}
         <div class="m3"><div class="m3-num dim" id="f-avg"><span class="skeleton-val"></span></div><div class="m3-label">Ø Nettoerlös</div></div>
       </div>
     </div>
-    <div class="sec-head"><span class="sec-label">Provisionsabrechnung</span><span style="display:flex;gap:18px"><span class="link-m" onclick="exportProvExcel()">↓ Als Excel exportieren</span><span class="link-m" onclick="printProvisions()">↓ Als PDF exportieren</span></span></div>
+    <div class="sec-head" style="flex-wrap:wrap;gap:12px"><span class="sec-label">Provisionsabrechnung</span><span style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:6px"><select id="fin-year" class="fin-year" aria-label="Jahr"></select><span class="link-m" onclick="printYearSummary()">↧ Jahres-PDF</span></span><span class="link-m" onclick="exportProvExcel()">↓ Excel</span><span class="link-m" onclick="printProvisions()">↓ PDF</span></span></div>
+    <div class="fin-filters" id="fin-filters">
+      <span class="fin-glabel">Zeitraum</span>
+      <button class="filt active" data-r="all" onclick="setFinRange('all',this)">Alle</button>
+      <button class="filt" data-r="month" onclick="setFinRange('month',this)">Monat</button>
+      <button class="filt" data-r="quarter" onclick="setFinRange('quarter',this)">Quartal</button>
+      <button class="filt" data-r="year" onclick="setFinRange('year',this)">Jahr</button>
+      <input type="date" id="fin-from" class="fin-date" onchange="setFinRange('custom')" aria-label="Von"/>
+      <span style="color:var(--text-3);font-size:12px">–</span>
+      <input type="date" id="fin-to" class="fin-date" onchange="setFinRange('custom')" aria-label="Bis"/>
+      <span class="fin-sep"></span>
+      <span class="fin-glabel">Status</span>
+      <button class="filt active" data-s="all" onclick="setFinStatus('all',this)">Alle</button>
+      <button class="filt" data-s="open" onclick="setFinStatus('open',this)">Offen</button>
+      <button class="filt" data-s="paid" onclick="setFinStatus('paid',this)">Bezahlt</button>
+    </div>
     <div style="overflow-x:auto"><table class="ftable" id="prov-table"></table></div>
     <div class="prov-note">Provisionsrechnungen werden von SourceOn nach Lieferbestätigung ausgestellt. Zahlungsfrist: 14 Tage netto.</div>
     <div class="chart-box" id="chart-blk" style="display:none"><span class="sec-label">Umsatz über Zeit</span><div class="chart-wrap"><canvas id="fin-chart"></canvas></div></div>
@@ -740,21 +766,84 @@ function selectBid(id){
 }
 
 // ── FINANZEN ──
+var _finRange={mode:'all',from:null,to:null};
+var _finStatus='all';
+function _finBounds(){
+  var now=new Date(),y=now.getFullYear(),m=now.getMonth();
+  switch(_finRange.mode){
+    case 'month':return [new Date(y,m,1),new Date(y,m+1,1)];
+    case 'quarter':var q=Math.floor(m/3)*3;return [new Date(y,q,1),new Date(y,q+3,1)];
+    case 'year':return [new Date(y,0,1),new Date(y+1,0,1)];
+    case 'custom':return [_finRange.from,_finRange.to];
+    default:return [null,null];
+  }
+}
+function _finInRange(bid){
+  var b=_finBounds();if(!b[0]&&!b[1])return true;if(!bid.submitted_at)return false;
+  var d=new Date(bid.submitted_at);if(b[0]&&d<b[0])return false;if(b[1]&&d>=b[1])return false;return true;
+}
+function _finPassStatus(bid){if(_finStatus==='all')return true;var paid=bid.provision_paid===true;return _finStatus==='paid'?paid:!paid;}
+function setFinRange(mode,btn){
+  _finRange.mode=mode;
+  if(mode==='custom'){
+    var f=document.getElementById('fin-from').value,t=document.getElementById('fin-to').value;
+    _finRange.from=f?new Date(f):null;_finRange.to=t?new Date(new Date(t).getTime()+86400000):null;
+  }
+  var pills=document.querySelectorAll('#fin-filters .filt[data-r]');
+  pills.forEach(function(p){p.classList.toggle('active',mode!=='custom'&&p.getAttribute('data-r')===mode);});
+  renderFinanzen();
+}
+function setFinStatus(s,btn){
+  _finStatus=s;
+  document.querySelectorAll('#fin-filters .filt[data-s]').forEach(function(p){p.classList.toggle('active',p.getAttribute('data-s')===s);});
+  renderFinanzen();
+}
+// Referenz je Abrechnung (lokal gespeichert)
+var _provNotes=null;
+function _loadProvNotes(){if(_provNotes)return _provNotes;try{_provNotes=JSON.parse(localStorage.getItem('so_prov_notes')||'{}');}catch(e){_provNotes={};}return _provNotes;}
+function _saveProvNotes(){try{localStorage.setItem('so_prov_notes',JSON.stringify(_provNotes||{}));}catch(e){}}
+function provRefHtml(id){var n=_loadProvNotes();var v=n[id]||'';return '<span class="'+(v?'prov-ref set':'prov-ref')+'" data-id="'+esc(id)+'" onclick="editProvRef(this)">'+(v?esc(v):'＋ Referenz')+'</span>';}
+function editProvRef(el){var id=el.getAttribute('data-id');var n=_loadProvNotes();var cur=n[id]||'';var inp=document.createElement('input');inp.className='prov-ref-input';inp.value=cur;inp.maxLength=40;inp.placeholder='z.B. Auftrag Nr.';el.replaceWith(inp);inp.focus();
+  function done(){var v=inp.value.trim();if(v)n[id]=v;else delete n[id];_saveProvNotes();var tmp=document.createElement('div');tmp.innerHTML=provRefHtml(id);inp.replaceWith(tmp.firstChild);}
+  inp.addEventListener('blur',done);inp.addEventListener('keydown',function(e){if(e.key==='Enter')inp.blur();else if(e.key==='Escape'){inp.value=cur;inp.blur();}});
+}
+function _finPopulateYears(won){
+  var sel=document.getElementById('fin-year');if(!sel)return;var prev=sel.value;var years={};
+  won.forEach(function(bid){if(bid.submitted_at)years[new Date(bid.submitted_at).getFullYear()]=1;});
+  var cy=new Date().getFullYear();years[cy]=1;var list=Object.keys(years).map(Number).sort(function(a,b){return b-a;});
+  sel.innerHTML=list.map(function(y){return '<option value="'+y+'">'+y+'</option>';}).join('');
+  if(prev&&list.indexOf(Number(prev))!==-1)sel.value=prev;
+}
 function renderFinanzen(){
-  var revenue=0,openProv=0,paidProv=0,netSum=0,netCount=0,rows='';
+  var revenue=0,openProv=0,paidProv=0,netSum=0,netCount=0,rows='',fRev=0,fProv=0,shown=0;
   var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
+  _finPopulateYears(won);
   won.forEach(function(bid){var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;revenue+=ord;var prov=ord*COMM;var paid=bid.provision_paid===true;if(paid)paidProv+=prov;else openProv+=prov;netSum+=ord*(1-COMM);netCount++;
+    if(!_finInRange(bid)||!_finPassStatus(bid))return;
+    fRev+=ord;fProv+=prov;shown++;
     var d=bid.submitted_at?fmtShort(new Date(bid.submitted_at)):'--';
-    rows+='<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td class="num">'+fmtCHF(ord)+'</td><td class="num">'+fmtCHF(prov)+'</td><td><span class="status-pill '+(paid?'p-green':'p-amber')+'">'+(paid?'Bezahlt':'Offen')+'</span></td><td><span class="act-link" style="cursor:pointer;color:var(--gold-ink);white-space:nowrap" onclick="makeProvisionPDF(\''+esc(bid.id)+'\')">↓ PDF</span></td></tr>';});
+    rows+='<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td class="num">'+fmtCHF(ord)+'</td><td class="num">'+fmtCHF(prov)+'</td><td>'+provRefHtml(bid.id)+'</td><td><span class="status-pill '+(paid?'p-green':'p-amber')+'">'+(paid?'Bezahlt':'Offen')+'</span></td><td><span class="act-link" style="cursor:pointer;color:var(--gold-ink);white-space:nowrap" onclick="makeProvisionPDF(\''+esc(bid.id)+'\')">↓ PDF</span></td></tr>';});
   var h=document.getElementById('fin-hero');h.textContent=revenue>0?fmtCHF(revenue):'CHF 0';h.className='hero-num'+(revenue>0?'':' zero');
   document.getElementById('fin-hero-sub').textContent=won.length>0?('Aus '+won.length+' gewonnenen Auftrag'+(won.length!==1?'en':'')):'Noch keine gewonnenen Aufträge';
   var fo=document.getElementById('f-open');fo.textContent=openProv>0?fmtCHF(openProv):'--';fo.className='m3-num'+(openProv>0?' amber':' dim');
   var fp=document.getElementById('f-paid');fp.textContent=paidProv>0?fmtCHF(paidProv):'--';fp.className='m3-num'+(paidProv>0?' green':' dim');
   var fa=document.getElementById('f-avg');fa.textContent=netCount>0?fmtCHF(netSum/netCount):'--';fa.className='m3-num'+(netCount>0?'':' dim');
-  var head='<thead><tr><th>Datum</th><th>Material</th><th class="num">Bestellwert CHF</th><th class="num">Provision (2.25%)</th><th>Status</th><th>Abrechnung</th></tr></thead>';
-  var body='<tbody>'+(rows||'<tr><td colspan="6" style="color:var(--text-3)">Noch keine Provisionen — erst nach gewonnenen Aufträgen</td></tr>')+(rows?'<tr class="total"><td>Total</td><td></td><td class="num">'+fmtCHF(revenue)+'</td><td class="num gold">'+fmtCHF(openProv+paidProv)+'</td><td></td><td></td></tr>':'')+'</tbody>';
+  var head='<thead><tr><th>Datum</th><th>Material</th><th class="num">Bestellwert CHF</th><th class="num">Provision (2.25%)</th><th>Referenz</th><th>Status</th><th>Abrechnung</th></tr></thead>';
+  var emptyMsg=won.length>0?'Keine Einträge im gewählten Zeitraum/Status':'Noch keine Provisionen — erst nach gewonnenen Aufträgen';
+  var body='<tbody>'+(rows||'<tr><td colspan="7" style="color:var(--text-3)">'+emptyMsg+'</td></tr>')+(rows?'<tr class="total"><td>Total ('+shown+')</td><td></td><td class="num">'+fmtCHF(fRev)+'</td><td class="num gold">'+fmtCHF(fProv)+'</td><td></td><td></td><td></td></tr>':'')+'</tbody>';
   document.getElementById('prov-table').innerHTML=head+body;
-  renderChart(won);
+  renderChart(won.filter(function(bid){return _finInRange(bid)&&_finPassStatus(bid);}));
+}
+// Jahres-Zusammenfassung (PDF)
+function printYearSummary(){
+  var sel=document.getElementById('fin-year');var year=sel?Number(sel.value):new Date().getFullYear();
+  var notes=_loadProvNotes();var rows='',rev=0,prov=0,cnt=0;
+  var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen';});
+  won.forEach(function(bid){if(!bid.submitted_at)return;var d=new Date(bid.submitted_at);if(d.getFullYear()!==year)return;var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)return;rev+=ord;var pr=ord*COMM;prov+=pr;cnt++;
+    var ref=notes[bid.id]?esc(notes[bid.id]):'';
+    rows+='<tr><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+esc(fmtDMY(d))+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd">'+esc(bMat(b))+(ref?' <span style="color:#999">· '+ref+'</span>':'')+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(ord)+'</td><td style="padding:6px 8px;border-bottom:1px solid #ddd;text-align:right">'+fmtCHF(pr)+'</td></tr>';});
+  document.getElementById('print-content').innerHTML='<div style="max-width:660px"><div style="font-size:24px;font-weight:800;color:#0F2238">Source<span style="color:#E8A020">On</span></div><div style="font-size:15px;color:#555;margin-bottom:4px">Provisionsübersicht '+year+'</div><div style="font-size:12px;color:#888;margin-bottom:22px">'+esc(_profile.company_name||'')+' · '+cnt+' Aufträge · Erstellt am '+fmtDMY(new Date())+'</div><table style="width:100%;border-collapse:collapse;font-size:13px;color:#111"><tr style="text-align:left;color:#888;font-size:11px;text-transform:uppercase"><th style="padding:6px 8px;border-bottom:2px solid #333">Datum</th><th style="padding:6px 8px;border-bottom:2px solid #333">Material</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Bestellwert</th><th style="padding:6px 8px;border-bottom:2px solid #333;text-align:right">Provision (2.25%)</th></tr>'+(rows||'<tr><td colspan="4" style="padding:8px">Keine Aufträge in '+year+'.</td></tr>')+'<tr><td style="padding:8px;font-weight:700" colspan="2">Total '+year+'</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(rev)+'</td><td style="padding:8px;text-align:right;font-weight:700">'+fmtCHF(prov)+'</td></tr></table><div style="margin-top:30px;font-size:11px;color:#999">Jahresübersicht zu Buchhaltungszwecken · sourceon.ch</div></div>';
+  window.print();
 }
 function renderChart(won){
   var now=new Date(),buckets={},order=[];
