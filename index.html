@@ -873,12 +873,12 @@ body{background:#070F1A}
 #lp .stat-link:hover{text-decoration:underline}
 
 /* SECTION 4 — tiles */
-#lp .tiles{display:grid;grid-template-columns:2fr 1fr 1fr;grid-template-rows:auto auto;gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
-@media(max-width:900px){#lp .tiles{grid-template-columns:1fr 1fr}#lp .tile-lg{grid-row:auto!important;grid-column:1/-1}}
+#lp .tiles{display:grid;grid-template-columns:1.6fr 1fr 1fr;grid-template-rows:auto;gap:1px;background:var(--lpb);border-radius:16px;overflow:hidden}
+@media(max-width:900px){#lp .tiles{grid-template-columns:1fr 1fr}#lp .tile-lg{grid-column:1/-1}}
 @media(max-width:600px){#lp .tiles{grid-template-columns:1fr}}
 #lp .tile{background:var(--bg1);padding:26px 26px;transition:background .2s;display:flex;flex-direction:column;color:var(--t1)}
 #lp .tile:hover{background:var(--bg2)}
-#lp .tile-lg{grid-row:1/span 2}
+#lp .tile-lg{grid-row:auto}
 #lp .tile-cat{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);font-weight:600;margin-bottom:10px}
 #lp .tile-lg .tile-title{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1.2}
 #lp .tile-title{font-size:20px;font-weight:700;color:var(--t1);letter-spacing:-.01em}
@@ -1001,7 +1001,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     <a class="nav-logo" href="/">Source<span>On</span></a>
     <ul class="nav-links">
       <li><a href="materialien.html" data-i18n="nav.materials">Materialien</a></li>
-      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div></li>
+      <li class="has-dd"><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Subunternehmer</a></div></li>
       <li><a href="ueberuns.html" data-i18n="nav.about">Über uns</a></li>
     </ul>
     <div class="nav-right">
@@ -1050,7 +1050,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav.forwhom">Für wen</a>
-  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_ov_bau">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="nav_ov_handwerk">Handwerk</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div>
+  <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_ov_bau">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="nav_ov_handwerk">Handwerk</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav.supplier">Lieferant werden</a>
   <a href="ueberuns.html" onclick="toggleNav()" data-i18n="nav.about">Über uns</a>
   <button class="btn btn-gold btn-lg" style="margin-top:12px" onclick="toggleNav();window.location.href='kontakt.html'" data-i18n="nav.cta">Materialbedarf melden</button>
@@ -1098,7 +1098,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     <div class="hero-content">
       <span class="eyebrow" data-i18n="lp_hero_eyebrow">Schweizer B2B-Beschaffung</span>
       <h1 class="h1" data-i18n-html="lp_hero_h1">Baumaterialien<br><span class="h1-l2">günstiger einkaufen.</span></h1>
-      <p class="subline" data-i18n="lp_hero_sub">Für Bauprojekte mit grossem Materialvolumen — Bauträger, Generalunternehmer, Wohnbaugenossenschaften und die öffentliche Hand.</p>
+      <p class="subline" data-i18n="lp_hero_sub">Für Schweizer Bau-KMU, Handwerksbetriebe und Subunternehmer. Auch kleine Bestellungen — gebündelt mit anderen Firmen zu besseren Preisen, ganz ohne eigene Einkaufsabteilung.</p>
       <div class="cta-row">
         <a class="btn-primary" href="kontakt.html" data-i18n="lp_hero_cta1">Materialbedarf melden&nbsp;→</a>
         <a class="btn-ghost" href="prozess.html" data-i18n="lp_hero_cta2">Wie es funktioniert&nbsp;→</a>
@@ -1158,7 +1158,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       <div class="lp-stat">
         <div class="n" data-i18n="lp_stat_num">CHF 8-10 Mrd.</div>
         <div class="l" data-i18n="lp_st1_label">Jährliches Baustoffeinkaufsvolumen</div>
-        <div class="s" data-i18n="lp_st1_sub">Generalunternehmer, Bauträger und die öffentliche Hand zahlen täglich zu viel.</div>
+        <div class="s" data-i18n="lp_st1_sub">Bau-KMU, Handwerksbetriebe und Subunternehmer zahlen zu viel — weil sie alleine einkaufen.</div>
       </div>
       <div class="lp-stat">
         <div class="n">98%</div>
@@ -1213,27 +1213,15 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     <span class="sec-label reveal" data-i18n="lp_s4_label">Für wen</span>
     <div class="tiles reveal">
       <a class="tile tile-lg" href="fuerwen-bauunternehmen.html">
-        <div class="tile-cat" data-i18n="lp_t1_cat">Bauunternehmen &amp; Generalunternehmen</div>
-        <div class="tile-title" data-i18n="lp_t1_title">Bessere Einkaufspreise — für jede Baufirma, jede Grösse.</div>
-        <div class="tile-desc" data-i18n="lp_t1_desc">SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte. Ob KMU oder Grosskonzern — jeder profitiert.</div>
+        <div class="tile-cat" data-i18n="lp_t1_cat">Bauunternehmen &amp; Baumeisterbetriebe</div>
+        <div class="tile-title" data-i18n="lp_t1_title">Bessere Einkaufspreise für Bau-KMU.</div>
+        <div class="tile-desc" data-i18n="lp_t1_desc">SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte — auch kleine Einzelbestellungen profitieren.</div>
         <div class="tile-link" data-i18n="lp_t1_link">Mehr erfahren →</div>
       </a>
       <a class="tile" href="fuerwen-handwerk.html">
-        <div class="tile-cat" data-i18n="lp_t2_cat">Handwerk &amp; Subunternehmer</div>
+        <div class="tile-cat" data-i18n="lp_t2_cat">Handwerk &amp; Ausbau</div>
         <div class="tile-title" data-i18n="lp_t2_title">Für jedes Gewerk.</div>
         <div class="tile-desc" data-i18n="lp_t2_desc">Schnelle Abwicklung, keine Vorauszahlung, vollautomatisch.</div>
-        <div class="tile-link">→</div>
-      </a>
-      <a class="tile" href="fuerwen-oeffentlich.html">
-        <div class="tile-cat" data-i18n="lp_t4_cat">Öffentliche Auftraggeber</div>
-        <div class="tile-title" data-i18n="lp_t4_title">Transparent, normkonform, dokumentiert.</div>
-        <div class="tile-desc" data-i18n="lp_t4_desc">Gemeinden, Kantone, staatsnahe Betriebe.</div>
-        <div class="tile-link">→</div>
-      </a>
-      <a class="tile" href="fuerwen-immobilien.html">
-        <div class="tile-cat" data-i18n="lp_t5_cat">Immobilien &amp; Wohnbau</div>
-        <div class="tile-title" data-i18n="lp_t5_title">Regelmässiger Unterhaltsbedarf.</div>
-        <div class="tile-desc" data-i18n="lp_t5_desc">Wohnbaugenossenschaften und Immobilienverwaltungen mit konstantem Bedarf.</div>
         <div class="tile-link">→</div>
       </a>
       <a class="tile" href="kontakt.html">
@@ -1420,7 +1408,7 @@ var I18N={
     lp_hero_h1:'Baumaterialien<br><span class="h1-l2">günstiger einkaufen.</span>',
     lp_hero_proof:'<b>8-35 %</b> Netto-Mindestrabatt garantiert&nbsp;&nbsp;·&nbsp;&nbsp;In 2 Minuten zum Rabatt&nbsp;&nbsp;·&nbsp;&nbsp;Geprüfte Schweizer Lieferanten',
     lp_hero_h1gold:'Für jede Schweizer Baufirma.',
-    lp_hero_sub:'Für Bauprojekte mit grossem Materialvolumen — Bauträger, Generalunternehmer, Wohnbaugenossenschaften und die öffentliche Hand.',calc_teaser_label:'EINSPARPOTENZIAL',calc_teaser_title:'Wie viel könntest du sparen?',calc_teaser_btn:'Jetzt berechnen →',
+    lp_hero_sub:'Für Schweizer Bau-KMU, Handwerksbetriebe und Subunternehmer. Auch kleine Bestellungen — gebündelt mit anderen Firmen zu besseren Preisen, ganz ohne eigene Einkaufsabteilung.',calc_teaser_label:'EINSPARPOTENZIAL',calc_teaser_title:'Wie viel könntest du sparen?',calc_teaser_btn:'Jetzt berechnen →',
     lp_hero_cta1:'Materialbedarf melden →',lp_hero_cta2:'Wie es funktioniert →',
     lp_s2_label:"So funktioniert's",
     strip_step1:"Bedarf melden",strip_step2:"Automatisch bündeln",strip_step3:"Lieferanten bieten",strip_step4:"Du sparst garantiert",strip_link:"Mehr erfahren →",
@@ -1434,14 +1422,14 @@ var I18N={
     lp_c3_desc:'Von Transportbeton bis Sanitär — alle Materialien geprüft, normkonform und über einen einzigen Kanal beschaffbar.',
     lp_c3_link:'Katalog ansehen',
     lp_stat_label:'Der Schweizer Baumarkt',lp_stat_num:'CHF 8-10 Mrd.',lp_stat_sub:'Jährliches Einkaufsvolumen',
-    lp_st1_label:'Jährliches Baustoffeinkaufsvolumen',lp_st1_sub:'Generalunternehmer, Bauträger und die öffentliche Hand zahlen täglich zu viel.',lp_st2_label:'Sind KMU',lp_st2_sub:'Ohne Grossabnehmerkonditionen',lp_st3_label:'Preisunterschied',lp_st3_sub:'Zwischen Einzelkäufer und Grossabnehmer beim selben Material',lp_mkt_statement:'Wer alleine einkauft, zahlt Einzelpreise. SourceOn ändert das.',lp_mkt_l1_k:'Modell',lp_mkt_l1_v:'Erfolgsbasiert — du zahlst erst wenn du sparst',lp_mkt_l2_k:'Prozess',lp_mkt_l2_v:'Vollautomatisch — Bündelung, Ausschreibung, Vergabe',lp_mkt_l3_k:'Standard',lp_mkt_l3_v:'SIA/ISO-konform — alle Lieferanten persönlich geprüft',
+    lp_st1_label:'Jährliches Baustoffeinkaufsvolumen',lp_st1_sub:'Bau-KMU, Handwerksbetriebe und Subunternehmer zahlen zu viel — weil sie alleine einkaufen.',lp_st2_label:'Sind KMU',lp_st2_sub:'Ohne Grossabnehmerkonditionen',lp_st3_label:'Preisunterschied',lp_st3_sub:'Zwischen Einzelkäufer und Grossabnehmer beim selben Material',lp_mkt_statement:'Wer alleine einkauft, zahlt Einzelpreise. SourceOn ändert das.',lp_mkt_l1_k:'Modell',lp_mkt_l1_v:'Erfolgsbasiert — du zahlst erst wenn du sparst',lp_mkt_l2_k:'Prozess',lp_mkt_l2_v:'Vollautomatisch — Bündelung, Ausschreibung, Vergabe',lp_mkt_l3_k:'Standard',lp_mkt_l3_v:'SIA/ISO-konform — alle Lieferanten persönlich geprüft',
     lp_stat_h:'98 % der Schweizer Baufirmen sind KMU — ohne Grossabnehmerkonditionen.',
     lp_stat_body:'Wer alleine einkauft, zahlt Einzelpreise. SourceOn bündelt den Bedarf mehrerer Baufirmen — und verhandelt mit dem gesamten Volumen beim Lieferanten. Je grösser das Bündel, desto höher der Rabatt für alle.',
     lp_s4_label:'Für wen',
-    lp_t1_cat:'Bauunternehmen & Generalunternehmen',lp_t1_title:'Bessere Einkaufspreise — für jede Baufirma, jede Grösse.',
-    lp_t1_desc:'SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte. Ob KMU oder Grosskonzern — jeder profitiert.',
+    lp_t1_cat:'Bauunternehmen & Baumeisterbetriebe',lp_t1_title:'Bessere Einkaufspreise für Bau-KMU.',
+    lp_t1_desc:'SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte — auch kleine Einzelbestellungen profitieren.',
     lp_t1_link:'Mehr erfahren →',
-    lp_t2_cat:'Handwerk & Subunternehmer',lp_t2_title:'Für jedes Gewerk.',lp_t2_desc:'Schnelle Abwicklung, keine Vorauszahlung, vollautomatisch.',
+    lp_t2_cat:'Handwerk & Ausbau',lp_t2_title:'Für jedes Gewerk.',lp_t2_desc:'Schnelle Abwicklung, keine Vorauszahlung, vollautomatisch.',
     lp_t3_cat:'Generalunternehmer & TU',lp_t3_title:'Grosse Projekte, maximale Einkaufsmacht.',lp_t3_desc:'Riesige Materialmengen, höchste Rabattstufen.',
     lp_t4_cat:'Öffentliche Auftraggeber',lp_t4_title:'Transparent, normkonform, dokumentiert.',lp_t4_desc:'Gemeinden, Kantone, staatsnahe Betriebe.',
     lp_t5_cat:'Immobilien & Wohnbau',lp_t5_title:'Regelmässiger Unterhaltsbedarf.',lp_t5_desc:'Wohnbaugenossenschaften und Immobilienverwaltungen mit konstantem Bedarf.',
@@ -1519,7 +1507,7 @@ var I18N={
     lp_hero_h1:'Buy building materials<br><span class="h1-l2">at lower prices.</span>',
     lp_hero_proof:'<b>8-35%</b> net minimum discount guaranteed&nbsp;&nbsp;·&nbsp;&nbsp;2 minutes to your discount&nbsp;&nbsp;·&nbsp;&nbsp;Vetted Swiss suppliers',
     lp_hero_h1gold:'For every Swiss construction firm.',
-    lp_hero_sub:'For construction projects with large material volumes — developers, general contractors, housing cooperatives and the public sector.',calc_teaser_label:'SAVINGS POTENTIAL',calc_teaser_title:'How much could you save?',calc_teaser_btn:'Calculate now →',
+    lp_hero_sub:'For Swiss construction SMEs, trades and subcontractors. Even small orders — bundled with other firms for better prices, with no purchasing department needed.',calc_teaser_label:'SAVINGS POTENTIAL',calc_teaser_title:'How much could you save?',calc_teaser_btn:'Calculate now →',
     lp_hero_cta1:'Report material demand →',lp_hero_cta2:'How it works →',
     lp_s2_label:'How it works',
     strip_step1:'Submit request',strip_step2:'Automatically bundle',strip_step3:'Suppliers bid',strip_step4:'You save guaranteed',strip_link:'Learn more →',
@@ -1533,14 +1521,14 @@ var I18N={
     lp_c3_desc:'From ready-mix concrete to sanitary — all materials tested, standard-compliant and procurable through a single channel.',
     lp_c3_link:'View catalogue',
     lp_stat_label:'The Swiss construction market',lp_stat_num:'CHF 8-10 bn',lp_stat_sub:'Annual procurement volume',
-    lp_st1_label:'Annual construction material volume',lp_st1_sub:'General contractors, developers and the public sector overpay every day.',lp_st2_label:'Are SMEs',lp_st2_sub:'Without bulk-buyer terms',lp_st3_label:'Price gap',lp_st3_sub:'Between single buyer and bulk buyer for the same material',lp_mkt_statement:'Buy alone, pay single-unit prices. SourceOn changes that.',lp_mkt_l1_k:'Model',lp_mkt_l1_v:'Success-based — you only pay when you save',lp_mkt_l2_k:'Process',lp_mkt_l2_v:'Fully automated — bundling, tender, award',lp_mkt_l3_k:'Standard',lp_mkt_l3_v:'SIA/ISO-compliant — every supplier personally vetted',
+    lp_st1_label:'Annual construction material volume',lp_st1_sub:'Construction SMEs, trades and subcontractors overpay — because they buy alone.',lp_st2_label:'Are SMEs',lp_st2_sub:'Without bulk-buyer terms',lp_st3_label:'Price gap',lp_st3_sub:'Between single buyer and bulk buyer for the same material',lp_mkt_statement:'Buy alone, pay single-unit prices. SourceOn changes that.',lp_mkt_l1_k:'Model',lp_mkt_l1_v:'Success-based — you only pay when you save',lp_mkt_l2_k:'Process',lp_mkt_l2_v:'Fully automated — bundling, tender, award',lp_mkt_l3_k:'Standard',lp_mkt_l3_v:'SIA/ISO-compliant — every supplier personally vetted',
     lp_stat_h:'98% of Swiss construction firms are SMEs — without bulk-buyer conditions.',
     lp_stat_body:'Whoever buys alone pays single-unit prices. SourceOn bundles the demand of several construction firms — and negotiates with the entire volume at the supplier. The bigger the bundle, the higher the discount for everyone.',
     lp_s4_label:"Who it's for",
-    lp_t1_cat:'Construction firms & general contractors',lp_t1_title:'Better purchasing prices — for every construction firm, every size.',
-    lp_t1_desc:'SourceOn bundles your material demand with other construction firms and negotiates volume discounts. Whether SME or large corporation — everyone benefits.',
+    lp_t1_cat:'Construction firms & master builders',lp_t1_title:'Better purchasing prices for construction SMEs.',
+    lp_t1_desc:'SourceOn bundles your material needs with other construction firms and negotiates volume discounts — even small individual orders benefit.',
     lp_t1_link:'Learn more →',
-    lp_t2_cat:'Trades & subcontractors',lp_t2_title:'For every trade.',lp_t2_desc:'Fast processing, no upfront payment, fully automated.',
+    lp_t2_cat:'Trades & interior finishing',lp_t2_title:'For every trade.',lp_t2_desc:'Fast processing, no upfront payment, fully automated.',
     lp_t3_cat:'General & total contractors',lp_t3_title:'Large projects, maximum purchasing power.',lp_t3_desc:'Huge material quantities, highest discount tiers.',
     lp_t4_cat:'Public sector clients',lp_t4_title:'Transparent, standard-compliant, documented.',lp_t4_desc:'Municipalities, cantons, public-sector entities.',
     lp_t5_cat:'Real estate & housing',lp_t5_title:'Regular maintenance needs.',lp_t5_desc:'Housing cooperatives and property managers with constant demand.',
@@ -1618,7 +1606,7 @@ var I18N={
     lp_hero_h1:'Achète tes matériaux<br><span class="h1-l2">de construction moins cher.</span>',
     lp_hero_proof:'<b>8-35 %</b> de remise nette minimale garantie&nbsp;&nbsp;·&nbsp;&nbsp;2 minutes jusqu\'à ta remise&nbsp;&nbsp;·&nbsp;&nbsp;Fournisseurs suisses vérifiés',
     lp_hero_h1gold:'Pour chaque entreprise de construction suisse.',
-    lp_hero_sub:'Pour les projets de construction à fort volume de matériaux — promoteurs, entreprises générales, coopératives d\'habitation et le secteur public.',calc_teaser_label:'POTENTIEL D\'ÉCONOMIES',calc_teaser_title:'Combien pourrais-tu économiser?',calc_teaser_btn:'Calculer maintenant →',
+    lp_hero_sub:'Pour les PME de construction, artisans et sous-traitants suisses. Même les petites commandes — regroupées avec d\'autres entreprises pour de meilleurs prix, sans service d\'achat.',calc_teaser_label:'POTENTIEL D\'ÉCONOMIES',calc_teaser_title:'Combien pourrais-tu économiser?',calc_teaser_btn:'Calculer maintenant →',
     lp_hero_cta1:'Annoncer un besoin →',lp_hero_cta2:'Comment ça marche →',
     lp_s2_label:'Comment ça marche',
     strip_step1:'Soumettre une demande',strip_step2:'Regrouper automatiquement',strip_step3:'Les fournisseurs soumettent',strip_step4:'Tu économises garanti',strip_link:'En savoir plus →',
@@ -1632,14 +1620,14 @@ var I18N={
     lp_c3_desc:'Du béton prêt à l\'emploi au sanitaire — tous les matériaux testés, conformes aux normes et disponibles via un seul canal.',
     lp_c3_link:'Voir le catalogue',
     lp_stat_label:'Le marché suisse de la construction',lp_stat_num:'CHF 8-10 mrd',lp_stat_sub:'Volume d\'achat annuel',
-    lp_st1_label:'Volume annuel d\'achat de matériaux',lp_st1_sub:'Entreprises générales, promoteurs et le secteur public paient trop chaque jour.',lp_st2_label:'Sont des PME',lp_st2_sub:'Sans conditions de gros acheteur',lp_st3_label:'Écart de prix',lp_st3_sub:'Entre acheteur isolé et gros acheteur pour le même matériau',lp_mkt_statement:'Acheter seul, c\'est payer le prix fort. SourceOn change ça.',lp_mkt_l1_k:'Modèle',lp_mkt_l1_v:'Basé sur le succès — tu ne paies que si tu économises',lp_mkt_l2_k:'Processus',lp_mkt_l2_v:'Entièrement automatisé — regroupement, appel d\'offres, attribution',lp_mkt_l3_k:'Norme',lp_mkt_l3_v:'Conforme SIA/ISO — chaque fournisseur vérifié personnellement',
+    lp_st1_label:'Volume annuel d\'achat de matériaux',lp_st1_sub:'Les PME de construction, artisans et sous-traitants paient trop — parce qu\'ils achètent seuls.',lp_st2_label:'Sont des PME',lp_st2_sub:'Sans conditions de gros acheteur',lp_st3_label:'Écart de prix',lp_st3_sub:'Entre acheteur isolé et gros acheteur pour le même matériau',lp_mkt_statement:'Acheter seul, c\'est payer le prix fort. SourceOn change ça.',lp_mkt_l1_k:'Modèle',lp_mkt_l1_v:'Basé sur le succès — tu ne paies que si tu économises',lp_mkt_l2_k:'Processus',lp_mkt_l2_v:'Entièrement automatisé — regroupement, appel d\'offres, attribution',lp_mkt_l3_k:'Norme',lp_mkt_l3_v:'Conforme SIA/ISO — chaque fournisseur vérifié personnellement',
     lp_stat_h:'98 % des entreprises de construction suisses sont des PME — sans conditions de gros acheteur.',
     lp_stat_body:'Celui qui achète seul paie les prix unitaires. SourceOn regroupe les besoins de plusieurs entreprises de construction — et négocie avec le volume total auprès du fournisseur. Plus le regroupement est grand, plus le rabais est élevé pour tous.',
     lp_s4_label:'Pour qui',
-    lp_t1_cat:'Entreprises de construction & entreprises générales',lp_t1_title:'De meilleurs prix d\'achat — pour chaque entreprise de construction, quelle que soit sa taille.',
-    lp_t1_desc:'SourceOn regroupe ton besoin en matériaux avec d\'autres entreprises de construction et négocie des remises de volume. Que tu sois une PME ou un grand groupe — tout le monde en profite.',
+    lp_t1_cat:'Entreprises de construction & PME du bâtiment',lp_t1_title:'De meilleurs prix d\'achat pour les PME de construction.',
+    lp_t1_desc:'SourceOn regroupe tes besoins en matériaux avec d\'autres entreprises et négocie des remises de volume — même les petites commandes en profitent.',
     lp_t1_link:'En savoir plus →',
-    lp_t2_cat:'Artisanat & sous-traitants',lp_t2_title:'Pour chaque corps de métier.',lp_t2_desc:'Traitement rapide, aucun paiement anticipé, entièrement automatisé.',
+    lp_t2_cat:'Artisanat & aménagement',lp_t2_title:'Pour chaque corps de métier.',lp_t2_desc:'Traitement rapide, aucun paiement anticipé, entièrement automatisé.',
     lp_t3_cat:'Entreprises générales & totales',lp_t3_title:'Grands projets, pouvoir d\'achat maximal.',lp_t3_desc:'D\'énormes quantités de matériaux, les niveaux de rabais les plus élevés.',
     lp_t4_cat:'Maîtres d\'ouvrage publics',lp_t4_title:'Transparent, conforme aux normes, documenté.',lp_t4_desc:'Communes, cantons, entreprises paraétatiques.',
     lp_t5_cat:'Immobilier & logement',lp_t5_title:'Besoins d\'entretien réguliers.',lp_t5_desc:'Coopératives d\'habitation et gérances immobilières avec un besoin constant.',
@@ -1717,7 +1705,7 @@ var I18N={
     lp_hero_h1:'Acquista materiali<br><span class="h1-l2">a prezzi più bassi.</span>',
     lp_hero_proof:'<b>8-35 %</b> di sconto minimo netto garantito&nbsp;&nbsp;·&nbsp;&nbsp;2 minuti fino allo sconto&nbsp;&nbsp;·&nbsp;&nbsp;Fornitori svizzeri verificati',
     lp_hero_h1gold:'Per ogni impresa edile svizzera.',
-    lp_hero_sub:'Per progetti edili con grandi volumi di materiale — sviluppatori immobiliari, imprese generali, cooperative di abitazione e il settore pubblico.',calc_teaser_label:'POTENZIALE DI RISPARMIO',calc_teaser_title:'Quanto potresti risparmiare?',calc_teaser_btn:'Calcola ora →',
+    lp_hero_sub:'Per PMI edili, artigiani e subappaltatori svizzeri. Anche piccoli ordini — raggruppati con altre imprese per prezzi migliori, senza un ufficio acquisti.',calc_teaser_label:'POTENZIALE DI RISPARMIO',calc_teaser_title:'Quanto potresti risparmiare?',calc_teaser_btn:'Calcola ora →',
     lp_hero_cta1:'Segnala il fabbisogno →',lp_hero_cta2:'Come funziona →',
     lp_s2_label:'Come funziona',
     strip_step1:'Invia richiesta',strip_step2:'Raggruppare automaticamente',strip_step3:'I fornitori offrono',strip_step4:'Risparmi garantito',strip_link:'Scopri di più →',
@@ -1731,14 +1719,14 @@ var I18N={
     lp_c3_desc:'Dal calcestruzzo preconfezionato al sanitario — tutti i materiali testati, conformi alle norme e disponibili tramite un unico canale.',
     lp_c3_link:'Vedi il catalogo',
     lp_stat_label:'Il mercato edile svizzero',lp_stat_num:'CHF 8-10 mld',lp_stat_sub:'Volume di acquisto annuo',
-    lp_st1_label:'Volume annuo d\'acquisto di materiali',lp_st1_sub:'Imprese generali, sviluppatori e il settore pubblico pagano troppo ogni giorno.',lp_st2_label:'Sono PMI',lp_st2_sub:'Senza condizioni da grande acquirente',lp_st3_label:'Differenza di prezzo',lp_st3_sub:'Tra singolo acquirente e grande acquirente per lo stesso materiale',lp_mkt_statement:'Chi compra da solo paga prezzi pieni. SourceOn cambia questo.',lp_mkt_l1_k:'Modello',lp_mkt_l1_v:'Basato sul successo — paghi solo se risparmi',lp_mkt_l2_k:'Processo',lp_mkt_l2_v:'Completamente automatico — raggruppamento, gara, aggiudicazione',lp_mkt_l3_k:'Standard',lp_mkt_l3_v:'Conforme SIA/ISO — ogni fornitore verificato personalmente',
+    lp_st1_label:'Volume annuo d\'acquisto di materiali',lp_st1_sub:'PMI edili, artigiani e subappaltatori pagano troppo — perché acquistano da soli.',lp_st2_label:'Sono PMI',lp_st2_sub:'Senza condizioni da grande acquirente',lp_st3_label:'Differenza di prezzo',lp_st3_sub:'Tra singolo acquirente e grande acquirente per lo stesso materiale',lp_mkt_statement:'Chi compra da solo paga prezzi pieni. SourceOn cambia questo.',lp_mkt_l1_k:'Modello',lp_mkt_l1_v:'Basato sul successo — paghi solo se risparmi',lp_mkt_l2_k:'Processo',lp_mkt_l2_v:'Completamente automatico — raggruppamento, gara, aggiudicazione',lp_mkt_l3_k:'Standard',lp_mkt_l3_v:'Conforme SIA/ISO — ogni fornitore verificato personalmente',
     lp_stat_h:'Il 98% delle imprese edili svizzere sono PMI — senza condizioni da grande acquirente.',
     lp_stat_body:'Chi acquista da solo paga i prezzi al singolo. SourceOn raggruppa il fabbisogno di più imprese edili — e negozia con l\'intero volume presso il fornitore. Più grande è il raggruppamento, maggiore è lo sconto per tutti.',
     lp_s4_label:'Per chi',
-    lp_t1_cat:'Imprese edili & imprese generali',lp_t1_title:'Migliori prezzi d\'acquisto — per ogni impresa edile, di ogni dimensione.',
-    lp_t1_desc:'SourceOn raggruppa il tuo fabbisogno di materiale con altre imprese edili e negozia sconti sul volume. Che tu sia una PMI o una grande azienda — ne beneficiano tutti.',
+    lp_t1_cat:'Imprese edili & piccole imprese di costruzione',lp_t1_title:'Prezzi d\'acquisto migliori per le PMI edili.',
+    lp_t1_desc:'SourceOn aggrega il tuo fabbisogno di materiali con altre imprese e negozia sconti sul volume — ne beneficiano anche i piccoli ordini singoli.',
     lp_t1_link:'Scopri di più →',
-    lp_t2_cat:'Artigianato & subappaltatori',lp_t2_title:'Per ogni mestiere.',lp_t2_desc:'Elaborazione rapida, nessun pagamento anticipato, completamente automatizzato.',
+    lp_t2_cat:'Artigianato & finiture',lp_t2_title:'Per ogni mestiere.',lp_t2_desc:'Elaborazione rapida, nessun pagamento anticipato, completamente automatizzato.',
     lp_t3_cat:'Imprese generali & totali',lp_t3_title:'Grandi progetti, massimo potere d\'acquisto.',lp_t3_desc:'Enormi quantità di materiale, i livelli di sconto più alti.',
     lp_t4_cat:'Committenti pubblici',lp_t4_title:'Trasparente, conforme alle norme, documentato.',lp_t4_desc:'Comuni, cantoni, aziende parastatali.',
     lp_t5_cat:'Immobili & edilizia abitativa',lp_t5_title:'Fabbisogno di manutenzione regolare.',lp_t5_desc:'Cooperative di abitazione e amministrazioni immobiliari con fabbisogno costante.',

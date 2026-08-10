@@ -3,7 +3,9 @@
   "trailingSlash": false,
   "redirects": [
     { "source": "/index", "destination": "/", "permanent": true },
-    { "source": "/supplier-login", "destination": "/lieferant", "permanent": true }
+    { "source": "/supplier-login", "destination": "/lieferant", "permanent": true },
+    { "source": "/fuerwen-oeffentlich", "destination": "/fuerwen", "permanent": true },
+    { "source": "/fuerwen-immobilien", "destination": "/fuerwen", "permanent": true }
   ],
   "headers": [
     {
