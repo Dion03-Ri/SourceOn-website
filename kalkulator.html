@@ -966,7 +966,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <div class="nav-inner">
     <a class="nav-logo" href="/">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="kalkulator.html" data-i18n="nav_calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
       <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_fw_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_fw_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-bauunternehmen.html" data-i18n="nav_fw_gu">Generalunternehmer &amp; TU</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_fw_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_fw_immo">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
@@ -1013,7 +1012,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav_calc">Kalkulator</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom">Für wen</a>
   <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_fw_bau_short">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="nav_fw_handwerk_short">Handwerk</a><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_fw_gu_short">Generalunternehmer</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()" data-i18n="nav_fw_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()" data-i18n="nav_fw_immo">Immobilien &amp; Wohnbau</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier">Lieferant werden</a>
@@ -1035,7 +1033,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <span class="calc-vlabel" data-i18n="calc_vlabel">Bestellvolumen</span>
         <div id="calc-display">CHF 150'000</div>
         <input type="range" id="calc-slider" min="0" max="100" value="32" step="0.1" style="--pct:32%"/>
-        <div class="calc-range"><span>CHF 20'000</span><span>CHF 10'000'000</span></div>
+        <div class="calc-range"><span>CHF 500</span><span>CHF 5'000'000</span></div>
         <input type="text" class="calc-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" data-i18n-placeholder="calc_placeholder" value="150'000"/>
         <p class="calc-mnote" data-i18n="calc_mnote">Beträge über CHF 10 Mio. bitte manuell eingeben.</p>
         <div class="calc-results">
@@ -1055,14 +1053,14 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <table class="tiertable">
           <thead><tr><th data-i18n="tier_col_vol">Bestellvolumen</th><th data-i18n="tier_col_disc">Netto-Mindestrabatt</th></tr></thead>
           <tbody>
-            <tr data-tier="0"><td class="vol">CHF 20'000 – 50'000</td><td class="pct">8%</td></tr>
-            <tr data-tier="1"><td class="vol">CHF 50'000 – 150'000</td><td class="pct">12%</td></tr>
-            <tr data-tier="2"><td class="vol">CHF 150'000 – 300'000</td><td class="pct">16%</td></tr>
-            <tr data-tier="3"><td class="vol">CHF 300'000 – 600'000</td><td class="pct">20%</td></tr>
-            <tr data-tier="4"><td class="vol">CHF 600'000 – 1.2 Mio.</td><td class="pct">25%</td></tr>
-            <tr data-tier="5"><td class="vol">CHF 1.2 – 3 Mio.</td><td class="pct">30%</td></tr>
-            <tr data-tier="6"><td class="vol">CHF 3 – 6 Mio.</td><td class="pct">35%</td></tr>
-            <tr data-tier="7"><td class="vol" data-i18n="tier_over6">Über CHF 6 Mio.</td><td class="pct" data-i18n="tier_over6_val">Individuell</td></tr>
+            <tr data-tier="0"><td class="vol">CHF 500 – 4'999</td><td class="pct">5%</td></tr>
+            <tr data-tier="1"><td class="vol">CHF 5'000 – 24'999</td><td class="pct">7%</td></tr>
+            <tr data-tier="2"><td class="vol">CHF 25'000 – 49'999</td><td class="pct">10%</td></tr>
+            <tr data-tier="3"><td class="vol">CHF 50'000 – 99'999</td><td class="pct">13%</td></tr>
+            <tr data-tier="4"><td class="vol">CHF 100'000 – 249'999</td><td class="pct">16%</td></tr>
+            <tr data-tier="5"><td class="vol">CHF 250'000 – 499'999</td><td class="pct">20%</td></tr>
+            <tr data-tier="6"><td class="vol">CHF 500'000 – 999'999</td><td class="pct">24%</td></tr>
+            <tr data-tier="7"><td class="vol">CHF 1'000'000+</td><td class="pct">28%</td></tr>
           </tbody>
         </table>
         <p class="tiernote" data-i18n="tier_note">Netto-Mindestrabatt nach SourceOn-Provision (2.25%). Durch Bündelung oft höher.</p>
@@ -1168,12 +1166,12 @@ const ro=new IntersectionObserver(entries=>{
 document.querySelectorAll('.reveal,.slide-left').forEach(el=>ro.observe(el));
 
 // CALCULATOR
-const MIN_V=20000,MAX_V=10000000;
+const MIN_V=500,MAX_V=5000000;
 const TIERS=[
-  {max:50000,rate:.08},{max:150000,rate:.12},{max:300000,rate:.16},{max:600000,rate:.20},
-  {max:1200000,rate:.25},{max:3000000,rate:.30},{max:6000000,rate:.35},{max:Infinity,rate:null}
+  {max:5000,net:.05,gross:.0725},{max:25000,net:.07,gross:.0925},{max:50000,net:.10,gross:.12},{max:100000,net:.13,gross:.15},
+  {max:250000,net:.16,gross:.18},{max:500000,net:.20,gross:.22},{max:1000000,net:.24,gross:.2575},{max:Infinity,net:.28,gross:.2975}
 ];
-function posToVal(p){return Math.round(MIN_V*Math.pow(MAX_V/MIN_V,p/100)/1000)*1000;}
+function posToVal(p){return Math.round(MIN_V*Math.pow(MAX_V/MIN_V,p/100)/100)*100;}
 function valToPos(v){return Math.log(v/MIN_V)/Math.log(MAX_V/MIN_V)*100;}
 function getTier(v){return TIERS.find(t=>v<=t.max)||TIERS[TIERS.length-1];}
 function fmtChf(n){return'CHF '+Math.round(n).toLocaleString('de-CH');}
@@ -1229,7 +1227,7 @@ updateCalc(150000);
 <script>
 // TIER TABLE HIGHLIGHT (new — does not modify existing calc logic)
 (function(){
-  function tierIdx(v){var t=[50000,150000,300000,600000,1200000,3000000,6000000];for(var i=0;i<t.length;i++){if(v<t[i])return i;}return 7;}
+  function tierIdx(v){var t=[5000,25000,50000,100000,250000,500000,1000000];for(var i=0;i<t.length;i++){if(v<t[i])return i;}return 7;}
   window.highlightActiveTier=function(idx){document.querySelectorAll('.tiertable tr[data-tier]').forEach(function(r){r.classList.toggle('active',+r.getAttribute('data-tier')===idx);});};
   function currentV(){var d=document.getElementById('calc-display');var v=d?parseInt(d.textContent.replace(/[^0-9]/g,''),10):NaN;if(isNaN(v)||!v){var inp=document.getElementById('calc-input');v=inp?parseInt((inp.value||'').replace(/[^0-9]/g,''),10):150000;}return v||150000;}
   function upd(){highlightActiveTier(tierIdx(currentV()));}

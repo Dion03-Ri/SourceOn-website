@@ -1000,7 +1000,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <div class="nav-inner">
     <a class="nav-logo" href="/">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="kalkulator.html" data-i18n="nav.calc">Kalkulator</a></li>
       <li><a href="materialien.html" data-i18n="nav.materials">Materialien</a></li>
       <li class="has-dd"><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; GU</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Subunternehmer</a><a href="fuerwen-oeffentlich.html" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div></li>
       <li><a href="ueberuns.html" data-i18n="nav.about">Über uns</a></li>
@@ -1050,7 +1049,6 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  <a href="kalkulator.html" onclick="toggleNav()" data-i18n="nav.calc">Kalkulator</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav.forwhom">Für wen</a>
   <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_ov_bau">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="nav_ov_handwerk">Handwerk</a><a href="fuerwen-oeffentlich.html" onclick="toggleNav()" data-i18n="nav_dd_oeff">Öffentliche Auftraggeber</a><a href="fuerwen-immobilien.html" onclick="toggleNav()" data-i18n="nav_dd_immo">Immobilien &amp; Wohnbau</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav.supplier">Lieferant werden</a>
@@ -1186,6 +1184,29 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
       </div>
     </div>
   </div></section>
+
+  <!-- KALKULATOR TEASER -->
+  <style id="calc-teaser-css">
+  #lp .calc-teaser{border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);padding:24px 0;background:var(--bg1)}
+  #lp .calc-teaser-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
+  #lp .calc-teaser-text{display:flex;align-items:center;gap:20px}
+  #lp .calc-teaser-label{font-size:10px;font-weight:600;color:var(--gold);letter-spacing:.1em;white-space:nowrap}
+  #lp .calc-teaser-title{font-size:15px;font-weight:500;color:var(--t1)}
+  #lp .calc-teaser-btn{background:transparent;border:1px solid var(--lpbs);color:var(--t2);font-size:13px;padding:8px 18px;border-radius:6px;text-decoration:none;white-space:nowrap;transition:border-color .15s,color .15s}
+  #lp .calc-teaser-btn:hover{border-color:var(--gold);color:var(--t1)}
+  @media(max-width:768px){#lp .calc-teaser-inner{flex-direction:column;align-items:flex-start;gap:16px}}
+  </style>
+  <section class="calc-teaser">
+    <div class="wrap">
+      <div class="calc-teaser-inner">
+        <div class="calc-teaser-text">
+          <span class="calc-teaser-label" data-i18n="calc_teaser_label">EINSPARPOTENZIAL</span>
+          <span class="calc-teaser-title" data-i18n="calc_teaser_title">Wie viel könntest du sparen?</span>
+        </div>
+        <a href="/kalkulator" class="calc-teaser-btn" data-i18n="calc_teaser_btn">Jetzt berechnen →</a>
+      </div>
+    </div>
+  </section>
 
   <!-- SECTION 4 — FOR WHOM -->
   <section class="sec bt"><div class="wrap">
@@ -1399,7 +1420,7 @@ var I18N={
     lp_hero_h1:'Baumaterialien<br><span class="h1-l2">günstiger einkaufen.</span>',
     lp_hero_proof:'<b>8-35 %</b> Netto-Mindestrabatt garantiert&nbsp;&nbsp;·&nbsp;&nbsp;In 2 Minuten zum Rabatt&nbsp;&nbsp;·&nbsp;&nbsp;Geprüfte Schweizer Lieferanten',
     lp_hero_h1gold:'Für jede Schweizer Baufirma.',
-    lp_hero_sub:'Für Bauprojekte mit grossem Materialvolumen — Bauträger, Generalunternehmer, Wohnbaugenossenschaften und die öffentliche Hand.',
+    lp_hero_sub:'Für Bauprojekte mit grossem Materialvolumen — Bauträger, Generalunternehmer, Wohnbaugenossenschaften und die öffentliche Hand.',calc_teaser_label:'EINSPARPOTENZIAL',calc_teaser_title:'Wie viel könntest du sparen?',calc_teaser_btn:'Jetzt berechnen →',
     lp_hero_cta1:'Materialbedarf melden →',lp_hero_cta2:'Wie es funktioniert →',
     lp_s2_label:"So funktioniert's",
     strip_step1:"Bedarf melden",strip_step2:"Automatisch bündeln",strip_step3:"Lieferanten bieten",strip_step4:"Du sparst garantiert",strip_link:"Mehr erfahren →",
@@ -1498,7 +1519,7 @@ var I18N={
     lp_hero_h1:'Buy building materials<br><span class="h1-l2">at lower prices.</span>',
     lp_hero_proof:'<b>8-35%</b> net minimum discount guaranteed&nbsp;&nbsp;·&nbsp;&nbsp;2 minutes to your discount&nbsp;&nbsp;·&nbsp;&nbsp;Vetted Swiss suppliers',
     lp_hero_h1gold:'For every Swiss construction firm.',
-    lp_hero_sub:'For construction projects with large material volumes — developers, general contractors, housing cooperatives and the public sector.',
+    lp_hero_sub:'For construction projects with large material volumes — developers, general contractors, housing cooperatives and the public sector.',calc_teaser_label:'SAVINGS POTENTIAL',calc_teaser_title:'How much could you save?',calc_teaser_btn:'Calculate now →',
     lp_hero_cta1:'Report material demand →',lp_hero_cta2:'How it works →',
     lp_s2_label:'How it works',
     strip_step1:'Submit request',strip_step2:'Automatically bundle',strip_step3:'Suppliers bid',strip_step4:'You save guaranteed',strip_link:'Learn more →',
@@ -1597,7 +1618,7 @@ var I18N={
     lp_hero_h1:'Achète tes matériaux<br><span class="h1-l2">de construction moins cher.</span>',
     lp_hero_proof:'<b>8-35 %</b> de remise nette minimale garantie&nbsp;&nbsp;·&nbsp;&nbsp;2 minutes jusqu\'à ta remise&nbsp;&nbsp;·&nbsp;&nbsp;Fournisseurs suisses vérifiés',
     lp_hero_h1gold:'Pour chaque entreprise de construction suisse.',
-    lp_hero_sub:'Pour les projets de construction à fort volume de matériaux — promoteurs, entreprises générales, coopératives d\'habitation et le secteur public.',
+    lp_hero_sub:'Pour les projets de construction à fort volume de matériaux — promoteurs, entreprises générales, coopératives d\'habitation et le secteur public.',calc_teaser_label:'POTENTIEL D\'ÉCONOMIES',calc_teaser_title:'Combien pourrais-tu économiser?',calc_teaser_btn:'Calculer maintenant →',
     lp_hero_cta1:'Annoncer un besoin →',lp_hero_cta2:'Comment ça marche →',
     lp_s2_label:'Comment ça marche',
     strip_step1:'Soumettre une demande',strip_step2:'Regrouper automatiquement',strip_step3:'Les fournisseurs soumettent',strip_step4:'Tu économises garanti',strip_link:'En savoir plus →',
@@ -1696,7 +1717,7 @@ var I18N={
     lp_hero_h1:'Acquista materiali<br><span class="h1-l2">a prezzi più bassi.</span>',
     lp_hero_proof:'<b>8-35 %</b> di sconto minimo netto garantito&nbsp;&nbsp;·&nbsp;&nbsp;2 minuti fino allo sconto&nbsp;&nbsp;·&nbsp;&nbsp;Fornitori svizzeri verificati',
     lp_hero_h1gold:'Per ogni impresa edile svizzera.',
-    lp_hero_sub:'Per progetti edili con grandi volumi di materiale — sviluppatori immobiliari, imprese generali, cooperative di abitazione e il settore pubblico.',
+    lp_hero_sub:'Per progetti edili con grandi volumi di materiale — sviluppatori immobiliari, imprese generali, cooperative di abitazione e il settore pubblico.',calc_teaser_label:'POTENZIALE DI RISPARMIO',calc_teaser_title:'Quanto potresti risparmiare?',calc_teaser_btn:'Calcola ora →',
     lp_hero_cta1:'Segnala il fabbisogno →',lp_hero_cta2:'Come funziona →',
     lp_s2_label:'Come funziona',
     strip_step1:'Invia richiesta',strip_step2:'Raggruppare automaticamente',strip_step3:'I fornitori offrono',strip_step4:'Risparmi garantito',strip_link:'Scopri di più →',
