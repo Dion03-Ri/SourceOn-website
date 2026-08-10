@@ -547,6 +547,11 @@ p{text-wrap:pretty}
         </div>
       </div>
       <div class="tool-card">
+        <div class="tool-title" data-i18n="tools_calc_title">Einsparkalkulator</div>
+        <div class="tool-sub" data-i18n="tools_calc_sub">Berechne dein Einsparpotenzial basierend auf deinem Bestellvolumen.</div>
+        <a href="/kalkulator" class="calc-cta" data-i18n="tools_calc_btn" style="display:inline-block;margin-top:14px">Zum Kalkulator →</a>
+      </div>
+      <div class="tool-card">
         <div class="tool-title">Dokumenten-Center</div>
         <div class="tool-sub">Anfragen als professionelles PDF speichern</div>
         <div id="doc-list"></div>
@@ -1112,6 +1117,20 @@ document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.get
 <script src="xlsx-export.js"></script>
 <script>
 window.addEventListener("pageshow", function(e){ if(e.persisted){ window.location.reload(); } });
+</script>
+<script>
+/* Werkzeuge → Einsparkalkulator-Karte: 4 Sprachen (Muster wie WARN_I18N) */
+(function(){
+  var T={
+    de:{tools_calc_title:'Einsparkalkulator',tools_calc_sub:'Berechne dein Einsparpotenzial basierend auf deinem Bestellvolumen.',tools_calc_btn:'Zum Kalkulator →'},
+    en:{tools_calc_title:'Savings Calculator',tools_calc_sub:'Calculate your savings potential based on your order volume.',tools_calc_btn:'To Calculator →'},
+    fr:{tools_calc_title:"Calculateur d'économies",tools_calc_sub:"Calcule ton potentiel d'économies en fonction de ton volume de commande.",tools_calc_btn:'Vers le calculateur →'},
+    it:{tools_calc_title:'Calcolatore di risparmio',tools_calc_sub:"Calcola il tuo potenziale di risparmio in base al volume d'ordine.",tools_calc_btn:'Al calcolatore →'}
+  };
+  function apply(){var l=localStorage.getItem('sourceon-lang')||'de';var d=T[l]||T.de;
+    document.querySelectorAll('[data-i18n^="tools_calc_"]').forEach(function(el){var k=el.getAttribute('data-i18n');if(d[k])el.textContent=d[k];});}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply);else apply();
+})();
 </script>
 </body>
 </html>

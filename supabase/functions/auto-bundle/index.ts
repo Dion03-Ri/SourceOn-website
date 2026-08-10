@@ -1,37 +1,33 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-// Rabattstufen — GROSS-Werte werden als bundle.ziel_mindestrabatt an Lieferanten
-// ausgeschrieben (der Kunde erhält den NETTO-Wert nach 2.25% Provision).
+// Rabattstufen (NETTO). Der an Lieferanten ausgeschriebene GROSS-Mindestrabatt
+// (bundle.ziel_mindestrabatt) = net + 2.25% Provision; der Kunde erhält den NETTO-Wert.
 // ⚠️ MUSS synchron bleiben mit /tiers.js (window.SO_TIERS).
-// gross = ceil_to_0.25%( (net + 0.0225) / 1.0225 ) — aufgerundet, damit die
-// Netto-Garantie nach Abzug der Provision (2.25% des Bestellwerts) zuverlässig erreicht wird.
-// Ab CHF 6 Mio. gelten individuelle Konditionen (manuell) — automatisch wird für
-// alles ab 3 Mio. der höchste definierte GROSS-Wert (36.25%) ausgeschrieben.
 const SUPPLIER_TIERS = [
-  { min: 3_000_000, net: 0.35, gross: 0.3625 }, // 3M+ (>6M individuell, manuell)
-  { min: 1_200_000, net: 0.30, gross: 0.3125 }, // 1.2M–3M
-  { min: 600_000,   net: 0.25, gross: 0.2625 }, // 600k–1.2M
-  { min: 300_000,   net: 0.20, gross: 0.2175 }, // 300k–600k
-  { min: 150_000,   net: 0.16, gross: 0.1775 }, // 150k–300k
-  { min: 50_000,    net: 0.12, gross: 0.1375 }, // 50k–150k
-  { min: 20_000,    net: 0.08, gross: 0.095 },  // 20k–50k
+  { min: 500, max: 4999, net: 0.05 },
+  { min: 5000, max: 24999, net: 0.07 },
+  { min: 25000, max: 49999, net: 0.10 },
+  { min: 50000, max: 99999, net: 0.13 },
+  { min: 100000, max: 249999, net: 0.16 },
+  { min: 250000, max: 499999, net: 0.20 },
+  { min: 500000, max: 999999, net: 0.24 },
+  { min: 1000000, max: Infinity, net: 0.28 },
 ];
-const FALLBACK_GROSS = 0.095; // unter 20k (Fallback-Bündel) → Kunde netto 8%
+const COMMISSION = 0.0225;
+const FALLBACK_GROSS = 0.0725; // unter CHF 500 (Fallback) → net 0.05 + Provision
 
-// Liefert den auszuschreibenden GROSS-Mindestrabatt (oder null, wenn < 20k → Fallback).
-function getGrossTarget(estimatedValueCHF: number): number | null {
-  for (const tier of SUPPLIER_TIERS) {
-    if (estimatedValueCHF >= tier.min) return tier.gross;
-  }
-  return null; // below 20k — fallback bundle
-}
-
-// Liefert den NETTO-Tarifsatz fuer ein Gesamtvolumen (0, wenn < 20k).
+// Liefert den NETTO-Tarifsatz fuer ein Gesamtvolumen (0, wenn < CHF 500).
 function getNetTier(estimatedValueCHF: number): number {
   for (const tier of SUPPLIER_TIERS) {
-    if (estimatedValueCHF >= tier.min) return tier.net;
+    if (estimatedValueCHF >= tier.min && estimatedValueCHF <= tier.max) return tier.net;
   }
-  return 0; // below 20k
+  return 0; // below 500
+}
+
+// Liefert den auszuschreibenden GROSS-Mindestrabatt (net + Provision) oder null (< 500 → Fallback).
+function getGrossTarget(estimatedValueCHF: number): number | null {
+  const net = getNetTier(estimatedValueCHF);
+  return net > 0 ? net + COMMISSION : null;
 }
 
 // ---------------------------------------------------------------------------
