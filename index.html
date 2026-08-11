@@ -1000,7 +1000,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <div class="nav-inner">
     <a class="nav-logo" href="/">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="materialien.html" data-i18n="nav.materials">Materialien</a></li>
+      <li><a href="materialien.html" data-i18n="nav.materials">Materialien</a></li><li><a href="/buendel" data-i18n="nav_bundles">Bündel</a></li>
       <li class="has-dd"><a href="fuerwen.html" data-i18n="nav.forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; Baumeisterbetriebe</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Ausbau</a></div></li>
       <li><a href="ueberuns.html" data-i18n="nav.about">Über uns</a></li>
     </ul>
@@ -1049,6 +1049,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <a href="/buendel" onclick="toggleNav()" data-i18n="nav_bundles">Bündel</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav.forwhom">Für wen</a>
   <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_ov_bau">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="nav_ov_handwerk">Handwerk</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav.supplier">Lieferant werden</a>
@@ -1395,7 +1396,7 @@ window.soLangNow=function(){return localStorage.getItem('sourceon-lang')||'de';}
 window.soT=function(map){var l=window.soLangNow();return (map&&(map[l]!=null?map[l]:map.de))||'';};
 var I18N={
   de:{lp_t6_cat:'Und mehr',lp_t6_title:'Nicht dabei?',lp_t6_desc:'Meld dich — wir prüfen ob SourceOn für deinen Bedarf passt.',lp_t6_link:'Anfragen →',
-    'nav.home':'Home','nav.process':'Wie es funktioniert','nav.calc':'Kalkulator','nav.materials':'Materialien',
+    'nav.home':'Home','nav.process':'Wie es funktioniert','nav.calc':'Kalkulator','nav.materials':'Materialien',nav_bundles:'Bündel',
     'nav.forwhom':'Für wen','nav.supplier':'Lieferant werden','nav.about':'Über uns','nav.contact':'Kontakt',
     'nav.cta':'Materialbedarf melden',
     nav_dd_bau:'Bauunternehmen & Baumeisterbetriebe',nav_dd_handwerk:'Handwerk & Ausbau',nav_dd_gu:'Generalunternehmer & TU',nav_dd_oeff:'Öffentliche Auftraggeber',nav_dd_immo:'Immobilien & Wohnbau',
@@ -1494,7 +1495,7 @@ var I18N={
     'chat.placeholder':'Frage stellen…'
   },
   en:{lp_t6_cat:'And more',lp_t6_title:'Not listed?',lp_t6_desc:'Get in touch — we\'ll check if SourceOn works for your needs.',lp_t6_link:'Enquire →',
-    'nav.home':'Home','nav.process':'How it works','nav.calc':'Calculator','nav.materials':'Materials',
+    'nav.home':'Home','nav.process':'How it works','nav.calc':'Calculator','nav.materials':'Materials',nav_bundles:'Bundles',
     'nav.forwhom':'Who it\'s for','nav.supplier':'Become a supplier','nav.about':'About us','nav.contact':'Contact',
     'nav.cta':'Report material demand',
     nav_dd_bau:'Construction firms & master builders',nav_dd_handwerk:'Trades & interior finishing',nav_dd_gu:'General & total contractors',nav_dd_oeff:'Public sector clients',nav_dd_immo:'Real estate & housing',
@@ -1593,7 +1594,7 @@ var I18N={
     'chat.placeholder':'Ask a question…'
   },
   fr:{lp_t6_cat:'Et plus',lp_t6_title:'Pas concerné?',lp_t6_desc:'Contactez-nous — nous vérifions si SourceOn correspond à vos besoins.',lp_t6_link:'Demander →',
-    'nav.home':'Accueil','nav.process':'Comment ça marche','nav.calc':'Calculateur','nav.materials':'Matériaux',
+    'nav.home':'Accueil','nav.process':'Comment ça marche','nav.calc':'Calculateur','nav.materials':'Matériaux',nav_bundles:'Groupements',
     'nav.forwhom':'Pour qui','nav.supplier':'Devenir fournisseur','nav.about':'À propos','nav.contact':'Contact',
     'nav.cta':'Annoncer un besoin',
     nav_dd_bau:'Entreprises de construction & PME du bâtiment',nav_dd_handwerk:'Artisanat & aménagement',nav_dd_gu:'Entreprises générales & totales',nav_dd_oeff:'Maîtres d\'ouvrage publics',nav_dd_immo:'Immobilier & logement',
@@ -1692,7 +1693,7 @@ var I18N={
     'chat.placeholder':'Poser une question…'
   },
   it:{lp_t6_cat:'E altro',lp_t6_title:'Non ti ritrovi?',lp_t6_desc:'Contattaci — verifichiamo se SourceOn è adatto alle tue esigenze.',lp_t6_link:'Richiedi →',
-    'nav.home':'Home','nav.process':'Come funziona','nav.calc':'Calcolatore','nav.materials':'Materiali',
+    'nav.home':'Home','nav.process':'Come funziona','nav.calc':'Calcolatore','nav.materials':'Materiali',nav_bundles:'Raggruppamenti',
     'nav.forwhom':'Per chi','nav.supplier':'Diventa fornitore','nav.about':'Chi siamo','nav.contact':'Contatto',
     'nav.cta':'Segnala fabbisogno materiale',
     nav_dd_bau:'Imprese edili & piccole imprese di costruzione',nav_dd_handwerk:'Artigianato & finiture',nav_dd_gu:'Imprese generali & totali',nav_dd_oeff:'Committenti pubblici',nav_dd_immo:'Immobili & edilizia abitativa',

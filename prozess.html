@@ -958,7 +958,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <div class="nav-inner">
     <a class="nav-logo" href="/">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
+      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li><li><a href="/buendel" data-i18n="nav_bundles">Bündel</a></li>
       <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="fw_bau">Bauunternehmen &amp; Baumeisterbetriebe</a><a href="fuerwen-handwerk.html" data-i18n="fw_handwerk">Handwerk &amp; Ausbau</a></div></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
     </ul>
@@ -1007,6 +1007,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <a href="/buendel" onclick="toggleNav()" data-i18n="nav_bundles">Bündel</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom_m">Für wen</a>
   <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="fw_bau_m">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="fw_handwerk_m">Handwerk</a><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="fw_gu_m">Generalunternehmer</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier_m">Lieferant werden</a>
@@ -1281,7 +1282,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 (function(){
 const T={
 de:{
-nav_home:"Home",nav_process:"Wie es funktioniert",nav_calculator:"Kalkulator",nav_materials:"Materialien",nav_forwhom:"Für wen",nav_supplier:"Lieferant werden",nav_about:"Über uns",nav_contact:"Kontakt",nav_cta:"Materialbedarf melden",
+nav_home:"Home",nav_process:"Wie es funktioniert",nav_calculator:"Kalkulator",nav_materials:"Materialien",nav_bundles:'Bündel',nav_forwhom:"Für wen",nav_supplier:"Lieferant werden",nav_about:"Über uns",nav_contact:"Kontakt",nav_cta:"Materialbedarf melden",
 nav_home_m:"Home",nav_process_m:"Wie es funktioniert",nav_calculator_m:"Kalkulator",nav_forwhom_m:"Für wen",nav_supplier_m:"Lieferant werden",nav_about_m:"Über uns",nav_contact_m:"Kontakt",nav_cta_m:"Materialbedarf melden",
 proc_label:"So funktioniert es",proc_title:"Vier Schritte.<br>Eine Entscheidung.",proc_subtitle:"Von der ersten Anfrage bis zur Lieferung — du behältst jederzeit die volle Kontrolle.",
 proc_step1_title:"Bedarf melden",proc_step1_text:"Du teilst uns deinen Materialbedarf mit — Materialart, Menge und Lieferzeitraum. Du siehst sofort deinen garantierten Ziel-Mindestrabatt. Dauert zwei Minuten.",
@@ -1328,7 +1329,7 @@ footer_calc:"Kalkulator",
 trust_title:"Verifizierung erforderlich",trust_msg:"Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.",trust_submit:"Bestätigen",trust_noresend:"Keinen Code erhalten?",trust_resend:"Code erneut senden",trust_cancel:"Abbrechen"
 },
 en:{
-nav_home:"Home",nav_process:"How it works",nav_calculator:"Calculator",nav_materials:"Materials",nav_forwhom:"For whom",nav_supplier:"Become a supplier",nav_about:"About us",nav_contact:"Contact",nav_cta:"Report material need",
+nav_home:"Home",nav_process:"How it works",nav_calculator:"Calculator",nav_materials:"Materials",nav_bundles:'Bundles',nav_forwhom:"For whom",nav_supplier:"Become a supplier",nav_about:"About us",nav_contact:"Contact",nav_cta:"Report material need",
 nav_home_m:"Home",nav_process_m:"How it works",nav_calculator_m:"Calculator",nav_forwhom_m:"For whom",nav_supplier_m:"Become a supplier",nav_about_m:"About us",nav_contact_m:"Contact",nav_cta_m:"Report material need",
 proc_label:"How it works",proc_title:"Four steps.<br>One decision.",proc_subtitle:"From the first enquiry to delivery — you stay in full control at all times.",
 proc_step1_title:"Report your need",proc_step1_text:"Tell us your material needs — type, quantity and delivery timeframe. You see your guaranteed target minimum discount right away. Takes two minutes.",
@@ -1375,7 +1376,7 @@ footer_calc:"Calculator",
 trust_title:"Verification required",trust_msg:"A confirmation code has been sent to your email. Please enter it below.",trust_submit:"Confirm",trust_noresend:"Didn't receive a code?",trust_resend:"Resend code",trust_cancel:"Cancel"
 },
 fr:{
-nav_home:"Accueil",nav_process:"Comment ça marche",nav_calculator:"Calculateur",nav_materials:"Matériaux",nav_forwhom:"Pour qui",nav_supplier:"Devenir fournisseur",nav_about:"À propos",nav_contact:"Contact",nav_cta:"Annoncer un besoin",
+nav_home:"Accueil",nav_process:"Comment ça marche",nav_calculator:"Calculateur",nav_materials:"Matériaux",nav_bundles:'Groupements',nav_forwhom:"Pour qui",nav_supplier:"Devenir fournisseur",nav_about:"À propos",nav_contact:"Contact",nav_cta:"Annoncer un besoin",
 nav_home_m:"Accueil",nav_process_m:"Comment ça marche",nav_calculator_m:"Calculateur",nav_forwhom_m:"Pour qui",nav_supplier_m:"Devenir fournisseur",nav_about_m:"À propos",nav_contact_m:"Contact",nav_cta_m:"Annoncer un besoin",
 proc_label:"Comment ça marche",proc_title:"Quatre étapes.<br>Une décision.",proc_subtitle:"De la première demande à la livraison — vous gardez le contrôle total à tout moment.",
 proc_step1_title:"Annoncer le besoin",proc_step1_text:"Communiquez-nous votre besoin en matériaux — type, quantité et délai de livraison. Vous voyez immédiatement votre rabais minimum cible garanti. Cela prend deux minutes.",
@@ -1422,7 +1423,7 @@ footer_calc:"Calculateur",
 trust_title:"Vérification requise",trust_msg:"Un code de confirmation a été envoyé à ton e-mail. Merci de le saisir ci-dessous.",trust_submit:"Confirmer",trust_noresend:"Tu n'as pas reçu de code ?",trust_resend:"Renvoyer le code",trust_cancel:"Annuler"
 },
 it:{
-nav_home:"Home",nav_process:"Come funziona",nav_calculator:"Calcolatore",nav_materials:"Materiali",nav_forwhom:"Per chi",nav_supplier:"Diventa fornitore",nav_about:"Chi siamo",nav_contact:"Contatto",nav_cta:"Segnala fabbisogno",
+nav_home:"Home",nav_process:"Come funziona",nav_calculator:"Calcolatore",nav_materials:"Materiali",nav_bundles:'Raggruppamenti',nav_forwhom:"Per chi",nav_supplier:"Diventa fornitore",nav_about:"Chi siamo",nav_contact:"Contatto",nav_cta:"Segnala fabbisogno",
 nav_home_m:"Home",nav_process_m:"Come funziona",nav_calculator_m:"Calcolatore",nav_forwhom_m:"Per chi",nav_supplier_m:"Diventa fornitore",nav_about_m:"Chi siamo",nav_contact_m:"Contatto",nav_cta_m:"Segnala fabbisogno",
 proc_label:"Come funziona",proc_title:"Quattro passaggi.<br>Una decisione.",proc_subtitle:"Dalla prima richiesta alla consegna — mantieni sempre il pieno controllo.",
 proc_step1_title:"Segnala il fabbisogno",proc_step1_text:"Comunicaci il tuo fabbisogno di materiale — tipo, quantità e periodo di consegna. Vedi subito il tuo sconto minimo obiettivo garantito. Ci vogliono due minuti.",

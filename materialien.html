@@ -947,7 +947,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   <div class="nav-inner">
     <a class="nav-logo" href="/">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
+      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li><li><a href="/buendel" data-i18n="nav_bundles">Bündel</a></li>
       <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_forwhom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; Baumeisterbetriebe</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Ausbau</a></div></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
     </ul>
@@ -996,6 +996,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <a href="/buendel" onclick="toggleNav()" data-i18n="nav_bundles">Bündel</a>
   <a href="fuerwen.html" onclick="toggleNav()" data-i18n="nav_forwhom">Für wen</a>
   <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" onclick="toggleNav()" data-i18n="nav_ov_bau">Bauunternehmen</a><a href="fuerwen-handwerk.html" onclick="toggleNav()" data-i18n="nav_ov_handwerk">Handwerk</a></div>
   <a href="lieferant.html" onclick="toggleNav()" data-i18n="nav_supplier">Lieferant werden</a>
@@ -1326,7 +1327,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 const T={
   de:{
     page_title:'Baumaterialien Katalog | 58 Baustoffe SIA/ISO-konform — SourceOn',
-    nav_home:'Home',nav_process:'Wie es funktioniert',nav_calc:'Kalkulator',nav_materials:'Materialien',
+    nav_home:'Home',nav_process:'Wie es funktioniert',nav_calc:'Kalkulator',nav_materials:'Materialien',nav_bundles:'Bündel',
     nav_forwhom:'Für wen',nav_supplier:'Lieferant werden',nav_about:'Über uns',nav_contact:'Kontakt',
     nav_cta:'Materialbedarf melden',
     nav_dd_bau:'Bauunternehmen & Baumeisterbetriebe',nav_dd_handwerk:'Handwerk & Ausbau',nav_dd_gu:'Generalunternehmer & TU',nav_dd_oeff:'Öffentliche Auftraggeber',nav_dd_immo:'Immobilien & Wohnbau',
@@ -1378,7 +1379,7 @@ const T={
   },
   en:{
     page_title:'Construction Materials Catalogue | 58 Building Materials SIA/ISO — SourceOn',
-    nav_home:'Home',nav_process:'How it works',nav_calc:'Calculator',nav_materials:'Materials',
+    nav_home:'Home',nav_process:'How it works',nav_calc:'Calculator',nav_materials:'Materials',nav_bundles:'Bundles',
     nav_forwhom:'For whom',nav_supplier:'Become a supplier',nav_about:'About us',nav_contact:'Contact',
     nav_cta:'Report material needs',
     nav_dd_bau:'Construction firms & master builders',nav_dd_handwerk:'Trades & interior finishing',nav_dd_gu:'General & total contractors',nav_dd_oeff:'Public clients',nav_dd_immo:'Real estate & housing',
@@ -1430,7 +1431,7 @@ const T={
   },
   fr:{
     page_title:'Catalogue de matériaux de construction | 58 matériaux SIA/ISO — SourceOn',
-    nav_home:'Accueil',nav_process:'Comment ça marche',nav_calc:'Calculateur',nav_materials:'Matériaux',
+    nav_home:'Accueil',nav_process:'Comment ça marche',nav_calc:'Calculateur',nav_materials:'Matériaux',nav_bundles:'Groupements',
     nav_forwhom:'Pour qui',nav_supplier:'Devenir fournisseur',nav_about:'À propos',nav_contact:'Contact',
     nav_cta:'Signaler un besoin',
     nav_dd_bau:'Entreprises de construction & PME du bâtiment',nav_dd_handwerk:'Artisanat & aménagement',nav_dd_gu:'Entreprises générales & totales',nav_dd_oeff:'Maîtres d\'ouvrage publics',nav_dd_immo:'Immobilier & logement',
@@ -1483,7 +1484,7 @@ const T={
   },
   it:{
     page_title:'Catalogo materiali da costruzione | 58 materiali SIA/ISO — SourceOn',
-    nav_home:'Home',nav_process:'Come funziona',nav_calc:'Calcolatore',nav_materials:'Materiali',
+    nav_home:'Home',nav_process:'Come funziona',nav_calc:'Calcolatore',nav_materials:'Materiali',nav_bundles:'Raggruppamenti',
     nav_forwhom:'Per chi',nav_supplier:'Diventa fornitore',nav_about:'Chi siamo',nav_contact:'Contatto',
     nav_cta:'Segnala fabbisogno',
     nav_dd_bau:'Imprese edili & piccole imprese di costruzione',nav_dd_handwerk:'Artigianato & finiture',nav_dd_gu:'Imprese generali & totali',nav_dd_oeff:'Committenti pubblici',nav_dd_immo:'Immobiliare & abitativo',

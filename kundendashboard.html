@@ -432,6 +432,10 @@ p{text-wrap:pretty}
         <div class="m3"><div class="m3-num" id="ov-done"><span class="skeleton-val"></span></div><div class="m3-label">Abgeschlossen</div></div>
       </div>
     </div>
+    <a href="/buendel" style="display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--bg-1);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 20px;margin-bottom:32px;text-decoration:none;box-shadow:0 1px 2px rgba(16,24,40,.04)">
+      <span data-i18n="buendel_banner_text" style="font-size:14px;color:var(--text-2)">Offene Bündel ansehen — laufende Sammelbestellungen in deiner Region.</span>
+      <span data-i18n="buendel_banner_link" style="font-size:13px;font-weight:600;color:var(--gold-ink);white-space:nowrap">Bündel anzeigen →</span>
+    </a>
     <div class="sec-head"><span class="sec-label">Bevorstehend</span><span class="link-m" onclick="exportICS()">↓ Kalender</span></div>
     <div id="ov-agenda" class="ov-card"></div>
     <div class="divider"></div>
@@ -1122,13 +1126,13 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
 /* Werkzeuge → Einsparkalkulator-Karte: 4 Sprachen (Muster wie WARN_I18N) */
 (function(){
   var T={
-    de:{tools_calc_title:'Einsparkalkulator',tools_calc_sub:'Berechne dein Einsparpotenzial basierend auf deinem Bestellvolumen.',tools_calc_btn:'Zum Kalkulator →'},
-    en:{tools_calc_title:'Savings Calculator',tools_calc_sub:'Calculate your savings potential based on your order volume.',tools_calc_btn:'To Calculator →'},
-    fr:{tools_calc_title:"Calculateur d'économies",tools_calc_sub:"Calcule ton potentiel d'économies en fonction de ton volume de commande.",tools_calc_btn:'Vers le calculateur →'},
-    it:{tools_calc_title:'Calcolatore di risparmio',tools_calc_sub:"Calcola il tuo potenziale di risparmio in base al volume d'ordine.",tools_calc_btn:'Al calcolatore →'}
+    de:{tools_calc_title:'Einsparkalkulator',tools_calc_sub:'Berechne dein Einsparpotenzial basierend auf deinem Bestellvolumen.',tools_calc_btn:'Zum Kalkulator →',buendel_banner_text:'Offene Bündel ansehen — laufende Sammelbestellungen in deiner Region.',buendel_banner_link:'Bündel anzeigen →'},
+    en:{tools_calc_title:'Savings Calculator',tools_calc_sub:'Calculate your savings potential based on your order volume.',tools_calc_btn:'To Calculator →',buendel_banner_text:'View open bundles — ongoing group orders in your region.',buendel_banner_link:'View bundles →'},
+    fr:{tools_calc_title:"Calculateur d'économies",tools_calc_sub:"Calcule ton potentiel d'économies en fonction de ton volume de commande.",tools_calc_btn:'Vers le calculateur →',buendel_banner_text:"Voir les groupements ouverts — commandes groupées en cours dans ta région.",buendel_banner_link:'Voir les groupements →'},
+    it:{tools_calc_title:'Calcolatore di risparmio',tools_calc_sub:"Calcola il tuo potenziale di risparmio in base al volume d'ordine.",tools_calc_btn:'Al calcolatore →',buendel_banner_text:'Vedi i raggruppamenti aperti — ordini collettivi in corso nella tua regione.',buendel_banner_link:'Vedi i raggruppamenti →'}
   };
   function apply(){var l=localStorage.getItem('sourceon-lang')||'de';var d=T[l]||T.de;
-    document.querySelectorAll('[data-i18n^="tools_calc_"]').forEach(function(el){var k=el.getAttribute('data-i18n');if(d[k])el.textContent=d[k];});}
+    document.querySelectorAll('[data-i18n^="tools_calc_"],[data-i18n^="buendel_"]').forEach(function(el){var k=el.getAttribute('data-i18n');if(d[k])el.textContent=d[k];});}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',apply);else apply();
 })();
 </script>

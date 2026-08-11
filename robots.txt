@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Allow: /buendel.html
 
 # Block private/admin pages
 Disallow: /adminoverview.html

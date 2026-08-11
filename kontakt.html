@@ -1071,7 +1071,7 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
   <div class="nav-inner">
     <a class="nav-logo" href="/">Source<span>On</span></a>
     <ul class="nav-links">
-      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li>
+      <li><a href="materialien.html" data-i18n="nav_materials">Materialien</a></li><li><a href="/buendel" data-i18n="nav_bundles">Bündel</a></li>
       <li class="has-dd"><a href="fuerwen.html" data-i18n="nav_for_whom">Für wen</a><div class="nav-dd"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_dd_bau">Bauunternehmen &amp; Baumeisterbetriebe</a><a href="fuerwen-handwerk.html" data-i18n="nav_dd_handwerk">Handwerk &amp; Ausbau</a></div></li>
       <li><a href="ueberuns.html" data-i18n="nav_about">Über uns</a></li>
     </ul>
@@ -1120,6 +1120,7 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
 
 <div id="nav-overlay">
   <button id="nav-close" onclick="toggleNav()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <a href="/buendel" onclick="toggleNav()" data-i18n="nav_bundles">Bündel</a>
   <a href="fuerwen.html" data-i18n="nav_for_whom" onclick="toggleNav()">Für wen</a>
   <div class="nav-ov-sub"><a href="fuerwen-bauunternehmen.html" data-i18n="nav_ov_bau" onclick="toggleNav()">Bauunternehmen</a><a href="fuerwen-handwerk.html" data-i18n="nav_ov_handwerk" onclick="toggleNav()">Handwerk</a></div>
   <a href="lieferant.html" data-i18n="nav_supplier" onclick="toggleNav()">Lieferant werden</a>
@@ -1996,7 +1997,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 (function(){
 window.I18N={
   de:{
-    nav_home:"Home",nav_process:"Wie es funktioniert",nav_calculator:"Kalkulator",nav_materials:"Materialien",nav_for_whom:"Für wen",nav_supplier:"Lieferant werden",nav_about:"Über uns",nav_contact:"Kontakt",nav_cta:"Materialbedarf melden",
+    nav_home:"Home",nav_process:"Wie es funktioniert",nav_calculator:"Kalkulator",nav_materials:"Materialien",nav_bundles:'Bündel',nav_for_whom:"Für wen",nav_supplier:"Lieferant werden",nav_about:"Über uns",nav_contact:"Kontakt",nav_cta:"Materialbedarf melden",
     kontakt_badge:"Materialbedarf melden",kontakt_title:"Jetzt Materialbedarf melden",kontakt_desc:"Du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.",
     kontakt_email:"info@SourceOn.ch",kontakt_location:"Zürich, Schweiz",
     kontakt_how_title:"Wie es funktioniert",kontakt_how_text:"Wähle dein Material aus dem Katalog, gib Menge und Lieferzeitraum an — fertig. Du siehst sofort deinen garantierten Netto-Mindestrabatt, bevor du absendest.",
@@ -2052,7 +2053,7 @@ window.I18N={
     trust_h3:"Verifizierung erforderlich",trust_msg:"Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.",trust_msg_phone:"Ein Bestätigungscode wurde an deine Telefonnummer gesendet.",trust_submit:"Bestätigen",trust_nocode:"Keinen Code erhalten?",trust_resend:"Code erneut senden",trust_cancel:"Abbrechen",trust_checking:"Wird geprüft…",trust_unexpected:"Unerwarteter Status: ",trust_invalid:"Ungültiger Code",trust_start_failed:"Verifizierung konnte nicht gestartet werden: "
   },
   en:{
-    nav_home:"Home",nav_process:"How it works",nav_calculator:"Calculator",nav_materials:"Materials",nav_for_whom:"For whom",nav_supplier:"Become a supplier",nav_about:"About us",nav_contact:"Contact",nav_cta:"Report material needs",
+    nav_home:"Home",nav_process:"How it works",nav_calculator:"Calculator",nav_materials:"Materials",nav_bundles:'Bundles',nav_for_whom:"For whom",nav_supplier:"Become a supplier",nav_about:"About us",nav_contact:"Contact",nav_cta:"Report material needs",
     kontakt_badge:"Report material needs",kontakt_title:"Report your material needs now",kontakt_desc:"You only pay when we save you money. You see your guaranteed net minimum discount right away and track the status anytime in your dashboard.",
     kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Switzerland",
     kontakt_how_title:"How it works",kontakt_how_text:"Select your material from the catalog, enter quantity and delivery timeframe — done. You immediately see your guaranteed net minimum discount before submitting.",
@@ -2109,7 +2110,7 @@ window.I18N={
     trust_h3:"Verification required",trust_msg:"A verification code has been sent to your email. Please enter it below.",trust_msg_phone:"A verification code has been sent to your phone number.",trust_submit:"Confirm",trust_nocode:"Didn't receive a code?",trust_resend:"Resend code",trust_cancel:"Cancel",trust_checking:"Verifying…",trust_unexpected:"Unexpected status: ",trust_invalid:"Invalid code",trust_start_failed:"Verification could not be started: "
   },
   fr:{
-    nav_home:"Accueil",nav_process:"Comment ça marche",nav_calculator:"Calculateur",nav_materials:"Matériaux",nav_for_whom:"Pour qui",nav_supplier:"Devenir fournisseur",nav_about:"À propos",nav_contact:"Contact",nav_cta:"Déclarer un besoin",
+    nav_home:"Accueil",nav_process:"Comment ça marche",nav_calculator:"Calculateur",nav_materials:"Matériaux",nav_bundles:'Groupements',nav_for_whom:"Pour qui",nav_supplier:"Devenir fournisseur",nav_about:"À propos",nav_contact:"Contact",nav_cta:"Déclarer un besoin",
     kontakt_badge:"Déclarer un besoin",kontakt_title:"Déclarez vos besoins en matériaux",kontakt_desc:"Vous ne payez que si nous vous faisons économiser. Vous voyez immédiatement votre rabais minimum net garanti et suivez le statut à tout moment dans votre tableau de bord.",
     kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Suisse",
     kontakt_how_title:"Comment ça marche",kontakt_how_text:"Sélectionnez votre matériau dans le catalogue, indiquez la quantité et le délai de livraison — c'est tout. Vous voyez immédiatement votre remise minimale nette garantie avant d'envoyer.",
@@ -2165,7 +2166,7 @@ window.I18N={
     trust_h3:"Vérification requise",trust_msg:"Un code de vérification a été envoyé à ton e-mail. Merci de le saisir ci-dessous.",trust_msg_phone:"Un code de vérification a été envoyé à ton numéro de téléphone.",trust_submit:"Confirmer",trust_nocode:"Tu n'as pas reçu de code?",trust_resend:"Renvoyer le code",trust_cancel:"Annuler",trust_checking:"Vérification…",trust_unexpected:"Statut inattendu: ",trust_invalid:"Code invalide",trust_start_failed:"La vérification n'a pas pu être démarrée: "
   },
   it:{
-    nav_home:"Home",nav_process:"Come funziona",nav_calculator:"Calcolatore",nav_materials:"Materiali",nav_for_whom:"Per chi",nav_supplier:"Diventare fornitore",nav_about:"Chi siamo",nav_contact:"Contatto",nav_cta:"Segnalare fabbisogno",
+    nav_home:"Home",nav_process:"Come funziona",nav_calculator:"Calcolatore",nav_materials:"Materiali",nav_bundles:'Raggruppamenti',nav_for_whom:"Per chi",nav_supplier:"Diventare fornitore",nav_about:"Chi siamo",nav_contact:"Contatto",nav_cta:"Segnalare fabbisogno",
     kontakt_badge:"Segnalare fabbisogno",kontakt_title:"Segnala ora il tuo fabbisogno di materiali",kontakt_desc:"Paghi solo se ti facciamo risparmiare. Vedi subito il tuo sconto minimo netto garantito e segui lo stato in qualsiasi momento nella tua dashboard.",
     kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurigo, Svizzera",
     kontakt_how_title:"Come funziona",kontakt_how_text:"Seleziona il tuo materiale dal catalogo, inserisci quantità e tempistica di consegna — fatto. Vedi immediatamente il tuo sconto minimo netto garantito prima di inviare.",
