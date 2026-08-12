@@ -2112,7 +2112,10 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
 (function(){
   var SB_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
   var SB_KEY='sb_publishable_C2d4skG1yF4lTzlKpvEWbw_mePtBH1c';
-  var H={apikey:SB_KEY,Authorization:'Bearer '+SB_KEY};
+  /* Nur apikey, KEIN Authorization-Header → Supabase behandelt die Anfrage als
+     anonym (Rolle anon) und greift auf die öffentliche Read-Policy, nicht auf
+     bundles_select_participants. */
+  var H={apikey:SB_KEY};
   var T={
     de:{vol:'Aktuelles Volumen',req:'Anzahl Bedarfe',rem:'Noch',days:'Tage',hours:'Stunden',ended:'Frist abgelaufen'},
     en:{vol:'Current volume',req:'Number of requests',rem:'Still',days:'days',hours:'hours',ended:'Deadline passed'},
