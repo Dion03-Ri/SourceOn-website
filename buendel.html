@@ -2108,6 +2108,7 @@ document.addEventListener('keydown',function(e){
 window.addEventListener("pageshow", function(e){ if(e.persisted){ window.location.reload(); } });
 </script>
 <script>
+console.log('[Buendel] SCRIPT LOADED');
 /* Offene Bündel — Live-Liste aus Supabase (PostgREST, Publishable-Key). */
 (function(){
   var SB_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
@@ -2160,7 +2161,11 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
       show('bd-loading',false);show('bd-empty',false);
     }catch(error){console.error('[Buendel] Error:', error);empty();}
   }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load);else load();
+  // Robust: nur einmal starten, egal ob DOM schon fertig oder Gate den Body ersetzt.
+  var _booted=false;
+  function boot(){if(_booted)return;_booted=true;console.log('[Buendel] boot → load()');load();}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',boot);}else{boot();}
+  window.addEventListener('load',boot);
 })();
 </script>
 </body>
