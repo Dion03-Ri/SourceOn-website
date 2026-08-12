@@ -2132,7 +2132,7 @@ console.log('[Buendel] SCRIPT LOADED');
   async function load(){
     console.log('[Buendel] Starting fetch...');
     try{
-      var r=await fetch(SB_URL+'/rest/v1/bundles?status=in.(offen,sammelt)&select=id,sourceon_id,liefer_zone,bid_deadline&order=bid_deadline.asc',{headers:H});
+      var r=await fetch(SB_URL+'/rest/v1/bundles?status=in.(offen,sammelt,ausgeschrieben)&select=id,sourceon_id,liefer_zone,bid_deadline&order=bid_deadline.asc',{headers:H});
       if(!r.ok)throw new Error('bundles HTTP '+r.status);
       var bundles=await r.json();
       console.log('[Buendel] Bundles:', bundles);
