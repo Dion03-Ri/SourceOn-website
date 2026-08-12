@@ -2132,18 +2132,20 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
       var bundles=await r.json();
       if(!bundles||!bundles.length){empty();return;}
       var cat={};
-      try{var rc=await fetch(SB_URL+'/rest/v1/material_catalog?select=sourceon_id,bezeichnung',{headers:H});if(rc.ok){(await rc.json()).forEach(function(c){cat[c.sourceon_id]=c.bezeichnung;});}}catch(e){}
+      try{var rc=await fetch(SB_URL+'/rest/v1/material_catalog?select=sourceon_id,bezeichnung,richtpreis_chf',{headers:H});if(rc.ok){(await rc.json()).forEach(function(c){cat[c.sourceon_id]={name:c.bezeichnung,rp:Number(c.richtpreis_chf)||0};});}}catch(e){}
       var agg={};
-      try{var ids=bundles.map(function(b){return b.id;}).join(',');var rr=await fetch(SB_URL+'/rest/v1/material_requests?bundle_id=in.('+ids+')&select=bundle_id,estimated_chf',{headers:H});if(rr.ok){(await rr.json()).forEach(function(m){var a=agg[m.bundle_id]||{c:0,s:0};a.c++;a.s+=Number(m.estimated_chf)||0;agg[m.bundle_id]=a;});}}catch(e){}
+      try{var ids=bundles.map(function(b){return b.id;}).join(',');var rr=await fetch(SB_URL+'/rest/v1/material_requests?bundle_id=in.('+ids+')&select=bundle_id,menge',{headers:H});if(rr.ok){(await rr.json()).forEach(function(m){var a=agg[m.bundle_id]||{c:0,menge:0};a.c++;a.menge+=Number(m.menge)||0;agg[m.bundle_id]=a;});}}catch(e){}
       var t=tr(),html='';
       bundles.forEach(function(b){
-        var name=cat[b.sourceon_id]||b.sourceon_id||'Material';
-        var a=agg[b.id]||{c:0,s:0};
+        var ci=cat[b.sourceon_id];
+        var name=(ci&&ci.name)||b.sourceon_id||'Material';
+        var a=agg[b.id]||{c:0,menge:0};
+        var total=a.menge*((ci&&ci.rp)||0); // total_chf = Σ(menge) × richtpreis_chf
         html+='<div class="bd-card">'
           +'<div class="bd-mat">'+esc(name)+'</div>'
           +'<div class="bd-zone">'+esc(b.liefer_zone||'')+'</div>'
           +'<div class="bd-rows">'
-          +'<div class="bd-r"><span class="l">'+esc(t.vol)+'</span><span class="v gold">'+fmtChf(a.s)+'</span></div>'
+          +'<div class="bd-r"><span class="l">'+esc(t.vol)+'</span><span class="v gold">'+fmtChf(total)+'</span></div>'
           +'<div class="bd-r"><span class="l">'+esc(t.req)+'</span><span class="v">'+a.c+'</span></div>'
           +'</div>'
           +'<div class="bd-cd"><span class="dot"></span>'+esc(countdown(b.bid_deadline))+'</div>'
