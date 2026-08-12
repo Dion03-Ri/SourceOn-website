@@ -2126,15 +2126,17 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
   function show(id,on){var e=document.getElementById(id);if(e)e.style.display=on?'':'none';}
   function empty(){show('bd-loading',false);show('bd-empty',true);}
   async function load(){
+    console.log('[Buendel] Starting fetch...');
     try{
       var r=await fetch(SB_URL+'/rest/v1/bundles?status=in.(offen,sammelt)&select=id,sourceon_id,liefer_zone,bid_deadline&order=bid_deadline.asc',{headers:H});
-      if(!r.ok)throw 0;
+      if(!r.ok)throw new Error('bundles HTTP '+r.status);
       var bundles=await r.json();
+      console.log('[Buendel] Bundles:', bundles);
       if(!bundles||!bundles.length){empty();return;}
       var cat={};
-      try{var rc=await fetch(SB_URL+'/rest/v1/material_catalog?select=sourceon_id,bezeichnung,richtpreis_chf',{headers:H});if(rc.ok){(await rc.json()).forEach(function(c){cat[c.sourceon_id]={name:c.bezeichnung,rp:Number(c.richtpreis_chf)||0};});}}catch(e){}
+      try{var rc=await fetch(SB_URL+'/rest/v1/material_catalog?select=sourceon_id,bezeichnung,richtpreis_chf',{headers:H});if(rc.ok){var catalog=await rc.json();console.log('[Buendel] Catalog:', catalog);catalog.forEach(function(c){cat[c.sourceon_id]={name:c.bezeichnung,rp:Number(c.richtpreis_chf)||0};});}}catch(error){console.error('[Buendel] Error:', error);}
       var agg={};
-      try{var ids=bundles.map(function(b){return b.id;}).join(',');var rr=await fetch(SB_URL+'/rest/v1/material_requests?bundle_id=in.('+ids+')&select=bundle_id,menge',{headers:H});if(rr.ok){(await rr.json()).forEach(function(m){var a=agg[m.bundle_id]||{c:0,menge:0};a.c++;a.menge+=Number(m.menge)||0;agg[m.bundle_id]=a;});}}catch(e){}
+      try{var ids=bundles.map(function(b){return b.id;}).join(',');var rr=await fetch(SB_URL+'/rest/v1/material_requests?bundle_id=in.('+ids+')&select=bundle_id,menge',{headers:H});if(rr.ok){var requests=await rr.json();console.log('[Buendel] Requests:', requests);requests.forEach(function(m){var a=agg[m.bundle_id]||{c:0,menge:0};a.c++;a.menge+=Number(m.menge)||0;agg[m.bundle_id]=a;});}}catch(error){console.error('[Buendel] Error:', error);}
       var t=tr(),html='';
       bundles.forEach(function(b){
         var ci=cat[b.sourceon_id];
@@ -2153,7 +2155,7 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
       });
       var list=document.getElementById('bd-list');if(list)list.innerHTML=html;
       show('bd-loading',false);show('bd-empty',false);
-    }catch(e){empty();}
+    }catch(error){console.error('[Buendel] Error:', error);empty();}
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',load);else load();
 })();
