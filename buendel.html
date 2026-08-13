@@ -1013,6 +1013,15 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <section class="sec bt"><div class="wrap">
     <style>
+    #lp .bd-filter{display:flex;gap:12px 16px;align-items:center;flex-wrap:wrap;margin:8px 0 22px}
+    #lp .bd-search{flex:1 1 260px;min-width:220px;background:var(--bg2);border:1px solid var(--lpbs);border-radius:8px;color:var(--t1);font-size:14px;padding:11px 14px;font-family:inherit;outline:none;transition:border-color .15s}
+    #lp .bd-search:focus{border-color:var(--gold)}
+    #lp .bd-search::placeholder{color:var(--t3)}
+    #lp .bd-chips{display:flex;gap:6px;flex-wrap:wrap}
+    #lp .bd-chip{padding:7px 14px;border-radius:999px;font-size:12px;font-weight:500;background:var(--bg2);color:var(--t3);border:1px solid transparent;cursor:pointer;transition:all .15s;font-family:inherit}
+    #lp .bd-chip:hover{color:var(--t1)}
+    #lp .bd-chip.active{background:var(--gold);color:#070F1A}
+    #lp .bd-nomatch{text-align:center;color:var(--t3);font-size:14px;padding:40px 20px}
     #lp .bd-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:8px}
     #lp .bd-card{background:var(--bg1);border:1px solid var(--lpb);border-radius:10px;padding:20px}
     #lp .bd-mat{font-size:16px;font-weight:600;color:var(--t1);letter-spacing:-.01em;line-height:1.3}
@@ -1032,7 +1041,12 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     #lp .bd-cta-btn{display:inline-block;background:var(--gold);color:#070F1A;font-weight:700;font-size:14px;padding:12px 24px;border-radius:8px;text-decoration:none;transition:filter .15s}
     #lp .bd-cta-btn:hover{filter:brightness(1.08)}
     </style>
+    <div id="bd-filter" class="bd-filter" style="display:none">
+      <input type="text" id="bd-search" class="bd-search" data-i18n-placeholder="bd_search_ph" placeholder="Material suchen…" autocomplete="off"/>
+      <div id="bd-chips" class="bd-chips"></div>
+    </div>
     <div id="bd-list" class="bd-list"></div>
+    <div id="bd-nomatch" class="bd-nomatch" style="display:none" data-i18n="bd_nomatch">Kein Bündel für diese Suche gefunden.</div>
     <div id="bd-loading" class="bd-loading" data-i18n="bd_loading">Bündel werden geladen…</div>
     <div id="bd-empty" class="bd-empty" style="display:none" data-i18n="bd_empty">Aktuell keine offenen Bündel — melde deinen Bedarf und starte ein neues Bündel.</div>
     <div class="bd-cta">
@@ -1247,7 +1261,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 (function(){
 const T={
   de:{
-    page_title:'Offene Bündel | Laufende Sammelbestellungen — SourceOn',sm_eyebrow:'Sondermaterial',bd_eyebrow:'OFFENE BÜNDEL',bd_heading:'Laufende Sammelbestellungen.',bd_sub:'Bündel fassen den Materialbedarf mehrerer Baufirmen zusammen — gebündelte Mengen ermöglichen bessere Einkaufskonditionen.',bd_loading:'Bündel werden geladen…',bd_empty:'Aktuell keine offenen Bündel — melde deinen Bedarf und starte ein neues Bündel.',bd_cta_title:'Möchtest du einem Bündel beitreten?',bd_cta_sub:'Melde deinen Materialbedarf — passende Bündel werden automatisch erkannt.',bd_cta_btn:'Materialbedarf melden →',sm_heading:'Material nicht im Katalog?',
+    page_title:'Offene Bündel | Laufende Sammelbestellungen — SourceOn',sm_eyebrow:'Sondermaterial',bd_eyebrow:'OFFENE BÜNDEL',bd_heading:'Laufende Sammelbestellungen.',bd_sub:'Bündel fassen den Materialbedarf mehrerer Baufirmen zusammen — gebündelte Mengen ermöglichen bessere Einkaufskonditionen.',bd_loading:'Bündel werden geladen…',bd_empty:'Aktuell keine offenen Bündel — melde deinen Bedarf und starte ein neues Bündel.',bd_cta_title:'Möchtest du einem Bündel beitreten?',bd_cta_sub:'Melde deinen Materialbedarf — passende Bündel werden automatisch erkannt.',bd_cta_btn:'Materialbedarf melden →',bd_search_ph:'Material suchen…',bd_nomatch:'Kein Bündel für diese Suche gefunden.',sm_heading:'Material nicht im Katalog?',
     nav_home:'Home',nav_process:'Wie es funktioniert',nav_calc:'Kalkulator',nav_materials:'Materialien',nav_bundles:'Bündel',
     nav_forwhom:'Für wen',nav_supplier:'Lieferant werden',nav_about:'Über uns',nav_contact:'Kontakt',
     nav_cta:'Materialbedarf melden',
@@ -1299,7 +1313,7 @@ const T={
     footer_tagline:'Du zahlst erst, wenn wir dir sparen.'
   },
   en:{
-    page_title:'Open Bundles | Ongoing group orders — SourceOn',sm_eyebrow:'Special material',bd_eyebrow:'OPEN BUNDLES',bd_heading:'Ongoing group orders.',bd_sub:'Bundles combine the material needs of several construction firms — pooled volumes enable better purchasing conditions.',bd_loading:'Loading bundles…',bd_empty:'No open bundles right now — report your needs and start a new bundle.',bd_cta_title:'Want to join a bundle?',bd_cta_sub:'Report your material needs — matching bundles are detected automatically.',bd_cta_btn:'Report material needs →',sm_heading:'Material not in the catalogue?',
+    page_title:'Open Bundles | Ongoing group orders — SourceOn',sm_eyebrow:'Special material',bd_eyebrow:'OPEN BUNDLES',bd_heading:'Ongoing group orders.',bd_sub:'Bundles combine the material needs of several construction firms — pooled volumes enable better purchasing conditions.',bd_loading:'Loading bundles…',bd_empty:'No open bundles right now — report your needs and start a new bundle.',bd_cta_title:'Want to join a bundle?',bd_cta_sub:'Report your material needs — matching bundles are detected automatically.',bd_cta_btn:'Report material needs →',bd_search_ph:'Search material…',bd_nomatch:'No bundle found for this search.',sm_heading:'Material not in the catalogue?',
     nav_home:'Home',nav_process:'How it works',nav_calc:'Calculator',nav_materials:'Materials',nav_bundles:'Bundles',
     nav_forwhom:'For whom',nav_supplier:'Become a supplier',nav_about:'About us',nav_contact:'Contact',
     nav_cta:'Report material needs',
@@ -1351,7 +1365,7 @@ const T={
     footer_tagline:'You only pay when we save you money.'
   },
   fr:{
-    page_title:'Groupements ouverts | Commandes groupées en cours — SourceOn',sm_eyebrow:'Matériau spécial',bd_eyebrow:'GROUPEMENTS OUVERTS',bd_heading:'Commandes groupées en cours.',bd_sub:'Les groupements réunissent les besoins en matériaux de plusieurs entreprises — les volumes regroupés permettent de meilleures conditions d\'achat.',bd_loading:'Chargement des groupements…',bd_empty:'Aucun groupement ouvert pour le moment — annonce ton besoin et lance un nouveau groupement.',bd_cta_title:'Envie de rejoindre un groupement ?',bd_cta_sub:'Annonce ton besoin en matériaux — les groupements correspondants sont détectés automatiquement.',bd_cta_btn:'Annoncer un besoin →',sm_heading:'Matériau pas dans le catalogue ?',
+    page_title:'Groupements ouverts | Commandes groupées en cours — SourceOn',sm_eyebrow:'Matériau spécial',bd_eyebrow:'GROUPEMENTS OUVERTS',bd_heading:'Commandes groupées en cours.',bd_sub:'Les groupements réunissent les besoins en matériaux de plusieurs entreprises — les volumes regroupés permettent de meilleures conditions d\'achat.',bd_loading:'Chargement des groupements…',bd_empty:'Aucun groupement ouvert pour le moment — annonce ton besoin et lance un nouveau groupement.',bd_cta_title:'Envie de rejoindre un groupement ?',bd_cta_sub:'Annonce ton besoin en matériaux — les groupements correspondants sont détectés automatiquement.',bd_cta_btn:'Annoncer un besoin →',bd_search_ph:'Rechercher un matériau…',bd_nomatch:'Aucun groupement trouvé pour cette recherche.',sm_heading:'Matériau pas dans le catalogue ?',
     nav_home:'Accueil',nav_process:'Comment ça marche',nav_calc:'Calculateur',nav_materials:'Matériaux',nav_bundles:'Groupements',
     nav_forwhom:'Pour qui',nav_supplier:'Devenir fournisseur',nav_about:'À propos',nav_contact:'Contact',
     nav_cta:'Signaler un besoin',
@@ -1404,7 +1418,7 @@ const T={
     footer_tagline:'Vous ne payez que lorsque nous vous faisons économiser.'
   },
   it:{
-    page_title:'Raggruppamenti aperti | Ordini collettivi in corso — SourceOn',sm_eyebrow:'Materiale speciale',bd_eyebrow:'RAGGRUPPAMENTI APERTI',bd_heading:'Ordini collettivi in corso.',bd_sub:'I raggruppamenti uniscono il fabbisogno di materiali di più imprese edili — i volumi aggregati consentono condizioni d\'acquisto migliori.',bd_loading:'Caricamento raggruppamenti…',bd_empty:'Al momento nessun raggruppamento aperto — segnala il tuo fabbisogno e avvia un nuovo raggruppamento.',bd_cta_title:'Vuoi unirti a un raggruppamento?',bd_cta_sub:'Segnala il tuo fabbisogno di materiali — i raggruppamenti adatti vengono rilevati automaticamente.',bd_cta_btn:'Segnala il fabbisogno →',sm_heading:'Materiale non nel catalogo?',
+    page_title:'Raggruppamenti aperti | Ordini collettivi in corso — SourceOn',sm_eyebrow:'Materiale speciale',bd_eyebrow:'RAGGRUPPAMENTI APERTI',bd_heading:'Ordini collettivi in corso.',bd_sub:'I raggruppamenti uniscono il fabbisogno di materiali di più imprese edili — i volumi aggregati consentono condizioni d\'acquisto migliori.',bd_loading:'Caricamento raggruppamenti…',bd_empty:'Al momento nessun raggruppamento aperto — segnala il tuo fabbisogno e avvia un nuovo raggruppamento.',bd_cta_title:'Vuoi unirti a un raggruppamento?',bd_cta_sub:'Segnala il tuo fabbisogno di materiali — i raggruppamenti adatti vengono rilevati automaticamente.',bd_cta_btn:'Segnala il fabbisogno →',bd_search_ph:'Cerca materiale…',bd_nomatch:'Nessun raggruppamento trovato per questa ricerca.',sm_heading:'Materiale non nel catalogo?',
     nav_home:'Home',nav_process:'Come funziona',nav_calc:'Calcolatore',nav_materials:'Materiali',nav_bundles:'Raggruppamenti',
     nav_forwhom:'Per chi',nav_supplier:'Diventa fornitore',nav_about:'Chi siamo',nav_contact:'Contatto',
     nav_cta:'Segnala fabbisogno',
@@ -2117,10 +2131,10 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
      bundles_select_participants. */
   var H={apikey:SB_KEY};
   var T={
-    de:{vol:'Aktuelles Volumen',req:'Anzahl Bedarfe',rem:'Noch',days:'Tage',hours:'Stunden',ended:'Frist abgelaufen'},
-    en:{vol:'Current volume',req:'Number of requests',rem:'Still',days:'days',hours:'hours',ended:'Deadline passed'},
-    fr:{vol:'Volume actuel',req:'Nombre de besoins',rem:'Encore',days:'jours',hours:'heures',ended:'Délai expiré'},
-    it:{vol:'Volume attuale',req:'Numero di richieste',rem:'Ancora',days:'giorni',hours:'ore',ended:'Termine scaduto'}
+    de:{vol:'Aktuelles Volumen',req:'Anzahl Bedarfe',rem:'Noch',days:'Tage',hours:'Stunden',ended:'Frist abgelaufen',all:'Alle Regionen'},
+    en:{vol:'Current volume',req:'Number of requests',rem:'Still',days:'days',hours:'hours',ended:'Deadline passed',all:'All regions'},
+    fr:{vol:'Volume actuel',req:'Nombre de besoins',rem:'Encore',days:'jours',hours:'heures',ended:'Délai expiré',all:'Toutes les régions'},
+    it:{vol:'Volume attuale',req:'Numero di richieste',rem:'Ancora',days:'giorni',hours:'ore',ended:'Termine scaduto',all:'Tutte le regioni'}
   };
   function tr(){var l=localStorage.getItem('sourceon-lang')||'de';return T[l]||T.de;}
   function esc(s){var d=document.createElement('div');d.textContent=(s==null?'':String(s));return d.innerHTML;}
@@ -2138,25 +2152,48 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
       try{var rc=await fetch(SB_URL+'/rest/v1/material_catalog?select=sourceon_id,bezeichnung,richtpreis_chf',{headers:H});if(rc.ok){var catalog=await rc.json();catalog.forEach(function(c){cat[c.sourceon_id]={name:c.bezeichnung,rp:Number(c.richtpreis_chf)||0};});}}catch(e){}
       var agg={};
       try{var ids=bundles.map(function(b){return b.id;}).join(',');var rr=await fetch(SB_URL+'/rest/v1/material_requests?bundle_id=in.('+ids+')&select=bundle_id,menge',{headers:H});if(rr.ok){var requests=await rr.json();requests.forEach(function(m){var a=agg[m.bundle_id]||{c:0,menge:0};a.c++;a.menge+=Number(m.menge)||0;agg[m.bundle_id]=a;});}}catch(e){}
-      var t=tr(),html='';
-      bundles.forEach(function(b){
-        var ci=cat[b.sourceon_id];
-        var name=(ci&&ci.name)||b.sourceon_id||'Material';
-        var a=agg[b.id]||{c:0,menge:0};
-        var total=a.menge*((ci&&ci.rp)||0); // total_chf = Σ(menge) × richtpreis_chf
-        html+='<div class="bd-card">'
-          +'<div class="bd-mat">'+esc(name)+'</div>'
-          +'<div class="bd-zone">'+esc(b.liefer_zone||'')+'</div>'
-          +'<div class="bd-rows">'
-          +'<div class="bd-r"><span class="l">'+esc(t.vol)+'</span><span class="v gold">'+fmtChf(total)+'</span></div>'
-          +'<div class="bd-r"><span class="l">'+esc(t.req)+'</span><span class="v">'+a.c+'</span></div>'
-          +'</div>'
-          +'<div class="bd-cd"><span class="dot"></span>'+esc(countdown(b.bid_deadline))+'</div>'
-          +'</div>';
+      _items=bundles.map(function(b){
+        var ci=cat[b.sourceon_id];var a=agg[b.id]||{c:0,menge:0};
+        // total_chf = Σ(menge) × richtpreis_chf; mehrere Bündel je Material bleiben separate Karten
+        return {name:(ci&&ci.name)||b.sourceon_id||'Material',zone:b.liefer_zone||'',total:a.menge*((ci&&ci.rp)||0),count:a.c,deadline:b.bid_deadline};
       });
-      var list=document.getElementById('bd-list');if(list)list.innerHTML=html;
-      show('bd-loading',false);show('bd-empty',false);
+      show('bd-loading',false);show('bd-empty',false);show('bd-filter',true);
+      buildChips();
+      var si=document.getElementById('bd-search');if(si&&!si._bound){si._bound=true;si.addEventListener('input',renderList);}
+      renderList();
     }catch(e){empty();}
+  }
+  var _items=[],_zone='';
+  function cardHtml(it){var t=tr();
+    return '<div class="bd-card">'
+      +'<div class="bd-mat">'+esc(it.name)+'</div>'
+      +'<div class="bd-zone">'+esc(it.zone)+'</div>'
+      +'<div class="bd-rows">'
+      +'<div class="bd-r"><span class="l">'+esc(t.vol)+'</span><span class="v gold">'+fmtChf(it.total)+'</span></div>'
+      +'<div class="bd-r"><span class="l">'+esc(t.req)+'</span><span class="v">'+it.count+'</span></div>'
+      +'</div>'
+      +'<div class="bd-cd"><span class="dot"></span>'+esc(countdown(it.deadline))+'</div>'
+      +'</div>';
+  }
+  function renderList(){
+    var si=document.getElementById('bd-search');var q=si?si.value.trim().toLowerCase():'';
+    var html='',shown=0;
+    _items.forEach(function(it){
+      if(_zone&&it.zone!==_zone)return;
+      if(q&&it.name.toLowerCase().indexOf(q)===-1)return;
+      shown++;html+=cardHtml(it);
+    });
+    var list=document.getElementById('bd-list');if(list)list.innerHTML=html;
+    show('bd-nomatch',shown===0&&_items.length>0);
+  }
+  function buildChips(){
+    var el=document.getElementById('bd-chips');if(!el)return;var t=tr();
+    var zones=[];_items.forEach(function(it){if(it.zone&&zones.indexOf(it.zone)===-1)zones.push(it.zone);});zones.sort();
+    if(zones.length<2){el.innerHTML='';_zone='';return;} // Region-Filter nur bei ≥2 Regionen
+    var html='<button class="bd-chip'+(_zone===''?' active':'')+'" data-z="">'+esc(t.all)+'</button>';
+    zones.forEach(function(z){html+='<button class="bd-chip'+(_zone===z?' active':'')+'" data-z="'+esc(z)+'">'+esc(z)+'</button>';});
+    el.innerHTML=html;
+    el.querySelectorAll('.bd-chip').forEach(function(bt){bt.addEventListener('click',function(){_zone=bt.getAttribute('data-z');buildChips();renderList();});});
   }
   // Robust: nur einmal starten, egal ob DOM schon fertig oder Gate den Body ersetzt.
   var _booted=false;
