@@ -119,260 +119,197 @@ Deno.serve(async (req: Request) => {
     const supabaseKey = Deno.env.get("SB_SECRET_KEY") ?? Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const sb = createClient(supabaseUrl, supabaseKey);
 
-    // 1. Fetch open, unbundled material requests
-    // NOTE (commitment constraint — not yet enforced): committed_min_rabatt is the
-    // minimum discount each customer was guaranteed at request time. A future change
-    // should ensure a bundle's ziel_mindestrabatt >= the HIGHEST committed_min_rabatt
-    // among its member requests, so no customer is bundled below their guaranteed
-    // minimum. Do NOT change bundling logic here yet — the column is selected so the
-    // constraint can be implemented later.
+    const now = new Date();
+    const nowMs = now.getTime();
+    const minCollEndMs = nowMs + 5 * DAY_MS; // Mindest-Sammelfenster: 5 Tage
+
+    // Timing fuer eine Menge von Requests: frueheste berechnete collection_end,
+    // Dringlichkeit (fruehester Liefertermin <= 12 Tage) und bid_deadline-Tage.
+    function groupTiming(reqs: Array<{ liefer_zeitraum_bis: string; liefer_zeitraum_von: string; created_at?: string | null; fallback_deadline?: string | null }>) {
+      let calc: Date | null = null;
+      let urgent = false;
+      let urgentBidDays = 7;
+      let earliestBis: string | null = null;
+      for (const r of reqs) {
+        const ce = collectionEnd(r.liefer_zeitraum_bis, r.created_at ?? r.fallback_deadline ?? null);
+        if (!calc || ce.getTime() < calc.getTime()) calc = ce;
+        if (r.liefer_zeitraum_von && availableDaysFromToday(r.liefer_zeitraum_von) <= 12) urgent = true;
+        const bdd = bidDeadlineDays(availableDaysFromToday(r.liefer_zeitraum_bis));
+        if (earliestBis === null || r.liefer_zeitraum_bis < earliestBis) { earliestBis = r.liefer_zeitraum_bis; urgentBidDays = bdd; }
+      }
+      return { calc: calc ?? now, urgent, urgentBidDays };
+    }
+
+    // 1. Offene, noch nicht gebuendelte Requests
     const { data: openRequests, error: fetchErr } = await sb
       .from("material_requests")
       .select("id, sourceon_id, menge, einheit, liefer_zone, liefer_zeitraum_von, liefer_zeitraum_bis, fallback_deadline, committed_min_rabatt, created_at")
       .eq("status", "offen")
       .is("bundle_id", null);
-
     if (fetchErr) {
       return Response.json({ error: "Failed to fetch requests", detail: fetchErr.message }, { status: 500 });
     }
 
-    if (!openRequests || openRequests.length === 0) {
-      return Response.json({ message: "No open unbundled requests found", bundlesCreated: 0 });
+    // 2. Bestehende 'sammelt'-Buendel (zum Beitreten)
+    const { data: sammeltRows } = await sb
+      .from("bundles")
+      .select("id, sourceon_id, liefer_zone, liefer_zeitraum_von, liefer_zeitraum_bis, bid_deadline, gesamtvolumen")
+      .eq("status", "sammelt");
+    const sammeltBundles = (sammeltRows ?? []) as Array<Record<string, any>>;
+
+    if ((!openRequests || openRequests.length === 0) && sammeltBundles.length === 0) {
+      return Response.json({ message: "Nothing to do", bundlesPublished: 0 });
     }
 
-    // Fetch material catalog for einheit + richtpreis_chf lookup
-    const { data: catalog } = await sb
-      .from("material_catalog")
-      .select("sourceon_id, einheit, richtpreis_chf");
+    // Materialkatalog (einheit + richtpreis_chf)
+    const { data: catalog } = await sb.from("material_catalog").select("sourceon_id, einheit, richtpreis_chf");
     const catalogMap: Record<string, { einheit: string; richtpreis: number | null }> = {};
-    if (catalog) {
-      for (const c of catalog) {
-        catalogMap[c.sourceon_id] = { einheit: c.einheit, richtpreis: c.richtpreis_chf };
-      }
-    }
+    if (catalog) for (const c of catalog) catalogMap[c.sourceon_id] = { einheit: c.einheit, richtpreis: c.richtpreis_chf };
 
-    // 2. Group by sourceon_id + liefer_zone + overlapping delivery windows
-    const groups: RequestGroup[] = [];
+    const summary: Array<Record<string, any>> = [];
+    const skipped: Array<Record<string, any>> = [];
+    const bundlesToProcess = new Set<string>();
 
-    for (const req of openRequests as MaterialRequest[]) {
-      if (!req.menge || !req.sourceon_id || !req.liefer_zone) continue;
-      if (!req.liefer_zeitraum_von || !req.liefer_zeitraum_bis) continue;
-
-      let placed = false;
-      for (const g of groups) {
-        if (
-          g.sourceon_id === req.sourceon_id &&
-          g.liefer_zone === req.liefer_zone &&
-          datesOverlap(
-            g.liefer_zeitraum_von, g.liefer_zeitraum_bis,
-            req.liefer_zeitraum_von, req.liefer_zeitraum_bis
-          )
-        ) {
-          g.requests.push(req);
-          g.totalMenge += Number(req.menge);
-          // Expand the group's delivery window to the union
-          if (req.liefer_zeitraum_von < g.liefer_zeitraum_von) {
-            g.liefer_zeitraum_von = req.liefer_zeitraum_von;
-          }
-          if (req.liefer_zeitraum_bis > g.liefer_zeitraum_bis) {
-            g.liefer_zeitraum_bis = req.liefer_zeitraum_bis;
-          }
-          placed = true;
+    // 3. Jeden offenen Request zuordnen: bestehendem 'sammelt'-Buendel beitreten,
+    //    sonst in eine neue Gruppe (nach sourceon_id + liefer_zone + Datumsueberlappung).
+    const newGroups: RequestGroup[] = [];
+    const joinMap: Record<string, MaterialRequest[]> = {};
+    for (const r of (openRequests ?? []) as MaterialRequest[]) {
+      if (!r.menge || !r.sourceon_id || !r.liefer_zone || !r.liefer_zeitraum_von || !r.liefer_zeitraum_bis) continue;
+      let joined = false;
+      for (const bnd of sammeltBundles) {
+        if (bnd.sourceon_id === r.sourceon_id && bnd.liefer_zone === r.liefer_zone &&
+            bnd.liefer_zeitraum_von && bnd.liefer_zeitraum_bis &&
+            datesOverlap(bnd.liefer_zeitraum_von, bnd.liefer_zeitraum_bis, r.liefer_zeitraum_von, r.liefer_zeitraum_bis)) {
+          (joinMap[bnd.id] ??= []).push(r);
+          if (r.liefer_zeitraum_von < bnd.liefer_zeitraum_von) bnd.liefer_zeitraum_von = r.liefer_zeitraum_von;
+          if (r.liefer_zeitraum_bis > bnd.liefer_zeitraum_bis) bnd.liefer_zeitraum_bis = r.liefer_zeitraum_bis;
+          joined = true;
           break;
         }
       }
-
-      if (!placed) {
-        groups.push({
-          sourceon_id: req.sourceon_id,
-          liefer_zone: req.liefer_zone,
-          liefer_zeitraum_von: req.liefer_zeitraum_von,
-          liefer_zeitraum_bis: req.liefer_zeitraum_bis,
-          totalMenge: Number(req.menge),
-          einheit: req.einheit || catalogMap[req.sourceon_id]?.einheit || "Stk",
-          requests: [req],
-        });
-      }
-    }
-
-    // 3-6. Create bundles for qualifying groups
-    const summary: Array<{
-      sourceon_id: string;
-      liefer_zone: string;
-      totalMenge: number;
-      einheit: string;
-      estimatedCHF: number;
-      targetDiscount: number;
-      requestCount: number;
-    }> = [];
-    const skipped: Array<{ sourceon_id: string; liefer_zone: string; estimatedCHF: number; reason: string }> = [];
-
-    const nowMs = Date.now();
-
-    for (const g of groups) {
-      const catEntry = catalogMap[g.sourceon_id];
-      const richtpreis = catEntry?.richtpreis ?? null;
-      if (richtpreis === null) {
-        console.warn(`[auto-bundle] No richtpreis_chf for sourceon_id "${g.sourceon_id}" — skipping group`);
-        skipped.push({
-          sourceon_id: g.sourceon_id,
-          liefer_zone: g.liefer_zone,
-          estimatedCHF: 0,
-          reason: `No richtpreis_chf in material_catalog for ${g.sourceon_id}`,
-        });
-        continue;
-      }
-      const estimatedCHF = g.totalMenge * richtpreis;
-      const discount = getGrossTarget(estimatedCHF); // GROSS gross target, null if < 50k
-
-      // --- Window-based timing: evaluate every request in the group ---
-      // Timing is driven by each request's LATEST accepted delivery date
-      // (liefer_zeitraum_bis). The group publishes when the EARLIEST collection_end
-      // among its requests is reached — i.e. the member with the earliest
-      // "Spätestens" is the binding deadline; until then it keeps collecting
-      // partners (large orders wait too — their committed minimum discount is
-      // guaranteed regardless). The 14-day cap in collectionEnd() still applies.
-      let groupCollEnd: Date | null = null;   // earliest collection_end
-      let earliestBis: string | null = null;  // most urgent (earliest latest-date)
-      let urgentBidDays = 7;                   // bid_deadline_days of the most urgent request
-      for (const r of g.requests) {
-        const avail = availableDaysFromToday(r.liefer_zeitraum_bis);
-        const bdd = bidDeadlineDays(avail);
-        const ce = collectionEnd(r.liefer_zeitraum_bis, r.created_at ?? r.fallback_deadline ?? null);
-        console.log(
-          `[auto-bundle] eval req ${r.id} (${g.sourceon_id}/${g.liefer_zone}): ` +
-          `availDays=${avail}, bidDeadlineDays=${bdd}, collectionEnd=${ce.toISOString().slice(0, 10)}`
-        );
-        if (groupCollEnd === null || ce.getTime() < groupCollEnd.getTime()) groupCollEnd = ce;
-        if (earliestBis === null || r.liefer_zeitraum_bis < earliestBis) {
-          earliestBis = r.liefer_zeitraum_bis;
-          urgentBidDays = bdd;
+      if (joined) continue;
+      let placed = false;
+      for (const g of newGroups) {
+        if (g.sourceon_id === r.sourceon_id && g.liefer_zone === r.liefer_zone &&
+            datesOverlap(g.liefer_zeitraum_von, g.liefer_zeitraum_bis, r.liefer_zeitraum_von, r.liefer_zeitraum_bis)) {
+          g.requests.push(r); g.totalMenge += Number(r.menge);
+          if (r.liefer_zeitraum_von < g.liefer_zeitraum_von) g.liefer_zeitraum_von = r.liefer_zeitraum_von;
+          if (r.liefer_zeitraum_bis > g.liefer_zeitraum_bis) g.liefer_zeitraum_bis = r.liefer_zeitraum_bis;
+          placed = true; break;
         }
       }
-
-      // Not yet time to publish → keep collecting (also large ≥50k groups wait).
-      if (groupCollEnd && nowMs < groupCollEnd.getTime()) {
-        console.log(
-          `[auto-bundle] group ${g.sourceon_id}/${g.liefer_zone} STILL COLLECTING ` +
-          `until ${groupCollEnd.toISOString().slice(0, 10)} ` +
-          `(~${Math.round(estimatedCHF)} CHF, ${g.requests.length} req, tier ${discount === null ? "<50k" : (discount * 100) + "%"})`
-        );
-        skipped.push({
-          sourceon_id: g.sourceon_id,
-          liefer_zone: g.liefer_zone,
-          estimatedCHF: Math.round(estimatedCHF),
-          reason: `Collecting until ${groupCollEnd.toISOString().slice(0, 10)}`,
-        });
-        continue;
-      }
-
-      // collection_end reached → PUBLISH now.
-      // bid_deadline uses the bid_deadline_days of the MOST URGENT request so the
-      // auction always finishes in time for every member's delivery.
-      const bidDeadline = new Date();
-      bidDeadline.setDate(bidDeadline.getDate() + urgentBidDays);
-
-      const isFallback = discount === null;
-
-      // target_discount = volumengewichteter Durchschnitt der individuell garantierten
-      // NETTO-Mindestrabätte + 2.25% Provision (→ GROSS, wie an Lieferanten ausgeschrieben).
-      // Bei einem Gebot GENAU auf die Zielmarke reicht der Gesamt-Rabatttopf exakt aus, um
-      // JEDEM Kunden seinen eigenen Satz auf sein eigenes Volumen auszuzahlen
-      // (SourceOn verteilt pro Kunde zu dessen committed_min_rabatt; ein Gebot ÜBER der
-      // Zielmarke verteilt den Mehrwert proportional nach Volumen). Requests ohne festen
-      // Satz (>6 Mio., committed_min_rabatt = null) werden übersprungen.
-      let weightedNetSum = 0; // Σ(estimatedCHF_i × committed_min_rabatt_i)
-      let ratedChfSum = 0;    // Σ(estimatedCHF_i) der bewerteten Requests
-      for (const r of g.requests) {
-        const c = r.committed_min_rabatt;
-        if (c == null) continue;
-        const rate = Number(c);
-        if (isNaN(rate)) continue;
-        const chf = Number(r.menge) * richtpreis;
-        weightedNetSum += chf * rate;
-        ratedChfSum += chf;
-      }
-      let targetRabatt: number;
-      if (ratedChfSum > 0) {
-        // NETTO-Zielrabatt = MAX aus (a) volumengewichtetem Durchschnitt der individuell
-        // garantierten Saetze und (b) dem Tarifsatz fuer das GESAMTE Buendelvolumen.
-        // So faellt ein grosses Sammelbuendel nie unter die Stufe, die dem Gesamtvolumen
-        // zusteht (z. B. 8 Firmen mit total 1.2 Mio. → mind. 30% netto statt Durchschnitt).
-        const weightedAvg = weightedNetSum / ratedChfSum;
-        const tierRate = getNetTier(estimatedCHF); // Tarif fuer Gesamtvolumen
-        const targetNet = Math.max(tierRate, weightedAvg);
-        targetRabatt = Math.round((targetNet + 0.0225) * 10000) / 10000; // GROSS, auf 0.01% gerundet
-      } else {
-        // kein Request mit festem Satz → Volumen-Tarifstufe als Rückfall
-        targetRabatt = isFallback ? FALLBACK_GROSS : (discount as number);
-      }
-
-      const { data: bundle, error: insertErr } = await sb
-        .from("bundles")
-        .insert({
-          sourceon_id: g.sourceon_id,
-          liefer_zone: g.liefer_zone,
-          liefer_zeitraum_von: g.liefer_zeitraum_von,
-          liefer_zeitraum_bis: g.liefer_zeitraum_bis,
-          gesamtvolumen: g.totalMenge,
-          einheit: g.einheit,
-          ziel_mindestrabatt: targetRabatt,
-          status: "ausgeschrieben",
-          bid_deadline: bidDeadline.toISOString(),
-          bundle_type: "single_material",
-          is_fallback_bundle: isFallback,
-        })
-        .select("id")
-        .single();
-
-      if (insertErr || !bundle) {
-        console.error(`Failed to create bundle for ${g.sourceon_id}/${g.liefer_zone}:`, insertErr);
-        continue;
-      }
-
-      const requestIds = g.requests.map((r) => r.id);
-      const { error: updateErr } = await sb
-        .from("material_requests")
-        .update({ bundle_id: bundle.id, status: "gebuendelt" })
-        .in("id", requestIds);
-      if (updateErr) {
-        console.error(`Failed to update requests for bundle ${bundle.id}:`, updateErr);
-      }
-
-      console.log(
-        `[auto-bundle] PUBLISHED ${isFallback ? "FALLBACK " : ""}bundle ${g.sourceon_id}/${g.liefer_zone} — ` +
-        `${g.totalMenge} ${g.einheit} (~${Math.round(estimatedCHF)} CHF) → ${(targetRabatt * 100).toFixed(2)}% target ` +
-        `(volumengewichtet aus ${g.requests.length} Commitments${ratedChfSum > 0 ? "" : " → Rückfall Volumenstufe"}), ` +
-        `${requestIds.length} req, bidDeadline=+${urgentBidDays}d ` +
-        `(reason: collection_end ${groupCollEnd ? groupCollEnd.toISOString().slice(0, 10) : "?"} reached)`
-      );
-
-      summary.push({
-        sourceon_id: g.sourceon_id,
-        liefer_zone: g.liefer_zone,
-        totalMenge: g.totalMenge,
-        einheit: g.einheit,
-        estimatedCHF: Math.round(estimatedCHF),
-        targetDiscount: targetRabatt,
-        requestCount: requestIds.length,
+      if (!placed) newGroups.push({
+        sourceon_id: r.sourceon_id, liefer_zone: r.liefer_zone,
+        liefer_zeitraum_von: r.liefer_zeitraum_von, liefer_zeitraum_bis: r.liefer_zeitraum_bis,
+        totalMenge: Number(r.menge), einheit: r.einheit || catalogMap[r.sourceon_id]?.einheit || "Stk",
+        requests: [r],
       });
     }
 
-    // 7. Log summary
-    console.log(`[auto-bundle] Created ${summary.length} bundle(s), skipped ${skipped.length} group(s)`);
-    for (const s of summary) {
-      console.log(
-        `  Bundle: ${s.sourceon_id} / ${s.liefer_zone} — ${s.totalMenge} ${s.einheit} ` +
-        `(~${s.estimatedCHF} CHF) → ${(s.targetDiscount * 100).toFixed(2)}% target, ${s.requestCount} requests`
-      );
+    // 4. Beitritte in bestehende 'sammelt'-Buendel anwenden (CHANGE 3 + 4)
+    for (const bnd of sammeltBundles) {
+      bundlesToProcess.add(bnd.id); // immer auf Publish pruefen
+      const joins = joinMap[bnd.id];
+      if (!joins || !joins.length) continue;
+      const ids = joins.map((r) => r.id);
+      await sb.from("material_requests").update({ bundle_id: bnd.id }).in("id", ids);
+      const addVol = joins.reduce((sum: number, r: MaterialRequest) => sum + Number(r.menge), 0);
+      const newVol = Number(bnd.gesamtvolumen || 0) + addVol;
+      // CHANGE 4: collection_end = max(bestehend, neue Request-collection_end, now + 5 Tage)
+      const jt = groupTiming(joins);
+      const existingCE = bnd.bid_deadline ? new Date(bnd.bid_deadline).getTime() : 0;
+      const collEndMs = Math.max(existingCE, jt.calc.getTime(), minCollEndMs);
+      await sb.from("bundles").update({
+        gesamtvolumen: newVol,
+        liefer_zeitraum_von: bnd.liefer_zeitraum_von,
+        liefer_zeitraum_bis: bnd.liefer_zeitraum_bis,
+        bid_deadline: new Date(collEndMs).toISOString(),
+      }).eq("id", bnd.id);
+      console.log(`[auto-bundle] ${joins.length} request(s) joined sammelt bundle ${bnd.id}; collection_end=${new Date(collEndMs).toISOString().slice(0, 10)}`);
     }
 
+    // 5. Neue 'sammelt'-Buendel fuer unzugeordnete Gruppen (CHANGE 2 + 1)
+    for (const g of newGroups) {
+      const richtpreis = catalogMap[g.sourceon_id]?.richtpreis ?? null;
+      if (richtpreis === null) {
+        skipped.push({ sourceon_id: g.sourceon_id, liefer_zone: g.liefer_zone, estimatedCHF: 0, reason: `No richtpreis_chf for ${g.sourceon_id}` });
+        continue;
+      }
+      const t = groupTiming(g.requests);
+      // CHANGE 1: collection_end = urgent ? now : max(calculatedEnd, now + 5 Tage)
+      const collEndMs = t.urgent ? nowMs : Math.max(t.calc.getTime(), minCollEndMs);
+      const { data: bundle, error: insertErr } = await sb.from("bundles").insert({
+        sourceon_id: g.sourceon_id, liefer_zone: g.liefer_zone,
+        liefer_zeitraum_von: g.liefer_zeitraum_von, liefer_zeitraum_bis: g.liefer_zeitraum_bis,
+        gesamtvolumen: g.totalMenge, einheit: g.einheit,
+        status: "sammelt", bundle_type: "single_material",
+        bid_deadline: new Date(collEndMs).toISOString(),
+      }).select("id").single();
+      if (insertErr || !bundle) { console.error(`Failed to create sammelt bundle ${g.sourceon_id}/${g.liefer_zone}:`, insertErr); continue; }
+      await sb.from("material_requests").update({ bundle_id: bundle.id }).in("id", g.requests.map((r) => r.id));
+      bundlesToProcess.add(bundle.id);
+      console.log(`[auto-bundle] CREATED sammelt bundle ${bundle.id} (${g.sourceon_id}/${g.liefer_zone}, ${g.requests.length} req) collection_end=${new Date(collEndMs).toISOString().slice(0, 10)}${t.urgent ? " URGENT" : ""}`);
+    }
+
+    // 6. Publish-Pruefung fuer alle 'sammelt'-Buendel: urgent ODER collection_end erreicht → 'ausgeschrieben'
+    for (const bid of bundlesToProcess) {
+      const { data: members } = await sb.from("material_requests")
+        .select("id, menge, liefer_zeitraum_von, liefer_zeitraum_bis, committed_min_rabatt, created_at, fallback_deadline, sourceon_id, liefer_zone")
+        .eq("bundle_id", bid);
+      if (!members || !members.length) continue;
+      const { data: bRow } = await sb.from("bundles").select("bid_deadline, status").eq("id", bid).single();
+      if (!bRow || bRow.status !== "sammelt") continue;
+      const sid = members[0].sourceon_id as string;
+      const zone = members[0].liefer_zone as string;
+      const t = groupTiming(members as any);
+      const storedCE = bRow.bid_deadline ? new Date(bRow.bid_deadline).getTime() : nowMs;
+      const shouldPublish = t.urgent || storedCE <= nowMs;
+      if (!shouldPublish) {
+        skipped.push({ sourceon_id: sid, liefer_zone: zone, estimatedCHF: 0, reason: `Collecting until ${new Date(storedCE).toISOString().slice(0, 10)}` });
+        continue;
+      }
+      const richtpreis = catalogMap[sid]?.richtpreis ?? null;
+      if (richtpreis === null) { skipped.push({ sourceon_id: sid, liefer_zone: zone, estimatedCHF: 0, reason: `No richtpreis_chf for ${sid}` }); continue; }
+      const totalMenge = members.reduce((sum: number, r: any) => sum + Number(r.menge), 0);
+      const estimatedCHF = totalMenge * richtpreis;
+      const discount = getGrossTarget(estimatedCHF);
+      const isFallback = discount === null;
+      let weightedNetSum = 0, ratedChfSum = 0;
+      for (const r of members) {
+        const c = r.committed_min_rabatt; if (c == null) continue;
+        const rate = Number(c); if (isNaN(rate)) continue;
+        const chf = Number(r.menge) * richtpreis; weightedNetSum += chf * rate; ratedChfSum += chf;
+      }
+      let targetRabatt: number;
+      if (ratedChfSum > 0) {
+        const weightedAvg = weightedNetSum / ratedChfSum;
+        const tierRate = getNetTier(estimatedCHF);
+        targetRabatt = Math.round((Math.max(tierRate, weightedAvg) + 0.0225) * 10000) / 10000;
+      } else {
+        targetRabatt = isFallback ? FALLBACK_GROSS : (discount as number);
+      }
+      const bidDeadline = new Date(nowMs + t.urgentBidDays * DAY_MS);
+      const { error: pubErr } = await sb.from("bundles").update({
+        status: "ausgeschrieben",
+        ziel_mindestrabatt: targetRabatt,
+        gesamtvolumen: totalMenge,
+        bid_deadline: bidDeadline.toISOString(),
+        is_fallback_bundle: isFallback,
+      }).eq("id", bid);
+      if (pubErr) { console.error(`Failed to publish bundle ${bid}:`, pubErr); continue; }
+      await sb.from("material_requests").update({ status: "gebuendelt" }).eq("bundle_id", bid);
+      console.log(`[auto-bundle] PUBLISHED bundle ${bid} (${sid}/${zone}) — ${totalMenge} (~${Math.round(estimatedCHF)} CHF) → ${(targetRabatt * 100).toFixed(2)}% target, bidDeadline=+${t.urgentBidDays}d${t.urgent ? " (urgent)" : ""}`);
+      summary.push({ sourceon_id: sid, liefer_zone: zone, totalMenge, einheit: catalogMap[sid]?.einheit ?? "", estimatedCHF: Math.round(estimatedCHF), targetDiscount: targetRabatt, requestCount: members.length });
+    }
+
+    console.log(`[auto-bundle] Published ${summary.length} bundle(s), still collecting/skipped ${skipped.length}`);
     return Response.json({
-      bundlesCreated: summary.length,
-      groupsSkipped: skipped.length,
+      bundlesPublished: summary.length,
+      skipped: skipped.length,
       bundles: summary,
-      skipped,
-      openRequestsProcessed: openRequests.length,
+      skippedDetail: skipped,
+      openRequestsProcessed: (openRequests ?? []).length,
     });
   } catch (err) {
     console.error("[auto-bundle] Unexpected error:", err);
