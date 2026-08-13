@@ -737,7 +737,7 @@ function renderUebersicht(){
   var now=new Date(),events=[];
   _requests.forEach(function(r){var dl=reqDeadline(r);if(dl&&dl.date>now){events.push({date:dl.date,desc:(r.status==='offen'?'Ausschreibung spätestens':'Angebotsfrist endet')+' — '+matNameFor(r),pill:badgeFor(r.status)});}});
   events.sort(function(a,b){return a.date-b.date;});events=events.slice(0,5);
-  var _urgentN=_requests.filter(function(r){var u=_urgency(r);return u&&u.isUrgent&&(r.status==='offen'||r.status==='gebuendelt');}).length;
+  var _urgentN=_requests.filter(function(r){var u=_urgency(r);return u&&u.isUrgent&&(r.status==='offen'||r.status==='sammelt'||r.status==='gebuendelt');}).length;
   var _ovBar=_urgentN>0?'<div class="warn-ov-bar" onclick="showTab(\'anfragen\')">⚠️ '+_wt('ov_notice').replace('{N}',_urgentN)+'</div>':'';
   document.getElementById('ov-agenda').innerHTML=_ovBar+(events.length?events.map(function( e2){return '<div class="ev-row"><span class="ev-dot"></span><span class="ev-date">'+esc(fmtAgenda(e2.date))+'</span><span class="ev-desc">'+esc(e2.desc)+'</span><span class="status-pill '+e2.pill.c+'">'+esc(e2.pill.t)+'</span></div>';}).join(''):'<div class="empty-line">Keine bevorstehenden Ereignisse</div>');
   document.getElementById('ov-preview').innerHTML=_requests.length?_requests.slice(0,3).map(function(r){var b=badgeFor(r.status);var gs=reqGuaranteedSaving(r);return '<div class="prev-row" onclick="showTab(\'anfragen\')"><span class="prev-mat">'+esc(matNameFor(r))+'</span><span class="prev-qty">'+mengeStr(r)+'</span><span class="status-pill '+b.c+'">'+esc(b.t)+'</span><span class="prev-sav">'+(gs!=null?fmtCHF(gs):'--')+'</span></div>';}).join(''):'<div class="empty-line">Noch keine Anfragen</div>';
@@ -802,7 +802,7 @@ async function selectReq(id){
       +'<div class="dl-row"><span class="l">Lieferzeitraum</span><span class="v">'+esc(lz)+'</span></div>'
       +'</div>';
   }else{
-    mid=tl+'<div class="rd-status">'+esc(statusText(r))+'</div>'+saveBox+when;
+    mid=tl+warnBanner(r)+'<div class="rd-status">'+esc(statusText(r))+'</div>'+saveBox+when;
   }
   var actions='<div class="rd-actions">';
   if(isActive(r)){actions+='<span class="act-link act-danger" id="cancel-lk" onclick="askCancel(\''+esc(id)+'\')">Anfrage stornieren</span><span class="confirm-inline" id="cf-'+esc(id)+'">Wirklich? <span class="yes" onclick="doCancel(\''+esc(id)+'\')">Ja</span> · <span class="no" onclick="hideCancel(\''+esc(id)+'\')">Nein</span></span>';}
@@ -813,7 +813,7 @@ async function selectReq(id){
   det.innerHTML=
     '<div class="rd-head-row"><div><div class="rd-mat">'+esc(matNameFor(r))+'</div>'+(r.sourceon_id?'<div class="rd-id">'+esc(r.sourceon_id)+'</div>':'')+'</div><div class="rd-head-meta"><span class="status-pill '+b.c+'">'+esc(b.t)+'</span><div class="rd-date">'+esc(d)+'</div></div></div>'
     +'<div class="rd-key"><div><div class="k-num">'+mengeStr(r)+'</div><div class="k-lbl">Menge</div></div><div><div class="k-num">'+esc(zeitraumStr(r))+'</div><div class="k-lbl">Lieferzeitraum</div></div><div><div class="k-num gold">'+(gs!=null?fmtCHF(gs):'--')+'</div><div class="k-lbl">Min. Ersparnis</div></div></div>'
-    +warnBanner(r)+mid+actions;
+    +mid+actions;
   requestAnimationFrame(function(){det.style.opacity='1';});
 }
 
@@ -827,12 +827,12 @@ var WARN_I18N={
 function _wlang(){var l=localStorage.getItem('sourceon-lang')||'de';return WARN_I18N[l]?l:'de';}
 function _wt(k){var d=WARN_I18N[_wlang()];return (d&&d[k])||WARN_I18N.de[k]||k;}
 function _daysUntil(r){
-  if(!r||!r.liefer_zeitraum_bis)return null;
-  var dd=new Date(r.liefer_zeitraum_bis);if(isNaN(dd))return null;
+  if(!r||!r.liefer_zeitraum_von)return null;
+  var dd=new Date(r.liefer_zeitraum_von);if(isNaN(dd))return null;
   var today=new Date();today.setHours(0,0,0,0);dd.setHours(0,0,0,0);
   return Math.ceil((dd-today)/(1000*60*60*24));
 }
-function _urgency(r){var d=_daysUntil(r);if(d==null)return null;return {days:d,isUrgent:d<=10&&d>0,isCritical:d<=5&&d>0};}
+function _urgency(r){var d=_daysUntil(r);if(d==null)return null;return {days:d,isUrgent:d<=12&&d>0,isCritical:d<=5&&d>0};}
 function _warnPill(r){
   var u=_urgency(r);if(!u||!u.isUrgent)return '';
   return '<span class="warn-pill'+(u.isCritical?' crit':'')+'">'+esc(_wt('days').replace('{X}',u.days))+'</span>';
@@ -848,7 +848,7 @@ function warnBanner(r){
       +'<div class="warn-sub">'+esc(_wt('sub_geb'))+'</div>'
       +'<div class="warn-info">'+esc(_wt('info_tender').replace('{date}',dtxt))+'</div></div>';
   }
-  if(r.status==='offen'){
+  if((r.status==='offen'||r.status==='sammelt')&&!r.bundle_id){
     if(_warnDismissed(id))return '';
     return '<div class="warn-banner'+crit+'" id="warn-'+esc(id)+'"><div class="warn-head">'+icon+' '+esc(_wt('head'))+'</div>'
       +'<div class="warn-sub">'+esc(_wt('sub_offen').replace('{X}',u.days))+'</div>'
