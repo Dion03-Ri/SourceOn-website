@@ -877,9 +877,16 @@ body{background:#070F1A}
 #lp .form-textarea{min-height:80px;resize:vertical}
 #lp input[type=date].form-input{color-scheme:dark}
 #lp .form-error{font-size:12px;color:#EF4444;margin-top:4px}
-#lp .material-row{display:grid;grid-template-columns:1fr 130px 32px;gap:8px;align-items:end;margin-bottom:8px}
-#lp .material-row.first-row{grid-template-columns:1fr 130px}
-@media(max-width:768px){#lp .material-row{grid-template-columns:1fr 90px 32px}#lp .material-row.first-row{grid-template-columns:1fr 90px}}
+#lp .material-row{display:flex;flex-direction:column;gap:10px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:14px;margin-bottom:10px}
+#lp .material-row .mat-top{display:grid;grid-template-columns:1fr 130px 32px;gap:8px;align-items:end}
+#lp .material-row.first-row .mat-top{grid-template-columns:1fr 130px}
+@media(max-width:768px){#lp .material-row .mat-top{grid-template-columns:1fr 90px 32px}#lp .material-row.first-row .mat-top{grid-template-columns:1fr 90px}}
+#lp .mat-dates{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#lp .mat-date-lbl{font-size:.7rem;color:#94A3B8;display:block;margin-bottom:4px}
+#lp .mat-rabatt{font-size:12px;color:#475569;background:#FFF9EE;border:1px solid #F5D9A0;border-radius:6px;padding:8px 12px}
+#lp .mat-rabatt strong{color:#B45309;font-weight:700}
+#lp .tier-breakdown .tier-row{padding:4px 0}
+#lp .tier-breakdown{margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #E2E8F0}
 #lp .mat-combo{position:relative}
 #lp .mat-qty-wrap{position:relative}
 #lp .mat-unit{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:600;color:var(--gold);pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .2s}
@@ -1184,24 +1191,25 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
               <label class="form-label" data-i18n-html="form_material_qty" style="display:none">Material &amp; Menge *</label>
               <div class="material-rows" id="material-rows">
                 <div class="material-row first-row">
-                  <div class="mat-combo"><input type="text" class="form-input mat-search" placeholder="Material suchen oder wählen…" data-i18n-placeholder="form_select_material" autocomplete="off"/><input type="hidden" class="mat-id"/><div class="mat-dd"></div></div>
-                  <div class="mat-qty-wrap"><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><span class="mat-unit"></span></div>
+                  <div class="mat-top">
+                    <div class="mat-combo"><input type="text" class="form-input mat-search" placeholder="Material suchen oder wählen…" data-i18n-placeholder="form_select_material" autocomplete="off"/><input type="hidden" class="mat-id"/><div class="mat-dd"></div></div>
+                    <div class="mat-qty-wrap"><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><span class="mat-unit"></span></div>
+                  </div>
+                  <div class="mat-dates">
+                    <div><span class="mat-date-lbl" data-i18n="liefer_von_label">Frühestens</span><input type="date" class="form-input mat-von" aria-label="Frühestes Lieferdatum" oninput="_onMatRow(this)"/></div>
+                    <div><span class="mat-date-lbl" data-i18n="liefer_bis_label">Spätestens</span><input type="date" class="form-input mat-bis" aria-label="Spätestes Lieferdatum" oninput="_onMatRow(this)"/></div>
+                  </div>
+                  <div class="mat-rabatt" style="display:none"><span data-i18n="liefer_rabatt_label">Netto-Mindestrabatt</span>: <strong class="mat-rabatt-val">–</strong></div>
                 </div>
               </div>
               <div id="kontakt-transport-note" data-i18n="mat_transport_note" style="display:none;font-size:12px;color:var(--t3);background:var(--bg2);border-radius:6px;padding:10px 14px;margin-top:12px;border-left:2px solid var(--lpbs)">Hinweis: Transportkosten werden separat zwischen dir und dem Lieferanten vereinbart und sind nicht Bestandteil der SourceOn-Vermittlung. Bei grossen Mengen lohnt es sich, auch hier nachzufragen.</div>
               <div class="form-error" role="alert" data-i18n="form_error_material" id="e-c-material">Bitte mindestens ein Material mit Menge angeben</div>
+              <div class="form-error" role="alert" id="e-mat-dates" data-i18n="err_mat_dates" style="display:none">Bitte für jedes Material Frühestens- und Spätestens-Datum wählen.</div>
               <button type="button" class="add-material-btn" id="add-material-btn" data-i18n-html="form_add_material" onclick="addMaterialRow()">＋ Weiteres Material hinzufügen</button>
               <p style="font-size:.78rem;color:var(--muted);margin-top:10px;line-height:1.6" data-i18n-html="form_material_hint">Dein Material ist nicht dabei? <a href="sondermaterial.html" style="color:var(--gold);font-weight:600;text-decoration:none">Frag uns nach einer individuellen Beschaffung</a> — wir prüfen gerne, ob wir es für dich bündeln können.</p>
             </div>
-            <span class="fsec-label" data-i18n="fsec_timing">Lieferzeitraum &amp; Adresse</span>
+            <span class="fsec-label" data-i18n="fsec_timing">Lieferadresse</span>
             <div class="form-grid" style="grid-template-columns:1fr;gap:16px">
-              <div class="form-group"><label class="form-label" data-i18n="form_timing_label">Gewünschter Lieferzeitraum *</label>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-                  <div><span style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:4px" data-i18n="form_date_from">Frühestens</span><input type="date" class="form-input" id="c-date-von" aria-label="Frühestes Lieferdatum" oninput="_onDateChange()" required aria-required="true"/></div>
-                  <div><span style="font-size:.7rem;color:var(--muted);display:block;margin-bottom:4px" data-i18n="form_date_to">Spätestens</span><input type="date" class="form-input" id="c-date-bis" aria-label="Spätestes Lieferdatum" oninput="_onDateChange()" required aria-required="true"/></div>
-                </div>
-                <div class="form-error" role="alert" id="e-c-timing" data-i18n="err_timing">Bitte gültigen Lieferzeitraum wählen</div>
-              </div>
               <div class="form-group">
                 <label class="form-label" for="c-street" data-i18n="form_address_label">Lieferadresse *</label>
                 <input type="text" class="form-input" id="c-street" name="strasse" placeholder="Strasse und Hausnummer" data-i18n-placeholder="form_placeholder_address" required aria-required="true"/>
@@ -1220,19 +1228,18 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
                 </div>
               </div>
             </div>
-            <div id="tempo-indicator" class="tempo-indicator" style="display:none"></div>
             <div class="form-group"><label class="form-label" for="c-desc" data-i18n-html="form_project_label">Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span></label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und weitere Anforderungen…" data-i18n-placeholder="form_placeholder_project"></textarea></div>
             <div id="tier-summary" class="tier-summary" style="display:none">
-              <div class="tier-row"><span class="tier-label" data-i18n="tier_label_value">Geschätzter Auftragswert</span><span class="tier-val" id="tier-value">CHF 0</span></div>
+              <div id="tier-breakdown" class="tier-breakdown"></div>
+              <div class="tier-row tier-row-hl"><span class="tier-label" data-i18n="tier_label_value">Geschätzter Auftragswert</span><span class="tier-val" id="tier-value">CHF 0</span></div>
               <div class="tier-note-sub" data-i18n="tier_note_sub">basierend auf SourceOn-Richtpreisen</div>
-              <div class="tier-row tier-row-hl"><span class="tier-label" data-i18n="tier_label_rate">Dein garantierter Netto-Mindestrabatt</span><span class="tier-rate" id="tier-rate">8%</span></div>
-              <p class="tier-hint" data-i18n-html="tier_hint">Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">8%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.</p>
+              <p class="tier-hint" data-i18n="bundle_note">Jedes Material wird separat gebündelt und ausgeschrieben.</p>
             </div>
             <div class="commit-box" id="commit-box">
               <div data-i18n="commit_note" style="font-size:12px;color:var(--t2);line-height:1.6;padding:10px 14px;background:rgba(232,160,32,0.05);border-radius:8px;border-left:2px solid var(--gold);margin-top:12px;margin-bottom:16px">Hinweis: Erreicht das verhandelte Angebot deinen Mindestrabatt, wird dein Auftrag automatisch ausgeführt. Du kannst ihn danach nicht mehr zurückziehen.</div>
               <label class="commit-check">
                 <input type="checkbox" id="c-commitment" onchange="if(this.checked){var b=document.getElementById('commit-box');b&&b.classList.remove('commit-error');var e=document.getElementById('e-c-commitment');e&&(e.style.display='none');}"/>
-                <span class="commit-text" data-i18n-html="commit_text">Ich bestätige verbindlich: Erreicht das verhandelte Angebot meinen garantierten Netto-Mindestrabatt von <strong id="commit-rate">8%</strong>, gilt mein Auftrag als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt — <strong id="commit-rate2">8%</strong> kommen vollständig bei mir an. Wird die Zielmarke verfehlt, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a></span>
+                <span class="commit-text" data-i18n-html="commit_text">Ich bestätige verbindlich: Erreicht das verhandelte Angebot je Material den oben angezeigten garantierten Netto-Mindestrabatt, gilt mein Auftrag für das jeweilige Material als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt und kommt vollständig bei mir an. Wird die Zielmarke bei einem Material verfehlt, entfällt die betreffende Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a></span>
               </label>
               <div class="form-error" role="alert" id="e-c-commitment" data-i18n="err_commit">Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.</div>
             </div>
@@ -1383,30 +1390,49 @@ function _tierRate(v){if(window.SO_TIERS)return window.SO_TIERS.netRate(v);for(v
 function _soIndividualLabel(){return ({de:'Individuell',en:'Individual',fr:'Individuel',it:'Individuale'})[_matLang()]||'Individuell';}
 window._orderValue=0;window._committedRate=0.08;
 function _parseQty(s){var n=parseFloat(String(s||'').replace(/'/g,'').replace(',','.').replace(/[^0-9.]/g,''));return isNaN(n)?0:n;}
+// Netto-Rabatt pro Material (menge × richtpreis) — jedes Material wird separat
+// gebündelt/ausgeschrieben, deshalb gilt die Rabattstufe je Material einzeln.
+function _rowRate(rowCHF){return _tierRate(rowCHF);}
 function _recalcTier(){
   var total=0;
   var _hasBeton=false;
+  var breakdown=[];
   document.querySelectorAll('#material-rows .material-row').forEach(function(r){
     var idEl=r.querySelector('.mat-id');var id=idEl?idEl.value:'';
     var qtyEl=r.querySelector('.mat-qty');var qty=qtyEl?_parseQty(qtyEl.value):0;
+    var badge=r.querySelector('.mat-rabatt');var badgeVal=r.querySelector('.mat-rabatt-val');
+    var rowCHF=0,hasVal=false;
     if(id&&_matById[id]){
       if(_matById[id].kategorie==='Beton')_hasBeton=true;
       if(qty>0){
         var rp=_matById[id].richtpreis_chf;
-        if(rp!=null&&!isNaN(parseFloat(rp)))total+=qty*parseFloat(rp);
+        if(rp!=null&&!isNaN(parseFloat(rp))){rowCHF=qty*parseFloat(rp);total+=rowCHF;hasVal=true;}
       }
+    }
+    if(hasVal){
+      var rate=_rowRate(rowCHF);
+      var label=(rate==null)?_soIndividualLabel():(Math.round(rate*100)+'%');
+      if(badge)badge.style.display='';
+      if(badgeVal)badgeVal.textContent=label;
+      breakdown.push({name:_matLabel(_matById[id]),rate:label});
+    }else{
+      if(badge)badge.style.display='none';
     }
   });
   var _tn=document.getElementById('kontakt-transport-note');if(_tn)_tn.style.display=_hasBeton?'block':'none';
   window._orderValue=total;
-  var rate=_tierRate(total);window._committedRate=rate;
-  var label=(rate==null)?_soIndividualLabel():(Math.round(rate*100)+'%');
+  window._committedRate=_tierRate(total); // Rückwärtskompatibilität (nicht mehr im Payload)
+  var bd=document.getElementById('tier-breakdown');
+  if(bd){
+    bd.innerHTML=breakdown.map(function(b){
+      return '<div class="tier-row"><span class="tier-label">'+_escHtml(b.name)+'</span><span class="tier-val">'+_escHtml(b.rate)+'</span></div>';
+    }).join('');
+  }
   var box=document.getElementById('tier-summary');
   if(box){
     if(total>0){box.style.display='block';var tv=document.getElementById('tier-value');if(tv)tv.textContent='CHF '+Math.round(total).toLocaleString('de-CH');}
     else{box.style.display='none';}
   }
-  ['tier-rate','tier-rate-inline','commit-rate','commit-rate2'].forEach(function(idn){var el=document.getElementById(idn);if(el)el.textContent=label;});
 }
 
 // ============ Lieferzeitraum: Tempo-Indikator + Validierung (nutzt timing.js) ============
@@ -1416,47 +1442,48 @@ function _isoDays(dateStr){
   var d=new Date(dateStr);d.setHours(0,0,0,0);var t=new Date();t.setHours(0,0,0,0);
   return Math.floor((d-t)/86400000);
 }
-function _onDateChange(){
-  var von=document.getElementById('c-date-von').value;
-  var bis=document.getElementById('c-date-bis').value;
-  var bisEl=document.getElementById('c-date-bis');
-  if(von)bisEl.min=von; // bis nie vor von
-  var err=document.getElementById('e-c-timing');if(err)err.style.display='none';
-  var box=document.getElementById('tempo-indicator');
-  if(!von||!bis){if(box)box.style.display='none';return;}
-  // Das Tempo richtet sich nach der Zeitspanne vom Absenden (heute) bis zum
-  // SPÄTESTEN gewünschten Liefertermin (bis) — so viel Zeit bleibt real, um
-  // Bündelungspartner zu sammeln und auszuschreiben.
-  var avail=Math.ceil((new Date(bis)-new Date())/(1000*60*60*24));
-  var _tl=(typeof I18N!=='undefined'&&I18N[window._currentLang||localStorage.getItem('sourceon-lang')||'de'])||{};
-  if(box){
-    if(avail>23){box.textContent=_tl.tempo_msg_flex||'🟢 Flexibler Zeitraum — deine Anfrage sammelt bis zu 14 Tage Bündelungspartner für maximale Ersparnis.';box.style.display='block';}
-    else if(avail>=14){box.textContent=_tl.tempo_msg_med||'🟡 Mittlerer Zeitraum — deine Anfrage sammelt einige Tage Partner und wird dann ausgeschrieben.';box.style.display='block';}
-    else if(avail>=5){box.textContent=_tl.tempo_msg_tight||'🟠 Knapper Zeitraum — deine Anfrage wird beschleunigt ausgeschrieben (verkürzte Gebotsfrist für Lieferanten).';box.style.display='block';}
-    else{box.style.display='none';} // <5 Tage: Validierung greift beim Absenden
-  }
+function _minLeadStr(){
+  var minLead=(window.SO_TIMING&&window.SO_TIMING.MIN_LEAD_DAYS)||5;
+  var min=new Date();min.setDate(min.getDate()+minLead);
+  return min.toISOString().split('T')[0];
 }
+// Setzt min-Datum auf die Datumsfelder einer Material-Zeile.
+function _initRowDates(row){
+  if(!row)return;
+  var minStr=_minLeadStr();
+  var v=row.querySelector('.mat-von'),b=row.querySelector('.mat-bis');
+  if(v&&!v.min)v.min=minStr;if(b&&!b.min)b.min=minStr;
+}
+// Reagiert auf Datumsänderung in EINER Zeile: bis nie vor von, Fehler ausblenden.
+function _onMatRow(el){
+  var row=el&&el.closest?el.closest('.material-row'):null;if(!row)return;
+  var v=row.querySelector('.mat-von'),b=row.querySelector('.mat-bis');
+  if(v&&v.value&&b)b.min=v.value;
+  var err=document.getElementById('e-mat-dates');if(err)err.style.display='none';
+}
+// Prüft je Material-Zeile (mit Material + Menge) den eigenen Lieferzeitraum.
 function _validateDates(){
-  var von=document.getElementById('c-date-von').value;
-  var bis=document.getElementById('c-date-bis').value;
-  var err=document.getElementById('e-c-timing');
   var minLead=(window.SO_TIMING&&window.SO_TIMING.MIN_LEAD_DAYS)||5;
   var _tl=(typeof I18N!=='undefined'&&I18N[window._currentLang||localStorage.getItem('sourceon-lang')||'de'])||{};
+  var err=document.getElementById('e-mat-dates');
   function fail(msg){if(err){err.textContent=msg;err.style.display='block';}return false;}
-  if(!von||!bis)return fail(_tl.err_dates_required||'Bitte frühestes und spätestes Lieferdatum angeben.');
-  if(_isoDays(von)<minLead)return fail(_tl.err_dates_lead||'Für Lieferungen innerhalb von 5 Tagen kontaktiere uns bitte direkt: info@sourceon.ch');
-  if(bis<von)return fail(_tl.err_dates_order||'Das späteste Datum darf nicht vor dem frühesten liegen.');
+  var rows=document.querySelectorAll('#material-rows .material-row');
+  for(var i=0;i<rows.length;i++){
+    var r=rows[i];
+    var idEl=r.querySelector('.mat-id');var id=idEl?idEl.value:'';
+    var qEl=r.querySelector('.mat-qty');var qv=qEl?qEl.value.trim():'';
+    if(!id||!qv)continue; // nur vollständige Zeilen prüfen (Material-Check greift sonst)
+    var vEl=r.querySelector('.mat-von'),bEl=r.querySelector('.mat-bis');
+    var von=vEl?vEl.value:'',bis=bEl?bEl.value:'';
+    if(!von||!bis)return fail(_tl.err_dates_required||'Bitte frühestes und spätestes Lieferdatum je Material angeben.');
+    if(_isoDays(von)<minLead)return fail(_tl.err_dates_lead||'Für Lieferungen innerhalb von 5 Tagen kontaktiere uns bitte direkt: info@sourceon.ch');
+    if(bis<von)return fail(_tl.err_dates_order||'Das späteste Datum darf nicht vor dem frühesten liegen.');
+  }
   if(err)err.style.display='none';
   return true;
 }
 function _initDateFields(){
-  var vonEl=document.getElementById('c-date-von');
-  if(!vonEl)return;
-  var minLead=(window.SO_TIMING&&window.SO_TIMING.MIN_LEAD_DAYS)||5;
-  var min=new Date();min.setDate(min.getDate()+minLead);
-  var minStr=min.toISOString().split('T')[0];
-  vonEl.min=minStr;
-  var bisEl=document.getElementById('c-date-bis');if(bisEl)bisEl.min=minStr;
+  document.querySelectorAll('#material-rows .material-row').forEach(_initRowDates);
 }
 
 function _buildMatGroups(){
@@ -1581,15 +1608,31 @@ function _applyCatalogFailure(){
 
 var MAT_COMBO_HTML='<div class="mat-combo"><input type="text" class="form-input mat-search" placeholder="Material suchen oder wählen…" data-i18n-placeholder="form_select_material" autocomplete="off"/><input type="hidden" class="mat-id"/><div class="mat-dd"></div></div>';
 
+// Innen-HTML einer Material-Zeile (identisch zur statischen ersten Zeile, plus
+// Entfernen-Button). Jede Zeile hat eigenen Lieferzeitraum + eigenen Rabatt-Badge.
+function _matRowInnerHTML(withRemove){
+  return '<div class="mat-top">'+MAT_COMBO_HTML
+    +'<div class="mat-qty-wrap"><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><span class="mat-unit"></span></div>'
+    +(withRemove?'<button type="button" class="mat-remove-btn" onclick="removeMaterialRow(this)" title="Entfernen"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>':'')
+    +'</div>'
+    +'<div class="mat-dates"><div><span class="mat-date-lbl" data-i18n="liefer_von_label">Frühestens</span><input type="date" class="form-input mat-von" aria-label="Frühestes Lieferdatum" oninput="_onMatRow(this)"/></div><div><span class="mat-date-lbl" data-i18n="liefer_bis_label">Spätestens</span><input type="date" class="form-input mat-bis" aria-label="Spätestes Lieferdatum" oninput="_onMatRow(this)"/></div></div>'
+    +'<div class="mat-rabatt" style="display:none"><span data-i18n="liefer_rabatt_label">Netto-Mindestrabatt</span>: <strong class="mat-rabatt-val">–</strong></div>';
+}
+
 function addMaterialRow(){
   if(matRowCount>=10)return;matRowCount++;
   const rows=document.getElementById('material-rows');
   const div=document.createElement('div');div.className='material-row';
-  div.innerHTML=MAT_COMBO_HTML+'<div class="mat-qty-wrap"><input type="text" class="form-input mat-qty" placeholder="z.B. 200 m³" data-i18n-placeholder="form_placeholder_qty"/><span class="mat-unit"></span></div><button type="button" class="mat-remove-btn" onclick="removeMaterialRow(this)" title="Entfernen"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>';
+  div.innerHTML=_matRowInnerHTML(true);
   rows.appendChild(div);
   _initMatCombo(div.querySelector('.mat-combo'));
+  _initRowDates(div);
   if(_matCatalogFailed)_applyCatalogFailure();
-  var cl=window._currentLang||localStorage.getItem('sourceon-lang')||'de';var t=typeof I18N!=='undefined'&&I18N[cl]?I18N[cl]:null;if(t){div.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){if(t[el.dataset.i18nPlaceholder])el.placeholder=t[el.dataset.i18nPlaceholder];});}
+  var cl=window._currentLang||localStorage.getItem('sourceon-lang')||'de';var t=typeof I18N!=='undefined'&&I18N[cl]?I18N[cl]:null;
+  if(t){
+    div.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){if(t[el.dataset.i18nPlaceholder])el.placeholder=t[el.dataset.i18nPlaceholder];});
+    div.querySelectorAll('[data-i18n]').forEach(function(el){if(t[el.dataset.i18n])el.textContent=t[el.dataset.i18n];});
+  }
   if(matRowCount>=10)document.getElementById('add-material-btn').style.display='none';
 }
 function removeMaterialRow(btn){btn.closest('.material-row').remove();matRowCount--;document.getElementById('add-material-btn').style.display='';if(typeof _recalcTier==='function')_recalcTier();}
@@ -1754,7 +1797,12 @@ async function submitContact(e){
       var qty=r.querySelector('.mat-qty').value.trim();
       if(!sid){if(txt&&qty)unmatched.push(txt);return;}
       if(!qty)return;
-      materials.push({sourceon_id:sid,menge:qty});
+      var vEl=r.querySelector('.mat-von'),bEl=r.querySelector('.mat-bis');
+      var von=vEl?vEl.value:'',bis=bEl?bEl.value:'';
+      // Anzeige-Rabatt je Material; der Server rechnet ihn manipulationssicher nach.
+      var rp=_matById[sid]&&_matById[sid].richtpreis_chf;
+      var chf=(rp!=null&&!isNaN(parseFloat(rp)))?_parseQty(qty)*parseFloat(rp):0;
+      materials.push({sourceon_id:sid,menge:qty,liefer_zeitraum_von:von,liefer_zeitraum_bis:bis,committed_min_rabatt:_tierRate(chf)});
     });
     if(unmatched.length>0){
       submitBtn.disabled=false;submitBtn.style.opacity='1';
@@ -1779,8 +1827,6 @@ async function submitContact(e){
       telefon:document.getElementById('c-phone').value.trim(),
       strasse:streetVal,plz:plzVal,ort:ortVal,
       materials:materials,
-      liefer_zeitraum_von:document.getElementById('c-date-von').value,
-      liefer_zeitraum_bis:document.getElementById('c-date-bis').value,
       commitment_accepted:true,
       commitment_version:COMMITMENT_VERSION
     };
@@ -2036,12 +2082,15 @@ window.I18N={
     tempobox_t:"Lieferzeitraum gibt das Tempo vor",
     tempobox_r1:"🟢 Flexibel (>23 Tage) — Maximale Bündelungszeit",tempobox_r2:"🟡 Mittel (14–23 Tage) — Schnellere Ausschreibung",tempobox_r3:"🟠 Knapp (5–13 Tage) — Beschleunigte Abwicklung",
     form_title:"Jetzt melden",form_subtitle:"Du siehst deinen garantierten Mindestrabatt vor dem Absenden.",
-    fsec_company:"Firmendaten",fsec_material:"Material & Menge",fsec_timing:"Lieferzeitraum & Adresse",
+    fsec_company:"Firmendaten",fsec_material:"Material & Menge",fsec_timing:"Lieferadresse",
     form_date_from:"Frühestens",form_date_to:"Spätestens",err_timing:"Bitte gültigen Lieferzeitraum wählen",
+    liefer_von_label:"Frühestens",liefer_bis_label:"Spätestens",liefer_rabatt_label:"Netto-Mindestrabatt",
+    bundle_note:"Jedes Material wird separat gebündelt und ausgeschrieben.",
+    err_mat_dates:"Bitte für jedes Material Frühestens- und Spätestens-Datum wählen.",
     acct_opt_label:"Anfragen jederzeit verfolgen",acct_opt_check:"Konto erstellen, um meine Anfragen und Ersparnisse jederzeit einzusehen",acct_opt_hint:"Nach dem Absenden wirst du aufgefordert, ein Passwort festzulegen. Du kannst dich danach jederzeit einloggen, um den Status deiner Anfragen zu verfolgen.",
     tier_label_value:"Geschätzter Auftragswert",tier_note_sub:"basierend auf SourceOn-Richtpreisen",tier_label_rate:"Dein garantierter Netto-Mindestrabatt",
     tier_hint:'Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">8%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.',
-    commit_text:'Ich bestätige verbindlich: Erreicht das verhandelte Angebot meinen garantierten Netto-Mindestrabatt von <strong id="commit-rate">8%</strong>, gilt mein Auftrag als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt — <strong id="commit-rate2">8%</strong> kommen vollständig bei mir an. Wird die Zielmarke verfehlt, entfällt meine Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a>',
+    commit_text:'Ich bestätige verbindlich: Erreicht das verhandelte Angebot je Material den oben angezeigten garantierten Netto-Mindestrabatt, gilt mein Auftrag für das jeweilige Material als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt und kommt vollständig bei mir an. Wird die Zielmarke bei einem Material verfehlt, entfällt die betreffende Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a>',
     err_commit:"Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.",
     commit_note:'Hinweis: Erreicht das verhandelte Angebot deinen Mindestrabatt, wird dein Auftrag automatisch ausgeführt. Du kannst ihn danach nicht mehr zurückziehen.',
     tempo_msg_flex:"🟢 Flexibler Zeitraum — deine Anfrage sammelt bis zu 14 Tage Bündelungspartner für maximale Ersparnis.",
@@ -2093,12 +2142,15 @@ window.I18N={
     tempobox_t:"Delivery period sets the pace",
     tempobox_r1:"🟢 Flexible (>23 days) — Maximum bundling time",tempobox_r2:"🟡 Medium (14–23 days) — Faster tender",tempobox_r3:"🟠 Tight (5–13 days) — Accelerated processing",
     form_title:"Report now",form_subtitle:"You see your guaranteed minimum discount before submitting.",
-    fsec_company:"Company details",fsec_material:"Material & quantity",fsec_timing:"Delivery period & address",
+    fsec_company:"Company details",fsec_material:"Material & quantity",fsec_timing:"Delivery address",
     form_date_from:"Earliest",form_date_to:"Latest",err_timing:"Please select a valid delivery period",
+    liefer_von_label:"Earliest",liefer_bis_label:"Latest",liefer_rabatt_label:"Net minimum discount",
+    bundle_note:"Each material is bundled and tendered separately.",
+    err_mat_dates:"Please select an earliest and latest date for each material.",
     acct_opt_label:"Track requests anytime",acct_opt_check:"Create an account to view my requests and savings anytime",acct_opt_hint:"After submitting, you'll be prompted to set a password. You can then log in anytime to track the status of your requests.",
     tier_label_value:"Estimated order value",tier_note_sub:"based on SourceOn reference prices",tier_label_rate:"Your guaranteed net minimum discount",
     tier_hint:'Net, after SourceOn commission — <strong id="tier-rate-inline">8%</strong> reach you in full. Through bundling with other construction firms, your savings are often higher.',
-    commit_text:'I confirm bindingly: If the negotiated offer reaches my guaranteed net minimum discount of <strong id="commit-rate">8%</strong>, my order is deemed placed. The SourceOn success commission is already accounted for — <strong id="commit-rate2">8%</strong> reach me in full. If the target is missed, my request lapses automatically and free of charge. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Read customer agreement</a>',
+    commit_text:'I confirm bindingly: If the negotiated offer reaches the guaranteed net minimum discount shown above for each material, my order for that material is deemed placed. The SourceOn success commission is already accounted for and reaches me in full. If the target is missed for a material, that request lapses automatically and free of charge. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Read customer agreement</a>',
     err_commit:"Please confirm the binding order placement to continue.",
     commit_note:'Note: If the negotiated offer reaches your minimum discount, your order is automatically executed. You cannot withdraw it afterwards.',
     tempo_msg_flex:"🟢 Flexible period — your request collects bundling partners for up to 14 days for maximum savings.",
@@ -2149,12 +2201,15 @@ window.I18N={
     tempobox_t:"Le délai de livraison donne le rythme",
     tempobox_r1:"🟢 Flexible (>23 jours) — Temps de regroupement maximal",tempobox_r2:"🟡 Moyen (14–23 jours) — Appel d'offres plus rapide",tempobox_r3:"🟠 Serré (5–13 jours) — Traitement accéléré",
     form_title:"Déclarer maintenant",form_subtitle:"Tu vois ta remise minimale garantie avant d'envoyer.",
-    fsec_company:"Données de l'entreprise",fsec_material:"Matériau & quantité",fsec_timing:"Délai de livraison & adresse",
+    fsec_company:"Données de l'entreprise",fsec_material:"Matériau & quantité",fsec_timing:"Adresse de livraison",
     form_date_from:"Au plus tôt",form_date_to:"Au plus tard",err_timing:"Choisis un délai de livraison valide",
+    liefer_von_label:"Au plus tôt",liefer_bis_label:"Au plus tard",liefer_rabatt_label:"Rabais net minimum",
+    bundle_note:"Chaque matériau est regroupé et mis en appel d'offres séparément.",
+    err_mat_dates:"Choisis une date au plus tôt et au plus tard pour chaque matériau.",
     acct_opt_label:"Suivre les demandes à tout moment",acct_opt_check:"Créer un compte pour consulter mes demandes et économies à tout moment",acct_opt_hint:"Après l'envoi, on te demandera de définir un mot de passe. Tu pourras ensuite te connecter à tout moment pour suivre le statut de tes demandes.",
     tier_label_value:"Valeur estimée de la commande",tier_note_sub:"basé sur les prix indicatifs SourceOn",tier_label_rate:"Ta remise minimale nette garantie",
     tier_hint:'Net, après commission SourceOn — <strong id="tier-rate-inline">8%</strong> te reviennent intégralement. Grâce au regroupement avec d\'autres entreprises de construction, tes économies sont souvent plus élevées.',
-    commit_text:'Je confirme de manière ferme : si l\'offre négociée atteint ma remise minimale nette garantie de <strong id="commit-rate">8%</strong>, ma commande est considérée comme passée. La commission de succès SourceOn y est déjà intégrée — <strong id="commit-rate2">8%</strong> me reviennent intégralement. Si l\'objectif n\'est pas atteint, ma demande est annulée automatiquement et gratuitement. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Lire l\'accord client</a>',
+    commit_text:'Je confirme de manière ferme : si l\'offre négociée atteint, pour chaque matériau, le rabais net minimum garanti indiqué ci-dessus, ma commande pour le matériau concerné est considérée comme passée. La commission de succès SourceOn y est déjà intégrée et me revient intégralement. Si l\'objectif n\'est pas atteint pour un matériau, la demande concernée est annulée automatiquement et gratuitement. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Lire l\'accord client</a>',
     err_commit:"Confirme la passation de commande ferme pour continuer.",
     commit_note:'Remarque: Si l\'offre négociée atteint ta remise minimale, ta commande est automatiquement exécutée. Tu ne peux plus la retirer ensuite.',
     tempo_msg_flex:"🟢 Délai flexible — ta demande rassemble des partenaires de regroupement jusqu'à 14 jours pour un maximum d'économies.",
@@ -2205,12 +2260,15 @@ window.I18N={
     tempobox_t:"Il periodo di consegna detta il ritmo",
     tempobox_r1:"🟢 Flessibile (>23 giorni) — Tempo di raggruppamento massimo",tempobox_r2:"🟡 Medio (14–23 giorni) — Gara più rapida",tempobox_r3:"🟠 Stretto (5–13 giorni) — Elaborazione accelerata",
     form_title:"Segnala ora",form_subtitle:"Vedi il tuo sconto minimo garantito prima di inviare.",
-    fsec_company:"Dati aziendali",fsec_material:"Materiale & quantità",fsec_timing:"Periodo di consegna & indirizzo",
+    fsec_company:"Dati aziendali",fsec_material:"Materiale & quantità",fsec_timing:"Indirizzo di consegna",
     form_date_from:"Al più presto",form_date_to:"Al più tardi",err_timing:"Seleziona un periodo di consegna valido",
+    liefer_von_label:"Al più presto",liefer_bis_label:"Al più tardi",liefer_rabatt_label:"Sconto netto minimo",
+    bundle_note:"Ogni materiale viene raggruppato e messo a gara separatamente.",
+    err_mat_dates:"Seleziona una data al più presto e al più tardi per ogni materiale.",
     acct_opt_label:"Segui le richieste in qualsiasi momento",acct_opt_check:"Crea un account per consultare le mie richieste e i miei risparmi in qualsiasi momento",acct_opt_hint:"Dopo l'invio ti verrà chiesto di impostare una password. Potrai poi accedere in qualsiasi momento per seguire lo stato delle tue richieste.",
     tier_label_value:"Valore stimato dell'ordine",tier_note_sub:"basato sui prezzi indicativi SourceOn",tier_label_rate:"Il tuo sconto minimo netto garantito",
     tier_hint:'Netto, dopo la commissione SourceOn — <strong id="tier-rate-inline">8%</strong> ti spettano interamente. Grazie al raggruppamento con altre imprese edili, il tuo risparmio è spesso più elevato.',
-    commit_text:'Confermo in modo vincolante: se l\'offerta negoziata raggiunge il mio sconto minimo netto garantito del <strong id="commit-rate">8%</strong>, il mio ordine si considera conferito. La commissione di successo SourceOn è già inclusa — <strong id="commit-rate2">8%</strong> mi spettano interamente. Se l\'obiettivo non viene raggiunto, la mia richiesta decade automaticamente e gratuitamente. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Leggi l\'accordo cliente</a>',
+    commit_text:'Confermo in modo vincolante: se l\'offerta negoziata raggiunge, per ogni materiale, lo sconto minimo netto garantito indicato sopra, il mio ordine per quel materiale si considera conferito. La commissione di successo SourceOn è già inclusa e mi spetta interamente. Se l\'obiettivo non viene raggiunto per un materiale, la richiesta relativa decade automaticamente e gratuitamente. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Leggi l\'accordo cliente</a>',
     err_commit:"Conferma il conferimento vincolante dell'ordine per continuare.",
     commit_note:'Nota: Se l\'offerta negoziata raggiunge il tuo sconto minimo, il tuo ordine viene eseguito automaticamente. Non puoi più ritirarlo in seguito.',
     tempo_msg_flex:"🟢 Periodo flessibile — la tua richiesta raccoglie partner di raggruppamento fino a 14 giorni per il massimo risparmio.",
@@ -2260,9 +2318,8 @@ window.setLang=function(lang){
   document.documentElement.lang=lang;
   window._currentLang=lang;
   document.body.classList.add('lang-ready');var _lh=document.getElementById('_lh');if(_lh){setTimeout(function(){_lh.remove();},200);}
-  // Re-apply dynamic rate values into re-rendered tier/commit HTML, and refresh the tempo indicator in the new language.
+  // Re-apply per-material rates/breakdown into the re-rendered summary in the new language.
   if(typeof _recalcTier==='function')_recalcTier();
-  if(typeof _onDateChange==='function')_onDateChange();
 };
 (function(){var l=localStorage.getItem('sourceon-lang');if(l&&I18N[l])setLang(l);})();
 document.addEventListener('click',function(e){var sw=document.getElementById('lang-switch');if(sw&&!sw.contains(e.target))sw.classList.remove('open');});
@@ -2725,7 +2782,7 @@ document.addEventListener('keydown',function(e){
    (c-commitment) wird bewusst NICHT gespeichert/wiederhergestellt. */
 (function(){
   var KEY='sourceon_form_draft', MAXAGE=7200000; // 2 Stunden
-  var FIELDS=['c-company','c-name','c-email','c-phone','c-street','c-plz','c-ort','c-date-von','c-date-bis','c-desc'];
+  var FIELDS=['c-company','c-name','c-email','c-phone','c-street','c-plz','c-ort','c-desc'];
   var CHECKS=['c-create-account'];
   var DI18N={
     de:{restored:'Entwurf wiederhergestellt — zuletzt gespeichert vor %s.',min:'%n Min.',now:'wenigen Sekunden',del:'Entwurf löschen'},
@@ -2742,9 +2799,9 @@ document.addEventListener('keydown',function(e){
     CHECKS.forEach(function(id){var el=document.getElementById(id);if(el)d[id]=el.checked;});
     var mats=[];
     document.querySelectorAll('#material-rows .material-row').forEach(function(r){
-      var s=r.querySelector('.mat-search'),idEl=r.querySelector('.mat-id'),q=r.querySelector('.mat-qty'),u=r.querySelector('.mat-unit');
-      var sv=s?s.value:'',iv=idEl?idEl.value:'',qv=q?q.value:'',uv=u?u.textContent:'';
-      if(sv||iv||qv)mats.push({q:sv,id:iv,qty:qv,unit:uv});
+      var s=r.querySelector('.mat-search'),idEl=r.querySelector('.mat-id'),q=r.querySelector('.mat-qty'),u=r.querySelector('.mat-unit'),vo=r.querySelector('.mat-von'),bi=r.querySelector('.mat-bis');
+      var sv=s?s.value:'',iv=idEl?idEl.value:'',qv=q?q.value:'',uv=u?u.textContent:'',vov=vo?vo.value:'',biv=bi?bi.value:'';
+      if(sv||iv||qv||vov||biv)mats.push({q:sv,id:iv,qty:qv,unit:uv,von:vov,bis:biv});
     });
     d._mats=mats;return d;
   }
@@ -2762,7 +2819,7 @@ document.addEventListener('keydown',function(e){
     var rws=document.querySelectorAll('#material-rows .material-row');
     for(var i=rws.length-1;i>=1;i--){var rb=rws[i].querySelector('.mat-remove-btn');if(rb&&typeof removeMaterialRow==='function')removeMaterialRow(rb);else rws[i].remove();}
     var f=document.querySelector('#material-rows .material-row');
-    if(f){var s=f.querySelector('.mat-search'),idEl=f.querySelector('.mat-id'),q=f.querySelector('.mat-qty'),u=f.querySelector('.mat-unit');if(s)s.value='';if(idEl)idEl.value='';if(q)q.value='';if(u){u.textContent='';u.classList.remove('visible');}}
+    if(f){var s=f.querySelector('.mat-search'),idEl=f.querySelector('.mat-id'),q=f.querySelector('.mat-qty'),u=f.querySelector('.mat-unit'),vo=f.querySelector('.mat-von'),bi=f.querySelector('.mat-bis');if(s)s.value='';if(idEl)idEl.value='';if(q)q.value='';if(vo)vo.value='';if(bi)bi.value='';if(u){u.textContent='';u.classList.remove('visible');}}
     if(typeof _recalcTier==='function')_recalcTier();
   }
   function restore(d){
@@ -2774,13 +2831,13 @@ document.addEventListener('keydown',function(e){
       while(document.querySelectorAll('#material-rows .material-row').length<need&&typeof addMaterialRow==='function'&&guard++<12){addMaterialRow();}
       var rows=document.querySelectorAll('#material-rows .material-row');
       d._mats.forEach(function(m,i){var r=rows[i];if(!r)return;
-        var s=r.querySelector('.mat-search'),idEl=r.querySelector('.mat-id'),q=r.querySelector('.mat-qty'),u=r.querySelector('.mat-unit');
+        var s=r.querySelector('.mat-search'),idEl=r.querySelector('.mat-id'),q=r.querySelector('.mat-qty'),u=r.querySelector('.mat-unit'),vo=r.querySelector('.mat-von'),bi=r.querySelector('.mat-bis');
         if(s)s.value=m.q||'';if(idEl)idEl.value=m.id||'';if(q)q.value=m.qty||'';
+        if(vo)vo.value=m.von||'';if(bi)bi.value=m.bis||'';
         if(u&&m.unit){u.textContent=m.unit;u.classList.add('visible');}
       });
     }
     if(typeof _recalcTier==='function')_recalcTier();
-    if(typeof _onDateChange==='function')_onDateChange();
   }
   function relTime(savedAt){var mins=Math.floor((Date.now()-savedAt)/60000);if(mins<1)return T().now;return T().min.replace('%n',mins);}
   function showBanner(savedAt){

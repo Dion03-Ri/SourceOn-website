@@ -99,8 +99,7 @@ function zoneFromPlz(plz: string): string {
 interface Body {
   firmenname?: string; ansprechperson?: string; email?: string; telefon?: string;
   strasse?: string; plz?: string; ort?: string;
-  materials?: { sourceon_id: string; menge: string }[];
-  liefer_zeitraum_von?: string; liefer_zeitraum_bis?: string;
+  materials?: { sourceon_id: string; menge: string; liefer_zeitraum_von?: string; liefer_zeitraum_bis?: string }[];
   commitment_accepted?: boolean; commitment_version?: string;
   clerk_user_id?: string;
 }
@@ -125,12 +124,13 @@ Deno.serve(async (req) => {
   const strasse = (b.strasse || "").trim();
   const plz = (b.plz || "").trim();
   const ort = (b.ort || "").trim();
-  const von = b.liefer_zeitraum_von || null;
-  const bis = b.liefer_zeitraum_bis || null;
   const materials = Array.isArray(b.materials) ? b.materials : [];
 
+  // Jedes Material hat jetzt seinen EIGENEN Lieferzeitraum (von/bis).
+  const datesOk = materials.every((m) => m && m.liefer_zeitraum_von && m.liefer_zeitraum_bis);
+
   if (!firmenname || !ansprechperson || !email || email.indexOf("@") < 1 || !telefon ||
-      !strasse || !plz || !ort || !von || !bis || b.commitment_accepted !== true || materials.length === 0) {
+      !strasse || !plz || !ort || !datesOk || b.commitment_accepted !== true || materials.length === 0) {
     return json({ success: false, error: "missing_fields" }, 400);
   }
 
@@ -146,13 +146,13 @@ Deno.serve(async (req) => {
     cat[c.sourceon_id] = { einheit: c.einheit, richtpreis: c.richtpreis_chf };
   });
 
-  // Gesamt-Bestellwert -> Rabattstufe (serverseitig, manipulationssicher).
-  let total = 0;
-  for (const m of materials) {
+  // Rabattstufe PRO Material (serverseitig, manipulationssicher) — jedes Material
+  // wird separat gebündelt/ausgeschrieben, deshalb zählt sein eigenes Volumen.
+  function rateForMaterial(m: { sourceon_id: string; menge: string }): number | null {
     const rp = cat[m.sourceon_id]?.richtpreis;
-    if (rp != null && !isNaN(Number(rp))) total += parseQty(m.menge) * Number(rp);
+    const val = (rp != null && !isNaN(Number(rp))) ? parseQty(m.menge) * Number(rp) : 0;
+    return netRate(val);
   }
-  const committedRate = netRate(total); // fraction oder null (individuell)
   const committedAt = new Date().toISOString();
   const commitmentVersion = (b.commitment_version || "").toString().slice(0, 40) || "server";
 
@@ -187,13 +187,13 @@ Deno.serve(async (req) => {
         sourceon_id: m.sourceon_id,
         menge: (m.menge || "").toString().trim(),
         einheit: cat[m.sourceon_id]?.einheit || "Stk",
-        liefer_zeitraum_von: von,
-        liefer_zeitraum_bis: bis,
+        liefer_zeitraum_von: m.liefer_zeitraum_von,
+        liefer_zeitraum_bis: m.liefer_zeitraum_bis,
         liefer_zone: zone,
         status: "offen",
         commitment_accepted: true,
         commitment_accepted_at: committedAt,
-        committed_min_rabatt: committedRate,
+        committed_min_rabatt: rateForMaterial(m),
         commitment_version: commitmentVersion,
       }));
 
