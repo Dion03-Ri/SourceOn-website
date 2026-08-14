@@ -204,6 +204,28 @@ Deno.serve(async (req) => {
       requestIds = (mr.data ?? []).map((r: { id: string }) => r.id);
     }
 
+    // Bündeln sofort anstossen, statt bis zum nächsten stündlichen smart-task-Lauf zu warten.
+    // Der neue Request wird dadurch direkt einem bestehenden 'sammelt'-Bündel zugeordnet
+    // (oder es wird eines angelegt). Best-effort: schlägt es fehl, holt der Cron es nach.
+    if (requestIds.length > 0) {
+      try {
+        const triggerSecret = Deno.env.get("AI_TRIGGER_SECRET");
+        const baseUrl = Deno.env.get("SUPABASE_URL");
+        if (triggerSecret && baseUrl) {
+          const p = fetch(baseUrl.replace(/\/$/, "") + "/functions/v1/smart-task", {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "x-ai-secret": triggerSecret },
+            body: "{}",
+          }).catch((e) => console.error("[submit] smart-task trigger failed:", e));
+          // Hintergrund-Task am Leben halten, ohne die Kunden-Antwort zu verzögern.
+          // deno-lint-ignore no-explicit-any
+          const rt = (globalThis as any).EdgeRuntime;
+          if (rt && typeof rt.waitUntil === "function") rt.waitUntil(p);
+          else await p;
+        }
+      } catch (_e) { /* best-effort — der stündliche Cron holt es sonst nach */ }
+    }
+
     return json({ success: true, customer_id: customerId, request_ids: requestIds });
   } catch (e) {
     return json({ success: false, error: String(e) }, 500);
