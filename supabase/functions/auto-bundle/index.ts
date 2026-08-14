@@ -111,7 +111,12 @@ Deno.serve(async (req: Request) => {
     // den geheimen Header x-ai-secret mitschickt. Ohne diesen Header waere die
     // Function fuer jeden im Internet aufrufbar (Compute-/DoS-Hebel).
     const triggerSecret = Deno.env.get("AI_TRIGGER_SECRET");
-    if (!triggerSecret || req.headers.get("x-ai-secret") !== triggerSecret) {
+    const receivedSecret = req.headers.get("x-ai-secret");
+    // TEMP-DIAGNOSE (keine Secret-Werte, nur Vorhandensein/Laenge/Match) — nach dem Fix wieder entfernen.
+    console.log("[auth-debug] envSet=" + (triggerSecret ? ("yes(len=" + triggerSecret.length + ")") : "NO") +
+      " recvSet=" + (receivedSecret ? ("yes(len=" + receivedSecret.length + ")") : "NO") +
+      " match=" + (triggerSecret != null && triggerSecret === receivedSecret));
+    if (!triggerSecret || receivedSecret !== triggerSecret) {
       return Response.json({ error: "unauthorized" }, { status: 401 });
     }
 
