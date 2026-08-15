@@ -66,7 +66,7 @@ body:not(.clerk-loaded) [data-auth] { visibility: hidden; }
   padding: 8px 16px;
   border: none;
   border-radius: 8px;
-  background: #E8A020;
+  background: #C8A84B;
   color: #08111E;
   font-weight: 700;
   font-size: .82rem;
@@ -82,7 +82,7 @@ body:not(.clerk-loaded) [data-auth] { visibility: hidden; }
   position: absolute;
   top: -48px;
   left: 8px;
-  background: var(--gold, #E8A020);
+  background: var(--gold, #C8A84B);
   color: #070F1A;
   padding: 10px 18px;
   border-radius: 0 0 8px 8px;

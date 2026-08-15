@@ -32,10 +32,10 @@
   border: 1.5px solid rgba(255,255,255,.2); background: rgba(255,255,255,.06);
   color: #fff; font-weight: 700; font-family: inherit; font-size: .95rem; cursor: pointer;
 }
-#nav-overlay .mnav-langs button.active { background: var(--gold, #E8A020); color: #08111E; border-color: transparent; }
+#nav-overlay .mnav-langs button.active { background: var(--gold, #C8A84B); color: #08111E; border-color: transparent; }
 #nav-overlay .mnav-acct { display: flex; flex-direction: column; gap: 6px; align-items: center; }
 #nav-overlay .mnav-acct a { font-size: 1rem !important; font-weight: 500; color: rgba(255,255,255,.75) !important; }
-#nav-overlay .mnav-acct a:hover { color: var(--gold, #E8A020) !important; }
+#nav-overlay .mnav-acct a:hover { color: var(--gold, #C8A84B) !important; }
 
 /* --- Einfache Navigationsleisten (Rechtsseiten & Dashboards) umbrechen statt überlaufen --- */
 @media (max-width: 640px){
