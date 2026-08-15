@@ -11,10 +11,10 @@
     document.documentElement.style.visibility='visible';
     var box=document.createElement('div');
     box.style.cssText='text-align:center;max-width:420px;width:100%;padding:24px';
-    box.innerHTML='<div style="font-size:28px;font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:32px">Source<span style="color:#C8A84B">On</span></div>'
+    box.innerHTML='<div style="font-size:28px;font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:32px">Source<span style="color:#E8A020">On</span></div>'
       +'<p style="color:#94A3B8;font-size:.92rem;line-height:1.7;margin-bottom:32px">SourceOn befindet sich im Aufbau.<br>Diese Seite ist noch nicht öffentlich verfügbar.</p>'
       +'<input id="pg-pw" type="password" placeholder="Passwort" style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:.9rem;font-family:inherit;outline:none;margin-bottom:12px"/>'
-      +'<button id="pg-btn" style="width:100%;padding:12px;border-radius:10px;border:none;background:#C8A84B;color:#08111E;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer">Zugang</button>'
+      +'<button id="pg-btn" style="width:100%;padding:12px;border-radius:10px;border:none;background:#E8A020;color:#08111E;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer">Zugang</button>'
       +'<div id="pg-err" style="color:#EF4444;font-size:.82rem;margin-top:12px;display:none">Falsches Passwort.</div>';
     document.body.appendChild(box);
     var inp=document.getElementById('pg-pw');
@@ -68,17 +68,17 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .container{max-width:800px;margin:0 auto;padding:0 24px}
 header{padding:20px 0;border-bottom:1px solid rgba(255,255,255,.06)}
 .nav-logo{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#fff}
-.nav-logo span{color:#C8A84B}
-.back-link{display:inline-flex;align-items:center;gap:6px;color:#C8A84B;font-size:.85rem;font-weight:600;text-decoration:none;margin-top:40px}
+.nav-logo span{color:#E8A020}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:#E8A020;font-size:.85rem;font-weight:600;text-decoration:none;margin-top:40px}
 .back-link:hover{text-decoration:underline}
 .legal-hero{padding:48px 0 32px;border-bottom:1px solid rgba(255,255,255,.06)}
 .legal-hero h1{font-size:1.8rem;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:8px}
 .legal-hero .subtitle{color:#94A3B8;font-size:.88rem}
-.disclaimer{margin:32px 0;padding:16px 20px;background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25);border-radius:12px;font-size:.84rem;color:#C8A84B;line-height:1.7}
+.disclaimer{margin:32px 0;padding:16px 20px;background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25);border-radius:12px;font-size:.84rem;color:#E8A020;line-height:1.7}
 .section{padding:28px 0;border-bottom:1px solid rgba(255,255,255,.04)}
 .section:last-of-type{border-bottom:none;padding-bottom:48px}
 .section h2{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:10px}
-.section h2 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:rgba(232,160,32,.12);color:#C8A84B;font-size:.78rem;font-weight:700;flex-shrink:0}
+.section h2 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:rgba(232,160,32,.12);color:#E8A020;font-size:.78rem;font-weight:700;flex-shrink:0}
 .section p,.section ul{color:#CBD5E1;margin-bottom:10px}
 .section ul{padding-left:20px}
 .section li{margin-bottom:6px}
@@ -87,9 +87,9 @@ footer{padding:32px 0;border-top:1px solid rgba(255,255,255,.06);text-align:cent
 /* global-polish */
 a:not(.no-hover){transition:color .15s ease,opacity .15s ease}
 .nav-link:hover{color:#F1F5F9}
-footer a:hover,#lpfoot a:hover{color:#C8A84B}
-.content a:not(.btn):hover{color:#C8A84B;text-decoration:underline;text-decoration-color:rgba(232,160,32,0.4);text-underline-offset:3px}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #C8A84B;outline-offset:3px;border-radius:6px}
+footer a:hover,#lpfoot a:hover{color:#E8A020}
+.content a:not(.btn):hover{color:#E8A020;text-decoration:underline;text-decoration-color:rgba(232,160,32,0.4);text-underline-offset:3px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #E8A020;outline-offset:3px;border-radius:6px}
 h1,h2,h3{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 .hero-headline,[class*="headline"]{letter-spacing:-0.03em}
 p,li,td{font-variant-numeric:tabular-nums;hanging-punctuation:first last}
@@ -127,7 +127,7 @@ p{text-wrap:pretty}
 
   <div class="section">
     <h2><span class="num">2</span> <span data-i18n="kv.s2.h">Bedingter Auftrag und Ziel-Mindestrabatt</span></h2>
-    <p data-i18n-html="kv.s2.p1">Der Kunde meldet über das SourceOn-Formular seinen Materialbedarf und bestätigt dabei verbindlich einen individuellen <strong style="color:#C8A84B">Ziel-Mindestrabatt</strong>. Dieser richtet sich nach dem geschätzten Auftragswert des Kunden (berechnet aus SourceOn-Richtpreisen) gemäss der gestaffelten Rabatttabelle.</p>
+    <p data-i18n-html="kv.s2.p1">Der Kunde meldet über das SourceOn-Formular seinen Materialbedarf und bestätigt dabei verbindlich einen individuellen <strong style="color:#E8A020">Ziel-Mindestrabatt</strong>. Dieser richtet sich nach dem geschätzten Auftragswert des Kunden (berechnet aus SourceOn-Richtpreisen) gemäss der gestaffelten Rabatttabelle.</p>
     <p data-i18n-html="kv.s2.p2">Mit dieser Bestätigung wird die Anfrage zu einem <strong>bedingten Auftrag</strong> unter der aufschiebenden Bedingung (Art. 151 OR), dass ein verhandeltes Lieferantenangebot den bestätigten Ziel-Mindestrabatt erreicht oder übertrifft:</p>
     <ul>
       <li data-i18n-html="kv.s2.li1"><strong>Bedingung erfüllt:</strong> Erreicht oder übertrifft das Angebot den Ziel-Mindestrabatt, gilt der Auftrag des Kunden als erteilt und wird zu diesen Konditionen ausgeführt.</li>
@@ -154,7 +154,7 @@ p{text-wrap:pretty}
 
   <div class="section">
     <h2><span class="num">6</span> <span data-i18n="kv.s6.h">Erfolgsprovision</span></h2>
-    <p data-i18n-html="kv.s6.p1">SourceOn erhält bei erfolgreicher Vermittlung eine Provision von <strong style="color:#C8A84B">2.25% des Bestellwerts</strong>. Diese ist im ausgeschriebenen Mindestrabatt bereits einkalkuliert und wird über den Lieferanten abgerechnet — der dem Kunden bestätigte Netto-Mindestrabatt versteht sich nach Abzug dieser Provision und kommt vollständig beim Kunden an. Wird kein qualifizierendes Angebot erzielt, entstehen dem Kunden keinerlei Kosten.</p>
+    <p data-i18n-html="kv.s6.p1">SourceOn erhält bei erfolgreicher Vermittlung eine Provision von <strong style="color:#E8A020">2.25% des Bestellwerts</strong>. Diese ist im ausgeschriebenen Mindestrabatt bereits einkalkuliert und wird über den Lieferanten abgerechnet — der dem Kunden bestätigte Netto-Mindestrabatt versteht sich nach Abzug dieser Provision und kommt vollständig beim Kunden an. Wird kein qualifizierendes Angebot erzielt, entstehen dem Kunden keinerlei Kosten.</p>
   </div>
 
   <div class="section">
@@ -190,7 +190,7 @@ p{text-wrap:pretty}
       'kv.s1.h':'Vertragsgegenstand',
       'kv.s1.p1':'SourceOn (oder die zukünftige Rechtsform) vermittelt als Mäkler im Sinne von Art. 412 OR zwischen Schweizer Baufirmen (nachfolgend «Kunde») und Lieferanten von Baumaterialien. SourceOn kauft selbst nie Material und wird nicht Vertragspartei des Kaufvertrags — der Kaufvertrag über das Material kommt direkt zwischen dem Kunden und dem Lieferanten zustande.',
       'kv.s2.h':'Bedingter Auftrag und Ziel-Mindestrabatt',
-      'kv.s2.p1':'Der Kunde meldet über das SourceOn-Formular seinen Materialbedarf und bestätigt dabei verbindlich einen individuellen <strong style="color:#C8A84B">Ziel-Mindestrabatt</strong>. Dieser richtet sich nach dem geschätzten Auftragswert des Kunden (berechnet aus SourceOn-Richtpreisen) gemäss der gestaffelten Rabatttabelle.',
+      'kv.s2.p1':'Der Kunde meldet über das SourceOn-Formular seinen Materialbedarf und bestätigt dabei verbindlich einen individuellen <strong style="color:#E8A020">Ziel-Mindestrabatt</strong>. Dieser richtet sich nach dem geschätzten Auftragswert des Kunden (berechnet aus SourceOn-Richtpreisen) gemäss der gestaffelten Rabatttabelle.',
       'kv.s2.p2':'Mit dieser Bestätigung wird die Anfrage zu einem <strong>bedingten Auftrag</strong> unter der aufschiebenden Bedingung (Art. 151 OR), dass ein verhandeltes Lieferantenangebot den bestätigten Ziel-Mindestrabatt erreicht oder übertrifft:',
       'kv.s2.li1':'<strong>Bedingung erfüllt:</strong> Erreicht oder übertrifft das Angebot den Ziel-Mindestrabatt, gilt der Auftrag des Kunden als erteilt und wird zu diesen Konditionen ausgeführt.',
       'kv.s2.li2':'<strong>Bedingung nicht erfüllt:</strong> Wird der Ziel-Mindestrabatt nicht erreicht, entfällt die Anfrage automatisch, ersatzlos und für den Kunden kostenlos. Es entsteht keine Abnahmepflicht.',
@@ -203,7 +203,7 @@ p{text-wrap:pretty}
       'kv.s5.h':'Nichtabnahme trotz erfüllter Bedingung',
       'kv.s5.p1':'Ist die aufschiebende Bedingung erfüllt (Ziel-Mindestrabatt erreicht oder übertroffen) und verweigert der Kunde dennoch ohne sachlichen Grund die Abnahme, so behält sich SourceOn vor, den Kunden von der Plattform auszuschliessen sowie die SourceOn und dem Lieferanten hierdurch entstandenen Kosten und Aufwände geltend zu machen.',
       'kv.s6.h':'Erfolgsprovision',
-      'kv.s6.p1':'SourceOn erhält bei erfolgreicher Vermittlung eine Provision von <strong style="color:#C8A84B">2.25% des Bestellwerts</strong>. Diese ist im ausgeschriebenen Mindestrabatt bereits einkalkuliert und wird über den Lieferanten abgerechnet — der dem Kunden bestätigte Netto-Mindestrabatt versteht sich nach Abzug dieser Provision und kommt vollständig beim Kunden an. Wird kein qualifizierendes Angebot erzielt, entstehen dem Kunden keinerlei Kosten.',
+      'kv.s6.p1':'SourceOn erhält bei erfolgreicher Vermittlung eine Provision von <strong style="color:#E8A020">2.25% des Bestellwerts</strong>. Diese ist im ausgeschriebenen Mindestrabatt bereits einkalkuliert und wird über den Lieferanten abgerechnet — der dem Kunden bestätigte Netto-Mindestrabatt versteht sich nach Abzug dieser Provision und kommt vollständig beim Kunden an. Wird kein qualifizierendes Angebot erzielt, entstehen dem Kunden keinerlei Kosten.',
       'kv.s7.h':'Datenschutz',
       'kv.s7.p1':'Die vom Kunden übermittelten Daten werden gemäss Schweizer Datenschutzgesetz (DSG) verarbeitet und ausschliesslich zur Vermittlung und Abwicklung von Materialbeschaffungen genutzt. Eine separate Datenschutzerklärung gilt ergänzend.',
       'kv.s8.h':'Haftungsausschluss',
@@ -221,7 +221,7 @@ p{text-wrap:pretty}
       'kv.s1.h':'Subject Matter of the Agreement',
       'kv.s1.p1':'SourceOn (or its future legal form) acts as a broker within the meaning of Art. 412 CO between Swiss construction companies (hereinafter the "Customer") and suppliers of construction materials. SourceOn never purchases material itself and does not become a party to the purchase contract — the purchase contract for the material is concluded directly between the Customer and the supplier.',
       'kv.s2.h':'Conditional Order and Target Minimum Discount',
-      'kv.s2.p1':'The Customer submits their material requirements via the SourceOn form and, in doing so, confirms a binding individual <strong style="color:#C8A84B">target minimum discount</strong>. This is based on the Customer’s estimated order value (calculated from SourceOn reference prices) in accordance with the tiered discount table.',
+      'kv.s2.p1':'The Customer submits their material requirements via the SourceOn form and, in doing so, confirms a binding individual <strong style="color:#E8A020">target minimum discount</strong>. This is based on the Customer’s estimated order value (calculated from SourceOn reference prices) in accordance with the tiered discount table.',
       'kv.s2.p2':'With this confirmation, the request becomes a <strong>conditional order</strong> subject to the condition precedent (Art. 151 CO) that a negotiated supplier offer reaches or exceeds the confirmed target minimum discount:',
       'kv.s2.li1':'<strong>Condition met:</strong> If the offer reaches or exceeds the target minimum discount, the Customer’s order is deemed placed and is executed on these terms.',
       'kv.s2.li2':'<strong>Condition not met:</strong> If the target minimum discount is not reached, the request lapses automatically, without replacement and free of charge for the Customer. No obligation to accept arises.',
@@ -234,7 +234,7 @@ p{text-wrap:pretty}
       'kv.s5.h':'Non-Acceptance Despite a Fulfilled Condition',
       'kv.s5.p1':'If the condition precedent is met (target minimum discount reached or exceeded) and the Customer nevertheless refuses acceptance without objective grounds, SourceOn reserves the right to exclude the Customer from the platform and to assert the costs and expenses incurred by SourceOn and the supplier as a result.',
       'kv.s6.h':'Success Commission',
-      'kv.s6.p1':'Upon successful brokerage, SourceOn receives a commission of <strong style="color:#C8A84B">2.25% of the order value</strong>. This is already factored into the advertised minimum discount and is settled via the supplier — the net minimum discount confirmed to the Customer is understood to be net of this commission and reaches the Customer in full. If no qualifying offer is obtained, the Customer incurs no costs whatsoever.',
+      'kv.s6.p1':'Upon successful brokerage, SourceOn receives a commission of <strong style="color:#E8A020">2.25% of the order value</strong>. This is already factored into the advertised minimum discount and is settled via the supplier — the net minimum discount confirmed to the Customer is understood to be net of this commission and reaches the Customer in full. If no qualifying offer is obtained, the Customer incurs no costs whatsoever.',
       'kv.s7.h':'Data Protection',
       'kv.s7.p1':'The data submitted by the Customer is processed in accordance with the Swiss Data Protection Act (DSG) and used exclusively for the brokerage and handling of material procurement. A separate privacy policy applies in addition.',
       'kv.s8.h':'Disclaimer of Liability',
@@ -252,7 +252,7 @@ p{text-wrap:pretty}
       'kv.s1.h':'Objet du contrat',
       'kv.s1.p1':'SourceOn (ou sa future forme juridique) agit en qualité de courtier au sens de l’art. 412 CO entre des entreprises de construction suisses (ci-après le « Client ») et des fournisseurs de matériaux de construction. SourceOn n’achète jamais de matériaux elle-même et ne devient pas partie au contrat de vente — le contrat de vente portant sur le matériel est conclu directement entre le Client et le fournisseur.',
       'kv.s2.h':'Commande conditionnelle et rabais minimum cible',
-      'kv.s2.p1':'Le Client communique son besoin en matériaux via le formulaire SourceOn et confirme ainsi de manière contraignante un <strong style="color:#C8A84B">rabais minimum cible</strong> individuel. Celui-ci dépend de la valeur estimée de la commande du Client (calculée à partir des prix indicatifs SourceOn) conformément au barème de rabais échelonné.',
+      'kv.s2.p1':'Le Client communique son besoin en matériaux via le formulaire SourceOn et confirme ainsi de manière contraignante un <strong style="color:#E8A020">rabais minimum cible</strong> individuel. Celui-ci dépend de la valeur estimée de la commande du Client (calculée à partir des prix indicatifs SourceOn) conformément au barème de rabais échelonné.',
       'kv.s2.p2':'Par cette confirmation, la demande devient une <strong>commande conditionnelle</strong> soumise à la condition suspensive (art. 151 CO) qu’une offre négociée d’un fournisseur atteigne ou dépasse le rabais minimum cible confirmé :',
       'kv.s2.li1':'<strong>Condition remplie :</strong> si l’offre atteint ou dépasse le rabais minimum cible, la commande du Client est réputée passée et est exécutée à ces conditions.',
       'kv.s2.li2':'<strong>Condition non remplie :</strong> si le rabais minimum cible n’est pas atteint, la demande devient automatiquement caduque, sans remplacement et sans frais pour le Client. Aucune obligation d’achat n’en découle.',
@@ -265,7 +265,7 @@ p{text-wrap:pretty}
       'kv.s5.h':'Non-acceptation malgré une condition remplie',
       'kv.s5.p1':'Si la condition suspensive est remplie (rabais minimum cible atteint ou dépassé) et que le Client refuse néanmoins l’acceptation sans motif objectif, SourceOn se réserve le droit d’exclure le Client de la plateforme ainsi que de faire valoir les coûts et dépenses ainsi occasionnés à SourceOn et au fournisseur.',
       'kv.s6.h':'Commission de succès',
-      'kv.s6.p1':'En cas de courtage réussi, SourceOn perçoit une commission de <strong style="color:#C8A84B">2.25% de la valeur de la commande</strong>. Celle-ci est déjà intégrée dans le rabais minimum annoncé et est facturée par l’intermédiaire du fournisseur — le rabais minimum net confirmé au Client s’entend après déduction de cette commission et lui revient intégralement. Si aucune offre qualifiante n’est obtenue, le Client n’encourt aucun frais.',
+      'kv.s6.p1':'En cas de courtage réussi, SourceOn perçoit une commission de <strong style="color:#E8A020">2.25% de la valeur de la commande</strong>. Celle-ci est déjà intégrée dans le rabais minimum annoncé et est facturée par l’intermédiaire du fournisseur — le rabais minimum net confirmé au Client s’entend après déduction de cette commission et lui revient intégralement. Si aucune offre qualifiante n’est obtenue, le Client n’encourt aucun frais.',
       'kv.s7.h':'Protection des données',
       'kv.s7.p1':'Les données transmises par le Client sont traitées conformément à la loi suisse sur la protection des données (DSG) et utilisées exclusivement pour le courtage et la gestion des approvisionnements en matériaux. Une déclaration de protection des données distincte s’applique en complément.',
       'kv.s8.h':'Clause de non-responsabilité',
@@ -283,7 +283,7 @@ p{text-wrap:pretty}
       'kv.s1.h':'Oggetto del contratto',
       'kv.s1.p1':'SourceOn (o la sua futura forma giuridica) opera come mediatore ai sensi dell’art. 412 CO tra imprese di costruzione svizzere (di seguito «Cliente») e fornitori di materiali edili. SourceOn non acquista mai materiale in proprio e non diventa parte del contratto di compravendita — il contratto di compravendita del materiale è concluso direttamente tra il Cliente e il fornitore.',
       'kv.s2.h':'Ordine condizionato e sconto minimo target',
-      'kv.s2.p1':'Il Cliente comunica il proprio fabbisogno di materiali tramite il modulo SourceOn e conferma in modo vincolante uno <strong style="color:#C8A84B">sconto minimo target</strong> individuale. Esso dipende dal valore stimato dell’ordine del Cliente (calcolato in base ai prezzi indicativi di SourceOn) secondo la tabella degli sconti scaglionati.',
+      'kv.s2.p1':'Il Cliente comunica il proprio fabbisogno di materiali tramite il modulo SourceOn e conferma in modo vincolante uno <strong style="color:#E8A020">sconto minimo target</strong> individuale. Esso dipende dal valore stimato dell’ordine del Cliente (calcolato in base ai prezzi indicativi di SourceOn) secondo la tabella degli sconti scaglionati.',
       'kv.s2.p2':'Con questa conferma la richiesta diventa un <strong>ordine condizionato</strong> soggetto alla condizione sospensiva (art. 151 CO) che un’offerta negoziata di un fornitore raggiunga o superi lo sconto minimo target confermato:',
       'kv.s2.li1':'<strong>Condizione soddisfatta:</strong> se l’offerta raggiunge o supera lo sconto minimo target, l’ordine del Cliente si considera conferito e viene eseguito a tali condizioni.',
       'kv.s2.li2':'<strong>Condizione non soddisfatta:</strong> se lo sconto minimo target non viene raggiunto, la richiesta decade automaticamente, senza sostituzione e senza costi per il Cliente. Non sorge alcun obbligo di accettazione.',
@@ -296,7 +296,7 @@ p{text-wrap:pretty}
       'kv.s5.h':'Mancata accettazione nonostante la condizione soddisfatta',
       'kv.s5.p1':'Se la condizione sospensiva è soddisfatta (sconto minimo target raggiunto o superato) e il Cliente rifiuta nondimeno l’accettazione senza un motivo oggettivo, SourceOn si riserva il diritto di escludere il Cliente dalla piattaforma nonché di far valere i costi e gli oneri così sostenuti da SourceOn e dal fornitore.',
       'kv.s6.h':'Provvigione di successo',
-      'kv.s6.p1':'In caso di mediazione riuscita, SourceOn percepisce una provvigione del <strong style="color:#C8A84B">2.25% del valore dell’ordine</strong>. Essa è già inclusa nel calcolo dello sconto minimo pubblicizzato ed è fatturata tramite il fornitore — lo sconto minimo netto confermato al Cliente si intende al netto di questa provvigione e giunge integralmente al Cliente. Se non viene ottenuta alcuna offerta qualificante, il Cliente non sostiene alcun costo.',
+      'kv.s6.p1':'In caso di mediazione riuscita, SourceOn percepisce una provvigione del <strong style="color:#E8A020">2.25% del valore dell’ordine</strong>. Essa è già inclusa nel calcolo dello sconto minimo pubblicizzato ed è fatturata tramite il fornitore — lo sconto minimo netto confermato al Cliente si intende al netto di questa provvigione e giunge integralmente al Cliente. Se non viene ottenuta alcuna offerta qualificante, il Cliente non sostiene alcun costo.',
       'kv.s7.h':'Protezione dei dati',
       'kv.s7.p1':'I dati trasmessi dal Cliente sono trattati conformemente alla legge svizzera sulla protezione dei dati (DSG) e utilizzati esclusivamente per la mediazione e la gestione degli approvvigionamenti di materiali. Si applica in via complementare una separata informativa sulla protezione dei dati.',
       'kv.s8.h':'Esclusione di responsabilità',
@@ -343,7 +343,7 @@ p{text-wrap:pretty}
 #cookie-banner{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9998;width:calc(100% - 48px);max-width:680px;background:var(--bg1,#0C1824);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
 #cookie-banner .cookie-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%}
 #cookie-banner .cookie-text{font-size:13px;color:#94A3B8;margin:0;line-height:1.5}
-#cookie-banner .cookie-btn{background:#C8A84B;color:#070F1A;border:none;border-radius:6px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
+#cookie-banner .cookie-btn{background:#E8A020;color:#070F1A;border:none;border-radius:6px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
 @media(max-width:520px){#cookie-banner,#cookie-banner .cookie-inner{flex-direction:column;align-items:stretch}#cookie-banner .cookie-btn{width:100%}}
 </style>
 <script>

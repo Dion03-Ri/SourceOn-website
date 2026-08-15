@@ -12,10 +12,10 @@
     document.documentElement.style.visibility='visible';
     var box=document.createElement('div');
     box.style.cssText='text-align:center;max-width:420px;width:100%;padding:24px';
-    box.innerHTML='<div style="font-size:28px;font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:32px">Source<span style="color:#C8A84B">On</span></div>'
+    box.innerHTML='<div style="font-size:28px;font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:32px">Source<span style="color:#E8A020">On</span></div>'
       +'<p style="color:#94A3B8;font-size:.92rem;line-height:1.7;margin-bottom:32px">SourceOn befindet sich im Aufbau.<br>Diese Seite ist noch nicht öffentlich verfügbar.</p>'
       +'<input id="pg-pw" type="password" placeholder="Passwort" style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:.9rem;font-family:inherit;outline:none;margin-bottom:12px"/>'
-      +'<button id="pg-btn" style="width:100%;padding:12px;border-radius:10px;border:none;background:#C8A84B;color:#08111E;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer">Zugang</button>'
+      +'<button id="pg-btn" style="width:100%;padding:12px;border-radius:10px;border:none;background:#E8A020;color:#08111E;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer">Zugang</button>'
       +'<div id="pg-err" style="color:#EF4444;font-size:.82rem;margin-top:12px;display:none">Falsches Passwort.</div>';
     document.body.appendChild(box);
     var inp=document.getElementById('pg-pw');
@@ -67,7 +67,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --dark:#0E1116;--dark2:#F5F6F8;--dark3:#FFFFFF;
-  --gold:#C8A84B;--gold-h:#d4901a;--gold-ink:#9A6A00;--gold-dim:rgba(232,160,32,.14);
+  --gold:#E8A020;--gold-h:#d4901a;--gold-ink:#9A6A00;--gold-dim:rgba(232,160,32,.14);
   --muted:#56616F;--body:#7C8695;
   --green:#15924F;--red:#D64545;--amber:#B7791F;--blue:#2F6FD6;--purple:#7C5CD6;
   --r:16px;
@@ -191,7 +191,7 @@ a:not(.no-hover){transition:color .15s ease,opacity .15s ease}
 .nav-link:hover{color:#141A24}
 footer a:hover,#lpfoot a:hover{color:#9A6A00}
 .content a:not(.btn):hover{color:#9A6A00;text-decoration:underline;text-decoration-color:rgba(232,160,32,0.4);text-underline-offset:3px}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #C8A84B;outline-offset:3px;border-radius:6px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #E8A020;outline-offset:3px;border-radius:6px}
 h1,h2,h3{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 .hero-headline,[class*="headline"]{letter-spacing:-0.03em}
 p,li,td{font-variant-numeric:tabular-nums;hanging-punctuation:first last}
@@ -345,7 +345,7 @@ function showGate(which){
   if(which==='denied'){ if(msg)msg.textContent='Dieses Konto hat keinen Admin-Zugang.'; if(err)err.style.display='block'; if(lin)lin.style.display='none'; if(lout)lout.style.display='inline-block'; }
   else { if(msg)msg.textContent='Bitte mit deinem Admin-Konto anmelden.'; if(err)err.style.display='none'; if(lin)lin.style.display='inline-block'; if(lout)lout.style.display='none'; }
 }
-function clerkAdminLogin(){ if(!window.Clerk)return; window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#C8A84B',colorBackground:'#FFFFFF',colorText:'#141A24',colorInputBackground:'#F5F6F8',colorInputText:'#141A24'}},fallbackRedirectUrl:window.location.href}); }
+function clerkAdminLogin(){ if(!window.Clerk)return; window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#E8A020',colorBackground:'#FFFFFF',colorText:'#141A24',colorInputBackground:'#F5F6F8',colorInputText:'#141A24'}},fallbackRedirectUrl:window.location.href}); }
 function clerkAdminLogout(){ if(!window.Clerk)return; window.Clerk.signOut().then(function(){window.location.reload();}); }
 
 // 2FA / Geraete-Verifizierung (Clerk needs_client_trust) — sonst haengt das Login-Fenster
@@ -873,7 +873,7 @@ function toggleCustReqs(custId){
 .clerk-trust-modal p{font-size:.85rem;color:#56616F;line-height:1.6;margin-bottom:20px}
 .clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(16,24,40,.12);background:rgba(16,24,40,.05);color:#141A24;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none}
 .clerk-trust-modal input:focus{border-color:#9A6A00}
-.clerk-trust-modal .btn-verify{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:#C8A84B;color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:14px}
+.clerk-trust-modal .btn-verify{display:block;width:100%;padding:13px;border:none;border-radius:10px;background:#E8A020;color:#0F172A;font-size:.88rem;font-weight:700;font-family:inherit;cursor:pointer;margin-top:14px}
 .clerk-trust-modal .btn-verify:disabled{opacity:.5;cursor:not-allowed}
 .clerk-trust-modal .trust-error{font-size:.8rem;color:#FCA5A5;margin-top:10px;min-height:1.2em}
 .clerk-trust-modal .btn-cancel-trust{display:block;width:100%;padding:10px;border:none;border-radius:8px;background:transparent;border:1px solid rgba(16,24,40,.08);color:#56616F;font-size:.8rem;font-family:inherit;cursor:pointer;margin-top:8px}

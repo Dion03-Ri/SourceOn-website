@@ -11,10 +11,10 @@
     document.documentElement.style.visibility='visible';
     var box=document.createElement('div');
     box.style.cssText='text-align:center;max-width:420px;width:100%;padding:24px';
-    box.innerHTML='<div style="font-size:28px;font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:32px">Source<span style="color:#C8A84B">On</span></div>'
+    box.innerHTML='<div style="font-size:28px;font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:32px">Source<span style="color:#E8A020">On</span></div>'
       +'<p style="color:#94A3B8;font-size:.92rem;line-height:1.7;margin-bottom:32px">SourceOn befindet sich im Aufbau.<br>Diese Seite ist noch nicht öffentlich verfügbar.</p>'
       +'<input id="pg-pw" type="password" placeholder="Passwort" style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:.9rem;font-family:inherit;outline:none;margin-bottom:12px"/>'
-      +'<button id="pg-btn" style="width:100%;padding:12px;border-radius:10px;border:none;background:#C8A84B;color:#08111E;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer">Zugang</button>'
+      +'<button id="pg-btn" style="width:100%;padding:12px;border-radius:10px;border:none;background:#E8A020;color:#08111E;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer">Zugang</button>'
       +'<div id="pg-err" style="color:#EF4444;font-size:.82rem;margin-top:12px;display:none">Falsches Passwort.</div>';
     document.body.appendChild(box);
     var inp=document.getElementById('pg-pw');
@@ -68,17 +68,17 @@ body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;background:
 .container{max-width:800px;margin:0 auto;padding:0 24px}
 header{padding:20px 0;border-bottom:1px solid rgba(255,255,255,.06)}
 .nav-logo{font-size:22px;font-weight:800;letter-spacing:-.02em;color:#fff}
-.nav-logo span{color:#C8A84B}
-.back-link{display:inline-flex;align-items:center;gap:6px;color:#C8A84B;font-size:.85rem;font-weight:600;text-decoration:none;margin-top:40px}
+.nav-logo span{color:#E8A020}
+.back-link{display:inline-flex;align-items:center;gap:6px;color:#E8A020;font-size:.85rem;font-weight:600;text-decoration:none;margin-top:40px}
 .back-link:hover{text-decoration:underline}
 .legal-hero{padding:48px 0 32px;border-bottom:1px solid rgba(255,255,255,.06)}
 .legal-hero h1{font-size:1.8rem;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:8px}
 .legal-hero .subtitle{color:#94A3B8;font-size:.88rem}
-.disclaimer{margin:32px 0;padding:16px 20px;background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25);border-radius:12px;font-size:.84rem;color:#C8A84B;line-height:1.7}
+.disclaimer{margin:32px 0;padding:16px 20px;background:rgba(232,160,32,.08);border:1px solid rgba(232,160,32,.25);border-radius:12px;font-size:.84rem;color:#E8A020;line-height:1.7}
 .section{padding:28px 0;border-bottom:1px solid rgba(255,255,255,.04)}
 .section:last-of-type{border-bottom:none;padding-bottom:48px}
 .section h2{font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:12px;display:flex;align-items:center;gap:10px}
-.section h2 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:rgba(232,160,32,.12);color:#C8A84B;font-size:.78rem;font-weight:700;flex-shrink:0}
+.section h2 .num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;background:rgba(232,160,32,.12);color:#E8A020;font-size:.78rem;font-weight:700;flex-shrink:0}
 .section p,.section ul{color:#CBD5E1;margin-bottom:10px}
 .section ul{padding-left:20px}
 .section li{margin-bottom:6px}
@@ -87,9 +87,9 @@ footer{padding:32px 0;border-top:1px solid rgba(255,255,255,.06);text-align:cent
 /* global-polish */
 a:not(.no-hover){transition:color .15s ease,opacity .15s ease}
 .nav-link:hover{color:#F1F5F9}
-footer a:hover,#lpfoot a:hover{color:#C8A84B}
-.content a:not(.btn):hover{color:#C8A84B;text-decoration:underline;text-decoration-color:rgba(232,160,32,0.4);text-underline-offset:3px}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #C8A84B;outline-offset:3px;border-radius:6px}
+footer a:hover,#lpfoot a:hover{color:#E8A020}
+.content a:not(.btn):hover{color:#E8A020;text-decoration:underline;text-decoration-color:rgba(232,160,32,0.4);text-underline-offset:3px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #E8A020;outline-offset:3px;border-radius:6px}
 h1,h2,h3{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 .hero-headline,[class*="headline"]{letter-spacing:-0.03em}
 p,li,td{font-variant-numeric:tabular-nums;hanging-punctuation:first last}
@@ -139,7 +139,7 @@ p{text-wrap:pretty}
 
   <div class="section">
     <h2><span class="num">3</span> <span data-i18n="lv.s3_h">Provision</span></h2>
-    <p data-i18n-html="lv.s3_p">SourceOn erhält bei erfolgreicher Vermittlung eine Provision von <strong style="color:#C8A84B">2.25%</strong> auf den vereinbarten Materialwert, zahlbar durch den Lieferanten innerhalb von 14 Tagen nach Rechnungsstellung durch SourceOn.</p>
+    <p data-i18n-html="lv.s3_p">SourceOn erhält bei erfolgreicher Vermittlung eine Provision von <strong style="color:#E8A020">2.25%</strong> auf den vereinbarten Materialwert, zahlbar durch den Lieferanten innerhalb von 14 Tagen nach Rechnungsstellung durch SourceOn.</p>
   </div>
 
   <div class="section">
@@ -196,7 +196,7 @@ p{text-wrap:pretty}
       'lv.s2_li3':'Lieferzeitraum',
       'lv.s2_p3':'Exakte Lieferadressen werden erst nach verbindlichem Zuschlag freigegeben.',
       'lv.s3_h':'Provision',
-      'lv.s3_p':'SourceOn erhält bei erfolgreicher Vermittlung eine Provision von <strong style="color:#C8A84B">2.25%</strong> auf den vereinbarten Materialwert, zahlbar durch den Lieferanten innerhalb von 14 Tagen nach Rechnungsstellung durch SourceOn.',
+      'lv.s3_p':'SourceOn erhält bei erfolgreicher Vermittlung eine Provision von <strong style="color:#E8A020">2.25%</strong> auf den vereinbarten Materialwert, zahlbar durch den Lieferanten innerhalb von 14 Tagen nach Rechnungsstellung durch SourceOn.',
       'lv.s4_h':'Pflichten des Lieferanten',
       'lv.s4_li1':'Der Lieferant verpflichtet sich, wahrheitsgemässe Angaben zu Materialien, Kapazität und Zertifizierungen zu machen.',
       'lv.s4_li2':'Bei Gewinn einer Ausschreibung verpflichtet sich der Lieferant zur Lieferung gemäss den ausgeschriebenen Konditionen (Material, Menge, Zeitraum).',
@@ -227,7 +227,7 @@ p{text-wrap:pretty}
       'lv.s2_li3':'Delivery period',
       'lv.s2_p3':'Exact delivery addresses are only released after a binding award.',
       'lv.s3_h':'Commission',
-      'lv.s3_p':'Upon successful brokerage, SourceOn receives a commission of <strong style="color:#C8A84B">2.25%</strong> on the agreed material value, payable by the supplier within 14 days of invoicing by SourceOn.',
+      'lv.s3_p':'Upon successful brokerage, SourceOn receives a commission of <strong style="color:#E8A020">2.25%</strong> on the agreed material value, payable by the supplier within 14 days of invoicing by SourceOn.',
       'lv.s4_h':'Obligations of the Supplier',
       'lv.s4_li1':'The supplier undertakes to provide truthful information regarding materials, capacity and certifications.',
       'lv.s4_li2':'Upon winning a tender, the supplier undertakes to deliver in accordance with the tendered conditions (material, quantity, period).',
@@ -258,7 +258,7 @@ p{text-wrap:pretty}
       'lv.s2_li3':'Période de livraison',
       'lv.s2_p3':'Les adresses de livraison exactes ne sont communiquées qu\'après une adjudication ferme.',
       'lv.s3_h':'Commission',
-      'lv.s3_p':'En cas de courtage réussi, SourceOn perçoit une commission de <strong style="color:#C8A84B">2.25%</strong> sur la valeur du matériau convenue, payable par le fournisseur dans les 14 jours suivant la facturation par SourceOn.',
+      'lv.s3_p':'En cas de courtage réussi, SourceOn perçoit une commission de <strong style="color:#E8A020">2.25%</strong> sur la valeur du matériau convenue, payable par le fournisseur dans les 14 jours suivant la facturation par SourceOn.',
       'lv.s4_h':'Obligations du fournisseur',
       'lv.s4_li1':'Le fournisseur s\'engage à fournir des informations véridiques concernant les matériaux, la capacité et les certifications.',
       'lv.s4_li2':'En cas de remport d\'un appel d\'offres, le fournisseur s\'engage à livrer conformément aux conditions mises en appel d\'offres (matériau, quantité, période).',
@@ -289,7 +289,7 @@ p{text-wrap:pretty}
       'lv.s2_li3':'Periodo di consegna',
       'lv.s2_p3':'Gli indirizzi di consegna esatti vengono comunicati solo dopo un\'aggiudicazione vincolante.',
       'lv.s3_h':'Provvigione',
-      'lv.s3_p':'In caso di mediazione riuscita, SourceOn percepisce una provvigione del <strong style="color:#C8A84B">2.25%</strong> sul valore del materiale concordato, pagabile dal fornitore entro 14 giorni dalla fatturazione da parte di SourceOn.',
+      'lv.s3_p':'In caso di mediazione riuscita, SourceOn percepisce una provvigione del <strong style="color:#E8A020">2.25%</strong> sul valore del materiale concordato, pagabile dal fornitore entro 14 giorni dalla fatturazione da parte di SourceOn.',
       'lv.s4_h':'Obblighi del fornitore',
       'lv.s4_li1':'Il fornitore si impegna a fornire informazioni veritiere su materiali, capacità e certificazioni.',
       'lv.s4_li2':'In caso di aggiudicazione di una gara, il fornitore si impegna a effettuare la consegna secondo le condizioni messe a gara (materiale, quantità, periodo).',
@@ -342,7 +342,7 @@ p{text-wrap:pretty}
 #cookie-banner{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9998;width:calc(100% - 48px);max-width:680px;background:var(--bg1,#0C1824);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
 #cookie-banner .cookie-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%}
 #cookie-banner .cookie-text{font-size:13px;color:#94A3B8;margin:0;line-height:1.5}
-#cookie-banner .cookie-btn{background:#C8A84B;color:#070F1A;border:none;border-radius:6px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
+#cookie-banner .cookie-btn{background:#E8A020;color:#070F1A;border:none;border-radius:6px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
 @media(max-width:520px){#cookie-banner,#cookie-banner .cookie-inner{flex-direction:column;align-items:stretch}#cookie-banner .cookie-btn{width:100%}}
 </style>
 <script>

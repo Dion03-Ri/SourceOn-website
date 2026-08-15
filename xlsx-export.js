@@ -18,7 +18,7 @@
     ink:    '070F1A', // deepest navy  (title bg / data row A)
     panel:  '0C1824', // panel navy    (header bg / data row B)
     total:  '111F2E', // total-row bg
-    gold:   'C8A84B',
+    gold:   'E8A020',
     light:  'F1F5F9',
     muted:  '6B7C99',
     line:   '1E3A5F'

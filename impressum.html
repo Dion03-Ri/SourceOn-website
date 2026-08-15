@@ -12,10 +12,10 @@
     document.documentElement.style.visibility='visible';
     var box=document.createElement('div');
     box.style.cssText='text-align:center;max-width:420px;width:100%;padding:24px';
-    box.innerHTML='<div style="font-size:28px;font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:32px">Source<span style="color:#C8A84B">On</span></div>'
+    box.innerHTML='<div style="font-size:28px;font-weight:800;letter-spacing:-.02em;color:#fff;margin-bottom:32px">Source<span style="color:#E8A020">On</span></div>'
       +'<p style="color:#94A3B8;font-size:.92rem;line-height:1.7;margin-bottom:32px">SourceOn befindet sich im Aufbau.<br>Diese Seite ist noch nicht öffentlich verfügbar.</p>'
       +'<input id="pg-pw" type="password" placeholder="Passwort" style="width:100%;padding:12px 16px;border-radius:10px;border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:.9rem;font-family:inherit;outline:none;margin-bottom:12px"/>'
-      +'<button id="pg-btn" style="width:100%;padding:12px;border-radius:10px;border:none;background:#C8A84B;color:#08111E;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer">Zugang</button>'
+      +'<button id="pg-btn" style="width:100%;padding:12px;border-radius:10px;border:none;background:#E8A020;color:#08111E;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer">Zugang</button>'
       +'<div id="pg-err" style="color:#EF4444;font-size:.82rem;margin-top:12px;display:none">Falsches Passwort.</div>';
     document.body.appendChild(box);
     var inp=document.getElementById('pg-pw');
@@ -74,7 +74,7 @@
     .back-link {
       display: inline-block;
       margin-bottom: 2.5rem;
-      color: #C8A84B;
+      color: #E8A020;
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
@@ -83,7 +83,7 @@
     h1 {
       font-size: 2rem;
       font-weight: 700;
-      color: #C8A84B;
+      color: #E8A020;
       margin-bottom: 0.5rem;
     }
     .subtitle {
@@ -94,12 +94,12 @@
     h2 {
       font-size: 1.1rem;
       font-weight: 600;
-      color: #C8A84B;
+      color: #E8A020;
       margin-top: 2.5rem;
       margin-bottom: 0.75rem;
     }
     p { color: rgba(255,255,255,0.8); margin-bottom: 0.75rem; }
-    a { color: #C8A84B; }
+    a { color: #E8A020; }
     .info-block {
       background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.08);
@@ -112,9 +112,9 @@
   /* global-polish */
 a:not(.no-hover){transition:color .15s ease,opacity .15s ease}
 .nav-link:hover{color:#F1F5F9}
-footer a:hover,#lpfoot a:hover{color:#C8A84B}
-.content a:not(.btn):hover{color:#C8A84B;text-decoration:underline;text-decoration-color:rgba(232,160,32,0.4);text-underline-offset:3px}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #C8A84B;outline-offset:3px;border-radius:6px}
+footer a:hover,#lpfoot a:hover{color:#E8A020}
+.content a:not(.btn):hover{color:#E8A020;text-decoration:underline;text-decoration-color:rgba(232,160,32,0.4);text-underline-offset:3px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #E8A020;outline-offset:3px;border-radius:6px}
 h1,h2,h3{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 .hero-headline,[class*="headline"]{letter-spacing:-0.03em}
 p,li,td{font-variant-numeric:tabular-nums;hanging-punctuation:first last}
@@ -132,7 +132,7 @@ p{text-wrap:pretty}
     <h1 data-i18n="imp.h1">Impressum</h1>
     <p class="subtitle" data-i18n="imp.subtitle">Angaben gemäss Art. 13 ZGB und anwendbarem Schweizer Recht</p>
 
-    <div style="margin:24px 0;padding:16px 20px;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.4);border-left:4px solid #C8A84B;border-radius:10px;color:#C8A84B;font-size:.9rem;line-height:1.6" data-i18n-html="imp.notice">
+    <div style="margin:24px 0;padding:16px 20px;background:rgba(232,160,32,.1);border:1px solid rgba(232,160,32,.4);border-left:4px solid #E8A020;border-radius:10px;color:#E8A020;font-size:.9rem;line-height:1.6" data-i18n-html="imp.notice">
       <strong>Hinweis:</strong> Dieses Impressum wird nach Gründung der SourceOn mit den definitiven Unternehmensangaben aktualisiert.
     </div>
 
@@ -298,7 +298,7 @@ p{text-wrap:pretty}
 #cookie-banner{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:9998;width:calc(100% - 48px);max-width:680px;background:var(--bg1,#0C1824);border:1px solid rgba(255,255,255,0.12);border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 8px 32px rgba(0,0,0,0.4)}
 #cookie-banner .cookie-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;width:100%}
 #cookie-banner .cookie-text{font-size:13px;color:#94A3B8;margin:0;line-height:1.5}
-#cookie-banner .cookie-btn{background:#C8A84B;color:#070F1A;border:none;border-radius:6px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
+#cookie-banner .cookie-btn{background:#E8A020;color:#070F1A;border:none;border-radius:6px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
 @media(max-width:520px){#cookie-banner,#cookie-banner .cookie-inner{flex-direction:column;align-items:stretch}#cookie-banner .cookie-btn{width:100%}}
 </style>
 <script>
