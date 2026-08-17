@@ -2029,7 +2029,9 @@ function _soCheckAndSubmitPending(){
 async function _soSubmitRequest(payload){
   var submitBtn=document.querySelector('#form-contact button[type="submit"]');
   try{
-    // Optionalen Plan/Scan hochladen (Supabase Storage) und URL in den Payload legen.
+    // Optionalen Plan/Scan in den PRIVATEN Bucket hochladen und nur den internen
+    // Datei-Pfad im Payload mitschicken (keine öffentliche URL — der Scan ist
+    // vertraulich und wird intern nur über eine signierte URL angezeigt).
     // Nicht blockierend: schlägt der Upload fehl, wird die Anfrage trotzdem gesendet.
     if(_selectedScanFile&&window._supabase&&_supabase.storage){
       try{
@@ -2038,8 +2040,7 @@ async function _soSubmitRequest(payload){
         var _path='requests/'+_uid+'_'+Date.now()+'.'+(_ext||'dat');
         var _up=await _supabase.storage.from('customer-scans').upload(_path,_selectedScanFile,{upsert:false,contentType:_selectedScanFile.type||undefined});
         if(_up&&_up.error)throw _up.error;
-        var _pub=_supabase.storage.from('customer-scans').getPublicUrl(_path);
-        if(_pub&&_pub.data&&_pub.data.publicUrl){payload.scan_url=_pub.data.publicUrl;payload.scan_path=_path;}
+        payload.scan_path=_path;
       }catch(_upErr){console.warn('[SourceOn] Scan-Upload fehlgeschlagen:',_upErr);}
     }
     var _fnHeaders={'Content-Type':'application/json'};
