@@ -1120,29 +1120,23 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <!-- PROCESS STRIP -->
   <style>
-  .process-strip{border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);padding:48px 0;background:var(--bg1)}
-  .process-strip-inner{display:grid;grid-template-columns:repeat(4,1fr);align-items:center}
-  .ps-item{display:flex;flex-direction:column;gap:9px;padding:2px 30px;opacity:0;transform:translateY(12px)}
-  .ps-item:first-child{padding-left:0}
-  .ps-item + .ps-item{border-left:1px solid var(--lpb)}
-  .ps-n{font-size:11px;font-weight:600;color:var(--t3);font-variant-numeric:tabular-nums;letter-spacing:.16em}
-  .ps-t{font-size:14.5px;font-weight:450;color:#C6D2DF;letter-spacing:0}
-  .ps-cta{display:inline-block;margin-top:28px;font-size:13px;font-weight:500;color:var(--gold);text-decoration:none;white-space:nowrap;opacity:0;transform:translateY(12px)}
+  .process-strip{padding:8px 0 4px}
+  .process-strip-inner{display:flex;align-items:center;gap:14px 16px;flex-wrap:wrap}
+  .ps-item{display:inline-flex;align-items:center;gap:16px;opacity:0;transform:translateY(10px)}
+  .ps-n{display:none}
+  .ps-t{font-size:14px;font-weight:450;color:#C6D2DF;letter-spacing:0;white-space:nowrap}
+  .ps-item:not(:last-child)::after{content:"→";color:var(--gold);font-size:12px;opacity:.9}
+  .ps-cta{display:inline-block;margin-top:22px;font-size:13px;font-weight:500;color:var(--gold);text-decoration:none;white-space:nowrap;opacity:0;transform:translateY(10px)}
   .ps-cta:hover{text-decoration:underline;text-underline-offset:3px}
   .process-strip.lit .ps-item,.process-strip.lit .ps-cta{animation:psIn .55s cubic-bezier(.2,.7,.2,1) forwards}
-  .process-strip.lit .ps-item:nth-child(1){animation-delay:.04s}
-  .process-strip.lit .ps-item:nth-child(2){animation-delay:.13s}
-  .process-strip.lit .ps-item:nth-child(3){animation-delay:.22s}
-  .process-strip.lit .ps-item:nth-child(4){animation-delay:.31s}
-  .process-strip.lit .ps-cta{animation-delay:.44s}
-  .process-strip.lit .ps-item:nth-child(1) .ps-n{animation:psGlow .7s ease .04s forwards}
-  .process-strip.lit .ps-item:nth-child(2) .ps-n{animation:psGlow .7s ease .13s forwards}
-  .process-strip.lit .ps-item:nth-child(3) .ps-n{animation:psGlow .7s ease .22s forwards}
-  .process-strip.lit .ps-item:nth-child(4) .ps-n{animation:psGlow .7s ease .31s forwards}
+  .process-strip.lit .ps-item:nth-child(1){animation-delay:.05s}
+  .process-strip.lit .ps-item:nth-child(2){animation-delay:.16s}
+  .process-strip.lit .ps-item:nth-child(3){animation-delay:.27s}
+  .process-strip.lit .ps-item:nth-child(4){animation-delay:.38s}
+  .process-strip.lit .ps-cta{animation-delay:.5s}
   @keyframes psIn{to{opacity:1;transform:none}}
-  @keyframes psGlow{0%{color:var(--t3);text-shadow:none}45%{color:#F6C560;text-shadow:0 0 16px rgba(217,144,0,.7)}100%{color:var(--gold);text-shadow:0 0 0 rgba(217,144,0,0)}}
-  @media(max-width:768px){.process-strip{padding:38px 0}.process-strip-inner{grid-template-columns:1fr 1fr;gap:26px 20px}.ps-item{padding:0!important;border-left:none!important}}
-  @media(prefers-reduced-motion:reduce){.ps-item,.ps-cta{opacity:1!important;transform:none!important;animation:none!important}.ps-n{color:var(--gold)!important}}
+  @media(max-width:768px){.process-strip-inner{gap:10px 12px}.ps-t{font-size:13px}}
+  @media(prefers-reduced-motion:reduce){.ps-item,.ps-cta{opacity:1!important;transform:none!important;animation:none!important}}
   </style>
   <section class="process-strip">
     <div class="wrap">
