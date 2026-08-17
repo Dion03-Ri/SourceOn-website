@@ -8,7 +8,7 @@
   document.documentElement.style.visibility='hidden';
   window.addEventListener('DOMContentLoaded',function(){
     document.body.innerHTML='';
-    document.body.style.cssText='margin:0;padding:0;min-height:100vh;background:#0F2238;display:flex;align-items:center;justify-content:center;font-family:Inter,-apple-system,sans-serif';
+    document.body.style.cssText='margin:0;padding:0;min-height:100vh;background:#0F2238;display:flex;align-items:center;justify-content:center;font-family:Sora,-apple-system,sans-serif';
     document.documentElement.style.visibility='visible';
     var box=document.createElement('div');
     box.style.cssText='text-align:center;max-width:420px;width:100%;padding:24px';
@@ -63,7 +63,7 @@
 <meta name="description" content="SourceOn bündelt Baumaterial-Bestellungen Schweizer Baufirmen und verhandelt Mengenrabatte. 8-35% Netto-Mindestrabatt garantiert. Kostenlos für Baufirmen — du zahlst erst, wenn du sparst."/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
@@ -83,7 +83,7 @@
   --ease:cubic-bezier(0.4,0,0.2,1);
 }
 html{scroll-behavior:smooth;font-size:16px}
-body{font-family:'Inter',-apple-system,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:'Sora',-apple-system,sans-serif;color:var(--text);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit;text-decoration:none}
 ::selection{background:var(--gold);color:#1a1a1a}
 ::-webkit-scrollbar{width:6px}
@@ -633,7 +633,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 /* TECHNOLOGIE */
 .tech-section{background:var(--dark3);position:relative;overflow:hidden}
 /* ===== SVG Buendelungs-Animation (Apple-Style, 9s Loop mit Rueckfluss) ===== */
-.bundle-anim{display:block;width:100%;height:auto;margin:0 auto;overflow:visible;font-family:'Inter',-apple-system,sans-serif}
+.bundle-anim{display:block;width:100%;height:auto;margin:0 auto;overflow:visible;font-family:'Sora',-apple-system,sans-serif}
 .bundle-anim .ba-card{fill:#0F2238;stroke:#D99000;stroke-width:1.5;filter:url(#ba-shadow)}
 .bundle-anim .ba-name{fill:#fff;font-size:13px;font-weight:500}
 .bundle-anim .ba-vol{fill:#D99000;font-size:12px;font-weight:500}
@@ -674,17 +674,17 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 #engine-canvas{display:block;width:100%;height:100%}
 .engine-overlay{position:absolute;inset:0;pointer-events:none;z-index:1}
 .engine-node{position:absolute;background:rgba(10,21,37,.85);border:1px solid rgba(217,144,0,.3);border-radius:8px;padding:8px 12px;pointer-events:none;backdrop-filter:blur(6px)}
-.engine-node-title{font-size:10px;font-weight:700;color:#D99000;margin-bottom:2px;font-family:Inter,sans-serif}
-.engine-node-sub{font-size:8.5px;color:rgba(255,255,255,.5);font-family:Inter,sans-serif}
+.engine-node-title{font-size:10px;font-weight:700;color:#D99000;margin-bottom:2px;font-family:Sora,sans-serif}
+.engine-node-sub{font-size:8.5px;color:rgba(255,255,255,.5);font-family:Sora,sans-serif}
 .engine-node.green{border-color:rgba(16,185,129,.4)}
 .engine-node.green .engine-node-title{color:#10B981}
-.engine-node-saving{position:absolute;font-size:12px;font-weight:700;color:#10B981;font-family:Inter,sans-serif;opacity:0;animation:savPop 6s ease-in-out infinite}
+.engine-node-saving{position:absolute;font-size:12px;font-weight:700;color:#10B981;font-family:Sora,sans-serif;opacity:0;animation:savPop 6s ease-in-out infinite}
 .engine-node-saving:nth-child(2){animation-delay:2s}
 .engine-node-saving:nth-child(3){animation-delay:4s}
 @keyframes savPop{0%,75%,100%{opacity:0;transform:translateY(0)}80%{opacity:1;transform:translateY(-6px)}95%{opacity:1;transform:translateY(-6px)}}
-.engine-flow-label{position:absolute;font-size:9px;color:rgba(217,144,0,.5);font-family:Inter,sans-serif;font-weight:600;letter-spacing:.03em}
+.engine-flow-label{position:absolute;font-size:9px;color:rgba(217,144,0,.5);font-family:Sora,sans-serif;font-weight:600;letter-spacing:.03em}
 .engine-flow-label.green{color:rgba(16,185,129,.5)}
-.engine-compare{position:absolute;background:rgba(15,34,56,.9);border:1px solid rgba(217,144,0,.35);border-radius:6px;padding:5px 10px;font-size:9px;font-weight:600;color:#fff;font-family:Inter,sans-serif;display:flex;align-items:center;gap:5px}
+.engine-compare{position:absolute;background:rgba(15,34,56,.9);border:1px solid rgba(217,144,0,.35);border-radius:6px;padding:5px 10px;font-size:9px;font-weight:600;color:#fff;font-family:Sora,sans-serif;display:flex;align-items:center;gap:5px}
 .engine-compare span{color:#D99000}
 .engine-badge{position:absolute;z-index:2;background:rgba(15,34,56,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(217,144,0,.3);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px}
 .engine-badge-gold{color:#D99000}
@@ -788,7 +788,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 /* CLERK TRUST VERIFICATION MODAL */
 .clerk-trust-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .2s;pointer-events:none}
 .clerk-trust-overlay.open{opacity:1;pointer-events:auto}
-.clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;font-family:'Inter',-apple-system,sans-serif;color:#fff}
+.clerk-trust-modal{background:#0F2238;border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:36px;max-width:400px;width:90%;text-align:center;font-family:'Sora',-apple-system,sans-serif;color:#fff}
 .clerk-trust-modal h2,.clerk-trust-modal h3{font-size:1.1rem;font-weight:700;margin-bottom:8px}
 .clerk-trust-modal p{font-size:.85rem;color:#94A3B8;line-height:1.6;margin-bottom:20px}
 .clerk-trust-modal input{width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:1.1rem;font-family:inherit;text-align:center;letter-spacing:.2em;outline:none;transition:border-color .2s}
@@ -804,7 +804,7 @@ footer::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;back
 /* ===== NEW MINIMAL LANDING (scoped under #lp / #lpfoot) ===== */
 :root{--bg:#070F1A;--bg1:#0C1824;--bg2:#111F2E;--lpb:rgba(255,255,255,0.06);--lpbs:rgba(255,255,255,0.12);--t1:#F1F5F9;--t2:#94A3B8;--t3:#6B8AAA;--golddim:rgba(217,144,0,0.08);--goldbd:rgba(217,144,0,0.15)}
 body{background:#070F1A}
-#lp{color:var(--t1);font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
+#lp{color:var(--t1);font-family:'Sora',-apple-system,BlinkMacSystemFont,sans-serif;
   background-image:linear-gradient(90deg,rgba(255,255,255,.028) 1px,transparent 1px);
   background-size:calc(100%/7) 100%;background-position:center}
 #lp .wrap,#lpfoot .wrap{max-width:1200px;margin:0 auto;padding:0 48px}
@@ -895,7 +895,7 @@ body{background:#070F1A}
 #lp .supcta p{font-size:18px;color:var(--t2);margin-top:12px;margin-bottom:40px}
 
 /* FOOTER */
-#lpfoot{background:var(--bg);border-top:1px solid var(--lpb);padding:48px 0;font-family:'Inter',sans-serif;position:relative;overflow:hidden}
+#lpfoot{background:var(--bg);border-top:1px solid var(--lpb);padding:48px 0;font-family:'Sora',sans-serif;position:relative;overflow:hidden}
 /* dezente vertikale Bauplan-Linien im Footer */
 #lpfoot::before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;
   background-image:linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
@@ -985,10 +985,10 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 </script>
 <link rel="canonical" href="https://www.sourceon.ch/"/>
 <style id="nav-btn-v2">
-.nav-btn-primary{background:var(--gold);color:#070F1A;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;text-decoration:none;font-family:Inter,sans-serif;white-space:nowrap;transition:opacity .15s}
+.nav-btn-primary{background:var(--gold);color:#070F1A;font-size:13px;font-weight:600;padding:8px 16px;border-radius:6px;text-decoration:none;font-family:Sora,sans-serif;white-space:nowrap;transition:opacity .15s}
 .nav-btn-primary:hover{opacity:.88}
 .nav-btn-sep{width:1px;height:16px;background:rgba(255,255,255,.12);margin:0 4px;flex-shrink:0}
-.nav-btn-ghost{background:none;border:none;color:var(--t3);font-size:13px;font-weight:400;padding:8px 12px;text-decoration:none;font-family:Inter,sans-serif;white-space:nowrap;transition:color .15s;cursor:pointer}
+.nav-btn-ghost{background:none;border:none;color:var(--t3);font-size:13px;font-weight:400;padding:8px 12px;text-decoration:none;font-family:Sora,sans-serif;white-space:nowrap;transition:color .15s;cursor:pointer}
 .nav-btn-ghost:hover{color:var(--t1)}
 </style>
 </head>
@@ -1990,7 +1990,7 @@ function _soShowLoginMessage(msg,linkText,linkHref){
   var ov=document.createElement('div');ov.id='so-login-msg-overlay';
   ov.style.cssText='position:fixed;inset:0;z-index:100000;background:rgba(8,17,30,.78);display:flex;align-items:center;justify-content:center;padding:24px';
   var box=document.createElement('div');
-  box.style.cssText='background:#0F2238;border:1px solid rgba(217,144,0,.35);border-radius:16px;max-width:420px;width:100%;padding:32px;text-align:center;font-family:Inter,-apple-system,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.5)';
+  box.style.cssText='background:#0F2238;border:1px solid rgba(217,144,0,.35);border-radius:16px;max-width:420px;width:100%;padding:32px;text-align:center;font-family:Sora,-apple-system,sans-serif;box-shadow:0 24px 64px rgba(0,0,0,.5)';
   var d=document.createElement('div');d.style.cssText='font-size:1.02rem;font-weight:700;color:#fff;line-height:1.5;margin-bottom:24px';d.textContent=msg;
   var a=document.createElement('a');a.href=linkHref;a.textContent=linkText+' \u2192';a.style.cssText='display:block;width:100%;padding:13px;border-radius:10px;background:#D99000;color:#08111E;font-size:.9rem;font-weight:700;text-decoration:none;margin-bottom:10px';
   var b=document.createElement('button');b.type='button';b.textContent=window.soT({de:'Schliessen',en:'Close',fr:'Fermer',it:'Chiudi'});b.style.cssText='width:100%;padding:11px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.85rem;font-weight:600;cursor:pointer;font-family:inherit';
