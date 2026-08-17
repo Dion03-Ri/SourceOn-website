@@ -1250,12 +1250,15 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
       #lp #success-supplier .fs-icon{display:flex;align-items:center;justify-content:center;width:46px;height:46px;border-radius:50%;border:1px solid rgba(74,222,128,.5);background:transparent;margin-bottom:22px}
       #lp #success-supplier .fs-icon svg{width:22px;height:22px;color:#4ADE80}
       #lp #success-supplier .fs-title{color:var(--t1);font-size:20px;font-weight:600;letter-spacing:-.01em;line-height:1.3;margin-bottom:12px}
-      #lp #success-supplier .fs-msg{color:var(--t2);font-size:14.5px;font-weight:400;line-height:1.7;max-width:380px}
+      #lp #success-supplier .fs-msg{color:var(--t2);font-size:14.5px;font-weight:400;line-height:1.7;max-width:380px;margin-bottom:24px}
+      #lp #success-supplier .fs-dash{display:inline-block;background:transparent;color:var(--gold);text-decoration:none;font-size:15px;font-weight:600;padding:8px 2px;border:0;border-bottom:2px solid var(--gold);border-radius:0;transition:filter .15s}
+      #lp #success-supplier .fs-dash:hover{filter:brightness(1.12)}
       </style>
       <div class="form-success" id="success-supplier">
         <span class="fs-icon"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span>
         <div class="fs-title" data-i18n="sa.success.title">Vielen Dank! Deine Bewerbung ist eingegangen.</div>
         <div class="fs-msg" data-i18n="sa.success.sub">Wir prüfen dein Profil und melden uns innerhalb von 48 Stunden.</div>
+        <a href="supplierdashboard.html" class="fs-dash" data-i18n="sa.success.dash">Zum Dashboard →</a>
       </div>
       </div><!-- /sa-formwrap -->
       </div>
