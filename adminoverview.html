@@ -67,7 +67,7 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --dark:#0E1116;--dark2:#F5F6F8;--dark3:#FFFFFF;
-  --gold:#D99000;--gold-h:#d4901a;--gold-ink:#9A6A00;--gold-dim:rgba(232,160,32,.14);
+  --gold:#D99000;--gold-h:#d4901a;--gold-ink:#9A6A00;--gold-dim:rgba(217,144,0,.14);
   --muted:#56616F;--body:#7C8695;
   --green:#15924F;--red:#D64545;--amber:#B7791F;--blue:#2F6FD6;--purple:#7C5CD6;
   --r:16px;
@@ -106,7 +106,7 @@ a{color:var(--gold-ink);text-decoration:none}
 /* STATS GRID */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
 .stat-card{background:var(--dark3);border:1px solid rgba(16,24,40,.09);border-radius:var(--r);padding:24px 20px;transition:border-color .2s,box-shadow .2s;box-shadow:0 1px 2px rgba(16,24,40,.04)}
-.stat-card:hover{border-color:rgba(232,160,32,.15)}
+.stat-card:hover{border-color:rgba(217,144,0,.15)}
 .stat-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:8px}
 .stat-value{font-size:1.7rem;font-weight:800;letter-spacing:-.02em}
 .stat-value.gold{color:var(--gold-ink)}
@@ -127,7 +127,7 @@ thead{background:rgba(16,24,40,.04)}
 th{padding:12px 14px;text-align:left;font-weight:600;color:var(--muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;white-space:nowrap;border-bottom:1px solid rgba(16,24,40,.07)}
 td{padding:11px 14px;border-bottom:1px solid rgba(16,24,40,.04);vertical-align:top}
 tbody tr:nth-child(even){background:rgba(16,24,40,.02)}
-tbody tr:hover{background:rgba(232,160,32,.04)}
+tbody tr:hover{background:rgba(217,144,0,.04)}
 .cell-trunc{max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
 /* BADGES */
@@ -140,7 +140,7 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
 .badge-status.abgeschlossen{background:rgba(139,92,246,.12);color:#7C5CD6}
 @keyframes admToastIn{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
 @keyframes admToastOut{to{opacity:0;transform:translateX(24px)}}
-.adm-toast{position:fixed;top:24px;right:24px;z-index:9999;background:var(--gold);color:#070F1A;padding:14px 20px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 4px 24px rgba(232,160,32,0.3);cursor:pointer;max-width:360px;line-height:1.4;animation:admToastIn .3s ease,admToastOut .3s ease 7.7s forwards}
+.adm-toast{position:fixed;top:24px;right:24px;z-index:9999;background:var(--gold);color:#070F1A;padding:14px 20px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 4px 24px rgba(217,144,0,0.3);cursor:pointer;max-width:360px;line-height:1.4;animation:admToastIn .3s ease,admToastOut .3s ease 7.7s forwards}
 
 /* ACTION BUTTONS */
 .btn-sm{padding:5px 14px;border-radius:100px;font-size:.72rem;font-weight:600;font-family:inherit;cursor:pointer;border:none;transition:all .2s}
@@ -148,8 +148,8 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
 .btn-verify:hover{background:rgba(16,185,129,.3)}
 .btn-reject{background:rgba(239,68,68,.12);color:#D64545}
 .btn-reject:hover{background:rgba(239,68,68,.25)}
-.btn-relist{background:rgba(232,160,32,.15);color:#9A6A00}
-.btn-relist:hover{background:rgba(232,160,32,.3)}
+.btn-relist{background:rgba(217,144,0,.15);color:#9A6A00}
+.btn-relist:hover{background:rgba(217,144,0,.3)}
 .btn-remove{background:rgba(239,68,68,.12);color:#D64545}
 .btn-remove:hover{background:rgba(239,68,68,.25)}
 
@@ -168,7 +168,7 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
 /* AI SCORE */
 .ai-score{display:inline-block;padding:3px 10px;border-radius:100px;font-size:.72rem;font-weight:700;white-space:nowrap}
 .ai-score.high{background:rgba(16,185,129,.15);color:#15924F}
-.ai-score.mid{background:rgba(232,160,32,.15);color:#9A6A00}
+.ai-score.mid{background:rgba(217,144,0,.15);color:#9A6A00}
 .ai-score.low{background:rgba(239,68,68,.15);color:#D64545}
 .ai-score.none{background:rgba(148,163,184,.1);color:#56616F}
 .ai-flag{display:inline-block;padding:2px 8px;border-radius:100px;font-size:.65rem;font-weight:500;background:rgba(148,163,184,.1);color:#56616F;margin:1px 2px}
@@ -190,7 +190,7 @@ tbody tr:hover{background:rgba(232,160,32,.04)}
 a:not(.no-hover){transition:color .15s ease,opacity .15s ease}
 .nav-link:hover{color:#141A24}
 footer a:hover,#lpfoot a:hover{color:#9A6A00}
-.content a:not(.btn):hover{color:#9A6A00;text-decoration:underline;text-decoration-color:rgba(232,160,32,0.4);text-underline-offset:3px}
+.content a:not(.btn):hover{color:#9A6A00;text-decoration:underline;text-decoration-color:rgba(217,144,0,0.4);text-underline-offset:3px}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #D99000;outline-offset:3px;border-radius:6px}
 h1,h2,h3{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 .hero-headline,[class*="headline"]{letter-spacing:-0.03em}
@@ -577,7 +577,7 @@ async function loadProvisions(){
     var winner=r.supplier_name||r.gewonnener_supplier_id||'–';
     var st=r.provision_collected
       ? '<span class="badge" style="background:rgba(52,211,153,.14);color:#15924F">bezahlt</span>'
-      : '<span class="badge" style="background:rgba(232,160,32,.14);color:#9A6A00">offen</span>';
+      : '<span class="badge" style="background:rgba(217,144,0,.14);color:#9A6A00">offen</span>';
     var act=r.provision_collected ? '–'
       : '<span class="link-m" style="color:#15924F;cursor:pointer;font-weight:600" onclick="markProvision(\''+esc(r.id)+'\')">Als bezahlt markieren</span>';
     html+='<tr>'

@@ -77,7 +77,7 @@
   --bg:#F5F6F8;--bg-1:#FFFFFF;--bg-2:#EEF1F4;--bg-3:#E4E8ED;
   --border:rgba(16,24,40,0.09);--border-strong:rgba(16,24,40,0.15);
   --text-1:#141A24;--text-2:#56616F;--text-3:#7C8695;
-  --gold:#D99000;--gold-ink:#9A6A00;--gold-bg:rgba(232,160,32,0.12);--gold-border:rgba(232,160,32,0.30);--gold-dim:rgba(232,160,32,0.12);
+  --gold:#D99000;--gold-ink:#9A6A00;--gold-bg:rgba(217,144,0,0.12);--gold-border:rgba(217,144,0,0.30);--gold-dim:rgba(217,144,0,0.12);
   --green:#15924F;--green-bg:rgba(21,146,79,0.11);
   --amber:#B7791F;--amber-bg:rgba(183,121,31,0.12);
   --red:#D64545;--red-bg:rgba(214,69,69,0.10);
@@ -380,7 +380,7 @@ select.cinput option{background:#fff;color:var(--text-1)}
 a:not(.no-hover){transition:color .15s ease,opacity .15s ease}
 .nav-link:hover{color:#F1F5F9}
 footer a:hover,#lpfoot a:hover{color:#D99000}
-.content a:not(.btn):hover{color:#D99000;text-decoration:underline;text-decoration-color:rgba(232,160,32,0.4);text-underline-offset:3px}
+.content a:not(.btn):hover{color:#D99000;text-decoration:underline;text-decoration-color:rgba(217,144,0,0.4);text-underline-offset:3px}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid #D99000;outline-offset:3px;border-radius:6px}
 h1,h2,h3{text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 .hero-headline,[class*="headline"]{letter-spacing:-0.03em}
@@ -930,7 +930,7 @@ function renderChart(){
   document.getElementById('chart-blk').style.display='block';
   window.Chart.defaults.color='#94A3B8';
   var ctx=document.getElementById('fin-chart').getContext('2d');
-  new window.Chart(ctx,{type:'bar',data:{labels:order.map(function(k){return buckets[k].label;}),datasets:[{data:order.map(function(k){return Math.round(buckets[k].val);}),backgroundColor:'rgba(232,160,32,0.7)',borderColor:'#D99000',borderWidth:1,borderRadius:4,maxBarThickness:44}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return 'CHF '+fmtNum(c.parsed.y);}}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(30,58,95,0.6)'},ticks:{callback:function(v){return fmtNum(v);}}}}}});
+  new window.Chart(ctx,{type:'bar',data:{labels:order.map(function(k){return buckets[k].label;}),datasets:[{data:order.map(function(k){return Math.round(buckets[k].val);}),backgroundColor:'rgba(217,144,0,0.7)',borderColor:'#D99000',borderWidth:1,borderRadius:4,maxBarThickness:44}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return 'CHF '+fmtNum(c.parsed.y);}}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(30,58,95,0.6)'},ticks:{callback:function(v){return fmtNum(v);}}}}}});
 }
 function printOverview(){
   var t=computeTotals();var rows='';
