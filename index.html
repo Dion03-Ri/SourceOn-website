@@ -1194,21 +1194,35 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <!-- KALKULATOR TEASER -->
   <style id="calc-teaser-css">
-  #lp .calc-teaser{border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);padding:22px 0}
-  #lp .calc-teaser-inner{display:flex;align-items:center;justify-content:space-between;gap:24px}
-  #lp .calc-teaser-text{display:flex;align-items:baseline;gap:14px}
+  #lp .calc-teaser{position:relative;border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);padding:22px 0}
+  #lp .calc-teaser-inner{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:22px}
   #lp .calc-teaser-title{font-size:16px;font-weight:400;color:var(--t2);letter-spacing:-.01em}
-  #lp .calc-teaser-btn{color:var(--t1);font-size:13.5px;font-weight:500;text-decoration:none;white-space:nowrap;transition:color .15s}
-  #lp .calc-teaser-btn:hover{color:var(--gold)}
-  @media(max-width:768px){#lp .calc-teaser-inner{flex-direction:column;align-items:flex-start;gap:16px}}
+  /* Rechner-Grafik, die den Streifen kreuzt (grösser als die Spalte) */
+  #lp .calc-teaser-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);
+    width:198px;height:118px;background:#070F1A;border:1.5px solid var(--lpbs);border-radius:12px;
+    display:flex;flex-direction:column;justify-content:center;gap:12px;padding:14px 16px;text-decoration:none;z-index:2;
+    transition:border-color .18s,box-shadow .18s,transform .18s}
+  #lp .calc-teaser-btn:hover{border-color:rgba(217,144,0,.5);box-shadow:0 8px 26px rgba(0,0,0,.4);transform:translateY(-50%) translateY(-2px)}
+  #lp .ct-disp{display:flex;align-items:center;justify-content:space-between;gap:16px;border-bottom:1px solid var(--lpbs);padding-bottom:11px}
+  #lp .ct-txt{font-size:13.5px;font-weight:600;color:var(--t1);transition:color .18s}
+  #lp .ct-ar{color:var(--gold);font-weight:600}
+  #lp .calc-teaser-btn:hover .ct-txt{color:var(--gold)}
+  #lp .ct-keys{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  #lp .ct-keys i{height:10px;border-radius:2px;background:rgba(217,144,0,.16)}
+  @media(max-width:768px){
+    #lp .calc-teaser-inner{flex-direction:column;align-items:flex-start;gap:18px}
+    #lp .calc-teaser-btn{position:static;transform:none;width:200px;height:110px}
+    #lp .calc-teaser-btn:hover{transform:translateY(-2px)}
+  }
   </style>
   <section class="calc-teaser">
     <div class="wrap">
       <div class="calc-teaser-inner">
-        <div class="calc-teaser-text">
-          <span class="calc-teaser-title" data-i18n="calc_teaser_title">Wie viel könntest du sparen?</span>
-        </div>
-        <a href="/kalkulator" class="calc-teaser-btn" data-i18n="calc_teaser_btn">Jetzt berechnen →</a>
+        <span class="calc-teaser-title" data-i18n="calc_teaser_title">Wie viel könntest du sparen?</span>
+        <a href="/kalkulator" class="calc-teaser-btn" aria-label="Jetzt berechnen">
+          <span class="ct-disp"><span class="ct-txt" data-i18n="calc_teaser_btn">Jetzt berechnen</span><span class="ct-ar">→</span></span>
+          <span class="ct-keys"><i></i><i></i><i></i><i></i></span>
+        </a>
       </div>
     </div>
   </section>
@@ -1413,7 +1427,7 @@ var I18N={
     lp_hero_h1:'Baumaterialien<br><span class="h1-l2">günstiger einkaufen.</span>',
     lp_hero_proof:'<b>8-35 %</b> Netto-Mindestrabatt garantiert&nbsp;&nbsp;·&nbsp;&nbsp;In 2 Minuten zum Rabatt&nbsp;&nbsp;·&nbsp;&nbsp;Geprüfte Schweizer Lieferanten',
     lp_hero_h1gold:'Für jede Schweizer Baufirma.',
-    lp_hero_sub:'Für Schweizer Bau-KMU, Handwerksbetriebe und Subunternehmer. Auch kleine Bestellungen — gebündelt mit anderen Firmen zu besseren Preisen, ganz ohne eigene Einkaufsabteilung.',calc_teaser_label:'EINSPARPOTENZIAL',calc_teaser_title:'Wie viel könntest du sparen?',calc_teaser_btn:'Jetzt berechnen →',
+    lp_hero_sub:'Für Schweizer Bau-KMU, Handwerksbetriebe und Subunternehmer. Auch kleine Bestellungen — gebündelt mit anderen Firmen zu besseren Preisen, ganz ohne eigene Einkaufsabteilung.',calc_teaser_label:'EINSPARPOTENZIAL',calc_teaser_title:'Wie viel könntest du sparen?',calc_teaser_btn:'Jetzt berechnen',
     lp_hero_cta1:'Materialbedarf melden →',lp_hero_cta2:'Wie es funktioniert →',
     lp_s2_label:"So funktioniert's",
     strip_step1:"Bedarf melden",strip_step2:"Automatisch bündeln",strip_step3:"Lieferanten bieten",strip_step4:"Du sparst garantiert",strip_link:"Mehr erfahren →",
@@ -1513,7 +1527,7 @@ var I18N={
     lp_hero_h1:'Buy building materials<br><span class="h1-l2">at lower prices.</span>',
     lp_hero_proof:'<b>8-35%</b> net minimum discount guaranteed&nbsp;&nbsp;·&nbsp;&nbsp;2 minutes to your discount&nbsp;&nbsp;·&nbsp;&nbsp;Vetted Swiss suppliers',
     lp_hero_h1gold:'For every Swiss construction firm.',
-    lp_hero_sub:'For Swiss construction SMEs, trades and subcontractors. Even small orders — bundled with other firms for better prices, with no purchasing department needed.',calc_teaser_label:'SAVINGS POTENTIAL',calc_teaser_title:'How much could you save?',calc_teaser_btn:'Calculate now →',
+    lp_hero_sub:'For Swiss construction SMEs, trades and subcontractors. Even small orders — bundled with other firms for better prices, with no purchasing department needed.',calc_teaser_label:'SAVINGS POTENTIAL',calc_teaser_title:'How much could you save?',calc_teaser_btn:'Calculate now',
     lp_hero_cta1:'Report material demand →',lp_hero_cta2:'How it works →',
     lp_s2_label:'How it works',
     strip_step1:'Submit request',strip_step2:'Automatically bundle',strip_step3:'Suppliers bid',strip_step4:'You save guaranteed',strip_link:'Learn more →',
@@ -1613,7 +1627,7 @@ var I18N={
     lp_hero_h1:'Achète tes matériaux<br><span class="h1-l2">de construction moins cher.</span>',
     lp_hero_proof:'<b>8-35 %</b> de remise nette minimale garantie&nbsp;&nbsp;·&nbsp;&nbsp;2 minutes jusqu\'à ta remise&nbsp;&nbsp;·&nbsp;&nbsp;Fournisseurs suisses vérifiés',
     lp_hero_h1gold:'Pour chaque entreprise de construction suisse.',
-    lp_hero_sub:'Pour les PME de construction, artisans et sous-traitants suisses. Même les petites commandes — regroupées avec d\'autres entreprises pour de meilleurs prix, sans service d\'achat.',calc_teaser_label:'POTENTIEL D\'ÉCONOMIES',calc_teaser_title:'Combien pourrais-tu économiser?',calc_teaser_btn:'Calculer maintenant →',
+    lp_hero_sub:'Pour les PME de construction, artisans et sous-traitants suisses. Même les petites commandes — regroupées avec d\'autres entreprises pour de meilleurs prix, sans service d\'achat.',calc_teaser_label:'POTENTIEL D\'ÉCONOMIES',calc_teaser_title:'Combien pourrais-tu économiser?',calc_teaser_btn:'Calculer maintenant',
     lp_hero_cta1:'Annoncer un besoin →',lp_hero_cta2:'Comment ça marche →',
     lp_s2_label:'Comment ça marche',
     strip_step1:'Soumettre une demande',strip_step2:'Regrouper automatiquement',strip_step3:'Les fournisseurs soumettent',strip_step4:'Tu économises garanti',strip_link:'En savoir plus →',
@@ -1713,7 +1727,7 @@ var I18N={
     lp_hero_h1:'Acquista materiali<br><span class="h1-l2">a prezzi più bassi.</span>',
     lp_hero_proof:'<b>8-35 %</b> di sconto minimo netto garantito&nbsp;&nbsp;·&nbsp;&nbsp;2 minuti fino allo sconto&nbsp;&nbsp;·&nbsp;&nbsp;Fornitori svizzeri verificati',
     lp_hero_h1gold:'Per ogni impresa edile svizzera.',
-    lp_hero_sub:'Per PMI edili, artigiani e subappaltatori svizzeri. Anche piccoli ordini — raggruppati con altre imprese per prezzi migliori, senza un ufficio acquisti.',calc_teaser_label:'POTENZIALE DI RISPARMIO',calc_teaser_title:'Quanto potresti risparmiare?',calc_teaser_btn:'Calcola ora →',
+    lp_hero_sub:'Per PMI edili, artigiani e subappaltatori svizzeri. Anche piccoli ordini — raggruppati con altre imprese per prezzi migliori, senza un ufficio acquisti.',calc_teaser_label:'POTENZIALE DI RISPARMIO',calc_teaser_title:'Quanto potresti risparmiare?',calc_teaser_btn:'Calcola ora',
     lp_hero_cta1:'Segnala il fabbisogno →',lp_hero_cta2:'Come funziona →',
     lp_s2_label:'Come funziona',
     strip_step1:'Invia richiesta',strip_step2:'Raggruppare automaticamente',strip_step3:'I fornitori offrono',strip_step4:'Risparmi garantito',strip_link:'Scopri di più →',
