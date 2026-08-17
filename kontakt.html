@@ -1008,6 +1008,9 @@ body{background:#070F1A}
 #lp .file-upload-hint{color:var(--t3)}
 #lp .file-selected{color:#86EFAC}
 #lp .file-remove{color:var(--t3)}#lp .file-remove:hover{color:#EF4444}
+#lp .scan-status{margin-top:10px;font-size:12.5px;line-height:1.55;padding:10px 14px;border-radius:0;border-left:2px solid var(--gold);background:rgba(217,144,0,.06);color:var(--t2);font-family:ui-monospace,Menlo,Consolas,monospace}
+#lp .scan-status.err{border-left-color:#EF4444;background:rgba(239,68,68,.06)}
+#lp .scan-status.busy{color:var(--t3)}
 /* material block — gold corner brackets */
 #lp .material-row{border:1px solid var(--lpbs);border-radius:0;background:rgba(6,9,14,.4);position:relative}
 #lp .material-row::before,#lp .material-row::after{content:"";position:absolute;width:11px;height:11px;pointer-events:none}
@@ -1267,6 +1270,7 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
                 <div class="file-upload-hint" data-i18n="form_scan_hint">Foto, Plan oder PDF · max. 10 MB</div>
               </div>
               <div class="file-selected" id="scan-selected"><span id="scan-selected-name"></span><span class="file-remove" id="scan-remove" role="button" tabindex="0" data-i18n="form_scan_remove">entfernen</span></div>
+              <div class="scan-status" id="scan-status" role="status" style="display:none"></div>
             </div>
             <div id="tier-summary" class="tier-summary" style="display:none">
               <div id="tier-breakdown" class="tier-breakdown"></div>
@@ -1803,14 +1807,79 @@ var _selectedScanFile=null;
     if(_selectedScanFile){nameEl.textContent=_selectedScanFile.name;sel.classList.add('show');zone.style.display='none';}
     else{sel.classList.remove('show');zone.style.display='';input.value='';}
   }
-  input.addEventListener('change',function(){setFile(input.files&&input.files[0]);});
+  input.addEventListener('change',function(){setFile(input.files&&input.files[0]);if(_selectedScanFile)_analyzeScan(_selectedScanFile);});
   ['dragenter','dragover'].forEach(function(ev){zone.addEventListener(ev,function(e){e.preventDefault();zone.classList.add('drag-over');});});
   ['dragleave','drop'].forEach(function(ev){zone.addEventListener(ev,function(e){e.preventDefault();zone.classList.remove('drag-over');});});
-  zone.addEventListener('drop',function(e){var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f){try{input.files=e.dataTransfer.files;}catch(_e){}setFile(f);}});
-  function clearFile(){setFile(null);}
+  zone.addEventListener('drop',function(e){var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f){try{input.files=e.dataTransfer.files;}catch(_e){}setFile(f);if(_selectedScanFile)_analyzeScan(_selectedScanFile);}});
+  function clearFile(){setFile(null);_scanStatus('',null);}
   rm.addEventListener('click',clearFile);
   rm.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();clearFile();}});
 })();
+
+// Statuszeile unter dem Upload (busy / ok / err)
+function _scanStatus(msg,kind){
+  var el=document.getElementById('scan-status');if(!el)return;
+  if(!msg){el.style.display='none';el.textContent='';el.className='scan-status';return;}
+  el.style.display='';el.textContent=msg;el.className='scan-status'+(kind==='err'?' err':(kind==='busy'?' busy':''));
+}
+
+// Scan an die Analyse-Edge-Function schicken und die erkannten Materialien
+// in die Formularzeilen eintragen (Nutzer prüft danach und sendet normal ab).
+// Anbieter-neutral: die Funktion 'analyze-scan' liefert { success, materials:[{sourceon_id|bezeichnung, menge, liefer_von, liefer_bis}], note }.
+async function _analyzeScan(file){
+  if(!file)return;
+  _scanStatus('Scan wird analysiert …','busy');
+  try{
+    var sbUrl='https://mttzsqtuaisdjisjxrey.supabase.co';
+    var sbKey='sb_publishable_C2d4skG1yF4lTzlKpvEWbw_mePtBH1c';
+    var headers={'apikey':sbKey};
+    try{if(window.Clerk&&window.Clerk.session){var _tk=await window.Clerk.session.getToken();if(_tk)headers['Authorization']='Bearer '+_tk;}}catch(e){}
+    var fd=new FormData();fd.append('file',file,file.name);
+    var resp=await fetch(sbUrl+'/functions/v1/analyze-scan',{method:'POST',headers:headers,body:fd});
+    var json=await resp.json().catch(function(){return{};});
+    if(!resp.ok||!json.success||!Array.isArray(json.materials))throw new Error(json.error||('http '+resp.status));
+    var applied=_applyScanMaterials(json.materials);
+    if(applied>0){_scanStatus('✓ '+applied+' Material'+(applied===1?'':'ien')+' aus dem Scan übernommen — bitte prüfen und ggf. korrigieren.',null);}
+    else{_scanStatus('Aus dem Scan konnten keine Materialien eindeutig erkannt werden — bitte manuell eintragen. Dein Scan wird trotzdem mitgesendet.','err');}
+  }catch(err){
+    console.warn('[SourceOn] Scan-Analyse nicht verfügbar:',err&&err.message?err.message:err);
+    // Vor dem Launch (Funktion noch nicht deployt) oder bei Fehler: still zurückfallen.
+    _scanStatus('Automatische Analyse ist derzeit nicht verfügbar — bitte Material manuell eintragen. Dein Scan wird trotzdem mitgesendet.','err');
+  }
+}
+
+// Erkannte Materialien in die Formularzeilen schreiben — exakt wie manuelle Eingabe.
+function _applyScanMaterials(materials){
+  var applied=0;
+  materials.forEach(function(m){
+    if(!m)return;
+    var qty=(m.menge!=null?String(m.menge):'').trim();
+    var sid=m.sourceon_id!=null?String(m.sourceon_id).trim():'';
+    var txt=m.bezeichnung!=null?String(m.bezeichnung).trim():'';
+    if(!sid&&!txt)return;
+    // Freie Zeile finden oder neue anlegen.
+    var rows=document.querySelectorAll('#material-rows .material-row');
+    var row=null;
+    for(var i=0;i<rows.length;i++){var idv=rows[i].querySelector('.mat-id');var sv=rows[i].querySelector('.mat-search');if((!idv||!idv.value)&&(!sv||!sv.value.trim())){row=rows[i];break;}}
+    if(!row){addMaterialRow();var all=document.querySelectorAll('#material-rows .material-row');row=all[all.length-1];}
+    if(!row)return;
+    var combo=row.querySelector('.mat-combo');
+    if(sid&&typeof _matById!=='undefined'&&_matById[sid]&&typeof _selectMat==='function'){
+      _selectMat(combo,sid);
+    }else if(txt){
+      var s=row.querySelector('.mat-search');if(s){s.value=txt;}
+      var idEl=row.querySelector('.mat-id');if(idEl)idEl.value='';
+    }
+    var qEl=row.querySelector('.mat-qty');if(qEl&&qty)qEl.value=qty;
+    var vEl=row.querySelector('.mat-von'),bEl=row.querySelector('.mat-bis');
+    if(vEl&&m.liefer_von)vEl.value=String(m.liefer_von);
+    if(bEl&&m.liefer_bis)bEl.value=String(m.liefer_bis);
+    if(typeof _onMatRow==='function'&&vEl)_onMatRow(vEl);
+    applied++;
+  });
+  if(typeof _recalcTier==='function')_recalcTier();
+  return applied;
+}
 
 async function submitContact(e){
   e.preventDefault();
