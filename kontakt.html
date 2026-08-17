@@ -1000,6 +1000,14 @@ body{background:#070F1A}
 #lp .form-success{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.3);color:#86EFAC}
 #lp .form-success span{background:rgba(34,197,94,.16)}
 #lp .form-success svg{color:#4ADE80}
+/* scan upload — dark / kantig */
+#lp .file-upload-zone{border:1px dashed var(--lpbs);border-radius:0;background:rgba(6,9,14,.4)}
+#lp .file-upload-zone:hover,#lp .file-upload-zone.drag-over{border-color:var(--gold);background:rgba(217,144,0,.06)}
+#lp .file-upload-icon{color:var(--gold)}
+#lp .file-upload-text{color:var(--t2);font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px}
+#lp .file-upload-hint{color:var(--t3)}
+#lp .file-selected{color:#86EFAC}
+#lp .file-remove{color:var(--t3)}#lp .file-remove:hover{color:#EF4444}
 /* material block — gold corner brackets */
 #lp .material-row{border:1px solid var(--lpbs);border-radius:0;background:rgba(6,9,14,.4);position:relative}
 #lp .material-row::before,#lp .material-row::after{content:"";position:absolute;width:11px;height:11px;pointer-events:none}
@@ -1250,6 +1258,16 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
               </div>
             </div>
             <div class="form-group"><label class="form-label" for="c-desc" data-i18n-html="form_project_label">Projektbeschreibung <span style="font-weight:400;color:var(--body)">(optional)</span></label><textarea class="form-textarea" id="c-desc" placeholder="Kurze Beschreibung des Projekts und weitere Anforderungen…" data-i18n-placeholder="form_placeholder_project"></textarea></div>
+            <div class="form-group">
+              <label class="form-label" for="c-scan" data-i18n-html="form_scan_label">Plan / Scan hochladen <span style="font-weight:400;color:var(--body)">(optional)</span></label>
+              <div class="file-upload-zone" id="scan-zone">
+                <input type="file" id="c-scan" accept="image/*,application/pdf" aria-label="Plan oder Scan hochladen"/>
+                <div class="file-upload-icon" aria-hidden="true">&#8682;</div>
+                <div class="file-upload-text" data-i18n="form_scan_text">Datei hierher ziehen oder klicken zum Auswählen</div>
+                <div class="file-upload-hint" data-i18n="form_scan_hint">Foto, Plan oder PDF · max. 10 MB</div>
+              </div>
+              <div class="file-selected" id="scan-selected"><span id="scan-selected-name"></span><span class="file-remove" id="scan-remove" role="button" tabindex="0" data-i18n="form_scan_remove">entfernen</span></div>
+            </div>
             <div id="tier-summary" class="tier-summary" style="display:none">
               <div id="tier-breakdown" class="tier-breakdown"></div>
               <div class="tier-row tier-row-hl"><span class="tier-label" data-i18n="tier_label_value">Geschätzter Auftragswert</span><span class="tier-val" id="tier-value">CHF 0</span></div>
@@ -1769,6 +1787,31 @@ function _extractKanton(addr){
 }
 
 var _formLoadTime=Date.now();
+// Plan/Scan Upload — Auswahl, Drag&Drop, Entfernen. Datei bleibt im Speicher,
+// hochgeladen wird erst beim Absenden (in _soSubmitRequest), sobald authentifiziert.
+var _selectedScanFile=null;
+(function _initScanUpload(){
+  var input=document.getElementById('c-scan');
+  var zone=document.getElementById('scan-zone');
+  var sel=document.getElementById('scan-selected');
+  var nameEl=document.getElementById('scan-selected-name');
+  var rm=document.getElementById('scan-remove');
+  if(!input||!zone||!sel||!nameEl||!rm)return;
+  function setFile(f){
+    if(f&&f.size>10*1024*1024){alert('Datei zu gross (max. 10 MB).');input.value='';return;}
+    _selectedScanFile=f||null;
+    if(_selectedScanFile){nameEl.textContent=_selectedScanFile.name;sel.classList.add('show');zone.style.display='none';}
+    else{sel.classList.remove('show');zone.style.display='';input.value='';}
+  }
+  input.addEventListener('change',function(){setFile(input.files&&input.files[0]);});
+  ['dragenter','dragover'].forEach(function(ev){zone.addEventListener(ev,function(e){e.preventDefault();zone.classList.add('drag-over');});});
+  ['dragleave','drop'].forEach(function(ev){zone.addEventListener(ev,function(e){e.preventDefault();zone.classList.remove('drag-over');});});
+  zone.addEventListener('drop',function(e){var f=e.dataTransfer&&e.dataTransfer.files&&e.dataTransfer.files[0];if(f){try{input.files=e.dataTransfer.files;}catch(_e){}setFile(f);}});
+  function clearFile(){setFile(null);}
+  rm.addEventListener('click',clearFile);
+  rm.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();clearFile();}});
+})();
+
 async function submitContact(e){
   e.preventDefault();
   // Spam-Schutz: Honeypot-Feld + Timing. Bei Verdacht: Fake-Erfolg zeigen, still verwerfen.
@@ -1917,6 +1960,19 @@ function _soCheckAndSubmitPending(){
 async function _soSubmitRequest(payload){
   var submitBtn=document.querySelector('#form-contact button[type="submit"]');
   try{
+    // Optionalen Plan/Scan hochladen (Supabase Storage) und URL in den Payload legen.
+    // Nicht blockierend: schlägt der Upload fehl, wird die Anfrage trotzdem gesendet.
+    if(_selectedScanFile&&window._supabase&&_supabase.storage){
+      try{
+        var _ext=(_selectedScanFile.name.split('.').pop()||'dat').toLowerCase().replace(/[^a-z0-9]/g,'');
+        var _uid=(window.Clerk&&window.Clerk.user)?window.Clerk.user.id:'anon';
+        var _path='requests/'+_uid+'_'+Date.now()+'.'+(_ext||'dat');
+        var _up=await _supabase.storage.from('customer-scans').upload(_path,_selectedScanFile,{upsert:false,contentType:_selectedScanFile.type||undefined});
+        if(_up&&_up.error)throw _up.error;
+        var _pub=_supabase.storage.from('customer-scans').getPublicUrl(_path);
+        if(_pub&&_pub.data&&_pub.data.publicUrl){payload.scan_url=_pub.data.publicUrl;payload.scan_path=_path;}
+      }catch(_upErr){console.warn('[SourceOn] Scan-Upload fehlgeschlagen:',_upErr);}
+    }
     var _fnHeaders={'Content-Type':'application/json'};
     try{if(window.Clerk&&window.Clerk.session){var _tk=await window.Clerk.session.getToken();if(_tk)_fnHeaders['Authorization']='Bearer '+_tk;}}catch(e){}
     var _fnResp=await fetch('https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/submit-customer-request',{method:'POST',headers:_fnHeaders,body:JSON.stringify(payload)});
