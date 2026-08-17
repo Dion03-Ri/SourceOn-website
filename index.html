@@ -1120,12 +1120,14 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <!-- PROCESS STRIP -->
   <style>
-  .process-strip{border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);padding:52px 0;background:var(--bg1)}
-  .process-strip-inner{display:flex;align-items:center;justify-content:space-between;gap:20px 40px;flex-wrap:wrap}
-  .ps-item{display:flex;align-items:baseline;gap:10px;opacity:0;transform:translateY(12px)}
-  .ps-n{font-size:11px;font-weight:700;color:var(--t3);font-variant-numeric:tabular-nums;letter-spacing:.03em}
-  .ps-t{font-size:13.5px;font-weight:500;color:var(--t1);letter-spacing:-.01em;white-space:nowrap}
-  .ps-cta{font-size:13px;color:var(--gold);text-decoration:none;white-space:nowrap;opacity:0;transform:translateY(12px)}
+  .process-strip{border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);padding:48px 0;background:var(--bg1)}
+  .process-strip-inner{display:grid;grid-template-columns:repeat(4,1fr);align-items:center}
+  .ps-item{display:flex;flex-direction:column;gap:9px;padding:2px 30px;opacity:0;transform:translateY(12px)}
+  .ps-item:first-child{padding-left:0}
+  .ps-item + .ps-item{border-left:1px solid var(--lpb)}
+  .ps-n{font-size:12px;font-weight:700;color:var(--t3);font-variant-numeric:tabular-nums;letter-spacing:.12em}
+  .ps-t{font-size:15px;font-weight:600;color:var(--t1);letter-spacing:-.01em}
+  .ps-cta{display:inline-block;margin-top:30px;font-size:13.5px;font-weight:600;color:var(--gold);text-decoration:none;white-space:nowrap;opacity:0;transform:translateY(12px)}
   .ps-cta:hover{text-decoration:underline;text-underline-offset:3px}
   .process-strip.lit .ps-item,.process-strip.lit .ps-cta{animation:psIn .55s cubic-bezier(.2,.7,.2,1) forwards}
   .process-strip.lit .ps-item:nth-child(1){animation-delay:.04s}
@@ -1139,7 +1141,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   .process-strip.lit .ps-item:nth-child(4) .ps-n{animation:psGlow .7s ease .31s forwards}
   @keyframes psIn{to{opacity:1;transform:none}}
   @keyframes psGlow{0%{color:var(--t3);text-shadow:none}45%{color:#F6C560;text-shadow:0 0 16px rgba(217,144,0,.7)}100%{color:var(--gold);text-shadow:0 0 0 rgba(217,144,0,0)}}
-  @media(max-width:768px){.process-strip{padding:38px 0}.process-strip-inner{justify-content:flex-start;gap:16px 24px}}
+  @media(max-width:768px){.process-strip{padding:38px 0}.process-strip-inner{grid-template-columns:1fr 1fr;gap:26px 20px}.ps-item{padding:0!important;border-left:none!important}}
   @media(prefers-reduced-motion:reduce){.ps-item,.ps-cta{opacity:1!important;transform:none!important;animation:none!important}.ps-n{color:var(--gold)!important}}
   </style>
   <section class="process-strip">
@@ -1149,8 +1151,8 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="ps-item"><span class="ps-n">02</span><span class="ps-t" data-i18n="strip_step2">Automatisch bündeln</span></div>
         <div class="ps-item"><span class="ps-n">03</span><span class="ps-t" data-i18n="strip_step3">Lieferanten bieten</span></div>
         <div class="ps-item"><span class="ps-n">04</span><span class="ps-t" data-i18n="strip_step4">Du sparst garantiert</span></div>
-        <a href="/prozess" class="ps-cta" data-i18n="strip_link">Mehr erfahren →</a>
       </div>
+      <a href="/prozess" class="ps-cta" data-i18n="strip_link">Mehr erfahren →</a>
     </div>
   </section>
   <script>
