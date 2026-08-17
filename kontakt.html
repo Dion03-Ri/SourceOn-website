@@ -966,6 +966,12 @@ body{background:#070F1A}
 #lp .form-input::placeholder,#lp .form-textarea::placeholder,#lp .mat-search::placeholder,#lp .mat-qty::placeholder{color:var(--t3)}
 #lp .form-input:focus,#lp .form-textarea:focus,#lp .form-select:focus,#lp .mat-search:focus,#lp .mat-qty:focus{border-color:var(--gold);background:rgba(6,9,14,.85);box-shadow:none}
 #lp input[type=date].form-input{color-scheme:dark}
+/* keep autofill dark — no white flash on focus/autocomplete */
+#lp .form-input:-webkit-autofill,#lp .form-textarea:-webkit-autofill,#lp .form-select:-webkit-autofill,#lp .mat-search:-webkit-autofill,#lp .mat-qty:-webkit-autofill,
+#lp .form-input:-webkit-autofill:hover,#lp .form-input:-webkit-autofill:focus,#lp .mat-search:-webkit-autofill:focus,#lp .mat-qty:-webkit-autofill:focus{
+  -webkit-text-fill-color:var(--t1)!important;caret-color:var(--t1);
+  -webkit-box-shadow:0 0 0 1000px #0b0f16 inset!important;box-shadow:0 0 0 1000px #0b0f16 inset!important;
+  border:1px solid var(--lpbs)!important;transition:background-color 9999s ease-out 0s}
 #lp .form-select{background-image:url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23D99000' stroke-width='2'%3e%3cpath d='M6 9l6 6 6-6'/%3e%3c/svg%3e");background-repeat:no-repeat;background-position:right 14px center;background-size:16px;-webkit-appearance:none;appearance:none}
 #lp .form-select option{background:#0b0f16;color:var(--t1)}
 #lp .form-check span{color:var(--t2)}
