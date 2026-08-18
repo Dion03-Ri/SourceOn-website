@@ -1575,6 +1575,7 @@ var MAT_DB_TRANS={
     'Betonstahlk\u00f6rbe vorgefertigt':'Prefab rebar cages',
     'Kies 0\u201332mm':'Gravel 0-32mm','Kies 0\u201316mm':'Gravel 0-16mm','Splitt 8\u201316mm':'Chippings 8-16mm','Splitt 16\u201332mm':'Chippings 16-32mm','Sand 0\u20134mm':'Sand 0-4mm',
     'Hochlochziegel 15cm':'Perforated brick 15cm','Hochlochziegel 20cm':'Perforated brick 20cm','Hochlochziegel 25cm':'Perforated brick 25cm',
+    'Hochlochziegel HLZ 15 cm':'Perforated brick HLZ 15 cm','Hochlochziegel HLZ 20 cm':'Perforated brick HLZ 20 cm','Hochlochziegel HLZ 25 cm':'Perforated brick HLZ 25 cm','Betonstahlkörbe':'Rebar cages','Pumpbeton XC4':'Pump concrete XC4',
     'Kalksandstein 15cm':'Sand-lime brick 15cm','Porenbetonstein 20cm':'Aerated concrete block 20cm',
     'Mauerm\u00f6rtel MG II':'Masonry mortar MG II','Mauerm\u00f6rtel MG III':'Masonry mortar MG III',
     'Putzm\u00f6rtel Innen GP':'Interior plaster GP','Putzm\u00f6rtel Aussen R':'Exterior render R',
@@ -1603,6 +1604,7 @@ var MAT_DB_TRANS={
     'Betonstahlk\u00f6rbe vorgefertigt':'Cages prefabriquees',
     'Kies 0\u201332mm':'Gravier 0-32mm','Kies 0\u201316mm':'Gravier 0-16mm','Splitt 8\u201316mm':'Gravillons 8-16mm','Splitt 16\u201332mm':'Gravillons 16-32mm','Sand 0\u20134mm':'Sable 0-4mm',
     'Hochlochziegel 15cm':'Brique 15cm','Hochlochziegel 20cm':'Brique 20cm','Hochlochziegel 25cm':'Brique 25cm',
+    'Hochlochziegel HLZ 15 cm':'Brique HLZ 15 cm','Hochlochziegel HLZ 20 cm':'Brique HLZ 20 cm','Hochlochziegel HLZ 25 cm':'Brique HLZ 25 cm','Betonstahlkörbe':"Cages d'armature",'Pumpbeton XC4':'Béton pompé XC4',
     'Kalksandstein 15cm':'Silico-calcaire 15cm','Porenbetonstein 20cm':'Beton cellulaire 20cm',
     'Mauerm\u00f6rtel MG II':'Mortier MG II','Mauerm\u00f6rtel MG III':'Mortier MG III',
     'Putzm\u00f6rtel Innen GP':'Enduit interieur GP','Putzm\u00f6rtel Aussen R':'Enduit exterieur R',
@@ -1631,6 +1633,7 @@ var MAT_DB_TRANS={
     'Betonstahlk\u00f6rbe vorgefertigt':'Gabbie prefabbricate',
     'Kies 0\u201332mm':'Ghiaia 0-32mm','Kies 0\u201316mm':'Ghiaia 0-16mm','Splitt 8\u201316mm':'Pietrisco 8-16mm','Splitt 16\u201332mm':'Pietrisco 16-32mm','Sand 0\u20134mm':'Sabbia 0-4mm',
     'Hochlochziegel 15cm':'Mattone forato 15cm','Hochlochziegel 20cm':'Mattone forato 20cm','Hochlochziegel 25cm':'Mattone forato 25cm',
+    'Hochlochziegel HLZ 15 cm':'Mattone forato HLZ 15 cm','Hochlochziegel HLZ 20 cm':'Mattone forato HLZ 20 cm','Hochlochziegel HLZ 25 cm':'Mattone forato HLZ 25 cm','Betonstahlkörbe':'Gabbie di armatura','Pumpbeton XC4':'Calcestruzzo pompato XC4',
     'Kalksandstein 15cm':'Silico-calcareo 15cm','Porenbetonstein 20cm':'Blocco cellulare 20cm',
     'Mauerm\u00f6rtel MG II':'Malta MG II','Mauerm\u00f6rtel MG III':'Malta MG III',
     'Putzm\u00f6rtel Innen GP':'Intonaco interno GP','Putzm\u00f6rtel Aussen R':'Intonaco esterno R',
@@ -2182,14 +2185,24 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
     }catch(e){empty();}
   }
   var _items=[],_zone='';
+  function _tmNorm(x){return String(x).toLowerCase().replace(/[–—]/g,'-').replace(/\s+/g,' ').replace(/\s*(cm|mm)\b/g,'$1').trim();}
+  function _tmLook(mt,s){
+    s=String(s).trim(); if(!s)return null;
+    if(mt[s])return mt[s];                       // exakt
+    var ns=_tmNorm(s);
+    for(var k in mt){ if(_tmNorm(k)===ns) return mt[k]; }   // normalisiert
+    for(var k2 in mt){ var nk=_tmNorm(k2);                  // Präfix (mit Wortgrenze)
+      if(nk===ns||nk.indexOf(ns+' ')===0||ns.indexOf(nk+' ')===0) return mt[k2]; }
+    return null;
+  }
   function transMat(name){
     var lang=localStorage.getItem('sourceon-lang')||'de';
     var mt=window._matDbTrans&&window._matDbTrans[lang];
     if(!mt||!name)return name;
-    if(mt[name])return mt[name];
+    var whole=_tmLook(mt,name); if(whole)return whole;
     if(String(name).indexOf('—')===-1)return name;
     var parts=String(name).split(/\s*—\s*/);
-    return parts.map(function(p){var s=p.trim();return mt[s]||s;}).join(' — ');
+    return parts.map(function(p){var t=_tmLook(mt,p);return t||p.trim();}).join(' — ');
   }
   function cardHtml(it){var t=tr();
     return '<div class="bd-card">'
