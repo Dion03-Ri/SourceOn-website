@@ -596,7 +596,7 @@ p{text-wrap:pretty}
 <script>
 var SUPABASE_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
 var SUPABASE_KEY='sb_publishable_C2d4skG1yF4lTzlKpvEWbw_mePtBH1c';
-var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{accessToken:async function(){if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}return null;}});
+var sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{accessToken:async function(){if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}return null;}}):null;
 var currentUserId=null,_matCatalogMap={};
 var _requests=[],_bundleMap={},_commMap={},_customer=null,_filter='alle',_selId=null;
 var _customerIds=[],_rtChannel=null,_rtTimer=null;
@@ -728,6 +728,23 @@ window.SO_I18N={
  }
 };
 function soT(k){var l=(localStorage.getItem('sourceon-lang')||'de');if(!window.SO_I18N[l])l='de';var d=window.SO_I18N[l];return d[k]!==undefined?d[k]:(window.SO_I18N.de[k]!==undefined?window.SO_I18N.de[k]:k);}
+// Wendet SO_I18N auf alle statischen [data-i18n*]-Elemente an (nur Keys, die im Dict existieren — sonst unberührt lassen)
+function _soApplyI18n(){
+  try{
+    var l=(localStorage.getItem('sourceon-lang')||'de');
+    var D=(window.SO_I18N&&window.SO_I18N[l])||{};
+    var B=(window.SO_I18N&&window.SO_I18N.de)||{};
+    document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(B[k]!==undefined)el.textContent=(D[k]!==undefined?D[k]:B[k]);});
+    document.querySelectorAll('[data-i18n-html]').forEach(function(el){var k=el.getAttribute('data-i18n-html');if(B[k]!==undefined)el.innerHTML=(D[k]!==undefined?D[k]:B[k]);});
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){var k=el.getAttribute('data-i18n-placeholder');if(B[k]!==undefined)el.setAttribute('placeholder',(D[k]!==undefined?D[k]:B[k]));});
+    document.querySelectorAll('[data-i18n-aria]').forEach(function(el){var k=el.getAttribute('data-i18n-aria');if(B[k]!==undefined)el.setAttribute('aria-label',(D[k]!==undefined?D[k]:B[k]));});
+    document.documentElement.lang=l;
+  }catch(e){}
+}
+// setLang: Sprache speichern + SOFORT anwenden (nicht erst nach Reload)
+(function(){var _prev=window.setLang;window.setLang=function(l){try{localStorage.setItem('sourceon-lang',l);}catch(e){}try{if(typeof _prev==='function')_prev(l);}catch(e){}_soApplyI18n();try{if(typeof rerenderAll==='function')rerenderAll();}catch(e){}};})();
+try{_soApplyI18n();}catch(e){}
+document.addEventListener('DOMContentLoaded',function(){try{_soApplyI18n();}catch(e){}});
 var _LOCALE={de:'de-CH',en:'en-GB',fr:'fr-CH',it:'it-CH'};
 function soLocale(){return _LOCALE[localStorage.getItem('sourceon-lang')||'de']||'de-CH';}
 // Verification (trust) modal strings — read live from localStorage['sourceon-lang']
