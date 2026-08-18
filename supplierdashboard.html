@@ -447,14 +447,14 @@ p{text-wrap:pretty}
 
   <!-- TAB 4: LIEFERUNGEN -->
   <div class="db-content" id="sec-lieferungen"><div class="db-wrap">
-    <div class="greet"><div class="greet-hi" style="font-size:24px">Lieferungen</div></div>
-    <div class="sec-head"><span class="sec-label">Bevorstehende Lieferungen</span><span class="link-m" onclick="exportDeliveryICS()">↓ Termine exportieren</span></div>
+    <div class="greet"><div class="greet-hi" style="font-size:24px" data-i18n="tab_deliveries">Lieferungen</div></div>
+    <div class="sec-head"><span class="sec-label" data-i18n="deliv_upcoming">Bevorstehende Lieferungen</span><span class="link-m" onclick="exportDeliveryICS()" data-i18n="deliv_export">↓ Termine exportieren</span></div>
     <div id="deliv-upcoming"></div>
     <div class="divider"></div>
-    <div class="sec-head"><span class="sec-label">Abgeschlossene Lieferungen</span></div>
+    <div class="sec-head"><span class="sec-label" data-i18n="deliv_completed">Abgeschlossene Lieferungen</span></div>
     <div style="overflow-x:auto"><table class="ftable" id="deliv-past"></table></div>
-    <div id="deliv-empty" style="display:none"><div class="hero"><div class="hero-num zero" style="font-size:20px">Noch keine gewonnenen Aufträge</div><div class="hero-sub">Reiche Angebote auf offene Ausschreibungen ein.</div></div></div>
-    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+    <div id="deliv-empty" style="display:none"><div class="hero"><div class="hero-num zero" style="font-size:20px" data-i18n="deliv_empty_t">Noch keine gewonnenen Aufträge</div><div class="hero-sub" data-i18n="deliv_empty_s">Reiche Angebote auf offene Ausschreibungen ein.</div></div></div>
+    <div class="support" data-i18n-html="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
   </div></div>
 
   <!-- TAB 5: PROFIL -->
@@ -462,36 +462,36 @@ p{text-wrap:pretty}
     <div class="prof-head">
       <div class="avatar" id="pf-avatar">S</div>
       <div style="flex:1"><div class="prof-name" id="pf-name">—</div><div class="prof-email" id="pf-email"></div>
-        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-2);margin-top:10px"><span>Profil-Vollständigkeit</span><span id="pf-pct">0%</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-2);margin-top:10px"><span data-i18n="pf_completeness">Profil-Vollständigkeit</span><span id="pf-pct">0%</span></div>
         <div class="progress-track"><div class="progress-fill" id="pf-bar" style="width:0%"></div></div>
         <div class="miss" id="pf-miss"></div>
       </div>
     </div>
-    <span class="sec-label">Kontaktdaten</span>
+    <span class="sec-label" data-i18n="pf_contact">Kontaktdaten</span>
     <div id="acct-fields"></div>
     <div style="margin-top:32px"></div>
-    <span class="sec-label">Leistungsprofil</span>
-    <div class="fld"><label>Jahreskapazität</label><select id="pf-capacity"><option value="">Bitte wählen</option><option>Unter CHF 500'000</option><option>CHF 500'000 – 2'000'000</option><option>CHF 2'000'000 – 10'000'000</option><option>CHF 10'000'000 – 50'000'000</option><option>Über CHF 50'000'000</option></select></div>
-    <div class="fld"><label>Materialien</label><div class="checks" id="pf-materials"></div></div>
-    <div class="fld"><label>Regionen</label><div class="checks" id="pf-regions"></div></div>
-    <div class="fld"><label>Zertifizierungen</label><div class="checks" id="pf-certs"></div></div>
-    <div class="fld"><label>Bemerkungen</label><textarea id="pf-notes" rows="3"></textarea></div>
-    <div style="margin-top:20px;display:flex;align-items:center"><button class="btn-gold" id="btn-save" onclick="saveProfile()">Änderungen speichern</button><span class="save-msg" id="save-msg" style="display:none"></span></div>
+    <span class="sec-label" data-i18n="pf_service">Leistungsprofil</span>
+    <div class="fld"><label data-i18n="pf_capacity">Jahreskapazität</label><select id="pf-capacity"><option value="" data-i18n="cap_select">Bitte wählen</option><option value="Unter CHF 500'000" data-i18n="cap_under">Unter CHF 500'000</option><option>CHF 500'000 – 2'000'000</option><option>CHF 2'000'000 – 10'000'000</option><option>CHF 10'000'000 – 50'000'000</option><option value="Über CHF 50'000'000" data-i18n="cap_over">Über CHF 50'000'000</option></select></div>
+    <div class="fld"><label data-i18n="pf_materials">Materialien</label><div class="checks" id="pf-materials"></div></div>
+    <div class="fld"><label data-i18n="pf_regions">Regionen</label><div class="checks" id="pf-regions"></div></div>
+    <div class="fld"><label data-i18n="pf_certs">Zertifizierungen</label><div class="checks" id="pf-certs"></div></div>
+    <div class="fld"><label data-i18n="pf_notes">Bemerkungen</label><textarea id="pf-notes" rows="3"></textarea></div>
+    <div style="margin-top:20px;display:flex;align-items:center"><button class="btn-gold" id="btn-save" onclick="saveProfile()" data-i18n="pf_save">Änderungen speichern</button><span class="save-msg" id="save-msg" style="display:none"></span></div>
 
     <div class="agree-box">
-      <span class="sec-label">Rechtliches</span>
-      <div style="font-size:14px;color:var(--green)" id="agree-line">Lieferantenvereinbarung</div>
+      <span class="sec-label" data-i18n="pf_legal">Rechtliches</span>
+      <div style="font-size:14px;color:var(--green)" id="agree-line" data-i18n="pf_agreement">Lieferantenvereinbarung</div>
       <div style="font-size:12px;color:var(--text-3);margin-top:4px" id="agree-ver"></div>
-      <a href="lieferantenvereinbarung.html" target="_blank" class="link-g" style="display:inline-block;margin-top:10px;font-size:13px">Vereinbarung lesen →</a>
-      <div style="font-size:13px;color:var(--text-3);margin-top:12px;line-height:1.6">Jedes Angebot erfordert eine Lieferbestätigung und eine rechtliche Zustimmung gemäss Lieferantenvereinbarung.</div>
-      <a href="datenschutz.html" target="_blank" class="link-m" style="display:inline-block;margin-top:8px">Datenschutzerklärung →</a>
+      <a href="lieferantenvereinbarung.html" target="_blank" class="link-g" style="display:inline-block;margin-top:10px;font-size:13px" data-i18n="pf_read_agreement">Vereinbarung lesen →</a>
+      <div style="font-size:13px;color:var(--text-3);margin-top:12px;line-height:1.6" data-i18n="pf_legal_blurb">Jedes Angebot erfordert eine Lieferbestätigung und eine rechtliche Zustimmung gemäss Lieferantenvereinbarung.</div>
+      <a href="datenschutz.html" target="_blank" class="link-m" style="display:inline-block;margin-top:8px" data-i18n="pf_privacy">Datenschutzerklärung →</a>
     </div>
 
     <div class="danger-zone">
-      <span class="danger-link" id="deact-btn" onclick="askDeactivate()">Profil deaktivieren</span>
-      <div class="del-confirm" id="deact-confirm">Dein Profil wird aus dem aktiven Lieferantenpool entfernt. <span class="yes" onclick="doDeactivate()">Ja, deaktivieren</span> <span class="no" onclick="hideDeactivate()">Abbrechen</span></div>
+      <span class="danger-link" id="deact-btn" onclick="askDeactivate()" data-i18n="pf_deactivate">Profil deaktivieren</span>
+      <div class="del-confirm" id="deact-confirm"><span data-i18n="pf_deact_notice">Dein Profil wird aus dem aktiven Lieferantenpool entfernt.</span> <span class="yes" onclick="doDeactivate()" data-i18n="pf_deact_yes">Ja, deaktivieren</span> <span class="no" onclick="hideDeactivate()" data-i18n="pf_deact_no">Abbrechen</span></div>
     </div>
-    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+    <div class="support" data-i18n-html="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
   </div></div>
 </div>
 
@@ -1139,9 +1139,16 @@ function _toArr(sel){
   return [];
 }
 function _norm(s){return String(s==null?'':s).replace(/’/g,"'").replace(/[–—−]/g,'-').replace(/\s+/g,' ').trim().toLowerCase();}
-function renderChecks(cid,items,sel){
+var CERT_I18N={
+  de:{},
+  en:{'SIA-konform':'SIA-compliant','SUVA-zertifiziert':'SUVA-certified'},
+  fr:{'SIA-konform':'Conforme SIA','SUVA-zertifiziert':'Certifié SUVA'},
+  it:{'SIA-konform':'Conforme SIA','SUVA-zertifiziert':'Certificato SUVA'}
+};
+function certLabel(name){var l=localStorage.getItem('sourceon-lang')||'de';var m=CERT_I18N[l]||CERT_I18N.de;return m[name]||name;}
+function renderChecks(cid,items,sel,labelFn){
   var s=_toArr(sel).map(_norm);
-  document.getElementById(cid).innerHTML=items.map(function(it){var on=s.indexOf(_norm(it))!==-1;return '<label class="chk"><input type="checkbox" value="'+esc(it)+'"'+(on?' checked':'')+'/><span>'+esc(it)+'</span></label>';}).join('');
+  document.getElementById(cid).innerHTML=items.map(function(it){var on=s.indexOf(_norm(it))!==-1;var disp=labelFn?labelFn(it):it;return '<label class="chk"><input type="checkbox" value="'+esc(it)+'"'+(on?' checked':'')+'/><span>'+esc(disp)+'</span></label>';}).join('');
 }
 function setCapacity(val){
   var sel=document.getElementById('pf-capacity');if(!val){sel.value='';return;}
@@ -1161,7 +1168,7 @@ function renderProfil(){
   document.getElementById('pf-notes').value=p.notes||'';
   renderChecks('pf-materials',CATALOG_MATERIALS,p.materials);
   renderChecks('pf-regions',REGIONS,p.regions);
-  renderChecks('pf-certs',CERTS,p.certifications);
+  renderChecks('pf-certs',CERTS,p.certifications,certLabel);
   if(p.agreement_accepted||p.agreement_accepted_at){document.getElementById('agree-line').innerHTML='✓ Akzeptiert'+(p.agreement_accepted_at?' am '+esc(fmtDMYfull(new Date(p.agreement_accepted_at))):'');}else{document.getElementById('agree-line').textContent='Beim ersten Angebot akzeptiert';}
   if(p.agreement_version)document.getElementById('agree-ver').textContent='Version '+p.agreement_version;
   updateCompletion();
@@ -1200,9 +1207,9 @@ function clerkSignIn(){if(!window.Clerk)return;window.Clerk.openSignIn({appearan
 async function handleLogout(){if(window.Clerk){await window.Clerk.signOut();}window.location.href='/';}
 
 var _clerkSignInResource=null,_clerkTrustActive=false,_clerkTrustStrategy='email_code';
-async function _clerkSendVerificationCode(){_clerkTrustStrategy='email_code';try{var si=_clerkSignInResource;if(!si)return;await si.prepareSecondFactor({strategy:'email_code'});document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';_clerkShowTrustModal();}catch(e){try{await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});_clerkTrustStrategy='phone_code';document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';_clerkShowTrustModal();}catch(e2){_clerkTrustActive=false;alert('Verifizierung konnte nicht gestartet werden: '+(e2.errors?e2.errors[0].longMessage:e2.message));}}}
+async function _clerkSendVerificationCode(){_clerkTrustStrategy='email_code';var _t=_soTrustL();try{var si=_clerkSignInResource;if(!si)return;await si.prepareSecondFactor({strategy:'email_code'});document.getElementById('clerk-trust-msg').textContent=_t.email;_clerkShowTrustModal();}catch(e){try{await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});_clerkTrustStrategy='phone_code';document.getElementById('clerk-trust-msg').textContent=_t.phone;_clerkShowTrustModal();}catch(e2){_clerkTrustActive=false;alert(_t.start_fail+(e2.errors?e2.errors[0].longMessage:e2.message));}}}
 function _clerkShowTrustModal(){document.body.classList.add('so-2fa');try{window.Clerk.closeSignIn();}catch(e){}document.getElementById('clerk-trust-overlay').classList.add('open');document.getElementById('clerk-trust-code').value='';document.getElementById('clerk-trust-error').textContent='';document.getElementById('clerk-trust-code').focus();}
-async function clerkTrustVerify(){var code=document.getElementById('clerk-trust-code').value.trim();if(!code||!_clerkSignInResource){return;}var btn=document.getElementById('clerk-trust-submit');btn.disabled=true;btn.textContent='Wird geprüft...';document.getElementById('clerk-trust-error').textContent='';try{var result=await _clerkSignInResource.attemptSecondFactor({strategy:_clerkTrustStrategy,code:code});if(result.status==='complete'){await window.Clerk.setActive({session:result.createdSessionId});document.body.classList.remove('so-2fa');document.getElementById('clerk-trust-overlay').classList.remove('open');_clerkTrustActive=false;window.location.reload();return;}else{document.getElementById('clerk-trust-error').textContent='Unerwarteter Status: '+result.status;}}catch(e){var msg=e.errors?e.errors[0].longMessage:(e.message||'Ungültiger Code');document.getElementById('clerk-trust-error').textContent=msg;}btn.disabled=false;btn.textContent='Bestätigen';}
+async function clerkTrustVerify(){var _t=_soTrustL();var code=document.getElementById('clerk-trust-code').value.trim();if(!code||!_clerkSignInResource){return;}var btn=document.getElementById('clerk-trust-submit');btn.disabled=true;btn.textContent=_t.checking;document.getElementById('clerk-trust-error').textContent='';try{var result=await _clerkSignInResource.attemptSecondFactor({strategy:_clerkTrustStrategy,code:code});if(result.status==='complete'){await window.Clerk.setActive({session:result.createdSessionId});document.body.classList.remove('so-2fa');document.getElementById('clerk-trust-overlay').classList.remove('open');_clerkTrustActive=false;window.location.reload();return;}else{document.getElementById('clerk-trust-error').textContent=_t.unexpected+result.status;}}catch(e){var msg=e.errors?e.errors[0].longMessage:(e.message||_t.invalid);document.getElementById('clerk-trust-error').textContent=msg;}btn.disabled=false;btn.textContent=_t.confirm;}
 async function clerkTrustResend(){document.getElementById('clerk-trust-error').textContent='';await _clerkSendVerificationCode();}
 function clerkTrustCancel(){document.body.classList.remove('so-2fa');document.getElementById('clerk-trust-overlay').classList.remove('open');_clerkSignInResource=null;_clerkTrustActive=false;}
 document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.getElementById('clerk-trust-overlay').classList.contains('open')){clerkTrustVerify();}});
@@ -1211,16 +1218,176 @@ document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.get
 <style>.so-2fa [class*="cl-modal"]{display:none!important}</style>
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
   <div class="clerk-trust-modal">
-    <h3>Verifizierung erforderlich</h3>
-    <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
+    <h3 data-i18n="trust_title">Verifizierung erforderlich</h3>
+    <p id="clerk-trust-msg" data-i18n="trust_msg_email">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
-    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
+    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()" data-i18n="trust_confirm">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
-    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#D99000;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
-    <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
+    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8"><span data-i18n="trust_no_code">Keinen Code erhalten?</span> <a href="#" onclick="clerkTrustResend();return false" style="color:#D99000;text-decoration:underline;cursor:pointer" data-i18n="trust_resend">Code erneut senden</a></div>
+    <button class="btn-cancel-trust" onclick="clerkTrustCancel()" data-i18n="trust_cancel">Abbrechen</button>
   </div>
 </div>
   <script src="mobile-nav.js"></script>
+
+<script>
+/* ── i18n (site-wide 'sourceon-lang' shared key) ── */
+(function(){
+var T={
+ de:{
+  auth_check:"Authentifizierung wird geprüft",
+  tab_tenders:"Ausschreibungen",tab_bids:"Angebote",tab_finance:"Finanzen",tab_deliveries:"Lieferungen",tab_profile:"Profil",
+  back_site:"← Zurück zur Website",logout:"Abmelden",
+  au_hero_label:"Offene Ausschreibungen",au_hero_sub:"Passende Ausschreibungen für dein Profil",
+  au_empty_t:"Aktuell keine offenen Ausschreibungen",au_empty_s:"Du wirst benachrichtigt, sobald eine passende Ausschreibung verfügbar ist.",
+  support:'Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden',
+  a_submitted:"Eingereichte Angebote",a_won:"Gewonnen",a_rate:"Erfolgsquote",
+  f_all:"Alle",f_submitted:"Eingereicht",f_won:"Gewonnen",f_lost:"Verloren",f_expired:"Abgelaufen",
+  select_bid:"← Angebot auswählen",ang_empty_t:"Noch keine Angebote",ang_empty_s:"Sieh dir die offenen Ausschreibungen an.",
+  fin_hero_label:"Gesamtumsatz durch SourceOn",fin_no_orders:"Noch keine gewonnenen Aufträge",
+  fin_open_prov:"Offene Provisionen",fin_paid_prov:"Bezahlte Provisionen",fin_avg_net:"Ø Nettoerlös",
+  fin_statement:"Provisionsabrechnung",fin_year_pdf:"↧ Jahres-PDF",fin_excel:"↓ Excel",fin_pdf:"↓ PDF",
+  fin_period:"Zeitraum",fin_month:"Monat",fin_quarter:"Quartal",fin_year:"Jahr",fin_status:"Status",fin_open:"Offen",fin_paid:"Bezahlt",
+  fin_prov_note:"Provisionsrechnungen werden von SourceOn nach Lieferbestätigung ausgestellt. Zahlungsfrist: 14 Tage netto.",
+  fin_rev_time:"Umsatz über Zeit",
+  deliv_upcoming:"Bevorstehende Lieferungen",deliv_export:"↓ Termine exportieren",deliv_completed:"Abgeschlossene Lieferungen",
+  deliv_empty_t:"Noch keine gewonnenen Aufträge",deliv_empty_s:"Reiche Angebote auf offene Ausschreibungen ein.",
+  pf_completeness:"Profil-Vollständigkeit",pf_contact:"Kontaktdaten",pf_service:"Leistungsprofil",pf_capacity:"Jahreskapazität",
+  cap_select:"Bitte wählen",cap_under:"Unter CHF 500'000",cap_over:"Über CHF 50'000'000",
+  pf_materials:"Materialien",pf_regions:"Regionen",pf_certs:"Zertifizierungen",pf_notes:"Bemerkungen",pf_save:"Änderungen speichern",
+  pf_legal:"Rechtliches",pf_agreement:"Lieferantenvereinbarung",pf_read_agreement:"Vereinbarung lesen →",
+  pf_legal_blurb:"Jedes Angebot erfordert eine Lieferbestätigung und eine rechtliche Zustimmung gemäss Lieferantenvereinbarung.",
+  pf_privacy:"Datenschutzerklärung →",pf_deactivate:"Profil deaktivieren",
+  pf_deact_notice:"Dein Profil wird aus dem aktiven Lieferantenpool entfernt.",pf_deact_yes:"Ja, deaktivieren",pf_deact_no:"Abbrechen",
+  trust_title:"Verifizierung erforderlich",trust_msg_email:"Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.",
+  trust_confirm:"Bestätigen",trust_no_code:"Keinen Code erhalten?",trust_resend:"Code erneut senden",trust_cancel:"Abbrechen"
+ },
+ en:{
+  auth_check:"Verifying authentication",
+  tab_tenders:"Tenders",tab_bids:"Bids",tab_finance:"Finances",tab_deliveries:"Deliveries",tab_profile:"Profile",
+  back_site:"← Back to website",logout:"Log out",
+  au_hero_label:"Open tenders",au_hero_sub:"Matching tenders for your profile",
+  au_empty_t:"No open tenders at the moment",au_empty_s:"You'll be notified as soon as a matching tender is available.",
+  support:'Questions? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Reply within 48 hours',
+  a_submitted:"Submitted bids",a_won:"Won",a_rate:"Success rate",
+  f_all:"All",f_submitted:"Submitted",f_won:"Won",f_lost:"Lost",f_expired:"Expired",
+  select_bid:"← Select a bid",ang_empty_t:"No bids yet",ang_empty_s:"Take a look at the open tenders.",
+  fin_hero_label:"Total revenue through SourceOn",fin_no_orders:"No won orders yet",
+  fin_open_prov:"Open commissions",fin_paid_prov:"Paid commissions",fin_avg_net:"Ø Net proceeds",
+  fin_statement:"Commission statement",fin_year_pdf:"↧ Annual PDF",fin_excel:"↓ Excel",fin_pdf:"↓ PDF",
+  fin_period:"Period",fin_month:"Month",fin_quarter:"Quarter",fin_year:"Year",fin_status:"Status",fin_open:"Open",fin_paid:"Paid",
+  fin_prov_note:"Commission invoices are issued by SourceOn after delivery confirmation. Payment term: 14 days net.",
+  fin_rev_time:"Revenue over time",
+  deliv_upcoming:"Upcoming deliveries",deliv_export:"↓ Export dates",deliv_completed:"Completed deliveries",
+  deliv_empty_t:"No won orders yet",deliv_empty_s:"Submit bids on open tenders.",
+  pf_completeness:"Profile completeness",pf_contact:"Contact details",pf_service:"Service profile",pf_capacity:"Annual capacity",
+  cap_select:"Please select",cap_under:"Under CHF 500'000",cap_over:"Over CHF 50'000'000",
+  pf_materials:"Materials",pf_regions:"Regions",pf_certs:"Certifications",pf_notes:"Notes",pf_save:"Save changes",
+  pf_legal:"Legal",pf_agreement:"Supplier agreement",pf_read_agreement:"Read agreement →",
+  pf_legal_blurb:"Every bid requires a delivery confirmation and legal consent in accordance with the supplier agreement.",
+  pf_privacy:"Privacy policy →",pf_deactivate:"Deactivate profile",
+  pf_deact_notice:"Your profile will be removed from the active supplier pool.",pf_deact_yes:"Yes, deactivate",pf_deact_no:"Cancel",
+  trust_title:"Verification required",trust_msg_email:"A confirmation code has been sent to your email. Please enter it below.",
+  trust_confirm:"Confirm",trust_no_code:"Didn't receive a code?",trust_resend:"Resend code",trust_cancel:"Cancel"
+ },
+ fr:{
+  auth_check:"Vérification de l'authentification",
+  tab_tenders:"Appels d'offres",tab_bids:"Offres",tab_finance:"Finances",tab_deliveries:"Livraisons",tab_profile:"Profil",
+  back_site:"← Retour au site",logout:"Se déconnecter",
+  au_hero_label:"Appels d'offres ouverts",au_hero_sub:"Appels d'offres correspondant à ton profil",
+  au_empty_t:"Aucun appel d'offres ouvert actuellement",au_empty_s:"Tu seras notifié dès qu'un appel d'offres correspondant sera disponible.",
+  support:'Des questions ? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Réponse sous 48 heures',
+  a_submitted:"Offres soumises",a_won:"Remportées",a_rate:"Taux de réussite",
+  f_all:"Tous",f_submitted:"Soumis",f_won:"Remportées",f_lost:"Perdues",f_expired:"Expirées",
+  select_bid:"← Sélectionne une offre",ang_empty_t:"Aucune offre pour l'instant",ang_empty_s:"Consulte les appels d'offres ouverts.",
+  fin_hero_label:"Chiffre d'affaires total via SourceOn",fin_no_orders:"Aucune commande remportée pour l'instant",
+  fin_open_prov:"Commissions ouvertes",fin_paid_prov:"Commissions payées",fin_avg_net:"Ø Produit net",
+  fin_statement:"Décompte de commissions",fin_year_pdf:"↧ PDF annuel",fin_excel:"↓ Excel",fin_pdf:"↓ PDF",
+  fin_period:"Période",fin_month:"Mois",fin_quarter:"Trimestre",fin_year:"Année",fin_status:"Statut",fin_open:"Ouvert",fin_paid:"Payé",
+  fin_prov_note:"Les factures de commission sont émises par SourceOn après confirmation de la livraison. Délai de paiement : 14 jours nets.",
+  fin_rev_time:"Chiffre d'affaires dans le temps",
+  deliv_upcoming:"Livraisons à venir",deliv_export:"↓ Exporter les dates",deliv_completed:"Livraisons terminées",
+  deliv_empty_t:"Aucune commande remportée pour l'instant",deliv_empty_s:"Soumets des offres sur les appels d'offres ouverts.",
+  pf_completeness:"Complétude du profil",pf_contact:"Coordonnées",pf_service:"Profil de prestations",pf_capacity:"Capacité annuelle",
+  cap_select:"Veuillez choisir",cap_under:"Moins de CHF 500'000",cap_over:"Plus de CHF 50'000'000",
+  pf_materials:"Matériaux",pf_regions:"Régions",pf_certs:"Certifications",pf_notes:"Remarques",pf_save:"Enregistrer les modifications",
+  pf_legal:"Mentions légales",pf_agreement:"Accord fournisseur",pf_read_agreement:"Lire l'accord →",
+  pf_legal_blurb:"Chaque offre requiert une confirmation de livraison et un consentement juridique conformément à l'accord fournisseur.",
+  pf_privacy:"Politique de confidentialité →",pf_deactivate:"Désactiver le profil",
+  pf_deact_notice:"Ton profil sera retiré du pool de fournisseurs actifs.",pf_deact_yes:"Oui, désactiver",pf_deact_no:"Annuler",
+  trust_title:"Vérification requise",trust_msg_email:"Un code de confirmation a été envoyé à ton e-mail. Saisis-le ci-dessous.",
+  trust_confirm:"Confirmer",trust_no_code:"Tu n'as pas reçu de code ?",trust_resend:"Renvoyer le code",trust_cancel:"Annuler"
+ },
+ it:{
+  auth_check:"Verifica dell'autenticazione",
+  tab_tenders:"Bandi",tab_bids:"Offerte",tab_finance:"Finanze",tab_deliveries:"Consegne",tab_profile:"Profilo",
+  back_site:"← Torna al sito",logout:"Esci",
+  au_hero_label:"Bandi aperti",au_hero_sub:"Bandi adatti al tuo profilo",
+  au_empty_t:"Nessun bando aperto al momento",au_empty_s:"Riceverai una notifica non appena sarà disponibile un bando adatto.",
+  support:'Domande? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Risposta entro 48 ore',
+  a_submitted:"Offerte inviate",a_won:"Vinte",a_rate:"Tasso di successo",
+  f_all:"Tutti",f_submitted:"Inviate",f_won:"Vinte",f_lost:"Perse",f_expired:"Scadute",
+  select_bid:"← Seleziona un'offerta",ang_empty_t:"Ancora nessuna offerta",ang_empty_s:"Dai un'occhiata ai bandi aperti.",
+  fin_hero_label:"Fatturato totale tramite SourceOn",fin_no_orders:"Ancora nessun ordine vinto",
+  fin_open_prov:"Commissioni aperte",fin_paid_prov:"Commissioni pagate",fin_avg_net:"Ø Ricavo netto",
+  fin_statement:"Rendiconto commissioni",fin_year_pdf:"↧ PDF annuale",fin_excel:"↓ Excel",fin_pdf:"↓ PDF",
+  fin_period:"Periodo",fin_month:"Mese",fin_quarter:"Trimestre",fin_year:"Anno",fin_status:"Stato",fin_open:"Aperto",fin_paid:"Pagato",
+  fin_prov_note:"Le fatture di commissione sono emesse da SourceOn dopo la conferma della consegna. Termine di pagamento: 14 giorni netti.",
+  fin_rev_time:"Fatturato nel tempo",
+  deliv_upcoming:"Consegne imminenti",deliv_export:"↓ Esporta le date",deliv_completed:"Consegne completate",
+  deliv_empty_t:"Ancora nessun ordine vinto",deliv_empty_s:"Invia offerte sui bandi aperti.",
+  pf_completeness:"Completezza del profilo",pf_contact:"Dati di contatto",pf_service:"Profilo dei servizi",pf_capacity:"Capacità annua",
+  cap_select:"Seleziona",cap_under:"Meno di CHF 500'000",cap_over:"Oltre CHF 50'000'000",
+  pf_materials:"Materiali",pf_regions:"Regioni",pf_certs:"Certificazioni",pf_notes:"Note",pf_save:"Salva le modifiche",
+  pf_legal:"Note legali",pf_agreement:"Accordo fornitore",pf_read_agreement:"Leggi l'accordo →",
+  pf_legal_blurb:"Ogni offerta richiede una conferma di consegna e un consenso legale secondo l'accordo fornitore.",
+  pf_privacy:"Informativa sulla privacy →",pf_deactivate:"Disattiva il profilo",
+  pf_deact_notice:"Il tuo profilo verrà rimosso dal pool di fornitori attivi.",pf_deact_yes:"Sì, disattiva",pf_deact_no:"Annulla",
+  trust_title:"Verifica richiesta",trust_msg_email:"Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.",
+  trust_confirm:"Conferma",trust_no_code:"Non hai ricevuto un codice?",trust_resend:"Invia di nuovo il codice",trust_cancel:"Annulla"
+ }
+};
+window.setLang=function(lang){
+  if(!T[lang])lang='de';
+  var d=T[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-i18n');
+    if(d[k]!==undefined)el.textContent=d[k];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+    var k=el.getAttribute('data-i18n-html');
+    if(d[k]!==undefined)el.innerHTML=d[k];
+  });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
+    var k=el.getAttribute('data-i18n-placeholder');
+    if(d[k]!==undefined)el.placeholder=d[k];
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
+    var k=el.getAttribute('data-i18n-aria');
+    if(d[k]!==undefined)el.setAttribute('aria-label',d[k]);
+  });
+  var cur=document.getElementById('lang-current');
+  if(cur)cur.textContent=lang.toUpperCase();
+  document.querySelectorAll('.lang-opt').forEach(function(btn){
+    var oc=btn.getAttribute('onclick')||'';
+    btn.classList.toggle('active',oc.indexOf("'"+lang+"'")!==-1);
+  });
+  localStorage.setItem('sourceon-lang',lang);
+  document.documentElement.lang=lang;
+  var sw=document.getElementById('lang-switch');
+  if(sw)sw.classList.remove('open');
+};
+setLang(localStorage.getItem('sourceon-lang')||'de');
+})();
+
+/* Verify-modal strings injected from JS — shares the same 'sourceon-lang' key */
+var SO_TRUST_I18N={
+ de:{title:"Verifizierung erforderlich",email:"Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.",phone:"Ein Bestätigungscode wurde an deine Telefonnummer gesendet.",confirm:"Bestätigen",checking:"Wird geprüft...",invalid:"Ungültiger Code",start_fail:"Verifizierung konnte nicht gestartet werden: ",unexpected:"Unerwarteter Status: "},
+ en:{title:"Verification required",email:"A confirmation code has been sent to your email. Please enter it below.",phone:"A confirmation code has been sent to your phone number.",confirm:"Confirm",checking:"Checking...",invalid:"Invalid code",start_fail:"Verification could not be started: ",unexpected:"Unexpected status: "},
+ fr:{title:"Vérification requise",email:"Un code de confirmation a été envoyé à ton e-mail. Saisis-le ci-dessous.",phone:"Un code de confirmation a été envoyé à ton numéro de téléphone.",confirm:"Confirmer",checking:"Vérification...",invalid:"Code invalide",start_fail:"La vérification n'a pas pu être lancée : ",unexpected:"Statut inattendu : "},
+ it:{title:"Verifica richiesta",email:"Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.",phone:"Un codice di conferma è stato inviato al tuo numero di telefono.",confirm:"Conferma",checking:"Verifica in corso...",invalid:"Codice non valido",start_fail:"Impossibile avviare la verifica: ",unexpected:"Stato imprevisto: "}
+};
+function _soTrustL(){var l=localStorage.getItem('sourceon-lang')||'de';return SO_TRUST_I18N[l]||SO_TRUST_I18N.de;}
+</script>
 
 <script src="xlsx-export.js"></script>
 <script>

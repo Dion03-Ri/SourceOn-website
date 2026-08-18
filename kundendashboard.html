@@ -395,7 +395,7 @@ p{text-wrap:pretty}
 <body>
 
 <div class="auth-gate" id="auth-gate">
-  <div class="auth-gate-card" id="auth-gate-card"><div class="loading"><span class="loading-dots">Authentifizierung wird geprüft</span></div></div>
+  <div class="auth-gate-card" id="auth-gate-card"><div class="loading"><span class="loading-dots" data-i18n="auth_checking">Authentifizierung wird geprüft</span></div></div>
 </div>
 
 <div class="dash" id="dash">
@@ -403,13 +403,13 @@ p{text-wrap:pretty}
     <div class="db-nav-inner">
       <div class="db-logo">Source<span>On</span></div>
       <div class="db-tabs" id="tabs">
-        <button class="db-tab" data-tab="uebersicht" onclick="showTab('uebersicht')">Übersicht</button>
-        <button class="db-tab" data-tab="anfragen" onclick="showTab('anfragen')">Anfragen</button>
-        <button class="db-tab" data-tab="finanzen" onclick="showTab('finanzen')">Finanzen</button>
-        <button class="db-tab" data-tab="werkzeuge" onclick="showTab('werkzeuge')">Werkzeuge</button>
-        <button class="db-tab" data-tab="konto" onclick="showTab('konto')">Konto</button>
+        <button class="db-tab" data-tab="uebersicht" onclick="showTab('uebersicht')" data-i18n="tab_uebersicht">Übersicht</button>
+        <button class="db-tab" data-tab="anfragen" onclick="showTab('anfragen')" data-i18n="tab_anfragen">Anfragen</button>
+        <button class="db-tab" data-tab="finanzen" onclick="showTab('finanzen')" data-i18n="tab_finanzen">Finanzen</button>
+        <button class="db-tab" data-tab="werkzeuge" onclick="showTab('werkzeuge')" data-i18n="tab_werkzeuge">Werkzeuge</button>
+        <button class="db-tab" data-tab="konto" onclick="showTab('konto')" data-i18n="tab_konto">Konto</button>
       </div>
-      <div class="db-user"><a class="db-back" href="/">← Zurück zur Website</a><span class="db-firm" id="db-firm"></span><a class="db-logout" onclick="handleLogout()">Abmelden</a></div>
+      <div class="db-user"><a class="db-back" href="/" data-i18n="nav_back">← Zurück zur Website</a><span class="db-firm" id="db-firm"></span><a class="db-logout" onclick="handleLogout()" data-i18n="nav_logout">Abmelden</a></div>
     </div>
   </nav>
 
@@ -417,137 +417,137 @@ p{text-wrap:pretty}
   <div class="db-content" id="sec-uebersicht"><div class="db-wrap">
     <div class="greet">
       <div><div class="greet-hi" id="greet-hi">Guten Tag.</div><div class="greet-date" id="greet-date"></div></div>
-      <a href="kontakt.html" class="btn-gold">Weiteres Material melden →</a>
+      <a href="kontakt.html" class="btn-gold" data-i18n="report_more">Weiteres Material melden →</a>
     </div>
     <div class="hero-card">
       <div class="hero hero-panel">
-        <div class="hero-label">Einsparpotenzial</div>
+        <div class="hero-label" data-i18n="savings_potential">Einsparpotenzial</div>
         <div class="hero-num" id="ov-hero"><span class="skeleton-val"></span></div>
-        <div class="hero-sub" id="ov-hero-sub">Garantiertes Minimum aller aktiven Anfragen</div>
+        <div class="hero-sub" id="ov-hero-sub" data-i18n="guaranteed_min">Garantiertes Minimum aller aktiven Anfragen</div>
       </div>
       <div class="hero-card-divider"></div>
       <div class="metrics3">
-        <div class="m3"><div class="m3-num dim" id="ov-earned"><span class="skeleton-val"></span></div><div class="m3-label">Erzielte Ersparnis</div></div>
-        <div class="m3"><div class="m3-num" id="ov-active"><span class="skeleton-val"></span></div><div class="m3-label">Aktive Anfragen</div></div>
-        <div class="m3"><div class="m3-num" id="ov-done"><span class="skeleton-val"></span></div><div class="m3-label">Abgeschlossen</div></div>
+        <div class="m3"><div class="m3-num dim" id="ov-earned"><span class="skeleton-val"></span></div><div class="m3-label" data-i18n="earned_savings">Erzielte Ersparnis</div></div>
+        <div class="m3"><div class="m3-num" id="ov-active"><span class="skeleton-val"></span></div><div class="m3-label" data-i18n="active_requests">Aktive Anfragen</div></div>
+        <div class="m3"><div class="m3-num" id="ov-done"><span class="skeleton-val"></span></div><div class="m3-label" data-i18n="completed">Abgeschlossen</div></div>
       </div>
     </div>
     <a href="/buendel" style="display:flex;justify-content:space-between;align-items:center;gap:16px;background:var(--bg-1);border:1px solid var(--border);border-radius:var(--r-md);padding:14px 20px;margin-bottom:32px;text-decoration:none;box-shadow:0 1px 2px rgba(16,24,40,.04)">
       <span data-i18n="buendel_banner_text" style="font-size:14px;color:var(--text-2)">Offene Bündel ansehen — laufende Sammelbestellungen in deiner Region.</span>
       <span data-i18n="buendel_banner_link" style="font-size:13px;font-weight:600;color:var(--gold-ink);white-space:nowrap">Bündel anzeigen →</span>
     </a>
-    <div class="sec-head"><span class="sec-label">Bevorstehend</span><span class="link-m" onclick="exportICS()">↓ Kalender</span></div>
+    <div class="sec-head"><span class="sec-label" data-i18n="upcoming">Bevorstehend</span><span class="link-m" onclick="exportICS()" data-i18n="calendar">↓ Kalender</span></div>
     <div id="ov-agenda" class="ov-card"></div>
     <div class="divider"></div>
-    <div class="sec-head"><span class="sec-label">Letzte Anfragen</span><span class="link-g" onclick="showTab('anfragen')">Alle anzeigen →</span></div>
+    <div class="sec-head"><span class="sec-label" data-i18n="latest_requests">Letzte Anfragen</span><span class="link-g" onclick="showTab('anfragen')" data-i18n="show_all">Alle anzeigen →</span></div>
     <div id="ov-preview" class="ov-card"></div>
     <div id="ov-verlauf-wrap" style="display:none">
       <div class="divider"></div>
-      <span class="sec-label">Verlauf</span>
+      <span class="sec-label" data-i18n="history">Verlauf</span>
       <div style="overflow-x:auto"><table class="ftable" id="ov-verlauf"></table></div>
     </div>
-    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+    <div class="support" data-i18n-html="support_html">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
   </div></div>
 
   <!-- TAB 2: ANFRAGEN (split) -->
   <div class="db-content" id="sec-anfragen"><div class="db-wrap">
-    <div class="greet"><div class="greet-hi" style="font-size:24px">Deine Anfragen</div></div>
+    <div class="greet"><div class="greet-hi" style="font-size:24px" data-i18n="your_requests">Deine Anfragen</div></div>
     <div class="split" id="split">
       <div class="req-list">
         <div class="req-list-filters" id="filters">
-          <button class="filt active" data-f="alle" onclick="setFilter('alle')">Alle</button>
-          <button class="filt" data-f="offen" onclick="setFilter('offen')">Offen</button>
-          <button class="filt" data-f="gebuendelt" onclick="setFilter('gebuendelt')">Gebündelt</button>
-          <button class="filt" data-f="vergeben" onclick="setFilter('vergeben')">Vergeben</button>
+          <button class="filt active" data-f="alle" onclick="setFilter('alle')" data-i18n="filt_alle">Alle</button>
+          <button class="filt" data-f="offen" onclick="setFilter('offen')" data-i18n="filt_offen">Offen</button>
+          <button class="filt" data-f="gebuendelt" onclick="setFilter('gebuendelt')" data-i18n="filt_gebuendelt">Gebündelt</button>
+          <button class="filt" data-f="vergeben" onclick="setFilter('vergeben')" data-i18n="filt_vergeben">Vergeben</button>
         </div>
         <div id="req-items"></div>
       </div>
-      <div class="req-detail" id="req-detail"><div class="req-empty">← Anfrage auswählen</div></div>
+      <div class="req-detail" id="req-detail"><div class="req-empty" data-i18n="select_request">← Anfrage auswählen</div></div>
     </div>
-    <div id="req-empty" style="display:none"><div class="hero"><div class="hero-num zero" style="font-size:22px">Noch keine Anfragen</div><div class="hero-sub" style="margin-bottom:20px">Melde deinen ersten Materialbedarf.</div><a href="kontakt.html" class="btn-gold">Materialbedarf melden →</a></div></div>
-    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+    <div id="req-empty" style="display:none"><div class="hero"><div class="hero-num zero" style="font-size:22px" data-i18n="no_requests">Noch keine Anfragen</div><div class="hero-sub" style="margin-bottom:20px" data-i18n="report_first">Melde deinen ersten Materialbedarf.</div><a href="kontakt.html" class="btn-gold" data-i18n="report_need">Materialbedarf melden →</a></div></div>
+    <div class="support" data-i18n-html="support_html">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
   </div></div>
 
   <!-- TAB 3: FINANZEN -->
   <div class="db-content" id="sec-finanzen"><div class="db-wrap">
-    <div class="greet"><div class="greet-hi" style="font-size:24px">Finanzen</div></div>
+    <div class="greet"><div class="greet-hi" style="font-size:24px" data-i18n="tab_finanzen">Finanzen</div></div>
     <div class="hero-card">
       <div class="hero hero-panel">
-        <div class="hero-label">Einsparpotenzial</div>
+        <div class="hero-label" data-i18n="savings_potential">Einsparpotenzial</div>
         <div class="hero-num" id="fin-hero"><span class="skeleton-val"></span></div>
-        <div class="hero-sub">Garantiertes Minimum aller aktiven Anfragen</div>
+        <div class="hero-sub" data-i18n="guaranteed_min">Garantiertes Minimum aller aktiven Anfragen</div>
       </div>
       <div class="hero-card-divider"></div>
       <div class="metrics3">
-        <div class="m3"><div class="m3-num dim" id="fin-earned"><span class="skeleton-val"></span></div><div class="m3-label">Bereits gespart</div></div>
-        <div class="m3"><div class="m3-num" id="fin-avgrab"><span class="skeleton-val"></span></div><div class="m3-label">Ø Rabatt</div></div>
-        <div class="m3"><div class="m3-num" id="fin-total"><span class="skeleton-val"></span></div><div class="m3-label">Anfragen gesamt</div></div>
+        <div class="m3"><div class="m3-num dim" id="fin-earned"><span class="skeleton-val"></span></div><div class="m3-label" data-i18n="already_saved">Bereits gespart</div></div>
+        <div class="m3"><div class="m3-num" id="fin-avgrab"><span class="skeleton-val"></span></div><div class="m3-label" data-i18n="avg_discount">Ø Rabatt</div></div>
+        <div class="m3"><div class="m3-num" id="fin-total"><span class="skeleton-val"></span></div><div class="m3-label" data-i18n="total_requests">Anfragen gesamt</div></div>
       </div>
     </div>
-    <div class="sec-head"><span class="sec-label">Aufschlüsselung</span><span class="link-m" onclick="exportFinExcel()">↓ Finanzübersicht exportieren</span></div>
+    <div class="sec-head"><span class="sec-label" data-i18n="breakdown">Aufschlüsselung</span><span class="link-m" onclick="exportFinExcel()" data-i18n="export_fin">↓ Finanzübersicht exportieren</span></div>
     <div style="overflow-x:auto"><table class="ftable" id="fin-table"></table></div>
     <div class="prov-note" id="prov-text"></div>
     <div id="realized-wrap" style="display:none">
       <div class="divider"></div>
-      <span class="sec-label">Erzielte Einsparungen</span>
+      <span class="sec-label" data-i18n="realized_savings">Erzielte Einsparungen</span>
       <div style="overflow-x:auto"><table class="ftable" id="realized-table"></table></div>
     </div>
     <div id="jahr-wrap" style="display:none">
       <div class="divider"></div>
-      <span class="sec-label" id="jahr-label">Jahresübersicht</span>
+      <span class="sec-label" id="jahr-label" data-i18n="annual_overview">Jahresübersicht</span>
       <div class="jahr" id="jahr-grid"></div>
     </div>
     <div class="chart-box" id="chart-blk" style="display:none">
-      <span class="sec-label">Einsparpotenzial über Zeit</span>
+      <span class="sec-label" data-i18n="savings_over_time">Einsparpotenzial über Zeit</span>
       <div class="chart-wrap"><canvas id="fin-chart"></canvas></div>
     </div>
-    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+    <div class="support" data-i18n-html="support_html">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
   </div></div>
 
   <!-- TAB 4: WERKZEUGE -->
   <div class="db-content" id="sec-werkzeuge"><div class="db-wrap">
-    <div class="greet"><div><div class="greet-hi" style="font-size:24px">Werkzeuge</div><div class="greet-date">Praktische Rechner &amp; Dokumente</div></div></div>
+    <div class="greet"><div><div class="greet-hi" style="font-size:24px" data-i18n="tab_werkzeuge">Werkzeuge</div><div class="greet-date" data-i18n="werkzeuge_sub">Praktische Rechner &amp; Dokumente</div></div></div>
     <div class="tools-grid">
       <div class="tool-card">
-        <div class="tool-title">Mengenrechner</div>
-        <div class="tool-sub">Praktische Berechnung für den Baustellenalltag</div>
+        <div class="tool-title" data-i18n="calc_qty_title">Mengenrechner</div>
+        <div class="tool-sub" data-i18n="calc_qty_sub">Praktische Berechnung für den Baustellenalltag</div>
         <div class="subtabs">
-          <button class="subtab active" data-c="flaeche" onclick="calcTab('flaeche')">Fläche → m³</button>
-          <button class="subtab" data-c="einheiten" onclick="calcTab('einheiten')">Einheiten</button>
-          <button class="subtab" data-c="ziegel" onclick="calcTab('ziegel')">Ziegel</button>
+          <button class="subtab active" data-c="flaeche" onclick="calcTab('flaeche')" data-i18n="calc_area_vol">Fläche → m³</button>
+          <button class="subtab" data-c="einheiten" onclick="calcTab('einheiten')" data-i18n="calc_units">Einheiten</button>
+          <button class="subtab" data-c="ziegel" onclick="calcTab('ziegel')" data-i18n="calc_bricks">Ziegel</button>
         </div>
         <div class="calc-panel active" id="calc-flaeche">
           <div class="calc-row">
-            <div class="calc-field"><label>Fläche (m²)</label><input class="cinput" type="number" id="fl-a" value="200" oninput="calcFlaeche()"/></div>
+            <div class="calc-field"><label data-i18n="lbl_area">Fläche (m²)</label><input class="cinput" type="number" id="fl-a" value="200" oninput="calcFlaeche()"/></div>
             <div class="calc-op">×</div>
-            <div class="calc-field"><label>Dicke (cm)</label><input class="cinput" type="number" id="fl-t" value="14" oninput="calcFlaeche()"/></div>
+            <div class="calc-field"><label data-i18n="lbl_thickness">Dicke (cm)</label><input class="cinput" type="number" id="fl-t" value="14" oninput="calcFlaeche()"/></div>
             <div class="calc-op">=</div>
             <div class="calc-out" id="fl-o">28</div><div class="calc-unit">m³</div>
           </div>
           <div class="calc-ex" id="fl-ex">200 m² × 14 cm = 28 m³</div>
-          <a class="calc-cta" id="fl-cta" href="kontakt.html">→ Diesen Bedarf jetzt melden</a>
+          <a class="calc-cta" id="fl-cta" href="kontakt.html" data-i18n="report_this_need">→ Diesen Bedarf jetzt melden</a>
         </div>
         <div class="calc-panel" id="calc-einheiten">
           <div class="calc-row">
-            <div class="calc-field"><label>Umrechnung</label>
+            <div class="calc-field"><label data-i18n="lbl_conversion">Umrechnung</label>
               <select class="cinput" id="un-type" onchange="calcEinheiten()"><option value="kg-t">kg → t</option><option value="t-kg">t → kg</option><option value="m-lm">m → lm</option><option value="lm-m">lm → m</option><option value="m2-m3">m² → m³</option><option value="m3-m2">m³ → m²</option></select>
             </div>
-            <div class="calc-field"><label>Wert</label><input class="cinput" type="number" id="un-in" value="1000" oninput="calcEinheiten()"/></div>
-            <div class="calc-field" id="un-tw" style="display:none"><label>Dicke (cm)</label><input class="cinput" type="number" id="un-t" value="14" oninput="calcEinheiten()"/></div>
+            <div class="calc-field"><label data-i18n="lbl_value">Wert</label><input class="cinput" type="number" id="un-in" value="1000" oninput="calcEinheiten()"/></div>
+            <div class="calc-field" id="un-tw" style="display:none"><label data-i18n="lbl_thickness">Dicke (cm)</label><input class="cinput" type="number" id="un-t" value="14" oninput="calcEinheiten()"/></div>
             <div class="calc-op">=</div>
             <div class="calc-out" id="un-o">1</div><div class="calc-unit" id="un-u">t</div>
           </div>
         </div>
         <div class="calc-panel" id="calc-ziegel">
           <div class="calc-row">
-            <div class="calc-field"><label>Wandfläche (m²)</label><input class="cinput" type="number" id="zg-a" value="50" oninput="calcZiegel()"/></div>
-            <div class="calc-field"><label>Format</label>
+            <div class="calc-field"><label data-i18n="lbl_wallarea">Wandfläche (m²)</label><input class="cinput" type="number" id="zg-a" value="50" oninput="calcZiegel()"/></div>
+            <div class="calc-field"><label data-i18n="lbl_format">Format</label>
               <select class="cinput" id="zg-f" onchange="calcZiegel()"><option value="51">HLZ 15 cm</option><option value="40">HLZ 20 cm</option><option value="32">HLZ 25 cm</option><option value="48">KS 15 cm</option><option value="20">Porenbeton 20 cm</option></select>
             </div>
             <div class="calc-op">=</div>
-            <div class="calc-out" id="zg-o">2'550</div><div class="calc-unit">Stk</div>
+            <div class="calc-out" id="zg-o">2'550</div><div class="calc-unit" data-i18n="unit_stk">Stk</div>
           </div>
-          <div class="calc-ex" id="zg-ex">Inkl. 5 % Verschnitt: 2'678 Stk · Richtwert</div>
+          <div class="calc-ex" id="zg-ex" data-i18n="zg_ex_default">Inkl. 5 % Verschnitt: 2'678 Stk · Richtwert</div>
         </div>
       </div>
       <div class="tool-card">
@@ -556,33 +556,33 @@ p{text-wrap:pretty}
         <a href="/kalkulator" class="calc-cta" data-i18n="tools_calc_btn" style="display:inline-block;margin-top:14px">Zum Kalkulator →</a>
       </div>
       <div class="tool-card">
-        <div class="tool-title">Dokumenten-Center</div>
-        <div class="tool-sub">Anfragen als professionelles PDF speichern</div>
+        <div class="tool-title" data-i18n="doc_center">Dokumenten-Center</div>
+        <div class="tool-sub" data-i18n="doc_center_sub">Anfragen als professionelles PDF speichern</div>
         <div id="doc-list"></div>
       </div>
     </div>
-    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+    <div class="support" data-i18n-html="support_html">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
   </div></div>
 
   <!-- TAB 5: KONTO -->
   <div class="db-content" id="sec-konto"><div class="db-wrap">
     <div class="prof-head">
       <div class="avatar" id="kt-avatar">S</div>
-      <div style="flex:1"><div class="prof-name" id="kt-name">—</div><div class="prof-email" id="kt-email"></div><div class="prof-badge">Aktives Konto ●</div></div>
+      <div style="flex:1"><div class="prof-name" id="kt-name">—</div><div class="prof-email" id="kt-email"></div><div class="prof-badge" data-i18n="active_account">Aktives Konto ●</div></div>
     </div>
-    <span class="sec-label">Kontakt</span>
+    <span class="sec-label" data-i18n="contact">Kontakt</span>
     <div id="acct-fields"></div>
     <div class="agree-box">
-      <span class="sec-label">Kundenvereinbarung</span>
-      <div style="font-size:14px;color:var(--green)" id="agreement-line">Beim ersten Auftrag akzeptiert</div>
+      <span class="sec-label" data-i18n="agreement_title">Kundenvereinbarung</span>
+      <div style="font-size:14px;color:var(--green)" id="agreement-line" data-i18n="agreement_accepted">Beim ersten Auftrag akzeptiert</div>
       <div style="font-size:12px;color:var(--text-3);margin-top:4px" id="agreement-ver"></div>
-      <a href="kundenvereinbarung.html" target="_blank" class="link-g" style="display:inline-block;margin-top:10px;font-size:13px">Vereinbarung lesen →</a>
+      <a href="kundenvereinbarung.html" target="_blank" class="link-g" style="display:inline-block;margin-top:10px;font-size:13px" data-i18n="read_agreement">Vereinbarung lesen →</a>
     </div>
     <div class="danger-zone">
-      <span class="danger-link" id="del-btn" onclick="askDelete()">Konto löschen</span>
-      <div class="del-confirm" id="del-confirm">Alle Daten werden dauerhaft gelöscht. <span class="yes" onclick="doDelete()">Ja, löschen</span> <span class="no" onclick="hideDelete()">Abbrechen</span></div>
+      <span class="danger-link" id="del-btn" onclick="askDelete()" data-i18n="delete_account">Konto löschen</span>
+      <div class="del-confirm" id="del-confirm"><span data-i18n="delete_warning">Alle Daten werden dauerhaft gelöscht.</span> <span class="yes" onclick="doDelete()" data-i18n="yes_delete">Ja, löschen</span> <span class="no" onclick="hideDelete()" data-i18n="cancel">Abbrechen</span></div>
     </div>
-    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+    <div class="support" data-i18n-html="support_html">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
   </div></div>
 </div>
 
@@ -608,6 +608,136 @@ var _MONFs={de:['Januar','Februar','März','April','Mai','Juni','Juli','August',
 var _WD=_WDs[_LANG]||_WDs.de;
 var _MON=_MONs[_LANG]||_MONs.de;
 var _MONF=_MONFs[_LANG]||_MONFs.de;
+// ── Dashboard i18n dictionary (de base, en/fr/it) ──
+window.SO_I18N={
+ de:{
+  auth_checking:"Authentifizierung wird geprüft",tab_uebersicht:"Übersicht",tab_anfragen:"Anfragen",tab_finanzen:"Finanzen",tab_werkzeuge:"Werkzeuge",tab_konto:"Konto",
+  nav_back:"← Zurück zur Website",nav_logout:"Abmelden",report_more:"Weiteres Material melden →",savings_potential:"Einsparpotenzial",guaranteed_min:"Garantiertes Minimum aller aktiven Anfragen",
+  earned_savings:"Erzielte Ersparnis",active_requests:"Aktive Anfragen",completed:"Abgeschlossen",upcoming:"Bevorstehend",calendar:"↓ Kalender",latest_requests:"Letzte Anfragen",show_all:"Alle anzeigen →",history:"Verlauf",
+  support_html:'Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden',
+  your_requests:"Deine Anfragen",filt_alle:"Alle",filt_offen:"Offen",filt_gebuendelt:"Gebündelt",filt_vergeben:"Vergeben",select_request:"← Anfrage auswählen",no_requests:"Noch keine Anfragen",report_first:"Melde deinen ersten Materialbedarf.",report_need:"Materialbedarf melden →",
+  already_saved:"Bereits gespart",avg_discount:"Ø Rabatt",total_requests:"Anfragen gesamt",breakdown:"Aufschlüsselung",export_fin:"↓ Finanzübersicht exportieren",realized_savings:"Erzielte Einsparungen",annual_overview:"Jahresübersicht",savings_over_time:"Einsparpotenzial über Zeit",
+  werkzeuge_sub:"Praktische Rechner & Dokumente",calc_qty_title:"Mengenrechner",calc_qty_sub:"Praktische Berechnung für den Baustellenalltag",calc_area_vol:"Fläche → m³",calc_units:"Einheiten",calc_bricks:"Ziegel",
+  lbl_area:"Fläche (m²)",lbl_thickness:"Dicke (cm)",report_this_need:"→ Diesen Bedarf jetzt melden",lbl_conversion:"Umrechnung",lbl_value:"Wert",lbl_wallarea:"Wandfläche (m²)",lbl_format:"Format",unit_stk:"Stk",zg_ex_default:"Inkl. 5 % Verschnitt: 2'678 Stk · Richtwert",
+  doc_center:"Dokumenten-Center",doc_center_sub:"Anfragen als professionelles PDF speichern",active_account:"Aktives Konto ●",contact:"Kontakt",agreement_title:"Kundenvereinbarung",agreement_accepted:"Beim ersten Auftrag akzeptiert",read_agreement:"Vereinbarung lesen →",
+  delete_account:"Konto löschen",delete_warning:"Alle Daten werden dauerhaft gelöscht.",yes_delete:"Ja, löschen",cancel:"Abbrechen",
+  tools_calc_title:"Einsparkalkulator",tools_calc_sub:"Berechne dein Einsparpotenzial basierend auf deinem Bestellvolumen.",tools_calc_btn:"Zum Kalkulator →",buendel_banner_text:"Offene Bündel ansehen — laufende Sammelbestellungen in deiner Region.",buendel_banner_link:"Bündel anzeigen →",
+  greet_hi:"Guten Tag",no_active_requests:"Noch keine aktiven Anfragen",tender_latest:"Ausschreibung spätestens",bid_deadline:"Angebotsfrist",bid_deadline_ends:"Angebotsfrist endet",no_upcoming:"Keine bevorstehenden Ereignisse",no_requests_cat:"Keine Anfragen in dieser Kategorie.",no_requests_short:"Keine Anfragen.",
+  th_date:"Datum",th_material:"Material",th_qty:"Menge",th_status:"Status",th_chf:"CHF",th_vol_chf:"Volumen CHF",th_discount:"Rabatt",th_savings_min:"Ersparnis min. CHF",th_savings_chf:"Ersparnis CHF",total:"Total",total_savings:"Gesamtersparnis",
+  badge_offen:"Sammelt Partner",badge_gebuendelt:"Ausgeschrieben",badge_vergeben:"Zuschlag",badge_abgeschlossen:"Abgeschlossen",badge_storniert:"Storniert",badge_abgelaufen:"Abgelaufen",
+  status_offen:"Wir suchen Bündelungspartner mit ähnlichem Bedarf.",status_gebuendelt:"Deine Anfrage ist Teil eines aktiven Bündels — Lieferanten reichen Angebote ein.",status_vergeben:"Zuschlag erteilt — dein Lieferant koordiniert die Lieferung direkt mit dir.",status_abgeschlossen:"Bestellung abgeschlossen — die Lieferung ist erfolgt.",status_abgelaufen:"Diese Ausschreibung ist abgelaufen. Deine Anfrage wird neu gebündelt.",status_storniert:"Diese Anfrage wurde storniert.",
+  tl_received:"Eingegangen",tl_bundling:"Bündelung",tl_tender:"Ausschreibung",tl_award:"Zuschlag",from_short:"Ab",until_short:"Bis",
+  save_guaranteed:"Garantierte Ersparnis bei Zuschlag",net_based:"% netto · basierend auf SourceOn-Richtpreisen",lieferzeitraum:"Lieferzeitraum",min_savings:"Min. Ersparnis",
+  deal_awarded:"✓ Auftrag vergeben",deal_awarded_to:"Vergeben an",verified_supplier:"Verifizierter SourceOn-Lieferant",final_discount:"Finaler Rabatt",order_value:"Bestellwert",your_savings:"Deine Ersparnis",incl_commission:"Enthaltene SourceOn-Provision",
+  cancel_request:"Anfrage stornieren",really:"Wirklich?",yes:"Ja",no:"Nein",pdf_confirmation:"Bestellbestätigung als PDF →",ask_question:"Frage stellen →",
+  prov_text_a:"SourceOn-Provision (2.25% des Bestellwerts, ",prov_text_b:") ist im Einsparpotenzial bereits berücksichtigt. Du zahlst SourceOn nichts direkt.",
+  jahr_saved:"gespart",jahr_purchased:"eingekauft",jahr_orders_done:"Bestellungen abgeschlossen",
+  acct_firmenname:"Firmenname",acct_ansprechperson:"Ansprechperson",acct_telefon:"Telefon",acct_lieferadresse:"Lieferadresse",acct_kanton:"Kanton",save:"Speichern",accepted_on:"✓ Angenommen am ",version:"Version",no_docs:"Noch keine Dokumente verfügbar",
+  brick_waste_a:"Inkl. 5 % Verschnitt: ",brick_waste_b:" Stk · Richtwert",
+  gate_login_title:"Anmeldung erforderlich",gate_login_msg:"Bitte melde dich an, um auf das Kunden-Dashboard zuzugreifen.",gate_login_btn:"Anmelden",gate_home:"← Zur Hauptseite",gate_nocust_title:"Kein Kundenprofil gefunden",gate_nocust_msg:"Hast du bereits eine Materialanfrage gestellt? Verknüpfe dein Konto über das Kontaktformular.",gate_nocust_btn:"Zum Kontaktformular",
+  load_error:"Laden fehlgeschlagen — bitte Seite neu laden.",reload:"Neu laden",
+  alert_excel_wait:"Excel-Bibliothek noch nicht geladen — bitte kurz warten.",alert_no_dates:"Keine anstehenden Termine zum Exportieren.",alert_error:"Fehler.",alert_error_prefix:"Fehler: ",alert_cancel_failed:"Stornierung fehlgeschlagen.",alert_cancel_failed_prefix:"Stornierung fehlgeschlagen: ",alert_save_failed:"Speichern fehlgeschlagen.",alert_save_failed_prefix:"Speichern fehlgeschlagen: ",
+  checking:"Wird geprüft...",trust_verify_failed_prefix:"Verifizierung konnte nicht gestartet werden: ",trust_unexpected:"Unerwarteter Status: ",trust_invalid:"Ungültiger Code"
+ },
+ en:{
+  auth_checking:"Checking authentication",tab_uebersicht:"Overview",tab_anfragen:"Requests",tab_finanzen:"Finances",tab_werkzeuge:"Tools",tab_konto:"Account",
+  nav_back:"← Back to website",nav_logout:"Log out",report_more:"Report more material →",savings_potential:"Savings potential",guaranteed_min:"Guaranteed minimum across all active requests",
+  earned_savings:"Realized savings",active_requests:"Active requests",completed:"Completed",upcoming:"Upcoming",calendar:"↓ Calendar",latest_requests:"Latest requests",show_all:"Show all →",history:"History",
+  support_html:'Questions? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Reply within 48 hours',
+  your_requests:"Your requests",filt_alle:"All",filt_offen:"Open",filt_gebuendelt:"Bundled",filt_vergeben:"Awarded",select_request:"← Select a request",no_requests:"No requests yet",report_first:"Report your first material need.",report_need:"Report material need →",
+  already_saved:"Already saved",avg_discount:"Ø Discount",total_requests:"Total requests",breakdown:"Breakdown",export_fin:"↓ Export financial overview",realized_savings:"Realized savings",annual_overview:"Annual overview",savings_over_time:"Savings potential over time",
+  werkzeuge_sub:"Handy calculators & documents",calc_qty_title:"Quantity calculator",calc_qty_sub:"Practical calculation for everyday construction",calc_area_vol:"Area → m³",calc_units:"Units",calc_bricks:"Bricks",
+  lbl_area:"Area (m²)",lbl_thickness:"Thickness (cm)",report_this_need:"→ Report this need now",lbl_conversion:"Conversion",lbl_value:"Value",lbl_wallarea:"Wall area (m²)",lbl_format:"Format",unit_stk:"pcs",zg_ex_default:"Incl. 5% waste: 2'678 pcs · guide value",
+  doc_center:"Document center",doc_center_sub:"Save requests as a professional PDF",active_account:"Active account ●",contact:"Contact",agreement_title:"Customer agreement",agreement_accepted:"Accepted on first order",read_agreement:"Read agreement →",
+  delete_account:"Delete account",delete_warning:"All data will be permanently deleted.",yes_delete:"Yes, delete",cancel:"Cancel",
+  tools_calc_title:"Savings Calculator",tools_calc_sub:"Calculate your savings potential based on your order volume.",tools_calc_btn:"To Calculator →",buendel_banner_text:"View open bundles — ongoing group orders in your region.",buendel_banner_link:"View bundles →",
+  greet_hi:"Hello",no_active_requests:"No active requests yet",tender_latest:"Tender at the latest",bid_deadline:"Bid deadline",bid_deadline_ends:"Bid deadline ends",no_upcoming:"No upcoming events",no_requests_cat:"No requests in this category.",no_requests_short:"No requests.",
+  th_date:"Date",th_material:"Material",th_qty:"Quantity",th_status:"Status",th_chf:"CHF",th_vol_chf:"Volume CHF",th_discount:"Discount",th_savings_min:"Savings min. CHF",th_savings_chf:"Savings CHF",total:"Total",total_savings:"Total savings",
+  badge_offen:"Collecting partners",badge_gebuendelt:"Tendered",badge_vergeben:"Awarded",badge_abgeschlossen:"Completed",badge_storniert:"Cancelled",badge_abgelaufen:"Expired",
+  status_offen:"We're looking for bundling partners with similar needs.",status_gebuendelt:"Your request is part of an active bundle — suppliers are submitting offers.",status_vergeben:"Awarded — your supplier coordinates delivery directly with you.",status_abgeschlossen:"Order completed — delivery has taken place.",status_abgelaufen:"This tender has expired. Your request will be re-bundled.",status_storniert:"This request was cancelled.",
+  tl_received:"Received",tl_bundling:"Bundling",tl_tender:"Tender",tl_award:"Award",from_short:"From",until_short:"Until",
+  save_guaranteed:"Guaranteed savings on award",net_based:"% net · based on SourceOn reference prices",lieferzeitraum:"Delivery period",min_savings:"Min. savings",
+  deal_awarded:"✓ Order awarded",deal_awarded_to:"Awarded to",verified_supplier:"Verified SourceOn supplier",final_discount:"Final discount",order_value:"Order value",your_savings:"Your savings",incl_commission:"Included SourceOn commission",
+  cancel_request:"Cancel request",really:"Really?",yes:"Yes",no:"No",pdf_confirmation:"Order confirmation as PDF →",ask_question:"Ask a question →",
+  prov_text_a:"SourceOn commission (2.25% of order value, ",prov_text_b:") is already factored into the savings potential. You pay SourceOn nothing directly.",
+  jahr_saved:"saved",jahr_purchased:"purchased",jahr_orders_done:"orders completed",
+  acct_firmenname:"Company name",acct_ansprechperson:"Contact person",acct_telefon:"Phone",acct_lieferadresse:"Delivery address",acct_kanton:"Canton",save:"Save",accepted_on:"✓ Accepted on ",version:"Version",no_docs:"No documents available yet",
+  brick_waste_a:"Incl. 5% waste: ",brick_waste_b:" pcs · guide value",
+  gate_login_title:"Sign-in required",gate_login_msg:"Please sign in to access the customer dashboard.",gate_login_btn:"Sign in",gate_home:"← To homepage",gate_nocust_title:"No customer profile found",gate_nocust_msg:"Have you already submitted a material request? Link your account via the contact form.",gate_nocust_btn:"To contact form",
+  load_error:"Loading failed — please reload the page.",reload:"Reload",
+  alert_excel_wait:"Excel library not loaded yet — please wait a moment.",alert_no_dates:"No upcoming dates to export.",alert_error:"Error.",alert_error_prefix:"Error: ",alert_cancel_failed:"Cancellation failed.",alert_cancel_failed_prefix:"Cancellation failed: ",alert_save_failed:"Saving failed.",alert_save_failed_prefix:"Saving failed: ",
+  checking:"Checking...",trust_verify_failed_prefix:"Verification could not be started: ",trust_unexpected:"Unexpected status: ",trust_invalid:"Invalid code"
+ },
+ fr:{
+  auth_checking:"Vérification de l'authentification",tab_uebersicht:"Aperçu",tab_anfragen:"Demandes",tab_finanzen:"Finances",tab_werkzeuge:"Outils",tab_konto:"Compte",
+  nav_back:"← Retour au site",nav_logout:"Se déconnecter",report_more:"Signaler plus de matériel →",savings_potential:"Potentiel d'économies",guaranteed_min:"Minimum garanti pour toutes les demandes actives",
+  earned_savings:"Économies réalisées",active_requests:"Demandes actives",completed:"Terminées",upcoming:"À venir",calendar:"↓ Calendrier",latest_requests:"Dernières demandes",show_all:"Tout afficher →",history:"Historique",
+  support_html:'Des questions ? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Réponse sous 48 heures',
+  your_requests:"Tes demandes",filt_alle:"Toutes",filt_offen:"Ouvertes",filt_gebuendelt:"Groupées",filt_vergeben:"Attribuées",select_request:"← Sélectionner une demande",no_requests:"Pas encore de demandes",report_first:"Annonce ton premier besoin en matériaux.",report_need:"Annoncer un besoin →",
+  already_saved:"Déjà économisé",avg_discount:"Ø Remise",total_requests:"Total des demandes",breakdown:"Détail",export_fin:"↓ Exporter l'aperçu financier",realized_savings:"Économies réalisées",annual_overview:"Aperçu annuel",savings_over_time:"Potentiel d'économies dans le temps",
+  werkzeuge_sub:"Calculateurs & documents pratiques",calc_qty_title:"Calculateur de quantité",calc_qty_sub:"Calcul pratique pour le quotidien du chantier",calc_area_vol:"Surface → m³",calc_units:"Unités",calc_bricks:"Briques",
+  lbl_area:"Surface (m²)",lbl_thickness:"Épaisseur (cm)",report_this_need:"→ Annoncer ce besoin maintenant",lbl_conversion:"Conversion",lbl_value:"Valeur",lbl_wallarea:"Surface murale (m²)",lbl_format:"Format",unit_stk:"pcs",zg_ex_default:"Incl. 5 % de chute : 2'678 pcs · valeur indicative",
+  doc_center:"Centre de documents",doc_center_sub:"Enregistrer les demandes en PDF professionnel",active_account:"Compte actif ●",contact:"Contact",agreement_title:"Accord client",agreement_accepted:"Accepté lors de la première commande",read_agreement:"Lire l'accord →",
+  delete_account:"Supprimer le compte",delete_warning:"Toutes les données seront définitivement supprimées.",yes_delete:"Oui, supprimer",cancel:"Annuler",
+  tools_calc_title:"Calculateur d'économies",tools_calc_sub:"Calcule ton potentiel d'économies en fonction de ton volume de commande.",tools_calc_btn:"Vers le calculateur →",buendel_banner_text:"Voir les groupements ouverts — commandes groupées en cours dans ta région.",buendel_banner_link:"Voir les groupements →",
+  greet_hi:"Bonjour",no_active_requests:"Pas encore de demandes actives",tender_latest:"Appel d'offres au plus tard",bid_deadline:"Délai de l'offre",bid_deadline_ends:"Le délai de l'offre se termine",no_upcoming:"Aucun événement à venir",no_requests_cat:"Aucune demande dans cette catégorie.",no_requests_short:"Aucune demande.",
+  th_date:"Date",th_material:"Matériau",th_qty:"Quantité",th_status:"Statut",th_chf:"CHF",th_vol_chf:"Volume CHF",th_discount:"Remise",th_savings_min:"Économie min. CHF",th_savings_chf:"Économie CHF",total:"Total",total_savings:"Économies totales",
+  badge_offen:"Recherche de partenaires",badge_gebuendelt:"En appel d'offres",badge_vergeben:"Attribué",badge_abgeschlossen:"Terminé",badge_storniert:"Annulé",badge_abgelaufen:"Expiré",
+  status_offen:"Nous recherchons des partenaires de groupement ayant des besoins similaires.",status_gebuendelt:"Ta demande fait partie d'un groupement actif — les fournisseurs soumettent des offres.",status_vergeben:"Attribué — ton fournisseur coordonne la livraison directement avec toi.",status_abgeschlossen:"Commande terminée — la livraison a eu lieu.",status_abgelaufen:"Cet appel d'offres a expiré. Ta demande sera de nouveau groupée.",status_storniert:"Cette demande a été annulée.",
+  tl_received:"Reçue",tl_bundling:"Groupement",tl_tender:"Appel d'offres",tl_award:"Attribution",from_short:"À partir de",until_short:"Jusqu'à",
+  save_guaranteed:"Économies garanties en cas d'attribution",net_based:"% net · basé sur les prix indicatifs SourceOn",lieferzeitraum:"Période de livraison",min_savings:"Économie min.",
+  deal_awarded:"✓ Commande attribuée",deal_awarded_to:"Attribué à",verified_supplier:"Fournisseur SourceOn vérifié",final_discount:"Remise finale",order_value:"Valeur de commande",your_savings:"Tes économies",incl_commission:"Commission SourceOn incluse",
+  cancel_request:"Annuler la demande",really:"Vraiment ?",yes:"Oui",no:"Non",pdf_confirmation:"Confirmation de commande en PDF →",ask_question:"Poser une question →",
+  prov_text_a:"La commission SourceOn (2.25% de la valeur de commande, ",prov_text_b:") est déjà prise en compte dans le potentiel d'économies. Tu ne paies rien directement à SourceOn.",
+  jahr_saved:"économisé",jahr_purchased:"acheté",jahr_orders_done:"commandes terminées",
+  acct_firmenname:"Nom de l'entreprise",acct_ansprechperson:"Personne de contact",acct_telefon:"Téléphone",acct_lieferadresse:"Adresse de livraison",acct_kanton:"Canton",save:"Enregistrer",accepted_on:"✓ Accepté le ",version:"Version",no_docs:"Aucun document disponible",
+  brick_waste_a:"Incl. 5 % de chute : ",brick_waste_b:" pcs · valeur indicative",
+  gate_login_title:"Connexion requise",gate_login_msg:"Connecte-toi pour accéder au tableau de bord client.",gate_login_btn:"Se connecter",gate_home:"← Vers la page d'accueil",gate_nocust_title:"Aucun profil client trouvé",gate_nocust_msg:"As-tu déjà soumis une demande de matériaux ? Associe ton compte via le formulaire de contact.",gate_nocust_btn:"Vers le formulaire de contact",
+  load_error:"Échec du chargement — veuillez recharger la page.",reload:"Recharger",
+  alert_excel_wait:"Bibliothèque Excel pas encore chargée — merci de patienter.",alert_no_dates:"Aucune échéance à venir à exporter.",alert_error:"Erreur.",alert_error_prefix:"Erreur : ",alert_cancel_failed:"Échec de l'annulation.",alert_cancel_failed_prefix:"Échec de l'annulation : ",alert_save_failed:"Échec de l'enregistrement.",alert_save_failed_prefix:"Échec de l'enregistrement : ",
+  checking:"Vérification...",trust_verify_failed_prefix:"La vérification n'a pas pu être lancée : ",trust_unexpected:"Statut inattendu : ",trust_invalid:"Code invalide"
+ },
+ it:{
+  auth_checking:"Verifica dell'autenticazione",tab_uebersicht:"Panoramica",tab_anfragen:"Richieste",tab_finanzen:"Finanze",tab_werkzeuge:"Strumenti",tab_konto:"Account",
+  nav_back:"← Torna al sito",nav_logout:"Esci",report_more:"Segnala altro materiale →",savings_potential:"Potenziale di risparmio",guaranteed_min:"Minimo garantito su tutte le richieste attive",
+  earned_savings:"Risparmio realizzato",active_requests:"Richieste attive",completed:"Completate",upcoming:"In arrivo",calendar:"↓ Calendario",latest_requests:"Ultime richieste",show_all:"Mostra tutte →",history:"Cronologia",
+  support_html:'Domande? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Risposta entro 48 ore',
+  your_requests:"Le tue richieste",filt_alle:"Tutte",filt_offen:"Aperte",filt_gebuendelt:"Raggruppate",filt_vergeben:"Assegnate",select_request:"← Seleziona una richiesta",no_requests:"Ancora nessuna richiesta",report_first:"Segnala il tuo primo fabbisogno di materiale.",report_need:"Segnala fabbisogno →",
+  already_saved:"Già risparmiato",avg_discount:"Ø Sconto",total_requests:"Richieste totali",breakdown:"Dettaglio",export_fin:"↓ Esporta panoramica finanziaria",realized_savings:"Risparmi realizzati",annual_overview:"Panoramica annuale",savings_over_time:"Potenziale di risparmio nel tempo",
+  werkzeuge_sub:"Calcolatori e documenti pratici",calc_qty_title:"Calcolatore quantità",calc_qty_sub:"Calcolo pratico per il cantiere quotidiano",calc_area_vol:"Superficie → m³",calc_units:"Unità",calc_bricks:"Mattoni",
+  lbl_area:"Superficie (m²)",lbl_thickness:"Spessore (cm)",report_this_need:"→ Segnala ora questo fabbisogno",lbl_conversion:"Conversione",lbl_value:"Valore",lbl_wallarea:"Superficie muraria (m²)",lbl_format:"Formato",unit_stk:"pz",zg_ex_default:"Incl. 5% di sfrido: 2'678 pz · valore indicativo",
+  doc_center:"Centro documenti",doc_center_sub:"Salva le richieste come PDF professionale",active_account:"Account attivo ●",contact:"Contatto",agreement_title:"Accordo cliente",agreement_accepted:"Accettato al primo ordine",read_agreement:"Leggi l'accordo →",
+  delete_account:"Elimina account",delete_warning:"Tutti i dati saranno eliminati definitivamente.",yes_delete:"Sì, elimina",cancel:"Annulla",
+  tools_calc_title:"Calcolatore di risparmio",tools_calc_sub:"Calcola il tuo potenziale di risparmio in base al volume d'ordine.",tools_calc_btn:"Al calcolatore →",buendel_banner_text:"Vedi i raggruppamenti aperti — ordini collettivi in corso nella tua regione.",buendel_banner_link:"Vedi i raggruppamenti →",
+  greet_hi:"Buongiorno",no_active_requests:"Ancora nessuna richiesta attiva",tender_latest:"Bando al più tardi",bid_deadline:"Termine offerta",bid_deadline_ends:"Il termine dell'offerta scade",no_upcoming:"Nessun evento in arrivo",no_requests_cat:"Nessuna richiesta in questa categoria.",no_requests_short:"Nessuna richiesta.",
+  th_date:"Data",th_material:"Materiale",th_qty:"Quantità",th_status:"Stato",th_chf:"CHF",th_vol_chf:"Volume CHF",th_discount:"Sconto",th_savings_min:"Risparmio min. CHF",th_savings_chf:"Risparmio CHF",total:"Totale",total_savings:"Risparmio totale",
+  badge_offen:"Raccolta partner",badge_gebuendelt:"In gara",badge_vergeben:"Aggiudicato",badge_abgeschlossen:"Completato",badge_storniert:"Annullato",badge_abgelaufen:"Scaduto",
+  status_offen:"Cerchiamo partner di raggruppamento con esigenze simili.",status_gebuendelt:"La tua richiesta fa parte di un raggruppamento attivo — i fornitori presentano offerte.",status_vergeben:"Aggiudicato — il tuo fornitore coordina la consegna direttamente con te.",status_abgeschlossen:"Ordine completato — la consegna è avvenuta.",status_abgelaufen:"Questo bando è scaduto. La tua richiesta sarà raggruppata di nuovo.",status_storniert:"Questa richiesta è stata annullata.",
+  tl_received:"Ricevuta",tl_bundling:"Raggruppamento",tl_tender:"Bando",tl_award:"Aggiudicazione",from_short:"Da",until_short:"Fino a",
+  save_guaranteed:"Risparmio garantito in caso di aggiudicazione",net_based:"% netto · basato sui prezzi indicativi SourceOn",lieferzeitraum:"Periodo di consegna",min_savings:"Risparmio min.",
+  deal_awarded:"✓ Ordine assegnato",deal_awarded_to:"Assegnato a",verified_supplier:"Fornitore SourceOn verificato",final_discount:"Sconto finale",order_value:"Valore ordine",your_savings:"Il tuo risparmio",incl_commission:"Commissione SourceOn inclusa",
+  cancel_request:"Annulla richiesta",really:"Davvero?",yes:"Sì",no:"No",pdf_confirmation:"Conferma d'ordine in PDF →",ask_question:"Fai una domanda →",
+  prov_text_a:"La commissione SourceOn (2.25% del valore dell'ordine, ",prov_text_b:") è già considerata nel potenziale di risparmio. Non paghi nulla direttamente a SourceOn.",
+  jahr_saved:"risparmiato",jahr_purchased:"acquistato",jahr_orders_done:"ordini completati",
+  acct_firmenname:"Nome azienda",acct_ansprechperson:"Referente",acct_telefon:"Telefono",acct_lieferadresse:"Indirizzo di consegna",acct_kanton:"Cantone",save:"Salva",accepted_on:"✓ Accettato il ",version:"Versione",no_docs:"Ancora nessun documento disponibile",
+  brick_waste_a:"Incl. 5% di sfrido: ",brick_waste_b:" pz · valore indicativo",
+  gate_login_title:"Accesso richiesto",gate_login_msg:"Accedi per accedere alla dashboard cliente.",gate_login_btn:"Accedi",gate_home:"← Alla pagina principale",gate_nocust_title:"Nessun profilo cliente trovato",gate_nocust_msg:"Hai già inviato una richiesta di materiale? Collega il tuo account tramite il modulo di contatto.",gate_nocust_btn:"Al modulo di contatto",
+  load_error:"Caricamento fallito — ricarica la pagina.",reload:"Ricarica",
+  alert_excel_wait:"Libreria Excel non ancora caricata — attendi un momento.",alert_no_dates:"Nessuna scadenza in arrivo da esportare.",alert_error:"Errore.",alert_error_prefix:"Errore: ",alert_cancel_failed:"Annullamento fallito.",alert_cancel_failed_prefix:"Annullamento fallito: ",alert_save_failed:"Salvataggio fallito.",alert_save_failed_prefix:"Salvataggio fallito: ",
+  checking:"Verifica...",trust_verify_failed_prefix:"Impossibile avviare la verifica: ",trust_unexpected:"Stato imprevisto: ",trust_invalid:"Codice non valido"
+ }
+};
+function soT(k){var l=(localStorage.getItem('sourceon-lang')||'de');if(!window.SO_I18N[l])l='de';var d=window.SO_I18N[l];return d[k]!==undefined?d[k]:(window.SO_I18N.de[k]!==undefined?window.SO_I18N.de[k]:k);}
+var _LOCALE={de:'de-CH',en:'en-GB',fr:'fr-CH',it:'it-CH'};
+function soLocale(){return _LOCALE[localStorage.getItem('sourceon-lang')||'de']||'de-CH';}
+// Verification (trust) modal strings — read live from localStorage['sourceon-lang']
+window.SO_TRUST_I18N={
+  de:{title:"Verifizierung erforderlich",email:"Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.",phone:"Ein Bestätigungscode wurde an deine Telefonnummer gesendet.",submit:"Bestätigen"},
+  en:{title:"Verification required",email:"A confirmation code has been sent to your email. Please enter it below.",phone:"A confirmation code has been sent to your phone number.",submit:"Confirm"},
+  fr:{title:"Vérification requise",email:"Un code de confirmation a été envoyé à ton e-mail. Saisis-le ci-dessous.",phone:"Un code de confirmation a été envoyé à ton numéro de téléphone.",submit:"Confirmer"},
+  it:{title:"Verifica richiesta",email:"Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.",phone:"Un codice di conferma è stato inviato al tuo numero di telefono.",submit:"Conferma"}
+};
+function soTrust(k){var l=localStorage.getItem('sourceon-lang')||'de';if(!window.SO_TRUST_I18N[l])l='de';return window.SO_TRUST_I18N[l][k]||window.SO_TRUST_I18N.de[k];}
 function fmtNum(n){n=Math.round(n);var neg=n<0;var s=Math.abs(n).toString(),out='',c=0;for(var i=s.length-1;i>=0;i--){out=s.charAt(i)+out;if(++c%3===0&&i>0)out="'"+out;}return (neg?'-':'')+out;}
 function fmtCHF(n){return 'CHF '+fmtNum(n);}
 function fmtAgenda(d){return _WD[d.getDay()]+', '+d.getDate()+'. '+_MON[d.getMonth()];}
@@ -1111,13 +1241,13 @@ document.addEventListener('keydown',function(e){if(e.key==='Enter'&&document.get
 <style>.so-2fa [class*="cl-modal"]{display:none!important}</style>
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
   <div class="clerk-trust-modal">
-    <h3>Verifizierung erforderlich</h3>
-    <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
+    <h3 data-i18n="trust_title">Verifizierung erforderlich</h3>
+    <p id="clerk-trust-msg" data-i18n="trust_msg_email">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
-    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
+    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()" data-i18n="trust_submit">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
-    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#D99000;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
-    <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
+    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8"><span data-i18n="trust_noresend">Keinen Code erhalten?</span> <a href="#" onclick="clerkTrustResend();return false" style="color:#D99000;text-decoration:underline;cursor:pointer" data-i18n="trust_resend">Code erneut senden</a></div>
+    <button class="btn-cancel-trust" onclick="clerkTrustCancel()" data-i18n="cancel">Abbrechen</button>
   </div>
 </div>
   <script src="mobile-nav.js"></script>

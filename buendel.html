@@ -1215,7 +1215,7 @@ function toggleFaq(btn){
 </script>
 
 <!-- CHAT WIDGET -->
-<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen">
+<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen" data-i18n-aria="chat_aria">
   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
 </button>
 <div id="chat-win">
@@ -1234,7 +1234,7 @@ function toggleFaq(btn){
       <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip3">Materialbedarf melden</button>
     </div>
     <div class="chat-input-row">
-      <input type="text" id="chat-input" placeholder="Frage stellen…" onkeydown="if(event.key==='Enter')chatSend()"/>
+      <input type="text" id="chat-input" placeholder="Frage stellen…" data-i18n-placeholder="chat_input" onkeydown="if(event.key==='Enter')chatSend()"/>
       <button id="chat-send" onclick="chatSend()"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg></button>
     </div>
   </div>
@@ -1311,7 +1311,7 @@ const T={
     footer_privacy:'Datenschutz',footer_imprint:'Impressum',footer_terms:'AGB',
     footer_copy:'© 2026 SourceOn, Zürich — Alle Rechte vorbehalten',
     footer_tagline:'Du zahlst erst, wenn wir dir sparen.',
-    chat_title:'SourceOn Assistent',chat_sub:'Beantwortet alle Fragen zu SourceOn',chat_chip1:'Wie funktioniert SourceOn?',chat_chip2:'Was kostet es?',chat_chip3:'Materialbedarf melden',
+    chat_title:'SourceOn Assistent',chat_sub:'Beantwortet alle Fragen zu SourceOn',chat_chip1:'Wie funktioniert SourceOn?',chat_chip2:'Was kostet es?',chat_chip3:'Materialbedarf melden',chat_input:'Frage stellen…',chat_aria:'SourceOn Assistent öffnen',
     trust_title:'Verifizierung erforderlich',trust_msg:'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',trust_msg_phone:'Ein Bestätigungscode wurde an deine Telefonnummer gesendet.',trust_submit:'Bestätigen',trust_checking:'Wird geprüft…',trust_nocode:'Keinen Code erhalten?',trust_resend:'Code erneut senden',trust_cancel:'Abbrechen'
   },
   en:{
@@ -1365,7 +1365,7 @@ const T={
     footer_privacy:'Privacy policy',footer_imprint:'Imprint',footer_terms:'Terms',
     footer_copy:'© 2026 SourceOn, Zurich — All rights reserved',
     footer_tagline:'You only pay when we save you money.',
-    chat_title:'SourceOn Assistant',chat_sub:'Answers all questions about SourceOn',chat_chip1:'How does SourceOn work?',chat_chip2:'What does it cost?',chat_chip3:'Report material needs',
+    chat_title:'SourceOn Assistant',chat_sub:'Answers all questions about SourceOn',chat_chip1:'How does SourceOn work?',chat_chip2:'What does it cost?',chat_chip3:'Report material needs',chat_input:'Ask a question…',chat_aria:'Open SourceOn assistant',
     trust_title:'Verification required',trust_msg:'A confirmation code has been sent to your email. Please enter it below.',trust_msg_phone:'A confirmation code has been sent to your phone number.',trust_submit:'Confirm',trust_checking:'Checking…',trust_nocode:'Didn\'t receive a code?',trust_resend:'Resend code',trust_cancel:'Cancel'
   },
   fr:{
@@ -1420,7 +1420,7 @@ const T={
     footer_privacy:'Protection des données',footer_imprint:'Mentions légales',footer_terms:'CGV',
     footer_copy:'© 2026 SourceOn, Zurich — Tous droits réservés',
     footer_tagline:'Vous ne payez que lorsque nous vous faisons économiser.',
-    chat_title:'Assistant SourceOn',chat_sub:'Répond à toutes les questions sur SourceOn',chat_chip1:'Comment fonctionne SourceOn ?',chat_chip2:'Combien ça coûte ?',chat_chip3:'Déclarer un besoin',
+    chat_title:'Assistant SourceOn',chat_sub:'Répond à toutes les questions sur SourceOn',chat_chip1:'Comment fonctionne SourceOn ?',chat_chip2:'Combien ça coûte ?',chat_chip3:'Déclarer un besoin',chat_input:'Poser une question…',chat_aria:'Ouvrir l\'assistant SourceOn',
     trust_title:'Vérification requise',trust_msg:'Un code de confirmation a été envoyé à ton e-mail. Saisis-le ci-dessous.',trust_msg_phone:'Un code de confirmation a été envoyé à ton numéro de téléphone.',trust_submit:'Confirmer',trust_checking:'Vérification…',trust_nocode:'Tu n\'as pas reçu de code ?',trust_resend:'Renvoyer le code',trust_cancel:'Annuler'
   },
   it:{
@@ -1475,7 +1475,7 @@ const T={
     footer_privacy:'Privacy',footer_imprint:'Impressum',footer_terms:'CGC',
     footer_copy:'© 2026 SourceOn, Zurigo — Tutti i diritti riservati',
     footer_tagline:'Paghi solo quando ti facciamo risparmiare.',
-    chat_title:'Assistente SourceOn',chat_sub:'Risponde a tutte le domande su SourceOn',chat_chip1:'Come funziona SourceOn?',chat_chip2:'Quanto costa?',chat_chip3:'Segnala fabbisogno',
+    chat_title:'Assistente SourceOn',chat_sub:'Risponde a tutte le domande su SourceOn',chat_chip1:'Come funziona SourceOn?',chat_chip2:'Quanto costa?',chat_chip3:'Segnala fabbisogno',chat_input:'Fai una domanda…',chat_aria:'Apri l\'assistente SourceOn',
     trust_title:'Verifica richiesta',trust_msg:'Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.',trust_msg_phone:'Un codice di conferma è stato inviato al tuo numero di telefono.',trust_submit:'Conferma',trust_checking:'Verifica in corso…',trust_nocode:'Non hai ricevuto il codice?',trust_resend:'Invia di nuovo il codice',trust_cancel:'Annulla'
   }
 };
@@ -1494,6 +1494,11 @@ function applyLang(lang){
     var pk=el.getAttribute('data-i18n-placeholder');
     if(dict[pk]!==undefined)el.placeholder=dict[pk];
   });
+  document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
+    var ak=el.getAttribute('data-i18n-aria');
+    if(dict[ak]!==undefined)el.setAttribute('aria-label',dict[ak]);
+  });
+  if(window._bdRenderList){try{window._bdRenderList();}catch(e){}}
   document.getElementById('lang-current').textContent=lang.toUpperCase();
   document.querySelectorAll('.lang-opt').forEach(function(btn){
     btn.classList.toggle('active',btn.getAttribute('onclick').indexOf("'"+lang+"'")!==-1);
@@ -1586,6 +1591,7 @@ var MAT_DB_TRANS={
     'Kunststoffrohr PVC-U DN 110 Abwasser':'PVC-U pipe DN 110 drainage','Kunststoffrohr PP DN 50 Entw\u00e4sserung':'PP pipe DN 50 drainage',
     'Kupferrohr 22mm Trinkwasser':'Copper pipe 22mm drinking water','Verbundrohr PE-RT/Al 16mm Heizung':'Composite pipe PE-RT/Al 16mm heating',
     'Heizungsverteiler Fussbodenheizung':'Underfloor heating manifold',
+    'Standardbeton Fundamentplatte':'Standard concrete foundation slab','Innenwand':'Interior wall','St\u00fctzenfundament':'Column foundation','Druckwasserdicht':'Waterproof','Frostkoffer und Planie':'Frost blanket and subgrade','Matten und St\u00e4be':'Mesh and bars','Stahlbetondecke und W\u00e4nde':'Reinforced concrete slab and walls','Hochbelastete Bauteile':'Highly loaded components','Fundamentplatte':'Foundation slab','Bodenplatte':'Base slab','Aussenwand':'Exterior wall','Kellerwand':'Basement wall','Tragwerk':'Load-bearing structure','Decke':'Slab','Estrich':'Screed','Mauerwerk':'Masonry','Verputz':'Plaster','Trennwand':'Partition wall','Steildach':'Pitched roof','Flachdach':'Flat roof','Fassade':'Facade','Rohbau':'Structural works','Ausbau Innen':'Interior finishing',
     'Noch kein Material ausgew\u00e4hlt':'No material selected'
   },
   fr:{
@@ -1613,6 +1619,7 @@ var MAT_DB_TRANS={
     'Kunststoffrohr PVC-U DN 110 Abwasser':'Tuyau PVC-U DN 110','Kunststoffrohr PP DN 50 Entw\u00e4sserung':'Tuyau PP DN 50',
     'Kupferrohr 22mm Trinkwasser':'Tuyau cuivre 22mm','Verbundrohr PE-RT/Al 16mm Heizung':'Tuyau multicouche 16mm',
     'Heizungsverteiler Fussbodenheizung':'Collecteur chauffage au sol',
+    'Standardbeton Fundamentplatte':'Beton standard radier','Innenwand':'Mur interieur','St\u00fctzenfundament':'Fondation de colonne','Druckwasserdicht':'Etanche a l\'eau','Frostkoffer und Planie':'Couche antigel et plateforme','Matten und St\u00e4be':'Treillis et barres','Stahlbetondecke und W\u00e4nde':'Dalle et murs en beton arme','Hochbelastete Bauteile':'Elements fortement sollicites','Fundamentplatte':'Radier','Bodenplatte':'Dalle de sol','Aussenwand':'Mur exterieur','Kellerwand':'Mur de cave','Tragwerk':'Structure porteuse','Decke':'Dalle','Estrich':'Chape','Mauerwerk':'Maconnerie','Verputz':'Enduit','Trennwand':'Cloison','Steildach':'Toit en pente','Flachdach':'Toit plat','Fassade':'Facade','Rohbau':'Gros oeuvre','Ausbau Innen':'Amenagement interieur',
     'Noch kein Material ausgew\u00e4hlt':'Aucun materiau selectionne'
   },
   it:{
@@ -1640,6 +1647,7 @@ var MAT_DB_TRANS={
     'Kunststoffrohr PVC-U DN 110 Abwasser':'Tubo PVC-U DN 110','Kunststoffrohr PP DN 50 Entw\u00e4sserung':'Tubo PP DN 50',
     'Kupferrohr 22mm Trinkwasser':'Tubo rame 22mm','Verbundrohr PE-RT/Al 16mm Heizung':'Tubo multistrato 16mm',
     'Heizungsverteiler Fussbodenheizung':'Collettore riscaldamento',
+    'Standardbeton Fundamentplatte':'Calcestruzzo standard platea','Innenwand':'Parete interna','St\u00fctzenfundament':'Fondazione del pilastro','Druckwasserdicht':'Impermeabile','Frostkoffer und Planie':'Strato antigelo e piano','Matten und St\u00e4be':'Reti e barre','Stahlbetondecke und W\u00e4nde':'Solaio e pareti in cemento armato','Hochbelastete Bauteile':'Elementi ad alto carico','Fundamentplatte':'Platea di fondazione','Bodenplatte':'Soletta di base','Aussenwand':'Parete esterna','Kellerwand':'Parete interrata','Tragwerk':'Struttura portante','Decke':'Solaio','Estrich':'Massetto','Mauerwerk':'Muratura','Verputz':'Intonaco','Trennwand':'Parete divisoria','Steildach':'Tetto a falde','Flachdach':'Tetto piano','Fassade':'Facciata','Rohbau':'Opera grezza','Ausbau Innen':'Finitura interna',
     'Noch kein Material ausgew\u00e4hlt':'Nessun materiale selezionato'
   }
 };
@@ -2173,9 +2181,18 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
     }catch(e){empty();}
   }
   var _items=[],_zone='';
+  function transMat(name){
+    var lang=localStorage.getItem('sourceon-lang')||'de';
+    var mt=window._matDbTrans&&window._matDbTrans[lang];
+    if(!mt||!name)return name;
+    if(mt[name])return mt[name];
+    if(String(name).indexOf('—')===-1)return name;
+    var parts=String(name).split(/\s*—\s*/);
+    return parts.map(function(p){var s=p.trim();return mt[s]||s;}).join(' — ');
+  }
   function cardHtml(it){var t=tr();
     return '<div class="bd-card">'
-      +'<div class="bd-mat">'+esc(it.name)+'</div>'
+      +'<div class="bd-mat">'+esc(transMat(it.name))+'</div>'
       +'<div class="bd-zone">'+esc(it.zone)+'</div>'
       +'<div class="bd-rows">'
       +'<div class="bd-r"><span class="l">'+esc(t.vol)+'</span><span class="v gold">'+fmtChf(it.total)+'</span></div>'
@@ -2195,6 +2212,7 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
     var list=document.getElementById('bd-list');if(list)list.innerHTML=html;
     show('bd-nomatch',shown===0&&_items.length>0);
   }
+  window._bdRenderList=renderList;
   function buildChips(){
     var el=document.getElementById('bd-chips');if(!el)return;var t=tr();
     var zones=[];_items.forEach(function(it){if(it.zone&&zones.indexOf(it.zone)===-1)zones.push(it.zone);});zones.sort();

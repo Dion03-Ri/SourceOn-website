@@ -973,11 +973,11 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         </button>
         <div id="acct-dd">
           <div id="acct-signed-out">
-            <div class="acct-group-label">Kunden</div>
+            <div class="acct-group-label" data-i18n="acct_group_customers">Kunden</div>
             <a href="#" onclick="clerkCustomerLogin();return false" data-i18n="acct_customer_login">Kunden-Login</a>
             <a href="#" onclick="clerkCustomerSignUp();return false" data-i18n="acct_customer_register" class="acct-customer-reg">Als Kunde registrieren</a>
             <div class="acct-divider"></div>
-            <div class="acct-group-label">Lieferanten</div>
+            <div class="acct-group-label" data-i18n="acct_group_suppliers">Lieferanten</div>
             <a href="#" onclick="clerkSupplierLogin();return false" data-i18n="acct_login">Lieferanten-Login</a>
             <a href="lieferant.html" data-i18n="acct_register">Als Lieferant registrieren</a>
           </div>
@@ -1238,26 +1238,26 @@ function toggleFaq(btn){
 </script>
 
 <!-- CHAT WIDGET -->
-<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen">
+<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen" data-i18n-aria="chat_aria">
   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
 </button>
 <div id="chat-win">
   <div class="chat-head">
     <div class="chat-head-info">
       <div class="chat-avatar">SO</div>
-      <div><div class="chat-head-title">SourceOn Assistent</div><div class="chat-head-sub">Beantwortet alle Fragen zu SourceOn</div></div>
+      <div><div class="chat-head-title" data-i18n="chat_title">SourceOn Assistent</div><div class="chat-head-sub" data-i18n="chat_sub">Beantwortet alle Fragen zu SourceOn</div></div>
     </div>
     <button id="chat-close" onclick="toggleChat()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="chat-msgs" id="chat-msgs"></div>
   <div class="chat-footer">
     <div class="chat-chips" id="chat-chips">
-      <button class="chat-chip" onclick="sendChip(this)">Wie funktioniert SourceOn?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Was kostet es?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Materialbedarf melden</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip1">Wie funktioniert SourceOn?</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip2">Was kostet es?</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip3">Materialbedarf melden</button>
     </div>
     <div class="chat-input-row">
-      <input type="text" id="chat-input" placeholder="Frage stellen…" onkeydown="if(event.key==='Enter')chatSend()"/>
+      <input type="text" id="chat-input" placeholder="Frage stellen…" data-i18n-placeholder="chat_input_ph" onkeydown="if(event.key==='Enter')chatSend()"/>
       <button id="chat-send" onclick="chatSend()"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg></button>
     </div>
   </div>
@@ -1333,7 +1333,9 @@ const T={
     footer_calc:'Einsparkalkulator',
     footer_privacy:'Datenschutz',footer_imprint:'Impressum',footer_terms:'AGB',
     footer_copy:'© 2026 SourceOn, Zürich — Alle Rechte vorbehalten',
-    footer_tagline:'Du zahlst erst, wenn wir dir sparen.'
+    footer_tagline:'Du zahlst erst, wenn wir dir sparen.',
+    chat_title:'SourceOn Assistent',chat_sub:'Beantwortet alle Fragen zu SourceOn',chat_chip1:'Wie funktioniert SourceOn?',chat_chip2:'Was kostet es?',chat_chip3:'Materialbedarf melden',chat_input_ph:'Frage stellen…',chat_aria:'SourceOn Assistent öffnen',
+    trust_title:'Verifizierung erforderlich',trust_msg_email:'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',trust_submit:'Bestätigen',trust_resend_q:'Keinen Code erhalten?',trust_resend:'Code erneut senden',trust_cancel:'Abbrechen'
   },
   en:{
     page_title:'Request Special Material | Material not in catalogue — SourceOn',sm_eyebrow:'Special material',sm_heading:'Material not in the catalogue?',
@@ -1385,7 +1387,9 @@ const T={
     footer_calc:'Savings calculator',
     footer_privacy:'Privacy policy',footer_imprint:'Imprint',footer_terms:'Terms',
     footer_copy:'© 2026 SourceOn, Zurich — All rights reserved',
-    footer_tagline:'You only pay when we save you money.'
+    footer_tagline:'You only pay when we save you money.',
+    chat_title:'SourceOn Assistant',chat_sub:'Answers all questions about SourceOn',chat_chip1:'How does SourceOn work?',chat_chip2:'What does it cost?',chat_chip3:'Report material needs',chat_input_ph:'Ask a question…',chat_aria:'Open SourceOn assistant',
+    trust_title:'Verification required',trust_msg_email:'A confirmation code has been sent to your email. Please enter it below.',trust_submit:'Confirm',trust_resend_q:'Did not receive a code?',trust_resend:'Resend code',trust_cancel:'Cancel'
   },
   fr:{
     page_title:'Demander un matériau spécial | Matériau absent du catalogue — SourceOn',sm_eyebrow:'Matériau spécial',sm_heading:'Matériau pas dans le catalogue ?',
@@ -1438,7 +1442,9 @@ const T={
     footer_calc:'Calculateur d\'économies',
     footer_privacy:'Protection des données',footer_imprint:'Mentions légales',footer_terms:'CGV',
     footer_copy:'© 2026 SourceOn, Zurich — Tous droits réservés',
-    footer_tagline:'Vous ne payez que lorsque nous vous faisons économiser.'
+    footer_tagline:'Vous ne payez que lorsque nous vous faisons économiser.',
+    chat_title:'Assistant SourceOn',chat_sub:'Répond à toutes les questions sur SourceOn',chat_chip1:'Comment fonctionne SourceOn ?',chat_chip2:'Combien ça coûte ?',chat_chip3:'Déclarer un besoin',chat_input_ph:'Poser une question…',chat_aria:"Ouvrir l'assistant SourceOn",
+    trust_title:'Vérification requise',trust_msg_email:'Un code de confirmation a été envoyé à ton e-mail. Saisis-le ci-dessous.',trust_submit:'Confirmer',trust_resend_q:'Pas reçu de code ?',trust_resend:'Renvoyer le code',trust_cancel:'Annuler'
   },
   it:{
     page_title:'Richiedere materiale speciale | Materiale non nel catalogo — SourceOn',sm_eyebrow:'Materiale speciale',sm_heading:'Materiale non nel catalogo?',
@@ -1491,7 +1497,9 @@ const T={
     footer_calc:'Calcolatore di risparmio',
     footer_privacy:'Privacy',footer_imprint:'Impressum',footer_terms:'CGC',
     footer_copy:'© 2026 SourceOn, Zurigo — Tutti i diritti riservati',
-    footer_tagline:'Paghi solo quando ti facciamo risparmiare.'
+    footer_tagline:'Paghi solo quando ti facciamo risparmiare.',
+    chat_title:'Assistente SourceOn',chat_sub:'Risponde a tutte le domande su SourceOn',chat_chip1:'Come funziona SourceOn?',chat_chip2:'Quanto costa?',chat_chip3:'Segnala fabbisogno',chat_input_ph:'Fai una domanda…',chat_aria:"Apri l'assistente SourceOn",
+    trust_title:'Verifica richiesta',trust_msg_email:'Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.',trust_submit:'Conferma',trust_resend_q:'Nessun codice ricevuto?',trust_resend:'Invia di nuovo il codice',trust_cancel:'Annulla'
   }
 };
 
@@ -1508,6 +1516,10 @@ function applyLang(lang){
   document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){
     var pk=el.getAttribute('data-i18n-placeholder');
     if(dict[pk]!==undefined)el.placeholder=dict[pk];
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(function(el){
+    var ak=el.getAttribute('data-i18n-aria');
+    if(dict[ak]!==undefined)el.setAttribute('aria-label',dict[ak]);
   });
   document.getElementById('lang-current').textContent=lang.toUpperCase();
   document.querySelectorAll('.lang-opt').forEach(function(btn){
@@ -2004,6 +2016,13 @@ function _soApplyAcctI18n(lang){
 
 
 // CLERK needs_client_trust HANDLER (global, registered once)
+window.SO_TRUST_I18N={
+  de:{title:'Verifizierung erforderlich',msg_email:'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',msg_phone:'Ein Bestätigungscode wurde an deine Telefonnummer gesendet.',submit:'Bestätigen'},
+  en:{title:'Verification required',msg_email:'A confirmation code has been sent to your email. Please enter it below.',msg_phone:'A confirmation code has been sent to your phone number.',submit:'Confirm'},
+  fr:{title:'Vérification requise',msg_email:'Un code de confirmation a été envoyé à ton e-mail. Saisis-le ci-dessous.',msg_phone:'Un code de confirmation a été envoyé à ton numéro de téléphone.',submit:'Confirmer'},
+  it:{title:'Verifica richiesta',msg_email:'Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.',msg_phone:'Un codice di conferma è stato inviato al tuo numero di telefono.',submit:'Conferma'}
+};
+function _soTrustT(){var l=localStorage.getItem('sourceon-lang')||'de';return window.SO_TRUST_I18N[l]||window.SO_TRUST_I18N.de;}
 var _clerkSignInResource=null;
 var _clerkTrustActive=false;
 var _clerkTrustStrategy='email_code';
@@ -2015,14 +2034,14 @@ async function _clerkSendVerificationCode(){
     var si=_clerkSignInResource;
     if(!si)return;
     await si.prepareSecondFactor({strategy:'email_code'});
-    document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';
+    document.getElementById('clerk-trust-msg').textContent=_soTrustT().msg_email;
     _clerkShowTrustModal();
   }catch(e){
     console.error('[Clerk] prepareSecondFactor email_code failed:',e);
     try{
       await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});
       _clerkTrustStrategy='phone_code';
-      document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';
+      document.getElementById('clerk-trust-msg').textContent=_soTrustT().msg_phone;
       _clerkShowTrustModal();
     }catch(e2){
       console.error('[Clerk] prepareSecondFactor phone_code also failed:',e2);
@@ -2091,13 +2110,13 @@ document.addEventListener('keydown',function(e){
 <style>.so-2fa [class*="cl-modal"]{display:none!important}</style>
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
   <div class="clerk-trust-modal" role="dialog" aria-modal="true" aria-label="Verifizierung erforderlich">
-    <h2>Verifizierung erforderlich</h2>
-    <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
+    <h2 data-i18n="trust_title">Verifizierung erforderlich</h2>
+    <p id="clerk-trust-msg" data-i18n="trust_msg_email">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
-    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
+    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()" data-i18n="trust_submit">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
-    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#D99000;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
-    <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
+    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8"><span data-i18n="trust_resend_q">Keinen Code erhalten?</span> <a href="#" onclick="clerkTrustResend();return false" style="color:#D99000;text-decoration:underline;cursor:pointer" data-i18n="trust_resend">Code erneut senden</a></div>
+    <button class="btn-cancel-trust" onclick="clerkTrustCancel()" data-i18n="trust_cancel">Abbrechen</button>
   </div>
 </div>
 

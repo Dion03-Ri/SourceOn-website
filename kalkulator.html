@@ -1240,26 +1240,26 @@ updateCalc(150000);
 </script>
 
 <!-- CHAT WIDGET -->
-<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen">
+<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen" data-i18n-aria="chat_aria">
   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
 </button>
 <div id="chat-win">
   <div class="chat-head">
     <div class="chat-head-info">
       <div class="chat-avatar">SO</div>
-      <div><div class="chat-head-title">SourceOn Assistent</div><div class="chat-head-sub">Beantwortet alle Fragen zu SourceOn</div></div>
+      <div><div class="chat-head-title" data-i18n="chat_title">SourceOn Assistent</div><div class="chat-head-sub" data-i18n="chat_sub">Beantwortet alle Fragen zu SourceOn</div></div>
     </div>
     <button id="chat-close" onclick="toggleChat()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="chat-msgs" id="chat-msgs"></div>
   <div class="chat-footer">
     <div class="chat-chips" id="chat-chips">
-      <button class="chat-chip" onclick="sendChip(this)">Wie funktioniert SourceOn?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Was kostet es?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Materialbedarf melden</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip1">Wie funktioniert SourceOn?</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip2">Was kostet es?</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip3">Materialbedarf melden</button>
     </div>
     <div class="chat-input-row">
-      <input type="text" id="chat-input" placeholder="Frage stellen…" onkeydown="if(event.key==='Enter')chatSend()"/>
+      <input type="text" id="chat-input" placeholder="Frage stellen…" data-i18n-placeholder="chat_input_ph" onkeydown="if(event.key==='Enter')chatSend()"/>
       <button id="chat-send" onclick="chatSend()"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg></button>
     </div>
   </div>
@@ -1269,7 +1269,7 @@ updateCalc(150000);
 
 
 let history=[];let chatOpen=false;
-window.toggleChat=function(){chatOpen=!chatOpen;document.getElementById('chat-win').classList.toggle('open',chatOpen);if(chatOpen&&document.getElementById('chat-msgs').children.length===0)addBotMsg('Hallo! Ich bin der SourceOn Assistent. Wie kann ich dir helfen?');};
+window.toggleChat=function(){chatOpen=!chatOpen;document.getElementById('chat-win').classList.toggle('open',chatOpen);if(chatOpen&&document.getElementById('chat-msgs').children.length===0)addBotMsg(window.soTrust?window.soTrust('chat_greeting'):'Hallo! Ich bin der SourceOn Assistent. Wie kann ich dir helfen?');};
 window.sendChip=function(el){document.getElementById('chat-chips').style.display='none';handleSend(el.textContent);};
 window.chatSend=function(){const inp=document.getElementById('chat-input');const txt=inp.value.trim();if(!txt)return;inp.value='';handleSend(txt);};
 function addUserMsg(txt){const el=document.createElement('div');el.className='chat-msg chat-msg-user';el.textContent=txt;document.getElementById('chat-msgs').appendChild(el);scrollBottom();}
@@ -1277,7 +1277,7 @@ function addBotMsg(txt){const wrap=document.createElement('div');const lbl=docum
 function showTyping(){const el=document.createElement('div');el.className='chat-typing';el.id='chat-typing';el.innerHTML='<span></span><span></span><span></span>';document.getElementById('chat-msgs').appendChild(el);scrollBottom();}
 function hideTyping(){const el=document.getElementById('chat-typing');if(el)el.remove();}
 function scrollBottom(){const m=document.getElementById('chat-msgs');m.scrollTop=m.scrollHeight;}
-async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content:txt});if(history.length>20)history=history.slice(-20);showTyping();try{const r=await fetch('https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history})});const d=await r.json();const reply=d.reply?d.reply:'Entschuldigung. Kontaktiere uns: info@sourceon.ch';hideTyping();history.push({role:'assistant',content:reply});if(history.length>20)history=history.slice(-20);addBotMsg(reply);}catch(e){hideTyping();addBotMsg('Verbindungsfehler. Kontaktiere uns: info@sourceon.ch');}
+async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content:txt});if(history.length>20)history=history.slice(-20);showTyping();try{const r=await fetch('https://mttzsqtuaisdjisjxrey.supabase.co/functions/v1/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:history})});const d=await r.json();const reply=d.reply?d.reply:(window.soTrust?window.soTrust('chat_err_generic'):'Entschuldigung. Kontaktiere uns: info@sourceon.ch');hideTyping();history.push({role:'assistant',content:reply});if(history.length>20)history=history.slice(-20);addBotMsg(reply);}catch(e){hideTyping();addBotMsg(window.soTrust?window.soTrust('chat_err_conn'):'Verbindungsfehler. Kontaktiere uns: info@sourceon.ch');}
 }
 })();
 </script>
@@ -1347,6 +1347,16 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       trust_nocode: 'Keinen Code erhalten?',
       trust_resend: 'Code erneut senden',
       trust_cancel: 'Abbrechen',
+      chat_title: 'SourceOn Assistent',
+      chat_sub: 'Beantwortet alle Fragen zu SourceOn',
+      chat_chip1: 'Wie funktioniert SourceOn?',
+      chat_chip2: 'Was kostet es?',
+      chat_chip3: 'Materialbedarf melden',
+      chat_input_ph: 'Frage stellen…',
+      chat_aria: 'SourceOn Assistent öffnen',
+      chat_greeting: 'Hallo! Ich bin der SourceOn Assistent. Wie kann ich dir helfen?',
+      chat_err_generic: 'Entschuldigung. Kontaktiere uns: info@sourceon.ch',
+      chat_err_conn: 'Verbindungsfehler. Kontaktiere uns: info@sourceon.ch',
 
       cta_title: 'Bereit für tiefere Einkaufspreise?',
       cta_sub: 'Melde deinen nächsten Materialbedarf — du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst alles in deinem Dashboard.',
@@ -1423,6 +1433,16 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       trust_nocode: 'Didn\'t receive a code?',
       trust_resend: 'Resend code',
       trust_cancel: 'Cancel',
+      chat_title: 'SourceOn Assistant',
+      chat_sub: 'Answers all questions about SourceOn',
+      chat_chip1: 'How does SourceOn work?',
+      chat_chip2: 'What does it cost?',
+      chat_chip3: 'Report material needs',
+      chat_input_ph: 'Ask a question…',
+      chat_aria: 'Open SourceOn assistant',
+      chat_greeting: 'Hi! I am the SourceOn Assistant. How can I help you?',
+      chat_err_generic: 'Sorry. Contact us: info@sourceon.ch',
+      chat_err_conn: 'Connection error. Contact us: info@sourceon.ch',
 
       cta_title: 'Ready for lower procurement prices?',
       cta_sub: 'Submit your next material need — you only pay when we save you money. You see your guaranteed net minimum discount right away and track everything in your dashboard.',
@@ -1499,6 +1519,16 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       trust_nocode: 'Tu n\'as pas reçu de code ?',
       trust_resend: 'Renvoyer le code',
       trust_cancel: 'Annuler',
+      chat_title: 'Assistant SourceOn',
+      chat_sub: 'Répond à toutes les questions sur SourceOn',
+      chat_chip1: 'Comment fonctionne SourceOn ?',
+      chat_chip2: 'Combien ça coûte ?',
+      chat_chip3: 'Déclarer un besoin',
+      chat_input_ph: 'Poser une question…',
+      chat_aria: 'Ouvrir l\'assistant SourceOn',
+      chat_greeting: 'Bonjour ! Je suis l\'assistant SourceOn. Comment puis-je t\'aider ?',
+      chat_err_generic: 'Désolé. Contacte-nous : info@sourceon.ch',
+      chat_err_conn: 'Erreur de connexion. Contacte-nous : info@sourceon.ch',
 
       cta_title: 'Prêt pour des prix d\'achat plus bas ?',
       cta_sub: 'Déclarez votre prochain besoin matériel — vous ne payez que si nous vous faisons économiser. Vous voyez immédiatement votre rabais minimum net garanti et suivez tout dans votre tableau de bord.',
@@ -1575,6 +1605,16 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       trust_nocode: 'Non hai ricevuto il codice?',
       trust_resend: 'Invia di nuovo il codice',
       trust_cancel: 'Annulla',
+      chat_title: 'Assistente SourceOn',
+      chat_sub: 'Risponde a tutte le domande su SourceOn',
+      chat_chip1: 'Come funziona SourceOn?',
+      chat_chip2: 'Quanto costa?',
+      chat_chip3: 'Segnala fabbisogno',
+      chat_input_ph: 'Fai una domanda…',
+      chat_aria: 'Apri l\'assistente SourceOn',
+      chat_greeting: 'Ciao! Sono l\'assistente SourceOn. Come posso aiutarti?',
+      chat_err_generic: 'Spiacenti. Contattaci: info@sourceon.ch',
+      chat_err_conn: 'Errore di connessione. Contattaci: info@sourceon.ch',
 
       cta_title: 'Pronti per prezzi d\'acquisto più bassi?',
       cta_sub: 'Segnala il tuo prossimo fabbisogno materiale — paghi solo se ti facciamo risparmiare. Vedi subito il tuo sconto minimo netto garantito e segui tutto nella tua dashboard.',
@@ -1620,6 +1660,11 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
     document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
       var key = el.getAttribute('data-i18n-placeholder');
       if (dict[key] !== undefined) el.setAttribute('placeholder', dict[key]);
+    });
+
+    document.querySelectorAll('[data-i18n-aria]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n-aria');
+      if (dict[key] !== undefined) el.setAttribute('aria-label', dict[key]);
     });
 
     var langCurrent = document.getElementById('lang-current');

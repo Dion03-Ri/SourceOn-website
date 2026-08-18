@@ -1006,11 +1006,11 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         </button>
         <div id="acct-dd">
           <div id="acct-signed-out">
-            <div class="acct-group-label">Kunden</div>
+            <div class="acct-group-label" data-i18n="acct_group_customers">Kunden</div>
             <a href="#" onclick="clerkCustomerLogin();return false" data-i18n="acct_customer_login">Kunden-Login</a>
             <a href="#" onclick="clerkCustomerSignUp();return false" data-i18n="acct_customer_register" class="acct-customer-reg">Als Kunde registrieren</a>
             <div class="acct-divider"></div>
-            <div class="acct-group-label">Lieferanten</div>
+            <div class="acct-group-label" data-i18n="acct_group_suppliers">Lieferanten</div>
             <a href="#" onclick="clerkSupplierLogin();return false" data-i18n="acct_login">Lieferanten-Login</a>
             <a href="lieferant.html" data-i18n="acct_register">Als Lieferant registrieren</a>
           </div>
@@ -1260,7 +1260,7 @@ document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
 </script>
 
 <!-- CHAT WIDGET -->
-<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen">
+<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen" data-i18n-aria="chat_aria">
   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
 </button>
 <div id="chat-win">
@@ -1312,6 +1312,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       chat_chip2: 'Was kostet es?',
       chat_chip3: 'Materialbedarf melden',
       chat_input_ph: 'Frage stellen…',
+      chat_aria: 'SourceOn Assistent öffnen',
       trust_title: 'Verifizierung erforderlich',
       trust_msg: 'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',
       trust_submit: 'Bestätigen',
@@ -1405,6 +1406,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       chat_chip2: 'What does it cost?',
       chat_chip3: 'Report material needs',
       chat_input_ph: 'Ask a question…',
+      chat_aria: 'Open SourceOn assistant',
       trust_title: 'Verification required',
       trust_msg: 'A confirmation code has been sent to your email. Please enter it below.',
       trust_submit: 'Confirm',
@@ -1498,6 +1500,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       chat_chip2: 'Combien ça coûte ?',
       chat_chip3: 'Déclarer un besoin',
       chat_input_ph: 'Poser une question…',
+      chat_aria: "Ouvrir l'assistant SourceOn",
       trust_title: 'Vérification requise',
       trust_msg: 'Un code de confirmation a été envoyé à ton e-mail. Saisis-le ci-dessous.',
       trust_submit: 'Confirmer',
@@ -1591,6 +1594,7 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       chat_chip2: 'Quanto costa?',
       chat_chip3: 'Segnala fabbisogno',
       chat_input_ph: 'Fai una domanda…',
+      chat_aria: 'Apri l\'assistente SourceOn',
       trust_title: 'Verifica richiesta',
       trust_msg: 'Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.',
       trust_submit: 'Conferma',
@@ -1698,6 +1702,11 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
     document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el) {
       var key = el.getAttribute('data-i18n-placeholder');
       if (dict[key] !== undefined) el.placeholder = dict[key];
+    });
+
+    document.querySelectorAll('[data-i18n-aria]').forEach(function(el) {
+      var key = el.getAttribute('data-i18n-aria');
+      if (dict[key] !== undefined) el.setAttribute('aria-label', dict[key]);
     });
 
     var curr = document.getElementById('lang-current');
@@ -2035,6 +2044,13 @@ function _soApplyAcctI18n(lang){
 
 
 // CLERK needs_client_trust HANDLER (global, registered once)
+window.SO_TRUST_I18N={
+  de:{title:'Verifizierung erforderlich',msg_email:'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',msg_phone:'Ein Bestätigungscode wurde an deine Telefonnummer gesendet.',submit:'Bestätigen'},
+  en:{title:'Verification required',msg_email:'A confirmation code has been sent to your email. Please enter it below.',msg_phone:'A confirmation code has been sent to your phone number.',submit:'Confirm'},
+  fr:{title:'Vérification requise',msg_email:'Un code de confirmation a été envoyé à ton e-mail. Saisis-le ci-dessous.',msg_phone:'Un code de confirmation a été envoyé à ton numéro de téléphone.',submit:'Confirmer'},
+  it:{title:'Verifica richiesta',msg_email:'Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.',msg_phone:'Un codice di conferma è stato inviato al tuo numero di telefono.',submit:'Conferma'}
+};
+function _soTrustT(){var l=localStorage.getItem('sourceon-lang')||'de';return window.SO_TRUST_I18N[l]||window.SO_TRUST_I18N.de;}
 var _clerkSignInResource=null;
 var _clerkTrustActive=false;
 var _clerkTrustStrategy='email_code';
@@ -2046,14 +2062,14 @@ async function _clerkSendVerificationCode(){
     var si=_clerkSignInResource;
     if(!si)return;
     await si.prepareSecondFactor({strategy:'email_code'});
-    document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';
+    document.getElementById('clerk-trust-msg').textContent=_soTrustT().msg_email;
     _clerkShowTrustModal();
   }catch(e){
     console.error('[Clerk] prepareSecondFactor email_code failed:',e);
     try{
       await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});
       _clerkTrustStrategy='phone_code';
-      document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';
+      document.getElementById('clerk-trust-msg').textContent=_soTrustT().msg_phone;
       _clerkShowTrustModal();
     }catch(e2){
       console.error('[Clerk] prepareSecondFactor phone_code also failed:',e2);

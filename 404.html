@@ -1012,11 +1012,11 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     <div class="hero-glow"></div>
     <div class="hero-content">
       <span class="eyebrow" style="color:var(--gold)">404</span>
-      <h1 class="h1" style="font-weight:800">Diese Seite gibt es nicht.</h1>
-      <p style="font-size:18px;color:var(--t2);max-width:560px;margin:20px auto 0;line-height:1.6">Die gesuchte Seite wurde nicht gefunden — aber SourceOn schon.</p>
+      <h1 class="h1" style="font-weight:800" data-i18n="nf_title">Diese Seite gibt es nicht.</h1>
+      <p style="font-size:18px;color:var(--t2);max-width:560px;margin:20px auto 0;line-height:1.6" data-i18n="nf_desc">Die gesuchte Seite wurde nicht gefunden — aber SourceOn schon.</p>
       <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:32px">
-        <a class="btn btn-gold btn-lg" href="/">Zur Startseite →</a>
-        <a class="btn btn-ghost btn-lg" href="/kontakt.html" style="align-self:center;color:var(--gold);text-decoration:none;font-weight:600">Materialbedarf melden →</a>
+        <a class="btn btn-gold btn-lg" href="/" data-i18n="nf_home">Zur Startseite →</a>
+        <a class="btn btn-ghost btn-lg" href="/kontakt.html" style="align-self:center;color:var(--gold);text-decoration:none;font-weight:600" data-i18n="nf_cta">Materialbedarf melden →</a>
       </div>
     </div>
   </section>
@@ -1174,6 +1174,7 @@ window.soLangNow=function(){return localStorage.getItem('sourceon-lang')||'de';}
 window.soT=function(map){var l=window.soLangNow();return (map&&(map[l]!=null?map[l]:map.de))||'';};
 var I18N={
   de:{lp_t6_cat:'Und mehr',lp_t6_title:'Nicht dabei?',lp_t6_desc:'Meld dich — wir prüfen ob SourceOn für deinen Bedarf passt.',lp_t6_link:'Anfragen →',
+    nf_title:'Diese Seite gibt es nicht.',nf_desc:'Die gesuchte Seite wurde nicht gefunden — aber SourceOn schon.',nf_home:'Zur Startseite →',nf_cta:'Materialbedarf melden →',
     'nav.home':'Home','nav.process':'Wie es funktioniert','nav.calc':'Kalkulator','nav.materials':'Materialien',nav_bundles:'Bündel',
     'nav.forwhom':'Für wen','nav.supplier':'Lieferant werden','nav.about':'Über uns','nav.contact':'Kontakt',
     'nav.cta':'Materialbedarf melden',
@@ -1270,6 +1271,7 @@ var I18N={
     'chat.placeholder':'Frage stellen…'
   },
   en:{lp_t6_cat:'And more',lp_t6_title:'Not listed?',lp_t6_desc:'Get in touch — we\'ll check if SourceOn works for your needs.',lp_t6_link:'Enquire →',
+    nf_title:"This page doesn't exist.",nf_desc:"The page you're looking for wasn't found — but SourceOn was.",nf_home:'Go to homepage →',nf_cta:'Report material needs →',
     'nav.home':'Home','nav.process':'How it works','nav.calc':'Calculator','nav.materials':'Materials',nav_bundles:'Bundles',
     'nav.forwhom':'Who it\'s for','nav.supplier':'Become a supplier','nav.about':'About us','nav.contact':'Contact',
     'nav.cta':'Report material demand',
@@ -1366,6 +1368,7 @@ var I18N={
     'chat.placeholder':'Ask a question…'
   },
   fr:{lp_t6_cat:'Et plus',lp_t6_title:'Pas concerné?',lp_t6_desc:'Contactez-nous — nous vérifions si SourceOn correspond à vos besoins.',lp_t6_link:'Demander →',
+    nf_title:"Cette page n'existe pas.",nf_desc:'La page recherchée est introuvable — mais SourceOn, oui.',nf_home:"Aller à l'accueil →",nf_cta:'Déclarer un besoin →',
     'nav.home':'Accueil','nav.process':'Comment ça marche','nav.calc':'Calculateur','nav.materials':'Matériaux',nav_bundles:'Groupements',
     'nav.forwhom':'Pour qui','nav.supplier':'Devenir fournisseur','nav.about':'À propos','nav.contact':'Contact',
     'nav.cta':'Annoncer un besoin',
@@ -1462,6 +1465,7 @@ var I18N={
     'chat.placeholder':'Poser une question…'
   },
   it:{lp_t6_cat:'E altro',lp_t6_title:'Non ti ritrovi?',lp_t6_desc:'Contattaci — verifichiamo se SourceOn è adatto alle tue esigenze.',lp_t6_link:'Richiedi →',
+    nf_title:'Questa pagina non esiste.',nf_desc:'La pagina cercata non è stata trovata — ma SourceOn sì.',nf_home:'Vai alla home →',nf_cta:'Segnala fabbisogno →',
     'nav.home':'Home','nav.process':'Come funziona','nav.calc':'Calcolatore','nav.materials':'Materiali',nav_bundles:'Raggruppamenti',
     'nav.forwhom':'Per chi','nav.supplier':'Diventa fornitore','nav.about':'Chi siamo','nav.contact':'Contatto',
     'nav.cta':'Segnala fabbisogno materiale',

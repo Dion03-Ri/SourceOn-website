@@ -1130,11 +1130,11 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
         </button>
         <div id="acct-dd">
           <div id="acct-signed-out">
-            <div class="acct-group-label">Kunden</div>
+            <div class="acct-group-label" data-i18n="acct_group_customers">Kunden</div>
             <a href="#" onclick="clerkCustomerLogin();return false" data-i18n="acct_customer_login">Kunden-Login</a>
             <a href="#" onclick="clerkCustomerSignUp();return false" data-i18n="acct_customer_register" class="acct-customer-reg">Als Kunde registrieren</a>
             <div class="acct-divider"></div>
-            <div class="acct-group-label">Lieferanten</div>
+            <div class="acct-group-label" data-i18n="acct_group_suppliers">Lieferanten</div>
             <a href="#" onclick="clerkSupplierLogin();return false" data-i18n="acct_login">Lieferanten-Login</a>
             <a href="lieferant.html" data-i18n="acct_register">Als Lieferant registrieren</a>
           </div>
@@ -2138,7 +2138,7 @@ function toggleFaq(btn){
 </script>
 
 <!-- CHAT WIDGET -->
-<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen">
+<button id="chat-btn" onclick="toggleChat()" aria-label="SourceOn Assistent öffnen" data-i18n-aria="chat_aria">
   <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
 </button>
 <div id="chat-win">
@@ -2212,7 +2212,7 @@ window.I18N={
     footer_calculator:"Einsparkalkulator",footer_privacy:"Datenschutz",footer_imprint:"Impressum",footer_terms:"AGB",
     footer_copy:"© 2026 SourceOn, Zürich — Alle Rechte vorbehalten",footer_tagline:"Du zahlst erst, wenn wir dir sparen.",
     chat_title:"SourceOn Assistent",chat_subtitle:"Beantwortet alle Fragen zu SourceOn",
-    chat_chip_how:"Wie funktioniert SourceOn?",chat_chip_cost:"Was kostet es?",chat_chip_report:"Materialbedarf melden",chat_placeholder:"Frage stellen…",
+    chat_chip_how:"Wie funktioniert SourceOn?",chat_chip_cost:"Was kostet es?",chat_chip_report:"Materialbedarf melden",chat_placeholder:"Frage stellen…",chat_aria:"SourceOn Assistent öffnen",
     meta_title:"Materialbedarf melden | Baumaterial günstig beschaffen — SourceOn",
     nav_dd_bau:"Bauunternehmen & Baumeisterbetriebe",nav_dd_handwerk:"Handwerk & Ausbau",nav_dd_gu:"Generalunternehmer & TU",nav_dd_oeff:"Öffentliche Auftraggeber",nav_dd_immo:"Immobilien & Wohnbau",
     nav_ov_bau:"Bauunternehmen",nav_ov_handwerk:"Handwerk",nav_ov_gu:"Generalunternehmer",
@@ -2273,7 +2273,7 @@ window.I18N={
     footer_calculator:"Savings calculator",footer_privacy:"Privacy policy",footer_imprint:"Legal notice",footer_terms:"Terms & conditions",
     footer_copy:"© 2026 SourceOn, Zurich — All rights reserved",footer_tagline:"You only pay when we save you money.",
     chat_title:"SourceOn Assistant",chat_subtitle:"Answers all questions about SourceOn",
-    chat_chip_how:"How does SourceOn work?",chat_chip_cost:"What does it cost?",chat_chip_report:"Report material needs",chat_placeholder:"Ask a question…",
+    chat_chip_how:"How does SourceOn work?",chat_chip_cost:"What does it cost?",chat_chip_report:"Report material needs",chat_placeholder:"Ask a question…",chat_aria:"Open SourceOn assistant",
     meta_title:"Submit Material Request | Buy Construction Materials Cheaper — SourceOn",
     nav_dd_bau:"Construction firms & master builders",nav_dd_handwerk:"Trades & interior finishing",nav_dd_gu:"General contractors & TC",nav_dd_oeff:"Public clients",nav_dd_immo:"Real estate & housing",
     nav_ov_bau:"Construction firms",nav_ov_handwerk:"Trades",nav_ov_gu:"General contractors",
@@ -2333,7 +2333,7 @@ window.I18N={
     footer_calculator:"Calculateur d'économies",footer_privacy:"Protection des données",footer_imprint:"Mentions légales",footer_terms:"CGV",
     footer_copy:"© 2026 SourceOn, Zurich — Tous droits réservés",footer_tagline:"Vous ne payez que lorsque nous vous faisons économiser.",
     chat_title:"Assistant SourceOn",chat_subtitle:"Répond à toutes les questions sur SourceOn",
-    chat_chip_how:"Comment fonctionne SourceOn ?",chat_chip_cost:"Combien ça coûte ?",chat_chip_report:"Déclarer un besoin",chat_placeholder:"Poser une question…",
+    chat_chip_how:"Comment fonctionne SourceOn ?",chat_chip_cost:"Combien ça coûte ?",chat_chip_report:"Déclarer un besoin",chat_placeholder:"Poser une question…",chat_aria:"Ouvrir l'assistant SourceOn",
     meta_title:"Soumettre une demande de matériaux | Acheter des matériaux moins cher — SourceOn",
     nav_dd_bau:"Entreprises de construction & PME du bâtiment",nav_dd_handwerk:"Artisanat & aménagement",nav_dd_gu:"Entreprises générales & ET",nav_dd_oeff:"Maîtres d'ouvrage publics",nav_dd_immo:"Immobilier & logement",
     nav_ov_bau:"Entreprises de construction",nav_ov_handwerk:"Artisans",nav_ov_gu:"Entreprises générales",
@@ -2393,7 +2393,7 @@ window.I18N={
     footer_calculator:"Calcolatore di risparmio",footer_privacy:"Protezione dei dati",footer_imprint:"Impressum",footer_terms:"CGC",
     footer_copy:"© 2026 SourceOn, Zurigo — Tutti i diritti riservati",footer_tagline:"Paghi solo quando ti facciamo risparmiare.",
     chat_title:"Assistente SourceOn",chat_subtitle:"Risponde a tutte le domande su SourceOn",
-    chat_chip_how:"Come funziona SourceOn?",chat_chip_cost:"Quanto costa?",chat_chip_report:"Segnalare fabbisogno",chat_placeholder:"Fai una domanda…",
+    chat_chip_how:"Come funziona SourceOn?",chat_chip_cost:"Quanto costa?",chat_chip_report:"Segnalare fabbisogno",chat_placeholder:"Fai una domanda…",chat_aria:"Apri l'assistente SourceOn",
     meta_title:"Invia richiesta di materiali | Acquistare materiali da costruzione a prezzi più bassi — SourceOn",
     nav_dd_bau:"Imprese edili & piccole imprese di costruzione",nav_dd_handwerk:"Artigianato & finiture",nav_dd_gu:"Imprese generali & IT",nav_dd_oeff:"Committenti pubblici",nav_dd_immo:"Immobiliare & edilizia abitativa",
     nav_ov_bau:"Imprese di costruzione",nav_ov_handwerk:"Artigiani",nav_ov_gu:"Imprese generali",
@@ -2455,6 +2455,7 @@ window.setLang=function(lang){
   document.querySelectorAll('[data-i18n]').forEach(function(el){if(t[el.dataset.i18n]!=null)el.textContent=t[el.dataset.i18n];});
   document.querySelectorAll('[data-i18n-html]').forEach(function(el){if(t[el.dataset.i18nHtml]!=null)el.innerHTML=t[el.dataset.i18nHtml];});
   document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){if(t[el.dataset.i18nPlaceholder]!=null)el.placeholder=t[el.dataset.i18nPlaceholder];});
+  document.querySelectorAll('[data-i18n-aria]').forEach(function(el){if(t[el.dataset.i18nAria]!=null)el.setAttribute('aria-label',t[el.dataset.i18nAria]);});
   translateMaterials(lang);
   document.getElementById('lang-current').textContent=LANG_LABELS[lang];
   document.querySelectorAll('.lang-opt').forEach(function(btn){btn.classList.toggle('active',btn.getAttribute('onclick').indexOf("'"+lang+"'")!==-1);});
