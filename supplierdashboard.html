@@ -347,19 +347,19 @@ p{text-wrap:pretty}
 </head>
 <body>
 
-<div class="auth-gate" id="auth-gate"><div class="auth-gate-card" id="auth-gate-card"><div class="loading"><span class="loading-dots">Authentifizierung wird geprüft</span></div></div></div>
+<div class="auth-gate" id="auth-gate"><div class="auth-gate-card" id="auth-gate-card"><div class="loading"><span class="loading-dots" data-i18n="auth_check">Authentifizierung wird geprüft</span></div></div></div>
 
 <div class="dash" id="dash">
   <nav class="db-nav"><div class="db-nav-inner">
     <div class="db-logo">Source<span>On</span></div>
     <div class="db-tabs" id="tabs">
-      <button class="db-tab" data-tab="ausschreibungen" onclick="showTab('ausschreibungen')">Ausschreibungen</button>
-      <button class="db-tab" data-tab="angebote" onclick="showTab('angebote')">Angebote</button>
-      <button class="db-tab" data-tab="finanzen" onclick="showTab('finanzen')">Finanzen</button>
-      <button class="db-tab" data-tab="lieferungen" onclick="showTab('lieferungen')">Lieferungen</button>
-      <button class="db-tab" data-tab="profil" onclick="showTab('profil')">Profil</button>
+      <button class="db-tab" data-tab="ausschreibungen" onclick="showTab('ausschreibungen')" data-i18n="tab_tenders">Ausschreibungen</button>
+      <button class="db-tab" data-tab="angebote" onclick="showTab('angebote')" data-i18n="tab_bids">Angebote</button>
+      <button class="db-tab" data-tab="finanzen" onclick="showTab('finanzen')" data-i18n="tab_finance">Finanzen</button>
+      <button class="db-tab" data-tab="lieferungen" onclick="showTab('lieferungen')" data-i18n="tab_deliveries">Lieferungen</button>
+      <button class="db-tab" data-tab="profil" onclick="showTab('profil')" data-i18n="tab_profile">Profil</button>
     </div>
-    <div class="db-user"><a class="db-back" href="/">← Zurück zur Website</a><span class="db-firm" id="db-firm"></span><a class="db-logout" onclick="handleLogout()">Abmelden</a></div>
+    <div class="db-user"><a class="db-back" href="/" data-i18n="back_site">← Zurück zur Website</a><span class="db-firm" id="db-firm"></span><a class="db-logout" onclick="handleLogout()" data-i18n="logout">Abmelden</a></div>
   </div></nav>
 
   <!-- TAB 1: AUSSCHREIBUNGEN -->
@@ -371,78 +371,78 @@ p{text-wrap:pretty}
     <div class="notif" id="notif"></div>
     <div class="hero-card">
       <div class="hero hero-panel">
-        <div class="hero-label">Offene Ausschreibungen</div>
+        <div class="hero-label" data-i18n="au_hero_label">Offene Ausschreibungen</div>
         <div class="hero-num" id="au-hero"><span class="skeleton-val"></span></div>
-        <div class="hero-sub" id="au-hero-sub">Passende Ausschreibungen für dein Profil</div>
+        <div class="hero-sub" id="au-hero-sub" data-i18n="au_hero_sub">Passende Ausschreibungen für dein Profil</div>
       </div>
     </div>
     <div class="filters" id="au-filters"></div>
     <div id="bundles-list"></div>
-    <div id="bundles-empty" style="display:none"><div class="hero"><div class="hero-num zero" style="font-size:20px">Aktuell keine offenen Ausschreibungen</div><div class="hero-sub">Du wirst benachrichtigt, sobald eine passende Ausschreibung verfügbar ist.</div></div></div>
-    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+    <div id="bundles-empty" style="display:none"><div class="hero"><div class="hero-num zero" style="font-size:20px" data-i18n="au_empty_t">Aktuell keine offenen Ausschreibungen</div><div class="hero-sub" data-i18n="au_empty_s">Du wirst benachrichtigt, sobald eine passende Ausschreibung verfügbar ist.</div></div></div>
+    <div class="support" data-i18n-html="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
   </div></div>
 
   <!-- TAB 2: ANGEBOTE (split) -->
   <div class="db-content" id="sec-angebote"><div class="db-wrap">
-    <div class="greet"><div class="greet-hi" style="font-size:24px">Angebote</div></div>
+    <div class="greet"><div class="greet-hi" style="font-size:24px" data-i18n="tab_bids">Angebote</div></div>
     <div class="hero-card"><div class="metrics3">
-      <div class="m3"><div class="m3-num" id="a1"><span class="skeleton-val"></span></div><div class="m3-label">Eingereichte Angebote</div></div>
-      <div class="m3"><div class="m3-num gold" id="a2"><span class="skeleton-val"></span></div><div class="m3-label">Gewonnen</div></div>
-      <div class="m3"><div class="m3-num dim" id="a3"><span class="skeleton-val"></span></div><div class="m3-label">Erfolgsquote</div></div>
+      <div class="m3"><div class="m3-num" id="a1"><span class="skeleton-val"></span></div><div class="m3-label" data-i18n="a_submitted">Eingereichte Angebote</div></div>
+      <div class="m3"><div class="m3-num gold" id="a2"><span class="skeleton-val"></span></div><div class="m3-label" data-i18n="a_won">Gewonnen</div></div>
+      <div class="m3"><div class="m3-num dim" id="a3"><span class="skeleton-val"></span></div><div class="m3-label" data-i18n="a_rate">Erfolgsquote</div></div>
     </div></div>
     <div class="split" id="ang-split">
       <div class="sv-list">
         <div class="sv-filters" id="bid-filters">
-          <button class="filt active" data-bf="alle" onclick="setBidFilter('alle')">Alle</button>
-          <button class="filt" data-bf="eingereicht" onclick="setBidFilter('eingereicht')">Eingereicht</button>
-          <button class="filt" data-bf="gewonnen" onclick="setBidFilter('gewonnen')">Gewonnen</button>
-          <button class="filt" data-bf="verloren" onclick="setBidFilter('verloren')">Verloren</button>
-          <button class="filt" data-bf="abgelaufen" onclick="setBidFilter('abgelaufen')">Abgelaufen</button>
+          <button class="filt active" data-bf="alle" onclick="setBidFilter('alle')" data-i18n="f_all">Alle</button>
+          <button class="filt" data-bf="eingereicht" onclick="setBidFilter('eingereicht')" data-i18n="f_submitted">Eingereicht</button>
+          <button class="filt" data-bf="gewonnen" onclick="setBidFilter('gewonnen')" data-i18n="f_won">Gewonnen</button>
+          <button class="filt" data-bf="verloren" onclick="setBidFilter('verloren')" data-i18n="f_lost">Verloren</button>
+          <button class="filt" data-bf="abgelaufen" onclick="setBidFilter('abgelaufen')" data-i18n="f_expired">Abgelaufen</button>
         </div>
         <div id="bid-items"></div>
       </div>
-      <div class="sv-detail" id="bid-detail"><div class="sv-empty">← Angebot auswählen</div></div>
+      <div class="sv-detail" id="bid-detail"><div class="sv-empty" data-i18n="select_bid">← Angebot auswählen</div></div>
     </div>
-    <div id="ang-empty" style="display:none"><div class="hero"><div class="hero-num zero" style="font-size:20px">Noch keine Angebote</div><div class="hero-sub">Sieh dir die offenen Ausschreibungen an.</div></div></div>
-    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+    <div id="ang-empty" style="display:none"><div class="hero"><div class="hero-num zero" style="font-size:20px" data-i18n="ang_empty_t">Noch keine Angebote</div><div class="hero-sub" data-i18n="ang_empty_s">Sieh dir die offenen Ausschreibungen an.</div></div></div>
+    <div class="support" data-i18n-html="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
   </div></div>
 
   <!-- TAB 3: FINANZEN -->
   <div class="db-content" id="sec-finanzen"><div class="db-wrap">
-    <div class="greet"><div class="greet-hi" style="font-size:24px">Finanzen</div></div>
+    <div class="greet"><div class="greet-hi" style="font-size:24px" data-i18n="tab_finance">Finanzen</div></div>
     <div class="hero-card">
       <div class="hero hero-panel">
-        <div class="hero-label">Gesamtumsatz durch SourceOn</div>
+        <div class="hero-label" data-i18n="fin_hero_label">Gesamtumsatz durch SourceOn</div>
         <div class="hero-num" id="fin-hero"><span class="skeleton-val"></span></div>
-        <div class="hero-sub" id="fin-hero-sub">Noch keine gewonnenen Aufträge</div>
+        <div class="hero-sub" id="fin-hero-sub" data-i18n="fin_no_orders">Noch keine gewonnenen Aufträge</div>
       </div>
       <div class="hero-card-divider"></div>
       <div class="metrics3">
-        <div class="m3"><div class="m3-num amber" id="f-open"><span class="skeleton-val"></span></div><div class="m3-label">Offene Provisionen</div></div>
-        <div class="m3"><div class="m3-num green" id="f-paid"><span class="skeleton-val"></span></div><div class="m3-label">Bezahlte Provisionen</div></div>
-        <div class="m3"><div class="m3-num dim" id="f-avg"><span class="skeleton-val"></span></div><div class="m3-label">Ø Nettoerlös</div></div>
+        <div class="m3"><div class="m3-num amber" id="f-open"><span class="skeleton-val"></span></div><div class="m3-label" data-i18n="fin_open_prov">Offene Provisionen</div></div>
+        <div class="m3"><div class="m3-num green" id="f-paid"><span class="skeleton-val"></span></div><div class="m3-label" data-i18n="fin_paid_prov">Bezahlte Provisionen</div></div>
+        <div class="m3"><div class="m3-num dim" id="f-avg"><span class="skeleton-val"></span></div><div class="m3-label" data-i18n="fin_avg_net">Ø Nettoerlös</div></div>
       </div>
     </div>
-    <div class="sec-head" style="flex-wrap:wrap;gap:12px"><span class="sec-label">Provisionsabrechnung</span><span style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:6px"><select id="fin-year" class="fin-year" aria-label="Jahr"></select><span class="link-m" onclick="printYearSummary()">↧ Jahres-PDF</span></span><span class="link-m" onclick="exportProvExcel()">↓ Excel</span><span class="link-m" onclick="printProvisions()">↓ PDF</span></span></div>
+    <div class="sec-head" style="flex-wrap:wrap;gap:12px"><span class="sec-label" data-i18n="fin_statement">Provisionsabrechnung</span><span style="display:flex;gap:16px;align-items:center;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:6px"><select id="fin-year" class="fin-year" aria-label="Jahr"></select><span class="link-m" onclick="printYearSummary()" data-i18n="fin_year_pdf">↧ Jahres-PDF</span></span><span class="link-m" onclick="exportProvExcel()" data-i18n="fin_excel">↓ Excel</span><span class="link-m" onclick="printProvisions()" data-i18n="fin_pdf">↓ PDF</span></span></div>
     <div class="fin-filters" id="fin-filters">
-      <span class="fin-glabel">Zeitraum</span>
-      <button class="filt active" data-r="all" onclick="setFinRange('all',this)">Alle</button>
-      <button class="filt" data-r="month" onclick="setFinRange('month',this)">Monat</button>
-      <button class="filt" data-r="quarter" onclick="setFinRange('quarter',this)">Quartal</button>
-      <button class="filt" data-r="year" onclick="setFinRange('year',this)">Jahr</button>
+      <span class="fin-glabel" data-i18n="fin_period">Zeitraum</span>
+      <button class="filt active" data-r="all" onclick="setFinRange('all',this)" data-i18n="f_all">Alle</button>
+      <button class="filt" data-r="month" onclick="setFinRange('month',this)" data-i18n="fin_month">Monat</button>
+      <button class="filt" data-r="quarter" onclick="setFinRange('quarter',this)" data-i18n="fin_quarter">Quartal</button>
+      <button class="filt" data-r="year" onclick="setFinRange('year',this)" data-i18n="fin_year">Jahr</button>
       <input type="date" id="fin-from" class="fin-date" onchange="setFinRange('custom')" aria-label="Von"/>
       <span style="color:var(--text-3);font-size:12px">–</span>
       <input type="date" id="fin-to" class="fin-date" onchange="setFinRange('custom')" aria-label="Bis"/>
       <span class="fin-sep"></span>
-      <span class="fin-glabel">Status</span>
-      <button class="filt active" data-s="all" onclick="setFinStatus('all',this)">Alle</button>
-      <button class="filt" data-s="open" onclick="setFinStatus('open',this)">Offen</button>
-      <button class="filt" data-s="paid" onclick="setFinStatus('paid',this)">Bezahlt</button>
+      <span class="fin-glabel" data-i18n="fin_status">Status</span>
+      <button class="filt active" data-s="all" onclick="setFinStatus('all',this)" data-i18n="f_all">Alle</button>
+      <button class="filt" data-s="open" onclick="setFinStatus('open',this)" data-i18n="fin_open">Offen</button>
+      <button class="filt" data-s="paid" onclick="setFinStatus('paid',this)" data-i18n="fin_paid">Bezahlt</button>
     </div>
     <div style="overflow-x:auto"><table class="ftable" id="prov-table"></table></div>
-    <div class="prov-note">Provisionsrechnungen werden von SourceOn nach Lieferbestätigung ausgestellt. Zahlungsfrist: 14 Tage netto.</div>
-    <div class="chart-box" id="chart-blk" style="display:none"><span class="sec-label">Umsatz über Zeit</span><div class="chart-wrap"><canvas id="fin-chart"></canvas></div></div>
-    <div class="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
+    <div class="prov-note" data-i18n="fin_prov_note">Provisionsrechnungen werden von SourceOn nach Lieferbestätigung ausgestellt. Zahlungsfrist: 14 Tage netto.</div>
+    <div class="chart-box" id="chart-blk" style="display:none"><span class="sec-label" data-i18n="fin_rev_time">Umsatz über Zeit</span><div class="chart-wrap"><canvas id="fin-chart"></canvas></div></div>
+    <div class="support" data-i18n-html="support">Fragen? <a href="mailto:info@sourceon.ch">info@sourceon.ch</a> · Antwort innerhalb von 48 Stunden</div>
   </div></div>
 
   <!-- TAB 4: LIEFERUNGEN -->

@@ -1267,19 +1267,19 @@ document.querySelectorAll('[data-count]').forEach(el=>co.observe(el));
   <div class="chat-head">
     <div class="chat-head-info">
       <div class="chat-avatar">SO</div>
-      <div><div class="chat-head-title">SourceOn Assistent</div><div class="chat-head-sub">Beantwortet alle Fragen zu SourceOn</div></div>
+      <div><div class="chat-head-title" data-i18n="chat_title">SourceOn Assistent</div><div class="chat-head-sub" data-i18n="chat_subtitle">Beantwortet alle Fragen zu SourceOn</div></div>
     </div>
     <button id="chat-close" onclick="toggleChat()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="chat-msgs" id="chat-msgs"></div>
   <div class="chat-footer">
     <div class="chat-chips" id="chat-chips">
-      <button class="chat-chip" onclick="sendChip(this)">Wie funktioniert SourceOn?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Was kostet es?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Materialbedarf melden</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip1">Wie funktioniert SourceOn?</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip2">Was kostet es?</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip3">Materialbedarf melden</button>
     </div>
     <div class="chat-input-row">
-      <input type="text" id="chat-input" placeholder="Frage stellen…" onkeydown="if(event.key==='Enter')chatSend()"/>
+      <input type="text" id="chat-input" placeholder="Frage stellen…" data-i18n-placeholder="chat_input_ph" onkeydown="if(event.key==='Enter')chatSend()"/>
       <button id="chat-send" onclick="chatSend()"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22,2 15,22 11,13 2,9"/></svg></button>
     </div>
   </div>
@@ -1306,6 +1306,15 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 (function(){
   var T = {
     de: {
+      chat_title: 'SourceOn Assistent',
+      chat_subtitle: 'Beantwortet alle Fragen zu SourceOn',
+      chat_chip1: 'Wie funktioniert SourceOn?',
+      chat_chip2: 'Was kostet es?',
+      chat_chip3: 'Materialbedarf melden',
+      chat_input_ph: 'Frage stellen…',
+      trust_title: 'Verifizierung erforderlich',
+      trust_msg: 'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',
+      trust_submit: 'Bestätigen',
       iv_label: 'Idee & Vision',
       iv_p1: 'Drei Baufirmen bestellen je 60 m³ Beton. Jede zahlt Einzelpreis. Dabei brauchen alle dasselbe Material, beim selben Lieferanten, in derselben Woche.',
       iv_p2: 'SourceOn bündelt diese drei Aufträge — und verhandelt als wäre es einer. Was Grossabnehmer seit jeher selbstverständlich nutzen, wird damit für jede Baufirma zugänglich. Nicht durch persönliche Beziehungen oder Verhandlungsgeschick. Durch ein System.',
@@ -1390,6 +1399,15 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_a_bundle: 'Nein. SourceOn verhandelt für das gesamte Bündel einen garantierten Mindestrabatt beim Lieferanten. Innerhalb des Bündels wird die Ersparnis nach Volumenanteil gestaffelt \u2014 wer mehr Material über SourceOn bezieht, profitiert von einer höheren individuellen Ersparnis. So bleibt das System fair und gleichzeitig wachstumsfördernd: je mehr du bündelst, desto mehr sparst du.'
     },
     en: {
+      chat_title: 'SourceOn Assistant',
+      chat_subtitle: 'Answers all questions about SourceOn',
+      chat_chip1: 'How does SourceOn work?',
+      chat_chip2: 'What does it cost?',
+      chat_chip3: 'Report material needs',
+      chat_input_ph: 'Ask a question…',
+      trust_title: 'Verification required',
+      trust_msg: 'A confirmation code has been sent to your email. Please enter it below.',
+      trust_submit: 'Confirm',
       iv_label: 'Idea & Vision',
       iv_p1: 'Three construction firms each order 60 m³ of concrete. Each pays retail price. Yet all need the same material, from the same supplier, in the same week.',
       iv_p2: 'SourceOn bundles these three orders — and negotiates as if they were one. What large buyers have always taken for granted becomes accessible to every construction firm. Not through personal relationships or negotiating skill. Through a system.',
@@ -1474,6 +1492,15 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_a_bundle: 'No. SourceOn negotiates a guaranteed minimum discount with the supplier for the entire bundle. Within the bundle, savings are tiered by volume share \u2014 those who source more material through SourceOn benefit from higher individual savings. This keeps the system fair while rewarding growth: the more you bundle, the more you save.'
     },
     fr: {
+      chat_title: 'Assistant SourceOn',
+      chat_subtitle: 'Répond à toutes les questions sur SourceOn',
+      chat_chip1: 'Comment fonctionne SourceOn ?',
+      chat_chip2: 'Combien ça coûte ?',
+      chat_chip3: 'Déclarer un besoin',
+      chat_input_ph: 'Poser une question…',
+      trust_title: 'Vérification requise',
+      trust_msg: 'Un code de confirmation a été envoyé à ton e-mail. Saisis-le ci-dessous.',
+      trust_submit: 'Confirmer',
       iv_label: 'Idée & Vision',
       iv_p1: 'Trois entreprises de construction commandent chacune 60 m³ de béton. Chacune paie le prix unitaire. Pourtant, toutes ont besoin du même matériau, chez le même fournisseur, la même semaine.',
       iv_p2: 'SourceOn regroupe ces trois commandes — et négocie comme si elles n\'en formaient qu\'une. Ce que les grands acheteurs ont toujours considéré comme acquis devient accessible à chaque entreprise de construction. Pas grâce aux relations personnelles ou au talent de négociation. Grâce à un système.',
@@ -1558,6 +1585,15 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       faq_a_bundle: 'Non. SourceOn négocie un rabais minimum garanti auprès du fournisseur pour l\'ensemble du regroupement. Au sein du regroupement, les économies sont échelonnées selon la part de volume \u2014 ceux qui approvisionnent plus de matériaux via SourceOn bénéficient d\'économies individuelles plus élevées.'
     },
     it: {
+      chat_title: 'Assistente SourceOn',
+      chat_subtitle: 'Risponde a tutte le domande su SourceOn',
+      chat_chip1: 'Come funziona SourceOn?',
+      chat_chip2: 'Quanto costa?',
+      chat_chip3: 'Segnala fabbisogno',
+      chat_input_ph: 'Fai una domanda…',
+      trust_title: 'Verifica richiesta',
+      trust_msg: 'Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.',
+      trust_submit: 'Conferma',
       iv_label: 'Idea & Visione',
       iv_p1: 'Tre imprese edili ordinano ciascuna 60 m³ di calcestruzzo. Ognuna paga il prezzo al dettaglio. Eppure tutte necessitano dello stesso materiale, dallo stesso fornitore, nella stessa settimana.',
       iv_p2: 'SourceOn raggruppa questi tre ordini — e negozia come se fossero uno. Ciò che i grandi acquirenti hanno sempre dato per scontato diventa accessibile a ogni impresa edile. Non attraverso relazioni personali o abilità di negoziazione. Attraverso un sistema.',
@@ -2086,10 +2122,10 @@ document.addEventListener('keydown',function(e){
 <style>.so-2fa [class*="cl-modal"]{display:none!important}</style>
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
   <div class="clerk-trust-modal" role="dialog" aria-modal="true" aria-label="Verifizierung erforderlich">
-    <h2>Verifizierung erforderlich</h2>
-    <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
+    <h2 data-i18n="trust_title">Verifizierung erforderlich</h2>
+    <p id="clerk-trust-msg" data-i18n="trust_msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
-    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
+    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()" data-i18n="trust_submit">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
     <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#D99000;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
     <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>

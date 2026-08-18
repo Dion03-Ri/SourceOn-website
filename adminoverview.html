@@ -216,86 +216,86 @@ p{text-wrap:pretty}
   <div class="topnav-right">
     <button class="btn-refresh" onclick="loadAllData()" id="btn-refresh">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-      Aktualisieren
+      <span data-i18n="nav_refresh">Aktualisieren</span>
     </button>
-    <a href="/" class="btn-back">Zur Website</a>
+    <a href="/" class="btn-back" data-i18n="nav_back">Zur Website</a>
   </div>
 </nav>
 
 <!-- AUTH GATE -->
 <div class="auth-gate" id="auth-gate">
   <div class="auth-card">
-    <h2>Admin-Zugang</h2>
-    <p id="auth-msg">Bitte mit deinem Admin-Konto anmelden.</p>
-    <button class="auth-btn" id="auth-login-btn" onclick="clerkAdminLogin()">Anmelden</button>
-    <button class="auth-btn" id="auth-logout-btn" style="display:none;background:transparent;border:1px solid rgba(16,24,40,.2)" onclick="clerkAdminLogout()">Abmelden</button>
-    <div class="auth-error" id="auth-error" style="display:none">Dieses Konto hat keinen Admin-Zugang.</div>
+    <h2 data-i18n="auth_title">Admin-Zugang</h2>
+    <p id="auth-msg" data-i18n="auth_msg_login">Bitte mit deinem Admin-Konto anmelden.</p>
+    <button class="auth-btn" id="auth-login-btn" onclick="clerkAdminLogin()" data-i18n="auth_login">Anmelden</button>
+    <button class="auth-btn" id="auth-logout-btn" style="display:none;background:transparent;border:1px solid rgba(16,24,40,.2)" onclick="clerkAdminLogout()" data-i18n="auth_logout">Abmelden</button>
+    <div class="auth-error" id="auth-error" style="display:none" data-i18n="auth_denied">Dieses Konto hat keinen Admin-Zugang.</div>
   </div>
 </div>
 
 <!-- MAIN DASHBOARD (hidden until auth) -->
 <div class="dash-main" id="dash-main">
-  <h1 class="dash-title">Admin Overview</h1>
-  <p class="dash-subtitle">Gesamtüberblick über alle Bündel, Lieferanten, Kunden und Materialanfragen.</p>
+  <h1 class="dash-title" data-i18n="dash_title">Admin Overview</h1>
+  <p class="dash-subtitle" data-i18n="dash_subtitle">Gesamtüberblick über alle Bündel, Lieferanten, Kunden und Materialanfragen.</p>
 
   <!-- SECTION 1: Stats -->
   <div class="stats-grid" id="stats-grid">
-    <div class="stat-card"><div class="stat-label">Aktive Bündel</div><div class="stat-value gold" id="st-active-bundles">–</div></div>
-    <div class="stat-card"><div class="stat-label">Vergebene Bündel</div><div class="stat-value blue" id="st-awarded-bundles">–</div></div>
-    <div class="stat-card"><div class="stat-label">Gesamtvolumen aktiv</div><div class="stat-value gold" id="st-total-volume">–</div></div>
-    <div class="stat-card"><div class="stat-label">Registrierte Lieferanten</div><div class="stat-value" id="st-total-suppliers">–</div></div>
-    <div class="stat-card"><div class="stat-label">Verifizierte Lieferanten</div><div class="stat-value green" id="st-verified-suppliers">–</div></div>
-    <div class="stat-card"><div class="stat-label">Wartende Bewerbungen</div><div class="stat-value amber" id="st-pending-suppliers">–</div></div>
-    <div class="stat-card"><div class="stat-label">Registrierte Kunden</div><div class="stat-value" id="st-total-customers">–</div></div>
-    <div class="stat-card"><div class="stat-label">Abgelaufene Bündel</div><div class="stat-value" style="color:#D64545" id="st-expired-bundles">–</div></div>
-    <div class="stat-card"><div class="stat-label">Offene Materialanfragen</div><div class="stat-value amber" id="st-open-requests">–</div></div>
+    <div class="stat-card"><div class="stat-label" data-i18n="stat_active_bundles">Aktive Bündel</div><div class="stat-value gold" id="st-active-bundles">–</div></div>
+    <div class="stat-card"><div class="stat-label" data-i18n="stat_awarded_bundles">Vergebene Bündel</div><div class="stat-value blue" id="st-awarded-bundles">–</div></div>
+    <div class="stat-card"><div class="stat-label" data-i18n="stat_total_volume">Gesamtvolumen aktiv</div><div class="stat-value gold" id="st-total-volume">–</div></div>
+    <div class="stat-card"><div class="stat-label" data-i18n="stat_total_suppliers">Registrierte Lieferanten</div><div class="stat-value" id="st-total-suppliers">–</div></div>
+    <div class="stat-card"><div class="stat-label" data-i18n="stat_verified_suppliers">Verifizierte Lieferanten</div><div class="stat-value green" id="st-verified-suppliers">–</div></div>
+    <div class="stat-card"><div class="stat-label" data-i18n="stat_pending_suppliers">Wartende Bewerbungen</div><div class="stat-value amber" id="st-pending-suppliers">–</div></div>
+    <div class="stat-card"><div class="stat-label" data-i18n="stat_total_customers">Registrierte Kunden</div><div class="stat-value" id="st-total-customers">–</div></div>
+    <div class="stat-card"><div class="stat-label" data-i18n="stat_expired_bundles">Abgelaufene Bündel</div><div class="stat-value" style="color:#D64545" id="st-expired-bundles">–</div></div>
+    <div class="stat-card"><div class="stat-label" data-i18n="stat_open_requests">Offene Materialanfragen</div><div class="stat-value amber" id="st-open-requests">–</div></div>
   </div>
 
   <!-- SECTION 2: Pending suppliers -->
   <div class="section" id="sec-pending">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px">Wartende Lieferanten-Bewerbungen <span class="badge" id="pending-count">0</span></span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportPendingExcel()">↓ Exportieren</span></div>
-    <p class="section-sub">Lieferanten, die auf Verifizierung warten. Hier kannst du sie direkt verifizieren oder ablehnen.</p>
-    <div class="tbl-wrap"><div id="pending-table" class="loading">Daten werden geladen...</div></div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px"><span data-i18n="sec_pending_title">Wartende Lieferanten-Bewerbungen</span> <span class="badge" id="pending-count">0</span></span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportPendingExcel()" data-i18n="btn_export">↓ Exportieren</span></div>
+    <p class="section-sub" data-i18n="sec_pending_sub">Lieferanten, die auf Verifizierung warten. Hier kannst du sie direkt verifizieren oder ablehnen.</p>
+    <div class="tbl-wrap"><div id="pending-table" class="loading" data-i18n="loading">Daten werden geladen...</div></div>
   </div>
 
   <!-- SECTION 3: All bundles -->
   <div class="section">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">Alle Bündel<span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportBundlesExcel()">↓ Exportieren</span></div>
-    <p class="section-sub">Alle erstellten Bündel, sortiert nach Erstelldatum (neueste zuerst).</p>
-    <div class="tbl-wrap"><div id="bundles-table" class="loading">Daten werden geladen...</div></div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span data-i18n="sec_bundles_title">Alle Bündel</span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportBundlesExcel()" data-i18n="btn_export">↓ Exportieren</span></div>
+    <p class="section-sub" data-i18n="sec_bundles_sub">Alle erstellten Bündel, sortiert nach Erstelldatum (neueste zuerst).</p>
+    <div class="tbl-wrap"><div id="bundles-table" class="loading" data-i18n="loading">Daten werden geladen...</div></div>
   </div>
 
   <!-- SECTION 3c: Ausstehende Provisionen -->
   <div class="section" id="sec-provisions">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px">Ausstehende Provisionen <span class="badge" id="prov-count">0</span></span></div>
-    <p class="section-sub">Vergebene Bündel mit fälliger Vermittlungsprovision (2.25% des Bestellwerts). Nach Zahlungseingang als bezahlt markieren.</p>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px"><span data-i18n="sec_prov_title">Ausstehende Provisionen</span> <span class="badge" id="prov-count">0</span></span></div>
+    <p class="section-sub" data-i18n="sec_prov_sub">Vergebene Bündel mit fälliger Vermittlungsprovision (2.25% des Bestellwerts). Nach Zahlungseingang als bezahlt markieren.</p>
     <div style="display:flex;gap:28px;flex-wrap:wrap;margin:6px 0 16px;font-size:.9rem">
-      <div>Ausstehende Provisionen: <strong id="prov-open-sum" style="color:#9A6A00">CHF 0</strong></div>
-      <div>Bereits eingegangen: <strong id="prov-collected-sum" style="color:#15924F">CHF 0</strong></div>
+      <div><span data-i18n="prov_open_label">Ausstehende Provisionen:</span> <strong id="prov-open-sum" style="color:#9A6A00">CHF 0</strong></div>
+      <div><span data-i18n="prov_collected_label">Bereits eingegangen:</span> <strong id="prov-collected-sum" style="color:#15924F">CHF 0</strong></div>
     </div>
-    <div class="tbl-wrap"><div id="provisions-table" class="loading">Daten werden geladen...</div></div>
+    <div class="tbl-wrap"><div id="provisions-table" class="loading" data-i18n="loading">Daten werden geladen...</div></div>
   </div>
 
   <!-- SECTION 3b: Expired bundles -->
   <div class="section" id="sec-expired">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px">Abgelaufene Bündel <span class="badge" id="expired-count" style="background:rgba(239,68,68,.12);color:#D64545">0</span></span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportExpiredBundlesExcel()">↓ Exportieren</span></div>
-    <p class="section-sub">Bündel deren Frist abgelaufen ist ohne qualifizierende Gebote. Erneut ausschreiben oder entfernen.</p>
-    <div class="tbl-wrap"><div id="expired-table" class="loading">Daten werden geladen...</div></div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span style="display:flex;align-items:center;gap:10px"><span data-i18n="sec_expired_title">Abgelaufene Bündel</span> <span class="badge" id="expired-count" style="background:rgba(239,68,68,.12);color:#D64545">0</span></span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportExpiredBundlesExcel()" data-i18n="btn_export">↓ Exportieren</span></div>
+    <p class="section-sub" data-i18n="sec_expired_sub">Bündel deren Frist abgelaufen ist ohne qualifizierende Gebote. Erneut ausschreiben oder entfernen.</p>
+    <div class="tbl-wrap"><div id="expired-table" class="loading" data-i18n="loading">Daten werden geladen...</div></div>
   </div>
 
   <!-- SECTION 4: All suppliers -->
   <div class="section">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">Alle Lieferanten<span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportSuppliersExcel()">↓ Alle exportieren</span></div>
-    <p class="section-sub">Vollständige Liste aller registrierten Lieferanten.</p>
-    <input type="text" class="search-input" id="supplier-search" placeholder="Nach Firmenname suchen..." oninput="filterSuppliers()"/>
-    <div class="tbl-wrap"><div id="suppliers-table" class="loading">Daten werden geladen...</div></div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span data-i18n="sec_suppliers_title">Alle Lieferanten</span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportSuppliersExcel()" data-i18n="btn_export_all">↓ Alle exportieren</span></div>
+    <p class="section-sub" data-i18n="sec_suppliers_sub">Vollständige Liste aller registrierten Lieferanten.</p>
+    <input type="text" class="search-input" id="supplier-search" placeholder="Nach Firmenname suchen..." data-i18n-placeholder="supplier_search_ph" oninput="filterSuppliers()"/>
+    <div class="tbl-wrap"><div id="suppliers-table" class="loading" data-i18n="loading">Daten werden geladen...</div></div>
   </div>
 
   <!-- SECTION 5: All customers -->
   <div class="section">
-    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">Alle Kunden<span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportCustomersExcel()">↓ Exportieren</span></div>
-    <p class="section-sub">Vollständige Liste aller registrierten Kunden mit Anzahl Materialanfragen.</p>
-    <div class="tbl-wrap"><div id="customers-table" class="loading">Daten werden geladen...</div></div>
+    <div class="section-title" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap"><span data-i18n="sec_customers_title">Alle Kunden</span><span class="link-m" style="font-size:.82rem;font-weight:600;color:#9A6A00;cursor:pointer" onclick="exportCustomersExcel()" data-i18n="btn_export">↓ Exportieren</span></div>
+    <p class="section-sub" data-i18n="sec_customers_sub">Vollständige Liste aller registrierten Kunden mit Anzahl Materialanfragen.</p>
+    <div class="tbl-wrap"><div id="customers-table" class="loading" data-i18n="loading">Daten werden geladen...</div></div>
   </div>
 </div>
 
@@ -881,17 +881,91 @@ function toggleCustReqs(custId){
 </style>
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
   <div class="clerk-trust-modal">
-    <h3>Verifizierung erforderlich</h3>
-    <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
+    <h3 data-i18n="trust_title">Verifizierung erforderlich</h3>
+    <p id="clerk-trust-msg" data-i18n="trust_msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
-    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
+    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()" data-i18n="trust_submit">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
-    <div style="margin-top:12px;font-size:.78rem;color:#56616F">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#9A6A00;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
-    <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
+    <div style="margin-top:12px;font-size:.78rem;color:#56616F"><span data-i18n="trust_noresend">Keinen Code erhalten?</span> <a href="#" onclick="clerkTrustResend();return false" style="color:#9A6A00;text-decoration:underline;cursor:pointer" data-i18n="trust_resend">Code erneut senden</a></div>
+    <button class="btn-cancel-trust" onclick="clerkTrustCancel()" data-i18n="trust_cancel">Abbrechen</button>
   </div>
 </div>
 <script>
 window.addEventListener("pageshow", function(e){ if(e.persisted){ window.location.reload(); } });
+</script>
+<script>
+(function(){
+var T={
+de:{
+nav_refresh:"Aktualisieren",nav_back:"Zur Website",
+auth_title:"Admin-Zugang",auth_msg_login:"Bitte mit deinem Admin-Konto anmelden.",auth_login:"Anmelden",auth_logout:"Abmelden",auth_denied:"Dieses Konto hat keinen Admin-Zugang.",
+dash_title:"Admin Overview",dash_subtitle:"Gesamtüberblick über alle Bündel, Lieferanten, Kunden und Materialanfragen.",
+stat_active_bundles:"Aktive Bündel",stat_awarded_bundles:"Vergebene Bündel",stat_total_volume:"Gesamtvolumen aktiv",stat_total_suppliers:"Registrierte Lieferanten",stat_verified_suppliers:"Verifizierte Lieferanten",stat_pending_suppliers:"Wartende Bewerbungen",stat_total_customers:"Registrierte Kunden",stat_expired_bundles:"Abgelaufene Bündel",stat_open_requests:"Offene Materialanfragen",
+sec_pending_title:"Wartende Lieferanten-Bewerbungen",sec_pending_sub:"Lieferanten, die auf Verifizierung warten. Hier kannst du sie direkt verifizieren oder ablehnen.",
+btn_export:"↓ Exportieren",btn_export_all:"↓ Alle exportieren",loading:"Daten werden geladen...",
+sec_bundles_title:"Alle Bündel",sec_bundles_sub:"Alle erstellten Bündel, sortiert nach Erstelldatum (neueste zuerst).",
+sec_prov_title:"Ausstehende Provisionen",sec_prov_sub:"Vergebene Bündel mit fälliger Vermittlungsprovision (2.25% des Bestellwerts). Nach Zahlungseingang als bezahlt markieren.",prov_open_label:"Ausstehende Provisionen:",prov_collected_label:"Bereits eingegangen:",
+sec_expired_title:"Abgelaufene Bündel",sec_expired_sub:"Bündel deren Frist abgelaufen ist ohne qualifizierende Gebote. Erneut ausschreiben oder entfernen.",
+sec_suppliers_title:"Alle Lieferanten",sec_suppliers_sub:"Vollständige Liste aller registrierten Lieferanten.",supplier_search_ph:"Nach Firmenname suchen...",
+sec_customers_title:"Alle Kunden",sec_customers_sub:"Vollständige Liste aller registrierten Kunden mit Anzahl Materialanfragen.",
+trust_title:"Verifizierung erforderlich",trust_msg:"Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.",trust_submit:"Bestätigen",trust_noresend:"Keinen Code erhalten?",trust_resend:"Code erneut senden",trust_cancel:"Abbrechen"
+},
+en:{
+nav_refresh:"Refresh",nav_back:"To website",
+auth_title:"Admin access",auth_msg_login:"Please sign in with your admin account.",auth_login:"Sign in",auth_logout:"Sign out",auth_denied:"This account does not have admin access.",
+dash_title:"Admin Overview",dash_subtitle:"Complete overview of all bundles, suppliers, customers and material requests.",
+stat_active_bundles:"Active bundles",stat_awarded_bundles:"Awarded bundles",stat_total_volume:"Total active volume",stat_total_suppliers:"Registered suppliers",stat_verified_suppliers:"Verified suppliers",stat_pending_suppliers:"Pending applications",stat_total_customers:"Registered customers",stat_expired_bundles:"Expired bundles",stat_open_requests:"Open material requests",
+sec_pending_title:"Pending supplier applications",sec_pending_sub:"Suppliers awaiting verification. Here you can verify or reject them directly.",
+btn_export:"↓ Export",btn_export_all:"↓ Export all",loading:"Loading data...",
+sec_bundles_title:"All bundles",sec_bundles_sub:"All created bundles, sorted by creation date (newest first).",
+sec_prov_title:"Outstanding commissions",sec_prov_sub:"Awarded bundles with a commission due (2.25% of the order value). Mark as paid once payment is received.",prov_open_label:"Outstanding commissions:",prov_collected_label:"Already received:",
+sec_expired_title:"Expired bundles",sec_expired_sub:"Bundles whose deadline has passed without qualifying bids. Re-list or remove.",
+sec_suppliers_title:"All suppliers",sec_suppliers_sub:"Complete list of all registered suppliers.",supplier_search_ph:"Search by company name...",
+sec_customers_title:"All customers",sec_customers_sub:"Complete list of all registered customers with number of material requests.",
+trust_title:"Verification required",trust_msg:"A confirmation code has been sent to your email. Please enter it below.",trust_submit:"Confirm",trust_noresend:"Didn't receive a code?",trust_resend:"Resend code",trust_cancel:"Cancel"
+},
+fr:{
+nav_refresh:"Actualiser",nav_back:"Vers le site",
+auth_title:"Accès admin",auth_msg_login:"Merci de te connecter avec ton compte admin.",auth_login:"Se connecter",auth_logout:"Se déconnecter",auth_denied:"Ce compte n'a pas d'accès admin.",
+dash_title:"Admin Overview",dash_subtitle:"Vue d'ensemble de tous les groupages, fournisseurs, clients et demandes de matériaux.",
+stat_active_bundles:"Groupages actifs",stat_awarded_bundles:"Groupages attribués",stat_total_volume:"Volume total actif",stat_total_suppliers:"Fournisseurs enregistrés",stat_verified_suppliers:"Fournisseurs vérifiés",stat_pending_suppliers:"Candidatures en attente",stat_total_customers:"Clients enregistrés",stat_expired_bundles:"Groupages expirés",stat_open_requests:"Demandes de matériaux ouvertes",
+sec_pending_title:"Candidatures fournisseurs en attente",sec_pending_sub:"Fournisseurs en attente de vérification. Ici tu peux les vérifier ou les refuser directement.",
+btn_export:"↓ Exporter",btn_export_all:"↓ Tout exporter",loading:"Chargement des données...",
+sec_bundles_title:"Tous les groupages",sec_bundles_sub:"Tous les groupages créés, triés par date de création (les plus récents d'abord).",
+sec_prov_title:"Commissions en attente",sec_prov_sub:"Groupages attribués avec une commission d'intermédiation due (2.25% de la valeur de commande). Marquer comme payé après réception du paiement.",prov_open_label:"Commissions en attente :",prov_collected_label:"Déjà reçu :",
+sec_expired_title:"Groupages expirés",sec_expired_sub:"Groupages dont le délai est expiré sans offres qualifiantes. Relancer ou supprimer.",
+sec_suppliers_title:"Tous les fournisseurs",sec_suppliers_sub:"Liste complète de tous les fournisseurs enregistrés.",supplier_search_ph:"Rechercher par nom d'entreprise...",
+sec_customers_title:"Tous les clients",sec_customers_sub:"Liste complète de tous les clients enregistrés avec le nombre de demandes de matériaux.",
+trust_title:"Vérification requise",trust_msg:"Un code de confirmation a été envoyé à ton e-mail. Merci de le saisir ci-dessous.",trust_submit:"Confirmer",trust_noresend:"Pas reçu de code ?",trust_resend:"Renvoyer le code",trust_cancel:"Annuler"
+},
+it:{
+nav_refresh:"Aggiorna",nav_back:"Al sito web",
+auth_title:"Accesso admin",auth_msg_login:"Accedi con il tuo account admin.",auth_login:"Accedi",auth_logout:"Esci",auth_denied:"Questo account non ha accesso admin.",
+dash_title:"Admin Overview",dash_subtitle:"Panoramica completa di tutti i raggruppamenti, fornitori, clienti e richieste di materiale.",
+stat_active_bundles:"Raggruppamenti attivi",stat_awarded_bundles:"Raggruppamenti aggiudicati",stat_total_volume:"Volume totale attivo",stat_total_suppliers:"Fornitori registrati",stat_verified_suppliers:"Fornitori verificati",stat_pending_suppliers:"Candidature in attesa",stat_total_customers:"Clienti registrati",stat_expired_bundles:"Raggruppamenti scaduti",stat_open_requests:"Richieste di materiale aperte",
+sec_pending_title:"Candidature fornitori in attesa",sec_pending_sub:"Fornitori in attesa di verifica. Qui puoi verificarli o rifiutarli direttamente.",
+btn_export:"↓ Esporta",btn_export_all:"↓ Esporta tutto",loading:"Caricamento dati...",
+sec_bundles_title:"Tutti i raggruppamenti",sec_bundles_sub:"Tutti i raggruppamenti creati, ordinati per data di creazione (i più recenti prima).",
+sec_prov_title:"Provvigioni in sospeso",sec_prov_sub:"Raggruppamenti aggiudicati con provvigione di intermediazione dovuta (2.25% del valore dell'ordine). Segnare come pagato dopo la ricezione del pagamento.",prov_open_label:"Provvigioni in sospeso:",prov_collected_label:"Già ricevuto:",
+sec_expired_title:"Raggruppamenti scaduti",sec_expired_sub:"Raggruppamenti il cui termine è scaduto senza offerte qualificanti. Ripubblicare o rimuovere.",
+sec_suppliers_title:"Tutti i fornitori",sec_suppliers_sub:"Elenco completo di tutti i fornitori registrati.",supplier_search_ph:"Cerca per nome azienda...",
+sec_customers_title:"Tutti i clienti",sec_customers_sub:"Elenco completo di tutti i clienti registrati con il numero di richieste di materiale.",
+trust_title:"Verifica richiesta",trust_msg:"Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.",trust_submit:"Conferma",trust_noresend:"Non hai ricevuto un codice?",trust_resend:"Invia di nuovo il codice",trust_cancel:"Annulla"
+}
+};
+window.setLang=function(lang){
+  if(!T[lang])lang='de';
+  var d=T[lang];
+  document.querySelectorAll('[data-i18n]').forEach(function(el){var k=el.getAttribute('data-i18n');if(d[k]!==undefined)el.textContent=d[k];});
+  document.querySelectorAll('[data-i18n-html]').forEach(function(el){var k=el.getAttribute('data-i18n-html');if(d[k]!==undefined)el.innerHTML=d[k];});
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(function(el){var k=el.getAttribute('data-i18n-placeholder');if(d[k]!==undefined)el.placeholder=d[k];});
+  document.querySelectorAll('[data-i18n-aria]').forEach(function(el){var k=el.getAttribute('data-i18n-aria');if(d[k]!==undefined)el.setAttribute('aria-label',d[k]);});
+  localStorage.setItem('sourceon-lang',lang);document.documentElement.lang=lang;
+  var cur=document.getElementById('lang-current');if(cur)cur.textContent=lang.toUpperCase();
+  document.querySelectorAll('.lang-opt').forEach(function(btn){var oc=btn.getAttribute('onclick')||'';btn.classList.toggle('active',oc.indexOf("'"+lang+"'")!==-1);});
+};
+var saved=localStorage.getItem('sourceon-lang')||'de';setLang(saved);
+})();
 </script>
 </body>
 </html>

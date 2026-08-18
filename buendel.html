@@ -1222,16 +1222,16 @@ function toggleFaq(btn){
   <div class="chat-head">
     <div class="chat-head-info">
       <div class="chat-avatar">SO</div>
-      <div><div class="chat-head-title">SourceOn Assistent</div><div class="chat-head-sub">Beantwortet alle Fragen zu SourceOn</div></div>
+      <div><div class="chat-head-title" data-i18n="chat_title">SourceOn Assistent</div><div class="chat-head-sub" data-i18n="chat_sub">Beantwortet alle Fragen zu SourceOn</div></div>
     </div>
     <button id="chat-close" onclick="toggleChat()"><svg aria-hidden="true" class="ic-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   </div>
   <div class="chat-msgs" id="chat-msgs"></div>
   <div class="chat-footer">
     <div class="chat-chips" id="chat-chips">
-      <button class="chat-chip" onclick="sendChip(this)">Wie funktioniert SourceOn?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Was kostet es?</button>
-      <button class="chat-chip" onclick="sendChip(this)">Materialbedarf melden</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip1">Wie funktioniert SourceOn?</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip2">Was kostet es?</button>
+      <button class="chat-chip" onclick="sendChip(this)" data-i18n="chat_chip3">Materialbedarf melden</button>
     </div>
     <div class="chat-input-row">
       <input type="text" id="chat-input" placeholder="Frage stellen…" onkeydown="if(event.key==='Enter')chatSend()"/>
@@ -1310,7 +1310,9 @@ const T={
     footer_calc:'Einsparkalkulator',
     footer_privacy:'Datenschutz',footer_imprint:'Impressum',footer_terms:'AGB',
     footer_copy:'© 2026 SourceOn, Zürich — Alle Rechte vorbehalten',
-    footer_tagline:'Du zahlst erst, wenn wir dir sparen.'
+    footer_tagline:'Du zahlst erst, wenn wir dir sparen.',
+    chat_title:'SourceOn Assistent',chat_sub:'Beantwortet alle Fragen zu SourceOn',chat_chip1:'Wie funktioniert SourceOn?',chat_chip2:'Was kostet es?',chat_chip3:'Materialbedarf melden',
+    trust_title:'Verifizierung erforderlich',trust_msg:'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.',trust_msg_phone:'Ein Bestätigungscode wurde an deine Telefonnummer gesendet.',trust_submit:'Bestätigen',trust_checking:'Wird geprüft…',trust_nocode:'Keinen Code erhalten?',trust_resend:'Code erneut senden',trust_cancel:'Abbrechen'
   },
   en:{
     page_title:'Open Bundles | Ongoing group orders — SourceOn',sm_eyebrow:'Special material',bd_eyebrow:'OPEN BUNDLES',bd_heading:'Ongoing group orders.',bd_sub:'Bundles combine the material needs of several construction firms — pooled volumes enable better purchasing conditions.',bd_loading:'Loading bundles…',bd_empty:'No open bundles right now — report your needs and start a new bundle.',bd_cta_title:'Want to join a bundle?',bd_cta_sub:'Report your material needs — matching bundles are detected automatically.',bd_cta_btn:'Report material needs →',bd_search_ph:'Search material…',bd_nomatch:'No bundle found for this search.',sm_heading:'Material not in the catalogue?',
@@ -1362,7 +1364,9 @@ const T={
     footer_calc:'Savings calculator',
     footer_privacy:'Privacy policy',footer_imprint:'Imprint',footer_terms:'Terms',
     footer_copy:'© 2026 SourceOn, Zurich — All rights reserved',
-    footer_tagline:'You only pay when we save you money.'
+    footer_tagline:'You only pay when we save you money.',
+    chat_title:'SourceOn Assistant',chat_sub:'Answers all questions about SourceOn',chat_chip1:'How does SourceOn work?',chat_chip2:'What does it cost?',chat_chip3:'Report material needs',
+    trust_title:'Verification required',trust_msg:'A confirmation code has been sent to your email. Please enter it below.',trust_msg_phone:'A confirmation code has been sent to your phone number.',trust_submit:'Confirm',trust_checking:'Checking…',trust_nocode:'Didn\'t receive a code?',trust_resend:'Resend code',trust_cancel:'Cancel'
   },
   fr:{
     page_title:'Groupements ouverts | Commandes groupées en cours — SourceOn',sm_eyebrow:'Matériau spécial',bd_eyebrow:'GROUPEMENTS OUVERTS',bd_heading:'Commandes groupées en cours.',bd_sub:'Les groupements réunissent les besoins en matériaux de plusieurs entreprises — les volumes regroupés permettent de meilleures conditions d\'achat.',bd_loading:'Chargement des groupements…',bd_empty:'Aucun groupement ouvert pour le moment — annonce ton besoin et lance un nouveau groupement.',bd_cta_title:'Envie de rejoindre un groupement ?',bd_cta_sub:'Annonce ton besoin en matériaux — les groupements correspondants sont détectés automatiquement.',bd_cta_btn:'Annoncer un besoin →',bd_search_ph:'Rechercher un matériau…',bd_nomatch:'Aucun groupement trouvé pour cette recherche.',sm_heading:'Matériau pas dans le catalogue ?',
@@ -1415,7 +1419,9 @@ const T={
     footer_calc:'Calculateur d\'économies',
     footer_privacy:'Protection des données',footer_imprint:'Mentions légales',footer_terms:'CGV',
     footer_copy:'© 2026 SourceOn, Zurich — Tous droits réservés',
-    footer_tagline:'Vous ne payez que lorsque nous vous faisons économiser.'
+    footer_tagline:'Vous ne payez que lorsque nous vous faisons économiser.',
+    chat_title:'Assistant SourceOn',chat_sub:'Répond à toutes les questions sur SourceOn',chat_chip1:'Comment fonctionne SourceOn ?',chat_chip2:'Combien ça coûte ?',chat_chip3:'Déclarer un besoin',
+    trust_title:'Vérification requise',trust_msg:'Un code de confirmation a été envoyé à ton e-mail. Saisis-le ci-dessous.',trust_msg_phone:'Un code de confirmation a été envoyé à ton numéro de téléphone.',trust_submit:'Confirmer',trust_checking:'Vérification…',trust_nocode:'Tu n\'as pas reçu de code ?',trust_resend:'Renvoyer le code',trust_cancel:'Annuler'
   },
   it:{
     page_title:'Raggruppamenti aperti | Ordini collettivi in corso — SourceOn',sm_eyebrow:'Materiale speciale',bd_eyebrow:'RAGGRUPPAMENTI APERTI',bd_heading:'Ordini collettivi in corso.',bd_sub:'I raggruppamenti uniscono il fabbisogno di materiali di più imprese edili — i volumi aggregati consentono condizioni d\'acquisto migliori.',bd_loading:'Caricamento raggruppamenti…',bd_empty:'Al momento nessun raggruppamento aperto — segnala il tuo fabbisogno e avvia un nuovo raggruppamento.',bd_cta_title:'Vuoi unirti a un raggruppamento?',bd_cta_sub:'Segnala il tuo fabbisogno di materiali — i raggruppamenti adatti vengono rilevati automaticamente.',bd_cta_btn:'Segnala il fabbisogno →',bd_search_ph:'Cerca materiale…',bd_nomatch:'Nessun raggruppamento trovato per questa ricerca.',sm_heading:'Materiale non nel catalogo?',
@@ -1468,7 +1474,9 @@ const T={
     footer_calc:'Calcolatore di risparmio',
     footer_privacy:'Privacy',footer_imprint:'Impressum',footer_terms:'CGC',
     footer_copy:'© 2026 SourceOn, Zurigo — Tutti i diritti riservati',
-    footer_tagline:'Paghi solo quando ti facciamo risparmiare.'
+    footer_tagline:'Paghi solo quando ti facciamo risparmiare.',
+    chat_title:'Assistente SourceOn',chat_sub:'Risponde a tutte le domande su SourceOn',chat_chip1:'Come funziona SourceOn?',chat_chip2:'Quanto costa?',chat_chip3:'Segnala fabbisogno',
+    trust_title:'Verifica richiesta',trust_msg:'Un codice di conferma è stato inviato alla tua e-mail. Inseriscilo qui sotto.',trust_msg_phone:'Un codice di conferma è stato inviato al tuo numero di telefono.',trust_submit:'Conferma',trust_checking:'Verifica in corso…',trust_nocode:'Non hai ricevuto il codice?',trust_resend:'Invia di nuovo il codice',trust_cancel:'Annulla'
   }
 };
 
@@ -1497,6 +1505,7 @@ function applyLang(lang){
   }catch(e){}
 }
 window.setLang=applyLang;
+window.soTrust=function(key){var l=localStorage.getItem('sourceon-lang')||'de';var d=T[l]||T.de;return (d&&d[key]!=null)?d[key]:T.de[key];};
 
 // ===== Special material request form =====
 var _SR_VALERR={de:'Bitte fülle alle Pflichtfelder aus.',en:'Please fill in all required fields.',fr:'Veuillez remplir tous les champs obligatoires.',it:'Compila tutti i campi obbligatori.'};
@@ -1992,14 +2001,14 @@ async function _clerkSendVerificationCode(){
     var si=_clerkSignInResource;
     if(!si)return;
     await si.prepareSecondFactor({strategy:'email_code'});
-    document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.';
+    document.getElementById('clerk-trust-msg').textContent=(window.soTrust?window.soTrust('trust_msg'):'Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.');
     _clerkShowTrustModal();
   }catch(e){
     console.error('[Clerk] prepareSecondFactor email_code failed:',e);
     try{
       await _clerkSignInResource.prepareSecondFactor({strategy:'phone_code'});
       _clerkTrustStrategy='phone_code';
-      document.getElementById('clerk-trust-msg').textContent='Ein Bestätigungscode wurde an deine Telefonnummer gesendet.';
+      document.getElementById('clerk-trust-msg').textContent=(window.soTrust?window.soTrust('trust_msg_phone'):'Ein Bestätigungscode wurde an deine Telefonnummer gesendet.');
       _clerkShowTrustModal();
     }catch(e2){
       console.error('[Clerk] prepareSecondFactor phone_code also failed:',e2);
@@ -2022,7 +2031,7 @@ async function clerkTrustVerify(){
   var code=document.getElementById('clerk-trust-code').value.trim();
   if(!code||!_clerkSignInResource){return;}
   var btn=document.getElementById('clerk-trust-submit');
-  btn.disabled=true;btn.textContent='Wird geprüft…';
+  btn.disabled=true;btn.textContent=(window.soTrust?window.soTrust('trust_checking'):'Wird geprüft…');
   document.getElementById('clerk-trust-error').textContent='';
   soLog('[Clerk] Submitting entered code (attemptSecondFactor), strategy:',_clerkTrustStrategy);
   try{
@@ -2042,7 +2051,7 @@ async function clerkTrustVerify(){
     console.error('[Clerk] attemptSecondFactor failed:',msg);
     document.getElementById('clerk-trust-error').textContent=msg;
   }
-  btn.disabled=false;btn.textContent='Bestätigen';
+  btn.disabled=false;btn.textContent=(window.soTrust?window.soTrust('trust_submit'):'Bestätigen');
 }
 
 async function clerkTrustResend(){
@@ -2068,13 +2077,13 @@ document.addEventListener('keydown',function(e){
 <style>.so-2fa [class*="cl-modal"]{display:none!important}</style>
 <div class="clerk-trust-overlay" id="clerk-trust-overlay">
   <div class="clerk-trust-modal" role="dialog" aria-modal="true" aria-label="Verifizierung erforderlich">
-    <h2>Verifizierung erforderlich</h2>
-    <p id="clerk-trust-msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
+    <h2 data-i18n="trust_title">Verifizierung erforderlich</h2>
+    <p id="clerk-trust-msg" data-i18n="trust_msg">Ein Bestätigungscode wurde an deine E-Mail gesendet. Bitte gib ihn unten ein.</p>
     <input type="text" id="clerk-trust-code" maxlength="6" placeholder="000000" autocomplete="one-time-code"/>
-    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()">Bestätigen</button>
+    <button class="btn-verify" id="clerk-trust-submit" onclick="clerkTrustVerify()" data-i18n="trust_submit">Bestätigen</button>
     <div class="trust-error" id="clerk-trust-error"></div>
-    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8">Keinen Code erhalten? <a href="#" onclick="clerkTrustResend();return false" style="color:#D99000;text-decoration:underline;cursor:pointer">Code erneut senden</a></div>
-    <button class="btn-cancel-trust" onclick="clerkTrustCancel()">Abbrechen</button>
+    <div style="margin-top:12px;font-size:.78rem;color:#94A3B8"><span data-i18n="trust_nocode">Keinen Code erhalten?</span> <a href="#" onclick="clerkTrustResend();return false" style="color:#D99000;text-decoration:underline;cursor:pointer" data-i18n="trust_resend">Code erneut senden</a></div>
+    <button class="btn-cancel-trust" onclick="clerkTrustCancel()" data-i18n="trust_cancel">Abbrechen</button>
   </div>
 </div>
 
