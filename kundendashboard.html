@@ -767,7 +767,7 @@ function richtpreis(r){var rp=(r.sourceon_id&&_matCatalogMap[r.sourceon_id])?_ma
 function reqEstValue(r){var rp=richtpreis(r);var m=parseFloat(r.menge);if(rp==null||isNaN(m))return null;return m*rp;}
 function reqGuaranteedSaving(r){var v=reqEstValue(r);var rab=parseFloat(r.committed_min_rabatt);if(v==null||isNaN(rab))return null;return v*rab;}
 function isActive(r){return r.status==='offen'||r.status==='gebuendelt';}
-function badgeFor(s){if(s==='offen')return {t:'Sammelt Partner',c:'p-mut'};if(s==='gebuendelt')return {t:'Ausgeschrieben',c:'p-green'};if(s==='vergeben')return {t:'Zuschlag',c:'p-gold'};if(s==='abgeschlossen')return {t:'Abgeschlossen',c:'p-green'};if(s==='storniert'||s==='abgesagt')return {t:'Storniert',c:'p-red'};if(s==='abgelaufen')return {t:'Abgelaufen',c:'p-mut'};return {t:s||'--',c:'p-mut'};}
+function badgeFor(s){if(s==='offen')return {t:soT('badge_offen'),c:'p-mut'};if(s==='gebuendelt')return {t:soT('badge_gebuendelt'),c:'p-green'};if(s==='vergeben')return {t:soT('badge_vergeben'),c:'p-gold'};if(s==='abgeschlossen')return {t:soT('badge_abgeschlossen'),c:'p-green'};if(s==='storniert'||s==='abgesagt')return {t:soT('badge_storniert'),c:'p-red'};if(s==='abgelaufen')return {t:soT('badge_abgelaufen'),c:'p-mut'};return {t:s||'--',c:'p-mut'};}
 function timelineStates(s){var st=['future','future','future','future'];st[0]='done';if(s==='offen'){st[1]='active';}else if(s==='gebuendelt'){st[1]='done';st[2]='active';}else if(s==='vergeben'){st[1]='done';st[2]='done';st[3]='active';}else if(s==='abgeschlossen'){st[1]='done';st[2]='done';st[3]='done';}else if(s==='abgelaufen'){st[1]='active';}return st;}
 function statusText(r){var s=r.status;if(s==='offen')return 'Wir suchen Bündelungspartner mit ähnlichem Bedarf.';if(s==='gebuendelt')return 'Deine Anfrage ist Teil eines aktiven Bündels — Lieferanten reichen Angebote ein.';if(s==='vergeben')return 'Zuschlag erteilt — dein Lieferant koordiniert die Lieferung direkt mit dir.';if(s==='abgeschlossen')return 'Bestellung abgeschlossen — die Lieferung ist erfolgt.';if(s==='abgelaufen')return 'Diese Ausschreibung ist abgelaufen. Deine Anfrage wird neu gebündelt.';if(s==='storniert'||s==='abgesagt')return 'Diese Anfrage wurde storniert.';return '';}
 function reqDeadline(r){var bundle=r.bundle_id?_bundleMap[r.bundle_id]:null;if(r.status==='gebuendelt'&&bundle&&bundle.bid_deadline){var d=new Date(bundle.bid_deadline);if(!isNaN(d))return {label:'Angebotsfrist',date:d};}if(r.status==='offen'&&r.liefer_zeitraum_bis&&window.SO_TIMING){var ce=window.SO_TIMING.collectionEnd(r.liefer_zeitraum_bis,r.created_at);if(ce)return {label:'Ausschreibung spätestens',date:ce};}return null;}
@@ -808,8 +808,8 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   var customerIds=custRes.data.map(function(c){return c.id;});
   var email=window.Clerk.user.primaryEmailAddress?window.Clerk.user.primaryEmailAddress.emailAddress:'';
   document.getElementById('db-firm').textContent=_customer.firmenname||'';
-  document.getElementById('greet-hi').textContent='Guten Tag'+(_customer.firmenname?', '+_customer.firmenname:'')+'.';
-  document.getElementById('greet-date').textContent=new Date().toLocaleDateString('de-CH',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('greet-hi').textContent=soT('greet_hi')+(_customer.firmenname?', '+_customer.firmenname:'')+'.';
+  document.getElementById('greet-date').textContent=new Date().toLocaleDateString(soLocale(),{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   document.getElementById('kt-email').textContent=email;
   document.getElementById('auth-gate').style.display='none';
   document.getElementById('dash').style.display='block';
@@ -886,7 +886,7 @@ function renderUebersicht(){
   document.getElementById('ov-active').textContent=t.active;
   document.getElementById('ov-done').textContent=t.done;
   var now=new Date(),events=[];
-  _requests.forEach(function(r){var dl=reqDeadline(r);if(dl&&dl.date>now){events.push({date:dl.date,desc:(r.status==='offen'?'Ausschreibung spätestens':'Angebotsfrist endet')+' — '+matNameFor(r),pill:badgeFor(r.status)});}});
+  _requests.forEach(function(r){var dl=reqDeadline(r);if(dl&&dl.date>now){events.push({date:dl.date,desc:soT(r.status==='offen'?'tender_latest':'bid_deadline_ends')+' — '+matNameFor(r),pill:badgeFor(r.status)});}});
   events.sort(function(a,b){return a.date-b.date;});events=events.slice(0,5);
   var _urgentN=_requests.filter(function(r){var u=_urgency(r);return u&&u.isUrgent&&(r.status==='offen'||r.status==='sammelt'||r.status==='gebuendelt');}).length;
   var _ovBar=_urgentN>0?'<div class="warn-ov-bar" onclick="showTab(\'anfragen\')">⚠️ '+_wt('ov_notice').replace('{N}',_urgentN)+'</div>':'';
@@ -1188,7 +1188,7 @@ function renderKonto(){
 }
 function editField(key){_editingField=key;renderKonto();}
 function cancelEdit(){_editingField=null;renderKonto();}
-async function saveField(key){var inp=document.getElementById('ai-'+key);if(!inp)return;var val=inp.value.trim();try{var upd={};upd[key]=val;var res=await sb.from('customers').update(upd).eq('id',_customer.id);if(res.error){alert('Speichern fehlgeschlagen: '+res.error.message);return;}_customer[key]=val;_editingField=null;renderKonto();if(key==='firmenname'){document.getElementById('greet-hi').textContent='Guten Tag, '+val+'.';document.getElementById('db-firm').textContent=val;}}catch(e){alert('Speichern fehlgeschlagen.');}}
+async function saveField(key){var inp=document.getElementById('ai-'+key);if(!inp)return;var val=inp.value.trim();try{var upd={};upd[key]=val;var res=await sb.from('customers').update(upd).eq('id',_customer.id);if(res.error){alert('Speichern fehlgeschlagen: '+res.error.message);return;}_customer[key]=val;_editingField=null;renderKonto();if(key==='firmenname'){document.getElementById('greet-hi').textContent=soT('greet_hi')+', '+val+'.';document.getElementById('db-firm').textContent=val;}}catch(e){alert('Speichern fehlgeschlagen.');}}
 function askDelete(){document.getElementById('del-btn').style.display='none';document.getElementById('del-confirm').classList.add('show');}
 function hideDelete(){document.getElementById('del-btn').style.display='';document.getElementById('del-confirm').classList.remove('show');}
 async function doDelete(){try{await sb.from('customers').delete().eq('id',_customer.id);}catch(e){}if(window.Clerk){try{await window.Clerk.signOut();}catch(e){}}window.location.href='/';}
