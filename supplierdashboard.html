@@ -505,11 +505,14 @@ p{text-wrap:pretty}
 <script>
 var SUPABASE_URL='https://mttzsqtuaisdjisjxrey.supabase.co';
 var SUPABASE_KEY='sb_publishable_C2d4skG1yF4lTzlKpvEWbw_mePtBH1c';
-var sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{accessToken:async function(){if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}return null;}});
+var sb=(window.supabase&&window.supabase.createClient)?window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY,{accessToken:async function(){if(window.Clerk&&window.Clerk.session){return await window.Clerk.session.getToken();}return null;}}):null;
 var currentUserId=null,_profile=null,_catalog={},_bundles=[],_myBids={},_bids=[],_bidFilter='alle',_bundleFilter='alle',_bidCounts={},_selBid=null;
 var _rtChannel=null,_rtTimer=null;
 var COMM=0.0225;
 var _LANG=(localStorage.getItem('sourceon-lang')||'de');
+function _sdT(k){var l=localStorage.getItem('sourceon-lang')||'de';var TT=window.SO_SD_T;if(!TT)return k;var d=TT[l]||TT.de;return (d&&d[k]!=null)?d[k]:((TT.de&&TT.de[k]!=null)?TT.de[k]:k);}
+function _sdF(k,vars){var s=_sdT(k);if(vars){for(var p in vars){s=s.split('{'+p+'}').join(vars[p]);}}return s;}
+function _sdLocale(){return ({de:'de-CH',en:'en-GB',fr:'fr-CH',it:'it-CH'})[localStorage.getItem('sourceon-lang')||'de']||'de-CH';}
 var _WDs={de:['So','Mo','Di','Mi','Do','Fr','Sa'],en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],fr:['dim','lun','mar','mer','jeu','ven','sam'],it:['dom','lun','mar','mer','gio','ven','sab']};
 var _MONs={de:['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],fr:['janv','févr','mars','avr','mai','juin','juil','août','sept','oct','nov','déc'],it:['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic']};
 var _MONFs={de:['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],en:['January','February','March','April','May','June','July','August','September','October','November','December'],fr:['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'],it:['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre']};
@@ -522,7 +525,7 @@ function fmtShort(d){return d.getDate()+'. '+_MON[d.getMonth()];}
 function fmtDMY(d){return d.getDate()+'. '+_MON[d.getMonth()]+' '+d.getFullYear();}
 function fmtDMYfull(d){return d.getDate()+'. '+_MONF[d.getMonth()]+' '+d.getFullYear();}
 function esc(s){if(s==null)return '';var d=document.createElement('div');d.textContent=String(s);return d.innerHTML;}
-function bMat(b){if(b.bezeichnung)return b.bezeichnung;if(b.sourceon_id&&_catalog[b.sourceon_id])return _catalog[b.sourceon_id].bezeichnung;if(b.bundle_type==='multi_material')return 'Mehrere Materialien';return b.material_type||b.sourceon_id||'Material';}
+function bMat(b){if(b.bezeichnung)return b.bezeichnung;if(b.sourceon_id&&_catalog[b.sourceon_id])return _catalog[b.sourceon_id].bezeichnung;if(b.bundle_type==='multi_material')return _sdT('mat_multi');return b.material_type||b.sourceon_id||_sdT('mat_fallback');}
 function bVol(b){var v=b.gesamtvolumen||b.total_quantity;return (v==null||v==='')?null:Number(v);}
 function bUnit(b){return b.einheit||b.unit||'';}
 function bVolStr(b){var v=bVol(b);return v!=null?fmtNum(v)+' '+bUnit(b):'--';}
@@ -533,8 +536,8 @@ function bZeitraum(b){if(b.liefer_zeitraum_von&&b.liefer_zeitraum_bis)return fmt
 function estValue(b){var rp=bRicht(b),v=bVol(b);return (rp==null||v==null)?null:rp*v;}
 function bestellwert(bid,b){var v=bVol(b);if(bid.preis_pro_einheit&&v)return Number(bid.preis_pro_einheit)*v;var rp=bRicht(b),r=parseFloat(bid.rabatt_prozent);if(rp==null||v==null||isNaN(r))return null;return rp*v*(1-r/100);}
 function normStatus(s){if(s==='won')return 'gewonnen';if(s==='submitted')return 'eingereicht';if(s==='lost')return 'verloren';if(s==='expired')return 'abgelaufen';return s;}
-function bidBadge(s){s=normStatus(s);if(s==='eingereicht')return {t:'Eingereicht',c:'p-mut'};if(s==='gewonnen')return {t:'Gewonnen',c:'p-green'};if(s==='verloren')return {t:'Verloren',c:'p-mut'};if(s==='abgelaufen')return {t:'Abgelaufen',c:'p-mut'};if(s==='zurueckgezogen')return {t:'Zurückgezogen',c:'p-mut'};return {t:s||'--',c:'p-mut'};}
-function countdown(deadline){var now=new Date(),diff=deadline-now;if(diff<=0)return {text:'Abgelaufen',cls:'cd-red'};var days=Math.floor(diff/86400000),hrs=Math.floor((diff%86400000)/3600000);var txt=(days>0?days+' Tag'+(days>1?'e':'')+' ':'')+hrs+' Std';var cls='cd-green';if(diff<86400000){cls='cd-red';txt='⚠ '+txt;}else if(diff<3*86400000){cls='cd-amber';txt='⚠ '+txt;}return {text:txt,cls:cls};}
+function bidBadge(s){s=normStatus(s);if(s==='eingereicht')return {t:_sdT('bs_submitted'),c:'p-mut'};if(s==='gewonnen')return {t:_sdT('bs_won'),c:'p-green'};if(s==='verloren')return {t:_sdT('bs_lost'),c:'p-mut'};if(s==='abgelaufen')return {t:_sdT('bs_expired'),c:'p-mut'};if(s==='zurueckgezogen')return {t:_sdT('bs_withdrawn'),c:'p-mut'};return {t:s||'--',c:'p-mut'};}
+function countdown(deadline){var now=new Date(),diff=deadline-now;if(diff<=0)return {text:_sdT('cd_expired'),cls:'cd-red'};var days=Math.floor(diff/86400000),hrs=Math.floor((diff%86400000)/3600000);var txt=(days>0?days+' '+_sdT(days>1?'cd_days':'cd_day')+' ':'')+hrs+' '+_sdT('cd_hrs');var cls='cd-green';if(diff<86400000){cls='cd-red';txt='⚠ '+txt;}else if(diff<3*86400000){cls='cd-amber';txt='⚠ '+txt;}return {text:txt,cls:cls};}
 function timelineStates(s){var st=['future','future','future','future'];st[0]='done';st[1]='done';if(s==='gewonnen'){st[2]='done';st[3]='done';}else{st[2]='active';}return st;}
 
 var VALID_TABS=['ausschreibungen','angebote','finanzen','lieferungen','profil'];
@@ -555,8 +558,8 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   if(_profile.status!=='verified'){showGate('not_supplier');return;}
   var email=window.Clerk.user.primaryEmailAddress?window.Clerk.user.primaryEmailAddress.emailAddress:(_profile.email||'');
   document.getElementById('db-firm').textContent=_profile.company_name||'';
-  document.getElementById('greet-hi').textContent='Guten Tag'+(_profile.company_name?', '+_profile.company_name:'')+'.';
-  document.getElementById('greet-date').textContent=new Date().toLocaleDateString('de-CH',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  document.getElementById('greet-hi').textContent=_sdT('greet_hello')+(_profile.company_name?', '+_profile.company_name:'')+'.';
+  document.getElementById('greet-date').textContent=new Date().toLocaleDateString(_sdLocale(),{weekday:'long',day:'numeric',month:'long',year:'numeric'});
   document.getElementById('pf-email').textContent=email;
   document.getElementById('auth-gate').style.display='none';
   document.getElementById('dash').style.display='block';
@@ -585,7 +588,7 @@ window.addEventListener('hashchange',function(){showTab(location.hash.replace('#
   startRealtime();
   }catch(_e){
     var _g=document.getElementById('auth-gate');
-    if(_g){_g.style.display='';_g.innerHTML='<div class="so-load-error" style="max-width:440px;margin:80px auto">Laden fehlgeschlagen — bitte Seite neu laden.<br><button onclick="location.reload()">Neu laden</button></div>';}
+    if(_g){_g.style.display='';_g.innerHTML='<div class="so-load-error" style="max-width:440px;margin:80px auto">'+esc(_sdT('load_error'))+'<br><button onclick="location.reload()">'+esc(_sdT('reload_btn'))+'</button></div>';}
     try{document.getElementById('dash').style.display='none';}catch(__e){}
   }
 })();
@@ -640,21 +643,21 @@ function renderNotif(){
   if(open.length===0)return;
   var b=open[0],days=Math.max(0,Math.ceil((new Date(b.bid_deadline)-new Date())/86400000));
   var el=document.getElementById('notif');
-  el.innerHTML='<span>⚡</span><span>Neue Ausschreibung: <b>'+esc(bMat(b))+'</b> · '+esc(bVolStr(b))+' · '+esc(bZone(b))+' · Frist in '+days+' Tag'+(days!==1?'en':'')+'</span>';
+  el.innerHTML='<span>⚡</span><span>'+esc(_sdT('notif_new'))+' <b>'+esc(bMat(b))+'</b> · '+esc(bVolStr(b))+' · '+esc(bZone(b))+' · '+esc(_sdF(days===1?'notif_deadline_one':'notif_deadline_many',{n:days}))+'</span>';
   el.classList.add('show');
 }
 function renderAusschreibungen(){
-  var v=document.getElementById('verif');if(_profile.status==='verified'){v.className='verif ok';document.getElementById('verif-t').textContent='Verifiziert';}else{v.className='verif pend';document.getElementById('verif-t').textContent='Ausstehend';}
+  var v=document.getElementById('verif');if(_profile.status==='verified'){v.className='verif ok';document.getElementById('verif-t').textContent=_sdT('w_verified');}else{v.className='verif pend';document.getElementById('verif-t').textContent=_sdT('w_pending');}
   var openCount=_bundles.filter(function(b){return new Date(b.bid_deadline)>new Date();}).length;
   var h=document.getElementById('au-hero');h.textContent=openCount;h.className='hero-num'+(openCount>0?'':' zero');
-  document.getElementById('au-hero-sub').textContent=openCount>0?'Passende Ausschreibungen für dein Profil':'Aktuell keine passenden Ausschreibungen';
+  document.getElementById('au-hero-sub').textContent=openCount>0?_sdT('au_hero_sub'):_sdT('au_sub_none');
   var cats={};_bundles.forEach(function(b){cats[bMat(b)]=true;});
   var fkeys=['alle'].concat(Object.keys(cats));
-  document.getElementById('au-filters').innerHTML=_bundles.length?fkeys.map(function(k){return '<button class="filt'+(k===_bundleFilter?' active':'')+'" onclick="setBundleFilter(\''+esc(k)+'\')">'+(k==='alle'?'Alle':esc(k))+'</button>';}).join(''):'';
+  document.getElementById('au-filters').innerHTML=_bundles.length?fkeys.map(function(k){return '<button class="filt'+(k===_bundleFilter?' active':'')+'" onclick="setBundleFilter(\''+esc(k)+'\')">'+(k==='alle'?esc(_sdT('f_all')):esc(k))+'</button>';}).join(''):'';
   var rows=_bundles.filter(function(b){return _bundleFilter==='alle'||bMat(b)===_bundleFilter;});
   var list=document.getElementById('bundles-list');
   if(_bundles.length===0){document.getElementById('bundles-empty').style.display='block';return;}
-  list.innerHTML=rows.length?rows.map(buildBundleRow).join(''):'<div class="empty-line">Keine Ausschreibungen in dieser Kategorie.</div>';
+  list.innerHTML=rows.length?rows.map(buildBundleRow).join(''):'<div class="empty-line">'+esc(_sdT('au_cat_empty'))+'</div>';
   list.querySelectorAll('.row-head').forEach(function(hd){hd.addEventListener('click',function(e){if(e.target.closest('.rabatt-in,.dark-input,.bidcheck,button,a,input,textarea,.act-link'))return;hd.parentNode.classList.toggle('open');});});
 }
 function setBundleFilter(f){_bundleFilter=f;renderAusschreibungen();}
@@ -662,32 +665,32 @@ function buildBundleRow(b){
   var deadline=new Date(b.bid_deadline),cd=countdown(deadline),expired=deadline<=new Date();
   var others=Math.max(0,(_bidCounts[b.id]||0)-(_myBids[b.id]?1:0));
   var ziel=bZiel(b),myBid=_myBids[b.id];
-  var detail='<div class="sumbox"><div><div class="l">Gesamtvolumen</div><div class="v gold">'+esc(bVolStr(b))+'</div></div><div><div class="l">Lieferzeitraum</div><div class="v">'+esc(bZeitraum(b))+'</div></div><div><div class="l">Geschätzter Auftragswert</div><div class="v">'+(estValue(b)!=null?fmtCHF(estValue(b)):'--')+'</div></div></div>';
-  detail+='<div class="sumnote">Exakte Lieferadressen werden erst nach Zuschlag freigegeben.</div>';
-  if(others>0){var comp=Math.min(5,others),dots='';for(var i=0;i<5;i++){dots+='<span class="'+(i<comp?'on':'off')+'">●</span>';}detail+='<div class="fomo">'+others+' weitere'+(others!==1?'':'r')+' Lieferant'+(others!==1?'en':'')+' '+(others!==1?'haben':'hat')+' bereits ein Angebot eingereicht.<span class="dots">'+dots+'</span></div>';}
+  var detail='<div class="sumbox"><div><div class="l">'+esc(_sdT('lbl_total_volume'))+'</div><div class="v gold">'+esc(bVolStr(b))+'</div></div><div><div class="l">'+esc(_sdT('lbl_delivery_period'))+'</div><div class="v">'+esc(bZeitraum(b))+'</div></div><div><div class="l">'+esc(_sdT('lbl_est_value'))+'</div><div class="v">'+(estValue(b)!=null?fmtCHF(estValue(b)):'--')+'</div></div></div>';
+  detail+='<div class="sumnote">'+esc(_sdT('note_addresses'))+'</div>';
+  if(others>0){var comp=Math.min(5,others),dots='';for(var i=0;i<5;i++){dots+='<span class="'+(i<comp?'on':'off')+'">●</span>';}detail+='<div class="fomo">'+esc(_sdF(others===1?'fomo_one':'fomo_many',{n:others}))+'<span class="dots">'+dots+'</span></div>';}
   if(myBid&&normStatus(myBid.status)!=='zurueckgezogen'){
     var net=bestellwert(myBid,b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';
-    detail+='<div class="bid-done"><div class="t">Dein Angebot: '+Number(myBid.rabatt_prozent).toFixed(1)+'% Rabatt · Nettoerlös '+netStr+'</div><div class="s">Eingereicht am '+esc(fmtDMY(new Date(myBid.submitted_at)))+(expired?'':' · <span class="act-link act-danger" onclick="withdrawBid(\''+esc(b.id)+'\')">Angebot zurückziehen</span>')+'</div></div>';
+    detail+='<div class="bid-done"><div class="t">'+esc(_sdT('bd_your_bid'))+': '+Number(myBid.rabatt_prozent).toFixed(1)+'% '+esc(_sdT('w_discount'))+' · '+esc(_sdT('w_net_proceeds'))+' '+netStr+'</div><div class="s">'+esc(_sdT('bd_submitted_on'))+' '+esc(fmtDMY(new Date(myBid.submitted_at)))+(expired?'':' · <span class="act-link act-danger" onclick="withdrawBid(\''+esc(b.id)+'\')">'+esc(_sdT('act_withdraw'))+'</span>')+'</div></div>';
   }else if(expired){
-    detail+='<div class="muted-msg">Frist abgelaufen — kein Angebot mehr möglich.</div>';
+    detail+='<div class="muted-msg">'+esc(_sdT('msg_expired_nobid'))+'</div>';
   }else{detail+=buildBidForm(b,ziel);}
   return '<div class="row-x" data-id="'+esc(b.id)+'"><div class="row-head b-head">'
     +'<div><div class="rc-t">'+esc(bMat(b))+'</div>'+(b.sourceon_id?'<div class="rc-id">'+esc(b.sourceon_id)+'</div>':'')+'</div>'
     +'<div><div class="rc-v">'+esc(bVolStr(b))+'</div><div class="rc-s">'+esc(bZone(b))+'</div></div>'
-    +'<div><div class="rc-v gold">'+(ziel!=null?'Min. '+ziel+'%':'--')+'</div><div class="rc-s">Brutto-Mindestrabatt</div></div>'
+    +'<div><div class="rc-v gold">'+(ziel!=null?'Min. '+ziel+'%':'--')+'</div><div class="rc-s">'+esc(_sdT('lbl_min_gross_discount'))+'</div></div>'
     +'<div><div class="cd '+cd.cls+'" id="cd-'+esc(b.id)+'">'+esc(cd.text)+'</div></div>'
-    +'<div class="rc-right"><span class="rc-s">'+others+' Bieter</span><span class="rc-chev">›</span></div>'
+    +'<div class="rc-right"><span class="rc-s">'+others+' '+esc(_sdT(others===1?'w_bidder':'w_bidders'))+'</span><span class="rc-chev">›</span></div>'
     +'</div><div class="row-detail"><div class="row-detail-inner">'+detail+'</div></div></div>';
 }
 function buildBidForm(b,ziel){
   var id=b.id;
-  var h='<div class="bidlbl">Dein Rabatt-Angebot</div><div class="rabatt-wrap"><input class="rabatt-in" type="number" step="0.1" min="0" max="100" id="rb-'+id+'" placeholder="0" oninput="calcBid(\''+id+'\')"/><span class="rabatt-suf">%</span></div>';
-  h+='<div class="minhint">'+(ziel!=null?'Mindestens '+ziel+'% gefordert':'Rabatt in Prozent angeben')+'</div><div class="minwarn" id="mw-'+id+'">⚠ Unter Mindestanforderung</div>';
-  h+='<div class="breakdown"><div class="bd-row"><span class="l">Regulärer Marktpreis (Richtwert)</span><span class="v" id="bd-base-'+id+'">--</span></div><div class="bd-row"><span class="l">Dein Rabatt (−<span id="bd-pct-'+id+'">0</span>%)</span><span class="v neg" id="bd-disc-'+id+'">--</span></div><div class="bd-row"><span class="l">Bestellwert</span><span class="v" id="bd-order-'+id+'">--</span></div><div class="bd-row"><span class="l">SourceOn-Provision (2.25%)</span><span class="v mut" id="bd-prov-'+id+'">--</span></div><div class="bd-div"></div><div class="bd-row bd-net"><span class="l">Dein Nettoerlös</span><span class="v" id="bd-net-'+id+'">--</span></div><div class="bd-note">Provision im Mindestrabatt bereits einkalkuliert</div></div>';
-  h+='<div class="bidlbl">Bemerkungen (optional)</div><textarea class="dark-input" id="nt-'+id+'"></textarea>';
-  h+='<label class="bidcheck"><input type="checkbox" id="c1-'+id+'" onchange="updBidBtn(\''+id+'\')"/><span>Ich bestätige, dass ich '+esc(bVolStr(b))+' innerhalb des angegebenen Lieferzeitraums liefern kann.</span></label>';
-  h+='<label class="bidcheck"><input type="checkbox" id="c2-'+id+'" onchange="updBidBtn(\''+id+'\')"/><span>Dieses Angebot ist verbindlich gemäss der <a href="lieferantenvereinbarung.html" target="_blank" style="color:var(--gold-ink)">Lieferantenvereinbarung →</a> von SourceOn.</span></label>';
-  h+='<button class="btn-gold" id="sub-'+id+'" style="width:100%;justify-content:center;margin-top:16px" disabled onclick="submitBid(\''+id+'\')">Angebot einreichen →</button><div id="err-'+id+'" style="display:none;color:#FCA5A5;font-size:13px;margin-top:10px"></div>';
+  var h='<div class="bidlbl">'+esc(_sdT('bf_your_discount_offer'))+'</div><div class="rabatt-wrap"><input class="rabatt-in" type="number" step="0.1" min="0" max="100" id="rb-'+id+'" placeholder="0" oninput="calcBid(\''+id+'\')"/><span class="rabatt-suf">%</span></div>';
+  h+='<div class="minhint">'+(ziel!=null?esc(_sdF('bf_min_required',{n:ziel})):esc(_sdT('bf_enter_discount')))+'</div><div class="minwarn" id="mw-'+id+'">'+esc(_sdT('bf_below_min'))+'</div>';
+  h+='<div class="breakdown"><div class="bd-row"><span class="l">'+esc(_sdT('bd_market_price'))+'</span><span class="v" id="bd-base-'+id+'">--</span></div><div class="bd-row"><span class="l">'+esc(_sdT('bd_your_discount'))+' (−<span id="bd-pct-'+id+'">0</span>%)</span><span class="v neg" id="bd-disc-'+id+'">--</span></div><div class="bd-row"><span class="l">'+esc(_sdT('bd_order_value'))+'</span><span class="v" id="bd-order-'+id+'">--</span></div><div class="bd-row"><span class="l">'+esc(_sdT('bd_provision'))+'</span><span class="v mut" id="bd-prov-'+id+'">--</span></div><div class="bd-div"></div><div class="bd-row bd-net"><span class="l">'+esc(_sdT('bd_net'))+'</span><span class="v" id="bd-net-'+id+'">--</span></div><div class="bd-note">'+esc(_sdT('bd_prov_note'))+'</div></div>';
+  h+='<div class="bidlbl">'+esc(_sdT('bf_notes'))+'</div><textarea class="dark-input" id="nt-'+id+'"></textarea>';
+  h+='<label class="bidcheck"><input type="checkbox" id="c1-'+id+'" onchange="updBidBtn(\''+id+'\')"/><span>'+esc(_sdF('bf_confirm_deliver',{vol:bVolStr(b)}))+'</span></label>';
+  h+='<label class="bidcheck"><input type="checkbox" id="c2-'+id+'" onchange="updBidBtn(\''+id+'\')"/><span>'+esc(_sdT('bf_binding_pre'))+'<a href="lieferantenvereinbarung.html" target="_blank" style="color:var(--gold-ink)">'+esc(_sdT('bf_agreement_link'))+'</a>'+esc(_sdT('bf_binding_post'))+'</span></label>';
+  h+='<button class="btn-gold" id="sub-'+id+'" style="width:100%;justify-content:center;margin-top:16px" disabled onclick="submitBid(\''+id+'\')">'+esc(_sdT('bf_submit'))+'</button><div id="err-'+id+'" style="display:none;color:#FCA5A5;font-size:13px;margin-top:10px"></div>';
   return h;
 }
 function calcBid(id){
@@ -707,9 +710,9 @@ function calcBid(id){
 function updBidBtn(id){var r=parseFloat(document.getElementById('rb-'+id).value);var c1=document.getElementById('c1-'+id).checked,c2=document.getElementById('c2-'+id).checked;document.getElementById('sub-'+id).disabled=!(c1&&c2&&!isNaN(r)&&r>0);}
 async function submitBid(id){
   var b=_bundles.filter(function(x){return x.id===id;})[0];if(!b)return;
-  var r=parseFloat(document.getElementById('rb-'+id).value);if(isNaN(r)||r<=0){showBidErr(id,'Bitte gib einen gültigen Rabatt an.');return;}
+  var r=parseFloat(document.getElementById('rb-'+id).value);if(isNaN(r)||r<=0){showBidErr(id,_sdT('err_valid_discount'));return;}
   var notes=document.getElementById('nt-'+id).value.trim();
-  var btn=document.getElementById('sub-'+id);btn.disabled=true;btn.textContent='Wird eingereicht…';
+  var btn=document.getElementById('sub-'+id);btn.disabled=true;btn.textContent=_sdT('btn_submitting');
   // preis_pro_einheit (NOT NULL) = tatsächlich angebotener Preis pro Einheit nach Rabatt
   // (Richtpreis × (1 − Rabatt%)), konsistent mit bestellwert().
   var _rp=bRicht(b);
@@ -717,14 +720,14 @@ async function submitBid(id){
   var payload={bundle_id:id,supplier_id:currentUserId,status:'eingereicht',rabatt_prozent:r,preis_pro_einheit:_ppe,delivery_confirmed:false,legal_confirmed:true,legal_confirmed_at:new Date().toISOString()};
   if(notes)payload.lieferfaehigkeit_notes=notes;
   var res=_myBids[id]?await sb.from('bids').update(payload).eq('bundle_id',id).eq('supplier_id',currentUserId):await sb.from('bids').insert(payload);
-  if(res.error){if(res.error.code==='23505'){res=await sb.from('bids').update(payload).eq('bundle_id',id).eq('supplier_id',currentUserId);}if(res.error){showBidErr(id,'Fehler: '+res.error.message);btn.disabled=false;btn.textContent='Angebot einreichen →';return;}}
+  if(res.error){if(res.error.code==='23505'){res=await sb.from('bids').update(payload).eq('bundle_id',id).eq('supplier_id',currentUserId);}if(res.error){showBidErr(id,_sdT('err_prefix')+res.error.message);btn.disabled=false;btn.textContent=_sdT('bf_submit');return;}}
   var now=new Date();_myBids[id]={bundle_id:id,rabatt_prozent:r,status:'eingereicht',submitted_at:now.toISOString(),bundles:b};
   var inner=document.querySelector('.row-x[data-id="'+id+'"] .row-detail-inner');
-  if(inner){var net=bestellwert({rabatt_prozent:r},b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';var hh=now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();inner.innerHTML=inner.innerHTML.split('<div class="bidlbl">')[0]+'<div class="bid-done"><div class="t">✓ Angebot eingereicht um '+hh+' Uhr</div><div class="s">Verbindlich bis '+esc(fmtDMY(new Date(b.bid_deadline)))+' · <span class="act-link act-danger" onclick="withdrawBid(\''+id+'\')">Angebot zurückziehen</span></div></div>';}
+  if(inner){var net=bestellwert({rabatt_prozent:r},b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';var hh=now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();inner.innerHTML=inner.innerHTML.split('<div class="bidlbl">')[0]+'<div class="bid-done"><div class="t">'+esc(_sdF('bd_submitted_at',{t:hh}))+'</div><div class="s">'+esc(_sdF('bd_binding_until',{d:fmtDMY(new Date(b.bid_deadline))}))+' · <span class="act-link act-danger" onclick="withdrawBid(\''+id+'\')">'+esc(_sdT('act_withdraw'))+'</span></div></div>';}
   renderAngebote();renderFinanzen();
 }
 function showBidErr(id,m){var e=document.getElementById('err-'+id);if(e){e.textContent=m;e.style.display='block';}}
-async function withdrawBid(id){if(!confirm('Möchtest du dein Angebot wirklich zurückziehen?'))return;var res=await sb.from('bids').update({status:'zurueckgezogen'}).eq('bundle_id',id).eq('supplier_id',currentUserId);if(res.error){alert('Fehler: '+res.error.message);return;}if(_myBids[id])_myBids[id].status='zurueckgezogen';window.location.reload();}
+async function withdrawBid(id){if(!confirm(_sdT('confirm_withdraw')))return;var res=await sb.from('bids').update({status:'zurueckgezogen'}).eq('bundle_id',id).eq('supplier_id',currentUserId);if(res.error){alert(_sdT('err_prefix')+res.error.message);return;}if(_myBids[id])_myBids[id].status='zurueckgezogen';window.location.reload();}
 function refreshCountdowns(){_bundles.forEach(function(b){var el=document.getElementById('cd-'+b.id);if(el){var cd=countdown(new Date(b.bid_deadline));el.textContent=cd.text;el.className='cd '+cd.cls;}});}
 
 // ── ANGEBOTE (split) ──
@@ -740,8 +743,8 @@ function renderAngebote(){
 function renderBidItems(){
   var el=document.getElementById('bid-items');
   var rows=_bids.filter(function(b){var s=normStatus(b.status);if(s==='zurueckgezogen')return false;return _bidFilter==='alle'||s===_bidFilter;});
-  if(rows.length===0){el.innerHTML='<div class="empty-line" style="padding:16px">Keine Angebote.</div>';return;}
-  el.innerHTML=rows.map(function(bid){var b=bid.bundles||bid.bundle||{};var bg=bidBadge(bid.status);var d=bid.submitted_at?fmtShort(new Date(bid.submitted_at)):'';var _vs=bVolStr(b);var _ml=bMat(b)+((_vs&&_vs!=='--')?' · '+_vs:'');return '<div class="sv-item'+(bid.id===_selBid?' active':'')+'" data-id="'+esc(bid.id)+'" onclick="selectBid(\''+esc(bid.id)+'\')"><div class="sv-top"><span class="sv-mat">'+esc(_ml)+'</span><span class="sv-date">'+esc(d)+'</span></div><div class="sv-bot"><span style="font-size:13px">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% Rabatt</span><span class="status-pill '+bg.c+'">'+esc(bg.t)+'</span></div></div>';}).join('');
+  if(rows.length===0){el.innerHTML='<div class="empty-line" style="padding:16px">'+esc(_sdT('bids_none'))+'</div>';return;}
+  el.innerHTML=rows.map(function(bid){var b=bid.bundles||bid.bundle||{};var bg=bidBadge(bid.status);var d=bid.submitted_at?fmtShort(new Date(bid.submitted_at)):'';var _vs=bVolStr(b);var _ml=bMat(b)+((_vs&&_vs!=='--')?' · '+_vs:'');return '<div class="sv-item'+(bid.id===_selBid?' active':'')+'" data-id="'+esc(bid.id)+'" onclick="selectBid(\''+esc(bid.id)+'\')"><div class="sv-top"><span class="sv-mat">'+esc(_ml)+'</span><span class="sv-date">'+esc(d)+'</span></div><div class="sv-bot"><span style="font-size:13px">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% '+esc(_sdT('w_discount'))+'</span><span class="status-pill '+bg.c+'">'+esc(bg.t)+'</span></div></div>';}).join('');
 }
 function selectBid(id){
   _selBid=id;document.querySelectorAll('.sv-item').forEach(function(it){it.classList.toggle('active',it.getAttribute('data-id')===id);});
@@ -749,22 +752,22 @@ function selectBid(id){
   var net=bestellwert(bid,b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';
   var d=bid.submitted_at?fmtDMY(new Date(bid.submitted_at)):'';
   var html='<div class="rd-head-row"><div><div class="rd-mat">'+esc(bMat(b))+'</div>'+(b.sourceon_id?'<div class="rd-id">'+esc(b.sourceon_id)+'</div>':'')+'</div><div class="rd-head-meta"><span class="status-pill '+bg.c+'">'+esc(bg.t)+'</span><div class="rd-date">'+esc(d)+'</div></div></div>';
-  html+='<div class="rd-key"><div><div class="k-num">'+Number(bid.rabatt_prozent||0).toFixed(1)+'%</div><div class="k-lbl">Rabatt</div></div><div><div class="k-num gold">'+netStr+'</div><div class="k-lbl">Nettoerlös</div></div><div><div class="k-num">'+esc(bVolStr(b))+'</div><div class="k-lbl">Menge</div></div></div>';
+  html+='<div class="rd-key"><div><div class="k-num">'+Number(bid.rabatt_prozent||0).toFixed(1)+'%</div><div class="k-lbl">'+esc(_sdT('w_discount'))+'</div></div><div><div class="k-num gold">'+netStr+'</div><div class="k-lbl">'+esc(_sdT('w_net_proceeds'))+'</div></div><div><div class="k-num">'+esc(bVolStr(b))+'</div><div class="k-lbl">'+esc(_sdT('w_quantity'))+'</div></div></div>';
   if(s==='gewonnen'){
     var confirmed=bid.delivery_confirmed===true;
-    html+='<div class="award-box"><div class="t">🏆 Zuschlag erhalten</div>'
-      +'<div style="font-size:13px;color:var(--text-2);line-height:1.7">Die vollständigen Auftrags- und Kundendetails findest du unten.</div>';
-    if(confirmed){html+='<div style="color:var(--green);font-size:13px;margin-top:12px">✓ Lieferung bestätigt'+(bid.delivery_confirmed_at?' am '+esc(fmtDMY(new Date(bid.delivery_confirmed_at))):'')+'</div>';}
-    else{html+='<button class="btn-gold" style="margin-top:14px" onclick="confirmDelivery(\''+esc(bid.id)+'\')">Lieferung bestätigen →</button>';}
+    html+='<div class="award-box"><div class="t">'+esc(_sdT('award_title'))+'</div>'
+      +'<div style="font-size:13px;color:var(--text-2);line-height:1.7">'+esc(_sdT('award_desc'))+'</div>';
+    if(confirmed){html+='<div style="color:var(--green);font-size:13px;margin-top:12px">'+esc(_sdT('deliv_confirmed_on'))+(bid.delivery_confirmed_at?esc(_sdF('w_on_date',{d:fmtDMY(new Date(bid.delivery_confirmed_at))})):'')+'</div>';}
+    else{html+='<button class="btn-gold" style="margin-top:14px" onclick="confirmDelivery(\''+esc(bid.id)+'\')">'+esc(_sdT('btn_confirm_delivery'))+'</button>';}
     html+='</div>';
-    html+='<div id="auftragsdetails" style="background:var(--bg-1);border:1px solid var(--border);border-radius:var(--r-md);padding:20px;margin-top:16px;font-size:13px;color:var(--text-2)">Auftragsdetails werden geladen…</div>';
+    html+='<div id="auftragsdetails" style="background:var(--bg-1);border:1px solid var(--border);border-radius:var(--r-md);padding:20px;margin-top:16px;font-size:13px;color:var(--text-2)">'+esc(_sdT('order_loading'))+'</div>';
   }else if(s==='eingereicht'){
-    var st=timelineStates(s),tlLbl=['Eingegangen','Bündelung','Ausschreibung','Zuschlag'];var tl='<div class="tl">';for(var i=0;i<4;i++){tl+='<div class="tl-step '+st[i]+'"><div class="tl-dot"></div><div class="tl-lbl">'+tlLbl[i]+'</div></div>';if(i<3)tl+='<div class="tl-conn'+(st[i]==='done'?' done':'')+'"></div>';}tl+='</div>';
-    html+=tl+'<div class="muted-msg">Dein Angebot ist eingereicht. Du wirst benachrichtigt, sobald über den Zuschlag entschieden ist.</div>';
-  }else if(s==='verloren'){html+='<div class="muted-msg">Dieser Auftrag wurde an einen anderen Lieferanten vergeben.</div>';}
-  else if(s==='abgelaufen'){html+='<div class="muted-msg">Ausschreibung ohne Zuschlag abgelaufen.</div>';}
-  var mailto='mailto:info@sourceon.ch?subject='+encodeURIComponent('Angebot '+(b.sourceon_id||''));
-  html+='<div class="rd-actions">'+(s==='gewonnen'?'<span class="act-link" onclick="makeDeliveryPDF(\''+esc(bid.id)+'\')">Lieferauftrag als PDF →</span><span class="act-link" onclick="makeProvisionPDF(\''+esc(bid.id)+'\')">Provisionsabrechnung als PDF →</span>':'')+'<a class="act-link" href="'+mailto+'">Frage zu diesem Angebot →</a></div>';
+    var st=timelineStates(s),tlLbl=[_sdT('tl_1'),_sdT('tl_2'),_sdT('tl_3'),_sdT('tl_4')];var tl='<div class="tl">';for(var i=0;i<4;i++){tl+='<div class="tl-step '+st[i]+'"><div class="tl-dot"></div><div class="tl-lbl">'+esc(tlLbl[i])+'</div></div>';if(i<3)tl+='<div class="tl-conn'+(st[i]==='done'?' done':'')+'"></div>';}tl+='</div>';
+    html+=tl+'<div class="muted-msg">'+esc(_sdT('msg_bid_submitted'))+'</div>';
+  }else if(s==='verloren'){html+='<div class="muted-msg">'+esc(_sdT('msg_lost'))+'</div>';}
+  else if(s==='abgelaufen'){html+='<div class="muted-msg">'+esc(_sdT('msg_expired_noaward'))+'</div>';}
+  var mailto='mailto:info@sourceon.ch?subject='+encodeURIComponent(_sdT('subj_offer')+(b.sourceon_id||''));
+  html+='<div class="rd-actions">'+(s==='gewonnen'?'<span class="act-link" onclick="makeDeliveryPDF(\''+esc(bid.id)+'\')">'+esc(_sdT('act_delivery_pdf'))+'</span><span class="act-link" onclick="makeProvisionPDF(\''+esc(bid.id)+'\')">'+esc(_sdT('act_provision_pdf'))+'</span>':'')+'<a class="act-link" href="'+mailto+'">'+esc(_sdT('act_question'))+'</a></div>';
   document.getElementById('bid-detail').innerHTML=html;
   if(s==='gewonnen'){loadAuftragsdetails(bid.bundle_id);}
 }
@@ -804,12 +807,12 @@ function setFinStatus(s,btn){
 }
 // Referenz je Abrechnung (in der Datenbank gespeichert, geräteübergreifend)
 function _bidById(id){for(var i=0;i<_bids.length;i++){if(String(_bids[i].id)===String(id))return _bids[i];}return null;}
-function provRefHtml(id){var bid=_bidById(id);var v=(bid&&bid.referenz)?bid.referenz:'';return '<span class="'+(v?'prov-ref set':'prov-ref')+'" data-id="'+esc(id)+'" onclick="editProvRef(this)">'+(v?esc(v):'＋ Referenz')+'</span>';}
-function editProvRef(el){var id=el.getAttribute('data-id');var bid=_bidById(id);var cur=(bid&&bid.referenz)?bid.referenz:'';var inp=document.createElement('input');inp.className='prov-ref-input';inp.value=cur;inp.maxLength=60;inp.placeholder='z.B. Auftrag Nr.';el.replaceWith(inp);inp.focus();var saving=false;
+function provRefHtml(id){var bid=_bidById(id);var v=(bid&&bid.referenz)?bid.referenz:'';return '<span class="'+(v?'prov-ref set':'prov-ref')+'" data-id="'+esc(id)+'" onclick="editProvRef(this)">'+(v?esc(v):esc(_sdT('ref_add')))+'</span>';}
+function editProvRef(el){var id=el.getAttribute('data-id');var bid=_bidById(id);var cur=(bid&&bid.referenz)?bid.referenz:'';var inp=document.createElement('input');inp.className='prov-ref-input';inp.value=cur;inp.maxLength=60;inp.placeholder=_sdT('ref_placeholder');el.replaceWith(inp);inp.focus();var saving=false;
   async function done(){if(saving)return;saving=true;var v=inp.value.trim();
     if(v!==cur){
       var res=await sb.from('bids').update({referenz:v||null}).eq('id',id);
-      if(res&&res.error){alert('Referenz konnte nicht gespeichert werden: '+res.error.message);saving=false;inp.focus();return;}
+      if(res&&res.error){alert(_sdT('ref_save_fail')+res.error.message);saving=false;inp.focus();return;}
       if(bid)bid.referenz=v||null;
     }
     var tmp=document.createElement('div');tmp.innerHTML=provRefHtml(id);inp.replaceWith(tmp.firstChild);
@@ -831,14 +834,14 @@ function renderFinanzen(){
     if(!_finInRange(bid)||!_finPassStatus(bid))return;
     fRev+=ord;fProv+=prov;shown++;
     var d=bid.submitted_at?fmtShort(new Date(bid.submitted_at)):'--';
-    rows+='<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td class="num">'+fmtCHF(ord)+'</td><td class="num">'+fmtCHF(prov)+'</td><td>'+provRefHtml(bid.id)+'</td><td><span class="status-pill '+(paid?'p-green':'p-amber')+'">'+(paid?'Bezahlt':'Offen')+'</span></td><td><span class="act-link" style="cursor:pointer;color:var(--gold-ink);white-space:nowrap" onclick="makeProvisionPDF(\''+esc(bid.id)+'\')">↓ PDF</span></td></tr>';});
+    rows+='<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td class="num">'+fmtCHF(ord)+'</td><td class="num">'+fmtCHF(prov)+'</td><td>'+provRefHtml(bid.id)+'</td><td><span class="status-pill '+(paid?'p-green':'p-amber')+'">'+esc(_sdT(paid?'fin_paid':'fin_open'))+'</span></td><td><span class="act-link" style="cursor:pointer;color:var(--gold-ink);white-space:nowrap" onclick="makeProvisionPDF(\''+esc(bid.id)+'\')">↓ PDF</span></td></tr>';});
   var h=document.getElementById('fin-hero');h.textContent=revenue>0?fmtCHF(revenue):'CHF 0';h.className='hero-num'+(revenue>0?'':' zero');
-  document.getElementById('fin-hero-sub').textContent=won.length>0?('Aus '+won.length+' gewonnenen Auftrag'+(won.length!==1?'en':'')):'Noch keine gewonnenen Aufträge';
+  document.getElementById('fin-hero-sub').textContent=won.length>0?_sdF(won.length===1?'fin_from_orders_one':'fin_from_orders_many',{n:won.length}):_sdT('fin_no_orders');
   var fo=document.getElementById('f-open');fo.textContent=openProv>0?fmtCHF(openProv):'--';fo.className='m3-num'+(openProv>0?' amber':' dim');
   var fp=document.getElementById('f-paid');fp.textContent=paidProv>0?fmtCHF(paidProv):'--';fp.className='m3-num'+(paidProv>0?' green':' dim');
   var fa=document.getElementById('f-avg');fa.textContent=netCount>0?fmtCHF(netSum/netCount):'--';fa.className='m3-num'+(netCount>0?'':' dim');
-  var head='<thead><tr><th>Datum</th><th>Material</th><th class="num">Bestellwert CHF</th><th class="num">Provision (2.25%)</th><th>Referenz</th><th>Status</th><th>Abrechnung</th></tr></thead>';
-  var emptyMsg=won.length>0?'Keine Einträge im gewählten Zeitraum/Status':'Noch keine Provisionen — erst nach gewonnenen Aufträgen';
+  var head='<thead><tr><th>'+esc(_sdT('w_date'))+'</th><th>'+esc(_sdT('w_material'))+'</th><th class="num">'+esc(_sdT('th_order_chf'))+'</th><th class="num">'+esc(_sdT('th_provision'))+'</th><th>'+esc(_sdT('w_reference'))+'</th><th>'+esc(_sdT('w_status'))+'</th><th>'+esc(_sdT('th_statement'))+'</th></tr></thead>';
+  var emptyMsg=won.length>0?_sdT('fin_empty_range'):_sdT('fin_empty_none');
   var body='<tbody>'+(rows||'<tr><td colspan="7" style="color:var(--text-3)">'+emptyMsg+'</td></tr>')+(rows?'<tr class="total"><td>Total ('+shown+')</td><td></td><td class="num">'+fmtCHF(fRev)+'</td><td class="num gold">'+fmtCHF(fProv)+'</td><td></td><td></td><td></td></tr>':'')+'</tbody>';
   document.getElementById('prov-table').innerHTML=head+body;
   renderChart(won.filter(function(bid){return _finInRange(bid)&&_finPassStatus(bid);}));
@@ -887,7 +890,7 @@ async function loadAuftragsdetails(bundleId){
   var el=document.getElementById('auftragsdetails');
   if(!el||!bundleId)return;
   var d=await soApiCall('won_order_details',{id:bundleId});
-  if(!d||!d.bundle){el.innerHTML='<div style="font-size:12px;color:var(--text-3)">Auftragsdetails konnten nicht geladen werden.</div>';return;}
+  if(!d||!d.bundle){el.innerHTML='<div style="font-size:12px;color:var(--text-3)">'+esc(_sdT('order_load_fail'))+'</div>';return;}
   var b=d.bundle, custs=d.customers||[];
   function fD(s){if(!s)return '–';var dt=new Date(s);return dt.getDate()+'. '+_MON[dt.getMonth()]+' '+dt.getFullYear();}
   var von=null,bis=null;
@@ -896,21 +899,21 @@ async function loadAuftragsdetails(bundleId){
   var mat=(b.sourceon_id||'')+(b.bezeichnung?' — '+b.bezeichnung:'');
   function row(l,v){return '<div style="color:var(--text-3)">'+l+'</div><div style="color:var(--text-1)">'+esc(v)+'</div>';}
   function cr(l,v){return '<div style="display:flex;justify-content:space-between;gap:12px;padding:3px 0"><span style="color:var(--text-3)">'+l+'</span><span style="color:var(--text-1);text-align:right">'+v+'</span></div>';}
-  var html='<div style="font-size:11px;text-transform:uppercase;color:var(--gold-ink);letter-spacing:0.1em;margin-bottom:14px">Auftragsdetails</div>';
+  var html='<div style="font-size:11px;text-transform:uppercase;color:var(--gold-ink);letter-spacing:0.1em;margin-bottom:14px">'+esc(_sdT('order_details_title'))+'</div>';
   html+='<div style="display:grid;grid-template-columns:auto 1fr;gap:6px 16px;font-size:13px">';
-  html+=row('Material',mat)+row('Gesamtmenge',(b.gesamtvolumen!=null?Number(b.gesamtvolumen).toLocaleString('de-CH'):'–')+' '+(b.einheit||''))+row('Lieferzeitraum',zeitraum)+row('Lieferzone',b.liefer_zone||'–');
+  html+=row(esc(_sdT('w_material')),mat)+row(esc(_sdT('lbl_total_qty')),(b.gesamtvolumen!=null?Number(b.gesamtvolumen).toLocaleString(_sdLocale()):'–')+' '+(b.einheit||''))+row(esc(_sdT('lbl_delivery_period')),zeitraum)+row(esc(_sdT('lbl_delivery_zone')),b.liefer_zone||'–');
   html+='</div>';
   custs.forEach(function(c){
     html+='<div style="background:var(--bg-2);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;margin-top:12px;font-size:13px">'
-      +cr('Firma',esc(c.firmenname||'–'))
-      +cr('Ansprechperson',esc(c.ansprechperson||'–'))
-      +cr('Telefon',c.telefon?'<a href="tel:'+esc(c.telefon)+'" style="color:var(--gold-ink)">'+esc(c.telefon)+'</a>':'–')
-      +cr('E-Mail',c.email?'<a href="mailto:'+esc(c.email)+'" style="color:var(--gold-ink)">'+esc(c.email)+'</a>':'–')
-      +cr('Lieferadresse',esc(c.lieferadresse||'–'))
-      +cr('Menge',(c.menge!=null?esc(String(c.menge)):'–')+' '+esc(c.einheit||''))
+      +cr(esc(_sdT('w_company')),esc(c.firmenname||'–'))
+      +cr(esc(_sdT('w_contact')),esc(c.ansprechperson||'–'))
+      +cr(esc(_sdT('w_phone')),c.telefon?'<a href="tel:'+esc(c.telefon)+'" style="color:var(--gold-ink)">'+esc(c.telefon)+'</a>':'–')
+      +cr(esc(_sdT('w_email')),c.email?'<a href="mailto:'+esc(c.email)+'" style="color:var(--gold-ink)">'+esc(c.email)+'</a>':'–')
+      +cr(esc(_sdT('w_delivery_addr')),esc(c.lieferadresse||'–'))
+      +cr(esc(_sdT('w_quantity')),(c.menge!=null?esc(String(c.menge)):'–')+' '+esc(c.einheit||''))
       +'</div>';
   });
-  html+='<div style="font-size:12px;color:var(--text-3);margin-top:14px;line-height:1.6">Bitte koordiniere die Lieferung direkt mit dem Kunden. Die SourceOn-Provision ist separat zu begleichen.</div>';
+  html+='<div style="font-size:12px;color:var(--text-3);margin-top:14px;line-height:1.6">'+esc(_sdT('order_coord_note'))+'</div>';
   el.innerHTML=html;
 }
 
@@ -930,7 +933,7 @@ function loadJsPDF(){
 async function makeProvisionPDF(bidId){
   var bid=_bids.filter(function(x){return x.id===bidId;})[0];if(!bid)return;
   var b=bid.bundles||{};var ord=bestellwert(bid,b);if(ord==null)ord=0;var prov=ord*COMM;
-  try{await loadJsPDF();}catch(e){alert('PDF-Bibliothek konnte nicht geladen werden.');return;}
+  try{await loadJsPDF();}catch(e){alert(_sdT('pdf_lib_fail'));return;}
   var today=new Date();
   function fD(dt){return dt.getDate()+'. '+_MON[dt.getMonth()]+' '+dt.getFullYear();}
   function chf(n){return 'CHF '+Number(n||0).toLocaleString('de-CH',{minimumFractionDigits:2,maximumFractionDigits:2});}
@@ -987,7 +990,7 @@ function _supToLines(){
 }
 function exportProvExcel(){
   var T=window.SO_XL;
-  if(!T){alert('Excel-Bibliothek noch nicht geladen — bitte kurz warten.');return;}
+  if(!T){alert(_sdT('xls_lib_wait'));return;}
   var firm=(_profile&&_profile.company_name)||'';
   var CHF=T.Z_CHF,PCT=T.Z_PCT,N=8,now=new Date();
   var docNo='PA-'+_xlDate().replace(/-/g,'')+'-'+String(currentUserId||'').slice(-4).toUpperCase();
@@ -1074,10 +1077,10 @@ function renderLieferungen(){
   if(won.length===0){document.getElementById('deliv-empty').style.display='block';return;}
   var upcoming=won.filter(function(b){return !b.delivery_confirmed;}),past=won.filter(function(b){return b.delivery_confirmed;});
   var up=document.getElementById('deliv-upcoming');
-  up.innerHTML=upcoming.length?upcoming.map(buildDeliveryRow).join(''):'<div class="empty-line">Keine bevorstehenden Lieferungen.</div>';
+  up.innerHTML=upcoming.length?upcoming.map(buildDeliveryRow).join(''):'<div class="empty-line">'+esc(_sdT('deliv_none_upcoming'))+'</div>';
   up.querySelectorAll('.row-head').forEach(function(hd){hd.addEventListener('click',function(e){if(e.target.closest('button,.act-link,a'))return;hd.parentNode.classList.toggle('open');});});
-  var head='<thead><tr><th>Datum</th><th>Material</th><th>Menge</th><th>Auftraggeber</th><th class="num">Nettoerlös</th><th>Status</th></tr></thead>';
-  var body='<tbody>'+(past.length?past.map(function(bid){var b=bid.bundles||{};var net=bestellwert(bid,b);var d=bid.delivery_confirmed_at?fmtShort(new Date(bid.delivery_confirmed_at)):'--';return '<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td>'+esc(bVolStr(b))+'</td><td id="dlv-p-'+esc(bid.id)+'">…</td><td class="num">'+(net!=null?fmtCHF(net*(1-COMM)):'--')+'</td><td><span class="status-pill p-green">Geliefert</span></td></tr>';}).join(''):'<tr><td colspan="6" style="color:var(--text-3)">Noch keine abgeschlossenen Lieferungen.</td></tr>')+'</tbody>';
+  var head='<thead><tr><th>'+esc(_sdT('w_date'))+'</th><th>'+esc(_sdT('w_material'))+'</th><th>'+esc(_sdT('w_quantity'))+'</th><th>'+esc(_sdT('w_client'))+'</th><th class="num">'+esc(_sdT('w_net_proceeds'))+'</th><th>'+esc(_sdT('w_status'))+'</th></tr></thead>';
+  var body='<tbody>'+(past.length?past.map(function(bid){var b=bid.bundles||{};var net=bestellwert(bid,b);var d=bid.delivery_confirmed_at?fmtShort(new Date(bid.delivery_confirmed_at)):'--';return '<tr><td>'+esc(d)+'</td><td>'+esc(bMat(b))+'</td><td>'+esc(bVolStr(b))+'</td><td id="dlv-p-'+esc(bid.id)+'">…</td><td class="num">'+(net!=null?fmtCHF(net*(1-COMM)):'--')+'</td><td><span class="status-pill p-green">'+esc(_sdT('w_delivered'))+'</span></td></tr>';}).join(''):'<tr><td colspan="6" style="color:var(--text-3)">'+esc(_sdT('deliv_none_past'))+'</td></tr>')+'</tbody>';
   document.getElementById('deliv-past').innerHTML=head+body;
   // Echte Kundennamen/-daten nachladen (Edge-Function, nur Gewinner):
   upcoming.forEach(function(bid){fillDeliveryDetail(bid.bundle_id,bid.id);});
@@ -1087,15 +1090,15 @@ function buildDeliveryRow(bid){
   var b=bid.bundles||{};var net=bestellwert(bid,b);var netStr=net!=null?fmtCHF(net*(1-COMM)):'--';
   var lieferdatum=b.liefer_zeitraum_von?fmtShort(new Date(b.liefer_zeitraum_von)):(b.delivery_timeframe||'--');
   var confirmed=bid.delivery_confirmed===true;
-  var detail='<div class="sumbox"><div><div class="l">Auftraggeber</div><div class="v" id="dlv-auftr-'+esc(bid.id)+'">…</div></div><div><div class="l">Lieferzeitraum</div><div class="v">'+esc(bZeitraum(b))+'</div></div><div><div class="l">Vereinb. Rabatt · Nettoerlös</div><div class="v gold">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% · '+netStr+'</div></div></div>';
-  detail+='<div class="sumnote" id="dlv-cust-'+esc(bid.id)+'">Kundendaten werden geladen…</div>';
-  detail+='<div class="rd-actions" style="border-top:none;padding-top:0;margin-top:0">'+(confirmed?'<span style="color:var(--green);font-size:13px">✓ Bestätigt'+(bid.delivery_confirmed_at?' am '+esc(fmtDMY(new Date(bid.delivery_confirmed_at))):'')+'</span>':'<button class="btn-gold" onclick="confirmDelivery(\''+esc(bid.id)+'\')">Lieferung bestätigen →</button>')+'<span class="act-link" onclick="makeDeliveryPDF(\''+esc(bid.id)+'\')">Lieferauftrag als PDF →</span></div>';
-  return '<div class="row-x"><div class="row-head d-head"><div><div class="rc-t">'+esc(bMat(b))+'</div>'+(b.sourceon_id?'<div class="rc-id">'+esc(b.sourceon_id)+'</div>':'')+'</div><div><div class="rc-v">'+esc(bVolStr(b))+'</div></div><div><div class="rc-v">'+esc(lieferdatum)+'</div></div><div><span class="status-pill p-amber">Ausstehend</span></div><div class="rc-right"><span class="rc-chev">›</span></div></div><div class="row-detail"><div class="row-detail-inner">'+detail+'</div></div></div>';
+  var detail='<div class="sumbox"><div><div class="l">'+esc(_sdT('w_client'))+'</div><div class="v" id="dlv-auftr-'+esc(bid.id)+'">…</div></div><div><div class="l">'+esc(_sdT('lbl_delivery_period'))+'</div><div class="v">'+esc(bZeitraum(b))+'</div></div><div><div class="l">'+esc(_sdT('lbl_agreed_disc_net'))+'</div><div class="v gold">'+Number(bid.rabatt_prozent||0).toFixed(1)+'% · '+netStr+'</div></div></div>';
+  detail+='<div class="sumnote" id="dlv-cust-'+esc(bid.id)+'">'+esc(_sdT('cust_loading'))+'</div>';
+  detail+='<div class="rd-actions" style="border-top:none;padding-top:0;margin-top:0">'+(confirmed?'<span style="color:var(--green);font-size:13px">'+esc(_sdT('deliv_confirmed_short'))+(bid.delivery_confirmed_at?esc(_sdF('w_on_date',{d:fmtDMY(new Date(bid.delivery_confirmed_at))})):'')+'</span>':'<button class="btn-gold" onclick="confirmDelivery(\''+esc(bid.id)+'\')">'+esc(_sdT('btn_confirm_delivery'))+'</button>')+'<span class="act-link" onclick="makeDeliveryPDF(\''+esc(bid.id)+'\')">'+esc(_sdT('act_delivery_pdf'))+'</span></div>';
+  return '<div class="row-x"><div class="row-head d-head"><div><div class="rc-t">'+esc(bMat(b))+'</div>'+(b.sourceon_id?'<div class="rc-id">'+esc(b.sourceon_id)+'</div>':'')+'</div><div><div class="rc-v">'+esc(bVolStr(b))+'</div></div><div><div class="rc-v">'+esc(lieferdatum)+'</div></div><div><span class="status-pill p-amber">'+esc(_sdT('w_pending'))+'</span></div><div class="rc-right"><span class="rc-chev">›</span></div></div><div class="row-detail"><div class="row-detail-inner">'+detail+'</div></div></div>';
 }
 async function confirmDelivery(bidId){
-  if(!confirm('Lieferung als erfolgt bestätigen?'))return;
+  if(!confirm(_sdT('confirm_delivery')))return;
   var res=await sb.from('bids').update({delivery_confirmed:true,delivery_confirmed_at:new Date().toISOString()}).eq('id',bidId);
-  if(res.error){res=await sb.from('bids').update({delivery_confirmed:true}).eq('id',bidId);if(res.error){alert('Fehler: '+res.error.message);return;}}
+  if(res.error){res=await sb.from('bids').update({delivery_confirmed:true}).eq('id',bidId);if(res.error){alert(_sdT('err_prefix')+res.error.message);return;}}
   for(var i=0;i<_bids.length;i++){if(_bids[i].id===bidId){_bids[i].delivery_confirmed=true;_bids[i].delivery_confirmed_at=new Date().toISOString();}}
   renderLieferungen();renderFinanzen();if(_selBid===bidId)selectBid(bidId);
 }
@@ -1120,7 +1123,7 @@ function icsDay(d){return d.getFullYear()+_p2(d.getMonth()+1)+_p2(d.getDate());}
 function icsEsc(s){return String(s==null?'':s).replace(/\\/g,'\\\\').replace(/;/g,'\\;').replace(/,/g,'\\,').replace(/\n/g,'\\n');}
 function exportDeliveryICS(){
   var won=_bids.filter(function(b){return normStatus(b.status)==='gewonnen'&&(b.bundles||{}).liefer_zeitraum_von;});
-  if(won.length===0){alert('Keine Lieferungen mit Datum zum Exportieren.');return;}
+  if(won.length===0){alert(_sdT('ics_none'));return;}
   var stamp=icsStamp(new Date());var lines=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//SourceOn//Lieferdashboard//DE','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
   won.forEach(function(bid){var b=bid.bundles;var start=new Date(b.liefer_zeitraum_von);var endEx=new Date(start.getFullYear(),start.getMonth(),start.getDate()+1);var sum='Lieferung — '+bMat(b)+' ('+bVolStr(b)+')';lines.push('BEGIN:VEVENT','UID:sod-'+bid.id+'@sourceon.ch','DTSTAMP:'+stamp,'DTSTART;VALUE=DATE:'+icsDay(start),'DTEND;VALUE=DATE:'+icsDay(endEx),'SUMMARY:'+icsEsc(sum),'DESCRIPTION:'+icsEsc('SourceOn-Lieferauftrag · sourceon.ch'),'STATUS:CONFIRMED','BEGIN:VALARM','ACTION:DISPLAY','DESCRIPTION:'+icsEsc(sum),'TRIGGER:-P1D','END:VALARM','END:VEVENT');});
   lines.push('END:VCALENDAR');
@@ -1131,7 +1134,7 @@ function exportDeliveryICS(){
 var CATALOG_MATERIALS=['Beton','Armierungsstahl','Kies & Splitt','Mauerwerk & Ziegel','Dämmung','Schalung','Mörtel','Betonfertigteile','Gipskarton & Ständerwerk','Bedachung & Fassade','Sanitär & HLKS','Vollsortiment'];
 var REGIONS=['Zürich','Bern','Basel','Luzern','Ostschweiz','Zentralschweiz','Aargau','Tessin','Westschweiz','Ganze Schweiz'];
 var CERTS=['ISO 9001','ISO 14001','SIA-konform','SN EN','SUVA-zertifiziert','Minergie'];
-var ACCT_FIELDS=[['company_name','Firmenname'],['contact_person','Ansprechperson'],['email','E-Mail'],['phone','Telefon'],['website','Website']];
+var ACCT_FIELDS=[['company_name','w_company_name'],['contact_person','w_contact'],['email','w_email'],['phone','w_phone'],['website','w_website']];
 function _toArr(sel){
   if(Array.isArray(sel))return sel;
   if(typeof sel==='string'){var t=sel.trim();if(!t)return [];try{var j=JSON.parse(t);if(Array.isArray(j))return j;}catch(e){}
@@ -1163,34 +1166,34 @@ function renderProfil(){
   console.log('[Supplier] Regions loaded:',p.regions,'· Certifications:',p.certifications);
   document.getElementById('pf-avatar').textContent=(p.company_name||'S').charAt(0).toUpperCase();
   document.getElementById('pf-name').textContent=p.company_name||'—';
-  document.getElementById('acct-fields').innerHTML=ACCT_FIELDS.map(function(f){var val=p[f[0]]||'';return '<div class="field-row" id="ar-'+f[0]+'"><span class="field-label">'+esc(f[1])+'</span><span class="field-value" id="av-'+f[0]+'">'+(val?esc(val):'<span class="muted">—</span>')+'</span><span class="field-edit" id="ae-'+f[0]+'" onclick="editField(\''+f[0]+'\')">✎</span></div>';}).join('');
+  document.getElementById('acct-fields').innerHTML=ACCT_FIELDS.map(function(f){var val=p[f[0]]||'';return '<div class="field-row" id="ar-'+f[0]+'"><span class="field-label">'+esc(_sdT(f[1]))+'</span><span class="field-value" id="av-'+f[0]+'">'+(val?esc(val):'<span class="muted">—</span>')+'</span><span class="field-edit" id="ae-'+f[0]+'" onclick="editField(\''+f[0]+'\')">✎</span></div>';}).join('');
   setCapacity(p.annual_capacity||'');
   document.getElementById('pf-notes').value=p.notes||'';
   renderChecks('pf-materials',CATALOG_MATERIALS,p.materials);
   renderChecks('pf-regions',REGIONS,p.regions);
   renderChecks('pf-certs',CERTS,p.certifications,certLabel);
-  if(p.agreement_accepted||p.agreement_accepted_at){document.getElementById('agree-line').innerHTML='✓ Akzeptiert'+(p.agreement_accepted_at?' am '+esc(fmtDMYfull(new Date(p.agreement_accepted_at))):'');}else{document.getElementById('agree-line').textContent='Beim ersten Angebot akzeptiert';}
+  if(p.agreement_accepted||p.agreement_accepted_at){document.getElementById('agree-line').innerHTML=esc(_sdT('agree_accepted'))+(p.agreement_accepted_at?esc(_sdF('w_on_date',{d:fmtDMYfull(new Date(p.agreement_accepted_at))})):'');}else{document.getElementById('agree-line').textContent=_sdT('agree_on_first');}
   if(p.agreement_version)document.getElementById('agree-ver').textContent='Version '+p.agreement_version;
   updateCompletion();
 }
 function updateCompletion(){
   var p=_profile;var checks=[['company_name',p.company_name],['contact_person',p.contact_person],['email',p.email],['phone',p.phone],['website',p.website],['annual_capacity',p.annual_capacity],['materials',(p.materials||[]).length],['regions',(p.regions||[]).length],['certifications',(p.certifications||[]).length]];
-  var labels={company_name:'Firmenname',contact_person:'Ansprechperson',email:'E-Mail',phone:'Telefonnummer',website:'Website',annual_capacity:'Jahreskapazität',materials:'Materialien',regions:'Regionen',certifications:'Zertifizierungen'};
-  var filled=0,miss=[];checks.forEach(function(c){if(c[1])filled++;else miss.push(labels[c[0]]);});
+  var labels={company_name:'w_company_name',contact_person:'w_contact',email:'w_email',phone:'w_phone_number',website:'w_website',annual_capacity:'pf_capacity',materials:'pf_materials',regions:'pf_regions',certifications:'pf_certs'};
+  var filled=0,miss=[];checks.forEach(function(c){if(c[1])filled++;else miss.push(_sdT(labels[c[0]]));});
   var pct=Math.round(filled/checks.length*100);document.getElementById('pf-pct').textContent=pct+'%';document.getElementById('pf-bar').style.width=pct+'%';
-  document.getElementById('pf-miss').innerHTML=miss.length?miss.map(function(m){return '✗ '+esc(m)+' fehlt';}).join('<br>'):'';
+  document.getElementById('pf-miss').innerHTML=miss.length?miss.map(function(m){return '✗ '+esc(m)+' '+esc(_sdT('w_missing'));}).join('<br>'):'';
 }
-function editField(key){var valEl=document.getElementById('av-'+key),editEl=document.getElementById('ae-'+key);var cur=_profile[key]||'';valEl.innerHTML='<input class="acct-input" id="ai-'+key+'" value="'+esc(cur)+'"/>';editEl.outerHTML='<span class="acct-save" id="ae-'+key+'" onclick="saveField(\''+key+'\')">Speichern</span><span class="acct-cancel" onclick="renderProfil()">Abbrechen</span>';document.getElementById('ai-'+key).focus();}
-async function saveField(key){var inp=document.getElementById('ai-'+key);if(!inp)return;var val=inp.value.trim();try{var upd={};upd[key]=val;var res=await sb.from('suppliers').update(upd).eq('id',currentUserId);if(res.error){alert('Speichern fehlgeschlagen: '+res.error.message);return;}_profile[key]=val;renderProfil();if(key==='company_name'){document.getElementById('greet-hi').textContent='Guten Tag, '+val+'.';document.getElementById('db-firm').textContent=val;}}catch(e){alert('Speichern fehlgeschlagen.');}}
+function editField(key){var valEl=document.getElementById('av-'+key),editEl=document.getElementById('ae-'+key);var cur=_profile[key]||'';valEl.innerHTML='<input class="acct-input" id="ai-'+key+'" value="'+esc(cur)+'"/>';editEl.outerHTML='<span class="acct-save" id="ae-'+key+'" onclick="saveField(\''+key+'\')">'+esc(_sdT('w_save'))+'</span><span class="acct-cancel" onclick="renderProfil()">'+esc(_sdT('w_cancel'))+'</span>';document.getElementById('ai-'+key).focus();}
+async function saveField(key){var inp=document.getElementById('ai-'+key);if(!inp)return;var val=inp.value.trim();try{var upd={};upd[key]=val;var res=await sb.from('suppliers').update(upd).eq('id',currentUserId);if(res.error){alert(_sdT('save_failed_prefix')+res.error.message);return;}_profile[key]=val;renderProfil();if(key==='company_name'){document.getElementById('greet-hi').textContent=_sdT('greet_hello')+', '+val+'.';document.getElementById('db-firm').textContent=val;}}catch(e){alert(_sdT('save_failed'));}}
 function getChecked(id){var v=[];document.getElementById(id).querySelectorAll('input:checked').forEach(function(cb){v.push(cb.value);});return v;}
 async function saveProfile(){
-  var btn=document.getElementById('btn-save'),msg=document.getElementById('save-msg');btn.disabled=true;btn.textContent='Wird gespeichert…';msg.style.display='none';
+  var btn=document.getElementById('btn-save'),msg=document.getElementById('save-msg');btn.disabled=true;btn.textContent=_sdT('btn_saving');msg.style.display='none';
   var payload={annual_capacity:document.getElementById('pf-capacity').value,materials:getChecked('pf-materials'),regions:getChecked('pf-regions'),certifications:getChecked('pf-certs'),notes:document.getElementById('pf-notes').value.trim()};
   var res=await sb.from('suppliers').update(payload).eq('id',currentUserId);
-  btn.disabled=false;btn.textContent='Änderungen speichern';
-  if(res.error){msg.textContent='Fehler: '+res.error.message;msg.style.color='#FCA5A5';msg.style.display='inline';return;}
+  btn.disabled=false;btn.textContent=_sdT('pf_save');
+  if(res.error){msg.textContent=_sdT('err_prefix')+res.error.message;msg.style.color='#FCA5A5';msg.style.display='inline';return;}
   Object.assign(_profile,payload);updateCompletion();
-  msg.textContent='Gespeichert ✓';msg.style.color='var(--green)';msg.style.display='inline';setTimeout(function(){msg.style.display='none';},3000);
+  msg.textContent=_sdT('saved_ok');msg.style.color='var(--green)';msg.style.display='inline';setTimeout(function(){msg.style.display='none';},3000);
 }
 function askDeactivate(){document.getElementById('deact-btn').style.display='none';document.getElementById('deact-confirm').classList.add('show');}
 function hideDeactivate(){document.getElementById('deact-btn').style.display='';document.getElementById('deact-confirm').classList.remove('show');}
@@ -1198,10 +1201,11 @@ async function doDeactivate(){try{await sb.from('suppliers').update({status:'ina
 
 // ── auth ──
 function showGate(type){var card=document.getElementById('auth-gate-card');
-  if(type==='login'){card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D99000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h2>Anmeldung erforderlich</h2><p>Bitte melde dich an, um auf das Lieferanten-Portal zuzugreifen.</p><br><a href="#" class="btn-gold" onclick="clerkSignIn();return false" style="margin:0 auto">Anmelden</a><br><a href="/" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}
-  else if(type==='pending'){card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D99000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h2>Profil wird geprüft</h2><p>Dein Profil wird noch geprüft. Wir melden uns innerhalb von 48 Stunden.</p><br><a href="/" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}
-  else if(type==='rejected'){card.innerHTML='<div class="status-icon rejected"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FCA5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div><h2>Bewerbung nicht angenommen</h2><p>Kontaktiere uns: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a></p><br><a href="/" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}
-  else{card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><h2>Kein Lieferanten-Profil</h2><p>Für dieses Konto wurde kein Lieferanten-Profil gefunden. <a href="lieferant.html">Jetzt als Lieferant bewerben →</a></p><br><a href="/" style="font-size:.82rem;color:#94A3B8">← Zur Hauptseite</a>';}
+  var _bh='<br><a href="/" style="font-size:.82rem;color:#94A3B8">'+esc(_sdT('gate_back_home'))+'</a>';
+  if(type==='login'){card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D99000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><h2>'+esc(_sdT('gate_login_title'))+'</h2><p>'+esc(_sdT('gate_login_msg'))+'</p><br><a href="#" class="btn-gold" onclick="clerkSignIn();return false" style="margin:0 auto">'+esc(_sdT('gate_login_btn'))+'</a>'+_bh;}
+  else if(type==='pending'){card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D99000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><h2>'+esc(_sdT('gate_pending_title'))+'</h2><p>'+esc(_sdT('gate_pending_msg'))+'</p>'+_bh;}
+  else if(type==='rejected'){card.innerHTML='<div class="status-icon rejected"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FCA5A5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div><h2>'+esc(_sdT('gate_rejected_title'))+'</h2><p>'+_sdT('gate_rejected_msg')+'</p>'+_bh;}
+  else{card.innerHTML='<div class="status-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><h2>'+esc(_sdT('gate_not_title'))+'</h2><p>'+_sdT('gate_not_msg')+'</p>'+_bh;}
 }
 function clerkSignIn(){if(!window.Clerk)return;window.Clerk.openSignIn({appearance:{variables:{colorPrimary:'#D99000',colorBackground:'#ffffff',colorText:'#141A24',colorInputBackground:'#F5F6F8',colorInputText:'#141A24'}},fallbackRedirectUrl:window.location.href});}
 async function handleLogout(){if(window.Clerk){await window.Clerk.signOut();}window.location.href='/';}
@@ -1346,6 +1350,187 @@ var T={
   trust_confirm:"Conferma",trust_no_code:"Non hai ricevuto un codice?",trust_resend:"Invia di nuovo il codice",trust_cancel:"Annulla"
  }
 };
+/* ── dynamically-rendered (JS) strings ── */
+var _SDX={
+ de:{
+  greet_hello:"Guten Tag",load_error:"Laden fehlgeschlagen — bitte Seite neu laden.",reload_btn:"Neu laden",
+  mat_multi:"Mehrere Materialien",mat_fallback:"Material",
+  bs_submitted:"Eingereicht",bs_won:"Gewonnen",bs_lost:"Verloren",bs_expired:"Abgelaufen",bs_withdrawn:"Zurückgezogen",
+  cd_expired:"Abgelaufen",cd_day:"Tag",cd_days:"Tage",cd_hrs:"Std",
+  notif_new:"Neue Ausschreibung:",notif_deadline_one:"Frist in {n} Tag",notif_deadline_many:"Frist in {n} Tagen",
+  au_sub_none:"Aktuell keine passenden Ausschreibungen",au_cat_empty:"Keine Ausschreibungen in dieser Kategorie.",
+  lbl_total_volume:"Gesamtvolumen",lbl_delivery_period:"Lieferzeitraum",lbl_est_value:"Geschätzter Auftragswert",
+  note_addresses:"Exakte Lieferadressen werden erst nach Zuschlag freigegeben.",
+  fomo_one:"{n} weiterer Lieferant hat bereits ein Angebot eingereicht.",fomo_many:"{n} weitere Lieferanten haben bereits ein Angebot eingereicht.",
+  bd_your_bid:"Dein Angebot",w_discount:"Rabatt",w_net_proceeds:"Nettoerlös",bd_submitted_on:"Eingereicht am",act_withdraw:"Angebot zurückziehen",
+  msg_expired_nobid:"Frist abgelaufen — kein Angebot mehr möglich.",
+  lbl_min_gross_discount:"Brutto-Mindestrabatt",w_bidder:"Bieter",w_bidders:"Bieter",
+  bf_your_discount_offer:"Dein Rabatt-Angebot",bf_min_required:"Mindestens {n}% gefordert",bf_enter_discount:"Rabatt in Prozent angeben",bf_below_min:"⚠ Unter Mindestanforderung",
+  bd_market_price:"Regulärer Marktpreis (Richtwert)",bd_your_discount:"Dein Rabatt",bd_order_value:"Bestellwert",bd_provision:"SourceOn-Provision (2.25%)",bd_net:"Dein Nettoerlös",bd_prov_note:"Provision im Mindestrabatt bereits einkalkuliert",
+  bf_notes:"Bemerkungen (optional)",bf_confirm_deliver:"Ich bestätige, dass ich {vol} innerhalb des angegebenen Lieferzeitraums liefern kann.",
+  bf_binding_pre:"Dieses Angebot ist verbindlich gemäss der ",bf_agreement_link:"Lieferantenvereinbarung →",bf_binding_post:" von SourceOn.",bf_submit:"Angebot einreichen →",
+  err_valid_discount:"Bitte gib einen gültigen Rabatt an.",btn_submitting:"Wird eingereicht…",err_prefix:"Fehler: ",
+  bd_submitted_at:"✓ Angebot eingereicht um {t} Uhr",bd_binding_until:"Verbindlich bis {d}",confirm_withdraw:"Möchtest du dein Angebot wirklich zurückziehen?",
+  bids_none:"Keine Angebote.",w_quantity:"Menge",
+  award_title:"🏆 Zuschlag erhalten",award_desc:"Die vollständigen Auftrags- und Kundendetails findest du unten.",
+  deliv_confirmed_on:"✓ Lieferung bestätigt",w_on_date:" am {d}",btn_confirm_delivery:"Lieferung bestätigen →",order_loading:"Auftragsdetails werden geladen…",
+  tl_1:"Eingegangen",tl_2:"Bündelung",tl_3:"Ausschreibung",tl_4:"Zuschlag",
+  msg_bid_submitted:"Dein Angebot ist eingereicht. Du wirst benachrichtigt, sobald über den Zuschlag entschieden ist.",
+  msg_lost:"Dieser Auftrag wurde an einen anderen Lieferanten vergeben.",msg_expired_noaward:"Ausschreibung ohne Zuschlag abgelaufen.",
+  act_delivery_pdf:"Lieferauftrag als PDF →",act_provision_pdf:"Provisionsabrechnung als PDF →",act_question:"Frage zu diesem Angebot →",subj_offer:"Angebot ",
+  order_load_fail:"Auftragsdetails konnten nicht geladen werden.",order_details_title:"Auftragsdetails",w_material:"Material",lbl_total_qty:"Gesamtmenge",lbl_delivery_zone:"Lieferzone",
+  w_company:"Firma",w_contact:"Ansprechperson",w_phone:"Telefon",w_email:"E-Mail",w_delivery_addr:"Lieferadresse",
+  order_coord_note:"Bitte koordiniere die Lieferung direkt mit dem Kunden. Die SourceOn-Provision ist separat zu begleichen.",
+  w_date:"Datum",th_order_chf:"Bestellwert CHF",th_provision:"Provision (2.25%)",w_reference:"Referenz",th_statement:"Abrechnung",
+  fin_from_orders_one:"Aus {n} gewonnenen Auftrag",fin_from_orders_many:"Aus {n} gewonnenen Aufträgen",
+  fin_empty_range:"Keine Einträge im gewählten Zeitraum/Status",fin_empty_none:"Noch keine Provisionen — erst nach gewonnenen Aufträgen",
+  ref_add:"＋ Referenz",ref_placeholder:"z.B. Auftrag Nr.",ref_save_fail:"Referenz konnte nicht gespeichert werden: ",
+  pdf_lib_fail:"PDF-Bibliothek konnte nicht geladen werden.",xls_lib_wait:"Excel-Bibliothek noch nicht geladen — bitte kurz warten.",ics_none:"Keine Lieferungen mit Datum zum Exportieren.",
+  w_client:"Auftraggeber",w_delivered:"Geliefert",deliv_none_upcoming:"Keine bevorstehenden Lieferungen.",deliv_none_past:"Noch keine abgeschlossenen Lieferungen.",
+  lbl_agreed_disc_net:"Vereinb. Rabatt · Nettoerlös",cust_loading:"Kundendaten werden geladen…",deliv_confirmed_short:"✓ Bestätigt",w_pending:"Ausstehend",w_verified:"Verifiziert",w_status:"Status",
+  w_missing:"fehlt",w_company_name:"Firmenname",w_phone_number:"Telefonnummer",w_website:"Website",w_save:"Speichern",w_cancel:"Abbrechen",
+  btn_saving:"Wird gespeichert…",saved_ok:"Gespeichert ✓",save_failed_prefix:"Speichern fehlgeschlagen: ",save_failed:"Speichern fehlgeschlagen.",
+  agree_accepted:"✓ Akzeptiert",agree_on_first:"Beim ersten Angebot akzeptiert",confirm_delivery:"Lieferung als erfolgt bestätigen?",
+  gate_login_title:"Anmeldung erforderlich",gate_login_msg:"Bitte melde dich an, um auf das Lieferanten-Portal zuzugreifen.",gate_login_btn:"Anmelden",gate_back_home:"← Zur Hauptseite",
+  gate_pending_title:"Profil wird geprüft",gate_pending_msg:"Dein Profil wird noch geprüft. Wir melden uns innerhalb von 48 Stunden.",
+  gate_rejected_title:"Bewerbung nicht angenommen",gate_rejected_msg:'Kontaktiere uns: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a>',
+  gate_not_title:"Kein Lieferanten-Profil",gate_not_msg:'Für dieses Konto wurde kein Lieferanten-Profil gefunden. <a href="lieferant.html">Jetzt als Lieferant bewerben →</a>'
+ },
+ en:{
+  greet_hello:"Hello",load_error:"Loading failed — please reload the page.",reload_btn:"Reload",
+  mat_multi:"Multiple materials",mat_fallback:"Material",
+  bs_submitted:"Submitted",bs_won:"Won",bs_lost:"Lost",bs_expired:"Expired",bs_withdrawn:"Withdrawn",
+  cd_expired:"Expired",cd_day:"day",cd_days:"days",cd_hrs:"hrs",
+  notif_new:"New tender:",notif_deadline_one:"deadline in {n} day",notif_deadline_many:"deadline in {n} days",
+  au_sub_none:"No matching tenders at the moment",au_cat_empty:"No tenders in this category.",
+  lbl_total_volume:"Total volume",lbl_delivery_period:"Delivery period",lbl_est_value:"Estimated order value",
+  note_addresses:"Exact delivery addresses are released only after award.",
+  fomo_one:"{n} other supplier has already submitted a bid.",fomo_many:"{n} other suppliers have already submitted a bid.",
+  bd_your_bid:"Your bid",w_discount:"Discount",w_net_proceeds:"Net proceeds",bd_submitted_on:"Submitted on",act_withdraw:"Withdraw bid",
+  msg_expired_nobid:"Deadline passed — bidding no longer possible.",
+  lbl_min_gross_discount:"Gross minimum discount",w_bidder:"bidder",w_bidders:"bidders",
+  bf_your_discount_offer:"Your discount offer",bf_min_required:"At least {n}% required",bf_enter_discount:"Enter discount in percent",bf_below_min:"⚠ Below minimum requirement",
+  bd_market_price:"Regular market price (reference)",bd_your_discount:"Your discount",bd_order_value:"Order value",bd_provision:"SourceOn commission (2.25%)",bd_net:"Your net proceeds",bd_prov_note:"Commission already included in the minimum discount",
+  bf_notes:"Notes (optional)",bf_confirm_deliver:"I confirm that I can deliver {vol} within the specified delivery period.",
+  bf_binding_pre:"This bid is binding in accordance with SourceOn's ",bf_agreement_link:"supplier agreement →",bf_binding_post:".",bf_submit:"Submit bid →",
+  err_valid_discount:"Please enter a valid discount.",btn_submitting:"Submitting…",err_prefix:"Error: ",
+  bd_submitted_at:"✓ Bid submitted at {t}",bd_binding_until:"Binding until {d}",confirm_withdraw:"Do you really want to withdraw your bid?",
+  bids_none:"No bids.",w_quantity:"Quantity",
+  award_title:"🏆 Awarded",award_desc:"You'll find the full order and customer details below.",
+  deliv_confirmed_on:"✓ Delivery confirmed",w_on_date:" on {d}",btn_confirm_delivery:"Confirm delivery →",order_loading:"Loading order details…",
+  tl_1:"Received",tl_2:"Bundling",tl_3:"Tender",tl_4:"Award",
+  msg_bid_submitted:"Your bid has been submitted. You'll be notified once the award decision is made.",
+  msg_lost:"This order was awarded to another supplier.",msg_expired_noaward:"Tender expired without award.",
+  act_delivery_pdf:"Delivery order as PDF →",act_provision_pdf:"Commission statement as PDF →",act_question:"Question about this bid →",subj_offer:"Bid ",
+  order_load_fail:"Order details could not be loaded.",order_details_title:"Order details",w_material:"Material",lbl_total_qty:"Total quantity",lbl_delivery_zone:"Delivery zone",
+  w_company:"Company",w_contact:"Contact person",w_phone:"Phone",w_email:"Email",w_delivery_addr:"Delivery address",
+  order_coord_note:"Please coordinate the delivery directly with the customer. The SourceOn commission is to be settled separately.",
+  w_date:"Date",th_order_chf:"Order value CHF",th_provision:"Commission (2.25%)",w_reference:"Reference",th_statement:"Statement",
+  fin_from_orders_one:"From {n} won order",fin_from_orders_many:"From {n} won orders",
+  fin_empty_range:"No entries for the selected period/status",fin_empty_none:"No commissions yet — only after won orders",
+  ref_add:"＋ Reference",ref_placeholder:"e.g. Order no.",ref_save_fail:"Reference could not be saved: ",
+  pdf_lib_fail:"PDF library could not be loaded.",xls_lib_wait:"Excel library not loaded yet — please wait a moment.",ics_none:"No deliveries with a date to export.",
+  w_client:"Client",w_delivered:"Delivered",deliv_none_upcoming:"No upcoming deliveries.",deliv_none_past:"No completed deliveries yet.",
+  lbl_agreed_disc_net:"Agreed discount · Net proceeds",cust_loading:"Loading customer data…",deliv_confirmed_short:"✓ Confirmed",w_pending:"Pending",w_verified:"Verified",w_status:"Status",
+  w_missing:"missing",w_company_name:"Company name",w_phone_number:"Phone number",w_website:"Website",w_save:"Save",w_cancel:"Cancel",
+  btn_saving:"Saving…",saved_ok:"Saved ✓",save_failed_prefix:"Saving failed: ",save_failed:"Saving failed.",
+  agree_accepted:"✓ Accepted",agree_on_first:"Accepted with the first bid",confirm_delivery:"Confirm delivery as completed?",
+  gate_login_title:"Sign-in required",gate_login_msg:"Please sign in to access the supplier portal.",gate_login_btn:"Sign in",gate_back_home:"← To the homepage",
+  gate_pending_title:"Profile under review",gate_pending_msg:"Your profile is still being reviewed. We'll get back to you within 48 hours.",
+  gate_rejected_title:"Application not accepted",gate_rejected_msg:'Contact us: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a>',
+  gate_not_title:"No supplier profile",gate_not_msg:'No supplier profile was found for this account. <a href="lieferant.html">Apply as a supplier now →</a>'
+ },
+ fr:{
+  greet_hello:"Bonjour",load_error:"Échec du chargement — veuillez recharger la page.",reload_btn:"Recharger",
+  mat_multi:"Plusieurs matériaux",mat_fallback:"Matériau",
+  bs_submitted:"Soumise",bs_won:"Remportée",bs_lost:"Perdue",bs_expired:"Expirée",bs_withdrawn:"Retirée",
+  cd_expired:"Expiré",cd_day:"jour",cd_days:"jours",cd_hrs:"h",
+  notif_new:"Nouvel appel d'offres :",notif_deadline_one:"délai dans {n} jour",notif_deadline_many:"délai dans {n} jours",
+  au_sub_none:"Aucun appel d'offres correspondant actuellement",au_cat_empty:"Aucun appel d'offres dans cette catégorie.",
+  lbl_total_volume:"Volume total",lbl_delivery_period:"Période de livraison",lbl_est_value:"Valeur estimée de la commande",
+  note_addresses:"Les adresses de livraison exactes ne sont communiquées qu'après l'attribution.",
+  fomo_one:"{n} autre fournisseur a déjà soumis une offre.",fomo_many:"{n} autres fournisseurs ont déjà soumis une offre.",
+  bd_your_bid:"Ton offre",w_discount:"Remise",w_net_proceeds:"Produit net",bd_submitted_on:"Soumise le",act_withdraw:"Retirer l'offre",
+  msg_expired_nobid:"Délai dépassé — offre plus possible.",
+  lbl_min_gross_discount:"Remise minimale brute",w_bidder:"enchérisseur",w_bidders:"enchérisseurs",
+  bf_your_discount_offer:"Ton offre de remise",bf_min_required:"Au moins {n}% requis",bf_enter_discount:"Indiquer la remise en pourcentage",bf_below_min:"⚠ En dessous de l'exigence minimale",
+  bd_market_price:"Prix du marché régulier (indicatif)",bd_your_discount:"Ta remise",bd_order_value:"Valeur de la commande",bd_provision:"Commission SourceOn (2.25%)",bd_net:"Ton produit net",bd_prov_note:"Commission déjà incluse dans la remise minimale",
+  bf_notes:"Remarques (facultatif)",bf_confirm_deliver:"Je confirme pouvoir livrer {vol} dans la période de livraison indiquée.",
+  bf_binding_pre:"Cette offre est contraignante conformément à l'",bf_agreement_link:"accord fournisseur de SourceOn →",bf_binding_post:".",bf_submit:"Soumettre l'offre →",
+  err_valid_discount:"Veuillez indiquer une remise valide.",btn_submitting:"Envoi en cours…",err_prefix:"Erreur : ",
+  bd_submitted_at:"✓ Offre soumise à {t}",bd_binding_until:"Contraignante jusqu'au {d}",confirm_withdraw:"Veux-tu vraiment retirer ton offre ?",
+  bids_none:"Aucune offre.",w_quantity:"Quantité",
+  award_title:"🏆 Marché attribué",award_desc:"Tu trouveras les détails complets de la commande et du client ci-dessous.",
+  deliv_confirmed_on:"✓ Livraison confirmée",w_on_date:" le {d}",btn_confirm_delivery:"Confirmer la livraison →",order_loading:"Chargement des détails de la commande…",
+  tl_1:"Reçue",tl_2:"Regroupement",tl_3:"Appel d'offres",tl_4:"Attribution",
+  msg_bid_submitted:"Ton offre a été soumise. Tu seras notifié dès que la décision d'attribution sera prise.",
+  msg_lost:"Cette commande a été attribuée à un autre fournisseur.",msg_expired_noaward:"Appel d'offres expiré sans attribution.",
+  act_delivery_pdf:"Bon de livraison en PDF →",act_provision_pdf:"Décompte de commissions en PDF →",act_question:"Question sur cette offre →",subj_offer:"Offre ",
+  order_load_fail:"Impossible de charger les détails de la commande.",order_details_title:"Détails de la commande",w_material:"Matériau",lbl_total_qty:"Quantité totale",lbl_delivery_zone:"Zone de livraison",
+  w_company:"Entreprise",w_contact:"Personne de contact",w_phone:"Téléphone",w_email:"E-mail",w_delivery_addr:"Adresse de livraison",
+  order_coord_note:"Merci de coordonner la livraison directement avec le client. La commission SourceOn est à régler séparément.",
+  w_date:"Date",th_order_chf:"Valeur commande CHF",th_provision:"Commission (2.25%)",w_reference:"Référence",th_statement:"Décompte",
+  fin_from_orders_one:"De {n} commande remportée",fin_from_orders_many:"De {n} commandes remportées",
+  fin_empty_range:"Aucune entrée pour la période/le statut sélectionné",fin_empty_none:"Aucune commission pour l'instant — seulement après des commandes remportées",
+  ref_add:"＋ Référence",ref_placeholder:"p. ex. Commande n°",ref_save_fail:"La référence n'a pas pu être enregistrée : ",
+  pdf_lib_fail:"La bibliothèque PDF n'a pas pu être chargée.",xls_lib_wait:"Bibliothèque Excel pas encore chargée — patiente un instant.",ics_none:"Aucune livraison avec date à exporter.",
+  w_client:"Client",w_delivered:"Livré",deliv_none_upcoming:"Aucune livraison à venir.",deliv_none_past:"Aucune livraison terminée pour l'instant.",
+  lbl_agreed_disc_net:"Remise convenue · Produit net",cust_loading:"Chargement des données client…",deliv_confirmed_short:"✓ Confirmée",w_pending:"En attente",w_verified:"Vérifié",w_status:"Statut",
+  w_missing:"manquant",w_company_name:"Nom de l'entreprise",w_phone_number:"Numéro de téléphone",w_website:"Site web",w_save:"Enregistrer",w_cancel:"Annuler",
+  btn_saving:"Enregistrement…",saved_ok:"Enregistré ✓",save_failed_prefix:"Échec de l'enregistrement : ",save_failed:"Échec de l'enregistrement.",
+  agree_accepted:"✓ Accepté",agree_on_first:"Accepté lors de la première offre",confirm_delivery:"Confirmer la livraison comme effectuée ?",
+  gate_login_title:"Connexion requise",gate_login_msg:"Connecte-toi pour accéder au portail fournisseur.",gate_login_btn:"Se connecter",gate_back_home:"← Vers la page principale",
+  gate_pending_title:"Profil en cours d'examen",gate_pending_msg:"Ton profil est encore en cours d'examen. Nous te répondrons sous 48 heures.",
+  gate_rejected_title:"Candidature non acceptée",gate_rejected_msg:'Contacte-nous : <a href="mailto:info@sourceon.ch">info@sourceon.ch</a>',
+  gate_not_title:"Aucun profil fournisseur",gate_not_msg:'Aucun profil fournisseur n\'a été trouvé pour ce compte. <a href="lieferant.html">Postule comme fournisseur →</a>'
+ },
+ it:{
+  greet_hello:"Buongiorno",load_error:"Caricamento non riuscito — ricarica la pagina.",reload_btn:"Ricarica",
+  mat_multi:"Più materiali",mat_fallback:"Materiale",
+  bs_submitted:"Inviata",bs_won:"Vinta",bs_lost:"Persa",bs_expired:"Scaduta",bs_withdrawn:"Ritirata",
+  cd_expired:"Scaduto",cd_day:"giorno",cd_days:"giorni",cd_hrs:"h",
+  notif_new:"Nuovo bando:",notif_deadline_one:"scadenza tra {n} giorno",notif_deadline_many:"scadenza tra {n} giorni",
+  au_sub_none:"Nessun bando corrispondente al momento",au_cat_empty:"Nessun bando in questa categoria.",
+  lbl_total_volume:"Volume totale",lbl_delivery_period:"Periodo di consegna",lbl_est_value:"Valore stimato dell'ordine",
+  note_addresses:"Gli indirizzi di consegna esatti vengono comunicati solo dopo l'aggiudicazione.",
+  fomo_one:"{n} altro fornitore ha già inviato un'offerta.",fomo_many:"{n} altri fornitori hanno già inviato un'offerta.",
+  bd_your_bid:"La tua offerta",w_discount:"Sconto",w_net_proceeds:"Ricavo netto",bd_submitted_on:"Inviata il",act_withdraw:"Ritira l'offerta",
+  msg_expired_nobid:"Termine scaduto — offerta non più possibile.",
+  lbl_min_gross_discount:"Sconto minimo lordo",w_bidder:"offerente",w_bidders:"offerenti",
+  bf_your_discount_offer:"La tua offerta di sconto",bf_min_required:"Almeno {n}% richiesto",bf_enter_discount:"Indica lo sconto in percentuale",bf_below_min:"⚠ Sotto il requisito minimo",
+  bd_market_price:"Prezzo di mercato regolare (indicativo)",bd_your_discount:"Il tuo sconto",bd_order_value:"Valore dell'ordine",bd_provision:"Commissione SourceOn (2.25%)",bd_net:"Il tuo ricavo netto",bd_prov_note:"Commissione già inclusa nello sconto minimo",
+  bf_notes:"Note (facoltativo)",bf_confirm_deliver:"Confermo di poter consegnare {vol} entro il periodo di consegna indicato.",
+  bf_binding_pre:"Questa offerta è vincolante ai sensi dell'",bf_agreement_link:"accordo fornitore di SourceOn →",bf_binding_post:".",bf_submit:"Invia l'offerta →",
+  err_valid_discount:"Inserisci uno sconto valido.",btn_submitting:"Invio in corso…",err_prefix:"Errore: ",
+  bd_submitted_at:"✓ Offerta inviata alle {t}",bd_binding_until:"Vincolante fino al {d}",confirm_withdraw:"Vuoi davvero ritirare la tua offerta?",
+  bids_none:"Nessuna offerta.",w_quantity:"Quantità",
+  award_title:"🏆 Aggiudicato",award_desc:"Trovi tutti i dettagli dell'ordine e del cliente qui sotto.",
+  deliv_confirmed_on:"✓ Consegna confermata",w_on_date:" il {d}",btn_confirm_delivery:"Conferma la consegna →",order_loading:"Caricamento dei dettagli dell'ordine…",
+  tl_1:"Ricevuta",tl_2:"Aggregazione",tl_3:"Bando",tl_4:"Aggiudicazione",
+  msg_bid_submitted:"La tua offerta è stata inviata. Riceverai una notifica non appena verrà presa la decisione di aggiudicazione.",
+  msg_lost:"Questo ordine è stato aggiudicato a un altro fornitore.",msg_expired_noaward:"Bando scaduto senza aggiudicazione.",
+  act_delivery_pdf:"Ordine di consegna in PDF →",act_provision_pdf:"Rendiconto commissioni in PDF →",act_question:"Domanda su questa offerta →",subj_offer:"Offerta ",
+  order_load_fail:"Impossibile caricare i dettagli dell'ordine.",order_details_title:"Dettagli dell'ordine",w_material:"Materiale",lbl_total_qty:"Quantità totale",lbl_delivery_zone:"Zona di consegna",
+  w_company:"Azienda",w_contact:"Referente",w_phone:"Telefono",w_email:"E-mail",w_delivery_addr:"Indirizzo di consegna",
+  order_coord_note:"Coordina la consegna direttamente con il cliente. La commissione SourceOn va saldata separatamente.",
+  w_date:"Data",th_order_chf:"Valore ordine CHF",th_provision:"Commissione (2.25%)",w_reference:"Riferimento",th_statement:"Rendiconto",
+  fin_from_orders_one:"Da {n} ordine vinto",fin_from_orders_many:"Da {n} ordini vinti",
+  fin_empty_range:"Nessuna voce per il periodo/stato selezionato",fin_empty_none:"Ancora nessuna commissione — solo dopo ordini vinti",
+  ref_add:"＋ Riferimento",ref_placeholder:"es. Ordine n.",ref_save_fail:"Impossibile salvare il riferimento: ",
+  pdf_lib_fail:"Impossibile caricare la libreria PDF.",xls_lib_wait:"Libreria Excel non ancora caricata — attendi un momento.",ics_none:"Nessuna consegna con data da esportare.",
+  w_client:"Committente",w_delivered:"Consegnato",deliv_none_upcoming:"Nessuna consegna imminente.",deliv_none_past:"Ancora nessuna consegna completata.",
+  lbl_agreed_disc_net:"Sconto concordato · Ricavo netto",cust_loading:"Caricamento dei dati del cliente…",deliv_confirmed_short:"✓ Confermata",w_pending:"In attesa",w_verified:"Verificato",w_status:"Stato",
+  w_missing:"mancante",w_company_name:"Nome dell'azienda",w_phone_number:"Numero di telefono",w_website:"Sito web",w_save:"Salva",w_cancel:"Annulla",
+  btn_saving:"Salvataggio…",saved_ok:"Salvato ✓",save_failed_prefix:"Salvataggio non riuscito: ",save_failed:"Salvataggio non riuscito.",
+  agree_accepted:"✓ Accettato",agree_on_first:"Accettato con la prima offerta",confirm_delivery:"Confermare la consegna come effettuata?",
+  gate_login_title:"Accesso richiesto",gate_login_msg:"Accedi per entrare nel portale fornitori.",gate_login_btn:"Accedi",gate_back_home:"← Alla pagina principale",
+  gate_pending_title:"Profilo in verifica",gate_pending_msg:"Il tuo profilo è ancora in verifica. Ti risponderemo entro 48 ore.",
+  gate_rejected_title:"Candidatura non accettata",gate_rejected_msg:'Contattaci: <a href="mailto:info@sourceon.ch">info@sourceon.ch</a>',
+  gate_not_title:"Nessun profilo fornitore",gate_not_msg:'Per questo account non è stato trovato alcun profilo fornitore. <a href="lieferant.html">Candidati come fornitore →</a>'
+ }
+};
+['de','en','fr','it'].forEach(function(l){var s=_SDX[l];for(var k in s){if(T[l])T[l][k]=s[k];}});
+window.SO_SD_T=T;
 window.setLang=function(lang){
   if(!T[lang])lang='de';
   var d=T[lang];
