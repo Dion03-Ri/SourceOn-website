@@ -1481,6 +1481,7 @@ const T={
 };
 
 function applyLang(lang){
+  try{localStorage.setItem('sourceon-lang',lang);}catch(e){} // ZUERST speichern, damit Karten-Render (transMat) sofort die neue Sprache nutzt
   const dict=T[lang]||T.de;
   document.querySelectorAll('[data-i18n]').forEach(function(el){
     const key=el.getAttribute('data-i18n');
@@ -2206,7 +2207,7 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
     var html='',shown=0;
     _items.forEach(function(it){
       if(_zone&&it.zone!==_zone)return;
-      if(q&&it.name.toLowerCase().indexOf(q)===-1)return;
+      if(q&&it.name.toLowerCase().indexOf(q)===-1&&transMat(it.name).toLowerCase().indexOf(q)===-1)return;
       shown++;html+=cardHtml(it);
     });
     var list=document.getElementById('bd-list');if(list)list.innerHTML=html;
