@@ -1221,9 +1221,9 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
           <div class="form-checks form-checks-3">
             <label class="form-check"><input type="checkbox"/><span>ISO 9001</span></label>
             <label class="form-check"><input type="checkbox"/><span>ISO 14001</span></label>
-            <label class="form-check"><input type="checkbox"/><span>SIA-konform</span></label>
+            <label class="form-check"><input type="checkbox"/><span data-i18n="form.certSia">SIA-konform</span></label>
             <label class="form-check"><input type="checkbox"/><span>SN EN</span></label>
-            <label class="form-check"><input type="checkbox"/><span>SUVA-zertifiziert</span></label>
+            <label class="form-check"><input type="checkbox"/><span data-i18n="form.certSuva">SUVA-zertifiziert</span></label>
             <label class="form-check"><input type="checkbox"/><span>Minergie</span></label>
           </div>
         </div>
@@ -1739,7 +1739,7 @@ var i18n = {
     'form.capSelect': 'Bitte wählen',
     'form.capUnder': 'Unter CHF 500\'000',
     'form.capOver': 'Über CHF 50\'000\'000',
-    'form.certs': 'Zertifizierungen',
+    'form.certs': 'Zertifizierungen','form.certSia':'SIA-konform','form.certSuva':'SUVA-zertifiziert',
     'form.notes': 'Bemerkungen',
     'form.notesPlaceholder': 'Weitere Informationen zu deinem Angebot…',
     'form.agreement': 'Ich akzeptiere die <a href="lieferantenvereinbarung.html" target="_blank">Lieferantenvereinbarung</a> von SourceOn und bestätige, dass die gemachten Angaben korrekt sind. *',
@@ -1857,7 +1857,7 @@ var i18n = {
     'form.capSelect': 'Please select',
     'form.capUnder': 'Under CHF 500\'000',
     'form.capOver': 'Over CHF 50\'000\'000',
-    'form.certs': 'Certifications',
+    'form.certs': 'Certifications','form.certSia':'SIA-compliant','form.certSuva':'SUVA-certified',
     'form.notes': 'Remarks',
     'form.notesPlaceholder': 'Additional information about your offer…',
     'form.agreement': 'I accept SourceOn\'s <a href="lieferantenvereinbarung.html" target="_blank">supplier agreement</a> and confirm that the information provided is correct. *',
@@ -1975,7 +1975,7 @@ var i18n = {
     'form.capSelect': 'Veuillez choisir',
     'form.capUnder': 'Moins de CHF 500\'000',
     'form.capOver': 'Plus de CHF 50\'000\'000',
-    'form.certs': 'Certifications',
+    'form.certs': 'Certifications','form.certSia':'Conforme SIA','form.certSuva':'Certifié SUVA',
     'form.notes': 'Remarques',
     'form.notesPlaceholder': 'Informations complémentaires sur ton offre…',
     'form.agreement': 'J\'accepte l\'<a href="lieferantenvereinbarung.html" target="_blank">accord fournisseur</a> de SourceOn et je confirme que les informations fournies sont correctes. *',
@@ -2093,7 +2093,7 @@ var i18n = {
     'form.capSelect': 'Seleziona',
     'form.capUnder': 'Meno di CHF 500\'000',
     'form.capOver': 'Oltre CHF 50\'000\'000',
-    'form.certs': 'Certificazioni',
+    'form.certs': 'Certificazioni','form.certSia':'Conforme SIA','form.certSuva':'Certificato SUVA',
     'form.notes': 'Note',
     'form.notesPlaceholder': 'Ulteriori informazioni sulla tua offerta…',
     'form.agreement': 'Accetto l\'<a href="lieferantenvereinbarung.html" target="_blank">accordo fornitore</a> di SourceOn e confermo che le informazioni fornite sono corrette. *',
