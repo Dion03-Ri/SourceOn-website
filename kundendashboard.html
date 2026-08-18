@@ -601,9 +601,13 @@ var currentUserId=null,_matCatalogMap={};
 var _requests=[],_bundleMap={},_commMap={},_customer=null,_filter='alle',_selId=null;
 var _customerIds=[],_rtChannel=null,_rtTimer=null;
 
-var _WD=['So','Mo','Di','Mi','Do','Fr','Sa'];
-var _MON=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
-var _MONF=['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'];
+var _LANG=(localStorage.getItem('sourceon-lang')||'de');
+var _WDs={de:['So','Mo','Di','Mi','Do','Fr','Sa'],en:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],fr:['dim','lun','mar','mer','jeu','ven','sam'],it:['dom','lun','mar','mer','gio','ven','sab']};
+var _MONs={de:['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'],en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],fr:['janv','févr','mars','avr','mai','juin','juil','août','sept','oct','nov','déc'],it:['gen','feb','mar','apr','mag','giu','lug','ago','set','ott','nov','dic']};
+var _MONFs={de:['Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember'],en:['January','February','March','April','May','June','July','August','September','October','November','December'],fr:['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'],it:['gennaio','febbraio','marzo','aprile','maggio','giugno','luglio','agosto','settembre','ottobre','novembre','dicembre']};
+var _WD=_WDs[_LANG]||_WDs.de;
+var _MON=_MONs[_LANG]||_MONs.de;
+var _MONF=_MONFs[_LANG]||_MONFs.de;
 function fmtNum(n){n=Math.round(n);var neg=n<0;var s=Math.abs(n).toString(),out='',c=0;for(var i=s.length-1;i>=0;i--){out=s.charAt(i)+out;if(++c%3===0&&i>0)out="'"+out;}return (neg?'-':'')+out;}
 function fmtCHF(n){return 'CHF '+fmtNum(n);}
 function fmtAgenda(d){return _WD[d.getDay()]+', '+d.getDate()+'. '+_MON[d.getMonth()];}
