@@ -1664,6 +1664,7 @@ function addMaterialRow(){
   rows.appendChild(div);
   _initMatCombo(div.querySelector('.mat-combo'));
   _initRowDates(div);
+  try{if(window._soSetDateLocale)window._soSetDateLocale();}catch(e){}
   if(_matCatalogFailed)_applyCatalogFailure();
   var cl=window._currentLang||localStorage.getItem('sourceon-lang')||'de';var t=typeof I18N!=='undefined'&&I18N[cl]?I18N[cl]:null;
   if(t){
@@ -2449,6 +2450,8 @@ window.translateMaterials=function(lang){
   });
 }
 
+window._soSetDateLocale=function(){try{var l=localStorage.getItem('sourceon-lang')||'de';var loc={de:'de-CH',en:'en-GB',fr:'fr-CH',it:'it-CH'}[l]||l;document.querySelectorAll('input[type=date]').forEach(function(el){el.setAttribute('lang',loc);});}catch(e){}};
+document.addEventListener('DOMContentLoaded',function(){try{window._soSetDateLocale();}catch(e){}});
 window.setLang=function(lang){
   if(!I18N[lang])return;
   var t=I18N[lang];
@@ -2463,6 +2466,7 @@ window.setLang=function(lang){
   localStorage.setItem('sourceon-lang',lang);
   document.documentElement.lang=lang;
   window._currentLang=lang;
+  try{if(window._soSetDateLocale)window._soSetDateLocale();}catch(e){}
   document.body.classList.add('lang-ready');var _lh=document.getElementById('_lh');if(_lh){setTimeout(function(){_lh.remove();},200);}
   // Re-apply per-material rates/breakdown into the re-rendered summary in the new language.
   if(typeof _recalcTier==='function')_recalcTier();
