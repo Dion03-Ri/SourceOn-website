@@ -1023,6 +1023,9 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
     #lp .bd-chip.active{background:var(--gold);color:#070F1A}
     #lp .bd-nomatch{text-align:center;color:var(--t3);font-size:14px;padding:40px 20px}
     #lp .bd-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:8px}
+    /* Bündel-Bereich erst zeigen, wenn Daten gerendert sind — kein „Loading→Karten"-Aufblitzen */
+    #lp #bd-filter,#lp #bd-list,#lp #bd-empty,#lp #bd-nomatch,#lp #bd-loading{transition:opacity .35s ease}
+    #lp:not(.bd-ready) #bd-filter,#lp:not(.bd-ready) #bd-list,#lp:not(.bd-ready) #bd-empty,#lp:not(.bd-ready) #bd-nomatch,#lp:not(.bd-ready) #bd-loading{opacity:0}
     #lp .bd-card{background:var(--bg1);border:1px solid var(--lpb);border-radius:10px;padding:20px}
     #lp .bd-mat{font-size:16px;font-weight:600;color:var(--t1);letter-spacing:-.01em;line-height:1.3}
     #lp .bd-zone{font-size:12px;color:var(--t3);margin-top:3px}
@@ -2345,7 +2348,9 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
   function fmtChf(n){n=Math.round(Number(n)||0);var s=Math.abs(n).toString(),o='',c=0;for(var i=s.length-1;i>=0;i--){o=s.charAt(i)+o;if(++c%3===0&&i>0)o="'"+o;}return 'CHF '+o;}
   function countdown(deadline){var t=tr();var ms=new Date(deadline).getTime()-Date.now();if(isNaN(ms)||ms<=0)return t.ended;var d=Math.floor(ms/86400000),h=Math.floor((ms%86400000)/3600000);return t.rem+' '+d+' '+t.days+' '+h+' '+t.hours;}
   function show(id,on){var e=document.getElementById(id);if(e)e.style.display=on?'':'none';}
-  function empty(){show('bd-loading',false);show('bd-empty',true);}
+  function _bdReady(){try{var m=document.getElementById('lp');if(m)m.classList.add('bd-ready');}catch(e){}}
+  setTimeout(_bdReady,2500); // Failsafe: spätestens nach 2.5s einblenden
+  function empty(){show('bd-loading',false);show('bd-empty',true);_bdReady();}
   async function load(){
     try{
       var r=await fetch(SB_URL+'/rest/v1/bundles?status=in.(offen,sammelt,ausgeschrieben)&select=id,sourceon_id,liefer_zone,bid_deadline&order=bid_deadline.asc',{headers:H});
@@ -2364,7 +2369,7 @@ window.addEventListener("pageshow", function(e){ if(e.persisted){ window.locatio
       show('bd-loading',false);show('bd-empty',false);show('bd-filter',true);
       buildChips();
       var si=document.getElementById('bd-search');if(si&&!si._bound){si._bound=true;si.addEventListener('input',renderList);}
-      renderList();
+      renderList();_bdReady();
     }catch(e){empty();}
   }
   var _items=[],_zone='';
