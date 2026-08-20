@@ -12,3 +12,6 @@ supabase/.branches/
 
 # OS / Editor
 .DS_Store
+
+# Claude Code scratchpad (temporäre Mockups/Notizen)
+scratchpad/
