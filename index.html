@@ -911,8 +911,9 @@ body{background:#070F1A}
 #lp .tile.tile-photo-hw::after{content:'';position:absolute;top:0;bottom:0;right:0;width:62%;z-index:1;pointer-events:none;
   background-image:url('Gemini_Generated_Image_omnyf9omnyf9omny.jpg');
   background-size:contain;background-position:right bottom;background-repeat:no-repeat;
-  -webkit-mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.5) 30%,#000 58%,#000 100%);
-  mask-image:linear-gradient(180deg,transparent 0%,rgba(0,0,0,.5) 30%,#000 58%,#000 100%)}
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.5) 16%,#000 34%,#000 100%),linear-gradient(180deg,transparent 0%,rgba(0,0,0,.5) 28%,#000 56%,#000 100%);
+  -webkit-mask-composite:source-in;mask-composite:intersect;
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.5) 16%,#000 34%,#000 100%),linear-gradient(180deg,transparent 0%,rgba(0,0,0,.5) 28%,#000 56%,#000 100%)}
 /* helle Karte -> dunkle Schrift fuer Lesbarkeit */
 #lp .tile.tile-photo-hw{background:#ffffff}
 #lp .tile.tile-photo-hw .tile-title{color:#0C1824}
