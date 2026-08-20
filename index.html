@@ -919,6 +919,18 @@ body{background:#070F1A}
 #lp .tile.tile-photo-hw .tile-title{color:#0C1824}
 #lp .tile.tile-photo-hw .tile-desc{color:#41556B}
 #lp .tile.tile-photo-hw .tile-link{color:var(--gold)}
+/* Nicht-dabei-Karte: gleicher Stil, eigenes Foto */
+#lp .tile.tile-photo-nd{position:relative;overflow:hidden;min-height:300px;justify-content:flex-start;background:#ffffff}
+#lp .tile.tile-photo-nd>*{position:relative;z-index:2}
+#lp .tile.tile-photo-nd::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:
+    radial-gradient(ellipse 70% 55% at 100% 100%,rgba(255,255,255,.85) 0%,rgba(255,255,255,0) 60%),
+    linear-gradient(180deg,#ffffff 0%,rgba(255,255,255,.88) 26%,rgba(255,255,255,.25) 54%,rgba(255,255,255,0) 78%),
+    url('Gemini_Generated_Image_x418zzx418zzx418.jpg');
+  background-size:cover,cover,cover;background-position:center,center,center 22%;background-repeat:no-repeat,no-repeat,no-repeat}
+#lp .tile.tile-photo-nd .tile-title{color:#0C1824}
+#lp .tile.tile-photo-nd .tile-desc{color:#41556B}
+#lp .tile.tile-photo-nd .tile-link{color:var(--gold)}
 
 /* SECTION 5 — supplier cta */
 #lp .supcta{padding:100px 0;background:var(--bg1);border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);text-align:center}
@@ -1282,7 +1294,7 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
         <div class="tile-desc" data-i18n="lp_t2_desc">Schnelle Abwicklung, keine Vorauszahlung, vollautomatisch.</div>
         <div class="tile-link" data-i18n="lp_t2_link">Mehr erfahren →</div>
       </a>
-      <a class="tile" href="kontakt.html">
+      <a class="tile tile-photo-nd" href="kontakt.html">
         <div class="tile-cat" data-i18n="lp_t6_cat">Und mehr</div>
         <div class="tile-title" data-i18n="lp_t6_title">Nicht dabei?</div>
         <div class="tile-desc" data-i18n="lp_t6_desc">Meld dich — wir prüfen ob SourceOn für deinen Bedarf passt.</div>
