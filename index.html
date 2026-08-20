@@ -1207,9 +1207,13 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <!-- KALKULATOR TEASER -->
   <style id="calc-teaser-css">
-  #lp .calc-teaser{position:relative;border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);padding:22px 0}
-  #lp .calc-teaser-inner{position:relative;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:22px}
-  #lp .calc-teaser-title{font-size:16px;font-weight:400;color:var(--t2);letter-spacing:-.01em}
+  #lp .calc-teaser{position:relative;border-top:1px solid var(--lpb);border-bottom:1px solid var(--lpb);padding:72px 0;overflow:hidden;
+    background-image:url('Gemini_Generated_Image_boyx1kboyx1kboyx.jpg');
+    background-size:cover;background-position:center 42%}
+  #lp .calc-teaser::before{content:"";position:absolute;inset:0;pointer-events:none;
+    background:linear-gradient(90deg,rgba(7,15,26,.94) 0%,rgba(7,15,26,.78) 42%,rgba(7,15,26,.55) 100%)}
+  #lp .calc-teaser-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:24px;min-height:22px}
+  #lp .calc-teaser-title{font-size:clamp(22px,3vw,30px);font-weight:600;color:#fff;letter-spacing:-.02em}
   /* Rechner-Grafik, die den Streifen kreuzt (grösser als die Spalte) */
   #lp .calc-teaser-btn{position:absolute;right:0;top:50%;transform:translateY(-50%);
     width:198px;height:118px;background:#070F1A;border:1.5px solid var(--lpbs);border-radius:12px;
