@@ -1146,7 +1146,10 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
   #lp .tile-lg:hover .tile-link{color:var(--gold)}
   @media(max-width:900px){#lp .tiles{grid-template-columns:1fr}#lp .tile-lg{grid-column:auto;grid-row:auto}}
   @media(max-width:600px){#lp .tiles{grid-template-columns:1fr}}
-  #lp .supcta{background:transparent;border-bottom:none;border-top:1px solid var(--lpbs)}
+  #lp .supcta{position:relative;overflow:hidden;text-align:left;border-bottom:none;border-top:1px solid var(--lpbs);
+    background-image:linear-gradient(90deg,#0C1824 0%,#0C1824 40%,rgba(12,24,36,.62) 62%,rgba(12,24,36,.28) 100%),url('pexels-pixabay-221047.jpg');
+    background-size:cover,cover;background-position:center,right center;background-repeat:no-repeat,no-repeat}
+  #lp .supcta .wrap>*{max-width:600px}
   </style>
   <section class="hero">
     <div class="hero-bg" aria-hidden="true"></div>
