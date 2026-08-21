@@ -819,7 +819,7 @@ body{background:#070F1A}
 #lp .calcsec{padding:60px 0}
 #lp .calcgrid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;max-width:1000px;margin:0 auto}
 @media(max-width:768px){#lp .calcgrid{grid-template-columns:1fr;gap:40px}}
-#lp .calccard{background:var(--bg1);border:1px solid var(--lpb);border-radius:16px;padding:36px;position:relative;overflow:hidden}
+#lp .calccard{background:var(--bg1);border:1px solid var(--lpb);border-radius:16px;padding:36px;position:relative;overflow:hidden;max-width:760px;margin:0 auto}
 @media(max-width:768px){#lp .calccard{padding:24px 20px}}
 #lp .calc-accent{height:3px;background:linear-gradient(90deg,var(--gold) 0%,rgba(217,144,0,.2) 100%);margin:-36px -36px 32px}
 @media(max-width:768px){#lp .calc-accent{margin:-24px -20px 32px}}
@@ -840,8 +840,17 @@ body{background:#070F1A}
 #lp .calc-rrow .l{font-size:13px;color:var(--t2)}
 #lp .calc-rrow .r{font-size:18px;font-weight:600;color:var(--t1);white-space:nowrap}
 #lp .calc-rrow.net .r{font-size:22px;color:var(--gold)}
-#lp .calc-cta-btn{width:100%;background:var(--gold);color:#070F1A;font-size:15px;font-weight:700;padding:14px;border-radius:8px;border:none;cursor:pointer;margin-top:24px;transition:all .2s;font-family:inherit}
-#lp .calc-cta-btn:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 4px 16px rgba(217,144,0,.25)}
+#lp .calc-cta-btn{display:block;width:100%;text-align:center;text-decoration:none;box-sizing:border-box;background:var(--gold);color:#070F1A;font-size:15px;font-weight:700;padding:15px;border-radius:8px;border:none;cursor:pointer;margin-top:24px;transition:all .2s;font-family:inherit}
+#lp .calc-cta-btn:hover{filter:brightness(1.08);transform:translateY(-1px);box-shadow:0 4px 16px rgba(217,144,0,.25);color:#070F1A}
+/* result blocks (redesign) */
+#lp .calc-res-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--lpb);border:1px solid var(--lpb);border-radius:12px;overflow:hidden;margin-bottom:22px}
+#lp .calc-res{background:var(--bg1);padding:26px 18px;text-align:center}
+#lp .calc-res-num{font-size:clamp(28px,3.4vw,36px);font-weight:800;color:var(--t1);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+#lp .calc-res-num.gold{color:var(--gold)}
+#lp .calc-res-lbl{font-size:12px;font-weight:600;color:var(--t2);margin-top:12px;letter-spacing:.01em}
+#lp .calc-res-sub{font-size:11px;color:var(--t3);margin-top:6px;line-height:1.45}
+#lp .calc-note{font-size:13px;color:var(--t2);text-align:center;margin:0;line-height:1.6}
+@media(max-width:600px){#lp .calc-res-grid{grid-template-columns:1fr}}
 #lp .calc-disc{font-size:11px;color:var(--t3);text-align:center;margin-top:12px;line-height:1.5}
 /* tier table */
 #lp .tiertable{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden}
@@ -1023,52 +1032,39 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 <main id="lp"><span id="main-content" tabindex="-1"></span>
   <section class="phero"><div class="wrap">
     <span class="eyebrow" data-i18n="calc_eyebrow">Einsparkalkulator</span>
-    <h1 data-i18n="calc_title">Wie viel könntest du sparen?</h1>
-    <p class="sub" data-i18n="calc_subtitle">Berechne dein persönliches Einsparpotenzial — basierend auf deinem Bestellvolumen.</p>
+    <h1 data-i18n="calc_title">Was würde dir SourceOn im Jahr sparen?</h1>
+    <p class="sub" data-i18n="calc_sub">Gib dein jährliches Materialbudget ein — wir zeigen dir dein Einsparpotenzial.</p>
   </div></section>
 
   <section class="calcsec"><div class="wrap">
-    <div class="calcgrid">
-      <div class="calccard reveal">
-        <div class="calc-accent"></div>
-        <span class="calc-vlabel" data-i18n="calc_vlabel">Bestellvolumen</span>
-        <div id="calc-display">CHF 150'000</div>
-        <input type="range" id="calc-slider" min="0" max="100" value="32" step="0.1" style="--pct:32%"/>
-        <div class="calc-range"><span>CHF 500</span><span>CHF 5'000'000</span></div>
-        <input type="text" class="calc-input" id="calc-input" placeholder="Betrag eingeben z.B. 75000" data-i18n-placeholder="calc_placeholder" value="150'000"/>
-        <p class="calc-mnote" data-i18n="calc_mnote">Beträge über CHF 5 Mio. bitte manuell eingeben.</p>
-        <div class="calc-results">
-          <div class="calc-tierrow"><span class="l" data-i18n="calc_rate_label">Garantierter Netto-Mindestrabatt</span><span class="r" id="calc-rate">16%</span><span class="r" id="calc-rate-ind" data-i18n="calc_rate_ind" style="display:none">Individuell</span></div>
-          <div id="calc-num">
-            <div class="calc-rrow"><span class="l" data-i18n="calc_gross_label">Verhandelter Rabatt (brutto)</span><span class="r" id="calc-gross">CHF 26'625</span></div>
-            <div class="calc-rrow net"><span class="l" data-i18n="calc_net_short">Deine garantierte Ersparnis (netto)</span><span class="r" id="calc-net">CHF 24'000</span></div>
-            <span data-i18n="calc_bundle_bonus" style="font-size:12px;color:var(--green);margin-top:8px;display:block;line-height:1.5">↑ Durch Bündelung mit anderen Baufirmen fällt deine tatsächliche Ersparnis oft deutlich höher aus als dieser garantierte Mindestwert.</span>
+    <div class="calccard reveal">
+      <div class="calc-accent"></div>
+      <span class="calc-vlabel" data-i18n="calc_slider_label">Jährliches Materialbudget</span>
+      <div id="calc-display">CHF 80'000</div>
+      <input type="range" id="calc-slider" min="0" max="100" value="40" step="0.1" style="--pct:40%"/>
+      <div class="calc-range"><span>CHF 5'000</span><span>CHF 5'000'000</span></div>
+      <input type="text" class="calc-input" id="calc-input" value="80'000" inputmode="numeric"/>
+
+      <div class="calc-results">
+        <div class="calc-res-grid">
+          <div class="calc-res">
+            <div class="calc-res-num" id="calc-rate">13%</div>
+            <div class="calc-res-lbl" data-i18n="calc_result_rabatt">Netto-Mindestrabatt</div>
+            <div class="calc-res-sub" data-i18n="calc_result_rabatt_sub">Garantierter Mindestrabatt auf deine Bestellungen</div>
           </div>
-          <a href="kontakt.html" id="calc-individual" data-i18n="calc_individual" style="display:none;font-size:14px;color:var(--gold);font-weight:600;margin-top:12px;line-height:1.5;text-decoration:none">Individuelle Konditionen — kontaktiere uns direkt →</a>
-          <a href="kontakt.html" data-i18n="calc_cta" style="display:inline-block;font-size:14px;color:var(--gold);font-weight:600;margin-top:20px;text-decoration:none">Materialbedarf melden →</a>
-          <span data-i18n="calc_transport" style="font-size:11px;color:var(--t3);margin-top:8px;line-height:1.5;display:block">Transportkosten (z.B. bei Beton) werden separat zwischen Kunde und Lieferant vereinbart und sind im Einsparpotenzial nicht enthalten.</span>
+          <div class="calc-res">
+            <div class="calc-res-num gold" id="calc-year">CHF 10'400</div>
+            <div class="calc-res-lbl" data-i18n="calc_result_year">Jährliche Ersparnis</div>
+            <div class="calc-res-sub" data-i18n="calc_result_year_sub">Was du pro Jahr mindestens sparst</div>
+          </div>
+          <div class="calc-res">
+            <div class="calc-res-num" id="calc-5year">CHF 52'000</div>
+            <div class="calc-res-lbl" data-i18n="calc_result_5year">In 5 Jahren</div>
+            <div class="calc-res-sub" data-i18n="calc_result_5year_sub">Dein kumuliertes Einsparpotenzial</div>
+          </div>
         </div>
-      </div>
-      <div class="reveal">
-        <span class="sec-label" style="margin-bottom:16px" data-i18n="tier_scale_label">Rabattstaffel</span>
-        <table class="tiertable">
-          <thead><tr><th data-i18n="tier_col_vol">Bestellvolumen</th><th data-i18n="tier_col_disc">Netto-Mindestrabatt</th></tr></thead>
-          <tbody>
-            <tr data-tier="0"><td class="vol">CHF 500 – 4'999</td><td class="pct">5%</td></tr>
-            <tr data-tier="1"><td class="vol">CHF 5'000 – 24'999</td><td class="pct">7%</td></tr>
-            <tr data-tier="2"><td class="vol">CHF 25'000 – 49'999</td><td class="pct">10%</td></tr>
-            <tr data-tier="3"><td class="vol">CHF 50'000 – 99'999</td><td class="pct">13%</td></tr>
-            <tr data-tier="4"><td class="vol">CHF 100'000 – 249'999</td><td class="pct">16%</td></tr>
-            <tr data-tier="5"><td class="vol">CHF 250'000 – 499'999</td><td class="pct">20%</td></tr>
-            <tr data-tier="6"><td class="vol">CHF 500'000 – 999'999</td><td class="pct">24%</td></tr>
-            <tr data-tier="7"><td class="vol">CHF 1'000'000+</td><td class="pct">28%</td></tr>
-          </tbody>
-        </table>
-        <p class="tiernote" data-i18n="tier_note">Netto-Mindestrabatt nach SourceOn-Provision (2.25%). Durch Bündelung oft höher.</p>
-        <div class="bundlebox">
-          <span class="sec-label" style="margin-bottom:12px" data-i18n="tier_bundle_label">Bündelungseffekt</span>
-          <p data-i18n="tier_text">Jede Baufirma im Bündel erhält mindestens ihren garantierten Netto-Mindestrabatt — basierend auf ihrem eigenen eingebrachten Volumen. Übertrifft der verhandelte Gesamtrabatt die Summe aller individuellen Garantien, wird die Zusatzersparnis proportional zum Volumenanteil verteilt. Wer mehr einbringt, profitiert mehr — aber jeder gewinnt mindestens sein garantiertes Minimum.</p>
-        </div>
+        <p class="calc-note" data-i18n="calc_note">Je mehr du bestellst, desto höher dein garantierter Rabatt.</p>
+        <a class="calc-cta-btn" href="kontakt.html" data-i18n="calc_cta">Materialbedarf melden →</a>
       </div>
     </div>
   </div></section>
@@ -1166,77 +1162,47 @@ const ro=new IntersectionObserver(entries=>{
 },{threshold:0.1});
 document.querySelectorAll('.reveal,.slide-left').forEach(el=>ro.observe(el));
 
-// CALCULATOR
-const MIN_V=500,MAX_V=5000000;
+// CALCULATOR — Jahresbudget -> Rabatt, jaehrliche & 5-Jahres-Ersparnis
+const MIN_V=5000,MAX_V=5000000,DEFAULT_V=80000;
 const TIERS=[
-  {max:5000,net:.05,gross:.0725},{max:25000,net:.07,gross:.0925},{max:50000,net:.10,gross:.12},{max:100000,net:.13,gross:.15},
-  {max:250000,net:.16,gross:.18},{max:500000,net:.20,gross:.22},{max:1000000,net:.24,gross:.2575},{max:Infinity,net:.28,gross:.2975}
+  {max:25000,net:.07},{max:50000,net:.10},{max:100000,net:.13},{max:250000,net:.16},
+  {max:500000,net:.20},{max:1000000,net:.24},{max:Infinity,net:.28}
 ];
-function posToVal(p){return Math.round(MIN_V*Math.pow(MAX_V/MIN_V,p/100)/100)*100;}
+function posToVal(p){return Math.round(MIN_V*Math.pow(MAX_V/MIN_V,p/100)/500)*500;}
 function valToPos(v){return Math.log(v/MIN_V)/Math.log(MAX_V/MIN_V)*100;}
-function getTier(v){return TIERS.find(t=>v<=t.max)||TIERS[TIERS.length-1];}
+function netRateFor(v){if(window.SO_TIERS)return window.SO_TIERS.netRate(v);var t=TIERS.find(function(t){return v<t.max;});return t?t.net:.28;}
 function fmtChf(n){return'CHF '+Math.round(n).toLocaleString('de-CH');}
-let animTimer=null;
+var animTimers={};
 function animateNum(id,target){
-  if(animTimer)clearInterval(animTimer);
-  const el=document.getElementById(id);const t0=performance.now();
-  animTimer=setInterval(()=>{
-    const p=Math.min(1,(performance.now()-t0)/600);
+  if(animTimers[id])clearInterval(animTimers[id]);
+  var el=document.getElementById(id);if(!el)return;var t0=performance.now();
+  animTimers[id]=setInterval(function(){
+    var p=Math.min(1,(performance.now()-t0)/500);
     el.textContent=fmtChf(target*(1-Math.pow(1-p,3)));
-    if(p>=1)clearInterval(animTimer);
+    if(p>=1)clearInterval(animTimers[id]);
   },16);
 }
 function updateCalc(v,fromSlider){
-  v=Math.max(MIN_V,fromSlider?Math.min(MAX_V,v):v);
-  const tier=(window.SO_TIERS?window.SO_TIERS.tierFor(v):getTier(v));
-  const individual=!!tier.individual||tier.net==null;
+  v=Math.max(MIN_V,Math.min(MAX_V,v));
+  var netRate=netRateFor(v);
+  var annual=v*netRate,five=annual*5;
   document.getElementById('calc-display').textContent=fmtChf(v);
   if(fromSlider)document.getElementById('calc-input').value=Math.round(v).toLocaleString('de-CH');
-  const numRows=document.getElementById('calc-num');
-  const indBox=document.getElementById('calc-individual');
-  const rateEl=document.getElementById('calc-rate');
-  const rateInd=document.getElementById('calc-rate-ind');
-  if(individual){
-    if(rateEl)rateEl.style.display='none';
-    if(rateInd)rateInd.style.display='';
-    if(numRows)numRows.style.display='none';
-    if(indBox)indBox.style.display='';
-  }else{
-    const netRate=tier.net,grossRate=tier.gross;
-    const gross=v*grossRate,net=v*netRate;
-    if(rateEl){rateEl.style.display='';rateEl.textContent=Math.round(netRate*100)+'%';}
-    if(rateInd)rateInd.style.display='none';
-    if(numRows)numRows.style.display='';
-    if(indBox)indBox.style.display='none';
-    document.getElementById('calc-gross').textContent=fmtChf(gross);
-    animateNum('calc-net',net);
-  }
-  const pos=valToPos(Math.min(v,MAX_V));
-  const sl=document.getElementById('calc-slider');
+  var rateEl=document.getElementById('calc-rate');if(rateEl)rateEl.textContent=Math.round(netRate*100)+'%';
+  animateNum('calc-year',annual);
+  animateNum('calc-5year',five);
+  var pos=valToPos(v),sl=document.getElementById('calc-slider');
   sl.value=pos;sl.style.setProperty('--pct',pos+'%');
 }
 document.getElementById('calc-slider').addEventListener('input',function(){
   this.style.setProperty('--pct',this.value+'%');updateCalc(posToVal(+this.value),true);
 });
 document.getElementById('calc-input').addEventListener('input',function(){
-  const v=parseInt(this.value.replace(/['\s.,]/g,''),10);
-  if(!isNaN(v)&&v>=MIN_V)updateCalc(v,false);
+  var v=parseInt(this.value.replace(/['\s.,]/g,''),10);
+  if(!isNaN(v)&&v>=MIN_V)updateCalc(Math.min(MAX_V,v),false);
 });
-updateCalc(150000);
+updateCalc(DEFAULT_V);
 
-</script>
-<script>
-// TIER TABLE HIGHLIGHT (new — does not modify existing calc logic)
-(function(){
-  function tierIdx(v){var t=[5000,25000,50000,100000,250000,500000,1000000];for(var i=0;i<t.length;i++){if(v<t[i])return i;}return 7;}
-  window.highlightActiveTier=function(idx){document.querySelectorAll('.tiertable tr[data-tier]').forEach(function(r){r.classList.toggle('active',+r.getAttribute('data-tier')===idx);});};
-  function currentV(){var d=document.getElementById('calc-display');var v=d?parseInt(d.textContent.replace(/[^0-9]/g,''),10):NaN;if(isNaN(v)||!v){var inp=document.getElementById('calc-input');v=inp?parseInt((inp.value||'').replace(/[^0-9]/g,''),10):150000;}return v||150000;}
-  function upd(){highlightActiveTier(tierIdx(currentV()));}
-  var sl=document.getElementById('calc-slider'),inp=document.getElementById('calc-input');
-  if(sl)sl.addEventListener('input',function(){setTimeout(upd,0);});
-  if(inp)inp.addEventListener('input',function(){setTimeout(upd,0);});
-  upd();
-})();
 </script>
 
 <!-- CHAT WIDGET -->
@@ -1296,8 +1262,16 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       nav_contact: 'Kontakt',
       nav_cta: 'Materialbedarf melden',
       calc_label: 'Kalkulator',
-      calc_title: 'Wie viel könntest du sparen?',
-      calc_subtitle: 'Berechne dein persönliches Einsparpotenzial — basierend auf deinem Bestellvolumen.',
+      calc_title: 'Was würde dir SourceOn im Jahr sparen?',
+      calc_sub: 'Gib dein jährliches Materialbudget ein — wir zeigen dir dein Einsparpotenzial.',
+      calc_slider_label: 'Jährliches Materialbudget',
+      calc_result_rabatt: 'Netto-Mindestrabatt',
+      calc_result_rabatt_sub: 'Garantierter Mindestrabatt auf deine Bestellungen',
+      calc_result_year: 'Jährliche Ersparnis',
+      calc_result_year_sub: 'Was du pro Jahr mindestens sparst',
+      calc_result_5year: 'In 5 Jahren',
+      calc_result_5year_sub: 'Dein kumuliertes Einsparpotenzial',
+      calc_note: 'Je mehr du bestellst, desto höher dein garantierter Rabatt.',
       calc_placeholder: 'Betrag eingeben z.B. 75000',
       calc_manual_note: 'Beträge über CHF 10 Mio. bitte manuell eingeben — Einsparpotenzial wird automatisch berechnet.',
       calc_discount_label: 'Garantierter Netto-Mindestrabatt: ',
@@ -1382,14 +1356,22 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       nav_contact: 'Contact',
       nav_cta: 'Submit material needs',
       calc_label: 'Calculator',
-      calc_title: 'How much could you save?',
-      calc_subtitle: 'Calculate your personal savings potential — based on your order volume.',
+      calc_title: 'How much would SourceOn save you per year?',
+      calc_sub: 'Enter your annual material budget — we\'ll show you your savings potential.',
+      calc_slider_label: 'Annual material budget',
+      calc_result_rabatt: 'Net minimum discount',
+      calc_result_rabatt_sub: 'Guaranteed minimum discount on your orders',
+      calc_result_year: 'Annual savings',
+      calc_result_year_sub: 'What you save per year at minimum',
+      calc_result_5year: 'Over 5 years',
+      calc_result_5year_sub: 'Your cumulative savings potential',
+      calc_note: 'The more you order, the higher your guaranteed discount.',
       calc_placeholder: 'Enter amount e.g. 75000',
       calc_manual_note: 'For amounts over CHF 10 million, please enter manually — savings potential is calculated automatically.',
       calc_discount_label: 'Guaranteed net minimum discount: ',
       calc_gross_label: 'Negotiated discount (gross)',
       calc_net_label: 'Your guaranteed saving (net, after SourceOn commission)',
-      calc_cta: 'Submit material needs →',
+      calc_cta: 'Submit material request →',
       calc_disclaimer: 'Non-binding estimate based on Swiss market data. Potential savings vary depending on material, volume and supplier.',
       calc_bundle_note: 'The savings shown here are an estimate based on your volume alone. If you are part of a larger bundle with other construction firms, your actual savings may be higher depending on your share of the total bundle.',
       tier_label: 'Bundle savings',
@@ -1468,14 +1450,22 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       nav_contact: 'Contact',
       nav_cta: 'Déclarer un besoin matériel',
       calc_label: 'Calculateur',
-      calc_title: 'Combien pourriez-vous économiser ?',
-      calc_subtitle: 'Calculez votre potentiel d\'économies personnelles — basé sur votre volume de commande.',
+      calc_title: 'Combien SourceOn te ferait-il économiser par an ?',
+      calc_sub: 'Entre ton budget matériaux annuel — nous te montrons ton potentiel d\'économies.',
+      calc_slider_label: 'Budget matériaux annuel',
+      calc_result_rabatt: 'Remise minimale nette',
+      calc_result_rabatt_sub: 'Remise minimale garantie sur tes commandes',
+      calc_result_year: 'Économies annuelles',
+      calc_result_year_sub: 'Ce que tu économises au minimum par an',
+      calc_result_5year: 'Sur 5 ans',
+      calc_result_5year_sub: 'Ton potentiel d\'économies cumulé',
+      calc_note: 'Plus tu commandes, plus ta remise garantie est élevée.',
       calc_placeholder: 'Entrez un montant p.ex. 75000',
       calc_manual_note: 'Pour les montants supérieurs à CHF 10 millions, veuillez saisir manuellement — le potentiel d\'économies est calculé automatiquement.',
       calc_discount_label: 'Rabais net minimum garanti : ',
       calc_gross_label: 'Rabais négocié (brut)',
       calc_net_label: 'Votre économie garantie (nette, après commission SourceOn)',
-      calc_cta: 'Déclarer un besoin matériel →',
+      calc_cta: 'Soumettre une demande →',
       calc_disclaimer: 'Estimation non contraignante basée sur les données du marché suisse. Les économies potentielles varient selon le matériau, le volume et le fournisseur.',
       calc_bundle_note: 'Les économies affichées ici sont une estimation basée sur votre seul volume. Si vous faites partie d\'un regroupement plus important avec d\'autres entreprises de construction, vos économies réelles peuvent être plus élevées selon votre part dans le volume total.',
       tier_label: '\u00c9conomies group\u00e9es',
@@ -1554,14 +1544,22 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
       nav_contact: 'Contatto',
       nav_cta: 'Segnala fabbisogno materiale',
       calc_label: 'Calcolatore',
-      calc_title: 'Quanto potresti risparmiare?',
-      calc_subtitle: 'Calcola il tuo potenziale di risparmio personale — in base al tuo volume ordini.',
+      calc_title: 'Quanto risparmieresti con SourceOn all\'anno?',
+      calc_sub: 'Inserisci il tuo budget annuale per i materiali — ti mostriamo il tuo potenziale di risparmio.',
+      calc_slider_label: 'Budget annuale materiali',
+      calc_result_rabatt: 'Sconto minimo netto',
+      calc_result_rabatt_sub: 'Sconto minimo garantito sui tuoi ordini',
+      calc_result_year: 'Risparmio annuale',
+      calc_result_year_sub: 'Quanto risparmi come minimo all\'anno',
+      calc_result_5year: 'In 5 anni',
+      calc_result_5year_sub: 'Il tuo potenziale di risparmio cumulato',
+      calc_note: 'Più ordini, più alto è il tuo sconto garantito.',
       calc_placeholder: 'Inserisci importo es. 75000',
       calc_manual_note: 'Per importi superiori a CHF 10 milioni, inserire manualmente — il potenziale di risparmio viene calcolato automaticamente.',
       calc_discount_label: 'Sconto netto minimo garantito: ',
       calc_gross_label: 'Sconto negoziato (lordo)',
       calc_net_label: 'Il tuo risparmio garantito (netto, dopo la provvigione SourceOn)',
-      calc_cta: 'Segnala fabbisogno materiale →',
+      calc_cta: 'Invia richiesta →',
       calc_disclaimer: 'Stima non vincolante basata sui dati del mercato svizzero. I risparmi potenziali variano in base a materiale, volume e fornitore.',
       calc_bundle_note: 'Il risparmio qui indicato è una stima basata solo sul tuo volume. Se fai parte di un raggruppamento più ampio con altre imprese edili, il tuo risparmio effettivo può essere maggiore a seconda della tua quota nel volume totale.',
       tier_label: 'Risparmio raggruppato',
