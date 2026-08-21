@@ -816,15 +816,18 @@ body{background:#070F1A}
 #lp .hero-glow{position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(ellipse 800px 600px at 50% 40%,rgba(217,144,0,0.04) 0%,transparent 70%)}
 /* Hintergrundbild im Hero (Baustelle) mit dunklem Verlauf-Overlay fuer Lesbarkeit */
 #lp .hero-bg{position:absolute;inset:0;pointer-events:none;z-index:0;background-color:#070F1A;
-  background-image:url('Gemini_Generated_Image_ckxk07ckxk07ckxk.jpg');
-  background-repeat:no-repeat;background-size:cover;background-position:center 30%}
+  background-image:url('pexels-ruandom-zhong-2511204-12196179.jpg');
+  background-repeat:no-repeat;background-size:cover;background-position:center 40%}
 #lp .hero-bg::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(7,15,26,.62) 0%,rgba(7,15,26,.74) 42%,rgba(7,15,26,.92) 78%,#070F1A 100%)}
+  background:
+    linear-gradient(0deg,rgba(18,38,66,.28),rgba(18,38,66,.28)),
+    linear-gradient(180deg,rgba(7,15,26,.64) 0%,rgba(7,15,26,.76) 42%,rgba(7,15,26,.92) 78%,#070F1A 100%)}
 @media(min-width:1024px){
   /* Desktop: Text linksbuendig -> links etwas staerker abdunkeln */
   #lp .hero-bg::after{background:
-    linear-gradient(90deg,rgba(7,15,26,.90) 0%,rgba(7,15,26,.55) 55%,rgba(7,15,26,.35) 100%),
-    linear-gradient(180deg,rgba(7,15,26,.30) 0%,rgba(7,15,26,.55) 70%,#070F1A 100%)}
+    linear-gradient(0deg,rgba(18,38,66,.26),rgba(18,38,66,.26)),
+    linear-gradient(90deg,rgba(7,15,26,.90) 0%,rgba(7,15,26,.62) 52%,rgba(7,15,26,.40) 100%),
+    linear-gradient(180deg,rgba(7,15,26,.26) 0%,rgba(7,15,26,.52) 68%,#070F1A 100%)}
 }
 /* Bauplan-Raster: feine vertikale Achsen im Hero, oben/unten ausgeblendet */
 #lp .hero-lines{position:absolute;inset:0;pointer-events:none;z-index:0;
