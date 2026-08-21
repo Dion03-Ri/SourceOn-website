@@ -829,6 +829,34 @@ body{background:#070F1A}
 #lp .tile-lg:hover .tile-link{color:var(--gold)}
 @media(max-width:900px){#lp .fwtiles{grid-template-columns:1fr}#lp .fwtiles .tile-lg{grid-column:auto;grid-row:auto}}
 @media(max-width:600px){#lp .fwtiles{grid-template-columns:1fr}#lp .fwtiles .tile-lg{grid-column:auto}}
+/* Foto-Karten (wie Startseite) */
+#lp .tile-lg.tile-photo{position:relative;overflow:hidden;min-height:520px;justify-content:flex-start}
+#lp .tile-lg.tile-photo>*{position:relative;z-index:2}
+#lp .tile-lg.tile-photo::after{content:'';position:absolute;inset:0;z-index:1;pointer-events:none;
+  background-image:linear-gradient(180deg,#0C1824 0%,rgba(12,24,36,.92) 30%,rgba(12,24,36,.20) 55%,rgba(12,24,36,0) 74%),url('pexels-gustavo-fring-6285152.jpg');
+  background-size:cover,cover;background-position:center,center bottom;background-repeat:no-repeat,no-repeat}
+#lp .tile.tile-photo-hw{position:relative;overflow:hidden;min-height:340px;justify-content:flex-start;background:linear-gradient(155deg,#0F2138,#0C1824)!important}
+#lp .tile.tile-photo-hw>*{position:relative;z-index:2;max-width:50%}
+#lp .tile.tile-photo-hw::after{content:'';position:absolute;top:0;bottom:0;right:0;width:60%;z-index:1;pointer-events:none;
+  background-image:url('fuerwen-hw.jpg');
+  background-size:cover;background-position:center top;background-repeat:no-repeat;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 26%,#000 100%),linear-gradient(180deg,transparent 0%,#000 20%,#000 100%);
+  -webkit-mask-composite:source-in;mask-composite:intersect;
+  mask-image:linear-gradient(90deg,transparent 0%,#000 26%,#000 100%),linear-gradient(180deg,transparent 0%,#000 20%,#000 100%)}
+#lp .tile.tile-photo-hw .tile-title{color:#fff}
+#lp .tile.tile-photo-hw .tile-desc{color:var(--t2)}
+#lp .tile.tile-photo-hw .tile-link{color:var(--gold)}
+#lp .tile.tile-photo-nd{position:relative;overflow:hidden;min-height:320px;justify-content:flex-start;background:linear-gradient(155deg,#0F2138,#0C1824)!important}
+#lp .tile.tile-photo-nd>*{position:relative;z-index:2;max-width:50%}
+#lp .tile.tile-photo-nd::after{content:'';position:absolute;top:0;bottom:0;right:0;width:62%;z-index:1;pointer-events:none;
+  background-image:url('fuerwen-nd.jpg');
+  background-size:cover;background-position:center top;background-repeat:no-repeat;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 26%,#000 100%),linear-gradient(180deg,transparent 0%,#000 18%,#000 100%);
+  -webkit-mask-composite:source-in;mask-composite:intersect;
+  mask-image:linear-gradient(90deg,transparent 0%,#000 26%,#000 100%),linear-gradient(180deg,transparent 0%,#000 18%,#000 100%)}
+#lp .tile.tile-photo-nd .tile-title{color:#fff}
+#lp .tile.tile-photo-nd .tile-desc{color:var(--t2)}
+#lp .tile.tile-photo-nd .tile-link{color:var(--gold)}
 /* stat + text (subpage section 1) */
 #lp .statgrid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
 @media(max-width:768px){#lp .statgrid{grid-template-columns:1fr;gap:40px}}
@@ -1009,19 +1037,19 @@ if(l&&l!=='de'){document.documentElement.lang=l;document.write('<style id=_lh>bo
 
   <section class="sec" style="padding-top:24px"><div class="wrap">
     <div class="fwtiles reveal">
-      <a class="tile tile-lg" href="fuerwen-bauunternehmen.html">
+      <a class="tile tile-lg tile-photo" href="fuerwen-bauunternehmen.html">
         <div class="tile-cat" data-i18n="tile_bau_cat">Bauunternehmen &amp; Baumeisterbetriebe</div>
         <div class="tile-title" data-i18n="tile_bau_title">Bessere Einkaufspreise für Bau-KMU.</div>
         <div class="tile-desc" data-i18n="tile_bau_desc">SourceOn bündelt deinen Materialbedarf mit anderen Baufirmen und verhandelt Mengenrabatte — auch kleine Einzelbestellungen profitieren.</div>
         <div class="tile-link" data-i18n="tile_bau_link">Mehr erfahren →</div>
       </a>
-      <a class="tile" href="fuerwen-handwerk.html">
+      <a class="tile tile-photo-hw" href="fuerwen-handwerk.html">
         <div class="tile-cat" data-i18n="tile_hw_cat">Handwerk &amp; Ausbau</div>
         <div class="tile-title" data-i18n="tile_hw_title">Für jedes Gewerk.</div>
         <div class="tile-desc" data-i18n="tile_hw_desc">Schnelle Abwicklung, keine Vorauszahlung, vollautomatisch.</div>
         <div class="tile-link" data-i18n="tile_bau_link">Mehr erfahren →</div>
       </a>
-      <a class="tile" href="kontakt.html">
+      <a class="tile tile-photo-nd" href="kontakt.html">
         <div class="tile-cat" data-i18n="tile_more_cat">Und mehr</div>
         <div class="tile-title" data-i18n="tile_more_title">Nicht dabei?</div>
         <div class="tile-desc" data-i18n="tile_more_desc">Meld dich — wir prüfen ob SourceOn für deinen Bedarf passt.</div>
