@@ -1178,10 +1178,10 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
       <div>
         <span class="ck-eyebrow" data-i18n="ck_eyebrow">Materialbedarf melden</span>
         <h1 class="ck-h1" data-i18n="ck_h1">Materialbedarf melden.</h1>
-        <p class="ck-sub" data-i18n="ck_sub">Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.</p>
+        <p class="ck-sub" data-i18n="ck_sub">Für dich kostenlos. Du erhältst deinen garantierten Netto-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.</p>
         <div class="cksteps">
           <div class="ckstep"><div class="ckstep-n">1</div><div><div class="ckstep-t" data-i18n="ckstep1_t">Material wählen</div><div class="ckstep-x" data-i18n="ckstep1_x">Aus 58 Katalog-Materialien auswählen, Menge und Lieferzeitraum eingeben.</div></div></div>
-          <div class="ckstep"><div class="ckstep-n">2</div><div><div class="ckstep-t" data-i18n="ckstep2_t">Mindestrabatt sehen</div><div class="ckstep-x" data-i18n="ckstep2_x">Du siehst sofort deinen garantierten Netto-Mindestrabatt basierend auf deinem Volumen.</div></div></div>
+          <div class="ckstep"><div class="ckstep-n">2</div><div><div class="ckstep-t" data-i18n="ckstep2_t">Mindestrabatt garantiert</div><div class="ckstep-x" data-i18n="ckstep2_x">Dein garantierter Netto-Mindestrabatt richtet sich nach deinem Volumen.</div></div></div>
           <div class="ckstep"><div class="ckstep-n">3</div><div><div class="ckstep-t" data-i18n="ckstep3_t">Absenden &amp; verfolgen</div><div class="ckstep-x" data-i18n="ckstep3_x">Nach dem Absenden verfolgst du den Status jederzeit in deinem Dashboard.</div></div></div>
         </div>
         <div class="cinfo">
@@ -1201,7 +1201,7 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
           <div class="ck-cardpad">
           <form id="form-contact" onsubmit="submitContact(event)" novalidate>
             <div class="form-title" data-i18n="form_title">Jetzt melden</div>
-            <div class="form-subtitle" data-i18n="form_subtitle">Du siehst deinen garantierten Mindestrabatt vor dem Absenden.</div>
+            <div class="form-subtitle" data-i18n="form_subtitle">Kostenlos und unverbindlich — melde deinen Materialbedarf in wenigen Minuten.</div>
             <span class="fsec-label first" data-i18n="fsec_company">Firmendaten</span>
             <div class="form-grid">
               <div class="form-group"><label class="form-label" for="c-company" data-i18n="form_company">Firmenname *</label><input type="text" class="form-input" id="c-company" required aria-required="true"/><div class="form-error" role="alert" data-i18n="form_error_required" id="e-c-company">Pflichtfeld</div></div>
@@ -1225,7 +1225,6 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
                     <div><span class="mat-date-lbl" data-i18n="liefer_von_label">Frühestens</span><input type="date" class="form-input mat-von" aria-label="Frühestes Lieferdatum" oninput="_onMatRow(this)"/></div>
                     <div><span class="mat-date-lbl" data-i18n="liefer_bis_label">Spätestens</span><input type="date" class="form-input mat-bis" aria-label="Spätestes Lieferdatum" oninput="_onMatRow(this)"/></div>
                   </div>
-                  <div class="mat-rabatt" style="display:none"><span data-i18n="liefer_rabatt_label">Netto-Mindestrabatt</span>: <strong class="mat-rabatt-val">–</strong></div>
                 </div>
               </div>
               <div id="kontakt-transport-note" data-i18n="mat_transport_note" style="display:none;font-size:12px;color:var(--t3);background:var(--bg2);border-radius:6px;padding:10px 14px;margin-top:12px;border-left:2px solid var(--lpbs)">Hinweis: Transportkosten werden separat zwischen dir und dem Lieferanten vereinbart und sind nicht Bestandteil der SourceOn-Vermittlung. Bei grossen Mengen lohnt es sich, auch hier nachzufragen.</div>
@@ -1266,17 +1265,11 @@ window.addEventListener('pageshow',function(e){if(e.persisted){window.location.r
               <div class="file-selected" id="scan-selected"><span id="scan-selected-name"></span><span class="file-remove" id="scan-remove" role="button" tabindex="0" data-i18n="form_scan_remove">entfernen</span></div>
               <div class="scan-status" id="scan-status" role="status" style="display:none"></div>
             </div>
-            <div id="tier-summary" class="tier-summary" style="display:none">
-              <div id="tier-breakdown" class="tier-breakdown"></div>
-              <div class="tier-row tier-row-hl"><span class="tier-label" data-i18n="tier_label_value">Geschätzter Auftragswert</span><span class="tier-val" id="tier-value">CHF 0</span></div>
-              <div class="tier-note-sub" data-i18n="tier_note_sub">basierend auf SourceOn-Richtpreisen</div>
-              <p class="tier-hint" data-i18n="bundle_note">Jedes Material wird separat gebündelt und ausgeschrieben.</p>
-            </div>
             <div class="commit-box" id="commit-box">
               <div data-i18n="commit_note" style="font-size:12px;color:var(--t2);line-height:1.6;padding:10px 14px;background:rgba(217,144,0,0.05);border-radius:8px;border-left:2px solid var(--gold);margin-top:12px;margin-bottom:16px">Hinweis: Erreicht das verhandelte Angebot deinen Mindestrabatt, wird dein Auftrag automatisch ausgeführt. Du kannst ihn danach nicht mehr zurückziehen.</div>
               <label class="commit-check">
                 <input type="checkbox" id="c-commitment" onchange="if(this.checked){var b=document.getElementById('commit-box');b&&b.classList.remove('commit-error');var e=document.getElementById('e-c-commitment');e&&(e.style.display='none');}"/>
-                <span class="commit-text" data-i18n-html="commit_text">Ich bestätige verbindlich: Erreicht das verhandelte Angebot je Material den oben angezeigten garantierten Netto-Mindestrabatt, gilt mein Auftrag für das jeweilige Material als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt und kommt vollständig bei mir an. Wird die Zielmarke bei einem Material verfehlt, entfällt die betreffende Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a></span>
+                <span class="commit-text" data-i18n-html="commit_text">Ich bestätige verbindlich: Erreicht das verhandelte Angebot je Material den garantierten Netto-Mindestrabatt, gilt mein Auftrag für das jeweilige Material als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt und kommt vollständig bei mir an. Wird die Zielmarke bei einem Material verfehlt, entfällt die betreffende Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a></span>
               </label>
               <div class="form-error" role="alert" id="e-c-commitment" data-i18n="err_commit">Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.</div>
             </div>
@@ -2186,9 +2179,9 @@ async function handleSend(txt){addUserMsg(txt);history.push({role:'user',content
 window.I18N={
   de:{
     nav_home:"Home",nav_process:"Wie es funktioniert",nav_calculator:"Kalkulator",nav_materials:"Materialien",nav_bundles:'Bündel',nav_for_whom:"Für wen",nav_supplier:"Lieferant werden",nav_about:"Über uns",nav_contact:"Kontakt",nav_cta:"Materialbedarf melden",
-    kontakt_badge:"Materialbedarf melden",kontakt_title:"Jetzt Materialbedarf melden",kontakt_desc:"Du zahlst nur, wenn wir dir sparen. Du siehst sofort deinen garantierten Netto-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.",
+    kontakt_badge:"Materialbedarf melden",kontakt_title:"Jetzt Materialbedarf melden",kontakt_desc:"Du zahlst nur, wenn wir dir sparen. Du erhältst deinen garantierten Netto-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.",
     kontakt_email:"info@SourceOn.ch",kontakt_location:"Zürich, Schweiz",
-    kontakt_how_title:"Wie es funktioniert",kontakt_how_text:"Wähle dein Material aus dem Katalog, gib Menge und Lieferzeitraum an — fertig. Du siehst sofort deinen garantierten Netto-Mindestrabatt, bevor du absendest.",
+    kontakt_how_title:"Wie es funktioniert",kontakt_how_text:"Wähle dein Material aus dem Katalog, gib Menge und Lieferzeitraum an — fertig. Dein garantierter Netto-Mindestrabatt richtet sich nach deinem Volumen.",
     form_company:"Firmenname *",form_contact_person:"Ansprechperson *",form_email:"E-Mail *",form_phone:"Telefon *",
     form_material_qty:"Material &amp; Menge *",
     form_error_required:"Pflichtfeld",form_error_email:"Gültige E-Mail",form_error_material:"Bitte mindestens ein Material mit Menge angeben",
@@ -2217,14 +2210,14 @@ window.I18N={
     meta_title:"Materialbedarf melden | Baumaterial günstig beschaffen — SourceOn",
     nav_dd_bau:"Bauunternehmen & Baumeisterbetriebe",nav_dd_handwerk:"Handwerk & Ausbau",nav_dd_gu:"Generalunternehmer & TU",nav_dd_oeff:"Öffentliche Auftraggeber",nav_dd_immo:"Immobilien & Wohnbau",
     nav_ov_bau:"Bauunternehmen",nav_ov_handwerk:"Handwerk",nav_ov_gu:"Generalunternehmer",
-    ck_eyebrow:"Materialbedarf melden",ck_h1:"Materialbedarf melden.",ck_sub:"Für dich kostenlos. Du siehst sofort deinen garantierten Ziel-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.",
+    ck_eyebrow:"Materialbedarf melden",ck_h1:"Materialbedarf melden.",ck_sub:"Für dich kostenlos. Du erhältst deinen garantierten Netto-Mindestrabatt und verfolgst den Status jederzeit in deinem Dashboard.",
     ckstep1_t:"Material wählen",ckstep1_x:"Aus 58 Katalog-Materialien auswählen, Menge und Lieferzeitraum eingeben.",
-    ckstep2_t:"Mindestrabatt sehen",ckstep2_x:"Du siehst sofort deinen garantierten Netto-Mindestrabatt basierend auf deinem Volumen.",
+    ckstep2_t:"Mindestrabatt garantiert",ckstep2_x:"Dein garantierter Netto-Mindestrabatt richtet sich nach deinem Volumen.",
     ckstep3_t:"Absenden & verfolgen",ckstep3_x:"Nach dem Absenden verfolgst du den Status jederzeit in deinem Dashboard.",
     ck_location:"Zürich, Schweiz",
     tempobox_t:"Lieferzeitraum gibt das Tempo vor",
     tempobox_r1:"🟢 Flexibel (>23 Tage) — Maximale Bündelungszeit",tempobox_r2:"🟡 Mittel (14–23 Tage) — Schnellere Ausschreibung",tempobox_r3:"🟠 Knapp (5–13 Tage) — Beschleunigte Abwicklung",
-    form_title:"Jetzt melden",form_subtitle:"Du siehst deinen garantierten Mindestrabatt vor dem Absenden.",
+    form_title:"Jetzt melden",form_subtitle:"Kostenlos und unverbindlich — melde deinen Materialbedarf in wenigen Minuten.",
     fsec_company:"Firmendaten",fsec_material:"Material & Menge",fsec_timing:"Lieferadresse",
     form_date_from:"Frühestens",form_date_to:"Spätestens",err_timing:"Bitte gültigen Lieferzeitraum wählen",
     liefer_von_label:"Frühestens",liefer_bis_label:"Spätestens",liefer_rabatt_label:"Netto-Mindestrabatt",
@@ -2233,7 +2226,7 @@ window.I18N={
     acct_opt_label:"Anfragen jederzeit verfolgen",acct_opt_check:"Konto erstellen, um meine Anfragen und Ersparnisse jederzeit einzusehen",acct_opt_hint:"Nach dem Absenden wirst du aufgefordert, ein Passwort festzulegen. Du kannst dich danach jederzeit einloggen, um den Status deiner Anfragen zu verfolgen.",
     tier_label_value:"Geschätzter Auftragswert",tier_note_sub:"basierend auf SourceOn-Richtpreisen",tier_label_rate:"Dein garantierter Netto-Mindestrabatt",
     tier_hint:'Netto, nach SourceOn-Provision — <strong id="tier-rate-inline">8%</strong> kommen vollständig bei dir an. Durch Bündelung mit anderen Baufirmen fällt deine Ersparnis oft höher aus.',
-    commit_text:'Ich bestätige verbindlich: Erreicht das verhandelte Angebot je Material den oben angezeigten garantierten Netto-Mindestrabatt, gilt mein Auftrag für das jeweilige Material als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt und kommt vollständig bei mir an. Wird die Zielmarke bei einem Material verfehlt, entfällt die betreffende Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a>',
+    commit_text:'Ich bestätige verbindlich: Erreicht das verhandelte Angebot je Material den garantierten Netto-Mindestrabatt, gilt mein Auftrag für das jeweilige Material als erteilt. Die SourceOn-Erfolgsprovision ist darin bereits berücksichtigt und kommt vollständig bei mir an. Wird die Zielmarke bei einem Material verfehlt, entfällt die betreffende Anfrage automatisch und kostenlos. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Kundenvereinbarung lesen</a>',
     err_commit:"Bitte bestätige die verbindliche Auftragserteilung, um fortzufahren.",
     commit_note:'Hinweis: Erreicht das verhandelte Angebot deinen Mindestrabatt, wird dein Auftrag automatisch ausgeführt. Du kannst ihn danach nicht mehr zurückziehen.',
     tempo_msg_flex:"🟢 Flexibler Zeitraum — deine Anfrage sammelt bis zu 14 Tage Bündelungspartner für maximale Ersparnis.",
@@ -2248,7 +2241,7 @@ window.I18N={
     nav_home:"Home",nav_process:"How it works",nav_calculator:"Calculator",nav_materials:"Materials",nav_bundles:'Bundles',nav_for_whom:"For whom",nav_supplier:"Become a supplier",nav_about:"About us",nav_contact:"Contact",nav_cta:"Report material needs",
     kontakt_badge:"Report material needs",kontakt_title:"Report your material needs now",kontakt_desc:"You only pay when we save you money. You see your guaranteed net minimum discount right away and track the status anytime in your dashboard.",
     kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurich, Switzerland",
-    kontakt_how_title:"How it works",kontakt_how_text:"Select your material from the catalog, enter quantity and delivery timeframe — done. You immediately see your guaranteed net minimum discount before submitting.",
+    kontakt_how_title:"How it works",kontakt_how_text:"Select your material from the catalog, enter quantity and delivery timeframe — done. Your guaranteed net minimum discount is based on your volume.",
     form_company:"Company name *",form_contact_person:"Contact person *",form_email:"Email *",form_phone:"Phone *",
     form_material_qty:"Material &amp; quantity *",
     form_error_required:"Required field",form_error_email:"Valid email required",form_error_material:"Please specify at least one material with quantity",
@@ -2278,14 +2271,14 @@ window.I18N={
     meta_title:"Submit Material Request | Buy Construction Materials Cheaper — SourceOn",
     nav_dd_bau:"Construction firms & master builders",nav_dd_handwerk:"Trades & interior finishing",nav_dd_gu:"General contractors & TC",nav_dd_oeff:"Public clients",nav_dd_immo:"Real estate & housing",
     nav_ov_bau:"Construction firms",nav_ov_handwerk:"Trades",nav_ov_gu:"General contractors",
-    ck_eyebrow:"Submit material request",ck_h1:"Report material needs.",ck_sub:"Free for you. You immediately see your guaranteed target minimum discount and track the status anytime in your dashboard.",
+    ck_eyebrow:"Submit material request",ck_h1:"Report material needs.",ck_sub:"Free for you. You get your guaranteed net minimum discount and track the status anytime in your dashboard.",
     ckstep1_t:"Select material",ckstep1_x:"Choose from 58 catalog materials, enter quantity and delivery period.",
-    ckstep2_t:"See minimum discount",ckstep2_x:"You immediately see your guaranteed net minimum discount based on your volume.",
+    ckstep2_t:"Guaranteed minimum discount",ckstep2_x:"Your guaranteed net minimum discount is based on your volume.",
     ckstep3_t:"Submit & track",ckstep3_x:"After submitting, you track the status anytime in your dashboard.",
     ck_location:"Zurich, Switzerland",
     tempobox_t:"Delivery period sets the pace",
     tempobox_r1:"🟢 Flexible (>23 days) — Maximum bundling time",tempobox_r2:"🟡 Medium (14–23 days) — Faster tender",tempobox_r3:"🟠 Tight (5–13 days) — Accelerated processing",
-    form_title:"Report now",form_subtitle:"You see your guaranteed minimum discount before submitting.",
+    form_title:"Report now",form_subtitle:"Free and non-binding — report your material needs in minutes.",
     fsec_company:"Company details",fsec_material:"Material & quantity",fsec_timing:"Delivery address",
     form_date_from:"Earliest",form_date_to:"Latest",err_timing:"Please select a valid delivery period",
     liefer_von_label:"Earliest",liefer_bis_label:"Latest",liefer_rabatt_label:"Net minimum discount",
@@ -2294,7 +2287,7 @@ window.I18N={
     acct_opt_label:"Track requests anytime",acct_opt_check:"Create an account to view my requests and savings anytime",acct_opt_hint:"After submitting, you'll be prompted to set a password. You can then log in anytime to track the status of your requests.",
     tier_label_value:"Estimated order value",tier_note_sub:"based on SourceOn reference prices",tier_label_rate:"Your guaranteed net minimum discount",
     tier_hint:'Net, after SourceOn commission — <strong id="tier-rate-inline">8%</strong> reach you in full. Through bundling with other construction firms, your savings are often higher.',
-    commit_text:'I confirm bindingly: If the negotiated offer reaches the guaranteed net minimum discount shown above for each material, my order for that material is deemed placed. The SourceOn success commission is already accounted for and reaches me in full. If the target is missed for a material, that request lapses automatically and free of charge. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Read customer agreement</a>',
+    commit_text:'I confirm bindingly: If the negotiated offer reaches the guaranteed net minimum discount for each material, my order for that material is deemed placed. The SourceOn success commission is already accounted for and reaches me in full. If the target is missed for a material, that request lapses automatically and free of charge. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Read customer agreement</a>',
     err_commit:"Please confirm the binding order placement to continue.",
     commit_note:'Note: If the negotiated offer reaches your minimum discount, your order is automatically executed. You cannot withdraw it afterwards.',
     tempo_msg_flex:"🟢 Flexible period — your request collects bundling partners for up to 14 days for maximum savings.",
@@ -2338,14 +2331,14 @@ window.I18N={
     meta_title:"Soumettre une demande de matériaux | Acheter des matériaux moins cher — SourceOn",
     nav_dd_bau:"Entreprises de construction & PME du bâtiment",nav_dd_handwerk:"Artisanat & aménagement",nav_dd_gu:"Entreprises générales & ET",nav_dd_oeff:"Maîtres d'ouvrage publics",nav_dd_immo:"Immobilier & logement",
     nav_ov_bau:"Entreprises de construction",nav_ov_handwerk:"Artisans",nav_ov_gu:"Entreprises générales",
-    ck_eyebrow:"Soumettre une demande de matériau",ck_h1:"Déclare ton besoin en matériaux.",ck_sub:"Gratuit pour toi. Tu vois immédiatement ta remise minimale cible garantie et tu suis le statut à tout moment dans ton tableau de bord.",
+    ck_eyebrow:"Soumettre une demande de matériau",ck_h1:"Déclare ton besoin en matériaux.",ck_sub:"Gratuit pour toi. Tu obtiens ta remise minimale nette garantie et suis le statut à tout moment dans ton tableau de bord.",
     ckstep1_t:"Choisir le matériau",ckstep1_x:"Choisis parmi 58 matériaux du catalogue, indique la quantité et le délai de livraison.",
-    ckstep2_t:"Voir la remise minimale",ckstep2_x:"Tu vois immédiatement ta remise minimale nette garantie selon ton volume.",
+    ckstep2_t:"Remise minimale garantie",ckstep2_x:"Ta remise minimale nette garantie dépend de ton volume.",
     ckstep3_t:"Envoyer & suivre",ckstep3_x:"Après l'envoi, tu suis le statut à tout moment dans ton tableau de bord.",
     ck_location:"Zurich, Suisse",
     tempobox_t:"Le délai de livraison donne le rythme",
     tempobox_r1:"🟢 Flexible (>23 jours) — Temps de regroupement maximal",tempobox_r2:"🟡 Moyen (14–23 jours) — Appel d'offres plus rapide",tempobox_r3:"🟠 Serré (5–13 jours) — Traitement accéléré",
-    form_title:"Déclarer maintenant",form_subtitle:"Tu vois ta remise minimale garantie avant d'envoyer.",
+    form_title:"Déclarer maintenant",form_subtitle:"Gratuit et sans engagement — déclare ton besoin en quelques minutes.",
     fsec_company:"Données de l'entreprise",fsec_material:"Matériau & quantité",fsec_timing:"Adresse de livraison",
     form_date_from:"Au plus tôt",form_date_to:"Au plus tard",err_timing:"Choisis un délai de livraison valide",
     liefer_von_label:"Au plus tôt",liefer_bis_label:"Au plus tard",liefer_rabatt_label:"Rabais net minimum",
@@ -2354,7 +2347,7 @@ window.I18N={
     acct_opt_label:"Suivre les demandes à tout moment",acct_opt_check:"Créer un compte pour consulter mes demandes et économies à tout moment",acct_opt_hint:"Après l'envoi, on te demandera de définir un mot de passe. Tu pourras ensuite te connecter à tout moment pour suivre le statut de tes demandes.",
     tier_label_value:"Valeur estimée de la commande",tier_note_sub:"basé sur les prix indicatifs SourceOn",tier_label_rate:"Ta remise minimale nette garantie",
     tier_hint:'Net, après commission SourceOn — <strong id="tier-rate-inline">8%</strong> te reviennent intégralement. Grâce au regroupement avec d\'autres entreprises de construction, tes économies sont souvent plus élevées.',
-    commit_text:'Je confirme de manière ferme : si l\'offre négociée atteint, pour chaque matériau, le rabais net minimum garanti indiqué ci-dessus, ma commande pour le matériau concerné est considérée comme passée. La commission de succès SourceOn y est déjà intégrée et me revient intégralement. Si l\'objectif n\'est pas atteint pour un matériau, la demande concernée est annulée automatiquement et gratuitement. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Lire l\'accord client</a>',
+    commit_text:'Je confirme de manière ferme : si l\'offre négociée atteint, pour chaque matériau, le rabais net minimum garanti, ma commande pour le matériau concerné est considérée comme passée. La commission de succès SourceOn y est déjà intégrée et me revient intégralement. Si l\'objectif n\'est pas atteint pour un matériau, la demande concernée est annulée automatiquement et gratuitement. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Lire l\'accord client</a>',
     err_commit:"Confirme la passation de commande ferme pour continuer.",
     commit_note:'Remarque: Si l\'offre négociée atteint ta remise minimale, ta commande est automatiquement exécutée. Tu ne peux plus la retirer ensuite.',
     tempo_msg_flex:"🟢 Délai flexible — ta demande rassemble des partenaires de regroupement jusqu'à 14 jours pour un maximum d'économies.",
@@ -2367,7 +2360,7 @@ window.I18N={
   },
   it:{
     nav_home:"Home",nav_process:"Come funziona",nav_calculator:"Calcolatore",nav_materials:"Materiali",nav_bundles:'Raggruppamenti',nav_for_whom:"Per chi",nav_supplier:"Diventare fornitore",nav_about:"Chi siamo",nav_contact:"Contatto",nav_cta:"Segnalare fabbisogno",
-    kontakt_badge:"Segnalare fabbisogno",kontakt_title:"Segnala ora il tuo fabbisogno di materiali",kontakt_desc:"Paghi solo se ti facciamo risparmiare. Vedi subito il tuo sconto minimo netto garantito e segui lo stato in qualsiasi momento nella tua dashboard.",
+    kontakt_badge:"Segnalare fabbisogno",kontakt_title:"Segnala ora il tuo fabbisogno di materiali",kontakt_desc:"Paghi solo se ti facciamo risparmiare. Ottieni il tuo sconto minimo netto garantito e segui lo stato in qualsiasi momento nella tua dashboard.",
     kontakt_email:"info@SourceOn.ch",kontakt_location:"Zurigo, Svizzera",
     kontakt_how_title:"Come funziona",kontakt_how_text:"Seleziona il tuo materiale dal catalogo, inserisci quantità e tempistica di consegna — fatto. Vedi immediatamente il tuo sconto minimo netto garantito prima di inviare.",
     form_company:"Nome azienda *",form_contact_person:"Persona di contatto *",form_email:"E-mail *",form_phone:"Telefono *",
@@ -2398,14 +2391,14 @@ window.I18N={
     meta_title:"Invia richiesta di materiali | Acquistare materiali da costruzione a prezzi più bassi — SourceOn",
     nav_dd_bau:"Imprese edili & piccole imprese di costruzione",nav_dd_handwerk:"Artigianato & finiture",nav_dd_gu:"Imprese generali & IT",nav_dd_oeff:"Committenti pubblici",nav_dd_immo:"Immobiliare & edilizia abitativa",
     nav_ov_bau:"Imprese di costruzione",nav_ov_handwerk:"Artigiani",nav_ov_gu:"Imprese generali",
-    ck_eyebrow:"Invia richiesta di materiale",ck_h1:"Segnala il tuo fabbisogno di materiali.",ck_sub:"Gratuito per te. Vedi subito il tuo sconto minimo obiettivo garantito e segui lo stato in qualsiasi momento nella tua dashboard.",
+    ck_eyebrow:"Invia richiesta di materiale",ck_h1:"Segnala il tuo fabbisogno di materiali.",ck_sub:"Gratuito per te. Ottieni il tuo sconto minimo netto garantito e segui lo stato in qualsiasi momento nella tua dashboard.",
     ckstep1_t:"Scegliere il materiale",ckstep1_x:"Scegli tra 58 materiali a catalogo, inserisci quantità e periodo di consegna.",
-    ckstep2_t:"Vedere lo sconto minimo",ckstep2_x:"Vedi subito il tuo sconto minimo netto garantito in base al tuo volume.",
+    ckstep2_t:"Sconto minimo garantito",ckstep2_x:"Il tuo sconto minimo netto garantito dipende dal tuo volume.",
     ckstep3_t:"Inviare & seguire",ckstep3_x:"Dopo l'invio, segui lo stato in qualsiasi momento nella tua dashboard.",
     ck_location:"Zurigo, Svizzera",
     tempobox_t:"Il periodo di consegna detta il ritmo",
     tempobox_r1:"🟢 Flessibile (>23 giorni) — Tempo di raggruppamento massimo",tempobox_r2:"🟡 Medio (14–23 giorni) — Gara più rapida",tempobox_r3:"🟠 Stretto (5–13 giorni) — Elaborazione accelerata",
-    form_title:"Segnala ora",form_subtitle:"Vedi il tuo sconto minimo garantito prima di inviare.",
+    form_title:"Segnala ora",form_subtitle:"Gratuito e senza impegno — segnala il tuo fabbisogno in pochi minuti.",
     fsec_company:"Dati aziendali",fsec_material:"Materiale & quantità",fsec_timing:"Indirizzo di consegna",
     form_date_from:"Al più presto",form_date_to:"Al più tardi",err_timing:"Seleziona un periodo di consegna valido",
     liefer_von_label:"Al più presto",liefer_bis_label:"Al più tardi",liefer_rabatt_label:"Sconto netto minimo",
@@ -2414,7 +2407,7 @@ window.I18N={
     acct_opt_label:"Segui le richieste in qualsiasi momento",acct_opt_check:"Crea un account per consultare le mie richieste e i miei risparmi in qualsiasi momento",acct_opt_hint:"Dopo l'invio ti verrà chiesto di impostare una password. Potrai poi accedere in qualsiasi momento per seguire lo stato delle tue richieste.",
     tier_label_value:"Valore stimato dell'ordine",tier_note_sub:"basato sui prezzi indicativi SourceOn",tier_label_rate:"Il tuo sconto minimo netto garantito",
     tier_hint:'Netto, dopo la commissione SourceOn — <strong id="tier-rate-inline">8%</strong> ti spettano interamente. Grazie al raggruppamento con altre imprese edili, il tuo risparmio è spesso più elevato.',
-    commit_text:'Confermo in modo vincolante: se l\'offerta negoziata raggiunge, per ogni materiale, lo sconto minimo netto garantito indicato sopra, il mio ordine per quel materiale si considera conferito. La commissione di successo SourceOn è già inclusa e mi spetta interamente. Se l\'obiettivo non viene raggiunto per un materiale, la richiesta relativa decade automaticamente e gratuitamente. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Leggi l\'accordo cliente</a>',
+    commit_text:'Confermo in modo vincolante: se l\'offerta negoziata raggiunge, per ogni materiale, lo sconto minimo netto garantito, il mio ordine per quel materiale si considera conferito. La commissione di successo SourceOn è già inclusa e mi spetta interamente. Se l\'obiettivo non viene raggiunto per un materiale, la richiesta relativa decade automaticamente e gratuitamente. <a href="kundenvereinbarung.html" target="_blank" rel="noopener">Leggi l\'accordo cliente</a>',
     err_commit:"Conferma il conferimento vincolante dell'ordine per continuare.",
     commit_note:'Nota: Se l\'offerta negoziata raggiunge il tuo sconto minimo, il tuo ordine viene eseguito automaticamente. Non puoi più ritirarlo in seguito.',
     tempo_msg_flex:"🟢 Periodo flessibile — la tua richiesta raccoglie partner di raggruppamento fino a 14 giorni per il massimo risparmio.",
